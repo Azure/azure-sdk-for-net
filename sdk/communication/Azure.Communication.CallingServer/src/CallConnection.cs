@@ -563,5 +563,45 @@ namespace Azure.Communication.CallingServer
                 throw;
             }
         }
+
+        /// <summary>
+        /// Cancel any media operation to all participants.
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual async Task<Response> CancelAllMediaOperationsAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(CancelAllMediaOperations)}");
+            scope.Start();
+            try
+            {
+                return await ContentRestClient.CancelAllMediaOperationsAsync(CallConnectionId, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Cancel any media operation to all participants.
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual Response CancelAllMediaOperations(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(CancelAllMediaOperations)}");
+            scope.Start();
+            try
+            {
+                return ContentRestClient.CancelAllMediaOperations(CallConnectionId, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
     }
 }

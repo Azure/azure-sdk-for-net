@@ -6,6 +6,7 @@ products:
 - azure
 - azure-cognitive-services
 - azure-qna-maker
+- language-service
 name: Azure.AI.Language.QuestionAnswering samples for .NET
 description: Samples for the Azure.AI.Language.QuestionAnswering client library
 ---

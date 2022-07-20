@@ -167,13 +167,13 @@ namespace Azure.ResourceManager.Storage
             Optional<StorageAccountEndpoints> secondaryEndpoints = default;
             Optional<StorageAccountEncryption> encryption = default;
             Optional<StorageAccountAccessTier> accessTier = default;
-            Optional<AzureFilesIdentityBasedAuthentication> azureFilesIdentityBasedAuthentication = default;
+            Optional<FilesIdentityBasedAuthentication> azureFilesIdentityBasedAuthentication = default;
             Optional<bool> supportsHttpsTrafficOnly = default;
             Optional<StorageAccountNetworkRuleSet> networkAcls = default;
             Optional<bool> isSftpEnabled = default;
             Optional<bool> isLocalUserEnabled = default;
             Optional<bool> isHnsEnabled = default;
-            Optional<GeoReplicationStats> geoReplicationStats = default;
+            Optional<GeoReplicationStatistics> geoReplicationStats = default;
             Optional<bool> failoverInProgress = default;
             Optional<LargeFileSharesState> largeFileSharesState = default;
             Optional<IReadOnlyList<StoragePrivateEndpointConnectionData>> privateEndpointConnections = default;
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.Storage
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            azureFilesIdentityBasedAuthentication = AzureFilesIdentityBasedAuthentication.DeserializeAzureFilesIdentityBasedAuthentication(property0.Value);
+                            azureFilesIdentityBasedAuthentication = FilesIdentityBasedAuthentication.DeserializeFilesIdentityBasedAuthentication(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("supportsHttpsTrafficOnly"))
@@ -504,7 +504,7 @@ namespace Azure.ResourceManager.Storage
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            geoReplicationStats = GeoReplicationStats.DeserializeGeoReplicationStats(property0.Value);
+                            geoReplicationStats = GeoReplicationStatistics.DeserializeGeoReplicationStatistics(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("failoverInProgress"))

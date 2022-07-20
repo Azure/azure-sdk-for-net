@@ -69,7 +69,6 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <param name="xMrcCv"> The client request correlation vector, which should be set to a new value for each request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <remarks> Creates a job request. </remarks>
         public async Task<ResponseWithHeaders<AssetConversionProperties, IngestionJobCreateHeaders>> CreateAsync(Guid accountId, Guid jobId, AssetConversionProperties body, string xMrcCv = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
@@ -101,7 +100,6 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <param name="xMrcCv"> The client request correlation vector, which should be set to a new value for each request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <remarks> Creates a job request. </remarks>
         public ResponseWithHeaders<AssetConversionProperties, IngestionJobCreateHeaders> Create(Guid accountId, Guid jobId, AssetConversionProperties body, string xMrcCv = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
@@ -152,7 +150,6 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <param name="jobId"> Identifier for the Azure Object Anchors ingestion job. </param>
         /// <param name="xMrcCv"> The client request correlation vector, which should be set to a new value for each request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Gets the status of a job request. </remarks>
         public async Task<ResponseWithHeaders<AssetConversionProperties, IngestionJobGetHeaders>> GetAsync(Guid accountId, Guid jobId, string xMrcCv = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetRequest(accountId, jobId, xMrcCv);
@@ -177,7 +174,6 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <param name="jobId"> Identifier for the Azure Object Anchors ingestion job. </param>
         /// <param name="xMrcCv"> The client request correlation vector, which should be set to a new value for each request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks> Gets the status of a job request. </remarks>
         public ResponseWithHeaders<AssetConversionProperties, IngestionJobGetHeaders> Get(Guid accountId, Guid jobId, string xMrcCv = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetRequest(accountId, jobId, xMrcCv);

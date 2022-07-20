@@ -20,8 +20,7 @@ var client = new DocumentModelAdministrationClient(new Uri(endpoint), credential
 
 ## Get and List Document Model Operations
 
-Note that operation information only persists for 24 hours. If the operation was successful, the document model Id is provided in the `Result` property. This Id can be used with
-other methods like for example, `GetModel()`.
+Note that operation information only persists for 24 hours. If the operation was successful, the document model Id is provided in the `Result` property. This Id can be used with other methods like for example, `GetModel()`.
 If the operation failed, the error information can be accessed using the `Error` property.
 
 ```C# Snippet:FormRecognizerSampleGetAndListOperations
@@ -29,8 +28,7 @@ var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureK
 
 // Make sure there is at least one operation, so we are going to build a custom model.
 Uri trainingFileUri = new Uri("<trainingFileUri>");
-BuildModelOperation operation = await client.StartBuildModelAsync(trainingFileUri, DocumentBuildMode.Template);
-await operation.WaitForCompletionAsync();
+BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Completed, trainingFileUri, DocumentBuildMode.Template);
 
 // List the first ten or fewer operations that have been executed in the last 24h.
 AsyncPageable<ModelOperationInfo> modelOperations = client.GetOperationsAsync();

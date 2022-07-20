@@ -70,7 +70,6 @@ namespace Azure.Communication.Sms
         /// <param name="smsSendOptions"> Optional configuration for sending SMS messages. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="from"/>, <paramref name="smsRecipients"/> or <paramref name="message"/> is null. </exception>
-        /// <remarks> Sends a SMS message from a phone number that belongs to the authenticated account. </remarks>
         public async Task<Response<SmsSendResponse>> SendAsync(string @from, IEnumerable<SmsRecipient> smsRecipients, string message, SmsSendOptions smsSendOptions = null, CancellationToken cancellationToken = default)
         {
             if (@from == null)
@@ -109,7 +108,6 @@ namespace Azure.Communication.Sms
         /// <param name="smsSendOptions"> Optional configuration for sending SMS messages. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="from"/>, <paramref name="smsRecipients"/> or <paramref name="message"/> is null. </exception>
-        /// <remarks> Sends a SMS message from a phone number that belongs to the authenticated account. </remarks>
         public Response<SmsSendResponse> Send(string @from, IEnumerable<SmsRecipient> smsRecipients, string message, SmsSendOptions smsSendOptions = null, CancellationToken cancellationToken = default)
         {
             if (@from == null)

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.IotHub
 
         internal static IotHubPrivateEndpointConnectionData DeserializeIotHubPrivateEndpointConnectionData(JsonElement element)
         {
-            PrivateEndpointConnectionProperties properties = default;
+            IotHubPrivateEndpointConnectionProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.IotHub
             {
                 if (property.NameEquals("properties"))
                 {
-                    properties = PrivateEndpointConnectionProperties.DeserializePrivateEndpointConnectionProperties(property.Value);
+                    properties = IotHubPrivateEndpointConnectionProperties.DeserializeIotHubPrivateEndpointConnectionProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"))
