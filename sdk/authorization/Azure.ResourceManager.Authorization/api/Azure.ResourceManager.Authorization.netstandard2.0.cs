@@ -461,8 +461,6 @@ namespace Azure.ResourceManager.Authorization
         public virtual Azure.ResourceManager.Authorization.RoleManagementPolicyAssignmentData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string scope, string roleManagementPolicyAssignmentName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Authorization.RoleManagementPolicyAssignmentResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Authorization.RoleManagementPolicyAssignmentResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Authorization.RoleManagementPolicyAssignmentResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Authorization.RoleManagementPolicyAssignmentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -501,8 +499,6 @@ namespace Azure.ResourceManager.Authorization
         public virtual Azure.ResourceManager.Authorization.RoleManagementPolicyData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string scope, string roleManagementPolicyName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Authorization.RoleManagementPolicyResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Authorization.RoleManagementPolicyResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Authorization.RoleManagementPolicyResource> Update(Azure.ResourceManager.Authorization.RoleManagementPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -834,7 +830,7 @@ namespace Azure.ResourceManager.Authorization.Models
     public partial class RoleAssignmentScheduleInfoExpiration
     {
         public RoleAssignmentScheduleInfoExpiration() { }
-        public string Duration { get { throw null; } set { } }
+        public System.TimeSpan? Duration { get { throw null; } set { } }
         public System.DateTimeOffset? EndOn { get { throw null; } set { } }
         public Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleType? RoleAssignmentExpirationType { get { throw null; } set { } }
     }
@@ -1024,7 +1020,7 @@ namespace Azure.ResourceManager.Authorization.Models
     public partial class RoleEligibilityScheduleRequestPropertiesScheduleInfoExpiration
     {
         public RoleEligibilityScheduleRequestPropertiesScheduleInfoExpiration() { }
-        public string Duration { get { throw null; } set { } }
+        public System.TimeSpan? Duration { get { throw null; } set { } }
         public System.DateTimeOffset? EndOn { get { throw null; } set { } }
         public Azure.ResourceManager.Authorization.Models.RoleEligibilityScheduleType? RoleEligibilityExpirationType { get { throw null; } set { } }
     }
@@ -1149,7 +1145,7 @@ namespace Azure.ResourceManager.Authorization.Models
     {
         public RoleManagementPolicyExpirationRule() { }
         public bool? IsExpirationRequired { get { throw null; } set { } }
-        public string MaximumDuration { get { throw null; } set { } }
+        public System.TimeSpan? MaximumDuration { get { throw null; } set { } }
     }
     public partial class RoleManagementPolicyNotificationRule : Azure.ResourceManager.Authorization.Models.RoleManagementPolicyRule
     {
