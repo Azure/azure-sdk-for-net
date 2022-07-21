@@ -28,18 +28,18 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <summary> Initializes a new instance of RoutingEventHubProperties. </summary>
         /// <param name="id"> Id of the event hub endpoint. </param>
         /// <param name="connectionString"> The connection string of the event hub endpoint. </param>
-        /// <param name="endpointUri"> The url of the event hub endpoint. It must include the protocol sb://. </param>
+        /// <param name="endpoint"> The url of the event hub endpoint. It must include the protocol sb://. </param>
         /// <param name="entityPath"> Event hub name on the event hub namespace. </param>
         /// <param name="authenticationType"> Method used to authenticate against the event hub endpoint. </param>
         /// <param name="identity"> Managed identity properties of routing event hub endpoint. </param>
         /// <param name="name"> The name that identifies this endpoint. The name can only include alphanumeric characters, periods, underscores, hyphens and has a maximum length of 64 characters. The following names are reserved:  events, fileNotifications, $default. Endpoint names must be unique across endpoint types. </param>
         /// <param name="subscriptionId"> The subscription identifier of the event hub endpoint. </param>
         /// <param name="resourceGroup"> The name of the resource group of the event hub endpoint. </param>
-        internal RoutingEventHubProperties(Guid? id, string connectionString, Uri endpointUri, string entityPath, IotHubAuthenticationType? authenticationType, ManagedIdentity identity, string name, string subscriptionId, string resourceGroup)
+        internal RoutingEventHubProperties(Guid? id, string connectionString, string endpoint, string entityPath, IotHubAuthenticationType? authenticationType, ManagedIdentity identity, string name, string subscriptionId, string resourceGroup)
         {
             Id = id;
             ConnectionString = connectionString;
-            EndpointUri = endpointUri;
+            Endpoint = endpoint;
             EntityPath = entityPath;
             AuthenticationType = authenticationType;
             Identity = identity;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <summary> The connection string of the event hub endpoint. </summary>
         public string ConnectionString { get; set; }
         /// <summary> The url of the event hub endpoint. It must include the protocol sb://. </summary>
-        public Uri EndpointUri { get; set; }
+        public string Endpoint { get; set; }
         /// <summary> Event hub name on the event hub namespace. </summary>
         public string EntityPath { get; set; }
         /// <summary> Method used to authenticate against the event hub endpoint. </summary>

@@ -255,9 +255,9 @@ namespace Azure.ResourceManager.IotHub.Models
     {
         public EventHubCompatibleEndpointProperties() { }
         public string Endpoint { get { throw null; } }
+        public string EventHubCompatibleName { get { throw null; } }
         public int? PartitionCount { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<string> PartitionIds { get { throw null; } }
-        public string Path { get { throw null; } }
         public long? RetentionTimeInDays { get { throw null; } set { } }
     }
     public partial class EventHubConsumerGroupInfoCreateOrUpdateContent
@@ -569,8 +569,8 @@ namespace Azure.ResourceManager.IotHub.Models
     {
         internal IotHubPrivateEndpointGroupInformationProperties() { }
         public string GroupId { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> RequiredDnsZoneNames { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> RequiredZoneNames { get { throw null; } }
     }
     public partial class IotHubPrivateLinkServiceConnectionState
     {
@@ -602,7 +602,7 @@ namespace Azure.ResourceManager.IotHub.Models
     public partial class IotHubProperties
     {
         public IotHubProperties() { }
-        public System.Collections.Generic.IList<string> AllowedFqdnList { get { throw null; } }
+        public System.Collections.Generic.IList<string> AllowedFqdns { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.IotHub.Models.SharedAccessSignatureAuthorizationRule> AuthorizationPolicies { get { throw null; } }
         public Azure.ResourceManager.IotHub.Models.CloudToDeviceProperties CloudToDevice { get { throw null; } set { } }
         public string Comments { get { throw null; } set { } }
@@ -900,7 +900,7 @@ namespace Azure.ResourceManager.IotHub.Models
         public RoutingEventHubProperties(string name) { }
         public Azure.ResourceManager.IotHub.Models.IotHubAuthenticationType? AuthenticationType { get { throw null; } set { } }
         public string ConnectionString { get { throw null; } set { } }
-        public System.Uri EndpointUri { get { throw null; } set { } }
+        public string Endpoint { get { throw null; } set { } }
         public string EntityPath { get { throw null; } set { } }
         public System.Guid? Id { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
@@ -929,7 +929,7 @@ namespace Azure.ResourceManager.IotHub.Models
         public RoutingServiceBusQueueEndpointProperties(string name) { }
         public Azure.ResourceManager.IotHub.Models.IotHubAuthenticationType? AuthenticationType { get { throw null; } set { } }
         public string ConnectionString { get { throw null; } set { } }
-        public System.Uri EndpointUri { get { throw null; } set { } }
+        public string Endpoint { get { throw null; } set { } }
         public string EntityPath { get { throw null; } set { } }
         public System.Guid? Id { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
@@ -942,7 +942,7 @@ namespace Azure.ResourceManager.IotHub.Models
         public RoutingServiceBusTopicEndpointProperties(string name) { }
         public Azure.ResourceManager.IotHub.Models.IotHubAuthenticationType? AuthenticationType { get { throw null; } set { } }
         public string ConnectionString { get { throw null; } set { } }
-        public System.Uri EndpointUri { get { throw null; } set { } }
+        public string Endpoint { get { throw null; } set { } }
         public string EntityPath { get { throw null; } set { } }
         public System.Guid? Id { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
@@ -958,7 +958,7 @@ namespace Azure.ResourceManager.IotHub.Models
         public string ConnectionString { get { throw null; } set { } }
         public string ContainerName { get { throw null; } set { } }
         public Azure.ResourceManager.IotHub.Models.RoutingStorageContainerPropertiesEncoding? Encoding { get { throw null; } set { } }
-        public System.Uri EndpointUri { get { throw null; } set { } }
+        public string Endpoint { get { throw null; } set { } }
         public string FileNameFormat { get { throw null; } set { } }
         public System.Guid? Id { get { throw null; } set { } }
         public int? MaxChunkSizeInBytes { get { throw null; } set { } }
