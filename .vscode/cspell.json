@@ -283,7 +283,7 @@
         "oaep"
       ]
     },
-	{
+    {
       "filename": "**/sdk/iothub/**/*.cs",
       "words": [
         "fqdns"
