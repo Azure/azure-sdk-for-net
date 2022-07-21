@@ -24,24 +24,24 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="idPropertiesId"> Content type identifier. </param>
-        /// <param name="namePropertiesName"> Content type name. Must be 1 to 250 characters long. </param>
+        /// <param name="contentTypeIdentifier"> Content type identifier. </param>
+        /// <param name="contentTypeName"> Content type name. Must be 1 to 250 characters long. </param>
         /// <param name="description"> Content type description. </param>
         /// <param name="schema"> Content type schema. </param>
         /// <param name="version"> Content type version. </param>
-        internal ApiManagementContentTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string idPropertiesId, string namePropertiesName, string description, BinaryData schema, string version) : base(id, name, resourceType, systemData)
+        internal ApiManagementContentTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string contentTypeIdentifier, string contentTypeName, string description, BinaryData schema, string version) : base(id, name, resourceType, systemData)
         {
-            IdPropertiesId = idPropertiesId;
-            NamePropertiesName = namePropertiesName;
+            ContentTypeIdentifier = contentTypeIdentifier;
+            ContentTypeName = contentTypeName;
             Description = description;
             Schema = schema;
             Version = version;
         }
 
         /// <summary> Content type identifier. </summary>
-        public string IdPropertiesId { get; set; }
+        public string ContentTypeIdentifier { get; set; }
         /// <summary> Content type name. Must be 1 to 250 characters long. </summary>
-        public string NamePropertiesName { get; set; }
+        public string ContentTypeName { get; set; }
         /// <summary> Content type description. </summary>
         public string Description { get; set; }
         /// <summary> Content type schema. </summary>

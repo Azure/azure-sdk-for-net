@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ApiManagement
             Optional<BackendCredentialsContract> credentials = default;
             Optional<BackendProxyContract> proxy = default;
             Optional<BackendTlsProperties> tls = default;
-            Optional<Uri> url = default;
+            Optional<Uri> uri = default;
             Optional<BackendProtocol> protocol = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -179,10 +179,10 @@ namespace Azure.ResourceManager.ApiManagement
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                url = null;
+                                uri = null;
                                 continue;
                             }
-                            url = new Uri(property0.Value.GetString());
+                            uri = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("protocol"))
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ApiManagement
                     continue;
                 }
             }
-            return new ApiManagementBackendData(id, name, type, systemData.Value, title.Value, description.Value, resourceId.Value, properties.Value, credentials.Value, proxy.Value, tls.Value, url.Value, Optional.ToNullable(protocol));
+            return new ApiManagementBackendData(id, name, type, systemData.Value, title.Value, description.Value, resourceId.Value, properties.Value, credentials.Value, proxy.Value, tls.Value, uri.Value, Optional.ToNullable(protocol));
         }
     }
 }

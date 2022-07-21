@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="policies"> Operation Policies. </param>
         /// <param name="displayName"> Operation Name. </param>
         /// <param name="method"> A Valid HTTP Operation Method. Typical Http Methods like GET, PUT, POST but not limited by only them. </param>
-        /// <param name="urlTemplate"> Relative URL template identifying the target resource for this operation. May include parameters. Example: /customers/{cid}/orders/{oid}/?date={date}. </param>
-        internal ApiOperationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<ParameterContract> templateParameters, string description, RequestContract request, IList<ResponseContract> responses, string policies, string displayName, string method, string urlTemplate) : base(id, name, resourceType, systemData)
+        /// <param name="uriTemplate"> Relative URL template identifying the target resource for this operation. May include parameters. Example: /customers/{cid}/orders/{oid}/?date={date}. </param>
+        internal ApiOperationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<ParameterContract> templateParameters, string description, RequestContract request, IList<ResponseContract> responses, string policies, string displayName, string method, string uriTemplate) : base(id, name, resourceType, systemData)
         {
             TemplateParameters = templateParameters;
             Description = description;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ApiManagement
             Policies = policies;
             DisplayName = displayName;
             Method = method;
-            UrlTemplate = urlTemplate;
+            UriTemplate = uriTemplate;
         }
 
         /// <summary> Collection of URL template parameters. </summary>
@@ -62,6 +62,6 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> A Valid HTTP Operation Method. Typical Http Methods like GET, PUT, POST but not limited by only them. </summary>
         public string Method { get; set; }
         /// <summary> Relative URL template identifying the target resource for this operation. May include parameters. Example: /customers/{cid}/orders/{oid}/?date={date}. </summary>
-        public string UrlTemplate { get; set; }
+        public string UriTemplate { get; set; }
     }
 }

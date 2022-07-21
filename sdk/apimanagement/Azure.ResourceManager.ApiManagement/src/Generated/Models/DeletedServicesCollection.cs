@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of DeletedServicesCollection. </summary>
         internal DeletedServicesCollection()
         {
-            Value = new ChangeTrackingList<DeletedServiceContractData>();
+            Value = new ChangeTrackingList<ApiManagementDeletedServiceData>();
         }
 
         /// <summary> Initializes a new instance of DeletedServicesCollection. </summary>
         /// <param name="value"> Page values. </param>
         /// <param name="nextLink"> Next page link if any. </param>
-        internal DeletedServicesCollection(IReadOnlyList<DeletedServiceContractData> value, string nextLink)
+        internal DeletedServicesCollection(IReadOnlyList<ApiManagementDeletedServiceData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Page values. </summary>
-        public IReadOnlyList<DeletedServiceContractData> Value { get; }
+        public IReadOnlyList<ApiManagementDeletedServiceData> Value { get; }
         /// <summary> Next page link if any. </summary>
         public string NextLink { get; }
     }

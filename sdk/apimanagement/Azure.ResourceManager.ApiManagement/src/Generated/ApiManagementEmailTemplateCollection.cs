@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="templateName"> Email Template Name Identifier. </param>
-        /// <param name="emailTemplateUpdateParameters"> Email Template update parameters. </param>
+        /// <param name="content"> Email Template update parameters. </param>
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="emailTemplateUpdateParameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<ApiManagementEmailTemplateResource>> CreateOrUpdateAsync(WaitUntil waitUntil, TemplateName templateName, EmailTemplateUpdateParameters emailTemplateUpdateParameters, string ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<ApiManagementEmailTemplateResource>> CreateOrUpdateAsync(WaitUntil waitUntil, TemplateName templateName, ApiManagementEmailTemplateCreateOrUpdateContent content, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(emailTemplateUpdateParameters, nameof(emailTemplateUpdateParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _apiManagementEmailTemplateEmailTemplateClientDiagnostics.CreateScope("ApiManagementEmailTemplateCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _apiManagementEmailTemplateEmailTemplateRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, templateName, emailTemplateUpdateParameters, ifMatch, cancellationToken).ConfigureAwait(false);
+                var response = await _apiManagementEmailTemplateEmailTemplateRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, templateName, content, ifMatch, cancellationToken).ConfigureAwait(false);
                 var operation = new ApiManagementArmOperation<ApiManagementEmailTemplateResource>(Response.FromValue(new ApiManagementEmailTemplateResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -93,19 +93,19 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="templateName"> Email Template Name Identifier. </param>
-        /// <param name="emailTemplateUpdateParameters"> Email Template update parameters. </param>
+        /// <param name="content"> Email Template update parameters. </param>
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="emailTemplateUpdateParameters"/> is null. </exception>
-        public virtual ArmOperation<ApiManagementEmailTemplateResource> CreateOrUpdate(WaitUntil waitUntil, TemplateName templateName, EmailTemplateUpdateParameters emailTemplateUpdateParameters, string ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<ApiManagementEmailTemplateResource> CreateOrUpdate(WaitUntil waitUntil, TemplateName templateName, ApiManagementEmailTemplateCreateOrUpdateContent content, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(emailTemplateUpdateParameters, nameof(emailTemplateUpdateParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _apiManagementEmailTemplateEmailTemplateClientDiagnostics.CreateScope("ApiManagementEmailTemplateCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _apiManagementEmailTemplateEmailTemplateRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, templateName, emailTemplateUpdateParameters, ifMatch, cancellationToken);
+                var response = _apiManagementEmailTemplateEmailTemplateRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, templateName, content, ifMatch, cancellationToken);
                 var operation = new ApiManagementArmOperation<ApiManagementEmailTemplateResource>(Response.FromValue(new ApiManagementEmailTemplateResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);

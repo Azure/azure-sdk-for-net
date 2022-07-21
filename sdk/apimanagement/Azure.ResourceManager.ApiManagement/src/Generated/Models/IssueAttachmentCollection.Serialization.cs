@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static IssueAttachmentCollection DeserializeIssueAttachmentCollection(JsonElement element)
         {
-            Optional<IReadOnlyList<IssueAttachmentContractData>> value = default;
+            Optional<IReadOnlyList<ApiIssueAttachmentData>> value = default;
             Optional<long> count = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<IssueAttachmentContractData> array = new List<IssueAttachmentContractData>();
+                    List<ApiIssueAttachmentData> array = new List<ApiIssueAttachmentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IssueAttachmentContractData.DeserializeIssueAttachmentContractData(item));
+                        array.Add(ApiIssueAttachmentData.DeserializeApiIssueAttachmentData(item));
                     }
                     value = array;
                     continue;

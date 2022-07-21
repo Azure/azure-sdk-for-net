@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("useFromLocation");
                 writer.WriteStringValue(UseFromLocation);
             }
-            if (Optional.IsDefined(ResourceId))
+            if (Optional.IsDefined(ResourceUri))
             {
                 writer.WritePropertyName("resourceId");
-                writer.WriteStringValue(ResourceId);
+                writer.WriteStringValue(ResourceUri.AbsoluteUri);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

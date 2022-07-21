@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("type");
                 writer.WriteStringValue(TypePropertiesType.Value.ToString());
             }
-            if (Optional.IsDefined(SigninTenant))
+            if (Optional.IsDefined(SignInTenant))
             {
                 writer.WritePropertyName("signinTenant");
-                writer.WriteStringValue(SigninTenant);
+                writer.WriteStringValue(SignInTenant);
             }
             if (Optional.IsCollectionDefined(AllowedTenants))
             {
@@ -44,15 +44,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("authority");
                 writer.WriteStringValue(Authority);
             }
-            if (Optional.IsDefined(SignupPolicyName))
+            if (Optional.IsDefined(SignUpPolicyName))
             {
                 writer.WritePropertyName("signupPolicyName");
-                writer.WriteStringValue(SignupPolicyName);
+                writer.WriteStringValue(SignUpPolicyName);
             }
-            if (Optional.IsDefined(SigninPolicyName))
+            if (Optional.IsDefined(SignInPolicyName))
             {
                 writer.WritePropertyName("signinPolicyName");
-                writer.WriteStringValue(SigninPolicyName);
+                writer.WriteStringValue(SignInPolicyName);
             }
             if (Optional.IsDefined(ProfileEditingPolicyName))
             {

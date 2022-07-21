@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Secret))
+            if (Optional.IsDefined(IsSecret))
             {
                 writer.WritePropertyName("secret");
-                writer.WriteBooleanValue(Secret.Value);
+                writer.WriteBooleanValue(IsSecret.Value);
             }
             if (Optional.IsDefined(DisplayName))
             {
@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("value");
                 writer.WriteStringValue(Value);
             }
-            if (Optional.IsDefined(KeyVault))
+            if (Optional.IsDefined(KeyVaultDetails))
             {
                 writer.WritePropertyName("keyVault");
-                writer.WriteObjectValue(KeyVault);
+                writer.WriteObjectValue(KeyVaultDetails);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

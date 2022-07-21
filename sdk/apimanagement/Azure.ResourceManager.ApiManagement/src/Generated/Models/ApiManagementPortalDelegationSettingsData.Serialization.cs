@@ -30,15 +30,15 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("validationKey");
                 writer.WriteStringValue(ValidationKey);
             }
-            if (Optional.IsDefined(Subscriptions))
+            if (Optional.IsDefined(IsSubscriptions))
             {
                 writer.WritePropertyName("subscriptions");
-                writer.WriteObjectValue(Subscriptions);
+                writer.WriteObjectValue(IsSubscriptions);
             }
-            if (Optional.IsDefined(UserRegistration))
+            if (Optional.IsDefined(IsUserRegistration))
             {
                 writer.WritePropertyName("userRegistration");
-                writer.WriteObjectValue(UserRegistration);
+                writer.WriteObjectValue(IsUserRegistration);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ApiManagement
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<Uri> url = default;
+            Optional<Uri> uri = default;
             Optional<string> validationKey = default;
             Optional<SubscriptionsDelegationSettingsProperties> subscriptions = default;
             Optional<RegistrationDelegationSettingsProperties> userRegistration = default;
@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.ApiManagement
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                url = null;
+                                uri = null;
                                 continue;
                             }
-                            url = new Uri(property0.Value.GetString());
+                            uri = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("validationKey"))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ApiManagement
                     continue;
                 }
             }
-            return new ApiManagementPortalDelegationSettingsData(id, name, type, systemData.Value, url.Value, validationKey.Value, subscriptions.Value, userRegistration.Value);
+            return new ApiManagementPortalDelegationSettingsData(id, name, type, systemData.Value, uri.Value, validationKey.Value, subscriptions.Value, userRegistration.Value);
         }
     }
 }

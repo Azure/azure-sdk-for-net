@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of IssueCommentCollection. </summary>
         internal IssueCommentCollection()
         {
-            Value = new ChangeTrackingList<IssueCommentContractData>();
+            Value = new ChangeTrackingList<ApiIssueCommentData>();
         }
 
         /// <summary> Initializes a new instance of IssueCommentCollection. </summary>
         /// <param name="value"> Issue Comment values. </param>
         /// <param name="count"> Total record count number across all pages. </param>
         /// <param name="nextLink"> Next page link if any. </param>
-        internal IssueCommentCollection(IReadOnlyList<IssueCommentContractData> value, long? count, string nextLink)
+        internal IssueCommentCollection(IReadOnlyList<ApiIssueCommentData> value, long? count, string nextLink)
         {
             Value = value;
             Count = count;
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Issue Comment values. </summary>
-        public IReadOnlyList<IssueCommentContractData> Value { get; }
+        public IReadOnlyList<ApiIssueCommentData> Value { get; }
         /// <summary> Total record count number across all pages. </summary>
         public long? Count { get; }
         /// <summary> Next page link if any. </summary>

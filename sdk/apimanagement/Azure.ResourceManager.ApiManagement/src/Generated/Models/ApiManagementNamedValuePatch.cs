@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Optional tags that when provided can be used to filter the NamedValue list. </summary>
         public IList<string> Tags { get; }
         /// <summary> Determines whether the value is a secret and should be encrypted or not. Default value is false. </summary>
-        public bool? Secret { get; set; }
+        public bool? IsSecret { get; set; }
         /// <summary> Unique name of NamedValue. It may contain only letters, digits, period, dash, and underscore characters. </summary>
         public string DisplayName { get; set; }
         /// <summary> Value of the NamedValue. Can contain policy expressions. It may not be empty or consist only of whitespace. </summary>

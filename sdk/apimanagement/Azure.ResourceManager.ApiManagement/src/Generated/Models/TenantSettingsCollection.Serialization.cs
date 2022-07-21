@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static TenantSettingsCollection DeserializeTenantSettingsCollection(JsonElement element)
         {
-            Optional<IReadOnlyList<TenantSettingsContractData>> value = default;
+            Optional<IReadOnlyList<ApiManagementTenantSettingsData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<TenantSettingsContractData> array = new List<TenantSettingsContractData>();
+                    List<ApiManagementTenantSettingsData> array = new List<ApiManagementTenantSettingsData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TenantSettingsContractData.DeserializeTenantSettingsContractData(item));
+                        array.Add(ApiManagementTenantSettingsData.DeserializeApiManagementTenantSettingsData(item));
                     }
                     value = array;
                     continue;

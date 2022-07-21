@@ -178,12 +178,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<string> provisioningState = default;
             Optional<string> targetProvisioningState = default;
             Optional<DateTimeOffset> createdAtUtc = default;
-            Optional<Uri> gatewayUrl = default;
-            Optional<Uri> gatewayRegionalUrl = default;
-            Optional<Uri> portalUrl = default;
-            Optional<Uri> managementApiUrl = default;
-            Optional<Uri> scmUrl = default;
-            Optional<Uri> developerPortalUrl = default;
+            Optional<Uri> gatewayUri = default;
+            Optional<Uri> gatewayRegionalUri = default;
+            Optional<Uri> portalUri = default;
+            Optional<Uri> managementApiUri = default;
+            Optional<Uri> scmUri = default;
+            Optional<Uri> developerPortalUri = default;
             Optional<IList<HostnameConfiguration>> hostnameConfigurations = default;
             Optional<IReadOnlyList<IPAddress>> publicIPAddresses = default;
             Optional<IReadOnlyList<IPAddress>> privateIPAddresses = default;
@@ -327,60 +327,60 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                gatewayUrl = null;
+                                gatewayUri = null;
                                 continue;
                             }
-                            gatewayUrl = new Uri(property0.Value.GetString());
+                            gatewayUri = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("gatewayRegionalUrl"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                gatewayRegionalUrl = null;
+                                gatewayRegionalUri = null;
                                 continue;
                             }
-                            gatewayRegionalUrl = new Uri(property0.Value.GetString());
+                            gatewayRegionalUri = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("portalUrl"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                portalUrl = null;
+                                portalUri = null;
                                 continue;
                             }
-                            portalUrl = new Uri(property0.Value.GetString());
+                            portalUri = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("managementApiUrl"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                managementApiUrl = null;
+                                managementApiUri = null;
                                 continue;
                             }
-                            managementApiUrl = new Uri(property0.Value.GetString());
+                            managementApiUri = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("scmUrl"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                scmUrl = null;
+                                scmUri = null;
                                 continue;
                             }
-                            scmUrl = new Uri(property0.Value.GetString());
+                            scmUri = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("developerPortalUrl"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                developerPortalUrl = null;
+                                developerPortalUri = null;
                                 continue;
                             }
-                            developerPortalUrl = new Uri(property0.Value.GetString());
+                            developerPortalUri = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("hostnameConfigurations"))
@@ -587,7 +587,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new ApiManagementServicePatch(id, name, type, systemData.Value, sku.Value, identity, Optional.ToNullable(etag), Optional.ToList(zones), notificationSenderEmail.Value, provisioningState.Value, targetProvisioningState.Value, Optional.ToNullable(createdAtUtc), gatewayUrl.Value, gatewayRegionalUrl.Value, portalUrl.Value, managementApiUrl.Value, scmUrl.Value, developerPortalUrl.Value, Optional.ToList(hostnameConfigurations), Optional.ToList(publicIPAddresses), Optional.ToList(privateIPAddresses), publicIPAddressId.Value, Optional.ToNullable(publicNetworkAccess), virtualNetworkConfiguration.Value, Optional.ToList(additionalLocations), Optional.ToDictionary(customProperties), Optional.ToList(certificates), Optional.ToNullable(enableClientCertificate), Optional.ToNullable(disableGateway), Optional.ToNullable(virtualNetworkType), apiVersionConstraint.Value, Optional.ToNullable(restore), Optional.ToList(privateEndpointConnections), Optional.ToNullable(platformVersion), publisherEmail.Value, publisherName.Value, Optional.ToDictionary(tags));
+            return new ApiManagementServicePatch(id, name, type, systemData.Value, sku.Value, identity, Optional.ToNullable(etag), Optional.ToList(zones), notificationSenderEmail.Value, provisioningState.Value, targetProvisioningState.Value, Optional.ToNullable(createdAtUtc), gatewayUri.Value, gatewayRegionalUri.Value, portalUri.Value, managementApiUri.Value, scmUri.Value, developerPortalUri.Value, Optional.ToList(hostnameConfigurations), Optional.ToList(publicIPAddresses), Optional.ToList(privateIPAddresses), publicIPAddressId.Value, Optional.ToNullable(publicNetworkAccess), virtualNetworkConfiguration.Value, Optional.ToList(additionalLocations), Optional.ToDictionary(customProperties), Optional.ToList(certificates), Optional.ToNullable(enableClientCertificate), Optional.ToNullable(disableGateway), Optional.ToNullable(virtualNetworkType), apiVersionConstraint.Value, Optional.ToNullable(restore), Optional.ToList(privateEndpointConnections), Optional.ToNullable(platformVersion), publisherEmail.Value, publisherName.Value, Optional.ToDictionary(tags));
         }
     }
 }

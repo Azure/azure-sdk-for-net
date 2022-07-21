@@ -22,15 +22,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Identity Provider Type identifier. </summary>
         public IdentityProviderType? ProviderType { get; set; }
         /// <summary> The TenantId to use instead of Common when logging into Active Directory. </summary>
-        public string SigninTenant { get; set; }
+        public string SignInTenant { get; set; }
         /// <summary> List of Allowed Tenants when configuring Azure Active Directory login. </summary>
         public IList<string> AllowedTenants { get; }
         /// <summary> OpenID Connect discovery endpoint hostname for AAD or AAD B2C. </summary>
         public string Authority { get; set; }
         /// <summary> Signup Policy Name. Only applies to AAD B2C Identity Provider. </summary>
-        public string SignupPolicyName { get; set; }
+        public string SignUpPolicyName { get; set; }
         /// <summary> Signin Policy Name. Only applies to AAD B2C Identity Provider. </summary>
-        public string SigninPolicyName { get; set; }
+        public string SignInPolicyName { get; set; }
         /// <summary> Profile Editing Policy Name. Only applies to AAD B2C Identity Provider. </summary>
         public string ProfileEditingPolicyName { get; set; }
         /// <summary> Password Reset Policy Name. Only applies to AAD B2C Identity Provider. </summary>

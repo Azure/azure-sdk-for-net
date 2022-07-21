@@ -87,11 +87,11 @@ namespace Azure.ResourceManager.ApiManagement
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of IssueCommentContractResources in the ApiIssue. </summary>
-        /// <returns> An object representing collection of IssueCommentContractResources and their operations over a IssueCommentContractResource. </returns>
-        public virtual IssueCommentContractCollection GetIssueCommentContracts()
+        /// <summary> Gets a collection of ApiIssueCommentResources in the ApiIssue. </summary>
+        /// <returns> An object representing collection of ApiIssueCommentResources and their operations over a ApiIssueCommentResource. </returns>
+        public virtual ApiIssueCommentCollection GetApiIssueComments()
         {
-            return GetCachedClient(Client => new IssueCommentContractCollection(Client, Id));
+            return GetCachedClient(Client => new ApiIssueCommentCollection(Client, Id));
         }
 
         /// <summary>
@@ -104,9 +104,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentException"> <paramref name="commentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="commentId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<IssueCommentContractResource>> GetIssueCommentContractAsync(string commentId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiIssueCommentResource>> GetApiIssueCommentAsync(string commentId, CancellationToken cancellationToken = default)
         {
-            return await GetIssueCommentContracts().GetAsync(commentId, cancellationToken).ConfigureAwait(false);
+            return await GetApiIssueComments().GetAsync(commentId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -119,31 +119,16 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentException"> <paramref name="commentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="commentId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<IssueCommentContractResource> GetIssueCommentContract(string commentId, CancellationToken cancellationToken = default)
+        public virtual Response<ApiIssueCommentResource> GetApiIssueComment(string commentId, CancellationToken cancellationToken = default)
         {
-            return GetIssueCommentContracts().Get(commentId, cancellationToken);
+            return GetApiIssueComments().Get(commentId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of IssueAttachmentContractResources in the ApiIssue. </summary>
-        /// <returns> An object representing collection of IssueAttachmentContractResources and their operations over a IssueAttachmentContractResource. </returns>
-        public virtual IssueAttachmentContractCollection GetIssueAttachmentContracts()
+        /// <summary> Gets a collection of ApiIssueAttachmentResources in the ApiIssue. </summary>
+        /// <returns> An object representing collection of ApiIssueAttachmentResources and their operations over a ApiIssueAttachmentResource. </returns>
+        public virtual ApiIssueAttachmentCollection GetApiIssueAttachments()
         {
-            return GetCachedClient(Client => new IssueAttachmentContractCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Gets the details of the issue Attachment for an API specified by its identifier.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/issues/{issueId}/attachments/{attachmentId}
-        /// Operation Id: ApiIssueAttachment_Get
-        /// </summary>
-        /// <param name="attachmentId"> Attachment identifier within an Issue. Must be unique in the current Issue. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="attachmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="attachmentId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<IssueAttachmentContractResource>> GetIssueAttachmentContractAsync(string attachmentId, CancellationToken cancellationToken = default)
-        {
-            return await GetIssueAttachmentContracts().GetAsync(attachmentId, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(Client => new ApiIssueAttachmentCollection(Client, Id));
         }
 
         /// <summary>
@@ -156,9 +141,24 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentException"> <paramref name="attachmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="attachmentId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<IssueAttachmentContractResource> GetIssueAttachmentContract(string attachmentId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiIssueAttachmentResource>> GetApiIssueAttachmentAsync(string attachmentId, CancellationToken cancellationToken = default)
         {
-            return GetIssueAttachmentContracts().Get(attachmentId, cancellationToken);
+            return await GetApiIssueAttachments().GetAsync(attachmentId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the details of the issue Attachment for an API specified by its identifier.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/issues/{issueId}/attachments/{attachmentId}
+        /// Operation Id: ApiIssueAttachment_Get
+        /// </summary>
+        /// <param name="attachmentId"> Attachment identifier within an Issue. Must be unique in the current Issue. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="attachmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="attachmentId"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ApiIssueAttachmentResource> GetApiIssueAttachment(string attachmentId, CancellationToken cancellationToken = default)
+        {
+            return GetApiIssueAttachments().Get(attachmentId, cancellationToken);
         }
 
         /// <summary>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static GatewayCertificateAuthorityCollection DeserializeGatewayCertificateAuthorityCollection(JsonElement element)
         {
-            Optional<IReadOnlyList<GatewayCertificateAuthorityContractData>> value = default;
+            Optional<IReadOnlyList<ApiManagementGatewayCertificateAuthorityData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<GatewayCertificateAuthorityContractData> array = new List<GatewayCertificateAuthorityContractData>();
+                    List<ApiManagementGatewayCertificateAuthorityData> array = new List<ApiManagementGatewayCertificateAuthorityData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GatewayCertificateAuthorityContractData.DeserializeGatewayCertificateAuthorityContractData(item));
+                        array.Add(ApiManagementGatewayCertificateAuthorityData.DeserializeApiManagementGatewayCertificateAuthorityData(item));
                     }
                     value = array;
                     continue;

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -33,10 +34,10 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("useFromLocation");
                 writer.WriteStringValue(UseFromLocation);
             }
-            if (Optional.IsDefined(ResourceId))
+            if (Optional.IsDefined(ResourceUri))
             {
                 writer.WritePropertyName("resourceId");
-                writer.WriteStringValue(ResourceId);
+                writer.WriteStringValue(ResourceUri.AbsoluteUri);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.ApiManagement
             Optional<string> description = default;
             Optional<string> connectionString = default;
             Optional<string> useFromLocation = default;
-            Optional<string> resourceId = default;
+            Optional<Uri> resourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -105,7 +106,12 @@ namespace Azure.ResourceManager.ApiManagement
                         }
                         if (property0.NameEquals("resourceId"))
                         {
-                            resourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                resourceId = null;
+                                continue;
+                            }
+                            resourceId = new Uri(property0.Value.GetString());
                             continue;
                         }
                     }

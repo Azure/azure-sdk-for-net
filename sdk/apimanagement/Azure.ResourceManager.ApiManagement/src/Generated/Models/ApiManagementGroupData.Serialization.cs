@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(TypePropertiesType))
+            if (Optional.IsDefined(GroupType))
             {
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(TypePropertiesType.Value.ToSerialString());
+                writer.WriteStringValue(GroupType.Value.ToSerialString());
             }
             if (Optional.IsDefined(ExternalId))
             {

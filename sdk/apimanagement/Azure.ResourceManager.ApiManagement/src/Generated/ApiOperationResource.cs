@@ -87,11 +87,11 @@ namespace Azure.ResourceManager.ApiManagement
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of ServiceApiOperationPolicyResources in the ApiOperation. </summary>
-        /// <returns> An object representing collection of ServiceApiOperationPolicyResources and their operations over a ServiceApiOperationPolicyResource. </returns>
-        public virtual ServiceApiOperationPolicyCollection GetServiceApiOperationPolicies()
+        /// <summary> Gets a collection of ApiOperationPolicyResources in the ApiOperation. </summary>
+        /// <returns> An object representing collection of ApiOperationPolicyResources and their operations over a ApiOperationPolicyResource. </returns>
+        public virtual ApiOperationPolicyCollection GetApiOperationPolicies()
         {
-            return GetCachedClient(Client => new ServiceApiOperationPolicyCollection(Client, Id));
+            return GetCachedClient(Client => new ApiOperationPolicyCollection(Client, Id));
         }
 
         /// <summary>
@@ -103,9 +103,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="format"> Policy Export Format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ServiceApiOperationPolicyResource>> GetServiceApiOperationPolicyAsync(PolicyIdName policyId, PolicyExportFormat? format = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiOperationPolicyResource>> GetApiOperationPolicyAsync(PolicyIdName policyId, PolicyExportFormat? format = null, CancellationToken cancellationToken = default)
         {
-            return await GetServiceApiOperationPolicies().GetAsync(policyId, format, cancellationToken).ConfigureAwait(false);
+            return await GetApiOperationPolicies().GetAsync(policyId, format, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -117,16 +117,16 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="format"> Policy Export Format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<ServiceApiOperationPolicyResource> GetServiceApiOperationPolicy(PolicyIdName policyId, PolicyExportFormat? format = null, CancellationToken cancellationToken = default)
+        public virtual Response<ApiOperationPolicyResource> GetApiOperationPolicy(PolicyIdName policyId, PolicyExportFormat? format = null, CancellationToken cancellationToken = default)
         {
-            return GetServiceApiOperationPolicies().Get(policyId, format, cancellationToken);
+            return GetApiOperationPolicies().Get(policyId, format, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ServiceApiOperationTagResources in the ApiOperation. </summary>
-        /// <returns> An object representing collection of ServiceApiOperationTagResources and their operations over a ServiceApiOperationTagResource. </returns>
-        public virtual ServiceApiOperationTagCollection GetServiceApiOperationTags()
+        /// <summary> Gets a collection of ApiOperationTagResources in the ApiOperation. </summary>
+        /// <returns> An object representing collection of ApiOperationTagResources and their operations over a ApiOperationTagResource. </returns>
+        public virtual ApiOperationTagCollection GetApiOperationTags()
         {
-            return GetCachedClient(Client => new ServiceApiOperationTagCollection(Client, Id));
+            return GetCachedClient(Client => new ApiOperationTagCollection(Client, Id));
         }
 
         /// <summary>
@@ -139,9 +139,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentException"> <paramref name="tagId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tagId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ServiceApiOperationTagResource>> GetServiceApiOperationTagAsync(string tagId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiOperationTagResource>> GetApiOperationTagAsync(string tagId, CancellationToken cancellationToken = default)
         {
-            return await GetServiceApiOperationTags().GetAsync(tagId, cancellationToken).ConfigureAwait(false);
+            return await GetApiOperationTags().GetAsync(tagId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -154,9 +154,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentException"> <paramref name="tagId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tagId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ServiceApiOperationTagResource> GetServiceApiOperationTag(string tagId, CancellationToken cancellationToken = default)
+        public virtual Response<ApiOperationTagResource> GetApiOperationTag(string tagId, CancellationToken cancellationToken = default)
         {
-            return GetServiceApiOperationTags().Get(tagId, cancellationToken);
+            return GetApiOperationTags().Get(tagId, cancellationToken);
         }
 
         /// <summary>

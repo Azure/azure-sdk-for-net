@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<IReadOnlyList<IPAddress>> privateIPAddresses = default;
             Optional<string> publicIPAddressId = default;
             Optional<VirtualNetworkConfiguration> virtualNetworkConfiguration = default;
-            Optional<Uri> gatewayRegionalUrl = default;
+            Optional<Uri> gatewayRegionalUri = default;
             Optional<bool> disableGateway = default;
             Optional<PlatformVersion> platformVersion = default;
             foreach (var property in element.EnumerateObject())
@@ -138,10 +138,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        gatewayRegionalUrl = null;
+                        gatewayRegionalUri = null;
                         continue;
                     }
-                    gatewayRegionalUrl = new Uri(property.Value.GetString());
+                    gatewayRegionalUri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("disableGateway"))
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new AdditionalLocation(location, sku, Optional.ToList(zones), Optional.ToList(publicIPAddresses), Optional.ToList(privateIPAddresses), publicIPAddressId.Value, virtualNetworkConfiguration.Value, gatewayRegionalUrl.Value, Optional.ToNullable(disableGateway), Optional.ToNullable(platformVersion));
+            return new AdditionalLocation(location, sku, Optional.ToList(zones), Optional.ToList(publicIPAddresses), Optional.ToList(privateIPAddresses), publicIPAddressId.Value, virtualNetworkConfiguration.Value, gatewayRegionalUri.Value, Optional.ToNullable(disableGateway), Optional.ToNullable(platformVersion));
         }
     }
 }

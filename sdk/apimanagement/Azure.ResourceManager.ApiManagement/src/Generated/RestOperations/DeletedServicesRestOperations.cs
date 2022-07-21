@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DeletedServiceContractData>> GetByNameAsync(string subscriptionId, AzureLocation location, string serviceName, CancellationToken cancellationToken = default)
+        public async Task<Response<ApiManagementDeletedServiceData>> GetByNameAsync(string subscriptionId, AzureLocation location, string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
@@ -142,13 +142,13 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        DeletedServiceContractData value = default;
+                        ApiManagementDeletedServiceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DeletedServiceContractData.DeserializeDeletedServiceContractData(document.RootElement);
+                        value = ApiManagementDeletedServiceData.DeserializeApiManagementDeletedServiceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DeletedServiceContractData)null, message.Response);
+                    return Response.FromValue((ApiManagementDeletedServiceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DeletedServiceContractData> GetByName(string subscriptionId, AzureLocation location, string serviceName, CancellationToken cancellationToken = default)
+        public Response<ApiManagementDeletedServiceData> GetByName(string subscriptionId, AzureLocation location, string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
@@ -172,13 +172,13 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        DeletedServiceContractData value = default;
+                        ApiManagementDeletedServiceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DeletedServiceContractData.DeserializeDeletedServiceContractData(document.RootElement);
+                        value = ApiManagementDeletedServiceData.DeserializeApiManagementDeletedServiceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DeletedServiceContractData)null, message.Response);
+                    return Response.FromValue((ApiManagementDeletedServiceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

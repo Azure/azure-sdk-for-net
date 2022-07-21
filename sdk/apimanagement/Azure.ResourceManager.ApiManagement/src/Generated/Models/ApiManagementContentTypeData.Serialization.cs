@@ -19,15 +19,15 @@ namespace Azure.ResourceManager.ApiManagement
             writer.WriteStartObject();
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(IdPropertiesId))
+            if (Optional.IsDefined(ContentTypeIdentifier))
             {
                 writer.WritePropertyName("id");
-                writer.WriteStringValue(IdPropertiesId);
+                writer.WriteStringValue(ContentTypeIdentifier);
             }
-            if (Optional.IsDefined(NamePropertiesName))
+            if (Optional.IsDefined(ContentTypeName))
             {
                 writer.WritePropertyName("name");
-                writer.WriteStringValue(NamePropertiesName);
+                writer.WriteStringValue(ContentTypeName);
             }
             if (Optional.IsDefined(Description))
             {

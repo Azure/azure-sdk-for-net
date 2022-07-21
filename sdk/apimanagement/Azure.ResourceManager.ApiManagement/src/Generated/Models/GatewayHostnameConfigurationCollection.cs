@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of GatewayHostnameConfigurationCollection. </summary>
         internal GatewayHostnameConfigurationCollection()
         {
-            Value = new ChangeTrackingList<GatewayHostnameConfigurationContractData>();
+            Value = new ChangeTrackingList<ApiManagementGatewayHostnameConfigurationData>();
         }
 
         /// <summary> Initializes a new instance of GatewayHostnameConfigurationCollection. </summary>
         /// <param name="value"> Page values. </param>
         /// <param name="nextLink"> Next page link if any. </param>
-        internal GatewayHostnameConfigurationCollection(IReadOnlyList<GatewayHostnameConfigurationContractData> value, string nextLink)
+        internal GatewayHostnameConfigurationCollection(IReadOnlyList<ApiManagementGatewayHostnameConfigurationData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Page values. </summary>
-        public IReadOnlyList<GatewayHostnameConfigurationContractData> Value { get; }
+        public IReadOnlyList<ApiManagementGatewayHostnameConfigurationData> Value { get; }
         /// <summary> Next page link if any. </summary>
         public string NextLink { get; }
     }

@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ContentItemContractData>> GetAsync(string subscriptionId, string resourceGroupName, string serviceName, string contentTypeId, string contentItemId, CancellationToken cancellationToken = default)
+        public async Task<Response<ApiManagementContentItemData>> GetAsync(string subscriptionId, string resourceGroupName, string serviceName, string contentTypeId, string contentItemId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -265,13 +265,13 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        ContentItemContractData value = default;
+                        ApiManagementContentItemData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ContentItemContractData.DeserializeContentItemContractData(document.RootElement);
+                        value = ApiManagementContentItemData.DeserializeApiManagementContentItemData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ContentItemContractData)null, message.Response);
+                    return Response.FromValue((ApiManagementContentItemData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ContentItemContractData> Get(string subscriptionId, string resourceGroupName, string serviceName, string contentTypeId, string contentItemId, CancellationToken cancellationToken = default)
+        public Response<ApiManagementContentItemData> Get(string subscriptionId, string resourceGroupName, string serviceName, string contentTypeId, string contentItemId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -300,13 +300,13 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        ContentItemContractData value = default;
+                        ApiManagementContentItemData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ContentItemContractData.DeserializeContentItemContractData(document.RootElement);
+                        value = ApiManagementContentItemData.DeserializeApiManagementContentItemData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ContentItemContractData)null, message.Response);
+                    return Response.FromValue((ApiManagementContentItemData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ContentItemContractData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, string contentTypeId, string contentItemId, string ifMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ApiManagementContentItemData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, string contentTypeId, string contentItemId, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -365,9 +365,9 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                 case 201:
                     {
-                        ContentItemContractData value = default;
+                        ApiManagementContentItemData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ContentItemContractData.DeserializeContentItemContractData(document.RootElement);
+                        value = ApiManagementContentItemData.DeserializeApiManagementContentItemData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ContentItemContractData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string serviceName, string contentTypeId, string contentItemId, string ifMatch = null, CancellationToken cancellationToken = default)
+        public Response<ApiManagementContentItemData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string serviceName, string contentTypeId, string contentItemId, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -400,9 +400,9 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                 case 201:
                     {
-                        ContentItemContractData value = default;
+                        ApiManagementContentItemData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ContentItemContractData.DeserializeContentItemContractData(document.RootElement);
+                        value = ApiManagementContentItemData.DeserializeApiManagementContentItemData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -86,11 +86,11 @@ namespace Azure.ResourceManager.ApiManagement
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of ContentItemContractResources in the ApiManagementContentType. </summary>
-        /// <returns> An object representing collection of ContentItemContractResources and their operations over a ContentItemContractResource. </returns>
-        public virtual ContentItemContractCollection GetContentItemContracts()
+        /// <summary> Gets a collection of ApiManagementContentItemResources in the ApiManagementContentType. </summary>
+        /// <returns> An object representing collection of ApiManagementContentItemResources and their operations over a ApiManagementContentItemResource. </returns>
+        public virtual ApiManagementContentItemCollection GetApiManagementContentItems()
         {
-            return GetCachedClient(Client => new ContentItemContractCollection(Client, Id));
+            return GetCachedClient(Client => new ApiManagementContentItemCollection(Client, Id));
         }
 
         /// <summary>
@@ -103,9 +103,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentException"> <paramref name="contentItemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="contentItemId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ContentItemContractResource>> GetContentItemContractAsync(string contentItemId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiManagementContentItemResource>> GetApiManagementContentItemAsync(string contentItemId, CancellationToken cancellationToken = default)
         {
-            return await GetContentItemContracts().GetAsync(contentItemId, cancellationToken).ConfigureAwait(false);
+            return await GetApiManagementContentItems().GetAsync(contentItemId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -118,9 +118,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentException"> <paramref name="contentItemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="contentItemId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ContentItemContractResource> GetContentItemContract(string contentItemId, CancellationToken cancellationToken = default)
+        public virtual Response<ApiManagementContentItemResource> GetApiManagementContentItem(string contentItemId, CancellationToken cancellationToken = default)
         {
-            return GetContentItemContracts().Get(contentItemId, cancellationToken);
+            return GetApiManagementContentItems().Get(contentItemId, cancellationToken);
         }
 
         /// <summary>

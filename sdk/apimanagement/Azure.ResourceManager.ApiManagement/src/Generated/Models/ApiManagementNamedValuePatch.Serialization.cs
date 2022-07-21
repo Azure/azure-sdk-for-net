@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Secret))
+            if (Optional.IsDefined(IsSecret))
             {
                 writer.WritePropertyName("secret");
-                writer.WriteBooleanValue(Secret.Value);
+                writer.WriteBooleanValue(IsSecret.Value);
             }
             if (Optional.IsDefined(DisplayName))
             {

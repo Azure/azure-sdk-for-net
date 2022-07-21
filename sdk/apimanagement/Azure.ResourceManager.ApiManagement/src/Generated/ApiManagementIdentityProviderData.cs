@@ -26,24 +26,24 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="typePropertiesType"> Identity Provider Type identifier. </param>
-        /// <param name="signinTenant"> The TenantId to use instead of Common when logging into Active Directory. </param>
+        /// <param name="identityProviderType"> Identity Provider Type identifier. </param>
+        /// <param name="signInTenant"> The TenantId to use instead of Common when logging into Active Directory. </param>
         /// <param name="allowedTenants"> List of Allowed Tenants when configuring Azure Active Directory login. </param>
         /// <param name="authority"> OpenID Connect discovery endpoint hostname for AAD or AAD B2C. </param>
-        /// <param name="signupPolicyName"> Signup Policy Name. Only applies to AAD B2C Identity Provider. </param>
-        /// <param name="signinPolicyName"> Signin Policy Name. Only applies to AAD B2C Identity Provider. </param>
+        /// <param name="signUpPolicyName"> Signup Policy Name. Only applies to AAD B2C Identity Provider. </param>
+        /// <param name="signInPolicyName"> Signin Policy Name. Only applies to AAD B2C Identity Provider. </param>
         /// <param name="profileEditingPolicyName"> Profile Editing Policy Name. Only applies to AAD B2C Identity Provider. </param>
         /// <param name="passwordResetPolicyName"> Password Reset Policy Name. Only applies to AAD B2C Identity Provider. </param>
         /// <param name="clientId"> Client Id of the Application in the external Identity Provider. It is App ID for Facebook login, Client ID for Google login, App ID for Microsoft. </param>
         /// <param name="clientSecret"> Client secret of the Application in external Identity Provider, used to authenticate login request. For example, it is App Secret for Facebook login, API Key for Google login, Public Key for Microsoft. This property will not be filled on &apos;GET&apos; operations! Use &apos;/listSecrets&apos; POST request to get the value. </param>
-        internal ApiManagementIdentityProviderData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IdentityProviderType? typePropertiesType, string signinTenant, IList<string> allowedTenants, string authority, string signupPolicyName, string signinPolicyName, string profileEditingPolicyName, string passwordResetPolicyName, string clientId, string clientSecret) : base(id, name, resourceType, systemData)
+        internal ApiManagementIdentityProviderData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IdentityProviderType? identityProviderType, string signInTenant, IList<string> allowedTenants, string authority, string signUpPolicyName, string signInPolicyName, string profileEditingPolicyName, string passwordResetPolicyName, string clientId, string clientSecret) : base(id, name, resourceType, systemData)
         {
-            TypePropertiesType = typePropertiesType;
-            SigninTenant = signinTenant;
+            IdentityProviderType = identityProviderType;
+            SignInTenant = signInTenant;
             AllowedTenants = allowedTenants;
             Authority = authority;
-            SignupPolicyName = signupPolicyName;
-            SigninPolicyName = signinPolicyName;
+            SignUpPolicyName = signUpPolicyName;
+            SignInPolicyName = signInPolicyName;
             ProfileEditingPolicyName = profileEditingPolicyName;
             PasswordResetPolicyName = passwordResetPolicyName;
             ClientId = clientId;
@@ -51,17 +51,17 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Identity Provider Type identifier. </summary>
-        public IdentityProviderType? TypePropertiesType { get; set; }
+        public IdentityProviderType? IdentityProviderType { get; set; }
         /// <summary> The TenantId to use instead of Common when logging into Active Directory. </summary>
-        public string SigninTenant { get; set; }
+        public string SignInTenant { get; set; }
         /// <summary> List of Allowed Tenants when configuring Azure Active Directory login. </summary>
         public IList<string> AllowedTenants { get; }
         /// <summary> OpenID Connect discovery endpoint hostname for AAD or AAD B2C. </summary>
         public string Authority { get; set; }
         /// <summary> Signup Policy Name. Only applies to AAD B2C Identity Provider. </summary>
-        public string SignupPolicyName { get; set; }
+        public string SignUpPolicyName { get; set; }
         /// <summary> Signin Policy Name. Only applies to AAD B2C Identity Provider. </summary>
-        public string SigninPolicyName { get; set; }
+        public string SignInPolicyName { get; set; }
         /// <summary> Profile Editing Policy Name. Only applies to AAD B2C Identity Provider. </summary>
         public string ProfileEditingPolicyName { get; set; }
         /// <summary> Password Reset Policy Name. Only applies to AAD B2C Identity Provider. </summary>

@@ -148,12 +148,12 @@ namespace Azure.ResourceManager.ApiManagement
             Optional<string> apiVersionDescription = default;
             Optional<ResourceIdentifier> apiVersionSetId = default;
             Optional<bool> subscriptionRequired = default;
-            Optional<Uri> termsOfServiceUrl = default;
+            Optional<Uri> termsOfServiceUri = default;
             Optional<ApiContactInformation> contact = default;
             Optional<ApiLicenseInformation> license = default;
             Optional<ResourceIdentifier> sourceApiId = default;
             Optional<string> displayName = default;
-            Optional<Uri> serviceUrl = default;
+            Optional<Uri> serviceUri = default;
             Optional<string> path = default;
             Optional<IList<Protocol>> protocols = default;
             Optional<ApiVersionSetContractDetails> apiVersionSet = default;
@@ -292,10 +292,10 @@ namespace Azure.ResourceManager.ApiManagement
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                termsOfServiceUrl = null;
+                                termsOfServiceUri = null;
                                 continue;
                             }
-                            termsOfServiceUrl = new Uri(property0.Value.GetString());
+                            termsOfServiceUri = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("contact"))
@@ -337,10 +337,10 @@ namespace Azure.ResourceManager.ApiManagement
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                serviceUrl = null;
+                                serviceUri = null;
                                 continue;
                             }
-                            serviceUrl = new Uri(property0.Value.GetString());
+                            serviceUri = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("path"))
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.ApiManagement
                     continue;
                 }
             }
-            return new ApiData(id, name, type, systemData.Value, description.Value, authenticationSettings.Value, subscriptionKeyParameterNames.Value, Optional.ToNullable(type0), apiRevision.Value, apiVersion.Value, Optional.ToNullable(isCurrent), Optional.ToNullable(isOnline), apiRevisionDescription.Value, apiVersionDescription.Value, apiVersionSetId.Value, Optional.ToNullable(subscriptionRequired), termsOfServiceUrl.Value, contact.Value, license.Value, sourceApiId.Value, displayName.Value, serviceUrl.Value, path.Value, Optional.ToList(protocols), apiVersionSet.Value);
+            return new ApiData(id, name, type, systemData.Value, description.Value, authenticationSettings.Value, subscriptionKeyParameterNames.Value, Optional.ToNullable(type0), apiRevision.Value, apiVersion.Value, Optional.ToNullable(isCurrent), Optional.ToNullable(isOnline), apiRevisionDescription.Value, apiVersionDescription.Value, apiVersionSetId.Value, Optional.ToNullable(subscriptionRequired), termsOfServiceUri.Value, contact.Value, license.Value, sourceApiId.Value, displayName.Value, serviceUri.Value, path.Value, Optional.ToList(protocols), apiVersionSet.Value);
         }
     }
 }

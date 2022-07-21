@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static PortalSettingsCollection DeserializePortalSettingsCollection(JsonElement element)
         {
-            Optional<IReadOnlyList<PortalSettingsContract>> value = default;
+            Optional<IReadOnlyList<PortalSettingsContractData>> value = default;
             Optional<long> count = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<PortalSettingsContract> array = new List<PortalSettingsContract>();
+                    List<PortalSettingsContractData> array = new List<PortalSettingsContractData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PortalSettingsContract.DeserializePortalSettingsContract(item));
+                        array.Add(PortalSettingsContractData.DeserializePortalSettingsContractData(item));
                     }
                     value = array;
                     continue;

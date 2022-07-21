@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TenantSettingsContractData>> GetAsync(string subscriptionId, string resourceGroupName, string serviceName, SettingsTypeName settingsType, CancellationToken cancellationToken = default)
+        public async Task<Response<ApiManagementTenantSettingsData>> GetAsync(string subscriptionId, string resourceGroupName, string serviceName, SettingsTypeName settingsType, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -164,13 +164,13 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        TenantSettingsContractData value = default;
+                        ApiManagementTenantSettingsData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TenantSettingsContractData.DeserializeTenantSettingsContractData(document.RootElement);
+                        value = ApiManagementTenantSettingsData.DeserializeApiManagementTenantSettingsData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((TenantSettingsContractData)null, message.Response);
+                    return Response.FromValue((ApiManagementTenantSettingsData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TenantSettingsContractData> Get(string subscriptionId, string resourceGroupName, string serviceName, SettingsTypeName settingsType, CancellationToken cancellationToken = default)
+        public Response<ApiManagementTenantSettingsData> Get(string subscriptionId, string resourceGroupName, string serviceName, SettingsTypeName settingsType, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -196,13 +196,13 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        TenantSettingsContractData value = default;
+                        ApiManagementTenantSettingsData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TenantSettingsContractData.DeserializeTenantSettingsContractData(document.RootElement);
+                        value = ApiManagementTenantSettingsData.DeserializeApiManagementTenantSettingsData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((TenantSettingsContractData)null, message.Response);
+                    return Response.FromValue((ApiManagementTenantSettingsData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static DeletedServicesCollection DeserializeDeletedServicesCollection(JsonElement element)
         {
-            Optional<IReadOnlyList<DeletedServiceContractData>> value = default;
+            Optional<IReadOnlyList<ApiManagementDeletedServiceData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DeletedServiceContractData> array = new List<DeletedServiceContractData>();
+                    List<ApiManagementDeletedServiceData> array = new List<ApiManagementDeletedServiceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeletedServiceContractData.DeserializeDeletedServiceContractData(item));
+                        array.Add(ApiManagementDeletedServiceData.DeserializeApiManagementDeletedServiceData(item));
                     }
                     value = array;
                     continue;

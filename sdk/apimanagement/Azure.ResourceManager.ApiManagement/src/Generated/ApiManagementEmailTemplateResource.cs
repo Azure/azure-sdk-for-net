@@ -201,19 +201,19 @@ namespace Azure.ResourceManager.ApiManagement
         /// Operation Id: EmailTemplate_Update
         /// </summary>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
-        /// <param name="emailTemplateUpdateParameters"> Update parameters. </param>
+        /// <param name="content"> Update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> or <paramref name="emailTemplateUpdateParameters"/> is null. </exception>
-        public virtual async Task<Response<ApiManagementEmailTemplateResource>> UpdateAsync(string ifMatch, EmailTemplateUpdateParameters emailTemplateUpdateParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> or <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<ApiManagementEmailTemplateResource>> UpdateAsync(string ifMatch, ApiManagementEmailTemplateCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(ifMatch, nameof(ifMatch));
-            Argument.AssertNotNull(emailTemplateUpdateParameters, nameof(emailTemplateUpdateParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _apiManagementEmailTemplateEmailTemplateClientDiagnostics.CreateScope("ApiManagementEmailTemplateResource.Update");
             scope.Start();
             try
             {
-                var response = await _apiManagementEmailTemplateEmailTemplateRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, emailTemplateUpdateParameters, cancellationToken).ConfigureAwait(false);
+                var response = await _apiManagementEmailTemplateEmailTemplateRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, content, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ApiManagementEmailTemplateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -229,19 +229,19 @@ namespace Azure.ResourceManager.ApiManagement
         /// Operation Id: EmailTemplate_Update
         /// </summary>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
-        /// <param name="emailTemplateUpdateParameters"> Update parameters. </param>
+        /// <param name="content"> Update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> or <paramref name="emailTemplateUpdateParameters"/> is null. </exception>
-        public virtual Response<ApiManagementEmailTemplateResource> Update(string ifMatch, EmailTemplateUpdateParameters emailTemplateUpdateParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> or <paramref name="content"/> is null. </exception>
+        public virtual Response<ApiManagementEmailTemplateResource> Update(string ifMatch, ApiManagementEmailTemplateCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(ifMatch, nameof(ifMatch));
-            Argument.AssertNotNull(emailTemplateUpdateParameters, nameof(emailTemplateUpdateParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _apiManagementEmailTemplateEmailTemplateClientDiagnostics.CreateScope("ApiManagementEmailTemplateResource.Update");
             scope.Start();
             try
             {
-                var response = _apiManagementEmailTemplateEmailTemplateRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, emailTemplateUpdateParameters, cancellationToken);
+                var response = _apiManagementEmailTemplateEmailTemplateRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, content, cancellationToken);
                 return Response.FromValue(new ApiManagementEmailTemplateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.ApiManagement
             );
         }
 
-        /// <summary> Gets a collection of DeletedServiceContractResources in the SubscriptionResource. </summary>
+        /// <summary> Gets a collection of ApiManagementDeletedServiceResources in the SubscriptionResource. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of DeletedServiceContractResources and their operations over a DeletedServiceContractResource. </returns>
-        public static DeletedServiceContractCollection GetDeletedServiceContracts(this SubscriptionResource subscriptionResource)
+        /// <returns> An object representing collection of ApiManagementDeletedServiceResources and their operations over a ApiManagementDeletedServiceResource. </returns>
+        public static ApiManagementDeletedServiceCollection GetApiManagementDeletedServices(this SubscriptionResource subscriptionResource)
         {
-            return GetExtensionClient(subscriptionResource).GetDeletedServiceContracts();
+            return GetExtensionClient(subscriptionResource).GetApiManagementDeletedServices();
         }
 
         /// <summary>
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<DeletedServiceContractResource>> GetDeletedServiceContractAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string serviceName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ApiManagementDeletedServiceResource>> GetApiManagementDeletedServiceAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string serviceName, CancellationToken cancellationToken = default)
         {
-            return await subscriptionResource.GetDeletedServiceContracts().GetAsync(location, serviceName, cancellationToken).ConfigureAwait(false);
+            return await subscriptionResource.GetApiManagementDeletedServices().GetAsync(location, serviceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -65,9 +65,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<DeletedServiceContractResource> GetDeletedServiceContract(this SubscriptionResource subscriptionResource, AzureLocation location, string serviceName, CancellationToken cancellationToken = default)
+        public static Response<ApiManagementDeletedServiceResource> GetApiManagementDeletedService(this SubscriptionResource subscriptionResource, AzureLocation location, string serviceName, CancellationToken cancellationToken = default)
         {
-            return subscriptionResource.GetDeletedServiceContracts().Get(location, serviceName, cancellationToken);
+            return subscriptionResource.GetApiManagementDeletedServices().Get(location, serviceName, cancellationToken);
         }
 
         /// <summary>
@@ -77,10 +77,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DeletedServiceContractResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DeletedServiceContractResource> GetDeletedServiceContractsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ApiManagementDeletedServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ApiManagementDeletedServiceResource> GetApiManagementDeletedServicesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetDeletedServiceContractsAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetApiManagementDeletedServicesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DeletedServiceContractResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DeletedServiceContractResource> GetDeletedServiceContracts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ApiManagementDeletedServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ApiManagementDeletedServiceResource> GetApiManagementDeletedServices(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetDeletedServiceContracts(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetApiManagementDeletedServices(cancellationToken);
         }
 
         /// <summary>
@@ -131,11 +131,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="content"> Parameters supplied to the CheckNameAvailability operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<Response<ApiManagementServiceNameAvailabilityResult>> CheckNameAvailabilityApiManagementServiceAsync(this SubscriptionResource subscriptionResource, ApiManagementServiceCheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<ApiManagementServiceNameAvailabilityResult>> CheckApiManagementServiceNameAvailabilityAsync(this SubscriptionResource subscriptionResource, ApiManagementServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(subscriptionResource).CheckNameAvailabilityApiManagementServiceAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).CheckApiManagementServiceNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -147,11 +147,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="content"> Parameters supplied to the CheckNameAvailability operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static Response<ApiManagementServiceNameAvailabilityResult> CheckNameAvailabilityApiManagementService(this SubscriptionResource subscriptionResource, ApiManagementServiceCheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static Response<ApiManagementServiceNameAvailabilityResult> CheckApiManagementServiceNameAvailability(this SubscriptionResource subscriptionResource, ApiManagementServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(subscriptionResource).CheckNameAvailabilityApiManagementService(content, cancellationToken);
+            return GetExtensionClient(subscriptionResource).CheckApiManagementServiceNameAvailability(content, cancellationToken);
         }
 
         /// <summary>
@@ -161,9 +161,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response<ApiManagementServiceGetDomainOwnershipIdentifierResult>> GetDomainOwnershipIdentifierApiManagementServiceAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static async Task<Response<ApiManagementServiceGetDomainOwnershipIdentifierResult>> GetApiManagementServiceDomainOwnershipIdentifierAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return await GetExtensionClient(subscriptionResource).GetDomainOwnershipIdentifierApiManagementServiceAsync(cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).GetApiManagementServiceDomainOwnershipIdentifierAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -173,9 +173,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response<ApiManagementServiceGetDomainOwnershipIdentifierResult> GetDomainOwnershipIdentifierApiManagementService(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Response<ApiManagementServiceGetDomainOwnershipIdentifierResult> GetApiManagementServiceDomainOwnershipIdentifier(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetDomainOwnershipIdentifierApiManagementService(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetApiManagementServiceDomainOwnershipIdentifier(cancellationToken);
         }
 
         /// <summary>
@@ -310,20 +310,20 @@ namespace Azure.ResourceManager.ApiManagement
         }
         #endregion
 
-        #region ServiceApiOperationPolicyResource
+        #region ApiOperationPolicyResource
         /// <summary>
-        /// Gets an object representing a <see cref="ServiceApiOperationPolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServiceApiOperationPolicyResource.CreateResourceIdentifier" /> to create a <see cref="ServiceApiOperationPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiOperationPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiOperationPolicyResource.CreateResourceIdentifier" /> to create an <see cref="ApiOperationPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServiceApiOperationPolicyResource" /> object. </returns>
-        public static ServiceApiOperationPolicyResource GetServiceApiOperationPolicyResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ApiOperationPolicyResource" /> object. </returns>
+        public static ApiOperationPolicyResource GetApiOperationPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServiceApiOperationPolicyResource.ValidateResourceId(id);
-                return new ServiceApiOperationPolicyResource(client, id);
+                ApiOperationPolicyResource.ValidateResourceId(id);
+                return new ApiOperationPolicyResource(client, id);
             }
             );
         }
@@ -348,58 +348,58 @@ namespace Azure.ResourceManager.ApiManagement
         }
         #endregion
 
-        #region ServicePolicyResource
+        #region ApiManagementPolicyResource
         /// <summary>
-        /// Gets an object representing a <see cref="ServicePolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServicePolicyResource.CreateResourceIdentifier" /> to create a <see cref="ServicePolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiManagementPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiManagementPolicyResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServicePolicyResource" /> object. </returns>
-        public static ServicePolicyResource GetServicePolicyResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ApiManagementPolicyResource" /> object. </returns>
+        public static ApiManagementPolicyResource GetApiManagementPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServicePolicyResource.ValidateResourceId(id);
-                return new ServicePolicyResource(client, id);
+                ApiManagementPolicyResource.ValidateResourceId(id);
+                return new ApiManagementPolicyResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServiceProductPolicyResource
+        #region ApiManagementProductPolicyResource
         /// <summary>
-        /// Gets an object representing a <see cref="ServiceProductPolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServiceProductPolicyResource.CreateResourceIdentifier" /> to create a <see cref="ServiceProductPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiManagementProductPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiManagementProductPolicyResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementProductPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServiceProductPolicyResource" /> object. </returns>
-        public static ServiceProductPolicyResource GetServiceProductPolicyResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ApiManagementProductPolicyResource" /> object. </returns>
+        public static ApiManagementProductPolicyResource GetApiManagementProductPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServiceProductPolicyResource.ValidateResourceId(id);
-                return new ServiceProductPolicyResource(client, id);
+                ApiManagementProductPolicyResource.ValidateResourceId(id);
+                return new ApiManagementProductPolicyResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServiceApiOperationTagResource
+        #region ApiOperationTagResource
         /// <summary>
-        /// Gets an object representing a <see cref="ServiceApiOperationTagResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServiceApiOperationTagResource.CreateResourceIdentifier" /> to create a <see cref="ServiceApiOperationTagResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiOperationTagResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiOperationTagResource.CreateResourceIdentifier" /> to create an <see cref="ApiOperationTagResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServiceApiOperationTagResource" /> object. </returns>
-        public static ServiceApiOperationTagResource GetServiceApiOperationTagResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ApiOperationTagResource" /> object. </returns>
+        public static ApiOperationTagResource GetApiOperationTagResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServiceApiOperationTagResource.ValidateResourceId(id);
-                return new ServiceApiOperationTagResource(client, id);
+                ApiOperationTagResource.ValidateResourceId(id);
+                return new ApiOperationTagResource(client, id);
             }
             );
         }
@@ -424,39 +424,39 @@ namespace Azure.ResourceManager.ApiManagement
         }
         #endregion
 
-        #region ServiceProductTagResource
+        #region ApiManagementProductTagResource
         /// <summary>
-        /// Gets an object representing a <see cref="ServiceProductTagResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServiceProductTagResource.CreateResourceIdentifier" /> to create a <see cref="ServiceProductTagResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiManagementProductTagResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiManagementProductTagResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementProductTagResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServiceProductTagResource" /> object. </returns>
-        public static ServiceProductTagResource GetServiceProductTagResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ApiManagementProductTagResource" /> object. </returns>
+        public static ApiManagementProductTagResource GetApiManagementProductTagResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServiceProductTagResource.ValidateResourceId(id);
-                return new ServiceProductTagResource(client, id);
+                ApiManagementProductTagResource.ValidateResourceId(id);
+                return new ApiManagementProductTagResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServiceTagResource
+        #region ApiManagementTagResource
         /// <summary>
-        /// Gets an object representing a <see cref="ServiceTagResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServiceTagResource.CreateResourceIdentifier" /> to create a <see cref="ServiceTagResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiManagementTagResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiManagementTagResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementTagResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServiceTagResource" /> object. </returns>
-        public static ServiceTagResource GetServiceTagResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ApiManagementTagResource" /> object. </returns>
+        public static ApiManagementTagResource GetApiManagementTagResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServiceTagResource.ValidateResourceId(id);
-                return new ServiceTagResource(client, id);
+                ApiManagementTagResource.ValidateResourceId(id);
+                return new ApiManagementTagResource(client, id);
             }
             );
         }
@@ -500,20 +500,20 @@ namespace Azure.ResourceManager.ApiManagement
         }
         #endregion
 
-        #region ServiceDiagnosticResource
+        #region ApiManagementDiagnosticResource
         /// <summary>
-        /// Gets an object representing a <see cref="ServiceDiagnosticResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServiceDiagnosticResource.CreateResourceIdentifier" /> to create a <see cref="ServiceDiagnosticResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiManagementDiagnosticResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiManagementDiagnosticResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementDiagnosticResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServiceDiagnosticResource" /> object. </returns>
-        public static ServiceDiagnosticResource GetServiceDiagnosticResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ApiManagementDiagnosticResource" /> object. </returns>
+        public static ApiManagementDiagnosticResource GetApiManagementDiagnosticResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServiceDiagnosticResource.ValidateResourceId(id);
-                return new ServiceDiagnosticResource(client, id);
+                ApiManagementDiagnosticResource.ValidateResourceId(id);
+                return new ApiManagementDiagnosticResource(client, id);
             }
             );
         }
@@ -538,58 +538,58 @@ namespace Azure.ResourceManager.ApiManagement
         }
         #endregion
 
-        #region ServiceIssueResource
+        #region ApiManagementIssueResource
         /// <summary>
-        /// Gets an object representing a <see cref="ServiceIssueResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServiceIssueResource.CreateResourceIdentifier" /> to create a <see cref="ServiceIssueResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiManagementIssueResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiManagementIssueResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementIssueResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServiceIssueResource" /> object. </returns>
-        public static ServiceIssueResource GetServiceIssueResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ApiManagementIssueResource" /> object. </returns>
+        public static ApiManagementIssueResource GetApiManagementIssueResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServiceIssueResource.ValidateResourceId(id);
-                return new ServiceIssueResource(client, id);
+                ApiManagementIssueResource.ValidateResourceId(id);
+                return new ApiManagementIssueResource(client, id);
             }
             );
         }
         #endregion
 
-        #region IssueCommentContractResource
+        #region ApiIssueCommentResource
         /// <summary>
-        /// Gets an object representing an <see cref="IssueCommentContractResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="IssueCommentContractResource.CreateResourceIdentifier" /> to create an <see cref="IssueCommentContractResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiIssueCommentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiIssueCommentResource.CreateResourceIdentifier" /> to create an <see cref="ApiIssueCommentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IssueCommentContractResource" /> object. </returns>
-        public static IssueCommentContractResource GetIssueCommentContractResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ApiIssueCommentResource" /> object. </returns>
+        public static ApiIssueCommentResource GetApiIssueCommentResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                IssueCommentContractResource.ValidateResourceId(id);
-                return new IssueCommentContractResource(client, id);
+                ApiIssueCommentResource.ValidateResourceId(id);
+                return new ApiIssueCommentResource(client, id);
             }
             );
         }
         #endregion
 
-        #region IssueAttachmentContractResource
+        #region ApiIssueAttachmentResource
         /// <summary>
-        /// Gets an object representing an <see cref="IssueAttachmentContractResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="IssueAttachmentContractResource.CreateResourceIdentifier" /> to create an <see cref="IssueAttachmentContractResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiIssueAttachmentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiIssueAttachmentResource.CreateResourceIdentifier" /> to create an <see cref="ApiIssueAttachmentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IssueAttachmentContractResource" /> object. </returns>
-        public static IssueAttachmentContractResource GetIssueAttachmentContractResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ApiIssueAttachmentResource" /> object. </returns>
+        public static ApiIssueAttachmentResource GetApiIssueAttachmentResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                IssueAttachmentContractResource.ValidateResourceId(id);
-                return new IssueAttachmentContractResource(client, id);
+                ApiIssueAttachmentResource.ValidateResourceId(id);
+                return new ApiIssueAttachmentResource(client, id);
             }
             );
         }
@@ -728,39 +728,39 @@ namespace Azure.ResourceManager.ApiManagement
         }
         #endregion
 
-        #region ContentItemContractResource
+        #region ApiManagementContentItemResource
         /// <summary>
-        /// Gets an object representing a <see cref="ContentItemContractResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContentItemContractResource.CreateResourceIdentifier" /> to create a <see cref="ContentItemContractResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiManagementContentItemResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiManagementContentItemResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementContentItemResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContentItemContractResource" /> object. </returns>
-        public static ContentItemContractResource GetContentItemContractResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ApiManagementContentItemResource" /> object. </returns>
+        public static ApiManagementContentItemResource GetApiManagementContentItemResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ContentItemContractResource.ValidateResourceId(id);
-                return new ContentItemContractResource(client, id);
+                ApiManagementContentItemResource.ValidateResourceId(id);
+                return new ApiManagementContentItemResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DeletedServiceContractResource
+        #region ApiManagementDeletedServiceResource
         /// <summary>
-        /// Gets an object representing a <see cref="DeletedServiceContractResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DeletedServiceContractResource.CreateResourceIdentifier" /> to create a <see cref="DeletedServiceContractResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiManagementDeletedServiceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiManagementDeletedServiceResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementDeletedServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DeletedServiceContractResource" /> object. </returns>
-        public static DeletedServiceContractResource GetDeletedServiceContractResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ApiManagementDeletedServiceResource" /> object. </returns>
+        public static ApiManagementDeletedServiceResource GetApiManagementDeletedServiceResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DeletedServiceContractResource.ValidateResourceId(id);
-                return new DeletedServiceContractResource(client, id);
+                ApiManagementDeletedServiceResource.ValidateResourceId(id);
+                return new ApiManagementDeletedServiceResource(client, id);
             }
             );
         }
@@ -823,39 +823,39 @@ namespace Azure.ResourceManager.ApiManagement
         }
         #endregion
 
-        #region GatewayHostnameConfigurationContractResource
+        #region ApiManagementGatewayHostnameConfigurationResource
         /// <summary>
-        /// Gets an object representing a <see cref="GatewayHostnameConfigurationContractResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="GatewayHostnameConfigurationContractResource.CreateResourceIdentifier" /> to create a <see cref="GatewayHostnameConfigurationContractResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiManagementGatewayHostnameConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiManagementGatewayHostnameConfigurationResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementGatewayHostnameConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GatewayHostnameConfigurationContractResource" /> object. </returns>
-        public static GatewayHostnameConfigurationContractResource GetGatewayHostnameConfigurationContractResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ApiManagementGatewayHostnameConfigurationResource" /> object. </returns>
+        public static ApiManagementGatewayHostnameConfigurationResource GetApiManagementGatewayHostnameConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                GatewayHostnameConfigurationContractResource.ValidateResourceId(id);
-                return new GatewayHostnameConfigurationContractResource(client, id);
+                ApiManagementGatewayHostnameConfigurationResource.ValidateResourceId(id);
+                return new ApiManagementGatewayHostnameConfigurationResource(client, id);
             }
             );
         }
         #endregion
 
-        #region GatewayCertificateAuthorityContractResource
+        #region ApiManagementGatewayCertificateAuthorityResource
         /// <summary>
-        /// Gets an object representing a <see cref="GatewayCertificateAuthorityContractResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="GatewayCertificateAuthorityContractResource.CreateResourceIdentifier" /> to create a <see cref="GatewayCertificateAuthorityContractResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiManagementGatewayCertificateAuthorityResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiManagementGatewayCertificateAuthorityResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementGatewayCertificateAuthorityResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GatewayCertificateAuthorityContractResource" /> object. </returns>
-        public static GatewayCertificateAuthorityContractResource GetGatewayCertificateAuthorityContractResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ApiManagementGatewayCertificateAuthorityResource" /> object. </returns>
+        public static ApiManagementGatewayCertificateAuthorityResource GetApiManagementGatewayCertificateAuthorityResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                GatewayCertificateAuthorityContractResource.ValidateResourceId(id);
-                return new GatewayCertificateAuthorityContractResource(client, id);
+                ApiManagementGatewayCertificateAuthorityResource.ValidateResourceId(id);
+                return new ApiManagementGatewayCertificateAuthorityResource(client, id);
             }
             );
         }
@@ -975,58 +975,58 @@ namespace Azure.ResourceManager.ApiManagement
         }
         #endregion
 
-        #region PortalRevisionContractResource
+        #region ApiManagementPortalRevisionResource
         /// <summary>
-        /// Gets an object representing a <see cref="PortalRevisionContractResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PortalRevisionContractResource.CreateResourceIdentifier" /> to create a <see cref="PortalRevisionContractResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiManagementPortalRevisionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiManagementPortalRevisionResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementPortalRevisionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PortalRevisionContractResource" /> object. </returns>
-        public static PortalRevisionContractResource GetPortalRevisionContractResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ApiManagementPortalRevisionResource" /> object. </returns>
+        public static ApiManagementPortalRevisionResource GetApiManagementPortalRevisionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                PortalRevisionContractResource.ValidateResourceId(id);
-                return new PortalRevisionContractResource(client, id);
+                ApiManagementPortalRevisionResource.ValidateResourceId(id);
+                return new ApiManagementPortalRevisionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region PortalSigninSettingsResource
+        #region ApiManagementPortalSignInSettingsResource
         /// <summary>
-        /// Gets an object representing a <see cref="PortalSigninSettingsResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PortalSigninSettingsResource.CreateResourceIdentifier" /> to create a <see cref="PortalSigninSettingsResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiManagementPortalSignInSettingsResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiManagementPortalSignInSettingsResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementPortalSignInSettingsResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PortalSigninSettingsResource" /> object. </returns>
-        public static PortalSigninSettingsResource GetPortalSigninSettingsResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ApiManagementPortalSignInSettingsResource" /> object. </returns>
+        public static ApiManagementPortalSignInSettingsResource GetApiManagementPortalSignInSettingsResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                PortalSigninSettingsResource.ValidateResourceId(id);
-                return new PortalSigninSettingsResource(client, id);
+                ApiManagementPortalSignInSettingsResource.ValidateResourceId(id);
+                return new ApiManagementPortalSignInSettingsResource(client, id);
             }
             );
         }
         #endregion
 
-        #region PortalSignupSettingsResource
+        #region ApiManagementPortalSignUpSettingsResource
         /// <summary>
-        /// Gets an object representing a <see cref="PortalSignupSettingsResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PortalSignupSettingsResource.CreateResourceIdentifier" /> to create a <see cref="PortalSignupSettingsResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiManagementPortalSignUpSettingsResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiManagementPortalSignUpSettingsResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementPortalSignUpSettingsResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PortalSignupSettingsResource" /> object. </returns>
-        public static PortalSignupSettingsResource GetPortalSignupSettingsResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ApiManagementPortalSignUpSettingsResource" /> object. </returns>
+        public static ApiManagementPortalSignUpSettingsResource GetApiManagementPortalSignUpSettingsResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                PortalSignupSettingsResource.ValidateResourceId(id);
-                return new PortalSignupSettingsResource(client, id);
+                ApiManagementPortalSignUpSettingsResource.ValidateResourceId(id);
+                return new ApiManagementPortalSignUpSettingsResource(client, id);
             }
             );
         }
@@ -1089,20 +1089,20 @@ namespace Azure.ResourceManager.ApiManagement
         }
         #endregion
 
-        #region ProductContractResource
+        #region ApiManagementProductResource
         /// <summary>
-        /// Gets an object representing a <see cref="ProductContractResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ProductContractResource.CreateResourceIdentifier" /> to create a <see cref="ProductContractResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiManagementProductResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiManagementProductResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementProductResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProductContractResource" /> object. </returns>
-        public static ProductContractResource GetProductContractResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ApiManagementProductResource" /> object. </returns>
+        public static ApiManagementProductResource GetApiManagementProductResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ProductContractResource.ValidateResourceId(id);
-                return new ProductContractResource(client, id);
+                ApiManagementProductResource.ValidateResourceId(id);
+                return new ApiManagementProductResource(client, id);
             }
             );
         }
@@ -1127,96 +1127,96 @@ namespace Azure.ResourceManager.ApiManagement
         }
         #endregion
 
-        #region TenantSettingsContractResource
+        #region ApiManagementTenantSettingsResource
         /// <summary>
-        /// Gets an object representing a <see cref="TenantSettingsContractResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TenantSettingsContractResource.CreateResourceIdentifier" /> to create a <see cref="TenantSettingsContractResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiManagementTenantSettingsResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiManagementTenantSettingsResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementTenantSettingsResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TenantSettingsContractResource" /> object. </returns>
-        public static TenantSettingsContractResource GetTenantSettingsContractResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ApiManagementTenantSettingsResource" /> object. </returns>
+        public static ApiManagementTenantSettingsResource GetApiManagementTenantSettingsResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                TenantSettingsContractResource.ValidateResourceId(id);
-                return new TenantSettingsContractResource(client, id);
+                ApiManagementTenantSettingsResource.ValidateResourceId(id);
+                return new ApiManagementTenantSettingsResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServiceSubscriptionResource
+        #region ApiManagementSubscriptionResource
         /// <summary>
-        /// Gets an object representing a <see cref="ServiceSubscriptionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServiceSubscriptionResource.CreateResourceIdentifier" /> to create a <see cref="ServiceSubscriptionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiManagementSubscriptionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiManagementSubscriptionResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementSubscriptionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServiceSubscriptionResource" /> object. </returns>
-        public static ServiceSubscriptionResource GetServiceSubscriptionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ApiManagementSubscriptionResource" /> object. </returns>
+        public static ApiManagementSubscriptionResource GetApiManagementSubscriptionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServiceSubscriptionResource.ValidateResourceId(id);
-                return new ServiceSubscriptionResource(client, id);
+                ApiManagementSubscriptionResource.ValidateResourceId(id);
+                return new ApiManagementSubscriptionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServiceUserSubscriptionResource
+        #region ApiManagementUserSubscriptionResource
         /// <summary>
-        /// Gets an object representing a <see cref="ServiceUserSubscriptionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServiceUserSubscriptionResource.CreateResourceIdentifier" /> to create a <see cref="ServiceUserSubscriptionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiManagementUserSubscriptionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiManagementUserSubscriptionResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementUserSubscriptionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServiceUserSubscriptionResource" /> object. </returns>
-        public static ServiceUserSubscriptionResource GetServiceUserSubscriptionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ApiManagementUserSubscriptionResource" /> object. </returns>
+        public static ApiManagementUserSubscriptionResource GetApiManagementUserSubscriptionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServiceUserSubscriptionResource.ValidateResourceId(id);
-                return new ServiceUserSubscriptionResource(client, id);
+                ApiManagementUserSubscriptionResource.ValidateResourceId(id);
+                return new ApiManagementUserSubscriptionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region TenantAccessResource
+        #region TenantAccessInfoResource
         /// <summary>
-        /// Gets an object representing a <see cref="TenantAccessResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TenantAccessResource.CreateResourceIdentifier" /> to create a <see cref="TenantAccessResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="TenantAccessInfoResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TenantAccessInfoResource.CreateResourceIdentifier" /> to create a <see cref="TenantAccessInfoResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TenantAccessResource" /> object. </returns>
-        public static TenantAccessResource GetTenantAccessResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="TenantAccessInfoResource" /> object. </returns>
+        public static TenantAccessInfoResource GetTenantAccessInfoResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                TenantAccessResource.ValidateResourceId(id);
-                return new TenantAccessResource(client, id);
+                TenantAccessInfoResource.ValidateResourceId(id);
+                return new TenantAccessInfoResource(client, id);
             }
             );
         }
         #endregion
 
-        #region UserContractResource
+        #region ApiManagementUserResource
         /// <summary>
-        /// Gets an object representing an <see cref="UserContractResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="UserContractResource.CreateResourceIdentifier" /> to create an <see cref="UserContractResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiManagementUserResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiManagementUserResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementUserResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="UserContractResource" /> object. </returns>
-        public static UserContractResource GetUserContractResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ApiManagementUserResource" /> object. </returns>
+        public static ApiManagementUserResource GetApiManagementUserResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                UserContractResource.ValidateResourceId(id);
-                return new UserContractResource(client, id);
+                ApiManagementUserResource.ValidateResourceId(id);
+                return new ApiManagementUserResource(client, id);
             }
             );
         }

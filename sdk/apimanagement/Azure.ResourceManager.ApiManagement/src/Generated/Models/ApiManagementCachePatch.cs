@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Cache update details. </summary>
@@ -22,6 +24,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Location identifier to use cache from (should be either &apos;default&apos; or valid Azure region identifier). </summary>
         public string UseFromLocation { get; set; }
         /// <summary> Original uri of entity in external system cache points to. </summary>
-        public string ResourceId { get; set; }
+        public Uri ResourceUri { get; set; }
     }
 }

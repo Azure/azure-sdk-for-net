@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static ContentItemCollection DeserializeContentItemCollection(JsonElement element)
         {
-            Optional<IReadOnlyList<ContentItemContractData>> value = default;
+            Optional<IReadOnlyList<ApiManagementContentItemData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ContentItemContractData> array = new List<ContentItemContractData>();
+                    List<ApiManagementContentItemData> array = new List<ApiManagementContentItemData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContentItemContractData.DeserializeContentItemContractData(item));
+                        array.Add(ApiManagementContentItemData.DeserializeApiManagementContentItemData(item));
                     }
                     value = array;
                     continue;

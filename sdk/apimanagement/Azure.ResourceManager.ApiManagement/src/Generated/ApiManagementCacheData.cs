@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -26,13 +27,13 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="description"> Cache description. </param>
         /// <param name="connectionString"> Runtime connection string to cache. </param>
         /// <param name="useFromLocation"> Location identifier to use cache from (should be either &apos;default&apos; or valid Azure region identifier). </param>
-        /// <param name="resourceId"> Original uri of entity in external system cache points to. </param>
-        internal ApiManagementCacheData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string connectionString, string useFromLocation, string resourceId) : base(id, name, resourceType, systemData)
+        /// <param name="resourceUri"> Original uri of entity in external system cache points to. </param>
+        internal ApiManagementCacheData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string connectionString, string useFromLocation, Uri resourceUri) : base(id, name, resourceType, systemData)
         {
             Description = description;
             ConnectionString = connectionString;
             UseFromLocation = useFromLocation;
-            ResourceId = resourceId;
+            ResourceUri = resourceUri;
         }
 
         /// <summary> Cache description. </summary>
@@ -42,6 +43,6 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Location identifier to use cache from (should be either &apos;default&apos; or valid Azure region identifier). </summary>
         public string UseFromLocation { get; set; }
         /// <summary> Original uri of entity in external system cache points to. </summary>
-        public string ResourceId { get; set; }
+        public Uri ResourceUri { get; set; }
     }
 }

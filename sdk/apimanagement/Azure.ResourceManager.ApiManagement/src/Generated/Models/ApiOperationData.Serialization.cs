@@ -65,10 +65,10 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("method");
                 writer.WriteStringValue(Method);
             }
-            if (Optional.IsDefined(UrlTemplate))
+            if (Optional.IsDefined(UriTemplate))
             {
                 writer.WritePropertyName("urlTemplate");
-                writer.WriteStringValue(UrlTemplate);
+                writer.WriteStringValue(UriTemplate);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ApiManagement
             Optional<string> policies = default;
             Optional<string> displayName = default;
             Optional<string> method = default;
-            Optional<string> urlTemplate = default;
+            Optional<string> uriTemplate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -186,14 +186,14 @@ namespace Azure.ResourceManager.ApiManagement
                         }
                         if (property0.NameEquals("urlTemplate"))
                         {
-                            urlTemplate = property0.Value.GetString();
+                            uriTemplate = property0.Value.GetString();
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new ApiOperationData(id, name, type, systemData.Value, Optional.ToList(templateParameters), description.Value, request.Value, Optional.ToList(responses), policies.Value, displayName.Value, method.Value, urlTemplate.Value);
+            return new ApiOperationData(id, name, type, systemData.Value, Optional.ToList(templateParameters), description.Value, request.Value, Optional.ToList(responses), policies.Value, displayName.Value, method.Value, uriTemplate.Value);
         }
     }
 }

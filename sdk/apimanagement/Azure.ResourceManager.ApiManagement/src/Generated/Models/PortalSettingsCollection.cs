@@ -16,20 +16,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of PortalSettingsCollection. </summary>
         internal PortalSettingsCollection()
         {
-            Value = new ChangeTrackingList<PortalSettingsContract>();
+            Value = new ChangeTrackingList<PortalSettingsContractData>();
         }
 
         /// <summary> Initializes a new instance of PortalSettingsCollection. </summary>
         /// <param name="value"> Descriptions of APIM policies. </param>
         /// <param name="count"> Total record count number. </param>
-        internal PortalSettingsCollection(IReadOnlyList<PortalSettingsContract> value, long? count)
+        internal PortalSettingsCollection(IReadOnlyList<PortalSettingsContractData> value, long? count)
         {
             Value = value;
             Count = count;
         }
 
         /// <summary> Descriptions of APIM policies. </summary>
-        public IReadOnlyList<PortalSettingsContract> Value { get; }
+        public IReadOnlyList<PortalSettingsContractData> Value { get; }
         /// <summary> Total record count number. </summary>
         public long? Count { get; }
     }

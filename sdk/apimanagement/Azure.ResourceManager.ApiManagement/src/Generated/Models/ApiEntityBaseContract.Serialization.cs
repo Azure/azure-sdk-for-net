@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<string> apiVersionDescription = default;
             Optional<ResourceIdentifier> apiVersionSetId = default;
             Optional<bool> subscriptionRequired = default;
-            Optional<Uri> termsOfServiceUrl = default;
+            Optional<Uri> termsOfServiceUri = default;
             Optional<ApiContactInformation> contact = default;
             Optional<ApiLicenseInformation> license = default;
             foreach (var property in element.EnumerateObject())
@@ -131,10 +131,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        termsOfServiceUrl = null;
+                        termsOfServiceUri = null;
                         continue;
                     }
-                    termsOfServiceUrl = new Uri(property.Value.GetString());
+                    termsOfServiceUri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("contact"))
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new ApiEntityBaseContract(description.Value, authenticationSettings.Value, subscriptionKeyParameterNames.Value, Optional.ToNullable(type), apiRevision.Value, apiVersion.Value, Optional.ToNullable(isCurrent), Optional.ToNullable(isOnline), apiRevisionDescription.Value, apiVersionDescription.Value, apiVersionSetId.Value, Optional.ToNullable(subscriptionRequired), termsOfServiceUrl.Value, contact.Value, license.Value);
+            return new ApiEntityBaseContract(description.Value, authenticationSettings.Value, subscriptionKeyParameterNames.Value, Optional.ToNullable(type), apiRevision.Value, apiVersion.Value, Optional.ToNullable(isCurrent), Optional.ToNullable(isOnline), apiRevisionDescription.Value, apiVersionDescription.Value, apiVersionSetId.Value, Optional.ToNullable(subscriptionRequired), termsOfServiceUri.Value, contact.Value, license.Value);
         }
     }
 }

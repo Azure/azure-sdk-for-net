@@ -260,11 +260,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
-        public virtual async Task<Response<bool>> CheckEntityExistsNotificationRecipientUserAsync(string userId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> CheckNotificationRecipientUserEntityExistsAsync(string userId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
-            using var scope = _notificationRecipientUserClientDiagnostics.CreateScope("ApiManagementNotificationResource.CheckEntityExistsNotificationRecipientUser");
+            using var scope = _notificationRecipientUserClientDiagnostics.CreateScope("ApiManagementNotificationResource.CheckNotificationRecipientUserEntityExists");
             scope.Start();
             try
             {
@@ -287,11 +287,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
-        public virtual Response<bool> CheckEntityExistsNotificationRecipientUser(string userId, CancellationToken cancellationToken = default)
+        public virtual Response<bool> CheckNotificationRecipientUserEntityExists(string userId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
-            using var scope = _notificationRecipientUserClientDiagnostics.CreateScope("ApiManagementNotificationResource.CheckEntityExistsNotificationRecipientUser");
+            using var scope = _notificationRecipientUserClientDiagnostics.CreateScope("ApiManagementNotificationResource.CheckNotificationRecipientUserEntityExists");
             scope.Start();
             try
             {
@@ -476,11 +476,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="email"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="email"/> is null. </exception>
-        public virtual async Task<Response<bool>> CheckEntityExistsNotificationRecipientEmailAsync(string email, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> CheckNotificationRecipientEmailEntityExistsAsync(string email, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(email, nameof(email));
 
-            using var scope = _notificationRecipientEmailClientDiagnostics.CreateScope("ApiManagementNotificationResource.CheckEntityExistsNotificationRecipientEmail");
+            using var scope = _notificationRecipientEmailClientDiagnostics.CreateScope("ApiManagementNotificationResource.CheckNotificationRecipientEmailEntityExists");
             scope.Start();
             try
             {
@@ -503,11 +503,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="email"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="email"/> is null. </exception>
-        public virtual Response<bool> CheckEntityExistsNotificationRecipientEmail(string email, CancellationToken cancellationToken = default)
+        public virtual Response<bool> CheckNotificationRecipientEmailEntityExists(string email, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(email, nameof(email));
 
-            using var scope = _notificationRecipientEmailClientDiagnostics.CreateScope("ApiManagementNotificationResource.CheckEntityExistsNotificationRecipientEmail");
+            using var scope = _notificationRecipientEmailClientDiagnostics.CreateScope("ApiManagementNotificationResource.CheckNotificationRecipientEmailEntityExists");
             scope.Start();
             try
             {

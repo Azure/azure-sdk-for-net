@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ClientAuthenticationMethod))
+            if (Optional.IsCollectionDefined(ClientAuthenticationMethods))
             {
                 writer.WritePropertyName("clientAuthenticationMethod");
                 writer.WriteStartArray();
-                foreach (var item in ClientAuthenticationMethod)
+                foreach (var item in ClientAuthenticationMethods)
                 {
                     writer.WriteStringValue(item.ToString());
                 }

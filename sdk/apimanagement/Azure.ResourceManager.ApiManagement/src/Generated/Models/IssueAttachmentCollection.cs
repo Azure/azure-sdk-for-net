@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of IssueAttachmentCollection. </summary>
         internal IssueAttachmentCollection()
         {
-            Value = new ChangeTrackingList<IssueAttachmentContractData>();
+            Value = new ChangeTrackingList<ApiIssueAttachmentData>();
         }
 
         /// <summary> Initializes a new instance of IssueAttachmentCollection. </summary>
         /// <param name="value"> Issue Attachment values. </param>
         /// <param name="count"> Total record count number across all pages. </param>
         /// <param name="nextLink"> Next page link if any. </param>
-        internal IssueAttachmentCollection(IReadOnlyList<IssueAttachmentContractData> value, long? count, string nextLink)
+        internal IssueAttachmentCollection(IReadOnlyList<ApiIssueAttachmentData> value, long? count, string nextLink)
         {
             Value = value;
             Count = count;
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Issue Attachment values. </summary>
-        public IReadOnlyList<IssueAttachmentContractData> Value { get; }
+        public IReadOnlyList<ApiIssueAttachmentData> Value { get; }
         /// <summary> Total record count number across all pages. </summary>
         public long? Count { get; }
         /// <summary> Next page link if any. </summary>

@@ -35,6 +35,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> A Valid HTTP Operation Method. Typical Http Methods like GET, PUT, POST but not limited by only them. </summary>
         public string Method { get; set; }
         /// <summary> Relative URL template identifying the target resource for this operation. May include parameters. Example: /customers/{cid}/orders/{oid}/?date={date}. </summary>
-        public string UrlTemplate { get; set; }
+        public string UriTemplate { get; set; }
     }
 }

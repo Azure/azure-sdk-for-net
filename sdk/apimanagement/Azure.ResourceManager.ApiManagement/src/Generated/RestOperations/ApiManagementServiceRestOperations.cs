@@ -726,7 +726,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, ApiManagementServiceCheckNameAvailabilityContent content)
+        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, ApiManagementServiceNameAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -753,7 +753,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ApiManagementServiceNameAvailabilityResult>> CheckNameAvailabilityAsync(string subscriptionId, ApiManagementServiceCheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<ApiManagementServiceNameAvailabilityResult>> CheckNameAvailabilityAsync(string subscriptionId, ApiManagementServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
@@ -780,7 +780,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ApiManagementServiceNameAvailabilityResult> CheckNameAvailability(string subscriptionId, ApiManagementServiceCheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public Response<ApiManagementServiceNameAvailabilityResult> CheckNameAvailability(string subscriptionId, ApiManagementServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));

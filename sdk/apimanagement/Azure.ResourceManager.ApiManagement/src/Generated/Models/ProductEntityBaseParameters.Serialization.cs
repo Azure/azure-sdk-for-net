@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<bool> subscriptionRequired = default;
             Optional<bool> approvalRequired = default;
             Optional<int> subscriptionsLimit = default;
-            Optional<ProductState> state = default;
+            Optional<ApiManagementProductState> state = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("description"))
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    state = property.Value.GetString().ToProductState();
+                    state = property.Value.GetString().ToApiManagementProductState();
                     continue;
                 }
             }

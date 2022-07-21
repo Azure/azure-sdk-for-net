@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of PortalRevisionCollection. </summary>
         internal PortalRevisionCollection()
         {
-            Value = new ChangeTrackingList<PortalRevisionContractData>();
+            Value = new ChangeTrackingList<ApiManagementPortalRevisionData>();
         }
 
         /// <summary> Initializes a new instance of PortalRevisionCollection. </summary>
         /// <param name="value"> Collection of portal revisions. </param>
         /// <param name="nextLink"> Next page link, if any. </param>
-        internal PortalRevisionCollection(IReadOnlyList<PortalRevisionContractData> value, string nextLink)
+        internal PortalRevisionCollection(IReadOnlyList<ApiManagementPortalRevisionData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Collection of portal revisions. </summary>
-        public IReadOnlyList<PortalRevisionContractData> Value { get; }
+        public IReadOnlyList<ApiManagementPortalRevisionData> Value { get; }
         /// <summary> Next page link, if any. </summary>
         public string NextLink { get; }
     }

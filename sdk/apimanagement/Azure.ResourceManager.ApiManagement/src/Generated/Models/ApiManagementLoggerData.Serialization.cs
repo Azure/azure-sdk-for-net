@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ApiManagement
             Optional<string> description = default;
             Optional<IDictionary<string, string>> credentials = default;
             Optional<bool> isBuffered = default;
-            Optional<string> resourceId = default;
+            Optional<ResourceIdentifier> resourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -144,7 +144,12 @@ namespace Azure.ResourceManager.ApiManagement
                         }
                         if (property0.NameEquals("resourceId"))
                         {
-                            resourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            resourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                     }

@@ -25,6 +25,17 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/issues/{issueId}: ApiIssue
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/policies/{policyId}: ApiPolicy
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/tags/{tagId}: ApiTag
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/operations/{operationId}/policies/{policyId}: ApiOperationPolicy
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/operations/{operationId}/tags/{tagId}: ApiOperationTag
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/diagnostics/{diagnosticId}: ApiManagementDiagnostic
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/issues/{issueId}: ApiManagementIssue
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/policies/{policyId}: ApiManagementPolicy
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/subscriptions/{sid}: ApiManagementSubscription
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tags/{tagId}: ApiManagementTag
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/users/{userId}: ApiManagementUser
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/products/{productId}/policies/{policyId}: ApiManagementProductPolicy
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/products/{productId}/tags/{tagId}: ApiManagementProductTag
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/users/{userId}/subscriptions/{sid}: ApiManagementUserSubscription
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -57,6 +68,7 @@ rename-rules:
   Ipsec: IPsec|ipsec
   SSO: Sso
   URI: Uri
+  Url: Uri
   Etag: ETag|etag
 
 override-operation-name:
@@ -73,6 +85,14 @@ override-operation-name:
   Region_ListByService: GetRegions
   TenantConfiguration_GetSyncState: GetTenantConfigurationSyncState
   TagResource_ListByService: GetTagResources
+  GatewayApi_GetEntityTag: GetGatewayApiEntityTag
+  GroupUser_CheckEntityExists: CheckGroupUserEntityExists
+  NotificationRecipientEmail_CheckEntityExists: CheckNotificationRecipientEmailEntityExists
+  NotificationRecipientUser_CheckEntityExists: CheckNotificationRecipientUserEntityExists
+  ProductApi_CheckEntityExists: CheckProductApiEntityExists
+  ProductGroup_CheckEntityExists: CheckProductGroupEntityExists
+  ApiManagementService_CheckNameAvailability: CheckApiManagementServiceNameAvailability
+  ApiManagementService_GetDomainOwnershipIdentifier: GetApiManagementServiceDomainOwnershipIdentifier
 
 prepend-rp-prefix:
 - ResourceSkuCapacity
@@ -82,7 +102,7 @@ rename-mapping:
   OpenidConnectProviderContract: ApiManagementOpenIdConnectProvider
   OpenidConnectProviderUpdateContract: OpenIdConnectProviderUpdateContract
   VirtualNetworkConfiguration.vnetid: VnetId
-  AccessInformationContract: TenantAccess
+  AccessInformationContract: TenantAccessInfo
   AccessInformationContract.properties.enabled: IsEnabled
   AccessInformationContract.properties.id: AccessInfoType
   AccessIdName: AccessName
@@ -97,23 +117,65 @@ rename-mapping:
   ApiManagementServiceBackupRestoreParameters: ApiManagementServiceBackupRestoreContent
   OperationResultContract: GitOperationResultContractData
   ConfigurationIdName: ConfigurationName
-  DeployConfigurationParameters: DeployConfigurationContent
+  SaveConfigurationParameter: ConfigurationSaveContent
+  DeployConfigurationParameters: ConfigurationDeployContent
   ApiVersionSetContract: ApiVersionSet
   AuthorizationServerContract:  ApiManagementAuthorizationServer
   BackendContract: ApiManagementBackend
   CacheContract: ApiManagementCache
   CertificateContract: ApiManagementCertificate
+  CertificateContract.properties.expirationDate: ExpiresOn
+  CertificateContract.properties.keyVault: KeyVaultDetails
   ContentTypeContract: ApiManagementContentType
+  ContentTypeContract.properties.id: ContentTypeIdentifier
+  ContentTypeContract.properties.name: ContentTypeName
   EmailTemplateContract: ApiManagementEmailTemplate
   GatewayContract: ApiManagementGateway
   GlobalSchemaContract: ApiManagementGlobalSchema
   GroupContract: ApiManagementGroup
+  GroupContract.properties.type: GroupType
+  GroupContract.properties.builtIn: IsBuiltIn
   IdentityProviderContract: ApiManagementIdentityProvider
+  IdentityProviderContract.properties.type: IdentityProviderType
   LoggerContract: ApiManagementLogger
   NamedValueContract: ApiManagementNamedValue
+  NamedValueContract.properties.keyVault: KeyVaultDetails
   NotificationContract: ApiManagementNotification
   PolicyDescriptionContract: PolicyDescriptionContractData
   PortalDelegationSettings: ApiManagementPortalDelegationSettings
+  PortalDelegationSettings.properties.subscriptions: IsSubscriptions
+  PortalDelegationSettings.properties.userRegistration: IsUserRegistration
+  PortalRevisionContract: ApiManagementPortalRevision
+  PortalSettingsContract: PortalSettingsContractData
+  PortalSigninSettings: ApiManagementPortalSignInSettings
+  PortalSigninSettings.properties.enabled: IsEnabled
+  PortalSignupSettings: ApiManagementPortalSignUpSettings
+  PortalSignupSettings.properties.enabled: IsEnabled
+  ProductContract: ApiManagementProduct
+  TenantSettingsContract: ApiManagementTenantSettings
+  ConnectivityCheckResponse: ConnectivityCheckResult
+  QuotaCounterValueUpdateContract: QuotaCounterValueUpdateContent
+  ContentItemContract: ApiManagementContentItem
+  DeletedServiceContract: ApiManagementDeletedService
+  DeletedServiceContract.properties.deletionDate: DeletedOn
+  EmailTemplateUpdateParameters: ApiManagementEmailTemplateCreateOrUpdateContent
+  GatewayCertificateAuthorityContract: ApiManagementGatewayCertificateAuthority
+  GatewayHostnameConfigurationContract: ApiManagementGatewayHostnameConfiguration
+  IssueAttachmentContract: ApiIssueAttachment
+  IssueCommentContract: ApiIssueComment
+  ProductState: ApiManagementProductState
+  UserState: ApiManagementUserState
+  TagCreateUpdateParameters: ApiManagementTagCreateOrUpdateContent
+  SubscriptionContract.properties.expirationDate: ExpiresOn
+  SubscriptionContract.properties.notificationDate: NotifiesOn
+  UserContract.properties.registrationDate: RegistriesOn
+  AccessInformationSecretsContract: TenantAccessInfoSecretsDetails
+  AccessInformationSecretsContract.id: AccessInfoType
+  ApiManagementServiceCheckNameAvailabilityParameters: ApiManagementServiceNameAvailabilityContent
+  ApiManagementServiceNameAvailabilityResult.nameAvailable: IsNameAvailable
+  NameAvailabilityReason: ApiManagementServiceNameUnavailableReason
+  ApiType.websocket: WebSocket
+  ApiType.graphql: GraphQL
 
 directive:
   - remove-operation: 'ApiManagementOperations_List'
@@ -121,8 +183,20 @@ directive:
     where: $.definitions
     transform: >
       $.AuthorizationServerContractBaseProperties.properties.bearerTokenSendingMethods.items['x-ms-enum']['name'] = 'BearerTokenSendingMethodMode';
+      $.AuthorizationServerContractBaseProperties.properties.clientAuthenticationMethod['x-ms-client-name'] = 'ClientAuthenticationMethods';
       $.BearerTokenSendingMethodsContract['x-ms-enum']['name'] = 'BearerTokenSendingMethodContract';
       $.ApiEntityBaseContract.properties.subscriptionRequired['x-ms-client-name'] = 'IsSubscriptionRequired';
+      $.CacheContractProperties.properties.resourceId['x-ms-client-name'] = 'resourceUri';
+      $.CacheUpdateProperties.properties.resourceId['x-ms-client-name'] = 'resourceUri';
+      $.IdentityProviderBaseParameters.properties.signinTenant['x-ms-client-name'] = 'SignInTenant';
+      $.IdentityProviderBaseParameters.properties.signupPolicyName['x-ms-client-name'] = 'SignUpPolicyName';
+      $.IdentityProviderBaseParameters.properties.signinPolicyName['x-ms-client-name'] = 'SignInPolicyName';
+      $.IssueContractBaseProperties.properties.apiId['x-ms-format'] = 'arm-id';
+      $.IssueContractProperties.properties.userId['x-ms-format'] = 'arm-id';
+      $.LoggerContractProperties.properties.resourceId['x-ms-format'] = 'arm-id';
+      $.NamedValueEntityBaseParameters.properties.secret['x-ms-client-name'] = 'IsSecret';
+      $.ProductEntityBaseParameters.properties.subscriptionRequired['x-ms-client-name'] = 'IsSubscriptionRequired';
+      $.ProductEntityBaseParameters.properties.approvalRequired['x-ms-client-name'] = 'IsApprovalRequired';
   - from: apimdeployment.json
     where: $.definitions
     transform: >

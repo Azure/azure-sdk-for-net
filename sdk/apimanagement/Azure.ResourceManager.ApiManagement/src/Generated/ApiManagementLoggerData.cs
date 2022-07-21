@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </param>
         /// <param name="isBuffered"> Whether records are buffered in the logger before publishing. Default is assumed to be true. </param>
         /// <param name="resourceId"> Azure Resource Id of a log target (either Azure Event Hub resource or Azure Application Insights resource). </param>
-        internal ApiManagementLoggerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, LoggerType? loggerType, string description, IDictionary<string, string> credentials, bool? isBuffered, string resourceId) : base(id, name, resourceType, systemData)
+        internal ApiManagementLoggerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, LoggerType? loggerType, string description, IDictionary<string, string> credentials, bool? isBuffered, ResourceIdentifier resourceId) : base(id, name, resourceType, systemData)
         {
             LoggerType = loggerType;
             Description = description;
@@ -55,6 +55,6 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Whether records are buffered in the logger before publishing. Default is assumed to be true. </summary>
         public bool? IsBuffered { get; set; }
         /// <summary> Azure Resource Id of a log target (either Azure Event Hub resource or Azure Application Insights resource). </summary>
-        public string ResourceId { get; set; }
+        public ResourceIdentifier ResourceId { get; set; }
     }
 }

@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of GatewayCertificateAuthorityCollection. </summary>
         internal GatewayCertificateAuthorityCollection()
         {
-            Value = new ChangeTrackingList<GatewayCertificateAuthorityContractData>();
+            Value = new ChangeTrackingList<ApiManagementGatewayCertificateAuthorityData>();
         }
 
         /// <summary> Initializes a new instance of GatewayCertificateAuthorityCollection. </summary>
         /// <param name="value"> Page values. </param>
         /// <param name="nextLink"> Next page link if any. </param>
-        internal GatewayCertificateAuthorityCollection(IReadOnlyList<GatewayCertificateAuthorityContractData> value, string nextLink)
+        internal GatewayCertificateAuthorityCollection(IReadOnlyList<ApiManagementGatewayCertificateAuthorityData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Page values. </summary>
-        public IReadOnlyList<GatewayCertificateAuthorityContractData> Value { get; }
+        public IReadOnlyList<ApiManagementGatewayCertificateAuthorityData> Value { get; }
         /// <summary> Next page link if any. </summary>
         public string NextLink { get; }
     }

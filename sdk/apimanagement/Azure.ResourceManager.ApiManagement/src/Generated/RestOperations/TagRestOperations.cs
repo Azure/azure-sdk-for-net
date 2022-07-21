@@ -1749,7 +1749,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, string tagId, TagCreateUpdateParameters tagCreateUpdateParameters, string ifMatch)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, string tagId, ApiManagementTagCreateOrUpdateContent content, string ifMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1772,9 +1772,9 @@ namespace Azure.ResourceManager.ApiManagement
             }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(tagCreateUpdateParameters);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -1784,20 +1784,20 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="tagId"> Tag identifier. Must be unique in the current API Management service instance. </param>
-        /// <param name="tagCreateUpdateParameters"> Create parameters. </param>
+        /// <param name="content"> Create parameters. </param>
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="tagId"/> or <paramref name="tagCreateUpdateParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="tagId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="tagId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TagContractData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, string tagId, TagCreateUpdateParameters tagCreateUpdateParameters, string ifMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<TagContractData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, string tagId, ApiManagementTagCreateOrUpdateContent content, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNullOrEmpty(tagId, nameof(tagId));
-            Argument.AssertNotNull(tagCreateUpdateParameters, nameof(tagCreateUpdateParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, serviceName, tagId, tagCreateUpdateParameters, ifMatch);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, serviceName, tagId, content, ifMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1819,20 +1819,20 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="tagId"> Tag identifier. Must be unique in the current API Management service instance. </param>
-        /// <param name="tagCreateUpdateParameters"> Create parameters. </param>
+        /// <param name="content"> Create parameters. </param>
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="tagId"/> or <paramref name="tagCreateUpdateParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="tagId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="tagId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TagContractData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string serviceName, string tagId, TagCreateUpdateParameters tagCreateUpdateParameters, string ifMatch = null, CancellationToken cancellationToken = default)
+        public Response<TagContractData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string serviceName, string tagId, ApiManagementTagCreateOrUpdateContent content, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNullOrEmpty(tagId, nameof(tagId));
-            Argument.AssertNotNull(tagCreateUpdateParameters, nameof(tagCreateUpdateParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, serviceName, tagId, tagCreateUpdateParameters, ifMatch);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, serviceName, tagId, content, ifMatch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1849,7 +1849,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, string tagId, string ifMatch, TagCreateUpdateParameters tagCreateUpdateParameters)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, string tagId, string ifMatch, ApiManagementTagCreateOrUpdateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1869,9 +1869,9 @@ namespace Azure.ResourceManager.ApiManagement
             request.Headers.Add("If-Match", ifMatch);
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(tagCreateUpdateParameters);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -1882,20 +1882,20 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="tagId"> Tag identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
-        /// <param name="tagCreateUpdateParameters"> Update parameters. </param>
+        /// <param name="content"> Update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="tagId"/>, <paramref name="ifMatch"/> or <paramref name="tagCreateUpdateParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="tagId"/>, <paramref name="ifMatch"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="tagId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TagContractData>> UpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, string tagId, string ifMatch, TagCreateUpdateParameters tagCreateUpdateParameters, CancellationToken cancellationToken = default)
+        public async Task<Response<TagContractData>> UpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, string tagId, string ifMatch, ApiManagementTagCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNullOrEmpty(tagId, nameof(tagId));
             Argument.AssertNotNull(ifMatch, nameof(ifMatch));
-            Argument.AssertNotNull(tagCreateUpdateParameters, nameof(tagCreateUpdateParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, serviceName, tagId, ifMatch, tagCreateUpdateParameters);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, serviceName, tagId, ifMatch, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1917,20 +1917,20 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="tagId"> Tag identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
-        /// <param name="tagCreateUpdateParameters"> Update parameters. </param>
+        /// <param name="content"> Update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="tagId"/>, <paramref name="ifMatch"/> or <paramref name="tagCreateUpdateParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="tagId"/>, <paramref name="ifMatch"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="tagId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TagContractData> Update(string subscriptionId, string resourceGroupName, string serviceName, string tagId, string ifMatch, TagCreateUpdateParameters tagCreateUpdateParameters, CancellationToken cancellationToken = default)
+        public Response<TagContractData> Update(string subscriptionId, string resourceGroupName, string serviceName, string tagId, string ifMatch, ApiManagementTagCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNullOrEmpty(tagId, nameof(tagId));
             Argument.AssertNotNull(ifMatch, nameof(ifMatch));
-            Argument.AssertNotNull(tagCreateUpdateParameters, nameof(tagCreateUpdateParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, serviceName, tagId, ifMatch, tagCreateUpdateParameters);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, serviceName, tagId, ifMatch, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

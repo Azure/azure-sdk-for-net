@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static GatewayHostnameConfigurationCollection DeserializeGatewayHostnameConfigurationCollection(JsonElement element)
         {
-            Optional<IReadOnlyList<GatewayHostnameConfigurationContractData>> value = default;
+            Optional<IReadOnlyList<ApiManagementGatewayHostnameConfigurationData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<GatewayHostnameConfigurationContractData> array = new List<GatewayHostnameConfigurationContractData>();
+                    List<ApiManagementGatewayHostnameConfigurationData> array = new List<ApiManagementGatewayHostnameConfigurationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GatewayHostnameConfigurationContractData.DeserializeGatewayHostnameConfigurationContractData(item));
+                        array.Add(ApiManagementGatewayHostnameConfigurationData.DeserializeApiManagementGatewayHostnameConfigurationData(item));
                     }
                     value = array;
                     continue;

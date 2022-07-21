@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Status of the issue. </summary>
         public State? State { get; set; }
         /// <summary> A resource identifier for the API the issue was created for. </summary>
-        public string ApiId { get; set; }
+        public ResourceIdentifier ApiId { get; set; }
         /// <summary> The issue title. </summary>
         public string Title { get; set; }
         /// <summary> Text describing the issue. </summary>

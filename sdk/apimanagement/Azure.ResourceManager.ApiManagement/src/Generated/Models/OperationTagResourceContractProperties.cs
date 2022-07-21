@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="apiVersion"> API Version. </param>
         /// <param name="description"> Operation Description. </param>
         /// <param name="method"> A Valid HTTP Operation Method. Typical Http Methods like GET, PUT, POST but not limited by only them. </param>
-        /// <param name="urlTemplate"> Relative URL template identifying the target resource for this operation. May include parameters. Example: /customers/{cid}/orders/{oid}/?date={date}. </param>
-        internal OperationTagResourceContractProperties(string id, string name, string apiName, string apiRevision, string apiVersion, string description, string method, string urlTemplate)
+        /// <param name="uriTemplate"> Relative URL template identifying the target resource for this operation. May include parameters. Example: /customers/{cid}/orders/{oid}/?date={date}. </param>
+        internal OperationTagResourceContractProperties(string id, string name, string apiName, string apiRevision, string apiVersion, string description, string method, string uriTemplate)
         {
             Id = id;
             Name = name;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             ApiVersion = apiVersion;
             Description = description;
             Method = method;
-            UrlTemplate = urlTemplate;
+            UriTemplate = uriTemplate;
         }
 
         /// <summary> Identifier of the operation in form /operations/{operationId}. </summary>
@@ -51,6 +51,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> A Valid HTTP Operation Method. Typical Http Methods like GET, PUT, POST but not limited by only them. </summary>
         public string Method { get; }
         /// <summary> Relative URL template identifying the target resource for this operation. May include parameters. Example: /customers/{cid}/orders/{oid}/?date={date}. </summary>
-        public string UrlTemplate { get; }
+        public string UriTemplate { get; }
     }
 }

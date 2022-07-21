@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of TenantSettingsCollection. </summary>
         internal TenantSettingsCollection()
         {
-            Value = new ChangeTrackingList<TenantSettingsContractData>();
+            Value = new ChangeTrackingList<ApiManagementTenantSettingsData>();
         }
 
         /// <summary> Initializes a new instance of TenantSettingsCollection. </summary>
         /// <param name="value"> Page values. </param>
         /// <param name="nextLink"> Next page link if any. </param>
-        internal TenantSettingsCollection(IReadOnlyList<TenantSettingsContractData> value, string nextLink)
+        internal TenantSettingsCollection(IReadOnlyList<ApiManagementTenantSettingsData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Page values. </summary>
-        public IReadOnlyList<TenantSettingsContractData> Value { get; }
+        public IReadOnlyList<ApiManagementTenantSettingsData> Value { get; }
         /// <summary> Next page link if any. </summary>
         public string NextLink { get; }
     }

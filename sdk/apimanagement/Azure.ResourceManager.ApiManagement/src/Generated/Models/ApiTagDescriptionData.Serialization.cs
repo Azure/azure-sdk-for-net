@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> description = default;
-            Optional<Uri> externalDocsUrl = default;
+            Optional<Uri> externalDocsUri = default;
             Optional<string> externalDocsDescription = default;
             Optional<string> tagId = default;
             Optional<string> displayName = default;
@@ -104,10 +104,10 @@ namespace Azure.ResourceManager.ApiManagement
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                externalDocsUrl = null;
+                                externalDocsUri = null;
                                 continue;
                             }
-                            externalDocsUrl = new Uri(property0.Value.GetString());
+                            externalDocsUri = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("externalDocsDescription"))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ApiManagement
                     continue;
                 }
             }
-            return new ApiTagDescriptionData(id, name, type, systemData.Value, description.Value, externalDocsUrl.Value, externalDocsDescription.Value, tagId.Value, displayName.Value);
+            return new ApiTagDescriptionData(id, name, type, systemData.Value, description.Value, externalDocsUri.Value, externalDocsDescription.Value, tagId.Value, displayName.Value);
         }
     }
 }

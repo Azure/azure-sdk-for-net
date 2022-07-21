@@ -30,15 +30,15 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("thumbprint");
                 writer.WriteStringValue(Thumbprint);
             }
-            if (Optional.IsDefined(ExpirationOn))
+            if (Optional.IsDefined(ExpiresOn))
             {
                 writer.WritePropertyName("expirationDate");
-                writer.WriteStringValue(ExpirationOn.Value, "O");
+                writer.WriteStringValue(ExpiresOn.Value, "O");
             }
-            if (Optional.IsDefined(KeyVault))
+            if (Optional.IsDefined(KeyVaultDetails))
             {
                 writer.WritePropertyName("keyVault");
-                writer.WriteObjectValue(KeyVault);
+                writer.WriteObjectValue(KeyVaultDetails);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

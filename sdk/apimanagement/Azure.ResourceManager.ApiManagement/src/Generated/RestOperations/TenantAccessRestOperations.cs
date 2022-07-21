@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TenantAccessData>> GetAsync(string subscriptionId, string resourceGroupName, string serviceName, AccessName accessName, CancellationToken cancellationToken = default)
+        public async Task<Response<TenantAccessInfoData>> GetAsync(string subscriptionId, string resourceGroupName, string serviceName, AccessName accessName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -252,13 +252,13 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        TenantAccessData value = default;
+                        TenantAccessInfoData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TenantAccessData.DeserializeTenantAccessData(document.RootElement);
+                        value = TenantAccessInfoData.DeserializeTenantAccessInfoData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((TenantAccessData)null, message.Response);
+                    return Response.FromValue((TenantAccessInfoData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TenantAccessData> Get(string subscriptionId, string resourceGroupName, string serviceName, AccessName accessName, CancellationToken cancellationToken = default)
+        public Response<TenantAccessInfoData> Get(string subscriptionId, string resourceGroupName, string serviceName, AccessName accessName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -284,19 +284,19 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        TenantAccessData value = default;
+                        TenantAccessInfoData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TenantAccessData.DeserializeTenantAccessData(document.RootElement);
+                        value = TenantAccessInfoData.DeserializeTenantAccessInfoData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((TenantAccessData)null, message.Response);
+                    return Response.FromValue((TenantAccessInfoData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string serviceName, AccessName accessName, string ifMatch, TenantAccessCreateOrUpdateContent content)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string serviceName, AccessName accessName, string ifMatch, TenantAccessInfoCreateOrUpdateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="ifMatch"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TenantAccessData>> CreateAsync(string subscriptionId, string resourceGroupName, string serviceName, AccessName accessName, string ifMatch, TenantAccessCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<TenantAccessInfoData>> CreateAsync(string subscriptionId, string resourceGroupName, string serviceName, AccessName accessName, string ifMatch, TenantAccessInfoCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -347,9 +347,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        TenantAccessData value = default;
+                        TenantAccessInfoData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TenantAccessData.DeserializeTenantAccessData(document.RootElement);
+                        value = TenantAccessInfoData.DeserializeTenantAccessInfoData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="ifMatch"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TenantAccessData> Create(string subscriptionId, string resourceGroupName, string serviceName, AccessName accessName, string ifMatch, TenantAccessCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public Response<TenantAccessInfoData> Create(string subscriptionId, string resourceGroupName, string serviceName, AccessName accessName, string ifMatch, TenantAccessInfoCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -381,9 +381,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        TenantAccessData value = default;
+                        TenantAccessInfoData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TenantAccessData.DeserializeTenantAccessData(document.RootElement);
+                        value = TenantAccessInfoData.DeserializeTenantAccessInfoData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, AccessName accessName, string ifMatch, TenantAccessPatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, AccessName accessName, string ifMatch, TenantAccessInfoPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="ifMatch"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TenantAccessData>> UpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, AccessName accessName, string ifMatch, TenantAccessPatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response<TenantAccessInfoData>> UpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, AccessName accessName, string ifMatch, TenantAccessInfoPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -442,9 +442,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        TenantAccessData value = default;
+                        TenantAccessInfoData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TenantAccessData.DeserializeTenantAccessData(document.RootElement);
+                        value = TenantAccessInfoData.DeserializeTenantAccessInfoData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="ifMatch"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TenantAccessData> Update(string subscriptionId, string resourceGroupName, string serviceName, AccessName accessName, string ifMatch, TenantAccessPatch patch, CancellationToken cancellationToken = default)
+        public Response<TenantAccessInfoData> Update(string subscriptionId, string resourceGroupName, string serviceName, AccessName accessName, string ifMatch, TenantAccessInfoPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -476,9 +476,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        TenantAccessData value = default;
+                        TenantAccessInfoData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TenantAccessData.DeserializeTenantAccessData(document.RootElement);
+                        value = TenantAccessInfoData.DeserializeTenantAccessInfoData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -663,7 +663,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AccessInformationSecretsContract>> ListSecretsAsync(string subscriptionId, string resourceGroupName, string serviceName, AccessName accessName, CancellationToken cancellationToken = default)
+        public async Task<Response<TenantAccessInfoSecretsDetails>> ListSecretsAsync(string subscriptionId, string resourceGroupName, string serviceName, AccessName accessName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -675,9 +675,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        AccessInformationSecretsContract value = default;
+                        TenantAccessInfoSecretsDetails value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AccessInformationSecretsContract.DeserializeAccessInformationSecretsContract(document.RootElement);
+                        value = TenantAccessInfoSecretsDetails.DeserializeTenantAccessInfoSecretsDetails(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -693,7 +693,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AccessInformationSecretsContract> ListSecrets(string subscriptionId, string resourceGroupName, string serviceName, AccessName accessName, CancellationToken cancellationToken = default)
+        public Response<TenantAccessInfoSecretsDetails> ListSecrets(string subscriptionId, string resourceGroupName, string serviceName, AccessName accessName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -705,9 +705,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        AccessInformationSecretsContract value = default;
+                        TenantAccessInfoSecretsDetails value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AccessInformationSecretsContract.DeserializeAccessInformationSecretsContract(document.RootElement);
+                        value = TenantAccessInfoSecretsDetails.DeserializeTenantAccessInfoSecretsDetails(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

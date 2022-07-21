@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<string> apiVersion = default;
             Optional<string> description = default;
             Optional<string> method = default;
-            Optional<string> urlTemplate = default;
+            Optional<string> uriTemplate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (property.NameEquals("urlTemplate"))
                 {
-                    urlTemplate = property.Value.GetString();
+                    uriTemplate = property.Value.GetString();
                     continue;
                 }
             }
-            return new OperationTagResourceContractProperties(id.Value, name.Value, apiName.Value, apiRevision.Value, apiVersion.Value, description.Value, method.Value, urlTemplate.Value);
+            return new OperationTagResourceContractProperties(id.Value, name.Value, apiName.Value, apiRevision.Value, apiVersion.Value, description.Value, method.Value, uriTemplate.Value);
         }
     }
 }

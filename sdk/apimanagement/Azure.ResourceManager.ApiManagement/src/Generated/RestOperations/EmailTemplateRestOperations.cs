@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, TemplateName templateName, EmailTemplateUpdateParameters emailTemplateUpdateParameters, string ifMatch)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, TemplateName templateName, ApiManagementEmailTemplateCreateOrUpdateContent content, string ifMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -331,9 +331,9 @@ namespace Azure.ResourceManager.ApiManagement
             }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(emailTemplateUpdateParameters);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -343,19 +343,19 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="templateName"> Email Template Name Identifier. </param>
-        /// <param name="emailTemplateUpdateParameters"> Email Template update parameters. </param>
+        /// <param name="content"> Email Template update parameters. </param>
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="emailTemplateUpdateParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ApiManagementEmailTemplateData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, TemplateName templateName, EmailTemplateUpdateParameters emailTemplateUpdateParameters, string ifMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ApiManagementEmailTemplateData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, TemplateName templateName, ApiManagementEmailTemplateCreateOrUpdateContent content, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNull(emailTemplateUpdateParameters, nameof(emailTemplateUpdateParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, serviceName, templateName, emailTemplateUpdateParameters, ifMatch);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, serviceName, templateName, content, ifMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -377,19 +377,19 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="templateName"> Email Template Name Identifier. </param>
-        /// <param name="emailTemplateUpdateParameters"> Email Template update parameters. </param>
+        /// <param name="content"> Email Template update parameters. </param>
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="emailTemplateUpdateParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ApiManagementEmailTemplateData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string serviceName, TemplateName templateName, EmailTemplateUpdateParameters emailTemplateUpdateParameters, string ifMatch = null, CancellationToken cancellationToken = default)
+        public Response<ApiManagementEmailTemplateData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string serviceName, TemplateName templateName, ApiManagementEmailTemplateCreateOrUpdateContent content, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
-            Argument.AssertNotNull(emailTemplateUpdateParameters, nameof(emailTemplateUpdateParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, serviceName, templateName, emailTemplateUpdateParameters, ifMatch);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, serviceName, templateName, content, ifMatch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, TemplateName templateName, string ifMatch, EmailTemplateUpdateParameters emailTemplateUpdateParameters)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, TemplateName templateName, string ifMatch, ApiManagementEmailTemplateCreateOrUpdateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -426,9 +426,9 @@ namespace Azure.ResourceManager.ApiManagement
             request.Headers.Add("If-Match", ifMatch);
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(emailTemplateUpdateParameters);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -439,19 +439,19 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="templateName"> Email Template Name Identifier. </param>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
-        /// <param name="emailTemplateUpdateParameters"> Update parameters. </param>
+        /// <param name="content"> Update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="ifMatch"/> or <paramref name="emailTemplateUpdateParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="ifMatch"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ApiManagementEmailTemplateData>> UpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, TemplateName templateName, string ifMatch, EmailTemplateUpdateParameters emailTemplateUpdateParameters, CancellationToken cancellationToken = default)
+        public async Task<Response<ApiManagementEmailTemplateData>> UpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, TemplateName templateName, string ifMatch, ApiManagementEmailTemplateCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNull(ifMatch, nameof(ifMatch));
-            Argument.AssertNotNull(emailTemplateUpdateParameters, nameof(emailTemplateUpdateParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, serviceName, templateName, ifMatch, emailTemplateUpdateParameters);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, serviceName, templateName, ifMatch, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -473,19 +473,19 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="templateName"> Email Template Name Identifier. </param>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
-        /// <param name="emailTemplateUpdateParameters"> Update parameters. </param>
+        /// <param name="content"> Update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="ifMatch"/> or <paramref name="emailTemplateUpdateParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="ifMatch"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ApiManagementEmailTemplateData> Update(string subscriptionId, string resourceGroupName, string serviceName, TemplateName templateName, string ifMatch, EmailTemplateUpdateParameters emailTemplateUpdateParameters, CancellationToken cancellationToken = default)
+        public Response<ApiManagementEmailTemplateData> Update(string subscriptionId, string resourceGroupName, string serviceName, TemplateName templateName, string ifMatch, ApiManagementEmailTemplateCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNull(ifMatch, nameof(ifMatch));
-            Argument.AssertNotNull(emailTemplateUpdateParameters, nameof(emailTemplateUpdateParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, serviceName, templateName, ifMatch, emailTemplateUpdateParameters);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, serviceName, templateName, ifMatch, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

@@ -62,10 +62,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("method");
                 writer.WriteStringValue(Method);
             }
-            if (Optional.IsDefined(UrlTemplate))
+            if (Optional.IsDefined(UriTemplate))
             {
                 writer.WritePropertyName("urlTemplate");
-                writer.WriteStringValue(UrlTemplate);
+                writer.WriteStringValue(UriTemplate);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

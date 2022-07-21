@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="apiId"/>, <paramref name="issueId"/> or <paramref name="commentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="apiId"/>, <paramref name="issueId"/> or <paramref name="commentId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IssueCommentContractData>> GetAsync(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string issueId, string commentId, CancellationToken cancellationToken = default)
+        public async Task<Response<ApiIssueCommentData>> GetAsync(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string issueId, string commentId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -299,13 +299,13 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        IssueCommentContractData value = default;
+                        ApiIssueCommentData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = IssueCommentContractData.DeserializeIssueCommentContractData(document.RootElement);
+                        value = ApiIssueCommentData.DeserializeApiIssueCommentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((IssueCommentContractData)null, message.Response);
+                    return Response.FromValue((ApiIssueCommentData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="apiId"/>, <paramref name="issueId"/> or <paramref name="commentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="apiId"/>, <paramref name="issueId"/> or <paramref name="commentId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IssueCommentContractData> Get(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string issueId, string commentId, CancellationToken cancellationToken = default)
+        public Response<ApiIssueCommentData> Get(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string issueId, string commentId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -336,19 +336,19 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        IssueCommentContractData value = default;
+                        ApiIssueCommentData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = IssueCommentContractData.DeserializeIssueCommentContractData(document.RootElement);
+                        value = ApiIssueCommentData.DeserializeApiIssueCommentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((IssueCommentContractData)null, message.Response);
+                    return Response.FromValue((ApiIssueCommentData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string issueId, string commentId, IssueCommentContractData data, string ifMatch)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string issueId, string commentId, ApiIssueCommentData data, string ifMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="apiId"/>, <paramref name="issueId"/>, <paramref name="commentId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="apiId"/>, <paramref name="issueId"/> or <paramref name="commentId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IssueCommentContractData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string issueId, string commentId, IssueCommentContractData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ApiIssueCommentData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string issueId, string commentId, ApiIssueCommentData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -411,9 +411,9 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                 case 201:
                     {
-                        IssueCommentContractData value = default;
+                        ApiIssueCommentData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = IssueCommentContractData.DeserializeIssueCommentContractData(document.RootElement);
+                        value = ApiIssueCommentData.DeserializeApiIssueCommentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="apiId"/>, <paramref name="issueId"/>, <paramref name="commentId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="apiId"/>, <paramref name="issueId"/> or <paramref name="commentId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IssueCommentContractData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string issueId, string commentId, IssueCommentContractData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public Response<ApiIssueCommentData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string issueId, string commentId, ApiIssueCommentData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -450,9 +450,9 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                 case 201:
                     {
-                        IssueCommentContractData value = default;
+                        ApiIssueCommentData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = IssueCommentContractData.DeserializeIssueCommentContractData(document.RootElement);
+                        value = ApiIssueCommentData.DeserializeApiIssueCommentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

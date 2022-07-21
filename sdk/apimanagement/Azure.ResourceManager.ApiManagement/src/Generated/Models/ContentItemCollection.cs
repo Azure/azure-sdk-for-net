@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of ContentItemCollection. </summary>
         internal ContentItemCollection()
         {
-            Value = new ChangeTrackingList<ContentItemContractData>();
+            Value = new ChangeTrackingList<ApiManagementContentItemData>();
         }
 
         /// <summary> Initializes a new instance of ContentItemCollection. </summary>
         /// <param name="value"> Collection of content items. </param>
         /// <param name="nextLink"> Next page link, if any. </param>
-        internal ContentItemCollection(IReadOnlyList<ContentItemContractData> value, string nextLink)
+        internal ContentItemCollection(IReadOnlyList<ApiManagementContentItemData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Collection of content items. </summary>
-        public IReadOnlyList<ContentItemContractData> Value { get; }
+        public IReadOnlyList<ApiManagementContentItemData> Value { get; }
         /// <summary> Next page link, if any. </summary>
         public string NextLink { get; }
     }
