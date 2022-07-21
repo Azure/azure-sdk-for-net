@@ -77,5 +77,14 @@ namespace Azure.ResourceManager.FluidRelay.Tests.Tests
             await deleteFluidRelayServerOperation.WaitForCompletionResponseAsync();
             Assert.IsTrue(deleteFluidRelayServerOperation.HasCompleted);
         }
+
+        [TestCase]
+        public async Task TestFluidRelayContainerCRUDOperations()
+        {
+            FluidRelayContainerCollection FluidRelayContainerResourceCollection = await GetFluidRelayContainerCollectionAsync("lin-demo", "dotNetSDKTest");
+            Response<FluidRelayContainerResource> getFluidRelayResponse = await FluidRelayContainerResourceCollection.GetAsync("19b201e5-a5f6-4f90-b3c0-bc36b650e64e");
+            FluidRelayContainerResource fluidRelayContainerResource = getFluidRelayResponse.Value;
+            Assert.IsNotNull(fluidRelayContainerResource);
+        }
     }
 }
