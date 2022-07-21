@@ -92,6 +92,13 @@
             "_justification": "Files contain ephemeral keys or certificates used by test code during playback."
         },
         {
+            "file": [
+                "sdk/storage/Azure.Storage.Blobs/tests/Unsafe/SessionRecords/ClientSideEncryptionTests/PartialDownloadAsync(V1_0,31,18)Async.json",
+                "sdk/storage/Azure.Storage.Blobs/tests/Unsafe/SessionRecords/ClientSideEncryptionTests/RoundtripAsyncWithOpenRead(V1_0,1024,60).json"
+            ],
+            "_justification": "Small, arbitrary recorded response bodies incorrectly flagged as credentials."
+        },
+        {
             "file":[
                 "sdk/datafactory/Azure.ResourceManager.DataFactory/src/Generated/Models/RestServiceAuthenticationType.cs"
             ],
