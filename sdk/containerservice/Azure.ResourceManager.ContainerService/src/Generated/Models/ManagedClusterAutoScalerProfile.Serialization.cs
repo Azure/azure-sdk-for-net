@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ManagedClusterPropertiesAutoScalerProfile : IUtf8JsonSerializable
+    public partial class ManagedClusterAutoScalerProfile : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -55,10 +55,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("ok-total-unready-count");
                 writer.WriteStringValue(OkTotalUnreadyCount);
             }
-            if (Optional.IsDefined(ScanInterval))
+            if (Optional.IsDefined(ScanIntervalInSeconds))
             {
                 writer.WritePropertyName("scan-interval");
-                writer.WriteStringValue(ScanInterval);
+                writer.WriteStringValue(ScanIntervalInSeconds);
             }
             if (Optional.IsDefined(ScaleDownDelayAfterAdd))
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             writer.WriteEndObject();
         }
 
-        internal static ManagedClusterPropertiesAutoScalerProfile DeserializeManagedClusterPropertiesAutoScalerProfile(JsonElement element)
+        internal static ManagedClusterAutoScalerProfile DeserializeManagedClusterAutoScalerProfile(JsonElement element)
         {
             Optional<string> balanceSimilarNodeGroups = default;
             Optional<AutoScaleExpander> expander = default;
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new ManagedClusterPropertiesAutoScalerProfile(balanceSimilarNodeGroups.Value, Optional.ToNullable(expander), maxEmptyBulkDelete.Value, maxGracefulTerminationSec.Value, maxNodeProvisionTime.Value, maxTotalUnreadyPercentage.Value, newPodScaleUpDelay.Value, okTotalUnreadyCount.Value, scanInterval.Value, scaleDownDelayAfterAdd.Value, scaleDownDelayAfterDelete.Value, scaleDownDelayAfterFailure.Value, scaleDownUnneededTime.Value, scaleDownUnreadyTime.Value, scaleDownUtilizationThreshold.Value, skipNodesWithLocalStorage.Value, skipNodesWithSystemPods.Value);
+            return new ManagedClusterAutoScalerProfile(balanceSimilarNodeGroups.Value, Optional.ToNullable(expander), maxEmptyBulkDelete.Value, maxGracefulTerminationSec.Value, maxNodeProvisionTime.Value, maxTotalUnreadyPercentage.Value, newPodScaleUpDelay.Value, okTotalUnreadyCount.Value, scanInterval.Value, scaleDownDelayAfterAdd.Value, scaleDownDelayAfterDelete.Value, scaleDownDelayAfterFailure.Value, scaleDownUnneededTime.Value, scaleDownUnreadyTime.Value, scaleDownUtilizationThreshold.Value, skipNodesWithLocalStorage.Value, skipNodesWithSystemPods.Value);
         }
     }
 }

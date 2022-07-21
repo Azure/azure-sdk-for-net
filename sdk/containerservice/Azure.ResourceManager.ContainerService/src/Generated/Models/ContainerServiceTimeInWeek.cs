@@ -11,25 +11,25 @@ using Azure.Core;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Time in a week. </summary>
-    public partial class TimeInWeek
+    public partial class ContainerServiceTimeInWeek
     {
-        /// <summary> Initializes a new instance of TimeInWeek. </summary>
-        public TimeInWeek()
+        /// <summary> Initializes a new instance of ContainerServiceTimeInWeek. </summary>
+        public ContainerServiceTimeInWeek()
         {
             HourSlots = new ChangeTrackingList<int>();
         }
 
-        /// <summary> Initializes a new instance of TimeInWeek. </summary>
+        /// <summary> Initializes a new instance of ContainerServiceTimeInWeek. </summary>
         /// <param name="day"> The day of the week. </param>
         /// <param name="hourSlots"> Each integer hour represents a time range beginning at 0m after the hour ending at the next hour (non-inclusive). 0 corresponds to 00:00 UTC, 23 corresponds to 23:00 UTC. Specifying [0, 1] means the 00:00 - 02:00 UTC time range. </param>
-        internal TimeInWeek(WeekDay? day, IList<int> hourSlots)
+        internal ContainerServiceTimeInWeek(ContainerServiceWeekDay? day, IList<int> hourSlots)
         {
             Day = day;
             HourSlots = hourSlots;
         }
 
         /// <summary> The day of the week. </summary>
-        public WeekDay? Day { get; set; }
+        public ContainerServiceWeekDay? Day { get; set; }
         /// <summary> Each integer hour represents a time range beginning at 0m after the hour ending at the next hour (non-inclusive). 0 corresponds to 00:00 UTC, 23 corresponds to 23:00 UTC. Specifying [0, 1] means the 00:00 - 02:00 UTC time range. </summary>
         public IList<int> HourSlots { get; }
     }

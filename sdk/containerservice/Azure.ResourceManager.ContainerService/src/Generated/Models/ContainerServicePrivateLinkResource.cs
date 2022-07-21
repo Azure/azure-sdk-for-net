@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="groupId"> The group ID of the resource. </param>
         /// <param name="requiredMembers"> The RequiredMembers of the resource. </param>
         /// <param name="privateLinkServiceId"> The private link service ID of the resource, this field is exposed only to NRP internally. </param>
-        internal ContainerServicePrivateLinkResource(string id, string name, ResourceType? resourceType, string groupId, IList<string> requiredMembers, string privateLinkServiceId)
+        internal ContainerServicePrivateLinkResource(ResourceIdentifier id, string name, ResourceType? resourceType, string groupId, IList<string> requiredMembers, ResourceIdentifier privateLinkServiceId)
         {
             Id = id;
             Name = name;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> The ID of the private link resource. </summary>
-        public string Id { get; set; }
+        public ResourceIdentifier Id { get; set; }
         /// <summary> The name of the private link resource. </summary>
         public string Name { get; set; }
         /// <summary> The resource type. </summary>
@@ -47,6 +47,6 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> The RequiredMembers of the resource. </summary>
         public IList<string> RequiredMembers { get; }
         /// <summary> The private link service ID of the resource, this field is exposed only to NRP internally. </summary>
-        public string PrivateLinkServiceId { get; }
+        public ResourceIdentifier PrivateLinkServiceId { get; }
     }
 }

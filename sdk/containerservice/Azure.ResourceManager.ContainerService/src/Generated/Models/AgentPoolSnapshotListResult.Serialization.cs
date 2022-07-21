@@ -12,11 +12,11 @@ using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    internal partial class SnapshotListResult
+    internal partial class AgentPoolSnapshotListResult
     {
-        internal static SnapshotListResult DeserializeSnapshotListResult(JsonElement element)
+        internal static AgentPoolSnapshotListResult DeserializeAgentPoolSnapshotListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<SnapshotData>> value = default;
+            Optional<IReadOnlyList<AgentPoolSnapshotData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SnapshotData> array = new List<SnapshotData>();
+                    List<AgentPoolSnapshotData> array = new List<AgentPoolSnapshotData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SnapshotData.DeserializeSnapshotData(item));
+                        array.Add(AgentPoolSnapshotData.DeserializeAgentPoolSnapshotData(item));
                     }
                     value = array;
                     continue;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new SnapshotListResult(Optional.ToList(value), nextLink.Value);
+            return new AgentPoolSnapshotListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </summary>
         /// <param name="serverFqdn"> server fqdn type for credentials to be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CredentialResults>> GetClusterAdminCredentialsAsync(string serverFqdn = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagedClusterCredentials>> GetClusterAdminCredentialsAsync(string serverFqdn = null, CancellationToken cancellationToken = default)
         {
             using var scope = _managedClusterClientDiagnostics.CreateScope("ManagedClusterResource.GetClusterAdminCredentials");
             scope.Start();
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </summary>
         /// <param name="serverFqdn"> server fqdn type for credentials to be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CredentialResults> GetClusterAdminCredentials(string serverFqdn = null, CancellationToken cancellationToken = default)
+        public virtual Response<ManagedClusterCredentials> GetClusterAdminCredentials(string serverFqdn = null, CancellationToken cancellationToken = default)
         {
             using var scope = _managedClusterClientDiagnostics.CreateScope("ManagedClusterResource.GetClusterAdminCredentials");
             scope.Start();
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="serverFqdn"> server fqdn type for credentials to be returned. </param>
         /// <param name="format"> Only apply to AAD clusters, specifies the format of returned kubeconfig. Format &apos;azure&apos; will return azure auth-provider kubeconfig; format &apos;exec&apos; will return exec format kubeconfig, which requires kubelogin binary in the path. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CredentialResults>> GetClusterUserCredentialsAsync(string serverFqdn = null, KubeConfigFormat? format = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagedClusterCredentials>> GetClusterUserCredentialsAsync(string serverFqdn = null, KubeConfigFormat? format = null, CancellationToken cancellationToken = default)
         {
             using var scope = _managedClusterClientDiagnostics.CreateScope("ManagedClusterResource.GetClusterUserCredentials");
             scope.Start();
@@ -511,7 +511,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="serverFqdn"> server fqdn type for credentials to be returned. </param>
         /// <param name="format"> Only apply to AAD clusters, specifies the format of returned kubeconfig. Format &apos;azure&apos; will return azure auth-provider kubeconfig; format &apos;exec&apos; will return exec format kubeconfig, which requires kubelogin binary in the path. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CredentialResults> GetClusterUserCredentials(string serverFqdn = null, KubeConfigFormat? format = null, CancellationToken cancellationToken = default)
+        public virtual Response<ManagedClusterCredentials> GetClusterUserCredentials(string serverFqdn = null, KubeConfigFormat? format = null, CancellationToken cancellationToken = default)
         {
             using var scope = _managedClusterClientDiagnostics.CreateScope("ManagedClusterResource.GetClusterUserCredentials");
             scope.Start();
@@ -534,7 +534,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </summary>
         /// <param name="serverFqdn"> server fqdn type for credentials to be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CredentialResults>> GetClusterMonitoringUserCredentialsAsync(string serverFqdn = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagedClusterCredentials>> GetClusterMonitoringUserCredentialsAsync(string serverFqdn = null, CancellationToken cancellationToken = default)
         {
             using var scope = _managedClusterClientDiagnostics.CreateScope("ManagedClusterResource.GetClusterMonitoringUserCredentials");
             scope.Start();
@@ -557,7 +557,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </summary>
         /// <param name="serverFqdn"> server fqdn type for credentials to be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CredentialResults> GetClusterMonitoringUserCredentials(string serverFqdn = null, CancellationToken cancellationToken = default)
+        public virtual Response<ManagedClusterCredentials> GetClusterMonitoringUserCredentials(string serverFqdn = null, CancellationToken cancellationToken = default)
         {
             using var scope = _managedClusterClientDiagnostics.CreateScope("ManagedClusterResource.GetClusterMonitoringUserCredentials");
             scope.Start();
@@ -1053,9 +1053,9 @@ namespace Azure.ResourceManager.ContainerService
         /// Operation Id: AgentPools_GetAvailableAgentPoolVersions
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AgentPoolAvailableVersions>> GetAvailableAgentPoolVersionsAgentPoolAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AgentPoolAvailableVersions>> GetAvailableAgentPoolVersionsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _agentPoolsClientDiagnostics.CreateScope("ManagedClusterResource.GetAvailableAgentPoolVersionsAgentPool");
+            using var scope = _agentPoolsClientDiagnostics.CreateScope("ManagedClusterResource.GetAvailableAgentPoolVersions");
             scope.Start();
             try
             {
@@ -1075,9 +1075,9 @@ namespace Azure.ResourceManager.ContainerService
         /// Operation Id: AgentPools_GetAvailableAgentPoolVersions
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AgentPoolAvailableVersions> GetAvailableAgentPoolVersionsAgentPool(CancellationToken cancellationToken = default)
+        public virtual Response<AgentPoolAvailableVersions> GetAvailableAgentPoolVersions(CancellationToken cancellationToken = default)
         {
-            using var scope = _agentPoolsClientDiagnostics.CreateScope("ManagedClusterResource.GetAvailableAgentPoolVersionsAgentPool");
+            using var scope = _agentPoolsClientDiagnostics.CreateScope("ManagedClusterResource.GetAvailableAgentPoolVersions");
             scope.Start();
             try
             {
@@ -1153,11 +1153,11 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="containerServicePrivateLinkResource"> Parameters required in order to resolve a private link service ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="containerServicePrivateLinkResource"/> is null. </exception>
-        public virtual async Task<Response<ContainerServicePrivateLinkResource>> PostResolvePrivateLinkServiceIdAsync(ContainerServicePrivateLinkResource containerServicePrivateLinkResource, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerServicePrivateLinkResource>> ResolvePrivateLinkServiceIdAsync(ContainerServicePrivateLinkResource containerServicePrivateLinkResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(containerServicePrivateLinkResource, nameof(containerServicePrivateLinkResource));
 
-            using var scope = _resolvePrivateLinkServiceIdClientDiagnostics.CreateScope("ManagedClusterResource.PostResolvePrivateLinkServiceId");
+            using var scope = _resolvePrivateLinkServiceIdClientDiagnostics.CreateScope("ManagedClusterResource.ResolvePrivateLinkServiceId");
             scope.Start();
             try
             {
@@ -1179,11 +1179,11 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="containerServicePrivateLinkResource"> Parameters required in order to resolve a private link service ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="containerServicePrivateLinkResource"/> is null. </exception>
-        public virtual Response<ContainerServicePrivateLinkResource> PostResolvePrivateLinkServiceId(ContainerServicePrivateLinkResource containerServicePrivateLinkResource, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerServicePrivateLinkResource> ResolvePrivateLinkServiceId(ContainerServicePrivateLinkResource containerServicePrivateLinkResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(containerServicePrivateLinkResource, nameof(containerServicePrivateLinkResource));
 
-            using var scope = _resolvePrivateLinkServiceIdClientDiagnostics.CreateScope("ManagedClusterResource.PostResolvePrivateLinkServiceId");
+            using var scope = _resolvePrivateLinkServiceIdClientDiagnostics.CreateScope("ManagedClusterResource.ResolvePrivateLinkServiceId");
             scope.Start();
             try
             {

@@ -20,46 +20,46 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.ContainerService
 {
     /// <summary>
-    /// A Class representing a Snapshot along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SnapshotResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSnapshotResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetSnapshot method.
+    /// A Class representing an AgentPoolSnapshot along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AgentPoolSnapshotResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetAgentPoolSnapshotResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetAgentPoolSnapshot method.
     /// </summary>
-    public partial class SnapshotResource : ArmResource
+    public partial class AgentPoolSnapshotResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="SnapshotResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="AgentPoolSnapshotResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/snapshots/{resourceName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _snapshotClientDiagnostics;
-        private readonly SnapshotsRestOperations _snapshotRestClient;
-        private readonly SnapshotData _data;
+        private readonly ClientDiagnostics _agentPoolSnapshotSnapshotsClientDiagnostics;
+        private readonly SnapshotsRestOperations _agentPoolSnapshotSnapshotsRestClient;
+        private readonly AgentPoolSnapshotData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="SnapshotResource"/> class for mocking. </summary>
-        protected SnapshotResource()
+        /// <summary> Initializes a new instance of the <see cref="AgentPoolSnapshotResource"/> class for mocking. </summary>
+        protected AgentPoolSnapshotResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SnapshotResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "AgentPoolSnapshotResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SnapshotResource(ArmClient client, SnapshotData data) : this(client, data.Id)
+        internal AgentPoolSnapshotResource(ArmClient client, AgentPoolSnapshotData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SnapshotResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AgentPoolSnapshotResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SnapshotResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal AgentPoolSnapshotResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _snapshotClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerService", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string snapshotApiVersion);
-            _snapshotRestClient = new SnapshotsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, snapshotApiVersion);
+            _agentPoolSnapshotSnapshotsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerService", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string agentPoolSnapshotSnapshotsApiVersion);
+            _agentPoolSnapshotSnapshotsRestClient = new SnapshotsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, agentPoolSnapshotSnapshotsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ContainerService
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual SnapshotData Data
+        public virtual AgentPoolSnapshotData Data
         {
             get
             {
@@ -95,16 +95,16 @@ namespace Azure.ResourceManager.ContainerService
         /// Operation Id: Snapshots_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SnapshotResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AgentPoolSnapshotResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _snapshotClientDiagnostics.CreateScope("SnapshotResource.Get");
+            using var scope = _agentPoolSnapshotSnapshotsClientDiagnostics.CreateScope("AgentPoolSnapshotResource.Get");
             scope.Start();
             try
             {
-                var response = await _snapshotRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _agentPoolSnapshotSnapshotsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SnapshotResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AgentPoolSnapshotResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -119,16 +119,16 @@ namespace Azure.ResourceManager.ContainerService
         /// Operation Id: Snapshots_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SnapshotResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<AgentPoolSnapshotResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _snapshotClientDiagnostics.CreateScope("SnapshotResource.Get");
+            using var scope = _agentPoolSnapshotSnapshotsClientDiagnostics.CreateScope("AgentPoolSnapshotResource.Get");
             scope.Start();
             try
             {
-                var response = _snapshotRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _agentPoolSnapshotSnapshotsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SnapshotResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AgentPoolSnapshotResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -146,11 +146,11 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _snapshotClientDiagnostics.CreateScope("SnapshotResource.Delete");
+            using var scope = _agentPoolSnapshotSnapshotsClientDiagnostics.CreateScope("AgentPoolSnapshotResource.Delete");
             scope.Start();
             try
             {
-                var response = await _snapshotRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _agentPoolSnapshotSnapshotsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new ContainerServiceArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -172,11 +172,11 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _snapshotClientDiagnostics.CreateScope("SnapshotResource.Delete");
+            using var scope = _agentPoolSnapshotSnapshotsClientDiagnostics.CreateScope("AgentPoolSnapshotResource.Delete");
             scope.Start();
             try
             {
-                var response = _snapshotRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _agentPoolSnapshotSnapshotsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 var operation = new ContainerServiceArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -197,16 +197,16 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="tagsObject"> Parameters supplied to the Update snapshot Tags operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tagsObject"/> is null. </exception>
-        public virtual async Task<Response<SnapshotResource>> UpdateAsync(TagsObject tagsObject, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AgentPoolSnapshotResource>> UpdateAsync(TagsObject tagsObject, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tagsObject, nameof(tagsObject));
 
-            using var scope = _snapshotClientDiagnostics.CreateScope("SnapshotResource.Update");
+            using var scope = _agentPoolSnapshotSnapshotsClientDiagnostics.CreateScope("AgentPoolSnapshotResource.Update");
             scope.Start();
             try
             {
-                var response = await _snapshotRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tagsObject, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new SnapshotResource(Client, response.Value), response.GetRawResponse());
+                var response = await _agentPoolSnapshotSnapshotsRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tagsObject, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new AgentPoolSnapshotResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -223,16 +223,16 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="tagsObject"> Parameters supplied to the Update snapshot Tags operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tagsObject"/> is null. </exception>
-        public virtual Response<SnapshotResource> Update(TagsObject tagsObject, CancellationToken cancellationToken = default)
+        public virtual Response<AgentPoolSnapshotResource> Update(TagsObject tagsObject, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tagsObject, nameof(tagsObject));
 
-            using var scope = _snapshotClientDiagnostics.CreateScope("SnapshotResource.Update");
+            using var scope = _agentPoolSnapshotSnapshotsClientDiagnostics.CreateScope("AgentPoolSnapshotResource.Update");
             scope.Start();
             try
             {
-                var response = _snapshotRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tagsObject, cancellationToken);
-                return Response.FromValue(new SnapshotResource(Client, response.Value), response.GetRawResponse());
+                var response = _agentPoolSnapshotSnapshotsRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tagsObject, cancellationToken);
+                return Response.FromValue(new AgentPoolSnapshotResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -250,20 +250,20 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<SnapshotResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AgentPoolSnapshotResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _snapshotClientDiagnostics.CreateScope("SnapshotResource.AddTag");
+            using var scope = _agentPoolSnapshotSnapshotsClientDiagnostics.CreateScope("AgentPoolSnapshotResource.AddTag");
             scope.Start();
             try
             {
                 var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues[key] = value;
                 await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _snapshotRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new SnapshotResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = await _agentPoolSnapshotSnapshotsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new AgentPoolSnapshotResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -281,20 +281,20 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<SnapshotResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<AgentPoolSnapshotResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _snapshotClientDiagnostics.CreateScope("SnapshotResource.AddTag");
+            using var scope = _agentPoolSnapshotSnapshotsClientDiagnostics.CreateScope("AgentPoolSnapshotResource.AddTag");
             scope.Start();
             try
             {
                 var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.TagValues[key] = value;
                 GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _snapshotRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new SnapshotResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = _agentPoolSnapshotSnapshotsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return Response.FromValue(new AgentPoolSnapshotResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -311,11 +311,11 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<SnapshotResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AgentPoolSnapshotResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _snapshotClientDiagnostics.CreateScope("SnapshotResource.SetTags");
+            using var scope = _agentPoolSnapshotSnapshotsClientDiagnostics.CreateScope("AgentPoolSnapshotResource.SetTags");
             scope.Start();
             try
             {
@@ -323,8 +323,8 @@ namespace Azure.ResourceManager.ContainerService
                 var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _snapshotRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new SnapshotResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = await _agentPoolSnapshotSnapshotsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new AgentPoolSnapshotResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -341,11 +341,11 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<SnapshotResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<AgentPoolSnapshotResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _snapshotClientDiagnostics.CreateScope("SnapshotResource.SetTags");
+            using var scope = _agentPoolSnapshotSnapshotsClientDiagnostics.CreateScope("AgentPoolSnapshotResource.SetTags");
             scope.Start();
             try
             {
@@ -353,8 +353,8 @@ namespace Azure.ResourceManager.ContainerService
                 var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _snapshotRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new SnapshotResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = _agentPoolSnapshotSnapshotsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return Response.FromValue(new AgentPoolSnapshotResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -371,19 +371,19 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<SnapshotResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AgentPoolSnapshotResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _snapshotClientDiagnostics.CreateScope("SnapshotResource.RemoveTag");
+            using var scope = _agentPoolSnapshotSnapshotsClientDiagnostics.CreateScope("AgentPoolSnapshotResource.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues.Remove(key);
                 await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _snapshotRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new SnapshotResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = await _agentPoolSnapshotSnapshotsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new AgentPoolSnapshotResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -400,19 +400,19 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<SnapshotResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<AgentPoolSnapshotResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _snapshotClientDiagnostics.CreateScope("SnapshotResource.RemoveTag");
+            using var scope = _agentPoolSnapshotSnapshotsClientDiagnostics.CreateScope("AgentPoolSnapshotResource.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.TagValues.Remove(key);
                 GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _snapshotRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new SnapshotResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = _agentPoolSnapshotSnapshotsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return Response.FromValue(new AgentPoolSnapshotResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {

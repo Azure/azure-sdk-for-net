@@ -12,25 +12,25 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> The response from the List Snapshots operation. </summary>
-    internal partial class SnapshotListResult
+    internal partial class AgentPoolSnapshotListResult
     {
-        /// <summary> Initializes a new instance of SnapshotListResult. </summary>
-        internal SnapshotListResult()
+        /// <summary> Initializes a new instance of AgentPoolSnapshotListResult. </summary>
+        internal AgentPoolSnapshotListResult()
         {
-            Value = new ChangeTrackingList<SnapshotData>();
+            Value = new ChangeTrackingList<AgentPoolSnapshotData>();
         }
 
-        /// <summary> Initializes a new instance of SnapshotListResult. </summary>
+        /// <summary> Initializes a new instance of AgentPoolSnapshotListResult. </summary>
         /// <param name="value"> The list of snapshots. </param>
         /// <param name="nextLink"> The URL to get the next set of snapshot results. </param>
-        internal SnapshotListResult(IReadOnlyList<SnapshotData> value, string nextLink)
+        internal AgentPoolSnapshotListResult(IReadOnlyList<AgentPoolSnapshotData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of snapshots. </summary>
-        public IReadOnlyList<SnapshotData> Value { get; }
+        public IReadOnlyList<AgentPoolSnapshotData> Value { get; }
         /// <summary> The URL to get the next set of snapshot results. </summary>
         public string NextLink { get; }
     }

@@ -233,9 +233,9 @@ namespace Azure.ResourceManager.ContainerService
             Optional<ContainerServiceNetworkProfile> networkProfile = default;
             Optional<ManagedClusterAadProfile> aadProfile = default;
             Optional<ManagedClusterAutoUpgradeProfile> autoUpgradeProfile = default;
-            Optional<ManagedClusterPropertiesAutoScalerProfile> autoScalerProfile = default;
+            Optional<ManagedClusterAutoScalerProfile> autoScalerProfile = default;
             Optional<ManagedClusterApiServerAccessProfile> apiServerAccessProfile = default;
-            Optional<string> diskEncryptionSetId = default;
+            Optional<ResourceIdentifier> diskEncryptionSetId = default;
             Optional<IDictionary<string, Models.UserAssignedIdentity>> identityProfile = default;
             Optional<IList<ContainerServicePrivateLinkResource>> privateLinkResources = default;
             Optional<bool> disableLocalAccounts = default;
@@ -521,7 +521,7 @@ namespace Azure.ResourceManager.ContainerService
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            autoScalerProfile = ManagedClusterPropertiesAutoScalerProfile.DeserializeManagedClusterPropertiesAutoScalerProfile(property0.Value);
+                            autoScalerProfile = ManagedClusterAutoScalerProfile.DeserializeManagedClusterAutoScalerProfile(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("apiServerAccessProfile"))
@@ -536,7 +536,12 @@ namespace Azure.ResourceManager.ContainerService
                         }
                         if (property0.NameEquals("diskEncryptionSetID"))
                         {
-                            diskEncryptionSetId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            diskEncryptionSetId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("identityProfile"))

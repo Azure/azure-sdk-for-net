@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="enableFips"> See [Add a FIPS-enabled node pool](https://docs.microsoft.com/azure/aks/use-multiple-node-pools#add-a-fips-enabled-node-pool-preview) for more details. </param>
         /// <param name="gpuInstanceProfile"> GPUInstanceProfile to be used to specify GPU MIG instance profile for supported GPU VM SKU. </param>
         /// <param name="creationData"> CreationData to be used to specify the source Snapshot ID if the node pool will be created/upgraded using a snapshot. </param>
-        internal AgentPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? count, string vmSize, int? osDiskSizeInGB, OSDiskType? osDiskType, KubeletDiskType? kubeletDiskType, WorkloadRuntime? workloadRuntime, string vnetSubnetId, string podSubnetId, int? maxPods, OSType? osType, OSSku? osSku, int? maxCount, int? minCount, bool? enableAutoScaling, ScaleDownMode? scaleDownMode, AgentPoolType? typePropertiesType, AgentPoolMode? mode, string orchestratorVersion, string currentOrchestratorVersion, string nodeImageVersion, AgentPoolUpgradeSettings upgradeSettings, string provisioningState, PowerState powerState, IList<string> availabilityZones, bool? enableNodePublicIP, string nodePublicIPPrefixId, ScaleSetPriority? scaleSetPriority, ScaleSetEvictionPolicy? scaleSetEvictionPolicy, float? spotMaxPrice, IDictionary<string, string> tags, IDictionary<string, string> nodeLabels, IList<string> nodeTaints, string proximityPlacementGroupId, KubeletConfig kubeletConfig, LinuxOSConfig linuxOSConfig, bool? enableEncryptionAtHost, bool? enableUltraSsd, bool? enableFips, GpuInstanceProfile? gpuInstanceProfile, CreationData creationData) : base(id, name, resourceType, systemData)
+        internal AgentPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? count, string vmSize, int? osDiskSizeInGB, OSDiskType? osDiskType, KubeletDiskType? kubeletDiskType, WorkloadRuntime? workloadRuntime, ResourceIdentifier vnetSubnetId, ResourceIdentifier podSubnetId, int? maxPods, OSType? osType, OSSku? osSku, int? maxCount, int? minCount, bool? enableAutoScaling, ScaleDownMode? scaleDownMode, AgentPoolType? typePropertiesType, AgentPoolMode? mode, string orchestratorVersion, string currentOrchestratorVersion, string nodeImageVersion, AgentPoolUpgradeSettings upgradeSettings, string provisioningState, PowerState powerState, IList<string> availabilityZones, bool? enableNodePublicIP, ResourceIdentifier nodePublicIPPrefixId, ScaleSetPriority? scaleSetPriority, ScaleSetEvictionPolicy? scaleSetEvictionPolicy, float? spotMaxPrice, IDictionary<string, string> tags, IDictionary<string, string> nodeLabels, IList<string> nodeTaints, ResourceIdentifier proximityPlacementGroupId, KubeletConfig kubeletConfig, LinuxOSConfig linuxOSConfig, bool? enableEncryptionAtHost, bool? enableUltraSsd, bool? enableFips, GpuInstanceProfile? gpuInstanceProfile, CreationData creationData) : base(id, name, resourceType, systemData)
         {
             Count = count;
             VmSize = vmSize;
@@ -126,9 +126,9 @@ namespace Azure.ResourceManager.ContainerService
         /// <summary> Determines the type of workload a node can run. </summary>
         public WorkloadRuntime? WorkloadRuntime { get; set; }
         /// <summary> If this is not specified, a VNET and subnet will be generated and used. If no podSubnetID is specified, this applies to nodes and pods, otherwise it applies to just nodes. This is of the form: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}. </summary>
-        public string VnetSubnetId { get; set; }
+        public ResourceIdentifier VnetSubnetId { get; set; }
         /// <summary> If omitted, pod IPs are statically assigned on the node subnet (see vnetSubnetID for more details). This is of the form: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}. </summary>
-        public string PodSubnetId { get; set; }
+        public ResourceIdentifier PodSubnetId { get; set; }
         /// <summary> The maximum number of pods that can run on a node. </summary>
         public int? MaxPods { get; set; }
         /// <summary> The operating system type. The default is Linux. </summary>
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <summary> Some scenarios may require nodes in a node pool to receive their own dedicated public IP addresses. A common scenario is for gaming workloads, where a console needs to make a direct connection to a cloud virtual machine to minimize hops. For more information see [assigning a public IP per node](https://docs.microsoft.com/azure/aks/use-multiple-node-pools#assign-a-public-ip-per-node-for-your-node-pools). The default is false. </summary>
         public bool? EnableNodePublicIP { get; set; }
         /// <summary> This is of the form: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIPPrefixName}. </summary>
-        public string NodePublicIPPrefixId { get; set; }
+        public ResourceIdentifier NodePublicIPPrefixId { get; set; }
         /// <summary> The Virtual Machine Scale Set priority. If not specified, the default is &apos;Regular&apos;. </summary>
         public ScaleSetPriority? ScaleSetPriority { get; set; }
         /// <summary> This cannot be specified unless the scaleSetPriority is &apos;Spot&apos;. If not specified, the default is &apos;Delete&apos;. </summary>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <summary> The taints added to new nodes during node pool create and scale. For example, key=value:NoSchedule. </summary>
         public IList<string> NodeTaints { get; }
         /// <summary> The ID for Proximity Placement Group. </summary>
-        public string ProximityPlacementGroupId { get; set; }
+        public ResourceIdentifier ProximityPlacementGroupId { get; set; }
         /// <summary> The Kubelet configuration on the agent pool nodes. </summary>
         public KubeletConfig KubeletConfig { get; set; }
         /// <summary> The OS configuration of Linux agent nodes. </summary>

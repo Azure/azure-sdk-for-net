@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class TimeSpan : IUtf8JsonSerializable
+    public partial class ContainerServiceTimeSpan : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             writer.WriteEndObject();
         }
 
-        internal static TimeSpan DeserializeTimeSpan(JsonElement element)
+        internal static ContainerServiceTimeSpan DeserializeContainerServiceTimeSpan(JsonElement element)
         {
             Optional<DateTimeOffset> start = default;
             Optional<DateTimeOffset> end = default;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new TimeSpan(Optional.ToNullable(start), Optional.ToNullable(end));
+            return new ContainerServiceTimeSpan(Optional.ToNullable(start), Optional.ToNullable(end));
         }
     }
 }

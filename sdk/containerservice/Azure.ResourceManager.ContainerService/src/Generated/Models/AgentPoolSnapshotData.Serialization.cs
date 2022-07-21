@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerService
 {
-    public partial class SnapshotData : IUtf8JsonSerializable
+    public partial class AgentPoolSnapshotData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ContainerService
             writer.WriteEndObject();
         }
 
-        internal static SnapshotData DeserializeSnapshotData(JsonElement element)
+        internal static AgentPoolSnapshotData DeserializeAgentPoolSnapshotData(JsonElement element)
         {
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.ContainerService
                     continue;
                 }
             }
-            return new SnapshotData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, creationData.Value, Optional.ToNullable(snapshotType), kubernetesVersion.Value, nodeImageVersion.Value, Optional.ToNullable(osType), Optional.ToNullable(osSku), vmSize.Value, Optional.ToNullable(enableFIPS));
+            return new AgentPoolSnapshotData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, creationData.Value, Optional.ToNullable(snapshotType), kubernetesVersion.Value, nodeImageVersion.Value, Optional.ToNullable(osType), Optional.ToNullable(osSku), vmSize.Value, Optional.ToNullable(enableFIPS));
         }
     }
 }

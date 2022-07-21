@@ -234,8 +234,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             Optional<OSDiskType> osDiskType = default;
             Optional<KubeletDiskType> kubeletDiskType = default;
             Optional<WorkloadRuntime> workloadRuntime = default;
-            Optional<string> vnetSubnetId = default;
-            Optional<string> podSubnetId = default;
+            Optional<ResourceIdentifier> vnetSubnetId = default;
+            Optional<ResourceIdentifier> podSubnetId = default;
             Optional<int> maxPods = default;
             Optional<OSType> osType = default;
             Optional<OSSku> osSku = default;
@@ -253,14 +253,14 @@ namespace Azure.ResourceManager.ContainerService.Models
             Optional<PowerState> powerState = default;
             Optional<IList<string>> availabilityZones = default;
             Optional<bool> enableNodePublicIP = default;
-            Optional<string> nodePublicIPPrefixId = default;
+            Optional<ResourceIdentifier> nodePublicIPPrefixId = default;
             Optional<ScaleSetPriority> scaleSetPriority = default;
             Optional<ScaleSetEvictionPolicy> scaleSetEvictionPolicy = default;
             Optional<float> spotMaxPrice = default;
             Optional<IDictionary<string, string>> tags = default;
             Optional<IDictionary<string, string>> nodeLabels = default;
             Optional<IList<string>> nodeTaints = default;
-            Optional<string> proximityPlacementGroupId = default;
+            Optional<ResourceIdentifier> proximityPlacementGroupId = default;
             Optional<KubeletConfig> kubeletConfig = default;
             Optional<LinuxOSConfig> linuxOSConfig = default;
             Optional<bool> enableEncryptionAtHost = default;
@@ -327,12 +327,22 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 if (property.NameEquals("vnetSubnetID"))
                 {
-                    vnetSubnetId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    vnetSubnetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("podSubnetID"))
                 {
-                    podSubnetId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    podSubnetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("maxPods"))
@@ -492,7 +502,12 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 if (property.NameEquals("nodePublicIPPrefixID"))
                 {
-                    nodePublicIPPrefixId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    nodePublicIPPrefixId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("scaleSetPriority"))
@@ -572,7 +587,12 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 if (property.NameEquals("proximityPlacementGroupID"))
                 {
-                    proximityPlacementGroupId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    proximityPlacementGroupId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("kubeletConfig"))

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    internal partial class ManagedClusterStorageProfileFileCSIDriver : IUtf8JsonSerializable
+    internal partial class ManagedClusterStorageProfileFileCsiDriver : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             writer.WriteEndObject();
         }
 
-        internal static ManagedClusterStorageProfileFileCSIDriver DeserializeManagedClusterStorageProfileFileCSIDriver(JsonElement element)
+        internal static ManagedClusterStorageProfileFileCsiDriver DeserializeManagedClusterStorageProfileFileCsiDriver(JsonElement element)
         {
             Optional<bool> enabled = default;
             foreach (var property in element.EnumerateObject())
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new ManagedClusterStorageProfileFileCSIDriver(Optional.ToNullable(enabled));
+            return new ManagedClusterStorageProfileFileCsiDriver(Optional.ToNullable(enabled));
         }
     }
 }

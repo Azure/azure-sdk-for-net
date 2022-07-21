@@ -11,11 +11,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class CredentialResults
+    public partial class ManagedClusterCredentials
     {
-        internal static CredentialResults DeserializeCredentialResults(JsonElement element)
+        internal static ManagedClusterCredentials DeserializeManagedClusterCredentials(JsonElement element)
         {
-            Optional<IReadOnlyList<CredentialResult>> kubeconfigs = default;
+            Optional<IReadOnlyList<ManagedClusterCredential>> kubeconfigs = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kubeconfigs"))
@@ -25,16 +25,16 @@ namespace Azure.ResourceManager.ContainerService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<CredentialResult> array = new List<CredentialResult>();
+                    List<ManagedClusterCredential> array = new List<ManagedClusterCredential>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CredentialResult.DeserializeCredentialResult(item));
+                        array.Add(ManagedClusterCredential.DeserializeManagedClusterCredential(item));
                     }
                     kubeconfigs = array;
                     continue;
                 }
             }
-            return new CredentialResults(Optional.ToList(kubeconfigs));
+            return new ManagedClusterCredentials(Optional.ToList(kubeconfigs));
         }
     }
 }

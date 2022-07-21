@@ -17,15 +17,15 @@ namespace Azure.ResourceManager.ContainerService.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Managed))
+            if (Optional.IsDefined(IsManagedAadEnabled))
             {
                 writer.WritePropertyName("managed");
-                writer.WriteBooleanValue(Managed.Value);
+                writer.WriteBooleanValue(IsManagedAadEnabled.Value);
             }
-            if (Optional.IsDefined(EnableAzureRbac))
+            if (Optional.IsDefined(IsAzureRbacEnabled))
             {
                 writer.WritePropertyName("enableAzureRBAC");
-                writer.WriteBooleanValue(EnableAzureRbac.Value);
+                writer.WriteBooleanValue(IsAzureRbacEnabled.Value);
             }
             if (Optional.IsCollectionDefined(AdminGroupObjectIds))
             {

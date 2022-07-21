@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class TimeInWeek : IUtf8JsonSerializable
+    public partial class ContainerServiceTimeInWeek : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.ContainerService.Models
             writer.WriteEndObject();
         }
 
-        internal static TimeInWeek DeserializeTimeInWeek(JsonElement element)
+        internal static ContainerServiceTimeInWeek DeserializeContainerServiceTimeInWeek(JsonElement element)
         {
-            Optional<WeekDay> day = default;
+            Optional<ContainerServiceWeekDay> day = default;
             Optional<IList<int>> hourSlots = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    day = new WeekDay(property.Value.GetString());
+                    day = new ContainerServiceWeekDay(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("hourSlots"))
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new TimeInWeek(Optional.ToNullable(day), Optional.ToList(hourSlots));
+            return new ContainerServiceTimeInWeek(Optional.ToNullable(day), Optional.ToList(hourSlots));
         }
     }
 }

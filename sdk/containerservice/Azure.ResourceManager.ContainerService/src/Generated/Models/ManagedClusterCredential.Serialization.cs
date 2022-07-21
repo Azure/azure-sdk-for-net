@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class CredentialResult
+    public partial class ManagedClusterCredential
     {
-        internal static CredentialResult DeserializeCredentialResult(JsonElement element)
+        internal static ManagedClusterCredential DeserializeManagedClusterCredential(JsonElement element)
         {
             Optional<string> name = default;
             Optional<byte[]> value = default;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new CredentialResult(name.Value, value.Value);
+            return new ManagedClusterCredential(name.Value, value.Value);
         }
     }
 }

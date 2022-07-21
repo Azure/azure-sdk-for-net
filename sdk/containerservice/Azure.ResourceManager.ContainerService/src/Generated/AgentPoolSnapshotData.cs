@@ -12,16 +12,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerService
 {
-    /// <summary> A class representing the Snapshot data model. </summary>
-    public partial class SnapshotData : TrackedResourceData
+    /// <summary> A class representing the AgentPoolSnapshot data model. </summary>
+    public partial class AgentPoolSnapshotData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of SnapshotData. </summary>
+        /// <summary> Initializes a new instance of AgentPoolSnapshotData. </summary>
         /// <param name="location"> The location. </param>
-        public SnapshotData(AzureLocation location) : base(location)
+        public AgentPoolSnapshotData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of SnapshotData. </summary>
+        /// <summary> Initializes a new instance of AgentPoolSnapshotData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="osSku"> Specifies an OS SKU. This value must not be specified if OSType is Windows. </param>
         /// <param name="vmSize"> The size of the VM. </param>
         /// <param name="enableFips"> Whether to use a FIPS-enabled OS. </param>
-        internal SnapshotData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CreationData creationData, SnapshotType? snapshotType, string kubernetesVersion, string nodeImageVersion, OSType? osType, OSSku? osSku, string vmSize, bool? enableFips) : base(id, name, resourceType, systemData, tags, location)
+        internal AgentPoolSnapshotData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CreationData creationData, SnapshotType? snapshotType, string kubernetesVersion, string nodeImageVersion, OSType? osType, OSSku? osSku, string vmSize, bool? enableFips) : base(id, name, resourceType, systemData, tags, location)
         {
             CreationData = creationData;
             SnapshotType = snapshotType;

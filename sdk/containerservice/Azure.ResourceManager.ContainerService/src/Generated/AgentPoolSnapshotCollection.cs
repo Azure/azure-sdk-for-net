@@ -21,28 +21,28 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.ContainerService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SnapshotResource" /> and their operations.
-    /// Each <see cref="SnapshotResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="SnapshotCollection" /> instance call the GetSnapshots method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="AgentPoolSnapshotResource" /> and their operations.
+    /// Each <see cref="AgentPoolSnapshotResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get an <see cref="AgentPoolSnapshotCollection" /> instance call the GetAgentPoolSnapshots method from an instance of <see cref="ResourceGroupResource" />.
     /// </summary>
-    public partial class SnapshotCollection : ArmCollection, IEnumerable<SnapshotResource>, IAsyncEnumerable<SnapshotResource>
+    public partial class AgentPoolSnapshotCollection : ArmCollection, IEnumerable<AgentPoolSnapshotResource>, IAsyncEnumerable<AgentPoolSnapshotResource>
     {
-        private readonly ClientDiagnostics _snapshotClientDiagnostics;
-        private readonly SnapshotsRestOperations _snapshotRestClient;
+        private readonly ClientDiagnostics _agentPoolSnapshotSnapshotsClientDiagnostics;
+        private readonly SnapshotsRestOperations _agentPoolSnapshotSnapshotsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SnapshotCollection"/> class for mocking. </summary>
-        protected SnapshotCollection()
+        /// <summary> Initializes a new instance of the <see cref="AgentPoolSnapshotCollection"/> class for mocking. </summary>
+        protected AgentPoolSnapshotCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SnapshotCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AgentPoolSnapshotCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal SnapshotCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal AgentPoolSnapshotCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _snapshotClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerService", SnapshotResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SnapshotResource.ResourceType, out string snapshotApiVersion);
-            _snapshotRestClient = new SnapshotsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, snapshotApiVersion);
+            _agentPoolSnapshotSnapshotsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerService", AgentPoolSnapshotResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(AgentPoolSnapshotResource.ResourceType, out string agentPoolSnapshotSnapshotsApiVersion);
+            _agentPoolSnapshotSnapshotsRestClient = new SnapshotsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, agentPoolSnapshotSnapshotsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -65,17 +65,17 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<SnapshotResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string resourceName, SnapshotData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<AgentPoolSnapshotResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string resourceName, AgentPoolSnapshotData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _snapshotClientDiagnostics.CreateScope("SnapshotCollection.CreateOrUpdate");
+            using var scope = _agentPoolSnapshotSnapshotsClientDiagnostics.CreateScope("AgentPoolSnapshotCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _snapshotRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerServiceArmOperation<SnapshotResource>(Response.FromValue(new SnapshotResource(Client, response), response.GetRawResponse()));
+                var response = await _agentPoolSnapshotSnapshotsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new ContainerServiceArmOperation<AgentPoolSnapshotResource>(Response.FromValue(new AgentPoolSnapshotResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -98,17 +98,17 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<SnapshotResource> CreateOrUpdate(WaitUntil waitUntil, string resourceName, SnapshotData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<AgentPoolSnapshotResource> CreateOrUpdate(WaitUntil waitUntil, string resourceName, AgentPoolSnapshotData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _snapshotClientDiagnostics.CreateScope("SnapshotCollection.CreateOrUpdate");
+            using var scope = _agentPoolSnapshotSnapshotsClientDiagnostics.CreateScope("AgentPoolSnapshotCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _snapshotRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data, cancellationToken);
-                var operation = new ContainerServiceArmOperation<SnapshotResource>(Response.FromValue(new SnapshotResource(Client, response), response.GetRawResponse()));
+                var response = _agentPoolSnapshotSnapshotsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data, cancellationToken);
+                var operation = new ContainerServiceArmOperation<AgentPoolSnapshotResource>(Response.FromValue(new AgentPoolSnapshotResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -129,18 +129,18 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        public virtual async Task<Response<SnapshotResource>> GetAsync(string resourceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AgentPoolSnapshotResource>> GetAsync(string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using var scope = _snapshotClientDiagnostics.CreateScope("SnapshotCollection.Get");
+            using var scope = _agentPoolSnapshotSnapshotsClientDiagnostics.CreateScope("AgentPoolSnapshotCollection.Get");
             scope.Start();
             try
             {
-                var response = await _snapshotRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken).ConfigureAwait(false);
+                var response = await _agentPoolSnapshotSnapshotsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SnapshotResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AgentPoolSnapshotResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -158,18 +158,18 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        public virtual Response<SnapshotResource> Get(string resourceName, CancellationToken cancellationToken = default)
+        public virtual Response<AgentPoolSnapshotResource> Get(string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using var scope = _snapshotClientDiagnostics.CreateScope("SnapshotCollection.Get");
+            using var scope = _agentPoolSnapshotSnapshotsClientDiagnostics.CreateScope("AgentPoolSnapshotCollection.Get");
             scope.Start();
             try
             {
-                var response = _snapshotRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken);
+                var response = _agentPoolSnapshotSnapshotsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SnapshotResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AgentPoolSnapshotResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -184,17 +184,17 @@ namespace Azure.ResourceManager.ContainerService
         /// Operation Id: Snapshots_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SnapshotResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SnapshotResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AgentPoolSnapshotResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AgentPoolSnapshotResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SnapshotResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<AgentPoolSnapshotResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _snapshotClientDiagnostics.CreateScope("SnapshotCollection.GetAll");
+                using var scope = _agentPoolSnapshotSnapshotsClientDiagnostics.CreateScope("AgentPoolSnapshotCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _snapshotRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SnapshotResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _agentPoolSnapshotSnapshotsRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new AgentPoolSnapshotResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -202,14 +202,14 @@ namespace Azure.ResourceManager.ContainerService
                     throw;
                 }
             }
-            async Task<Page<SnapshotResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<AgentPoolSnapshotResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _snapshotClientDiagnostics.CreateScope("SnapshotCollection.GetAll");
+                using var scope = _agentPoolSnapshotSnapshotsClientDiagnostics.CreateScope("AgentPoolSnapshotCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _snapshotRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SnapshotResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _agentPoolSnapshotSnapshotsRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new AgentPoolSnapshotResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -226,17 +226,17 @@ namespace Azure.ResourceManager.ContainerService
         /// Operation Id: Snapshots_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SnapshotResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SnapshotResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AgentPoolSnapshotResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AgentPoolSnapshotResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<SnapshotResource> FirstPageFunc(int? pageSizeHint)
+            Page<AgentPoolSnapshotResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _snapshotClientDiagnostics.CreateScope("SnapshotCollection.GetAll");
+                using var scope = _agentPoolSnapshotSnapshotsClientDiagnostics.CreateScope("AgentPoolSnapshotCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _snapshotRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SnapshotResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _agentPoolSnapshotSnapshotsRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new AgentPoolSnapshotResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -244,14 +244,14 @@ namespace Azure.ResourceManager.ContainerService
                     throw;
                 }
             }
-            Page<SnapshotResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<AgentPoolSnapshotResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _snapshotClientDiagnostics.CreateScope("SnapshotCollection.GetAll");
+                using var scope = _agentPoolSnapshotSnapshotsClientDiagnostics.CreateScope("AgentPoolSnapshotCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _snapshotRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SnapshotResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _agentPoolSnapshotSnapshotsRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new AgentPoolSnapshotResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -275,11 +275,11 @@ namespace Azure.ResourceManager.ContainerService
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using var scope = _snapshotClientDiagnostics.CreateScope("SnapshotCollection.Exists");
+            using var scope = _agentPoolSnapshotSnapshotsClientDiagnostics.CreateScope("AgentPoolSnapshotCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _snapshotRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _agentPoolSnapshotSnapshotsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -302,11 +302,11 @@ namespace Azure.ResourceManager.ContainerService
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using var scope = _snapshotClientDiagnostics.CreateScope("SnapshotCollection.Exists");
+            using var scope = _agentPoolSnapshotSnapshotsClientDiagnostics.CreateScope("AgentPoolSnapshotCollection.Exists");
             scope.Start();
             try
             {
-                var response = _snapshotRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken);
+                var response = _agentPoolSnapshotSnapshotsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.ContainerService
             }
         }
 
-        IEnumerator<SnapshotResource> IEnumerable<SnapshotResource>.GetEnumerator()
+        IEnumerator<AgentPoolSnapshotResource> IEnumerable<AgentPoolSnapshotResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.ContainerService
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<SnapshotResource> IAsyncEnumerable<SnapshotResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<AgentPoolSnapshotResource> IAsyncEnumerable<AgentPoolSnapshotResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

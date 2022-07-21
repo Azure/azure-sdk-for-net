@@ -26,6 +26,15 @@ rename-mapping:
   Expander: AutoScaleExpander
   KubeletConfig.containerLogMaxSizeMB: ContainerLogMaxSizeInMB
   LinuxOSConfig.swapFileSizeMB: SwapFileSizeInMB
+  ManagedClusterAADProfile.managed: IsManagedAadEnabled
+  ManagedClusterAADProfile.enableAzureRBAC: IsAzureRbacEnabled
+  ConnectionStatus: ContainerServicePrivateLinkServiceConnectionStatus
+  CredentialResults: ManagedClusterCredentials
+  CredentialResult: ManagedClusterCredential
+  LicenseType: WindowsVmLicenseType
+  ManagedClusterPropertiesAutoScalerProfile: ManagedClusterAutoScalerProfile
+  Snapshot: AgentPoolSnapshot
+  SnapshotListResult: AgentPoolSnapshotListResult
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -35,7 +44,13 @@ format-by-name-rules:
   '*Uris': 'Uri'
   'ResourceType': 'resource-type'
   '*ResourceId': 'arm-id'
-  'nodePublicIPPrefixID': 'arm-id'
+  'NodePublicIPPrefixId': 'arm-id'
+  '*SubnetId': 'arm-id'
+  'ProximityPlacementGroupId': 'arm-id'
+  'DiskEncryptionSetId': 'arm-id'
+  'PrivateLinkServiceId': 'arm-id'
+  'PrincipalId': 'uuid'
+  'IPAddress': 'ip-address'
 
 rename-rules:
   CPU: Cpu
@@ -66,6 +81,18 @@ rename-rules:
   CBLMariner: CblMariner
   API: Api
   OCI: Oci
+  CSI: Csi
+  MIG: Mig
+  Tcpkeepalive: TcpKeepalive
+
+override-operation-name:
+  ResolvePrivateLinkServiceId_POST: ResolvePrivateLinkServiceId
+  AgentPools_GetAvailableAgentPoolVersions: GetAvailableAgentPoolVersions
+
+prepend-rp-prefix:
+  - TimeSpan
+  - TimeInWeek
+  - WeekDay
 
 directive:
   - from: managedClusters.json
@@ -85,4 +112,13 @@ directive:
     where: $.definitions
     transform: >
       $.OSSKU['x-ms-enum'].name = 'OSSku';
+      $.MaintenanceConfigurationProperties.properties.timeInWeek['x-ms-client-name'] = 'TimesInWeek';
+      $.MaintenanceConfigurationProperties.properties.notAllowedTime['x-ms-client-name'] = 'NotAllowedTimes';
+      $.PrivateLinkResource.properties.id['x-ms-format'] = 'arm-id';
+      $.ManagedClusterProperties.properties.autoScalerProfile.properties['scan-interval']['x-ms-client-name'] = 'ScanIntervalInSeconds';
+# This caused bugs of duplicate names with single property flatten
+#   - from: managedClusters.json
+#     where: $.definitions..enabled
+#     transform: >
+#       $['x-ms-client-name'] = 'IsEnabled';
 ```

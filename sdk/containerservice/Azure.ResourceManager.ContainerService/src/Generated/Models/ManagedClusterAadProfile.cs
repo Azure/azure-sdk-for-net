@@ -21,17 +21,17 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of ManagedClusterAadProfile. </summary>
-        /// <param name="managed"> Whether to enable managed AAD. </param>
-        /// <param name="enableAzureRbac"> Whether to enable Azure RBAC for Kubernetes authorization. </param>
+        /// <param name="isManagedAadEnabled"> Whether to enable managed AAD. </param>
+        /// <param name="isAzureRbacEnabled"> Whether to enable Azure RBAC for Kubernetes authorization. </param>
         /// <param name="adminGroupObjectIds"> The list of AAD group object IDs that will have admin role of the cluster. </param>
         /// <param name="clientAppId"> The client AAD application ID. </param>
         /// <param name="serverAppId"> The server AAD application ID. </param>
         /// <param name="serverAppSecret"> The server AAD application secret. </param>
         /// <param name="tenantId"> The AAD tenant ID to use for authentication. If not specified, will use the tenant of the deployment subscription. </param>
-        internal ManagedClusterAadProfile(bool? managed, bool? enableAzureRbac, IList<string> adminGroupObjectIds, string clientAppId, string serverAppId, string serverAppSecret, Guid? tenantId)
+        internal ManagedClusterAadProfile(bool? isManagedAadEnabled, bool? isAzureRbacEnabled, IList<string> adminGroupObjectIds, string clientAppId, string serverAppId, string serverAppSecret, Guid? tenantId)
         {
-            Managed = managed;
-            EnableAzureRbac = enableAzureRbac;
+            IsManagedAadEnabled = isManagedAadEnabled;
+            IsAzureRbacEnabled = isAzureRbacEnabled;
             AdminGroupObjectIds = adminGroupObjectIds;
             ClientAppId = clientAppId;
             ServerAppId = serverAppId;
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Whether to enable managed AAD. </summary>
-        public bool? Managed { get; set; }
+        public bool? IsManagedAadEnabled { get; set; }
         /// <summary> Whether to enable Azure RBAC for Kubernetes authorization. </summary>
-        public bool? EnableAzureRbac { get; set; }
+        public bool? IsAzureRbacEnabled { get; set; }
         /// <summary> The list of AAD group object IDs that will have admin role of the cluster. </summary>
         public IList<string> AdminGroupObjectIds { get; }
         /// <summary> The client AAD application ID. </summary>

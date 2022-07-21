@@ -8,16 +8,16 @@
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> AzureDisk CSI Driver settings for the storage profile. </summary>
-    internal partial class ManagedClusterStorageProfileDiskCSIDriver
+    internal partial class ManagedClusterStorageProfileDiskCsiDriver
     {
-        /// <summary> Initializes a new instance of ManagedClusterStorageProfileDiskCSIDriver. </summary>
-        public ManagedClusterStorageProfileDiskCSIDriver()
+        /// <summary> Initializes a new instance of ManagedClusterStorageProfileDiskCsiDriver. </summary>
+        public ManagedClusterStorageProfileDiskCsiDriver()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterStorageProfileDiskCSIDriver. </summary>
+        /// <summary> Initializes a new instance of ManagedClusterStorageProfileDiskCsiDriver. </summary>
         /// <param name="enabled"> Whether to enable AzureDisk CSI Driver. The default value is true. </param>
-        internal ManagedClusterStorageProfileDiskCSIDriver(bool? enabled)
+        internal ManagedClusterStorageProfileDiskCsiDriver(bool? enabled)
         {
             Enabled = enabled;
         }

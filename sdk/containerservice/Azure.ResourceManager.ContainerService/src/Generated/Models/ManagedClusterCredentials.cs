@@ -11,22 +11,22 @@ using Azure.Core;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> The list credential result response. </summary>
-    public partial class CredentialResults
+    public partial class ManagedClusterCredentials
     {
-        /// <summary> Initializes a new instance of CredentialResults. </summary>
-        internal CredentialResults()
+        /// <summary> Initializes a new instance of ManagedClusterCredentials. </summary>
+        internal ManagedClusterCredentials()
         {
-            Kubeconfigs = new ChangeTrackingList<CredentialResult>();
+            Kubeconfigs = new ChangeTrackingList<ManagedClusterCredential>();
         }
 
-        /// <summary> Initializes a new instance of CredentialResults. </summary>
+        /// <summary> Initializes a new instance of ManagedClusterCredentials. </summary>
         /// <param name="kubeconfigs"> Base64-encoded Kubernetes configuration file. </param>
-        internal CredentialResults(IReadOnlyList<CredentialResult> kubeconfigs)
+        internal ManagedClusterCredentials(IReadOnlyList<ManagedClusterCredential> kubeconfigs)
         {
             Kubeconfigs = kubeconfigs;
         }
 
         /// <summary> Base64-encoded Kubernetes configuration file. </summary>
-        public IReadOnlyList<CredentialResult> Kubeconfigs { get; }
+        public IReadOnlyList<ManagedClusterCredential> Kubeconfigs { get; }
     }
 }
