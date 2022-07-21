@@ -12,21 +12,21 @@ using Azure.Core;
 namespace Azure.Communication.CallingServer
 {
     /// <summary> The ParticipantsUpdatedEvent. </summary>
-    public partial class ParticipantsUpdatedEvent
+    internal partial class ParticipantsUpdatedEventInternal
     {
-        /// <summary> Initializes a new instance of ParticipantsUpdatedEvent. </summary>
-        internal ParticipantsUpdatedEvent()
+        /// <summary> Initializes a new instance of ParticipantsUpdatedEventInternal. </summary>
+        internal ParticipantsUpdatedEventInternal()
         {
             Participants = new ChangeTrackingList<CommunicationIdentifierModel>();
         }
 
-        /// <summary> Initializes a new instance of ParticipantsUpdatedEvent. </summary>
+        /// <summary> Initializes a new instance of ParticipantsUpdatedEventInternal. </summary>
         /// <param name="participants"> List of current participants in the call. </param>
         /// <param name="type"></param>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
-        internal ParticipantsUpdatedEvent(IReadOnlyList<CommunicationIdentifierModel> participants, AcsEventType? type, string callConnectionId, string serverCallId, string correlationId)
+        internal ParticipantsUpdatedEventInternal(IReadOnlyList<CommunicationIdentifierModel> participants, AcsEventType? type, string callConnectionId, string serverCallId, string correlationId)
         {
             Participants = participants;
             Type = type;

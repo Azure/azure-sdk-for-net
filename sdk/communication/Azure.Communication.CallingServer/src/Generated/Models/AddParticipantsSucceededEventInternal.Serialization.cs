@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    public partial class AddParticipantsSucceededEvent
+    internal partial class AddParticipantsSucceededEventInternal
     {
-        internal static AddParticipantsSucceededEvent DeserializeAddParticipantsSucceededEvent(JsonElement element)
+        internal static AddParticipantsSucceededEventInternal DeserializeAddParticipantsSucceededEventInternal(JsonElement element)
         {
             Optional<string> operationContext = default;
             Optional<ResultInformation> resultInfo = default;
@@ -81,7 +81,7 @@ namespace Azure.Communication.CallingServer
                     continue;
                 }
             }
-            return new AddParticipantsSucceededEvent(operationContext.Value, resultInfo.Value, Optional.ToList(participants), Optional.ToNullable(type), callConnectionId.Value, serverCallId.Value, correlationId.Value);
+            return new AddParticipantsSucceededEventInternal(operationContext.Value, resultInfo.Value, Optional.ToList(participants), Optional.ToNullable(type), callConnectionId.Value, serverCallId.Value, correlationId.Value);
         }
     }
 }

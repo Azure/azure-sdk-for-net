@@ -11,24 +11,24 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    /// <summary> The AddParticipantsFailedEvent. </summary>
-    public partial class AddParticipantsFailedEvent
+    /// <summary> The AddParticipantsSucceededEvent. </summary>
+    internal partial class AddParticipantsSucceededEventInternal
     {
-        /// <summary> Initializes a new instance of AddParticipantsFailedEvent. </summary>
-        internal AddParticipantsFailedEvent()
+        /// <summary> Initializes a new instance of AddParticipantsSucceededEventInternal. </summary>
+        internal AddParticipantsSucceededEventInternal()
         {
             Participants = new ChangeTrackingList<CommunicationIdentifierModel>();
         }
 
-        /// <summary> Initializes a new instance of AddParticipantsFailedEvent. </summary>
+        /// <summary> Initializes a new instance of AddParticipantsSucceededEventInternal. </summary>
         /// <param name="operationContext"> Operation context. </param>
         /// <param name="resultInfo"></param>
-        /// <param name="participants"> Participants failed to be added. </param>
+        /// <param name="participants"> Participants added. </param>
         /// <param name="type"></param>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
-        internal AddParticipantsFailedEvent(string operationContext, ResultInformation resultInfo, IReadOnlyList<CommunicationIdentifierModel> participants, AcsEventType? type, string callConnectionId, string serverCallId, string correlationId)
+        internal AddParticipantsSucceededEventInternal(string operationContext, ResultInformation resultInfo, IReadOnlyList<CommunicationIdentifierModel> participants, AcsEventType? type, string callConnectionId, string serverCallId, string correlationId)
         {
             OperationContext = operationContext;
             ResultInfo = resultInfo;
@@ -43,7 +43,7 @@ namespace Azure.Communication.CallingServer
         public string OperationContext { get; }
         /// <summary> Gets the result info. </summary>
         public ResultInformation ResultInfo { get; }
-        /// <summary> Participants failed to be added. </summary>
+        /// <summary> Participants added. </summary>
         public IReadOnlyList<CommunicationIdentifierModel> Participants { get; }
         /// <summary> Gets the type. </summary>
         public AcsEventType? Type { get; }

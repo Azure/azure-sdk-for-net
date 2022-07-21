@@ -12,12 +12,10 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    public partial class AddParticipantsFailedEvent
+    internal partial class ParticipantsUpdatedEventInternal
     {
-        internal static AddParticipantsFailedEvent DeserializeAddParticipantsFailedEvent(JsonElement element)
+        internal static ParticipantsUpdatedEventInternal DeserializeParticipantsUpdatedEventInternal(JsonElement element)
         {
-            Optional<string> operationContext = default;
-            Optional<ResultInformation> resultInfo = default;
             Optional<IReadOnlyList<CommunicationIdentifierModel>> participants = default;
             Optional<AcsEventType> type = default;
             Optional<string> callConnectionId = default;
@@ -25,21 +23,6 @@ namespace Azure.Communication.CallingServer
             Optional<string> correlationId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("operationContext"))
-                {
-                    operationContext = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("resultInfo"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    resultInfo = ResultInformation.DeserializeResultInformation(property.Value);
-                    continue;
-                }
                 if (property.NameEquals("participants"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -81,7 +64,7 @@ namespace Azure.Communication.CallingServer
                     continue;
                 }
             }
-            return new AddParticipantsFailedEvent(operationContext.Value, resultInfo.Value, Optional.ToList(participants), Optional.ToNullable(type), callConnectionId.Value, serverCallId.Value, correlationId.Value);
+            return new ParticipantsUpdatedEventInternal(Optional.ToList(participants), Optional.ToNullable(type), callConnectionId.Value, serverCallId.Value, correlationId.Value);
         }
     }
 }
