@@ -885,12 +885,12 @@ namespace Azure.ResourceManager.Monitor
             );
         }
 
-        /// <summary> Gets a collection of DiagnosticSettingsResources in the ArmResource. </summary>
+        /// <summary> Gets a collection of DiagnosticSettingResources in the ArmResource. </summary>
         /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of DiagnosticSettingsResources and their operations over a DiagnosticSettingsResource. </returns>
-        public static DiagnosticSettingsCollection GetAllDiagnosticSettings(this ArmResource armResource)
+        /// <returns> An object representing collection of DiagnosticSettingResources and their operations over a DiagnosticSettingResource. </returns>
+        public static DiagnosticSettingCollection GetDiagnosticSettings(this ArmResource armResource)
         {
-            return GetExtensionClient(armResource).GetAllDiagnosticSettings();
+            return GetExtensionClient(armResource).GetDiagnosticSettings();
         }
 
         /// <summary>
@@ -904,9 +904,9 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<DiagnosticSettingsResource>> GetDiagnosticSettingsAsync(this ArmResource armResource, string name, CancellationToken cancellationToken = default)
+        public static async Task<Response<DiagnosticSettingResource>> GetDiagnosticSettingAsync(this ArmResource armResource, string name, CancellationToken cancellationToken = default)
         {
-            return await armResource.GetAllDiagnosticSettings().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return await armResource.GetDiagnosticSettings().GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -920,9 +920,9 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<DiagnosticSettingsResource> GetDiagnosticSettings(this ArmResource armResource, string name, CancellationToken cancellationToken = default)
+        public static Response<DiagnosticSettingResource> GetDiagnosticSetting(this ArmResource armResource, string name, CancellationToken cancellationToken = default)
         {
-            return armResource.GetAllDiagnosticSettings().Get(name, cancellationToken);
+            return armResource.GetDiagnosticSettings().Get(name, cancellationToken);
         }
 
         /// <summary> Gets a collection of DiagnosticSettingsCategoryResources in the ArmResource. </summary>
@@ -1070,20 +1070,20 @@ namespace Azure.ResourceManager.Monitor
         }
         #endregion
 
-        #region DiagnosticSettingsResource
+        #region DiagnosticSettingResource
         /// <summary>
-        /// Gets an object representing a <see cref="DiagnosticSettingsResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DiagnosticSettingsResource.CreateResourceIdentifier" /> to create a <see cref="DiagnosticSettingsResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DiagnosticSettingResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DiagnosticSettingResource.CreateResourceIdentifier" /> to create a <see cref="DiagnosticSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DiagnosticSettingsResource" /> object. </returns>
-        public static DiagnosticSettingsResource GetDiagnosticSettingsResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DiagnosticSettingResource" /> object. </returns>
+        public static DiagnosticSettingResource GetDiagnosticSettingResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DiagnosticSettingsResource.ValidateResourceId(id);
-                return new DiagnosticSettingsResource(client, id);
+                DiagnosticSettingResource.ValidateResourceId(id);
+                return new DiagnosticSettingResource(client, id);
             }
             );
         }

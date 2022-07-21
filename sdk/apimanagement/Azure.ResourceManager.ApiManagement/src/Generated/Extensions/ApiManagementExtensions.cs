@@ -994,58 +994,58 @@ namespace Azure.ResourceManager.ApiManagement
         }
         #endregion
 
-        #region PortalSigninSettingsResource
+        #region PortalSigninSettingResource
         /// <summary>
-        /// Gets an object representing a <see cref="PortalSigninSettingsResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PortalSigninSettingsResource.CreateResourceIdentifier" /> to create a <see cref="PortalSigninSettingsResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PortalSigninSettingResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PortalSigninSettingResource.CreateResourceIdentifier" /> to create a <see cref="PortalSigninSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PortalSigninSettingsResource" /> object. </returns>
-        public static PortalSigninSettingsResource GetPortalSigninSettingsResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PortalSigninSettingResource" /> object. </returns>
+        public static PortalSigninSettingResource GetPortalSigninSettingResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                PortalSigninSettingsResource.ValidateResourceId(id);
-                return new PortalSigninSettingsResource(client, id);
+                PortalSigninSettingResource.ValidateResourceId(id);
+                return new PortalSigninSettingResource(client, id);
             }
             );
         }
         #endregion
 
-        #region PortalSignupSettingsResource
+        #region PortalSignupSettingResource
         /// <summary>
-        /// Gets an object representing a <see cref="PortalSignupSettingsResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PortalSignupSettingsResource.CreateResourceIdentifier" /> to create a <see cref="PortalSignupSettingsResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PortalSignupSettingResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PortalSignupSettingResource.CreateResourceIdentifier" /> to create a <see cref="PortalSignupSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PortalSignupSettingsResource" /> object. </returns>
-        public static PortalSignupSettingsResource GetPortalSignupSettingsResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PortalSignupSettingResource" /> object. </returns>
+        public static PortalSignupSettingResource GetPortalSignupSettingResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                PortalSignupSettingsResource.ValidateResourceId(id);
-                return new PortalSignupSettingsResource(client, id);
+                PortalSignupSettingResource.ValidateResourceId(id);
+                return new PortalSignupSettingResource(client, id);
             }
             );
         }
         #endregion
 
-        #region PortalDelegationSettingsResource
+        #region PortalDelegationSettingResource
         /// <summary>
-        /// Gets an object representing a <see cref="PortalDelegationSettingsResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PortalDelegationSettingsResource.CreateResourceIdentifier" /> to create a <see cref="PortalDelegationSettingsResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PortalDelegationSettingResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PortalDelegationSettingResource.CreateResourceIdentifier" /> to create a <see cref="PortalDelegationSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PortalDelegationSettingsResource" /> object. </returns>
-        public static PortalDelegationSettingsResource GetPortalDelegationSettingsResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PortalDelegationSettingResource" /> object. </returns>
+        public static PortalDelegationSettingResource GetPortalDelegationSettingResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                PortalDelegationSettingsResource.ValidateResourceId(id);
-                return new PortalDelegationSettingsResource(client, id);
+                PortalDelegationSettingResource.ValidateResourceId(id);
+                return new PortalDelegationSettingResource(client, id);
             }
             );
         }

@@ -74,7 +74,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetAttachmentAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new AttachmentsClient(endpoint, credential);
         /// 
         /// Response response = await client.GetAttachmentAsync("<farmerId>", "<attachmentId>");
@@ -147,7 +147,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetAttachment with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new AttachmentsClient(endpoint, credential);
         /// 
         /// Response response = client.GetAttachment("<farmerId>", "<attachmentId>");
@@ -221,7 +221,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateOrUpdateAsync with required parameters and request content and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new AttachmentsClient(endpoint, credential);
         /// 
         /// var data = File.OpenRead("<filePath>");
@@ -297,7 +297,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateOrUpdate with required parameters and request content and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new AttachmentsClient(endpoint, credential);
         /// 
         /// var data = File.OpenRead("<filePath>");
@@ -372,7 +372,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call DeleteAsync with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new AttachmentsClient(endpoint, credential);
         /// 
         /// Response response = await client.DeleteAsync("<farmerId>", "<attachmentId>");
@@ -410,7 +410,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call Delete with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new AttachmentsClient(endpoint, credential);
         /// 
         /// Response response = client.Delete("<farmerId>", "<attachmentId>");
@@ -448,7 +448,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call DownloadAsync with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new AttachmentsClient(endpoint, credential);
         /// 
         /// Response response = await client.DownloadAsync("<farmerId>", "<attachmentId>");
@@ -486,7 +486,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call Download with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new AttachmentsClient(endpoint, credential);
         /// 
         /// Response response = client.Download("<farmerId>", "<attachmentId>");
@@ -541,7 +541,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetAttachmentsByFarmerIdAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new AttachmentsClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetAttachmentsByFarmerIdAsync("<farmerId>"))
@@ -553,7 +553,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetAttachmentsByFarmerIdAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new AttachmentsClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetAttachmentsByFarmerIdAsync("<farmerId>", new String[]{"<resourceIds>"}, new String[]{"<resourceTypes>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
@@ -649,7 +649,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetAttachmentsByFarmerId with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new AttachmentsClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetAttachmentsByFarmerId("<farmerId>"))
@@ -661,7 +661,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetAttachmentsByFarmerId with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new AttachmentsClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetAttachmentsByFarmerId("<farmerId>", new String[]{"<resourceIds>"}, new String[]{"<resourceTypes>"}, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))

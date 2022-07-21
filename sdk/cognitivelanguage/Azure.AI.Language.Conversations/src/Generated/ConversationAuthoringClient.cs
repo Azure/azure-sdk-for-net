@@ -51,7 +51,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call CreateProjectAsync with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// var data = new {
@@ -72,7 +72,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call CreateProjectAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// var data = new {
@@ -170,7 +170,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call CreateProject with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// var data = new {
@@ -191,7 +191,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call CreateProject with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// var data = new {
@@ -288,7 +288,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetProjectAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// Response response = await client.GetProjectAsync("<projectName>");
@@ -358,7 +358,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetProject with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// Response response = client.GetProject("<projectName>");
@@ -429,7 +429,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetDeploymentAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// Response response = await client.GetDeploymentAsync("<projectName>", "<deploymentName>");
@@ -491,7 +491,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetDeployment with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// Response response = client.GetDeployment("<projectName>", "<deploymentName>");
@@ -554,7 +554,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetDeploymentJobStatusAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// Response response = await client.GetDeploymentJobStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
@@ -653,7 +653,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetDeploymentJobStatus with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// Response response = client.GetDeploymentJobStatus("<projectName>", "<deploymentName>", "<jobId>");
@@ -751,7 +751,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetSwapDeploymentsJobStatusAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// Response response = await client.GetSwapDeploymentsJobStatusAsync("<projectName>", "<jobId>");
@@ -848,7 +848,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetSwapDeploymentsJobStatus with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// Response response = client.GetSwapDeploymentsJobStatus("<projectName>", "<jobId>");
@@ -945,7 +945,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetExportProjectJobStatusAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// Response response = await client.GetExportProjectJobStatusAsync("<projectName>", "<jobId>");
@@ -1044,7 +1044,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetExportProjectJobStatus with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// Response response = client.GetExportProjectJobStatus("<projectName>", "<jobId>");
@@ -1143,7 +1143,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetImportProjectJobStatusAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// Response response = await client.GetImportProjectJobStatusAsync("<projectName>", "<jobId>");
@@ -1240,7 +1240,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetImportProjectJobStatus with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// Response response = client.GetImportProjectJobStatus("<projectName>", "<jobId>");
@@ -1337,7 +1337,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetTrainedModelAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// Response response = await client.GetTrainedModelAsync("<projectName>", "<trainedModelLabel>");
@@ -1399,7 +1399,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetTrainedModel with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// Response response = client.GetTrainedModel("<projectName>", "<trainedModelLabel>");
@@ -1461,7 +1461,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call DeleteTrainedModelAsync with required parameters.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// Response response = await client.DeleteTrainedModelAsync("<projectName>", "<trainedModelLabel>");
@@ -1499,7 +1499,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call DeleteTrainedModel with required parameters.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// Response response = client.DeleteTrainedModel("<projectName>", "<trainedModelLabel>");
@@ -1537,7 +1537,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetModelEvaluationSummaryAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// Response response = await client.GetModelEvaluationSummaryAsync("<projectName>", "<trainedModelLabel>");
@@ -1645,7 +1645,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetModelEvaluationSummary with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// Response response = client.GetModelEvaluationSummary("<projectName>", "<trainedModelLabel>");
@@ -1753,7 +1753,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetTrainingJobStatusAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// Response response = await client.GetTrainingJobStatusAsync("<projectName>", "<jobId>");
@@ -1875,7 +1875,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetTrainingJobStatus with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// Response response = client.GetTrainingJobStatus("<projectName>", "<jobId>");
@@ -1996,7 +1996,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetProjectDeletionJobStatusAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// Response response = await client.GetProjectDeletionJobStatusAsync("<jobId>");
@@ -2091,7 +2091,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetProjectDeletionJobStatus with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// Response response = client.GetProjectDeletionJobStatus("<jobId>");
@@ -2183,7 +2183,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetProjectsAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetProjectsAsync())
@@ -2255,7 +2255,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetProjects and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetProjects())
@@ -2330,7 +2330,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetDeploymentsAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetDeploymentsAsync("<projectName>"))
@@ -2397,7 +2397,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetDeployments with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetDeployments("<projectName>"))
@@ -2464,7 +2464,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetTrainedModelsAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetTrainedModelsAsync("<projectName>"))
@@ -2531,7 +2531,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetTrainedModels with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetTrainedModels("<projectName>"))
@@ -2600,7 +2600,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetModelEvaluationResultsAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetModelEvaluationResultsAsync("<projectName>", "<trainedModelLabel>"))
@@ -2621,7 +2621,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetModelEvaluationResultsAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetModelEvaluationResultsAsync("<projectName>", "<trainedModelLabel>", <Utf16CodeUnit>))
@@ -2706,7 +2706,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetModelEvaluationResults with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetModelEvaluationResults("<projectName>", "<trainedModelLabel>"))
@@ -2727,7 +2727,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetModelEvaluationResults with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetModelEvaluationResults("<projectName>", "<trainedModelLabel>", <Utf16CodeUnit>))
@@ -2810,7 +2810,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetTrainingJobsAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetTrainingJobsAsync("<projectName>"))
@@ -2937,7 +2937,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetTrainingJobs with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetTrainingJobs("<projectName>"))
@@ -3063,7 +3063,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetSupportedLanguagesAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetSupportedLanguagesAsync("<projectKind>"))
@@ -3121,7 +3121,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetSupportedLanguages with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetSupportedLanguages("<projectKind>"))
@@ -3179,7 +3179,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetSupportedPrebuiltEntitiesAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetSupportedPrebuiltEntitiesAsync())
@@ -3193,7 +3193,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetSupportedPrebuiltEntitiesAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetSupportedPrebuiltEntitiesAsync("<language>", true))
@@ -3251,7 +3251,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetSupportedPrebuiltEntities and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetSupportedPrebuiltEntities())
@@ -3265,7 +3265,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetSupportedPrebuiltEntities with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetSupportedPrebuiltEntities("<language>", true))
@@ -3323,7 +3323,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetTrainingConfigVersionsAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetTrainingConfigVersionsAsync("<projectKind>"))
@@ -3381,7 +3381,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call GetTrainingConfigVersions with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetTrainingConfigVersions("<projectKind>"))
@@ -3441,7 +3441,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call DeleteProjectAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// var operation = await client.DeleteProjectAsync(WaitUntil.Completed, "<projectName>");
@@ -3538,7 +3538,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call DeleteProject with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// var operation = client.DeleteProject(WaitUntil.Completed, "<projectName>");
@@ -3638,7 +3638,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call ExportProjectAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// var operation = await client.ExportProjectAsync(WaitUntil.Completed, "<projectName>");
@@ -3654,7 +3654,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call ExportProjectAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// var operation = await client.ExportProjectAsync(WaitUntil.Completed, "<projectName>", "<exportedProjectFormat>", "<assetKind>", <Utf16CodeUnit>);
@@ -3757,7 +3757,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call ExportProject with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// var operation = client.ExportProject(WaitUntil.Completed, "<projectName>");
@@ -3773,7 +3773,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call ExportProject with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// var operation = client.ExportProject(WaitUntil.Completed, "<projectName>", "<exportedProjectFormat>", "<assetKind>", <Utf16CodeUnit>);
@@ -3875,7 +3875,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call ImportProjectAsync with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// var data = new {
@@ -3900,7 +3900,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call ImportProjectAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// var data = new {
@@ -4086,7 +4086,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call ImportProject with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// var data = new {
@@ -4111,7 +4111,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call ImportProject with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// var data = new {
@@ -4296,7 +4296,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call TrainAsync with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// var data = new {
@@ -4320,7 +4320,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call TrainAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// var data = new {
@@ -4470,7 +4470,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call Train with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// var data = new {
@@ -4494,7 +4494,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call Train with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// var data = new {
@@ -4644,7 +4644,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call SwapDeploymentsAsync with required parameters and request content and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// var data = new {
@@ -4757,7 +4757,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call SwapDeployments with required parameters and request content and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// var data = new {
@@ -4871,7 +4871,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call DeployProjectAsync with required parameters and request content and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// var data = new {
@@ -4949,7 +4949,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call DeployProject with required parameters and request content and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// var data = new {
@@ -5026,7 +5026,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call DeleteDeploymentAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// var operation = await client.DeleteDeploymentAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>");
@@ -5125,7 +5125,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call DeleteDeployment with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// var operation = client.DeleteDeployment(WaitUntil.Completed, "<projectName>", "<deploymentName>");
@@ -5224,7 +5224,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call CancelTrainingJobAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// var operation = await client.CancelTrainingJobAsync(WaitUntil.Completed, "<projectName>", "<jobId>");
@@ -5348,7 +5348,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// This sample shows how to call CancelTrainingJob with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// var operation = client.CancelTrainingJob(WaitUntil.Completed, "<projectName>", "<jobId>");

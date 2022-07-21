@@ -69,7 +69,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// This sample shows how to call GetRoleDefinitionsAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new RoleDefinitionsClient(endpoint, credential);
         /// 
         /// Response response = await client.GetRoleDefinitionsAsync();
@@ -80,7 +80,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// This sample shows how to call GetRoleDefinitionsAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new RoleDefinitionsClient(endpoint, credential);
         /// 
         /// Response response = await client.GetRoleDefinitionsAsync(true, "<scope>");
@@ -149,7 +149,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// This sample shows how to call GetRoleDefinitions and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new RoleDefinitionsClient(endpoint, credential);
         /// 
         /// Response response = client.GetRoleDefinitions();
@@ -160,7 +160,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// This sample shows how to call GetRoleDefinitions with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new RoleDefinitionsClient(endpoint, credential);
         /// 
         /// Response response = client.GetRoleDefinitions(true, "<scope>");
@@ -230,7 +230,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// This sample shows how to call GetRoleDefinitionByIdAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new RoleDefinitionsClient(endpoint, credential);
         /// 
         /// Response response = await client.GetRoleDefinitionByIdAsync("<roleDefinitionId>");
@@ -302,7 +302,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// This sample shows how to call GetRoleDefinitionById with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new RoleDefinitionsClient(endpoint, credential);
         /// 
         /// Response response = client.GetRoleDefinitionById("<roleDefinitionId>");
@@ -371,7 +371,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// This sample shows how to call GetScopesAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new RoleDefinitionsClient(endpoint, credential);
         /// 
         /// Response response = await client.GetScopesAsync();
@@ -404,7 +404,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// This sample shows how to call GetScopes and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new RoleDefinitionsClient(endpoint, credential);
         /// 
         /// Response response = client.GetScopes();

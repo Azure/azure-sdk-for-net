@@ -73,7 +73,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call GetKeyVaultReferenceAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// Response response = await client.GetKeyVaultReferenceAsync("<keyVaultName>");
@@ -131,7 +131,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call GetKeyVaultReference with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// Response response = client.GetKeyVaultReference("<keyVaultName>");
@@ -190,7 +190,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call CreateOrUpdateKeyVaultReferenceAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// var data = new {};
@@ -203,7 +203,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call CreateOrUpdateKeyVaultReferenceAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// var data = new {
@@ -283,7 +283,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call CreateOrUpdateKeyVaultReference with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// var data = new {};
@@ -296,7 +296,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call CreateOrUpdateKeyVaultReference with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// var data = new {
@@ -375,7 +375,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call DeleteKeyVaultReferenceAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// Response response = await client.DeleteKeyVaultReferenceAsync("<keyVaultName>");
@@ -433,7 +433,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call DeleteKeyVaultReference with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// Response response = client.DeleteKeyVaultReference("<keyVaultName>");
@@ -491,7 +491,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call GetScanRulesetAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// Response response = await client.GetScanRulesetAsync("<scanRulesetName>");
@@ -1063,7 +1063,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call GetScanRuleset with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// Response response = client.GetScanRuleset("<scanRulesetName>");
@@ -1636,7 +1636,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call CreateOrUpdateScanRulesetAsync with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// var data = new {
@@ -1651,7 +1651,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call CreateOrUpdateScanRulesetAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// var data = new {
@@ -2763,7 +2763,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call CreateOrUpdateScanRuleset with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// var data = new {
@@ -2778,7 +2778,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call CreateOrUpdateScanRuleset with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// var data = new {
@@ -3889,7 +3889,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call DeleteScanRulesetAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// Response response = await client.DeleteScanRulesetAsync("<scanRulesetName>");
@@ -4461,7 +4461,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call DeleteScanRuleset with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// Response response = client.DeleteScanRuleset("<scanRulesetName>");
@@ -5033,7 +5033,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call GetSystemRulesetsForDataSourceAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// Response response = await client.GetSystemRulesetsForDataSourceAsync("<dataSourceType>");
@@ -5605,7 +5605,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call GetSystemRulesetsForDataSource with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// Response response = client.GetSystemRulesetsForDataSource("<dataSourceType>");
@@ -6176,7 +6176,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call GetSystemRulesetsForVersionAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// Response response = await client.GetSystemRulesetsForVersionAsync(1234);
@@ -6187,7 +6187,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call GetSystemRulesetsForVersionAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// Response response = await client.GetSystemRulesetsForVersionAsync(1234, "<dataSourceType>");
@@ -6756,7 +6756,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call GetSystemRulesetsForVersion with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// Response response = client.GetSystemRulesetsForVersion(1234);
@@ -6767,7 +6767,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call GetSystemRulesetsForVersion with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// Response response = client.GetSystemRulesetsForVersion(1234, "<dataSourceType>");
@@ -7335,7 +7335,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call GetLatestSystemRulesetsAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// Response response = await client.GetLatestSystemRulesetsAsync();
@@ -7346,7 +7346,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call GetLatestSystemRulesetsAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// Response response = await client.GetLatestSystemRulesetsAsync("<dataSourceType>");
@@ -7914,7 +7914,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call GetLatestSystemRulesets and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// Response response = client.GetLatestSystemRulesets();
@@ -7925,7 +7925,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call GetLatestSystemRulesets with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// Response response = client.GetLatestSystemRulesets("<dataSourceType>");
@@ -8492,7 +8492,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call GetKeyVaultReferencesAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetKeyVaultReferencesAsync())
@@ -8552,7 +8552,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call GetKeyVaultReferences and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetKeyVaultReferences())
@@ -8612,7 +8612,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call GetClassificationRulesAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetClassificationRulesAsync())
@@ -8668,7 +8668,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call GetClassificationRules and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetClassificationRules())
@@ -8724,7 +8724,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call GetDataSourcesAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetDataSourcesAsync())
@@ -8857,7 +8857,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call GetDataSources and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetDataSources())
@@ -8990,7 +8990,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call GetScanRulesetsAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetScanRulesetsAsync())
@@ -9052,7 +9052,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call GetScanRulesets and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetScanRulesets())
@@ -9114,7 +9114,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call GetSystemRulesetsAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetSystemRulesetsAsync())
@@ -9176,7 +9176,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call GetSystemRulesets and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetSystemRulesets())
@@ -9239,7 +9239,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call GetSystemRulesetsVersionsAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetSystemRulesetsVersionsAsync())
@@ -9251,7 +9251,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call GetSystemRulesetsVersionsAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetSystemRulesetsVersionsAsync("<dataSourceType>"))
@@ -9314,7 +9314,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call GetSystemRulesetsVersions and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetSystemRulesetsVersions())
@@ -9326,7 +9326,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call GetSystemRulesetsVersions with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanningServiceClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetSystemRulesetsVersions("<dataSourceType>"))

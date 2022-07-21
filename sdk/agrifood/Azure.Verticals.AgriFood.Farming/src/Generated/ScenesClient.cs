@@ -73,7 +73,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetSatelliteDataIngestionJobDetailsAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ScenesClient(endpoint, credential);
         /// 
         /// Response response = await client.GetSatelliteDataIngestionJobDetailsAsync("<jobId>");
@@ -167,7 +167,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetSatelliteDataIngestionJobDetails with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ScenesClient(endpoint, credential);
         /// 
         /// Response response = client.GetSatelliteDataIngestionJobDetails("<jobId>");
@@ -260,7 +260,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call DownloadAsync with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ScenesClient(endpoint, credential);
         /// 
         /// Response response = await client.DownloadAsync("<filePath>");
@@ -295,7 +295,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call Download with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ScenesClient(endpoint, credential);
         /// 
         /// Response response = client.Download("<filePath>");
@@ -345,7 +345,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetScenesAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ScenesClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetScenesAsync("<provider>", "<farmerId>", "<boundaryId>"))
@@ -357,7 +357,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetScenesAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ScenesClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetScenesAsync("<provider>", "<farmerId>", "<boundaryId>", "<source>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<imageNames>"}, new Double[]{1234}, new String[]{"<imageFormats>"}, 1234, "<skipToken>"))
@@ -462,7 +462,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetScenes with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ScenesClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetScenes("<provider>", "<farmerId>", "<boundaryId>"))
@@ -474,7 +474,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetScenes with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ScenesClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetScenes("<provider>", "<farmerId>", "<boundaryId>", "<source>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<imageNames>"}, new Double[]{1234}, new String[]{"<imageFormats>"}, 1234, "<skipToken>"))
@@ -567,7 +567,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateSatelliteDataIngestionJobAsync with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ScenesClient(endpoint, credential);
         /// 
         /// var data = new {
@@ -589,7 +589,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateSatelliteDataIngestionJobAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ScenesClient(endpoint, credential);
         /// 
         /// var data = new {
@@ -744,7 +744,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateSatelliteDataIngestionJob with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ScenesClient(endpoint, credential);
         /// 
         /// var data = new {
@@ -766,7 +766,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateSatelliteDataIngestionJob with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ScenesClient(endpoint, credential);
         /// 
         /// var data = new {

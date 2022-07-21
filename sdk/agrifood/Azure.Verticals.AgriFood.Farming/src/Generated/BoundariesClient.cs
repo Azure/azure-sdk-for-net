@@ -73,7 +73,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetCascadeDeleteJobDetailsAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new BoundariesClient(endpoint, credential);
         /// 
         /// Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>");
@@ -153,7 +153,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetCascadeDeleteJobDetails with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new BoundariesClient(endpoint, credential);
         /// 
         /// Response response = client.GetCascadeDeleteJobDetails("<jobId>");
@@ -234,7 +234,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetBoundaryAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new BoundariesClient(endpoint, credential);
         /// 
         /// Response response = await client.GetBoundaryAsync("<farmerId>", "<boundaryId>");
@@ -317,7 +317,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetBoundary with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new BoundariesClient(endpoint, credential);
         /// 
         /// Response response = client.GetBoundary("<farmerId>", "<boundaryId>");
@@ -401,7 +401,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateOrUpdateAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new BoundariesClient(endpoint, credential);
         /// 
         /// var data = new {};
@@ -414,7 +414,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new BoundariesClient(endpoint, credential);
         /// 
         /// var data = new {
@@ -547,7 +547,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateOrUpdate with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new BoundariesClient(endpoint, credential);
         /// 
         /// var data = new {};
@@ -560,7 +560,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new BoundariesClient(endpoint, credential);
         /// 
         /// var data = new {
@@ -692,7 +692,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call DeleteAsync with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new BoundariesClient(endpoint, credential);
         /// 
         /// Response response = await client.DeleteAsync("<farmerId>", "<boundaryId>");
@@ -730,7 +730,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call Delete with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new BoundariesClient(endpoint, credential);
         /// 
         /// Response response = client.Delete("<farmerId>", "<boundaryId>");
@@ -770,7 +770,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetOverlapAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new BoundariesClient(endpoint, credential);
         /// 
         /// Response response = await client.GetOverlapAsync("<farmerId>", "<boundaryId>", "<otherFarmerId>", "<otherBoundaryId>");
@@ -830,7 +830,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetOverlap with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new BoundariesClient(endpoint, credential);
         /// 
         /// Response response = client.GetOverlap("<farmerId>", "<boundaryId>", "<otherFarmerId>", "<otherBoundaryId>");
@@ -908,7 +908,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetBoundariesByFarmerIdAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new BoundariesClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetBoundariesByFarmerIdAsync("<farmerId>"))
@@ -920,7 +920,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetBoundariesByFarmerIdAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new BoundariesClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetBoundariesByFarmerIdAsync("<farmerId>", true, "<parentType>", new String[]{"<parentIds>"}, 1234, 1234, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
@@ -1029,7 +1029,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetBoundariesByFarmerId with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new BoundariesClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetBoundariesByFarmerId("<farmerId>"))
@@ -1041,7 +1041,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetBoundariesByFarmerId with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new BoundariesClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetBoundariesByFarmerId("<farmerId>", true, "<parentType>", new String[]{"<parentIds>"}, 1234, 1234, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
@@ -1130,7 +1130,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call SearchByFarmerIdAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new BoundariesClient(endpoint, credential);
         /// 
         /// var data = new {};
@@ -1144,7 +1144,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call SearchByFarmerIdAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new BoundariesClient(endpoint, credential);
         /// 
         /// var data = new {
@@ -1300,7 +1300,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call SearchByFarmerId with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new BoundariesClient(endpoint, credential);
         /// 
         /// var data = new {};
@@ -1314,7 +1314,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call SearchByFarmerId with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new BoundariesClient(endpoint, credential);
         /// 
         /// var data = new {
@@ -1487,7 +1487,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetBoundariesAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new BoundariesClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetBoundariesAsync())
@@ -1499,7 +1499,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetBoundariesAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new BoundariesClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetBoundariesAsync(true, "<parentType>", new String[]{"<parentIds>"}, 1234, 1234, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
@@ -1603,7 +1603,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetBoundaries and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new BoundariesClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetBoundaries())
@@ -1615,7 +1615,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetBoundaries with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new BoundariesClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetBoundaries(true, "<parentType>", new String[]{"<parentIds>"}, 1234, 1234, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
@@ -1699,7 +1699,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call SearchAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new BoundariesClient(endpoint, credential);
         /// 
         /// var data = new {};
@@ -1713,7 +1713,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call SearchAsync with all request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new BoundariesClient(endpoint, credential);
         /// 
         /// var data = new {
@@ -1864,7 +1864,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call Search and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new BoundariesClient(endpoint, credential);
         /// 
         /// var data = new {};
@@ -1878,7 +1878,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call Search with all request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new BoundariesClient(endpoint, credential);
         /// 
         /// var data = new {
@@ -2034,7 +2034,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateCascadeDeleteJobAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new BoundariesClient(endpoint, credential);
         /// 
         /// var operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<farmerId>", "<boundaryId>");
@@ -2120,7 +2120,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateCascadeDeleteJob with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new BoundariesClient(endpoint, credential);
         /// 
         /// var operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<farmerId>", "<boundaryId>");

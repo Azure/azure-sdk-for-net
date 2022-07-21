@@ -163,11 +163,11 @@ namespace Azure.ResourceManager.Redis
             return GetRedisPatchSchedules().Get(defaultName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of RedisLinkedServerWithPropertiesResources in the Redis. </summary>
-        /// <returns> An object representing collection of RedisLinkedServerWithPropertiesResources and their operations over a RedisLinkedServerWithPropertiesResource. </returns>
-        public virtual RedisLinkedServerWithPropertiesCollection GetAllRedisLinkedServerWithProperties()
+        /// <summary> Gets a collection of RedisLinkedServerWithPropertyResources in the Redis. </summary>
+        /// <returns> An object representing collection of RedisLinkedServerWithPropertyResources and their operations over a RedisLinkedServerWithPropertyResource. </returns>
+        public virtual RedisLinkedServerWithPropertyCollection GetRedisLinkedServerWithProperties()
         {
-            return GetCachedClient(Client => new RedisLinkedServerWithPropertiesCollection(Client, Id));
+            return GetCachedClient(Client => new RedisLinkedServerWithPropertyCollection(Client, Id));
         }
 
         /// <summary>
@@ -180,9 +180,9 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentException"> <paramref name="linkedServerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServerName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<RedisLinkedServerWithPropertiesResource>> GetRedisLinkedServerWithPropertiesAsync(string linkedServerName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RedisLinkedServerWithPropertyResource>> GetRedisLinkedServerWithPropertyAsync(string linkedServerName, CancellationToken cancellationToken = default)
         {
-            return await GetAllRedisLinkedServerWithProperties().GetAsync(linkedServerName, cancellationToken).ConfigureAwait(false);
+            return await GetRedisLinkedServerWithProperties().GetAsync(linkedServerName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -195,9 +195,9 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentException"> <paramref name="linkedServerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServerName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<RedisLinkedServerWithPropertiesResource> GetRedisLinkedServerWithProperties(string linkedServerName, CancellationToken cancellationToken = default)
+        public virtual Response<RedisLinkedServerWithPropertyResource> GetRedisLinkedServerWithProperty(string linkedServerName, CancellationToken cancellationToken = default)
         {
-            return GetAllRedisLinkedServerWithProperties().Get(linkedServerName, cancellationToken);
+            return GetRedisLinkedServerWithProperties().Get(linkedServerName, cancellationToken);
         }
 
         /// <summary> Gets a collection of RedisPrivateEndpointConnectionResources in the Redis. </summary>

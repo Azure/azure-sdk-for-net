@@ -59,7 +59,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetBusinessMetadataDefByGuidAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
         /// Response response = await client.GetBusinessMetadataDefByGuidAsync("<guid>");
@@ -219,7 +219,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetBusinessMetadataDefByGuid with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
         /// Response response = client.GetBusinessMetadataDefByGuid("<guid>");
@@ -379,7 +379,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetBusinessMetadataDefByNameAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
         /// Response response = await client.GetBusinessMetadataDefByNameAsync("<name>");
@@ -539,7 +539,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetBusinessMetadataDefByName with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
         /// Response response = client.GetBusinessMetadataDefByName("<name>");
@@ -699,7 +699,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetClassificationDefByGuidAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
         /// Response response = await client.GetClassificationDefByGuidAsync("<guid>");
@@ -874,7 +874,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetClassificationDefByGuid with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
         /// Response response = client.GetClassificationDefByGuid("<guid>");
@@ -1049,7 +1049,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetClassificationDefByNameAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
         /// Response response = await client.GetClassificationDefByNameAsync("<name>");
@@ -1224,7 +1224,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetClassificationDefByName with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
         /// Response response = client.GetClassificationDefByName("<name>");
@@ -1399,7 +1399,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetEntityDefinitionByGuidAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
         /// Response response = await client.GetEntityDefinitionByGuidAsync("<guid>");
@@ -1598,7 +1598,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetEntityDefinitionByGuid with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
         /// Response response = client.GetEntityDefinitionByGuid("<guid>");
@@ -1797,7 +1797,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetEntityDefinitionByNameAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
         /// Response response = await client.GetEntityDefinitionByNameAsync("<name>");
@@ -1996,7 +1996,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetEntityDefinitionByName with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
         /// Response response = client.GetEntityDefinitionByName("<name>");
@@ -2195,7 +2195,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetEnumDefByGuidAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
         /// Response response = await client.GetEnumDefByGuidAsync("<guid>");
@@ -2331,7 +2331,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetEnumDefByGuid with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
         /// Response response = client.GetEnumDefByGuid("<guid>");
@@ -2467,7 +2467,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetEnumDefByNameAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
         /// Response response = await client.GetEnumDefByNameAsync("<name>");
@@ -2603,7 +2603,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetEnumDefByName with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
         /// Response response = client.GetEnumDefByName("<name>");
@@ -2739,7 +2739,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetRelationshipDefByGuidAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
         /// Response response = await client.GetRelationshipDefByGuidAsync("<guid>");
@@ -2934,7 +2934,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetRelationshipDefByGuid with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
         /// Response response = client.GetRelationshipDefByGuid("<guid>");
@@ -3129,7 +3129,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetRelationshipDefByNameAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
         /// Response response = await client.GetRelationshipDefByNameAsync("<name>");
@@ -3324,7 +3324,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetRelationshipDefByName with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
         /// Response response = client.GetRelationshipDefByName("<name>");
@@ -3519,7 +3519,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetStructDefByGuidAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
         /// Response response = await client.GetStructDefByGuidAsync("<guid>");
@@ -4028,7 +4028,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetStructDefByGuid with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
         /// Response response = client.GetStructDefByGuid("<guid>");
@@ -4537,7 +4537,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetStructDefByNameAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
         /// Response response = await client.GetStructDefByNameAsync("<name>");
@@ -5046,7 +5046,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetStructDefByName with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
         /// Response response = client.GetStructDefByName("<name>");
@@ -5555,7 +5555,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetTypeDefinitionByGuidAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
         /// Response response = await client.GetTypeDefinitionByGuidAsync("<guid>");
@@ -5812,7 +5812,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetTypeDefinitionByGuid with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
         /// Response response = client.GetTypeDefinitionByGuid("<guid>");
@@ -6069,7 +6069,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetTypeDefinitionByNameAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
         /// Response response = await client.GetTypeDefinitionByNameAsync("<name>");
@@ -6326,7 +6326,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetTypeDefinitionByName with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
         /// Response response = client.GetTypeDefinitionByName("<name>");
@@ -6583,7 +6583,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call DeleteTypeByNameAsync with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
         /// Response response = await client.DeleteTypeByNameAsync("<name>");
@@ -6619,7 +6619,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call DeleteTypeByName with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
         /// Response response = client.DeleteTypeByName("<name>");
@@ -6657,7 +6657,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetAllTypeDefinitionsAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
         /// Response response = await client.GetAllTypeDefinitionsAsync();
@@ -6668,7 +6668,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetAllTypeDefinitionsAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
         /// Response response = await client.GetAllTypeDefinitionsAsync(true, "<type>");
@@ -7296,7 +7296,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetAllTypeDefinitions and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
         /// Response response = client.GetAllTypeDefinitions();
@@ -7307,7 +7307,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetAllTypeDefinitions with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
         /// Response response = client.GetAllTypeDefinitions(true, "<type>");
@@ -7935,7 +7935,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call CreateTypeDefinitionsAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
         /// var data = new {};
@@ -7948,7 +7948,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call CreateTypeDefinitionsAsync with all request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
         /// var data = new {
@@ -9408,7 +9408,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call CreateTypeDefinitions and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
         /// var data = new {};
@@ -9421,7 +9421,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call CreateTypeDefinitions with all request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
         /// var data = new {
@@ -10878,7 +10878,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call UpdateAtlasTypeDefinitionsAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
         /// var data = new {};
@@ -10891,7 +10891,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call UpdateAtlasTypeDefinitionsAsync with all request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
         /// var data = new {
@@ -12348,7 +12348,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call UpdateAtlasTypeDefinitions and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
         /// var data = new {};
@@ -12361,7 +12361,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call UpdateAtlasTypeDefinitions with all request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
         /// var data = new {
@@ -13818,7 +13818,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call DeleteTypeDefinitionsAsync.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
         /// var data = new {};
@@ -13829,7 +13829,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call DeleteTypeDefinitionsAsync with all request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
         /// var data = new {
@@ -14698,7 +14698,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call DeleteTypeDefinitions.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
         /// var data = new {};
@@ -14709,7 +14709,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call DeleteTypeDefinitions with all request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
         /// var data = new {
@@ -15581,7 +15581,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetTypeDefinitionHeadersAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
         /// Response response = await client.GetTypeDefinitionHeadersAsync();
@@ -15592,7 +15592,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetTypeDefinitionHeadersAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
         /// Response response = await client.GetTypeDefinitionHeadersAsync(true, "<type>");
@@ -15646,7 +15646,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetTypeDefinitionHeaders and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
         /// Response response = client.GetTypeDefinitionHeaders();
@@ -15657,7 +15657,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetTypeDefinitionHeaders with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
         /// Response response = client.GetTypeDefinitionHeaders(true, "<type>");
@@ -15709,7 +15709,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetTermTemplateDefByGuidAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
         /// Response response = await client.GetTermTemplateDefByGuidAsync("<guid>");
@@ -15869,7 +15869,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetTermTemplateDefByGuid with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
         /// Response response = client.GetTermTemplateDefByGuid("<guid>");
@@ -16029,7 +16029,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetTermTemplateDefByNameAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
         /// Response response = await client.GetTermTemplateDefByNameAsync("<name>");
@@ -16189,7 +16189,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetTermTemplateDefByName with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
         /// 
         /// Response response = client.GetTermTemplateDefByName("<name>");

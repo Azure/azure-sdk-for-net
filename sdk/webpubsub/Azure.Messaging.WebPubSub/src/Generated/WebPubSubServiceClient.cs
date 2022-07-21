@@ -43,7 +43,7 @@ namespace Azure.Messaging.WebPubSub
         /// <example>
         /// This sample shows how to call GenerateClientTokenImplAsync and parse the result.
         /// <code><![CDATA[
-        /// var client = new WebPubSubServiceClient("<https://my-account-name.azure.com>", "<hub>");
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
         /// 
         /// Response response = await client.GenerateClientTokenImplAsync();
         /// 
@@ -52,7 +52,7 @@ namespace Azure.Messaging.WebPubSub
         /// ]]></code>
         /// This sample shows how to call GenerateClientTokenImplAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
-        /// var client = new WebPubSubServiceClient("<https://my-account-name.azure.com>", "<hub>");
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
         /// 
         /// Response response = await client.GenerateClientTokenImplAsync("<userId>", new String[]{"<role>"}, 1234);
         /// 
@@ -98,7 +98,7 @@ namespace Azure.Messaging.WebPubSub
         /// <example>
         /// This sample shows how to call GenerateClientTokenImpl and parse the result.
         /// <code><![CDATA[
-        /// var client = new WebPubSubServiceClient("<https://my-account-name.azure.com>", "<hub>");
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
         /// 
         /// Response response = client.GenerateClientTokenImpl();
         /// 
@@ -107,7 +107,7 @@ namespace Azure.Messaging.WebPubSub
         /// ]]></code>
         /// This sample shows how to call GenerateClientTokenImpl with all parameters, and how to parse the result.
         /// <code><![CDATA[
-        /// var client = new WebPubSubServiceClient("<https://my-account-name.azure.com>", "<hub>");
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
         /// 
         /// Response response = client.GenerateClientTokenImpl("<userId>", new String[]{"<role>"}, 1234);
         /// 
@@ -152,14 +152,14 @@ namespace Azure.Messaging.WebPubSub
         /// <example>
         /// This sample shows how to call CloseAllConnectionsAsync.
         /// <code><![CDATA[
-        /// var client = new WebPubSubServiceClient("<https://my-account-name.azure.com>", "<hub>");
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
         /// 
         /// Response response = await client.CloseAllConnectionsAsync();
         /// Console.WriteLine(response.Status);
         /// ]]></code>
         /// This sample shows how to call CloseAllConnectionsAsync with all parameters.
         /// <code><![CDATA[
-        /// var client = new WebPubSubServiceClient("<https://my-account-name.azure.com>", "<hub>");
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
         /// 
         /// Response response = await client.CloseAllConnectionsAsync(new String[]{"<excluded>"}, "<reason>");
         /// Console.WriteLine(response.Status);
@@ -190,14 +190,14 @@ namespace Azure.Messaging.WebPubSub
         /// <example>
         /// This sample shows how to call CloseAllConnections.
         /// <code><![CDATA[
-        /// var client = new WebPubSubServiceClient("<https://my-account-name.azure.com>", "<hub>");
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
         /// 
         /// Response response = client.CloseAllConnections();
         /// Console.WriteLine(response.Status);
         /// ]]></code>
         /// This sample shows how to call CloseAllConnections with all parameters.
         /// <code><![CDATA[
-        /// var client = new WebPubSubServiceClient("<https://my-account-name.azure.com>", "<hub>");
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
         /// 
         /// Response response = client.CloseAllConnections(new String[]{"<excluded>"}, "<reason>");
         /// Console.WriteLine(response.Status);
@@ -230,7 +230,7 @@ namespace Azure.Messaging.WebPubSub
         /// <example>
         /// This sample shows how to call SendToAllAsync with required parameters and request content.
         /// <code><![CDATA[
-        /// var client = new WebPubSubServiceClient("<https://my-account-name.azure.com>", "<hub>");
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
         /// 
         /// var data = File.OpenRead("<filePath>");
         /// 
@@ -239,7 +239,7 @@ namespace Azure.Messaging.WebPubSub
         /// ]]></code>
         /// This sample shows how to call SendToAllAsync with all parameters and request content.
         /// <code><![CDATA[
-        /// var client = new WebPubSubServiceClient("<https://my-account-name.azure.com>", "<hub>");
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
         /// 
         /// var data = File.OpenRead("<filePath>");
         /// 
@@ -276,7 +276,7 @@ namespace Azure.Messaging.WebPubSub
         /// <example>
         /// This sample shows how to call SendToAll with required parameters and request content.
         /// <code><![CDATA[
-        /// var client = new WebPubSubServiceClient("<https://my-account-name.azure.com>", "<hub>");
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
         /// 
         /// var data = File.OpenRead("<filePath>");
         /// 
@@ -285,7 +285,7 @@ namespace Azure.Messaging.WebPubSub
         /// ]]></code>
         /// This sample shows how to call SendToAll with all parameters and request content.
         /// <code><![CDATA[
-        /// var client = new WebPubSubServiceClient("<https://my-account-name.azure.com>", "<hub>");
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
         /// 
         /// var data = File.OpenRead("<filePath>");
         /// 
@@ -321,7 +321,7 @@ namespace Azure.Messaging.WebPubSub
         /// <example>
         /// This sample shows how to call ConnectionExistsImplAsync with required parameters.
         /// <code><![CDATA[
-        /// var client = new WebPubSubServiceClient("<https://my-account-name.azure.com>", "<hub>");
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
         /// 
         /// Response response = await client.ConnectionExistsImplAsync("<connectionId>");
         /// Console.WriteLine(response.Status);
@@ -355,7 +355,7 @@ namespace Azure.Messaging.WebPubSub
         /// <example>
         /// This sample shows how to call ConnectionExistsImpl with required parameters.
         /// <code><![CDATA[
-        /// var client = new WebPubSubServiceClient("<https://my-account-name.azure.com>", "<hub>");
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
         /// 
         /// Response response = client.ConnectionExistsImpl("<connectionId>");
         /// Console.WriteLine(response.Status);
@@ -390,14 +390,14 @@ namespace Azure.Messaging.WebPubSub
         /// <example>
         /// This sample shows how to call CloseConnectionAsync with required parameters.
         /// <code><![CDATA[
-        /// var client = new WebPubSubServiceClient("<https://my-account-name.azure.com>", "<hub>");
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
         /// 
         /// Response response = await client.CloseConnectionAsync("<connectionId>");
         /// Console.WriteLine(response.Status);
         /// ]]></code>
         /// This sample shows how to call CloseConnectionAsync with all parameters.
         /// <code><![CDATA[
-        /// var client = new WebPubSubServiceClient("<https://my-account-name.azure.com>", "<hub>");
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
         /// 
         /// Response response = await client.CloseConnectionAsync("<connectionId>", "<reason>");
         /// Console.WriteLine(response.Status);
@@ -432,14 +432,14 @@ namespace Azure.Messaging.WebPubSub
         /// <example>
         /// This sample shows how to call CloseConnection with required parameters.
         /// <code><![CDATA[
-        /// var client = new WebPubSubServiceClient("<https://my-account-name.azure.com>", "<hub>");
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
         /// 
         /// Response response = client.CloseConnection("<connectionId>");
         /// Console.WriteLine(response.Status);
         /// ]]></code>
         /// This sample shows how to call CloseConnection with all parameters.
         /// <code><![CDATA[
-        /// var client = new WebPubSubServiceClient("<https://my-account-name.azure.com>", "<hub>");
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
         /// 
         /// Response response = client.CloseConnection("<connectionId>", "<reason>");
         /// Console.WriteLine(response.Status);
@@ -475,7 +475,7 @@ namespace Azure.Messaging.WebPubSub
         /// <example>
         /// This sample shows how to call SendToConnectionAsync with required parameters and request content.
         /// <code><![CDATA[
-        /// var client = new WebPubSubServiceClient("<https://my-account-name.azure.com>", "<hub>");
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
         /// 
         /// var data = File.OpenRead("<filePath>");
         /// 
@@ -514,7 +514,7 @@ namespace Azure.Messaging.WebPubSub
         /// <example>
         /// This sample shows how to call SendToConnection with required parameters and request content.
         /// <code><![CDATA[
-        /// var client = new WebPubSubServiceClient("<https://my-account-name.azure.com>", "<hub>");
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
         /// 
         /// var data = File.OpenRead("<filePath>");
         /// 
@@ -551,7 +551,7 @@ namespace Azure.Messaging.WebPubSub
         /// <example>
         /// This sample shows how to call GroupExistsImplAsync with required parameters.
         /// <code><![CDATA[
-        /// var client = new WebPubSubServiceClient("<https://my-account-name.azure.com>", "<hub>");
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
         /// 
         /// Response response = await client.GroupExistsImplAsync("<group>");
         /// Console.WriteLine(response.Status);
@@ -585,7 +585,7 @@ namespace Azure.Messaging.WebPubSub
         /// <example>
         /// This sample shows how to call GroupExistsImpl with required parameters.
         /// <code><![CDATA[
-        /// var client = new WebPubSubServiceClient("<https://my-account-name.azure.com>", "<hub>");
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
         /// 
         /// Response response = client.GroupExistsImpl("<group>");
         /// Console.WriteLine(response.Status);
@@ -621,14 +621,14 @@ namespace Azure.Messaging.WebPubSub
         /// <example>
         /// This sample shows how to call CloseGroupConnectionsAsync with required parameters.
         /// <code><![CDATA[
-        /// var client = new WebPubSubServiceClient("<https://my-account-name.azure.com>", "<hub>");
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
         /// 
         /// Response response = await client.CloseGroupConnectionsAsync("<group>");
         /// Console.WriteLine(response.Status);
         /// ]]></code>
         /// This sample shows how to call CloseGroupConnectionsAsync with all parameters.
         /// <code><![CDATA[
-        /// var client = new WebPubSubServiceClient("<https://my-account-name.azure.com>", "<hub>");
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
         /// 
         /// Response response = await client.CloseGroupConnectionsAsync("<group>", new String[]{"<excluded>"}, "<reason>");
         /// Console.WriteLine(response.Status);
@@ -664,14 +664,14 @@ namespace Azure.Messaging.WebPubSub
         /// <example>
         /// This sample shows how to call CloseGroupConnections with required parameters.
         /// <code><![CDATA[
-        /// var client = new WebPubSubServiceClient("<https://my-account-name.azure.com>", "<hub>");
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
         /// 
         /// Response response = client.CloseGroupConnections("<group>");
         /// Console.WriteLine(response.Status);
         /// ]]></code>
         /// This sample shows how to call CloseGroupConnections with all parameters.
         /// <code><![CDATA[
-        /// var client = new WebPubSubServiceClient("<https://my-account-name.azure.com>", "<hub>");
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
         /// 
         /// Response response = client.CloseGroupConnections("<group>", new String[]{"<excluded>"}, "<reason>");
         /// Console.WriteLine(response.Status);
@@ -708,7 +708,7 @@ namespace Azure.Messaging.WebPubSub
         /// <example>
         /// This sample shows how to call SendToGroupAsync with required parameters and request content.
         /// <code><![CDATA[
-        /// var client = new WebPubSubServiceClient("<https://my-account-name.azure.com>", "<hub>");
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
         /// 
         /// var data = File.OpenRead("<filePath>");
         /// 
@@ -717,7 +717,7 @@ namespace Azure.Messaging.WebPubSub
         /// ]]></code>
         /// This sample shows how to call SendToGroupAsync with all parameters and request content.
         /// <code><![CDATA[
-        /// var client = new WebPubSubServiceClient("<https://my-account-name.azure.com>", "<hub>");
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
         /// 
         /// var data = File.OpenRead("<filePath>");
         /// 
@@ -757,7 +757,7 @@ namespace Azure.Messaging.WebPubSub
         /// <example>
         /// This sample shows how to call SendToGroup with required parameters and request content.
         /// <code><![CDATA[
-        /// var client = new WebPubSubServiceClient("<https://my-account-name.azure.com>", "<hub>");
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
         /// 
         /// var data = File.OpenRead("<filePath>");
         /// 
@@ -766,7 +766,7 @@ namespace Azure.Messaging.WebPubSub
         /// ]]></code>
         /// This sample shows how to call SendToGroup with all parameters and request content.
         /// <code><![CDATA[
-        /// var client = new WebPubSubServiceClient("<https://my-account-name.azure.com>", "<hub>");
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
         /// 
         /// var data = File.OpenRead("<filePath>");
         /// 
@@ -804,7 +804,7 @@ namespace Azure.Messaging.WebPubSub
         /// <example>
         /// This sample shows how to call AddConnectionToGroupAsync with required parameters.
         /// <code><![CDATA[
-        /// var client = new WebPubSubServiceClient("<https://my-account-name.azure.com>", "<hub>");
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
         /// 
         /// Response response = await client.AddConnectionToGroupAsync("<group>", "<connectionId>");
         /// Console.WriteLine(response.Status);
@@ -840,7 +840,7 @@ namespace Azure.Messaging.WebPubSub
         /// <example>
         /// This sample shows how to call AddConnectionToGroup with required parameters.
         /// <code><![CDATA[
-        /// var client = new WebPubSubServiceClient("<https://my-account-name.azure.com>", "<hub>");
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
         /// 
         /// Response response = client.AddConnectionToGroup("<group>", "<connectionId>");
         /// Console.WriteLine(response.Status);
@@ -876,7 +876,7 @@ namespace Azure.Messaging.WebPubSub
         /// <example>
         /// This sample shows how to call RemoveConnectionFromGroupAsync with required parameters.
         /// <code><![CDATA[
-        /// var client = new WebPubSubServiceClient("<https://my-account-name.azure.com>", "<hub>");
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
         /// 
         /// Response response = await client.RemoveConnectionFromGroupAsync("<group>", "<connectionId>");
         /// Console.WriteLine(response.Status);
@@ -912,7 +912,7 @@ namespace Azure.Messaging.WebPubSub
         /// <example>
         /// This sample shows how to call RemoveConnectionFromGroup with required parameters.
         /// <code><![CDATA[
-        /// var client = new WebPubSubServiceClient("<https://my-account-name.azure.com>", "<hub>");
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
         /// 
         /// Response response = client.RemoveConnectionFromGroup("<group>", "<connectionId>");
         /// Console.WriteLine(response.Status);
@@ -947,7 +947,7 @@ namespace Azure.Messaging.WebPubSub
         /// <example>
         /// This sample shows how to call UserExistsImplAsync with required parameters.
         /// <code><![CDATA[
-        /// var client = new WebPubSubServiceClient("<https://my-account-name.azure.com>", "<hub>");
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
         /// 
         /// Response response = await client.UserExistsImplAsync("<userId>");
         /// Console.WriteLine(response.Status);
@@ -981,7 +981,7 @@ namespace Azure.Messaging.WebPubSub
         /// <example>
         /// This sample shows how to call UserExistsImpl with required parameters.
         /// <code><![CDATA[
-        /// var client = new WebPubSubServiceClient("<https://my-account-name.azure.com>", "<hub>");
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
         /// 
         /// Response response = client.UserExistsImpl("<userId>");
         /// Console.WriteLine(response.Status);
@@ -1017,14 +1017,14 @@ namespace Azure.Messaging.WebPubSub
         /// <example>
         /// This sample shows how to call CloseUserConnectionsAsync with required parameters.
         /// <code><![CDATA[
-        /// var client = new WebPubSubServiceClient("<https://my-account-name.azure.com>", "<hub>");
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
         /// 
         /// Response response = await client.CloseUserConnectionsAsync("<userId>");
         /// Console.WriteLine(response.Status);
         /// ]]></code>
         /// This sample shows how to call CloseUserConnectionsAsync with all parameters.
         /// <code><![CDATA[
-        /// var client = new WebPubSubServiceClient("<https://my-account-name.azure.com>", "<hub>");
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
         /// 
         /// Response response = await client.CloseUserConnectionsAsync("<userId>", new String[]{"<excluded>"}, "<reason>");
         /// Console.WriteLine(response.Status);
@@ -1060,14 +1060,14 @@ namespace Azure.Messaging.WebPubSub
         /// <example>
         /// This sample shows how to call CloseUserConnections with required parameters.
         /// <code><![CDATA[
-        /// var client = new WebPubSubServiceClient("<https://my-account-name.azure.com>", "<hub>");
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
         /// 
         /// Response response = client.CloseUserConnections("<userId>");
         /// Console.WriteLine(response.Status);
         /// ]]></code>
         /// This sample shows how to call CloseUserConnections with all parameters.
         /// <code><![CDATA[
-        /// var client = new WebPubSubServiceClient("<https://my-account-name.azure.com>", "<hub>");
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
         /// 
         /// Response response = client.CloseUserConnections("<userId>", new String[]{"<excluded>"}, "<reason>");
         /// Console.WriteLine(response.Status);
@@ -1103,7 +1103,7 @@ namespace Azure.Messaging.WebPubSub
         /// <example>
         /// This sample shows how to call SendToUserAsync with required parameters and request content.
         /// <code><![CDATA[
-        /// var client = new WebPubSubServiceClient("<https://my-account-name.azure.com>", "<hub>");
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
         /// 
         /// var data = File.OpenRead("<filePath>");
         /// 
@@ -1142,7 +1142,7 @@ namespace Azure.Messaging.WebPubSub
         /// <example>
         /// This sample shows how to call SendToUser with required parameters and request content.
         /// <code><![CDATA[
-        /// var client = new WebPubSubServiceClient("<https://my-account-name.azure.com>", "<hub>");
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
         /// 
         /// var data = File.OpenRead("<filePath>");
         /// 
@@ -1179,7 +1179,7 @@ namespace Azure.Messaging.WebPubSub
         /// <example>
         /// This sample shows how to call RemoveUserFromAllGroupsAsync with required parameters.
         /// <code><![CDATA[
-        /// var client = new WebPubSubServiceClient("<https://my-account-name.azure.com>", "<hub>");
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
         /// 
         /// Response response = await client.RemoveUserFromAllGroupsAsync("<userId>");
         /// Console.WriteLine(response.Status);
@@ -1213,7 +1213,7 @@ namespace Azure.Messaging.WebPubSub
         /// <example>
         /// This sample shows how to call RemoveUserFromAllGroups with required parameters.
         /// <code><![CDATA[
-        /// var client = new WebPubSubServiceClient("<https://my-account-name.azure.com>", "<hub>");
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
         /// 
         /// Response response = client.RemoveUserFromAllGroups("<userId>");
         /// Console.WriteLine(response.Status);
@@ -1249,14 +1249,14 @@ namespace Azure.Messaging.WebPubSub
         /// <example>
         /// This sample shows how to call GrantPermissionAsync with required parameters.
         /// <code><![CDATA[
-        /// var client = new WebPubSubServiceClient("<https://my-account-name.azure.com>", "<hub>");
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
         /// 
         /// Response response = await client.GrantPermissionAsync("<permission>", "<connectionId>");
         /// Console.WriteLine(response.Status);
         /// ]]></code>
         /// This sample shows how to call GrantPermissionAsync with all parameters.
         /// <code><![CDATA[
-        /// var client = new WebPubSubServiceClient("<https://my-account-name.azure.com>", "<hub>");
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
         /// 
         /// Response response = await client.GrantPermissionAsync("<permission>", "<connectionId>", "<targetName>");
         /// Console.WriteLine(response.Status);
@@ -1293,14 +1293,14 @@ namespace Azure.Messaging.WebPubSub
         /// <example>
         /// This sample shows how to call GrantPermission with required parameters.
         /// <code><![CDATA[
-        /// var client = new WebPubSubServiceClient("<https://my-account-name.azure.com>", "<hub>");
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
         /// 
         /// Response response = client.GrantPermission("<permission>", "<connectionId>");
         /// Console.WriteLine(response.Status);
         /// ]]></code>
         /// This sample shows how to call GrantPermission with all parameters.
         /// <code><![CDATA[
-        /// var client = new WebPubSubServiceClient("<https://my-account-name.azure.com>", "<hub>");
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
         /// 
         /// Response response = client.GrantPermission("<permission>", "<connectionId>", "<targetName>");
         /// Console.WriteLine(response.Status);
@@ -1337,14 +1337,14 @@ namespace Azure.Messaging.WebPubSub
         /// <example>
         /// This sample shows how to call RevokePermissionAsync with required parameters.
         /// <code><![CDATA[
-        /// var client = new WebPubSubServiceClient("<https://my-account-name.azure.com>", "<hub>");
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
         /// 
         /// Response response = await client.RevokePermissionAsync("<permission>", "<connectionId>");
         /// Console.WriteLine(response.Status);
         /// ]]></code>
         /// This sample shows how to call RevokePermissionAsync with all parameters.
         /// <code><![CDATA[
-        /// var client = new WebPubSubServiceClient("<https://my-account-name.azure.com>", "<hub>");
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
         /// 
         /// Response response = await client.RevokePermissionAsync("<permission>", "<connectionId>", "<targetName>");
         /// Console.WriteLine(response.Status);
@@ -1381,14 +1381,14 @@ namespace Azure.Messaging.WebPubSub
         /// <example>
         /// This sample shows how to call RevokePermission with required parameters.
         /// <code><![CDATA[
-        /// var client = new WebPubSubServiceClient("<https://my-account-name.azure.com>", "<hub>");
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
         /// 
         /// Response response = client.RevokePermission("<permission>", "<connectionId>");
         /// Console.WriteLine(response.Status);
         /// ]]></code>
         /// This sample shows how to call RevokePermission with all parameters.
         /// <code><![CDATA[
-        /// var client = new WebPubSubServiceClient("<https://my-account-name.azure.com>", "<hub>");
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
         /// 
         /// Response response = client.RevokePermission("<permission>", "<connectionId>", "<targetName>");
         /// Console.WriteLine(response.Status);
@@ -1425,14 +1425,14 @@ namespace Azure.Messaging.WebPubSub
         /// <example>
         /// This sample shows how to call CheckPermissionAsync with required parameters.
         /// <code><![CDATA[
-        /// var client = new WebPubSubServiceClient("<https://my-account-name.azure.com>", "<hub>");
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
         /// 
         /// Response response = await client.CheckPermissionAsync("<permission>", "<connectionId>");
         /// Console.WriteLine(response.Status);
         /// ]]></code>
         /// This sample shows how to call CheckPermissionAsync with all parameters.
         /// <code><![CDATA[
-        /// var client = new WebPubSubServiceClient("<https://my-account-name.azure.com>", "<hub>");
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
         /// 
         /// Response response = await client.CheckPermissionAsync("<permission>", "<connectionId>", "<targetName>");
         /// Console.WriteLine(response.Status);
@@ -1469,14 +1469,14 @@ namespace Azure.Messaging.WebPubSub
         /// <example>
         /// This sample shows how to call CheckPermission with required parameters.
         /// <code><![CDATA[
-        /// var client = new WebPubSubServiceClient("<https://my-account-name.azure.com>", "<hub>");
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
         /// 
         /// Response response = client.CheckPermission("<permission>", "<connectionId>");
         /// Console.WriteLine(response.Status);
         /// ]]></code>
         /// This sample shows how to call CheckPermission with all parameters.
         /// <code><![CDATA[
-        /// var client = new WebPubSubServiceClient("<https://my-account-name.azure.com>", "<hub>");
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
         /// 
         /// Response response = client.CheckPermission("<permission>", "<connectionId>", "<targetName>");
         /// Console.WriteLine(response.Status);
