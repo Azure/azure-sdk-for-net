@@ -621,11 +621,11 @@ namespace Azure.ResourceManager.AppService
             return GetSiteSlotHostNameBindings().Get(hostName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SiteSlotHybridConnectionCollectionResources in the SiteSlot. </summary>
-        /// <returns> An object representing collection of SiteSlotHybridConnectionCollectionResources and their operations over a SiteSlotHybridConnectionCollectionResource. </returns>
-        public virtual SiteSlotHybridConnectionCollectionCollection GetSiteSlotHybridConnectionCollections()
+        /// <summary> Gets a collection of SiteSlotHybridConnectionResources in the SiteSlot. </summary>
+        /// <returns> An object representing collection of SiteSlotHybridConnectionResources and their operations over a SiteSlotHybridConnectionResource. </returns>
+        public virtual SiteSlotHybridConnectionCollection GetSiteSlotHybridConnections()
         {
-            return GetCachedClient(Client => new SiteSlotHybridConnectionCollectionCollection(Client, Id));
+            return GetCachedClient(Client => new SiteSlotHybridConnectionCollection(Client, Id));
         }
 
         /// <summary>
@@ -638,9 +638,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="entityName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="entityName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SiteSlotHybridConnectionCollectionResource>> GetSiteSlotHybridConnectionCollectionAsync(string entityName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteSlotHybridConnectionResource>> GetSiteSlotHybridConnectionAsync(string entityName, CancellationToken cancellationToken = default)
         {
-            return await GetSiteSlotHybridConnectionCollections().GetAsync(entityName, cancellationToken).ConfigureAwait(false);
+            return await GetSiteSlotHybridConnections().GetAsync(entityName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -653,9 +653,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="entityName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="entityName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SiteSlotHybridConnectionCollectionResource> GetSiteSlotHybridConnectionCollection(string entityName, CancellationToken cancellationToken = default)
+        public virtual Response<SiteSlotHybridConnectionResource> GetSiteSlotHybridConnection(string entityName, CancellationToken cancellationToken = default)
         {
-            return GetSiteSlotHybridConnectionCollections().Get(entityName, cancellationToken);
+            return GetSiteSlotHybridConnections().Get(entityName, cancellationToken);
         }
 
         /// <summary> Gets a collection of SiteSlotInstanceResources in the SiteSlot. </summary>

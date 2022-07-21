@@ -17,28 +17,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SiteSlotHybridConnectionCollectionResource" /> and their operations.
-    /// Each <see cref="SiteSlotHybridConnectionCollectionResource" /> in the collection will belong to the same instance of <see cref="SiteSlotResource" />.
-    /// To get a <see cref="SiteSlotHybridConnectionCollectionCollection" /> instance call the GetSiteSlotHybridConnectionCollections method from an instance of <see cref="SiteSlotResource" />.
+    /// A class representing a collection of <see cref="SiteSlotHybridConnectionResource" /> and their operations.
+    /// Each <see cref="SiteSlotHybridConnectionResource" /> in the collection will belong to the same instance of <see cref="SiteSlotResource" />.
+    /// To get a <see cref="SiteSlotHybridConnectionCollection" /> instance call the GetSiteSlotHybridConnections method from an instance of <see cref="SiteSlotResource" />.
     /// </summary>
-    public partial class SiteSlotHybridConnectionCollectionCollection : ArmCollection
+    public partial class SiteSlotHybridConnectionCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _siteSlotHybridConnectionCollectionWebAppsClientDiagnostics;
-        private readonly WebAppsRestOperations _siteSlotHybridConnectionCollectionWebAppsRestClient;
+        private readonly ClientDiagnostics _siteSlotHybridConnectionWebAppsClientDiagnostics;
+        private readonly WebAppsRestOperations _siteSlotHybridConnectionWebAppsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SiteSlotHybridConnectionCollectionCollection"/> class for mocking. </summary>
-        protected SiteSlotHybridConnectionCollectionCollection()
+        /// <summary> Initializes a new instance of the <see cref="SiteSlotHybridConnectionCollection"/> class for mocking. </summary>
+        protected SiteSlotHybridConnectionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SiteSlotHybridConnectionCollectionCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteSlotHybridConnectionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal SiteSlotHybridConnectionCollectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal SiteSlotHybridConnectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _siteSlotHybridConnectionCollectionWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotHybridConnectionCollectionResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SiteSlotHybridConnectionCollectionResource.ResourceType, out string siteSlotHybridConnectionCollectionWebAppsApiVersion);
-            _siteSlotHybridConnectionCollectionWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, siteSlotHybridConnectionCollectionWebAppsApiVersion);
+            _siteSlotHybridConnectionWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotHybridConnectionResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(SiteSlotHybridConnectionResource.ResourceType, out string siteSlotHybridConnectionWebAppsApiVersion);
+            _siteSlotHybridConnectionWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, siteSlotHybridConnectionWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -61,17 +61,17 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="entityName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="entityName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<SiteSlotHybridConnectionCollectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string entityName, RelayServiceConnectionEntityData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SiteSlotHybridConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string entityName, RelayServiceConnectionEntityData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _siteSlotHybridConnectionCollectionWebAppsClientDiagnostics.CreateScope("SiteSlotHybridConnectionCollectionCollection.CreateOrUpdate");
+            using var scope = _siteSlotHybridConnectionWebAppsClientDiagnostics.CreateScope("SiteSlotHybridConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _siteSlotHybridConnectionCollectionWebAppsRestClient.CreateOrUpdateRelayServiceConnectionSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, entityName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<SiteSlotHybridConnectionCollectionResource>(Response.FromValue(new SiteSlotHybridConnectionCollectionResource(Client, response), response.GetRawResponse()));
+                var response = await _siteSlotHybridConnectionWebAppsRestClient.CreateOrUpdateRelayServiceConnectionSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, entityName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new AppServiceArmOperation<SiteSlotHybridConnectionResource>(Response.FromValue(new SiteSlotHybridConnectionResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -94,17 +94,17 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="entityName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="entityName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<SiteSlotHybridConnectionCollectionResource> CreateOrUpdate(WaitUntil waitUntil, string entityName, RelayServiceConnectionEntityData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SiteSlotHybridConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string entityName, RelayServiceConnectionEntityData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _siteSlotHybridConnectionCollectionWebAppsClientDiagnostics.CreateScope("SiteSlotHybridConnectionCollectionCollection.CreateOrUpdate");
+            using var scope = _siteSlotHybridConnectionWebAppsClientDiagnostics.CreateScope("SiteSlotHybridConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _siteSlotHybridConnectionCollectionWebAppsRestClient.CreateOrUpdateRelayServiceConnectionSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, entityName, data, cancellationToken);
-                var operation = new AppServiceArmOperation<SiteSlotHybridConnectionCollectionResource>(Response.FromValue(new SiteSlotHybridConnectionCollectionResource(Client, response), response.GetRawResponse()));
+                var response = _siteSlotHybridConnectionWebAppsRestClient.CreateOrUpdateRelayServiceConnectionSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, entityName, data, cancellationToken);
+                var operation = new AppServiceArmOperation<SiteSlotHybridConnectionResource>(Response.FromValue(new SiteSlotHybridConnectionResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -125,18 +125,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="entityName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="entityName"/> is null. </exception>
-        public virtual async Task<Response<SiteSlotHybridConnectionCollectionResource>> GetAsync(string entityName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteSlotHybridConnectionResource>> GetAsync(string entityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
 
-            using var scope = _siteSlotHybridConnectionCollectionWebAppsClientDiagnostics.CreateScope("SiteSlotHybridConnectionCollectionCollection.Get");
+            using var scope = _siteSlotHybridConnectionWebAppsClientDiagnostics.CreateScope("SiteSlotHybridConnectionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _siteSlotHybridConnectionCollectionWebAppsRestClient.GetRelayServiceConnectionSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, entityName, cancellationToken).ConfigureAwait(false);
+                var response = await _siteSlotHybridConnectionWebAppsRestClient.GetRelayServiceConnectionSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, entityName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteSlotHybridConnectionCollectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotHybridConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -154,18 +154,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="entityName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="entityName"/> is null. </exception>
-        public virtual Response<SiteSlotHybridConnectionCollectionResource> Get(string entityName, CancellationToken cancellationToken = default)
+        public virtual Response<SiteSlotHybridConnectionResource> Get(string entityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
 
-            using var scope = _siteSlotHybridConnectionCollectionWebAppsClientDiagnostics.CreateScope("SiteSlotHybridConnectionCollectionCollection.Get");
+            using var scope = _siteSlotHybridConnectionWebAppsClientDiagnostics.CreateScope("SiteSlotHybridConnectionCollection.Get");
             scope.Start();
             try
             {
-                var response = _siteSlotHybridConnectionCollectionWebAppsRestClient.GetRelayServiceConnectionSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, entityName, cancellationToken);
+                var response = _siteSlotHybridConnectionWebAppsRestClient.GetRelayServiceConnectionSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, entityName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteSlotHybridConnectionCollectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotHybridConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -187,11 +187,11 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
 
-            using var scope = _siteSlotHybridConnectionCollectionWebAppsClientDiagnostics.CreateScope("SiteSlotHybridConnectionCollectionCollection.Exists");
+            using var scope = _siteSlotHybridConnectionWebAppsClientDiagnostics.CreateScope("SiteSlotHybridConnectionCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _siteSlotHybridConnectionCollectionWebAppsRestClient.GetRelayServiceConnectionSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, entityName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _siteSlotHybridConnectionWebAppsRestClient.GetRelayServiceConnectionSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, entityName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -214,11 +214,11 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
 
-            using var scope = _siteSlotHybridConnectionCollectionWebAppsClientDiagnostics.CreateScope("SiteSlotHybridConnectionCollectionCollection.Exists");
+            using var scope = _siteSlotHybridConnectionWebAppsClientDiagnostics.CreateScope("SiteSlotHybridConnectionCollection.Exists");
             scope.Start();
             try
             {
-                var response = _siteSlotHybridConnectionCollectionWebAppsRestClient.GetRelayServiceConnectionSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, entityName, cancellationToken: cancellationToken);
+                var response = _siteSlotHybridConnectionWebAppsRestClient.GetRelayServiceConnectionSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, entityName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)

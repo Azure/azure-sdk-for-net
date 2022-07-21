@@ -65,7 +65,7 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/webjobs/{webJobName}: SiteWebJob
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}: WebSite
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sourcecontrols/web: SiteSlotSourceControl
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridconnection/{entityName}: SiteSlotHybridConnectionCollection
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridconnection/{entityName}: SiteSlotHybridConnection
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/siteextensions/{siteExtensionId}: SiteExtension
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}: AppServicePlanHybridConnectionNamespaceRelay
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}: AppServicePlanVirtualNetworkConnection
@@ -130,7 +130,7 @@ rename-mapping:
   Site: WebSite
   AppServiceCertificateOrderPatchResource: AppServiceCertificateOrderPatch
   AppServiceCertificatePatchResource: AppServiceCertificatePatch
-  AppServiceEnvironmentPatchResource: AppServiceEnvironmentPatchOptions
+  AppServiceEnvironmentPatchResource: AppServiceEnvironmentPatchContent
   AppserviceGithubToken: AppServiceGithubToken
   AppServicePlanPatchResource: AppServicePlanPatchOptions
   Contact: ContactInformation 

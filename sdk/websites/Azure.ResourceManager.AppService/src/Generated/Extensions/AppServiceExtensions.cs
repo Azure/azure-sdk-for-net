@@ -3248,20 +3248,20 @@ namespace Azure.ResourceManager.AppService
         }
         #endregion
 
-        #region SiteSlotHybridConnectionCollectionResource
+        #region SiteSlotHybridConnectionResource
         /// <summary>
-        /// Gets an object representing a <see cref="SiteSlotHybridConnectionCollectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteSlotHybridConnectionCollectionResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotHybridConnectionCollectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SiteSlotHybridConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteSlotHybridConnectionResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotHybridConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSlotHybridConnectionCollectionResource" /> object. </returns>
-        public static SiteSlotHybridConnectionCollectionResource GetSiteSlotHybridConnectionCollectionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotHybridConnectionResource" /> object. </returns>
+        public static SiteSlotHybridConnectionResource GetSiteSlotHybridConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SiteSlotHybridConnectionCollectionResource.ValidateResourceId(id);
-                return new SiteSlotHybridConnectionCollectionResource(client, id);
+                SiteSlotHybridConnectionResource.ValidateResourceId(id);
+                return new SiteSlotHybridConnectionResource(client, id);
             }
             );
         }
