@@ -575,43 +575,27 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
-        public async Task TestSingle_CustomSessionInitializingHandler()
+        public async Task TestSingle_CustomSessionHandlers()
         {
             await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}", "session1");
-            var host = BuildHost<TestCustomSessionInitializingHandler>(SetCustomSessionInitializingHandler);
+            var host = BuildHost<TestCustomSessionHandlers>(SetCustomSessionHandlers);
             using (host)
             {
-                bool result = _waitHandle1.WaitOne(SBTimeoutMills);
-                Assert.True(result);
+                bool result1 = _waitHandle1.WaitOne(SBTimeoutMills);
+                bool result2 = _waitHandle2.WaitOne(SBTimeoutMills);
+
+                Assert.True(result1);
+                Assert.True(result2);
                 await host.StopAsync();
             }
         }
 
-        private static Action<IHostBuilder> SetCustomSessionInitializingHandler =>
+        private static Action<IHostBuilder> SetCustomSessionHandlers =>
             builder => builder.ConfigureWebJobs(b =>
                 b.AddServiceBus(sbOptions =>
                 {
-                    sbOptions.SessionInitializingAsync = TestCustomSessionInitializingHandler.SessionInitializingHandler;
-                }));
-
-        [Test]
-        public async Task TestSingle_CustomSessionClosingHandler()
-        {
-            await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}", "session1");
-            var host = BuildHost<TestCustomSessionClosingHandler>(SetCustomSessionClosingHandler);
-            using (host)
-            {
-                bool result = _waitHandle1.WaitOne(SBTimeoutMills);
-                Assert.True(result);
-                await host.StopAsync();
-            }
-        }
-
-        private static Action<IHostBuilder> SetCustomSessionClosingHandler =>
-            builder => builder.ConfigureWebJobs(b =>
-                b.AddServiceBus(sbOptions =>
-                {
-                    sbOptions.SessionClosingAsync = TestCustomSessionClosingHandler.SessionClosingHandler;
+                    sbOptions.SessionInitializingAsync = TestCustomSessionHandlers.SessionInitializingHandler;
+                    sbOptions.SessionClosingAsync = TestCustomSessionHandlers.SessionClosingHandler;
                 }));
 
         [Test]
@@ -1146,24 +1130,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             }
         }
 
-        public class TestCustomSessionInitializingHandler
-        {
-            public static async Task RunAsync(
-                [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)]
-                ServiceBusReceivedMessage message,
-                ServiceBusSessionMessageActions sessionActions)
-            {
-                await sessionActions.CompleteMessageAsync(message);
-            }
-
-            public static Task SessionInitializingHandler(ProcessSessionEventArgs arg)
-            {
-                _waitHandle1.Set();
-                return Task.CompletedTask;
-            }
-        }
-
-        public class TestCustomSessionClosingHandler
+        public class TestCustomSessionHandlers
         {
             public static async Task RunAsync(
                 [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)]
@@ -1174,9 +1141,15 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 sessionActions.ReleaseSession();
             }
 
-            public static Task SessionClosingHandler(ProcessSessionEventArgs arg)
+            public static Task SessionInitializingHandler(ProcessSessionEventArgs arg)
             {
                 _waitHandle1.Set();
+                return Task.CompletedTask;
+            }
+
+            public static Task SessionClosingHandler(ProcessSessionEventArgs arg)
+            {
+                _waitHandle2.Set();
                 return Task.CompletedTask;
             }
         }
