@@ -136,7 +136,7 @@ var layout = new MediaCompositionLayout()
 var response = await mediaCompositionClient.UpdateLayoutAsync(mediaCompositionId, layout);
 ```
 
-Note: Upserting `GroupCall`, `Room`, and `TeamsMeeting` input kind is currently not supported if the media composition is running. The media composition will need to be stopped if `GroupCall`, `Room`, or `TeamsMeeting` inputs needs to change.
+Note: Upserting `GroupCall`, `Room`, and `TeamsMeeting` input kind is currently not supported if the media composition is running. The media composition will need to be stopped if `GroupCall`, `Room`, or `TeamsMeeting` inputs need to change.
 You can upsert or remove inputs:
 
 ```C# Snippet:UpsertInputs
