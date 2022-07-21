@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.IotHub.Models
         public IotHubCertificateProperties() { }
         public System.BinaryData Certificate { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
-        public System.DateTimeOffset? ExpiresOn { get { throw null; } }
+        public System.DateTimeOffset? ExpireOn { get { throw null; } }
         public bool? IsVerified { get { throw null; } set { } }
         public string Subject { get { throw null; } }
         public System.BinaryData Thumbprint { get { throw null; } }
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.IotHub.Models
         internal IotHubCertificatePropertiesWithNonce() { }
         public System.BinaryData Certificate { get { throw null; } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
-        public System.DateTimeOffset? ExpiryOn { get { throw null; } }
+        public System.DateTimeOffset? ExpireOn { get { throw null; } }
         public bool? IsVerified { get { throw null; } }
         public string Subject { get { throw null; } }
         public System.BinaryData Thumbprint { get { throw null; } }
