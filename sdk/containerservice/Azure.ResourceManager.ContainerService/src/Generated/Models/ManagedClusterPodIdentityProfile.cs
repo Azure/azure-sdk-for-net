@@ -21,20 +21,20 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of ManagedClusterPodIdentityProfile. </summary>
-        /// <param name="enabled"> Whether the pod identity addon is enabled. </param>
+        /// <param name="isEnabled"> Whether the pod identity addon is enabled. </param>
         /// <param name="allowNetworkPluginKubenet"> Running in Kubenet is disabled by default due to the security related nature of AAD Pod Identity and the risks of IP spoofing. See [using Kubenet network plugin with AAD Pod Identity](https://docs.microsoft.com/azure/aks/use-azure-ad-pod-identity#using-kubenet-network-plugin-with-azure-active-directory-pod-managed-identities) for more information. </param>
         /// <param name="userAssignedIdentities"> The pod identities to use in the cluster. </param>
         /// <param name="userAssignedIdentityExceptions"> The pod identity exceptions to allow. </param>
-        internal ManagedClusterPodIdentityProfile(bool? enabled, bool? allowNetworkPluginKubenet, IList<ManagedClusterPodIdentity> userAssignedIdentities, IList<ManagedClusterPodIdentityException> userAssignedIdentityExceptions)
+        internal ManagedClusterPodIdentityProfile(bool? isEnabled, bool? allowNetworkPluginKubenet, IList<ManagedClusterPodIdentity> userAssignedIdentities, IList<ManagedClusterPodIdentityException> userAssignedIdentityExceptions)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             AllowNetworkPluginKubenet = allowNetworkPluginKubenet;
             UserAssignedIdentities = userAssignedIdentities;
             UserAssignedIdentityExceptions = userAssignedIdentityExceptions;
         }
 
         /// <summary> Whether the pod identity addon is enabled. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
         /// <summary> Running in Kubenet is disabled by default due to the security related nature of AAD Pod Identity and the risks of IP spoofing. See [using Kubenet network plugin with AAD Pod Identity](https://docs.microsoft.com/azure/aks/use-azure-ad-pod-identity#using-kubenet-network-plugin-with-azure-active-directory-pod-managed-identities) for more information. </summary>
         public bool? AllowNetworkPluginKubenet { get; set; }
         /// <summary> The pod identities to use in the cluster. </summary>

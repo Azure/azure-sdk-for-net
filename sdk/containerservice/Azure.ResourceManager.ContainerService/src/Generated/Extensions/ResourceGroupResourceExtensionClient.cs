@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.ContainerService
             return GetCachedClient(Client => new ManagedClusterCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of SnapshotResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of SnapshotResources and their operations over a SnapshotResource. </returns>
-        public virtual SnapshotCollection GetSnapshots()
+        /// <summary> Gets a collection of AgentPoolSnapshotResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of AgentPoolSnapshotResources and their operations over a AgentPoolSnapshotResource. </returns>
+        public virtual AgentPoolSnapshotCollection GetAgentPoolSnapshots()
         {
-            return GetCachedClient(Client => new SnapshotCollection(Client, Id));
+            return GetCachedClient(Client => new AgentPoolSnapshotCollection(Client, Id));
         }
     }
 }

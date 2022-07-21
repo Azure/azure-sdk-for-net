@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Initializes a new instance of PowerState. </summary>
         /// <param name="code"> Tells whether the cluster is Running or Stopped. </param>
-        internal PowerState(Code? code)
+        internal PowerState(ManagedClusterStateCode? code)
         {
             Code = code;
         }
 
         /// <summary> Tells whether the cluster is Running or Stopped. </summary>
-        public Code? Code { get; set; }
+        public ManagedClusterStateCode? Code { get; set; }
     }
 }
