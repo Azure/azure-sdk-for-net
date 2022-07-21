@@ -1,12 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.DataFactory;
 using Azure.ResourceManager.DataFactory.Models;
 using Azure.ResourceManager.DataFactory.Tests;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
@@ -14,63 +16,65 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
 {
     internal class DataFactoryPrivateEndpointConnectionTests : DataFactoryManagementTestBase
     {
-        private ResourceIdentifier _dataFactoryIdentifier;
-        private DataFactoryResource _dataFactory;
         public DataFactoryPrivateEndpointConnectionTests(bool isAsync) : base(isAsync)
         {
         }
 
-        [OneTimeSetUp]
-        public async Task GlobalSetUp()
-        {
-            string rgName = SessionRecording.GenerateAssetName("DataFactory-RG-");
-            string dataFactoryName = SessionRecording.GenerateAssetName("DataFactory-");
-            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(AzureLocation.WestUS2));
-            var dataFactoryLro = await CreateDataFactory(rgLro.Value, dataFactoryName);
-            _dataFactoryIdentifier = dataFactoryLro.Id;
-            await StopSessionRecordingAsync();
-        }
-
-        [SetUp]
-        public async Task TestSetUp()
-        {
-            _dataFactory = await Client.GetDataFactoryResource(_dataFactoryIdentifier).GetAsync();
-        }
-
         [Test]
         [RecordedTest]
-        [Ignore("Need to reference additional mgmt package, ignore it for now")]
+        [Ignore("Must be manually operate.Error: Private Endpoint connection is requesting a status change for 'Approved', while current status is: 'Approved'.")]
         public async Task CreateOrUpdate()
         {
-            string connectionName = Recording.GenerateAssetName("connection-");
-            connectionName = "datafactory-0000.7f9d436d-11ad-4077-b91e-89d26e2f160c";
+            string dataFactoryName = SessionRecording.GenerateAssetName("DataFactory-");
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            var resourceGroup = await CreateResourceGroup(subscription, "DataFactory-RG-", AzureLocation.WestUS2);
+            var dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
+
+            string connectionName = "DataFactory-5673.860b8eaf-a2d6-4870-96c3-784cfff79b42";
             DataFactoryPrivateEndpointConnectionCreateOrUpdateContent data = new DataFactoryPrivateEndpointConnectionCreateOrUpdateContent()
             {
                 Properties = new PrivateLinkConnectionApprovalRequest()
                 {
-                    PrivateEndpointId = new ResourceIdentifier("/subscriptions/***/resourceGroups/***/providers/Microsoft.Network/privateEndpoints/***"),
-                    PrivateLinkServiceConnectionState = new PrivateLinkConnectionState("Approved", "Approved by admin.",""),
-                }
+                    PrivateEndpointId = new ResourceIdentifier("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/DataFactory-RG-7129/providers/Microsoft.Network/privateEndpoints/dafasfsdf"),
+                    PrivateEndpoint = new Resources.Models.WritableSubResource()
+                    {
+                        Id = new ResourceIdentifier("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/DataFactory-RG-7129/providers/Microsoft.Network/privateEndpoints/dafasfsdf"),
+                    },
+                    PrivateLinkServiceConnectionState = new PrivateLinkConnectionState("Approved", "Auto-Approved", "None"),
+                },
             };
-            var connection = await _dataFactory.GetDataFactoryPrivateEndpointConnections().CreateOrUpdateAsync(WaitUntil.Completed, connectionName, data);
+            var connection = await dataFactory.GetDataFactoryPrivateEndpointConnections().CreateOrUpdateAsync(WaitUntil.Completed, connectionName, data);
             Assert.IsNotNull(connection);
         }
 
         [Test]
         [RecordedTest]
-        [Ignore("Need to reference additional mgmt package, ignore it for now")]
-        public async Task Get()
+        [PlaybackOnly("need to create a PrivateEndpointConnection manually")]
+        public async Task PrivateEndpointConnectionApiTests()
         {
-            var connection = await _dataFactory.GetDataFactoryPrivateEndpointConnections().GetAsync("datafactory-0000.7f9d436d-11ad-4077-b91e-89d26e2f160c");
-            Assert.IsNull(connection);
-        }
+            string dataFactoryName = Recording.GenerateAssetName("DataFactory-");
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            var resourceGroup = await CreateResourceGroup(subscription, "DataFactory-RG-", AzureLocation.WestUS2);
+            var dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
 
-        [Test]
-        [RecordedTest]
-        public async Task GetAll()
-        {
-            var list = await _dataFactory.GetDataFactoryPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
-            Assert.IsEmpty(list);
+            // GetAll
+            var list = await dataFactory.GetDataFactoryPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
+            Assert.IsNotEmpty(list);
+
+            // Get
+            string connectionName = list.FirstOrDefault().Data.Name;
+            var connection = await dataFactory.GetDataFactoryPrivateEndpointConnections().GetAsync(connectionName);
+            Assert.IsNotNull(connection);
+            Assert.AreEqual(connectionName, connection.Value.Data.Name);
+
+            // Exist
+            bool flag = await dataFactory.GetDataFactoryPrivateEndpointConnections().ExistsAsync(connectionName);
+            Assert.IsTrue(flag);
+
+            // Delete
+            await connection.Value.DeleteAsync(WaitUntil.Completed);
+            flag = await dataFactory.GetDataFactoryPrivateEndpointConnections().ExistsAsync(connectionName);
+            Assert.IsFalse(flag);
         }
     }
 }
