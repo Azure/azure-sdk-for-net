@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.IotHub.Models
         public System.Uri ExportBlobContainerUri { get { throw null; } }
         public string ExportBlobName { get { throw null; } set { } }
         public bool? IncludeConfigurations { get { throw null; } set { } }
-        public string UserAssignedIdentity { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier UserAssignedIdentity { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct IotHubAuthenticationType : System.IEquatable<Azure.ResourceManager.IotHub.Models.IotHubAuthenticationType>
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.IotHub.Models
         public string InputBlobName { get { throw null; } set { } }
         public System.Uri OutputBlobContainerUri { get { throw null; } }
         public string OutputBlobName { get { throw null; } set { } }
-        public string UserAssignedIdentity { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier UserAssignedIdentity { get { throw null; } set { } }
     }
     public enum IotHubIPFilterActionType
     {
@@ -781,7 +781,7 @@ namespace Azure.ResourceManager.IotHub.Models
         public string ConnectionString { get { throw null; } set { } }
         public string ContainerName { get { throw null; } set { } }
         public System.TimeSpan? SasTtlAsIso8601 { get { throw null; } set { } }
-        public string UserAssignedIdentity { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier UserAssignedIdentity { get { throw null; } set { } }
     }
     public partial class IotHubTestAllRoutesContent
     {
@@ -906,7 +906,7 @@ namespace Azure.ResourceManager.IotHub.Models
         public string Name { get { throw null; } set { } }
         public string ResourceGroup { get { throw null; } set { } }
         public string SubscriptionId { get { throw null; } set { } }
-        public string UserAssignedIdentity { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier UserAssignedIdentity { get { throw null; } set { } }
     }
     public partial class RoutingMessage
     {
@@ -935,7 +935,7 @@ namespace Azure.ResourceManager.IotHub.Models
         public string Name { get { throw null; } set { } }
         public string ResourceGroup { get { throw null; } set { } }
         public string SubscriptionId { get { throw null; } set { } }
-        public string UserAssignedIdentity { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier UserAssignedIdentity { get { throw null; } set { } }
     }
     public partial class RoutingServiceBusTopicEndpointProperties
     {
@@ -948,7 +948,7 @@ namespace Azure.ResourceManager.IotHub.Models
         public string Name { get { throw null; } set { } }
         public string ResourceGroup { get { throw null; } set { } }
         public string SubscriptionId { get { throw null; } set { } }
-        public string UserAssignedIdentity { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier UserAssignedIdentity { get { throw null; } set { } }
     }
     public partial class RoutingStorageContainerProperties
     {
@@ -965,7 +965,7 @@ namespace Azure.ResourceManager.IotHub.Models
         public string Name { get { throw null; } set { } }
         public string ResourceGroup { get { throw null; } set { } }
         public string SubscriptionId { get { throw null; } set { } }
-        public string UserAssignedIdentity { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier UserAssignedIdentity { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RoutingStorageContainerPropertiesEncoding : System.IEquatable<Azure.ResourceManager.IotHub.Models.RoutingStorageContainerPropertiesEncoding>
