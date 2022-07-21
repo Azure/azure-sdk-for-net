@@ -27,10 +27,10 @@ rename-mapping:
   Capabilities: IotHubCapability
   CertificateProperties.created: CreatedOn
   CertificateProperties.updated: UpdatedOn
-  CertificateProperties.expiry: ExpiresOn
+  CertificateProperties.expiry: ExpireOn
   CertificatePropertiesWithNonce.created: CreatedOn
   CertificatePropertiesWithNonce.updated: UpdatedOn
-  CertificatePropertiesWithNonce.expiry: ExpiryOn
+  CertificatePropertiesWithNonce.expiry: ExpireOn
   CertificateVerificationDescription: IotHubCertificateVerificationContent
   GroupIdInformation: IotHubPrivateEndpointGroupInformation
   GroupIdInformationProperties: IotHubPrivateEndpointGroupInformationProperties
