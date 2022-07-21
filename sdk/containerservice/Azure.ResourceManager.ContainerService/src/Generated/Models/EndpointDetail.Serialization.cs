@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
@@ -14,7 +15,7 @@ namespace Azure.ResourceManager.ContainerService.Models
     {
         internal static EndpointDetail DeserializeEndpointDetail(JsonElement element)
         {
-            Optional<string> ipAddress = default;
+            Optional<IPAddress> ipAddress = default;
             Optional<int> port = default;
             Optional<string> protocol = default;
             Optional<string> description = default;
@@ -22,7 +23,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 if (property.NameEquals("ipAddress"))
                 {
-                    ipAddress = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    ipAddress = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("port"))
