@@ -832,22 +832,35 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
         private static ArraySegment<byte> StreamToBytes(Stream stream)
         {
-            ArraySegment<byte> buffer;
             if (stream == null || stream.Length < 1)
             {
-                buffer = default;
-            }
-            else
-            {
-                using var memoryStream = new MemoryStream(StreamBufferSizeInBytes);
-                stream.CopyTo(memoryStream, StreamBufferSizeInBytes);
-                if (!memoryStream.TryGetBuffer(out buffer))
-                {
-                    buffer = new ArraySegment<byte>(memoryStream.ToArray());
-                }
+                return default;
             }
 
-            return buffer;
+            switch (stream)
+            {
+                case MemoryStream memStreamSource:
+                    {
+                        using var memStreamCopy = new MemoryStream((int)(memStreamSource.Length - memStreamSource.Position));
+                        memStreamSource.CopyTo(memStreamCopy, StreamBufferSizeInBytes);
+                        if (!memStreamCopy.TryGetBuffer(out ArraySegment<byte> segment))
+                        {
+                            segment = new ArraySegment<byte>(memStreamCopy.ToArray());
+                        }
+                        return segment;
+                    }
+
+                default:
+                    {
+                        using var memStreamCopy = new MemoryStream(StreamBufferSizeInBytes);
+                        stream.CopyTo(memStreamCopy, StreamBufferSizeInBytes);
+                        if (!memStreamCopy.TryGetBuffer(out ArraySegment<byte> segment))
+                        {
+                            segment = new ArraySegment<byte>(memStreamCopy.ToArray());
+                        }
+                        return segment;
+                    }
+            }
         }
 
         internal static AmqpMap GetSqlRuleFilterMap(SqlRuleFilter sqlRuleFilter)
