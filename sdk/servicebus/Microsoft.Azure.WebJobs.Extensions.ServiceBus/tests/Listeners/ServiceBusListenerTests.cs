@@ -34,6 +34,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
         private readonly LoggerFactory _loggerFactory;
         private readonly string _functionId = "test-functionid";
         private readonly string _entityPath = "test-entity-path";
+        private readonly string _connection = "connection";
         private readonly string _testConnection = "Endpoint=sb://test.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=abc123=";
         private readonly Mock<IConcurrencyThrottleManager> _mockConcurrencyThrottleManager;
         private readonly ServiceBusClient _client;
@@ -46,7 +47,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
             _client = new ServiceBusClient(_testConnection);
             ServiceBusProcessor processor = _client.CreateProcessor(_entityPath);
             ServiceBusReceiver receiver = _client.CreateReceiver(_entityPath);
-            var configuration = ConfigurationUtilities.CreateConfiguration(new KeyValuePair<string, string>("connection", _testConnection));
+            var configuration = ConfigurationUtilities.CreateConfiguration(new KeyValuePair<string, string>(_connection, _testConnection));
 
             ServiceBusOptions config = new ServiceBusOptions
             {
@@ -215,8 +216,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
                 SessionIdleTimeout = TimeSpan.FromSeconds(5)
             };
 
-            _mockClientFactory
-                .Setup(p => p.CreateClientFromSetting(_testConnection))
+            _mockMessagingProvider
+                .Setup(p => p.CreateClient(_testConnection, It.IsAny<ServiceBusClientOptions>()))
                 .Returns(mockClient.Object);
 
             mockClient
@@ -240,7 +241,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
                 true,
                 _mockExecutor.Object,
                 options,
-                _testConnection,
+                _connection,
                 _mockMessagingProvider.Object,
                 _loggerFactory,
                 false,
@@ -284,7 +285,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
                 true,
                 _mockExecutor.Object,
                 options,
-                _testConnection,
+                _connection,
                 _mockMessagingProvider.Object,
                 _loggerFactory,
                 false,

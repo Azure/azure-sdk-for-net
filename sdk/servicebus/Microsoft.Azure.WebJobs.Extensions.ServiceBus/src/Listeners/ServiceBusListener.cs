@@ -191,10 +191,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                 else
                 {
                     await _batchLoop.ConfigureAwait(false);
-                    if (!_isSessionsEnabled)
-                    {
-                        await _batchReceiver.Value.CloseAsync(cancellationToken).ConfigureAwait(false);
-                    }
+                    await _batchReceiver.Value.CloseAsync(cancellationToken).ConfigureAwait(false);
                 }
 
                 Started = false;
