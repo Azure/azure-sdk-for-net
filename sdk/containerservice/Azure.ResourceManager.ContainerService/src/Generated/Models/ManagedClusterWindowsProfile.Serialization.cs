@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("licenseType");
                 writer.WriteStringValue(LicenseType.Value.ToString());
             }
-            if (Optional.IsDefined(EnableCsiProxy))
+            if (Optional.IsDefined(IsCsiProxyEnabled))
             {
                 writer.WritePropertyName("enableCSIProxy");
-                writer.WriteBooleanValue(EnableCsiProxy.Value);
+                writer.WriteBooleanValue(IsCsiProxyEnabled.Value);
             }
             if (Optional.IsDefined(GmsaProfile))
             {

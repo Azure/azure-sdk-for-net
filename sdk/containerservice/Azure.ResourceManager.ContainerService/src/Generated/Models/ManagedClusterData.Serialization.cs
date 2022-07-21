@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.ContainerService
             Optional<ManagedClusterApiServerAccessProfile> apiServerAccessProfile = default;
             Optional<ResourceIdentifier> diskEncryptionSetId = default;
             Optional<IDictionary<string, Models.UserAssignedIdentity>> identityProfile = default;
-            Optional<IList<ContainerServicePrivateLinkResource>> privateLinkResources = default;
+            Optional<IList<ContainerServicePrivateLinkResourceData>> privateLinkResources = default;
             Optional<bool> disableLocalAccounts = default;
             Optional<ManagedClusterHttpProxyConfig> httpProxyConfig = default;
             Optional<ManagedClusterSecurityProfile> securityProfile = default;
@@ -566,10 +566,10 @@ namespace Azure.ResourceManager.ContainerService
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ContainerServicePrivateLinkResource> array = new List<ContainerServicePrivateLinkResource>();
+                            List<ContainerServicePrivateLinkResourceData> array = new List<ContainerServicePrivateLinkResourceData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ContainerServicePrivateLinkResource.DeserializeContainerServicePrivateLinkResource(item));
+                                array.Add(ContainerServicePrivateLinkResourceData.DeserializeContainerServicePrivateLinkResourceData(item));
                             }
                             privateLinkResources = array;
                             continue;

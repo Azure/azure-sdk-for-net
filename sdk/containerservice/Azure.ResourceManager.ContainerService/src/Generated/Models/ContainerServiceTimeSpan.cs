@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of ContainerServiceTimeSpan. </summary>
-        /// <param name="start"> The start of a time span. </param>
-        /// <param name="end"> The end of a time span. </param>
-        internal ContainerServiceTimeSpan(DateTimeOffset? start, DateTimeOffset? end)
+        /// <param name="startOn"> The start of a time span. </param>
+        /// <param name="endOn"> The end of a time span. </param>
+        internal ContainerServiceTimeSpan(DateTimeOffset? startOn, DateTimeOffset? endOn)
         {
-            Start = start;
-            End = end;
+            StartOn = startOn;
+            EndOn = endOn;
         }
 
         /// <summary> The start of a time span. </summary>
-        public DateTimeOffset? Start { get; set; }
+        public DateTimeOffset? StartOn { get; set; }
         /// <summary> The end of a time span. </summary>
-        public DateTimeOffset? End { get; set; }
+        public DateTimeOffset? EndOn { get; set; }
     }
 }

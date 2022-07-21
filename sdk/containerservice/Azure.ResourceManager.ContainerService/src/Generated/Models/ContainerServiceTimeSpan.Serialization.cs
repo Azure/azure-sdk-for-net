@@ -16,15 +16,15 @@ namespace Azure.ResourceManager.ContainerService.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Start))
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("start");
-                writer.WriteStringValue(Start.Value, "O");
+                writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(End))
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("end");
-                writer.WriteStringValue(End.Value, "O");
+                writer.WriteStringValue(EndOn.Value, "O");
             }
             writer.WriteEndObject();
         }

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ContainerService
             AgentPoolProfiles = new ChangeTrackingList<ManagedClusterAgentPoolProfile>();
             AddonProfiles = new ChangeTrackingDictionary<string, ManagedClusterAddonProfile>();
             IdentityProfile = new ChangeTrackingDictionary<string, Models.UserAssignedIdentity>();
-            PrivateLinkResources = new ChangeTrackingList<ContainerServicePrivateLinkResource>();
+            PrivateLinkResources = new ChangeTrackingList<ContainerServicePrivateLinkResourceData>();
         }
 
         /// <summary> Initializes a new instance of ManagedClusterData. </summary>
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="securityProfile"> Security profile for the managed cluster. </param>
         /// <param name="storageProfile"> Storage profile for the managed cluster. </param>
         /// <param name="publicNetworkAccess"> Allow or deny public network access for AKS. </param>
-        internal ManagedClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedClusterSku sku, ExtendedLocation extendedLocation, ManagedClusterIdentity identity, string provisioningState, PowerState powerState, int? maxAgentPools, string kubernetesVersion, string currentKubernetesVersion, string dnsPrefix, string fqdnSubdomain, string fqdn, string privateFqdn, string azurePortalFqdn, IList<ManagedClusterAgentPoolProfile> agentPoolProfiles, ContainerServiceLinuxProfile linuxProfile, ManagedClusterWindowsProfile windowsProfile, ManagedClusterServicePrincipalProfile servicePrincipalProfile, IDictionary<string, ManagedClusterAddonProfile> addonProfiles, ManagedClusterPodIdentityProfile podIdentityProfile, string nodeResourceGroup, bool? enableRbac, bool? enablePodSecurityPolicy, ContainerServiceNetworkProfile networkProfile, ManagedClusterAadProfile aadProfile, ManagedClusterAutoUpgradeProfile autoUpgradeProfile, ManagedClusterAutoScalerProfile autoScalerProfile, ManagedClusterApiServerAccessProfile apiServerAccessProfile, ResourceIdentifier diskEncryptionSetId, IDictionary<string, Models.UserAssignedIdentity> identityProfile, IList<ContainerServicePrivateLinkResource> privateLinkResources, bool? disableLocalAccounts, ManagedClusterHttpProxyConfig httpProxyConfig, ManagedClusterSecurityProfile securityProfile, ManagedClusterStorageProfile storageProfile, PublicNetworkAccess? publicNetworkAccess) : base(id, name, resourceType, systemData, tags, location)
+        internal ManagedClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedClusterSku sku, ExtendedLocation extendedLocation, ManagedClusterIdentity identity, string provisioningState, PowerState powerState, int? maxAgentPools, string kubernetesVersion, string currentKubernetesVersion, string dnsPrefix, string fqdnSubdomain, string fqdn, string privateFqdn, string azurePortalFqdn, IList<ManagedClusterAgentPoolProfile> agentPoolProfiles, ContainerServiceLinuxProfile linuxProfile, ManagedClusterWindowsProfile windowsProfile, ManagedClusterServicePrincipalProfile servicePrincipalProfile, IDictionary<string, ManagedClusterAddonProfile> addonProfiles, ManagedClusterPodIdentityProfile podIdentityProfile, string nodeResourceGroup, bool? enableRbac, bool? enablePodSecurityPolicy, ContainerServiceNetworkProfile networkProfile, ManagedClusterAadProfile aadProfile, ManagedClusterAutoUpgradeProfile autoUpgradeProfile, ManagedClusterAutoScalerProfile autoScalerProfile, ManagedClusterApiServerAccessProfile apiServerAccessProfile, ResourceIdentifier diskEncryptionSetId, IDictionary<string, Models.UserAssignedIdentity> identityProfile, IList<ContainerServicePrivateLinkResourceData> privateLinkResources, bool? disableLocalAccounts, ManagedClusterHttpProxyConfig httpProxyConfig, ManagedClusterSecurityProfile securityProfile, ManagedClusterStorageProfile storageProfile, PublicNetworkAccess? publicNetworkAccess) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             ExtendedLocation = extendedLocation;
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <summary> Identities associated with the cluster. </summary>
         public IDictionary<string, Models.UserAssignedIdentity> IdentityProfile { get; }
         /// <summary> Private link resources associated with the cluster. </summary>
-        public IList<ContainerServicePrivateLinkResource> PrivateLinkResources { get; }
+        public IList<ContainerServicePrivateLinkResourceData> PrivateLinkResources { get; }
         /// <summary> If set to true, getting static credentials will be disabled for this cluster. This must only be used on Managed Clusters that are AAD enabled. For more details see [disable local accounts](https://docs.microsoft.com/azure/aks/managed-aad#disable-local-accounts-preview). </summary>
         public bool? DisableLocalAccounts { get; set; }
         /// <summary> Configurations for provisioning the cluster with HTTP proxy servers. </summary>

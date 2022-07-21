@@ -18,16 +18,16 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of ManagedClusterSecurityProfileAzureDefender. </summary>
-        /// <param name="enabled"> Whether to enable Azure Defender. </param>
+        /// <param name="isEnabled"> Whether to enable Azure Defender. </param>
         /// <param name="logAnalyticsWorkspaceResourceId"> Resource ID of the Log Analytics workspace to be associated with Azure Defender.  When Azure Defender is enabled, this field is required and must be a valid workspace resource ID. When Azure Defender is disabled, leave the field empty. </param>
-        internal ManagedClusterSecurityProfileAzureDefender(bool? enabled, ResourceIdentifier logAnalyticsWorkspaceResourceId)
+        internal ManagedClusterSecurityProfileAzureDefender(bool? isEnabled, ResourceIdentifier logAnalyticsWorkspaceResourceId)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             LogAnalyticsWorkspaceResourceId = logAnalyticsWorkspaceResourceId;
         }
 
         /// <summary> Whether to enable Azure Defender. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
         /// <summary> Resource ID of the Log Analytics workspace to be associated with Azure Defender.  When Azure Defender is enabled, this field is required and must be a valid workspace resource ID. When Azure Defender is disabled, leave the field empty. </summary>
         public ResourceIdentifier LogAnalyticsWorkspaceResourceId { get; set; }
     }

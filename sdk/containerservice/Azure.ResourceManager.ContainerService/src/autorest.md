@@ -35,6 +35,13 @@ rename-mapping:
   ManagedClusterPropertiesAutoScalerProfile: ManagedClusterAutoScalerProfile
   Snapshot: AgentPoolSnapshot
   SnapshotListResult: AgentPoolSnapshotListResult
+  PrivateLinkResource: ContainerServicePrivateLinkResourceData
+  ManagedClusterAddonProfile.enabled: IsEnabled
+  ManagedClusterPodIdentityProfile.enabled: IsEnabled
+  ManagedClusterSecurityProfileAzureDefender.enabled: IsEnabled
+  WindowsGmsaProfile.enabled: IsEnabled
+  TimeSpan.start: StartOn
+  TimeSpan.end: EndOn
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -82,7 +89,11 @@ rename-rules:
   API: Api
   OCI: Oci
   CSI: Csi
-  MIG: Mig
+  MIG1G: Mig1G
+  MIG2G: Mig2G
+  MIG3G: Mig3G
+  MIG4G: Mig4G
+  MIG7G: Mig7G
   Tcpkeepalive: TcpKeepalive
 
 override-operation-name:
@@ -116,6 +127,7 @@ directive:
       $.MaintenanceConfigurationProperties.properties.notAllowedTime['x-ms-client-name'] = 'NotAllowedTimes';
       $.PrivateLinkResource.properties.id['x-ms-format'] = 'arm-id';
       $.ManagedClusterProperties.properties.autoScalerProfile.properties['scan-interval']['x-ms-client-name'] = 'ScanIntervalInSeconds';
+      $.ManagedClusterWindowsProfile.properties.enableCSIProxy['x-ms-client-name'] = 'IsCsiProxyEnabled';
 # This caused bugs of duplicate names with single property flatten
 #   - from: managedClusters.json
 #     where: $.definitions..enabled

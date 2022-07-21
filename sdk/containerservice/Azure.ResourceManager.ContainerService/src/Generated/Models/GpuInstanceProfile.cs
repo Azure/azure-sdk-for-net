@@ -22,22 +22,22 @@ namespace Azure.ResourceManager.ContainerService.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string MIG1GValue = "MIG1g";
-        private const string MIG2GValue = "MIG2g";
-        private const string MIG3GValue = "MIG3g";
-        private const string MIG4GValue = "MIG4g";
-        private const string MIG7GValue = "MIG7g";
+        private const string Mig1GValue = "MIG1g";
+        private const string Mig2GValue = "MIG2g";
+        private const string Mig3GValue = "MIG3g";
+        private const string Mig4GValue = "MIG4g";
+        private const string Mig7GValue = "MIG7g";
 
         /// <summary> MIG1g. </summary>
-        public static GpuInstanceProfile MIG1G { get; } = new GpuInstanceProfile(MIG1GValue);
+        public static GpuInstanceProfile Mig1G { get; } = new GpuInstanceProfile(Mig1GValue);
         /// <summary> MIG2g. </summary>
-        public static GpuInstanceProfile MIG2G { get; } = new GpuInstanceProfile(MIG2GValue);
+        public static GpuInstanceProfile Mig2G { get; } = new GpuInstanceProfile(Mig2GValue);
         /// <summary> MIG3g. </summary>
-        public static GpuInstanceProfile MIG3G { get; } = new GpuInstanceProfile(MIG3GValue);
+        public static GpuInstanceProfile Mig3G { get; } = new GpuInstanceProfile(Mig3GValue);
         /// <summary> MIG4g. </summary>
-        public static GpuInstanceProfile MIG4G { get; } = new GpuInstanceProfile(MIG4GValue);
+        public static GpuInstanceProfile Mig4G { get; } = new GpuInstanceProfile(Mig4GValue);
         /// <summary> MIG7g. </summary>
-        public static GpuInstanceProfile MIG7G { get; } = new GpuInstanceProfile(MIG7GValue);
+        public static GpuInstanceProfile Mig7G { get; } = new GpuInstanceProfile(Mig7GValue);
         /// <summary> Determines if two <see cref="GpuInstanceProfile"/> values are the same. </summary>
         public static bool operator ==(GpuInstanceProfile left, GpuInstanceProfile right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GpuInstanceProfile"/> values are not the same. </summary>

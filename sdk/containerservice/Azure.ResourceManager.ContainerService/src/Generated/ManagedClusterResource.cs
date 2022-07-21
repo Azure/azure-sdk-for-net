@@ -1097,10 +1097,10 @@ namespace Azure.ResourceManager.ContainerService
         /// Operation Id: PrivateLinkResources_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ContainerServicePrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ContainerServicePrivateLinkResource> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ContainerServicePrivateLinkResourceData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ContainerServicePrivateLinkResourceData> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ContainerServicePrivateLinkResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ContainerServicePrivateLinkResourceData>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _privateLinkResourcesClientDiagnostics.CreateScope("ManagedClusterResource.GetPrivateLinkResources");
                 scope.Start();
@@ -1124,10 +1124,10 @@ namespace Azure.ResourceManager.ContainerService
         /// Operation Id: PrivateLinkResources_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ContainerServicePrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ContainerServicePrivateLinkResource> GetPrivateLinkResources(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ContainerServicePrivateLinkResourceData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ContainerServicePrivateLinkResourceData> GetPrivateLinkResources(CancellationToken cancellationToken = default)
         {
-            Page<ContainerServicePrivateLinkResource> FirstPageFunc(int? pageSizeHint)
+            Page<ContainerServicePrivateLinkResourceData> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _privateLinkResourcesClientDiagnostics.CreateScope("ManagedClusterResource.GetPrivateLinkResources");
                 scope.Start();
@@ -1150,18 +1150,18 @@ namespace Azure.ResourceManager.ContainerService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/resolvePrivateLinkServiceId
         /// Operation Id: ResolvePrivateLinkServiceId_POST
         /// </summary>
-        /// <param name="containerServicePrivateLinkResource"> Parameters required in order to resolve a private link service ID. </param>
+        /// <param name="data"> Parameters required in order to resolve a private link service ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerServicePrivateLinkResource"/> is null. </exception>
-        public virtual async Task<Response<ContainerServicePrivateLinkResource>> ResolvePrivateLinkServiceIdAsync(ContainerServicePrivateLinkResource containerServicePrivateLinkResource, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<Response<ContainerServicePrivateLinkResourceData>> ResolvePrivateLinkServiceIdAsync(ContainerServicePrivateLinkResourceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(containerServicePrivateLinkResource, nameof(containerServicePrivateLinkResource));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _resolvePrivateLinkServiceIdClientDiagnostics.CreateScope("ManagedClusterResource.ResolvePrivateLinkServiceId");
             scope.Start();
             try
             {
-                var response = await _resolvePrivateLinkServiceIdRestClient.PostAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, containerServicePrivateLinkResource, cancellationToken).ConfigureAwait(false);
+                var response = await _resolvePrivateLinkServiceIdRestClient.PostAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1176,18 +1176,18 @@ namespace Azure.ResourceManager.ContainerService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/resolvePrivateLinkServiceId
         /// Operation Id: ResolvePrivateLinkServiceId_POST
         /// </summary>
-        /// <param name="containerServicePrivateLinkResource"> Parameters required in order to resolve a private link service ID. </param>
+        /// <param name="data"> Parameters required in order to resolve a private link service ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerServicePrivateLinkResource"/> is null. </exception>
-        public virtual Response<ContainerServicePrivateLinkResource> ResolvePrivateLinkServiceId(ContainerServicePrivateLinkResource containerServicePrivateLinkResource, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual Response<ContainerServicePrivateLinkResourceData> ResolvePrivateLinkServiceId(ContainerServicePrivateLinkResourceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(containerServicePrivateLinkResource, nameof(containerServicePrivateLinkResource));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _resolvePrivateLinkServiceIdClientDiagnostics.CreateScope("ManagedClusterResource.ResolvePrivateLinkServiceId");
             scope.Start();
             try
             {
-                var response = _resolvePrivateLinkServiceIdRestClient.Post(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, containerServicePrivateLinkResource, cancellationToken);
+                var response = _resolvePrivateLinkServiceIdRestClient.Post(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
                 return response;
             }
             catch (Exception e)
