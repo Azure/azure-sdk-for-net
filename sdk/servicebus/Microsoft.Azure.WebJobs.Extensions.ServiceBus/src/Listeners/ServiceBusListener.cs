@@ -179,11 +179,11 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                 // CloseAsync method stop new messages from being processed while allowing in-flight messages to be processed.
                 if (_singleDispatch)
                 {
-                    if (_isSessionsEnabled)
+                    if (_sessionMessageProcessor.IsValueCreated)
                     {
                         await _sessionMessageProcessor.Value.Processor.CloseAsync(cancellationToken).ConfigureAwait(false);
                     }
-                    else
+                    if (_messageProcessor.IsValueCreated)
                     {
                         await _messageProcessor.Value.Processor.CloseAsync(cancellationToken).ConfigureAwait(false);
                     }
@@ -191,7 +191,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                 else
                 {
                     await _batchLoop.ConfigureAwait(false);
-                    await _batchReceiver.Value.CloseAsync(cancellationToken).ConfigureAwait(false);
+                    if (_batchReceiver.IsValueCreated)
+                    {
+                        await _batchReceiver.Value.CloseAsync(cancellationToken).ConfigureAwait(false);
+                    }
                 }
 
                 Started = false;
@@ -390,10 +393,13 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                         }
                     }
 
-                    IReadOnlyList<ServiceBusReceivedMessage> messages =
-                        await receiver.ReceiveMessagesAsync(
-                            _serviceBusOptions.MaxMessageBatchSize,
-                            cancellationToken: cancellationToken).AwaitWithCancellation(cancellationToken);
+                    // For non-session receiver, we just fall back to the operation timeout.
+                    TimeSpan? maxWaitTime = _isSessionsEnabled ? _serviceBusOptions.SessionIdleTimeout : null;
+
+                    IReadOnlyList<ServiceBusReceivedMessage> messages = await receiver.ReceiveMessagesAsync(
+                        _serviceBusOptions.MaxMessageBatchSize,
+                        maxWaitTime,
+                        cancellationToken).ConfigureAwait(false);
 
                     if (messages.Count > 0)
                     {
