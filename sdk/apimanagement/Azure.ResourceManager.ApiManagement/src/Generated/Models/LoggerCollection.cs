@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of LoggerCollection. </summary>
         internal LoggerCollection()
         {
-            Value = new ChangeTrackingList<LoggerContractData>();
+            Value = new ChangeTrackingList<ApiManagementLoggerData>();
         }
 
         /// <summary> Initializes a new instance of LoggerCollection. </summary>
         /// <param name="value"> Logger values. </param>
         /// <param name="count"> Total record count number across all pages. </param>
         /// <param name="nextLink"> Next page link if any. </param>
-        internal LoggerCollection(IReadOnlyList<LoggerContractData> value, long? count, string nextLink)
+        internal LoggerCollection(IReadOnlyList<ApiManagementLoggerData> value, long? count, string nextLink)
         {
             Value = value;
             Count = count;
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Logger values. </summary>
-        public IReadOnlyList<LoggerContractData> Value { get; }
+        public IReadOnlyList<ApiManagementLoggerData> Value { get; }
         /// <summary> Total record count number across all pages. </summary>
         public long? Count { get; }
         /// <summary> Next page link if any. </summary>

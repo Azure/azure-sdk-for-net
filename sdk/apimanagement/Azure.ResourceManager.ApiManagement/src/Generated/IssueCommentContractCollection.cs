@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
     /// A class representing a collection of <see cref="IssueCommentContractResource" /> and their operations.
-    /// Each <see cref="IssueCommentContractResource" /> in the collection will belong to the same instance of <see cref="ServiceApiIssueResource" />.
-    /// To get an <see cref="IssueCommentContractCollection" /> instance call the GetIssueCommentContracts method from an instance of <see cref="ServiceApiIssueResource" />.
+    /// Each <see cref="IssueCommentContractResource" /> in the collection will belong to the same instance of <see cref="ApiIssueResource" />.
+    /// To get an <see cref="IssueCommentContractCollection" /> instance call the GetIssueCommentContracts method from an instance of <see cref="ApiIssueResource" />.
     /// </summary>
     public partial class IssueCommentContractCollection : ArmCollection, IEnumerable<IssueCommentContractResource>, IAsyncEnumerable<IssueCommentContractResource>
     {
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.ApiManagement
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ServiceApiIssueResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ServiceApiIssueResource.ResourceType), nameof(id));
+            if (id.ResourceType != ApiIssueResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ApiIssueResource.ResourceType), nameof(id));
         }
 
         /// <summary>

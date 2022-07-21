@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ApiManagement
     /// A Class representing an IssueAttachmentContract along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="IssueAttachmentContractResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetIssueAttachmentContractResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ServiceApiIssueResource" /> using the GetIssueAttachmentContract method.
+    /// Otherwise you can get one from its parent resource <see cref="ApiIssueResource" /> using the GetIssueAttachmentContract method.
     /// </summary>
     public partial class IssueAttachmentContractResource : ArmResource
     {

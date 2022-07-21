@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static TagDescriptionCollection DeserializeTagDescriptionCollection(JsonElement element)
         {
-            Optional<IReadOnlyList<TagDescriptionContractData>> value = default;
+            Optional<IReadOnlyList<ApiTagDescriptionData>> value = default;
             Optional<long> count = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<TagDescriptionContractData> array = new List<TagDescriptionContractData>();
+                    List<ApiTagDescriptionData> array = new List<ApiTagDescriptionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TagDescriptionContractData.DeserializeTagDescriptionContractData(item));
+                        array.Add(ApiTagDescriptionData.DeserializeApiTagDescriptionData(item));
                     }
                     value = array;
                     continue;

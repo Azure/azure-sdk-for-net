@@ -20,10 +20,10 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
-    /// A Class representing an ApiManagementServiceResource along with the instance operations that can be performed on it.
+    /// A Class representing an ApiManagementService along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ApiManagementServiceResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetApiManagementServiceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetApiManagementServiceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetApiManagementService method.
     /// </summary>
     public partial class ApiManagementServiceResource : ArmResource
     {
@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.ApiManagement
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _apiManagementServiceResourceApiManagementServiceClientDiagnostics;
-        private readonly ApiManagementServiceRestOperations _apiManagementServiceResourceApiManagementServiceRestClient;
-        private readonly ClientDiagnostics _apiContractApiClientDiagnostics;
-        private readonly ApiRestOperations _apiContractApiRestClient;
+        private readonly ClientDiagnostics _apiManagementServiceClientDiagnostics;
+        private readonly ApiManagementServiceRestOperations _apiManagementServiceRestClient;
+        private readonly ClientDiagnostics _apiClientDiagnostics;
+        private readonly ApiRestOperations _apiRestClient;
         private readonly ClientDiagnostics _defaultClientDiagnostics;
         private readonly ApiManagementRestOperations _defaultRestClient;
         private readonly ClientDiagnostics _apiManagementServiceSkusClientDiagnostics;
@@ -48,8 +48,8 @@ namespace Azure.ResourceManager.ApiManagement
         private readonly OutboundNetworkDependenciesEndpointsRestOperations _outboundNetworkDependenciesEndpointsRestClient;
         private readonly ClientDiagnostics _policyDescriptionClientDiagnostics;
         private readonly PolicyDescriptionRestOperations _policyDescriptionRestClient;
-        private readonly ClientDiagnostics _apiManagementServiceResourcePortalSettingsClientDiagnostics;
-        private readonly PortalSettingsRestOperations _apiManagementServiceResourcePortalSettingsRestClient;
+        private readonly ClientDiagnostics _apiManagementServicePortalSettingsClientDiagnostics;
+        private readonly PortalSettingsRestOperations _apiManagementServicePortalSettingsRestClient;
         private readonly ClientDiagnostics _productContractProductClientDiagnostics;
         private readonly ProductRestOperations _productContractProductRestClient;
         private readonly ClientDiagnostics _quotaByCounterKeysClientDiagnostics;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ApiManagement
         private readonly TagResourceRestOperations _tagResourceRestClient;
         private readonly ClientDiagnostics _tenantConfigurationClientDiagnostics;
         private readonly TenantConfigurationRestOperations _tenantConfigurationRestClient;
-        private readonly ApiManagementServiceResourceData _data;
+        private readonly ApiManagementServiceData _data;
 
         /// <summary> Initializes a new instance of the <see cref="ApiManagementServiceResource"/> class for mocking. </summary>
         protected ApiManagementServiceResource()
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Initializes a new instance of the <see cref = "ApiManagementServiceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ApiManagementServiceResource(ArmClient client, ApiManagementServiceResourceData data) : this(client, data.Id)
+        internal ApiManagementServiceResource(ArmClient client, ApiManagementServiceData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -85,12 +85,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ApiManagementServiceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _apiManagementServiceResourceApiManagementServiceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string apiManagementServiceResourceApiManagementServiceApiVersion);
-            _apiManagementServiceResourceApiManagementServiceRestClient = new ApiManagementServiceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementServiceResourceApiManagementServiceApiVersion);
-            _apiContractApiClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiContractResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ApiContractResource.ResourceType, out string apiContractApiApiVersion);
-            _apiContractApiRestClient = new ApiRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, apiContractApiApiVersion);
+            _apiManagementServiceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string apiManagementServiceApiVersion);
+            _apiManagementServiceRestClient = new ApiManagementServiceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementServiceApiVersion);
+            _apiClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ApiResource.ResourceType, out string apiApiVersion);
+            _apiRestClient = new ApiRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, apiApiVersion);
             _defaultClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _defaultRestClient = new ApiManagementRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _apiManagementServiceSkusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
@@ -101,9 +101,9 @@ namespace Azure.ResourceManager.ApiManagement
             _outboundNetworkDependenciesEndpointsRestClient = new OutboundNetworkDependenciesEndpointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _policyDescriptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _policyDescriptionRestClient = new PolicyDescriptionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _apiManagementServiceResourcePortalSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string apiManagementServiceResourcePortalSettingsApiVersion);
-            _apiManagementServiceResourcePortalSettingsRestClient = new PortalSettingsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementServiceResourcePortalSettingsApiVersion);
+            _apiManagementServicePortalSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string apiManagementServicePortalSettingsApiVersion);
+            _apiManagementServicePortalSettingsRestClient = new PortalSettingsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementServicePortalSettingsApiVersion);
             _productContractProductClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ProductContractResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ProductContractResource.ResourceType, out string productContractProductApiVersion);
             _productContractProductRestClient = new ProductRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, productContractProductApiVersion);
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual ApiManagementServiceResourceData Data
+        public virtual ApiManagementServiceData Data
         {
             get
             {
@@ -148,11 +148,11 @@ namespace Azure.ResourceManager.ApiManagement
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of ApiContractResources in the ApiManagementServiceResource. </summary>
-        /// <returns> An object representing collection of ApiContractResources and their operations over a ApiContractResource. </returns>
-        public virtual ApiContractCollection GetApiContracts()
+        /// <summary> Gets a collection of ApiResources in the ApiManagementService. </summary>
+        /// <returns> An object representing collection of ApiResources and their operations over a ApiResource. </returns>
+        public virtual ApiCollection GetApis()
         {
-            return GetCachedClient(Client => new ApiContractCollection(Client, Id));
+            return GetCachedClient(Client => new ApiCollection(Client, Id));
         }
 
         /// <summary>
@@ -165,9 +165,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentException"> <paramref name="apiId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="apiId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ApiContractResource>> GetApiContractAsync(string apiId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiResource>> GetApiAsync(string apiId, CancellationToken cancellationToken = default)
         {
-            return await GetApiContracts().GetAsync(apiId, cancellationToken).ConfigureAwait(false);
+            return await GetApis().GetAsync(apiId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -180,12 +180,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentException"> <paramref name="apiId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="apiId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ApiContractResource> GetApiContract(string apiId, CancellationToken cancellationToken = default)
+        public virtual Response<ApiResource> GetApi(string apiId, CancellationToken cancellationToken = default)
         {
-            return GetApiContracts().Get(apiId, cancellationToken);
+            return GetApis().Get(apiId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ServicePolicyResources in the ApiManagementServiceResource. </summary>
+        /// <summary> Gets a collection of ServicePolicyResources in the ApiManagementService. </summary>
         /// <returns> An object representing collection of ServicePolicyResources and their operations over a ServicePolicyResource. </returns>
         public virtual ServicePolicyCollection GetServicePolicies()
         {
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.ApiManagement
             return GetServicePolicies().Get(policyId, format, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ServiceTagResources in the ApiManagementServiceResource. </summary>
+        /// <summary> Gets a collection of ServiceTagResources in the ApiManagementService. </summary>
         /// <returns> An object representing collection of ServiceTagResources and their operations over a ServiceTagResource. </returns>
         public virtual ServiceTagCollection GetServiceTags()
         {
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.ApiManagement
             return GetServiceTags().Get(tagId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ServiceDiagnosticResources in the ApiManagementServiceResource. </summary>
+        /// <summary> Gets a collection of ServiceDiagnosticResources in the ApiManagementService. </summary>
         /// <returns> An object representing collection of ServiceDiagnosticResources and their operations over a ServiceDiagnosticResource. </returns>
         public virtual ServiceDiagnosticCollection GetServiceDiagnostics()
         {
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ApiManagement
             return GetServiceDiagnostics().Get(diagnosticId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ServiceIssueResources in the ApiManagementServiceResource. </summary>
+        /// <summary> Gets a collection of ServiceIssueResources in the ApiManagementService. </summary>
         /// <returns> An object representing collection of ServiceIssueResources and their operations over a ServiceIssueResource. </returns>
         public virtual ServiceIssueCollection GetServiceIssues()
         {
@@ -331,11 +331,11 @@ namespace Azure.ResourceManager.ApiManagement
             return GetServiceIssues().Get(issueId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ApiVersionSetContractResources in the ApiManagementServiceResource. </summary>
-        /// <returns> An object representing collection of ApiVersionSetContractResources and their operations over a ApiVersionSetContractResource. </returns>
-        public virtual ApiVersionSetContractCollection GetApiVersionSetContracts()
+        /// <summary> Gets a collection of ApiVersionSetResources in the ApiManagementService. </summary>
+        /// <returns> An object representing collection of ApiVersionSetResources and their operations over a ApiVersionSetResource. </returns>
+        public virtual ApiVersionSetCollection GetApiVersionSets()
         {
-            return GetCachedClient(Client => new ApiVersionSetContractCollection(Client, Id));
+            return GetCachedClient(Client => new ApiVersionSetCollection(Client, Id));
         }
 
         /// <summary>
@@ -348,9 +348,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentException"> <paramref name="versionSetId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="versionSetId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ApiVersionSetContractResource>> GetApiVersionSetContractAsync(string versionSetId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiVersionSetResource>> GetApiVersionSetAsync(string versionSetId, CancellationToken cancellationToken = default)
         {
-            return await GetApiVersionSetContracts().GetAsync(versionSetId, cancellationToken).ConfigureAwait(false);
+            return await GetApiVersionSets().GetAsync(versionSetId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -363,31 +363,16 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentException"> <paramref name="versionSetId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="versionSetId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ApiVersionSetContractResource> GetApiVersionSetContract(string versionSetId, CancellationToken cancellationToken = default)
+        public virtual Response<ApiVersionSetResource> GetApiVersionSet(string versionSetId, CancellationToken cancellationToken = default)
         {
-            return GetApiVersionSetContracts().Get(versionSetId, cancellationToken);
+            return GetApiVersionSets().Get(versionSetId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of AuthorizationServerContractResources in the ApiManagementServiceResource. </summary>
-        /// <returns> An object representing collection of AuthorizationServerContractResources and their operations over a AuthorizationServerContractResource. </returns>
-        public virtual AuthorizationServerContractCollection GetAuthorizationServerContracts()
+        /// <summary> Gets a collection of ApiManagementAuthorizationServerResources in the ApiManagementService. </summary>
+        /// <returns> An object representing collection of ApiManagementAuthorizationServerResources and their operations over a ApiManagementAuthorizationServerResource. </returns>
+        public virtual ApiManagementAuthorizationServerCollection GetApiManagementAuthorizationServers()
         {
-            return GetCachedClient(Client => new AuthorizationServerContractCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Gets the details of the authorization server specified by its identifier.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationServers/{authsid}
-        /// Operation Id: AuthorizationServer_Get
-        /// </summary>
-        /// <param name="authsid"> Identifier of the authorization server. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="authsid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="authsid"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<AuthorizationServerContractResource>> GetAuthorizationServerContractAsync(string authsid, CancellationToken cancellationToken = default)
-        {
-            return await GetAuthorizationServerContracts().GetAsync(authsid, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(Client => new ApiManagementAuthorizationServerCollection(Client, Id));
         }
 
         /// <summary>
@@ -400,16 +385,31 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentException"> <paramref name="authsid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authsid"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<AuthorizationServerContractResource> GetAuthorizationServerContract(string authsid, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiManagementAuthorizationServerResource>> GetApiManagementAuthorizationServerAsync(string authsid, CancellationToken cancellationToken = default)
         {
-            return GetAuthorizationServerContracts().Get(authsid, cancellationToken);
+            return await GetApiManagementAuthorizationServers().GetAsync(authsid, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of BackendContractResources in the ApiManagementServiceResource. </summary>
-        /// <returns> An object representing collection of BackendContractResources and their operations over a BackendContractResource. </returns>
-        public virtual BackendContractCollection GetBackendContracts()
+        /// <summary>
+        /// Gets the details of the authorization server specified by its identifier.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationServers/{authsid}
+        /// Operation Id: AuthorizationServer_Get
+        /// </summary>
+        /// <param name="authsid"> Identifier of the authorization server. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="authsid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="authsid"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ApiManagementAuthorizationServerResource> GetApiManagementAuthorizationServer(string authsid, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(Client => new BackendContractCollection(Client, Id));
+            return GetApiManagementAuthorizationServers().Get(authsid, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ApiManagementBackendResources in the ApiManagementService. </summary>
+        /// <returns> An object representing collection of ApiManagementBackendResources and their operations over a ApiManagementBackendResource. </returns>
+        public virtual ApiManagementBackendCollection GetApiManagementBackends()
+        {
+            return GetCachedClient(Client => new ApiManagementBackendCollection(Client, Id));
         }
 
         /// <summary>
@@ -422,9 +422,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentException"> <paramref name="backendId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backendId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<BackendContractResource>> GetBackendContractAsync(string backendId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiManagementBackendResource>> GetApiManagementBackendAsync(string backendId, CancellationToken cancellationToken = default)
         {
-            return await GetBackendContracts().GetAsync(backendId, cancellationToken).ConfigureAwait(false);
+            return await GetApiManagementBackends().GetAsync(backendId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -437,31 +437,16 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentException"> <paramref name="backendId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backendId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<BackendContractResource> GetBackendContract(string backendId, CancellationToken cancellationToken = default)
+        public virtual Response<ApiManagementBackendResource> GetApiManagementBackend(string backendId, CancellationToken cancellationToken = default)
         {
-            return GetBackendContracts().Get(backendId, cancellationToken);
+            return GetApiManagementBackends().Get(backendId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of CacheContractResources in the ApiManagementServiceResource. </summary>
-        /// <returns> An object representing collection of CacheContractResources and their operations over a CacheContractResource. </returns>
-        public virtual CacheContractCollection GetCacheContracts()
+        /// <summary> Gets a collection of ApiManagementCacheResources in the ApiManagementService. </summary>
+        /// <returns> An object representing collection of ApiManagementCacheResources and their operations over a ApiManagementCacheResource. </returns>
+        public virtual ApiManagementCacheCollection GetApiManagementCaches()
         {
-            return GetCachedClient(Client => new CacheContractCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Gets the details of the Cache specified by its identifier.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/caches/{cacheId}
-        /// Operation Id: Cache_Get
-        /// </summary>
-        /// <param name="cacheId"> Identifier of the Cache entity. Cache identifier (should be either &apos;default&apos; or valid Azure region identifier). </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="cacheId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="cacheId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<CacheContractResource>> GetCacheContractAsync(string cacheId, CancellationToken cancellationToken = default)
-        {
-            return await GetCacheContracts().GetAsync(cacheId, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(Client => new ApiManagementCacheCollection(Client, Id));
         }
 
         /// <summary>
@@ -474,16 +459,31 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentException"> <paramref name="cacheId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="cacheId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<CacheContractResource> GetCacheContract(string cacheId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiManagementCacheResource>> GetApiManagementCacheAsync(string cacheId, CancellationToken cancellationToken = default)
         {
-            return GetCacheContracts().Get(cacheId, cancellationToken);
+            return await GetApiManagementCaches().GetAsync(cacheId, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of CertificateContractResources in the ApiManagementServiceResource. </summary>
-        /// <returns> An object representing collection of CertificateContractResources and their operations over a CertificateContractResource. </returns>
-        public virtual CertificateContractCollection GetCertificateContracts()
+        /// <summary>
+        /// Gets the details of the Cache specified by its identifier.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/caches/{cacheId}
+        /// Operation Id: Cache_Get
+        /// </summary>
+        /// <param name="cacheId"> Identifier of the Cache entity. Cache identifier (should be either &apos;default&apos; or valid Azure region identifier). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="cacheId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="cacheId"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ApiManagementCacheResource> GetApiManagementCache(string cacheId, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(Client => new CertificateContractCollection(Client, Id));
+            return GetApiManagementCaches().Get(cacheId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ApiManagementCertificateResources in the ApiManagementService. </summary>
+        /// <returns> An object representing collection of ApiManagementCertificateResources and their operations over a ApiManagementCertificateResource. </returns>
+        public virtual ApiManagementCertificateCollection GetApiManagementCertificates()
+        {
+            return GetCachedClient(Client => new ApiManagementCertificateCollection(Client, Id));
         }
 
         /// <summary>
@@ -496,9 +496,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentException"> <paramref name="certificateId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<CertificateContractResource>> GetCertificateContractAsync(string certificateId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiManagementCertificateResource>> GetApiManagementCertificateAsync(string certificateId, CancellationToken cancellationToken = default)
         {
-            return await GetCertificateContracts().GetAsync(certificateId, cancellationToken).ConfigureAwait(false);
+            return await GetApiManagementCertificates().GetAsync(certificateId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -511,31 +511,16 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentException"> <paramref name="certificateId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<CertificateContractResource> GetCertificateContract(string certificateId, CancellationToken cancellationToken = default)
+        public virtual Response<ApiManagementCertificateResource> GetApiManagementCertificate(string certificateId, CancellationToken cancellationToken = default)
         {
-            return GetCertificateContracts().Get(certificateId, cancellationToken);
+            return GetApiManagementCertificates().Get(certificateId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ContentTypeContractResources in the ApiManagementServiceResource. </summary>
-        /// <returns> An object representing collection of ContentTypeContractResources and their operations over a ContentTypeContractResource. </returns>
-        public virtual ContentTypeContractCollection GetContentTypeContracts()
+        /// <summary> Gets a collection of ApiManagementContentTypeResources in the ApiManagementService. </summary>
+        /// <returns> An object representing collection of ApiManagementContentTypeResources and their operations over a ApiManagementContentTypeResource. </returns>
+        public virtual ApiManagementContentTypeCollection GetApiManagementContentTypes()
         {
-            return GetCachedClient(Client => new ContentTypeContractCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Gets the details of the developer portal&apos;s content type. Content types describe content items&apos; properties, validation rules, and constraints.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}
-        /// Operation Id: ContentType_Get
-        /// </summary>
-        /// <param name="contentTypeId"> Content type identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="contentTypeId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ContentTypeContractResource>> GetContentTypeContractAsync(string contentTypeId, CancellationToken cancellationToken = default)
-        {
-            return await GetContentTypeContracts().GetAsync(contentTypeId, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(Client => new ApiManagementContentTypeCollection(Client, Id));
         }
 
         /// <summary>
@@ -548,16 +533,31 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentException"> <paramref name="contentTypeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ContentTypeContractResource> GetContentTypeContract(string contentTypeId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiManagementContentTypeResource>> GetApiManagementContentTypeAsync(string contentTypeId, CancellationToken cancellationToken = default)
         {
-            return GetContentTypeContracts().Get(contentTypeId, cancellationToken);
+            return await GetApiManagementContentTypes().GetAsync(contentTypeId, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of EmailTemplateContractResources in the ApiManagementServiceResource. </summary>
-        /// <returns> An object representing collection of EmailTemplateContractResources and their operations over a EmailTemplateContractResource. </returns>
-        public virtual EmailTemplateContractCollection GetEmailTemplateContracts()
+        /// <summary>
+        /// Gets the details of the developer portal&apos;s content type. Content types describe content items&apos; properties, validation rules, and constraints.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}
+        /// Operation Id: ContentType_Get
+        /// </summary>
+        /// <param name="contentTypeId"> Content type identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="contentTypeId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ApiManagementContentTypeResource> GetApiManagementContentType(string contentTypeId, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(Client => new EmailTemplateContractCollection(Client, Id));
+            return GetApiManagementContentTypes().Get(contentTypeId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ApiManagementEmailTemplateResources in the ApiManagementService. </summary>
+        /// <returns> An object representing collection of ApiManagementEmailTemplateResources and their operations over a ApiManagementEmailTemplateResource. </returns>
+        public virtual ApiManagementEmailTemplateCollection GetApiManagementEmailTemplates()
+        {
+            return GetCachedClient(Client => new ApiManagementEmailTemplateCollection(Client, Id));
         }
 
         /// <summary>
@@ -568,9 +568,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="templateName"> Email Template Name Identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<EmailTemplateContractResource>> GetEmailTemplateContractAsync(TemplateName templateName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiManagementEmailTemplateResource>> GetApiManagementEmailTemplateAsync(TemplateName templateName, CancellationToken cancellationToken = default)
         {
-            return await GetEmailTemplateContracts().GetAsync(templateName, cancellationToken).ConfigureAwait(false);
+            return await GetApiManagementEmailTemplates().GetAsync(templateName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -581,16 +581,16 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="templateName"> Email Template Name Identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<EmailTemplateContractResource> GetEmailTemplateContract(TemplateName templateName, CancellationToken cancellationToken = default)
+        public virtual Response<ApiManagementEmailTemplateResource> GetApiManagementEmailTemplate(TemplateName templateName, CancellationToken cancellationToken = default)
         {
-            return GetEmailTemplateContracts().Get(templateName, cancellationToken);
+            return GetApiManagementEmailTemplates().Get(templateName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of GatewayContractResources in the ApiManagementServiceResource. </summary>
-        /// <returns> An object representing collection of GatewayContractResources and their operations over a GatewayContractResource. </returns>
-        public virtual GatewayContractCollection GetGatewayContracts()
+        /// <summary> Gets a collection of ApiManagementGatewayResources in the ApiManagementService. </summary>
+        /// <returns> An object representing collection of ApiManagementGatewayResources and their operations over a ApiManagementGatewayResource. </returns>
+        public virtual ApiManagementGatewayCollection GetApiManagementGateways()
         {
-            return GetCachedClient(Client => new GatewayContractCollection(Client, Id));
+            return GetCachedClient(Client => new ApiManagementGatewayCollection(Client, Id));
         }
 
         /// <summary>
@@ -603,9 +603,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentException"> <paramref name="gatewayId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<GatewayContractResource>> GetGatewayContractAsync(string gatewayId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiManagementGatewayResource>> GetApiManagementGatewayAsync(string gatewayId, CancellationToken cancellationToken = default)
         {
-            return await GetGatewayContracts().GetAsync(gatewayId, cancellationToken).ConfigureAwait(false);
+            return await GetApiManagementGateways().GetAsync(gatewayId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -618,31 +618,16 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentException"> <paramref name="gatewayId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<GatewayContractResource> GetGatewayContract(string gatewayId, CancellationToken cancellationToken = default)
+        public virtual Response<ApiManagementGatewayResource> GetApiManagementGateway(string gatewayId, CancellationToken cancellationToken = default)
         {
-            return GetGatewayContracts().Get(gatewayId, cancellationToken);
+            return GetApiManagementGateways().Get(gatewayId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of GroupContractResources in the ApiManagementServiceResource. </summary>
-        /// <returns> An object representing collection of GroupContractResources and their operations over a GroupContractResource. </returns>
-        public virtual GroupContractCollection GetGroupContracts()
+        /// <summary> Gets a collection of ApiManagementGroupResources in the ApiManagementService. </summary>
+        /// <returns> An object representing collection of ApiManagementGroupResources and their operations over a ApiManagementGroupResource. </returns>
+        public virtual ApiManagementGroupCollection GetApiManagementGroups()
         {
-            return GetCachedClient(Client => new GroupContractCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Gets the details of the group specified by its identifier.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/groups/{groupId}
-        /// Operation Id: Group_Get
-        /// </summary>
-        /// <param name="groupId"> Group identifier. Must be unique in the current API Management service instance. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<GroupContractResource>> GetGroupContractAsync(string groupId, CancellationToken cancellationToken = default)
-        {
-            return await GetGroupContracts().GetAsync(groupId, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(Client => new ApiManagementGroupCollection(Client, Id));
         }
 
         /// <summary>
@@ -655,16 +640,31 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<GroupContractResource> GetGroupContract(string groupId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiManagementGroupResource>> GetApiManagementGroupAsync(string groupId, CancellationToken cancellationToken = default)
         {
-            return GetGroupContracts().Get(groupId, cancellationToken);
+            return await GetApiManagementGroups().GetAsync(groupId, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of IdentityProviderContractResources in the ApiManagementServiceResource. </summary>
-        /// <returns> An object representing collection of IdentityProviderContractResources and their operations over a IdentityProviderContractResource. </returns>
-        public virtual IdentityProviderContractCollection GetIdentityProviderContracts()
+        /// <summary>
+        /// Gets the details of the group specified by its identifier.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/groups/{groupId}
+        /// Operation Id: Group_Get
+        /// </summary>
+        /// <param name="groupId"> Group identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ApiManagementGroupResource> GetApiManagementGroup(string groupId, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(Client => new IdentityProviderContractCollection(Client, Id));
+            return GetApiManagementGroups().Get(groupId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ApiManagementIdentityProviderResources in the ApiManagementService. </summary>
+        /// <returns> An object representing collection of ApiManagementIdentityProviderResources and their operations over a ApiManagementIdentityProviderResource. </returns>
+        public virtual ApiManagementIdentityProviderCollection GetApiManagementIdentityProviders()
+        {
+            return GetCachedClient(Client => new ApiManagementIdentityProviderCollection(Client, Id));
         }
 
         /// <summary>
@@ -675,9 +675,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="identityProviderName"> Identity Provider Type identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<IdentityProviderContractResource>> GetIdentityProviderContractAsync(IdentityProviderType identityProviderName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiManagementIdentityProviderResource>> GetApiManagementIdentityProviderAsync(IdentityProviderType identityProviderName, CancellationToken cancellationToken = default)
         {
-            return await GetIdentityProviderContracts().GetAsync(identityProviderName, cancellationToken).ConfigureAwait(false);
+            return await GetApiManagementIdentityProviders().GetAsync(identityProviderName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -688,16 +688,16 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="identityProviderName"> Identity Provider Type identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<IdentityProviderContractResource> GetIdentityProviderContract(IdentityProviderType identityProviderName, CancellationToken cancellationToken = default)
+        public virtual Response<ApiManagementIdentityProviderResource> GetApiManagementIdentityProvider(IdentityProviderType identityProviderName, CancellationToken cancellationToken = default)
         {
-            return GetIdentityProviderContracts().Get(identityProviderName, cancellationToken);
+            return GetApiManagementIdentityProviders().Get(identityProviderName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of LoggerContractResources in the ApiManagementServiceResource. </summary>
-        /// <returns> An object representing collection of LoggerContractResources and their operations over a LoggerContractResource. </returns>
-        public virtual LoggerContractCollection GetLoggerContracts()
+        /// <summary> Gets a collection of ApiManagementLoggerResources in the ApiManagementService. </summary>
+        /// <returns> An object representing collection of ApiManagementLoggerResources and their operations over a ApiManagementLoggerResource. </returns>
+        public virtual ApiManagementLoggerCollection GetApiManagementLoggers()
         {
-            return GetCachedClient(Client => new LoggerContractCollection(Client, Id));
+            return GetCachedClient(Client => new ApiManagementLoggerCollection(Client, Id));
         }
 
         /// <summary>
@@ -710,9 +710,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentException"> <paramref name="loggerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="loggerId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<LoggerContractResource>> GetLoggerContractAsync(string loggerId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiManagementLoggerResource>> GetApiManagementLoggerAsync(string loggerId, CancellationToken cancellationToken = default)
         {
-            return await GetLoggerContracts().GetAsync(loggerId, cancellationToken).ConfigureAwait(false);
+            return await GetApiManagementLoggers().GetAsync(loggerId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -725,31 +725,16 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentException"> <paramref name="loggerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="loggerId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<LoggerContractResource> GetLoggerContract(string loggerId, CancellationToken cancellationToken = default)
+        public virtual Response<ApiManagementLoggerResource> GetApiManagementLogger(string loggerId, CancellationToken cancellationToken = default)
         {
-            return GetLoggerContracts().Get(loggerId, cancellationToken);
+            return GetApiManagementLoggers().Get(loggerId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of NamedValueContractResources in the ApiManagementServiceResource. </summary>
-        /// <returns> An object representing collection of NamedValueContractResources and their operations over a NamedValueContractResource. </returns>
-        public virtual NamedValueContractCollection GetNamedValueContracts()
+        /// <summary> Gets a collection of ApiManagementNamedValueResources in the ApiManagementService. </summary>
+        /// <returns> An object representing collection of ApiManagementNamedValueResources and their operations over a ApiManagementNamedValueResource. </returns>
+        public virtual ApiManagementNamedValueCollection GetApiManagementNamedValues()
         {
-            return GetCachedClient(Client => new NamedValueContractCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Gets the details of the named value specified by its identifier.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/namedValues/{namedValueId}
-        /// Operation Id: NamedValue_Get
-        /// </summary>
-        /// <param name="namedValueId"> Identifier of the NamedValue. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="namedValueId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="namedValueId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<NamedValueContractResource>> GetNamedValueContractAsync(string namedValueId, CancellationToken cancellationToken = default)
-        {
-            return await GetNamedValueContracts().GetAsync(namedValueId, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(Client => new ApiManagementNamedValueCollection(Client, Id));
         }
 
         /// <summary>
@@ -762,16 +747,31 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentException"> <paramref name="namedValueId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="namedValueId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<NamedValueContractResource> GetNamedValueContract(string namedValueId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiManagementNamedValueResource>> GetApiManagementNamedValueAsync(string namedValueId, CancellationToken cancellationToken = default)
         {
-            return GetNamedValueContracts().Get(namedValueId, cancellationToken);
+            return await GetApiManagementNamedValues().GetAsync(namedValueId, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of NotificationContractResources in the ApiManagementServiceResource. </summary>
-        /// <returns> An object representing collection of NotificationContractResources and their operations over a NotificationContractResource. </returns>
-        public virtual NotificationContractCollection GetNotificationContracts()
+        /// <summary>
+        /// Gets the details of the named value specified by its identifier.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/namedValues/{namedValueId}
+        /// Operation Id: NamedValue_Get
+        /// </summary>
+        /// <param name="namedValueId"> Identifier of the NamedValue. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="namedValueId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="namedValueId"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ApiManagementNamedValueResource> GetApiManagementNamedValue(string namedValueId, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(Client => new NotificationContractCollection(Client, Id));
+            return GetApiManagementNamedValues().Get(namedValueId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ApiManagementNotificationResources in the ApiManagementService. </summary>
+        /// <returns> An object representing collection of ApiManagementNotificationResources and their operations over a ApiManagementNotificationResource. </returns>
+        public virtual ApiManagementNotificationCollection GetApiManagementNotifications()
+        {
+            return GetCachedClient(Client => new ApiManagementNotificationCollection(Client, Id));
         }
 
         /// <summary>
@@ -782,9 +782,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="notificationName"> Notification Name Identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<NotificationContractResource>> GetNotificationContractAsync(NotificationName notificationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiManagementNotificationResource>> GetApiManagementNotificationAsync(NotificationName notificationName, CancellationToken cancellationToken = default)
         {
-            return await GetNotificationContracts().GetAsync(notificationName, cancellationToken).ConfigureAwait(false);
+            return await GetApiManagementNotifications().GetAsync(notificationName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -795,16 +795,16 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="notificationName"> Notification Name Identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<NotificationContractResource> GetNotificationContract(NotificationName notificationName, CancellationToken cancellationToken = default)
+        public virtual Response<ApiManagementNotificationResource> GetApiManagementNotification(NotificationName notificationName, CancellationToken cancellationToken = default)
         {
-            return GetNotificationContracts().Get(notificationName, cancellationToken);
+            return GetApiManagementNotifications().Get(notificationName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of OpenIdConnectProviderContractResources in the ApiManagementServiceResource. </summary>
-        /// <returns> An object representing collection of OpenIdConnectProviderContractResources and their operations over a OpenIdConnectProviderContractResource. </returns>
-        public virtual OpenIdConnectProviderContractCollection GetOpenIdConnectProviderContracts()
+        /// <summary> Gets a collection of ApiManagementOpenIdConnectProviderResources in the ApiManagementService. </summary>
+        /// <returns> An object representing collection of ApiManagementOpenIdConnectProviderResources and their operations over a ApiManagementOpenIdConnectProviderResource. </returns>
+        public virtual ApiManagementOpenIdConnectProviderCollection GetApiManagementOpenIdConnectProviders()
         {
-            return GetCachedClient(Client => new OpenIdConnectProviderContractCollection(Client, Id));
+            return GetCachedClient(Client => new ApiManagementOpenIdConnectProviderCollection(Client, Id));
         }
 
         /// <summary>
@@ -817,9 +817,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentException"> <paramref name="openId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="openId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<OpenIdConnectProviderContractResource>> GetOpenIdConnectProviderContractAsync(string openId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiManagementOpenIdConnectProviderResource>> GetApiManagementOpenIdConnectProviderAsync(string openId, CancellationToken cancellationToken = default)
         {
-            return await GetOpenIdConnectProviderContracts().GetAsync(openId, cancellationToken).ConfigureAwait(false);
+            return await GetApiManagementOpenIdConnectProviders().GetAsync(openId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -832,12 +832,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentException"> <paramref name="openId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="openId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<OpenIdConnectProviderContractResource> GetOpenIdConnectProviderContract(string openId, CancellationToken cancellationToken = default)
+        public virtual Response<ApiManagementOpenIdConnectProviderResource> GetApiManagementOpenIdConnectProvider(string openId, CancellationToken cancellationToken = default)
         {
-            return GetOpenIdConnectProviderContracts().Get(openId, cancellationToken);
+            return GetApiManagementOpenIdConnectProviders().Get(openId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PortalRevisionContractResources in the ApiManagementServiceResource. </summary>
+        /// <summary> Gets a collection of PortalRevisionContractResources in the ApiManagementService. </summary>
         /// <returns> An object representing collection of PortalRevisionContractResources and their operations over a PortalRevisionContractResource. </returns>
         public virtual PortalRevisionContractCollection GetPortalRevisionContracts()
         {
@@ -874,28 +874,28 @@ namespace Azure.ResourceManager.ApiManagement
             return GetPortalRevisionContracts().Get(portalRevisionId, cancellationToken);
         }
 
-        /// <summary> Gets an object representing a PortalSigninSettingsResource along with the instance operations that can be performed on it in the ApiManagementServiceResource. </summary>
+        /// <summary> Gets an object representing a PortalSigninSettingsResource along with the instance operations that can be performed on it in the ApiManagementService. </summary>
         /// <returns> Returns a <see cref="PortalSigninSettingsResource" /> object. </returns>
         public virtual PortalSigninSettingsResource GetPortalSigninSettings()
         {
             return new PortalSigninSettingsResource(Client, new ResourceIdentifier(Id.ToString() + "/portalsettings/signin"));
         }
 
-        /// <summary> Gets an object representing a PortalSignupSettingsResource along with the instance operations that can be performed on it in the ApiManagementServiceResource. </summary>
+        /// <summary> Gets an object representing a PortalSignupSettingsResource along with the instance operations that can be performed on it in the ApiManagementService. </summary>
         /// <returns> Returns a <see cref="PortalSignupSettingsResource" /> object. </returns>
         public virtual PortalSignupSettingsResource GetPortalSignupSettings()
         {
             return new PortalSignupSettingsResource(Client, new ResourceIdentifier(Id.ToString() + "/portalsettings/signup"));
         }
 
-        /// <summary> Gets an object representing a PortalDelegationSettingsResource along with the instance operations that can be performed on it in the ApiManagementServiceResource. </summary>
-        /// <returns> Returns a <see cref="PortalDelegationSettingsResource" /> object. </returns>
-        public virtual PortalDelegationSettingsResource GetPortalDelegationSettings()
+        /// <summary> Gets an object representing a ApiManagementPortalDelegationSettingsResource along with the instance operations that can be performed on it in the ApiManagementService. </summary>
+        /// <returns> Returns a <see cref="ApiManagementPortalDelegationSettingsResource" /> object. </returns>
+        public virtual ApiManagementPortalDelegationSettingsResource GetApiManagementPortalDelegationSettings()
         {
-            return new PortalDelegationSettingsResource(Client, new ResourceIdentifier(Id.ToString() + "/portalsettings/delegation"));
+            return new ApiManagementPortalDelegationSettingsResource(Client, new ResourceIdentifier(Id.ToString() + "/portalsettings/delegation"));
         }
 
-        /// <summary> Gets a collection of ApiManagementPrivateEndpointConnectionResources in the ApiManagementServiceResource. </summary>
+        /// <summary> Gets a collection of ApiManagementPrivateEndpointConnectionResources in the ApiManagementService. </summary>
         /// <returns> An object representing collection of ApiManagementPrivateEndpointConnectionResources and their operations over a ApiManagementPrivateEndpointConnectionResource. </returns>
         public virtual ApiManagementPrivateEndpointConnectionCollection GetApiManagementPrivateEndpointConnections()
         {
@@ -932,7 +932,7 @@ namespace Azure.ResourceManager.ApiManagement
             return GetApiManagementPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ApiManagementPrivateLinkResources in the ApiManagementServiceResource. </summary>
+        /// <summary> Gets a collection of ApiManagementPrivateLinkResources in the ApiManagementService. </summary>
         /// <returns> An object representing collection of ApiManagementPrivateLinkResources and their operations over a ApiManagementPrivateLinkResource. </returns>
         public virtual ApiManagementPrivateLinkResourceCollection GetApiManagementPrivateLinkResources()
         {
@@ -969,7 +969,7 @@ namespace Azure.ResourceManager.ApiManagement
             return GetApiManagementPrivateLinkResources().Get(privateLinkSubResourceName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ProductContractResources in the ApiManagementServiceResource. </summary>
+        /// <summary> Gets a collection of ProductContractResources in the ApiManagementService. </summary>
         /// <returns> An object representing collection of ProductContractResources and their operations over a ProductContractResource. </returns>
         public virtual ProductContractCollection GetProductContracts()
         {
@@ -1006,11 +1006,11 @@ namespace Azure.ResourceManager.ApiManagement
             return GetProductContracts().Get(productId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of GlobalSchemaContractResources in the ApiManagementServiceResource. </summary>
-        /// <returns> An object representing collection of GlobalSchemaContractResources and their operations over a GlobalSchemaContractResource. </returns>
-        public virtual GlobalSchemaContractCollection GetGlobalSchemaContracts()
+        /// <summary> Gets a collection of ApiManagementGlobalSchemaResources in the ApiManagementService. </summary>
+        /// <returns> An object representing collection of ApiManagementGlobalSchemaResources and their operations over a ApiManagementGlobalSchemaResource. </returns>
+        public virtual ApiManagementGlobalSchemaCollection GetApiManagementGlobalSchemas()
         {
-            return GetCachedClient(Client => new GlobalSchemaContractCollection(Client, Id));
+            return GetCachedClient(Client => new ApiManagementGlobalSchemaCollection(Client, Id));
         }
 
         /// <summary>
@@ -1023,9 +1023,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentException"> <paramref name="schemaId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="schemaId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<GlobalSchemaContractResource>> GetGlobalSchemaContractAsync(string schemaId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiManagementGlobalSchemaResource>> GetApiManagementGlobalSchemaAsync(string schemaId, CancellationToken cancellationToken = default)
         {
-            return await GetGlobalSchemaContracts().GetAsync(schemaId, cancellationToken).ConfigureAwait(false);
+            return await GetApiManagementGlobalSchemas().GetAsync(schemaId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1038,12 +1038,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentException"> <paramref name="schemaId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="schemaId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<GlobalSchemaContractResource> GetGlobalSchemaContract(string schemaId, CancellationToken cancellationToken = default)
+        public virtual Response<ApiManagementGlobalSchemaResource> GetApiManagementGlobalSchema(string schemaId, CancellationToken cancellationToken = default)
         {
-            return GetGlobalSchemaContracts().Get(schemaId, cancellationToken);
+            return GetApiManagementGlobalSchemas().Get(schemaId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of TenantSettingsContractResources in the ApiManagementServiceResource. </summary>
+        /// <summary> Gets a collection of TenantSettingsContractResources in the ApiManagementService. </summary>
         /// <returns> An object representing collection of TenantSettingsContractResources and their operations over a TenantSettingsContractResource. </returns>
         public virtual TenantSettingsContractCollection GetTenantSettingsContracts()
         {
@@ -1076,7 +1076,7 @@ namespace Azure.ResourceManager.ApiManagement
             return GetTenantSettingsContracts().Get(settingsType, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ServiceSubscriptionResources in the ApiManagementServiceResource. </summary>
+        /// <summary> Gets a collection of ServiceSubscriptionResources in the ApiManagementService. </summary>
         /// <returns> An object representing collection of ServiceSubscriptionResources and their operations over a ServiceSubscriptionResource. </returns>
         public virtual ServiceSubscriptionCollection GetServiceSubscriptions()
         {
@@ -1113,11 +1113,11 @@ namespace Azure.ResourceManager.ApiManagement
             return GetServiceSubscriptions().Get(sid, cancellationToken);
         }
 
-        /// <summary> Gets a collection of AccessInformationContractResources in the ApiManagementServiceResource. </summary>
-        /// <returns> An object representing collection of AccessInformationContractResources and their operations over a AccessInformationContractResource. </returns>
-        public virtual AccessInformationContractCollection GetAccessInformationContracts()
+        /// <summary> Gets a collection of TenantAccessResources in the ApiManagementService. </summary>
+        /// <returns> An object representing collection of TenantAccessResources and their operations over a TenantAccessResource. </returns>
+        public virtual TenantAccessCollection GetTenantAccesses()
         {
-            return GetCachedClient(Client => new AccessInformationContractCollection(Client, Id));
+            return GetCachedClient(Client => new TenantAccessCollection(Client, Id));
         }
 
         /// <summary>
@@ -1128,9 +1128,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="accessName"> The identifier of the Access configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<AccessInformationContractResource>> GetAccessInformationContractAsync(AccessIdName accessName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TenantAccessResource>> GetTenantAccessAsync(AccessName accessName, CancellationToken cancellationToken = default)
         {
-            return await GetAccessInformationContracts().GetAsync(accessName, cancellationToken).ConfigureAwait(false);
+            return await GetTenantAccesses().GetAsync(accessName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1141,12 +1141,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="accessName"> The identifier of the Access configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<AccessInformationContractResource> GetAccessInformationContract(AccessIdName accessName, CancellationToken cancellationToken = default)
+        public virtual Response<TenantAccessResource> GetTenantAccess(AccessName accessName, CancellationToken cancellationToken = default)
         {
-            return GetAccessInformationContracts().Get(accessName, cancellationToken);
+            return GetTenantAccesses().Get(accessName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of UserContractResources in the ApiManagementServiceResource. </summary>
+        /// <summary> Gets a collection of UserContractResources in the ApiManagementService. </summary>
         /// <returns> An object representing collection of UserContractResources and their operations over a UserContractResource. </returns>
         public virtual UserContractCollection GetUserContracts()
         {
@@ -1191,11 +1191,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ApiManagementServiceResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _apiManagementServiceResourceApiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.Get");
+            using var scope = _apiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.Get");
             scope.Start();
             try
             {
-                var response = await _apiManagementServiceResourceApiManagementServiceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _apiManagementServiceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ApiManagementServiceResource(Client, response.Value), response.GetRawResponse());
@@ -1215,11 +1215,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ApiManagementServiceResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _apiManagementServiceResourceApiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.Get");
+            using var scope = _apiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.Get");
             scope.Start();
             try
             {
-                var response = _apiManagementServiceResourceApiManagementServiceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _apiManagementServiceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ApiManagementServiceResource(Client, response.Value), response.GetRawResponse());
@@ -1240,12 +1240,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _apiManagementServiceResourceApiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.Delete");
+            using var scope = _apiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.Delete");
             scope.Start();
             try
             {
-                var response = await _apiManagementServiceResourceApiManagementServiceRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation(_apiManagementServiceResourceApiManagementServiceClientDiagnostics, Pipeline, _apiManagementServiceResourceApiManagementServiceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _apiManagementServiceRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new ApiManagementArmOperation(_apiManagementServiceClientDiagnostics, Pipeline, _apiManagementServiceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1266,12 +1266,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _apiManagementServiceResourceApiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.Delete");
+            using var scope = _apiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.Delete");
             scope.Start();
             try
             {
-                var response = _apiManagementServiceResourceApiManagementServiceRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ApiManagementArmOperation(_apiManagementServiceResourceApiManagementServiceClientDiagnostics, Pipeline, _apiManagementServiceResourceApiManagementServiceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _apiManagementServiceRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new ApiManagementArmOperation(_apiManagementServiceClientDiagnostics, Pipeline, _apiManagementServiceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -1292,16 +1292,16 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="patch"> Parameters supplied to the CreateOrUpdate API Management service operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<ApiManagementServiceResource>> UpdateAsync(WaitUntil waitUntil, ApiManagementServiceResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ApiManagementServiceResource>> UpdateAsync(WaitUntil waitUntil, ApiManagementServicePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _apiManagementServiceResourceApiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.Update");
+            using var scope = _apiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.Update");
             scope.Start();
             try
             {
-                var response = await _apiManagementServiceResourceApiManagementServiceRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation<ApiManagementServiceResource>(new ApiManagementServiceResourceOperationSource(Client), _apiManagementServiceResourceApiManagementServiceClientDiagnostics, Pipeline, _apiManagementServiceResourceApiManagementServiceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var response = await _apiManagementServiceRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var operation = new ApiManagementArmOperation<ApiManagementServiceResource>(new ApiManagementServiceOperationSource(Client), _apiManagementServiceClientDiagnostics, Pipeline, _apiManagementServiceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1322,16 +1322,16 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="patch"> Parameters supplied to the CreateOrUpdate API Management service operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<ApiManagementServiceResource> Update(WaitUntil waitUntil, ApiManagementServiceResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ApiManagementServiceResource> Update(WaitUntil waitUntil, ApiManagementServicePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _apiManagementServiceResourceApiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.Update");
+            using var scope = _apiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.Update");
             scope.Start();
             try
             {
-                var response = _apiManagementServiceResourceApiManagementServiceRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new ApiManagementArmOperation<ApiManagementServiceResource>(new ApiManagementServiceResourceOperationSource(Client), _apiManagementServiceResourceApiManagementServiceClientDiagnostics, Pipeline, _apiManagementServiceResourceApiManagementServiceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var response = _apiManagementServiceRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
+                var operation = new ApiManagementArmOperation<ApiManagementServiceResource>(new ApiManagementServiceOperationSource(Client), _apiManagementServiceClientDiagnostics, Pipeline, _apiManagementServiceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -1358,11 +1358,11 @@ namespace Azure.ResourceManager.ApiManagement
         {
             async Task<Page<TagResourceContract>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _apiContractApiClientDiagnostics.CreateScope("ApiManagementServiceResource.GetApisByTags");
+                using var scope = _apiClientDiagnostics.CreateScope("ApiManagementServiceResource.GetApisByTags");
                 scope.Start();
                 try
                 {
-                    var response = await _apiContractApiRestClient.ListByTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedApis, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _apiRestClient.ListByTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedApis, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1373,11 +1373,11 @@ namespace Azure.ResourceManager.ApiManagement
             }
             async Task<Page<TagResourceContract>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _apiContractApiClientDiagnostics.CreateScope("ApiManagementServiceResource.GetApisByTags");
+                using var scope = _apiClientDiagnostics.CreateScope("ApiManagementServiceResource.GetApisByTags");
                 scope.Start();
                 try
                 {
-                    var response = await _apiContractApiRestClient.ListByTagsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedApis, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _apiRestClient.ListByTagsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedApis, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1404,11 +1404,11 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Page<TagResourceContract> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _apiContractApiClientDiagnostics.CreateScope("ApiManagementServiceResource.GetApisByTags");
+                using var scope = _apiClientDiagnostics.CreateScope("ApiManagementServiceResource.GetApisByTags");
                 scope.Start();
                 try
                 {
-                    var response = _apiContractApiRestClient.ListByTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedApis, cancellationToken: cancellationToken);
+                    var response = _apiRestClient.ListByTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedApis, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1419,11 +1419,11 @@ namespace Azure.ResourceManager.ApiManagement
             }
             Page<TagResourceContract> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _apiContractApiClientDiagnostics.CreateScope("ApiManagementServiceResource.GetApisByTags");
+                using var scope = _apiClientDiagnostics.CreateScope("ApiManagementServiceResource.GetApisByTags");
                 scope.Start();
                 try
                 {
-                    var response = _apiContractApiRestClient.ListByTagsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedApis, cancellationToken: cancellationToken);
+                    var response = _apiRestClient.ListByTagsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedApis, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1502,11 +1502,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ResourceSkuResult" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ResourceSkuResult> GetAvailableServiceSkusApiManagementServiceSkusAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ResourceSkuResult> GetAvailableApiManagementServiceSkusAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<ResourceSkuResult>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _apiManagementServiceSkusClientDiagnostics.CreateScope("ApiManagementServiceResource.GetAvailableServiceSkusApiManagementServiceSkus");
+                using var scope = _apiManagementServiceSkusClientDiagnostics.CreateScope("ApiManagementServiceResource.GetAvailableApiManagementServiceSkus");
                 scope.Start();
                 try
                 {
@@ -1521,7 +1521,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
             async Task<Page<ResourceSkuResult>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _apiManagementServiceSkusClientDiagnostics.CreateScope("ApiManagementServiceResource.GetAvailableServiceSkusApiManagementServiceSkus");
+                using var scope = _apiManagementServiceSkusClientDiagnostics.CreateScope("ApiManagementServiceResource.GetAvailableApiManagementServiceSkus");
                 scope.Start();
                 try
                 {
@@ -1544,11 +1544,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ResourceSkuResult" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ResourceSkuResult> GetAvailableServiceSkusApiManagementServiceSkus(CancellationToken cancellationToken = default)
+        public virtual Pageable<ResourceSkuResult> GetAvailableApiManagementServiceSkus(CancellationToken cancellationToken = default)
         {
             Page<ResourceSkuResult> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _apiManagementServiceSkusClientDiagnostics.CreateScope("ApiManagementServiceResource.GetAvailableServiceSkusApiManagementServiceSkus");
+                using var scope = _apiManagementServiceSkusClientDiagnostics.CreateScope("ApiManagementServiceResource.GetAvailableApiManagementServiceSkus");
                 scope.Start();
                 try
                 {
@@ -1563,7 +1563,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
             Page<ResourceSkuResult> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _apiManagementServiceSkusClientDiagnostics.CreateScope("ApiManagementServiceResource.GetAvailableServiceSkusApiManagementServiceSkus");
+                using var scope = _apiManagementServiceSkusClientDiagnostics.CreateScope("ApiManagementServiceResource.GetAvailableApiManagementServiceSkus");
                 scope.Start();
                 try
                 {
@@ -1585,19 +1585,19 @@ namespace Azure.ResourceManager.ApiManagement
         /// Operation Id: ApiManagementService_Restore
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="apiManagementServiceBackupRestoreParameters"> Parameters supplied to the Restore API Management service from backup operation. </param>
+        /// <param name="content"> Parameters supplied to the Restore API Management service from backup operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiManagementServiceBackupRestoreParameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<ApiManagementServiceResource>> RestoreAsync(WaitUntil waitUntil, ApiManagementServiceBackupRestoreParameters apiManagementServiceBackupRestoreParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<ApiManagementServiceResource>> RestoreAsync(WaitUntil waitUntil, ApiManagementServiceBackupRestoreContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(apiManagementServiceBackupRestoreParameters, nameof(apiManagementServiceBackupRestoreParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _apiManagementServiceResourceApiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.Restore");
+            using var scope = _apiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.Restore");
             scope.Start();
             try
             {
-                var response = await _apiManagementServiceResourceApiManagementServiceRestClient.RestoreAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiManagementServiceBackupRestoreParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation<ApiManagementServiceResource>(new ApiManagementServiceResourceOperationSource(Client), _apiManagementServiceResourceApiManagementServiceClientDiagnostics, Pipeline, _apiManagementServiceResourceApiManagementServiceRestClient.CreateRestoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiManagementServiceBackupRestoreParameters).Request, response, OperationFinalStateVia.Location);
+                var response = await _apiManagementServiceRestClient.RestoreAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new ApiManagementArmOperation<ApiManagementServiceResource>(new ApiManagementServiceOperationSource(Client), _apiManagementServiceClientDiagnostics, Pipeline, _apiManagementServiceRestClient.CreateRestoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1615,19 +1615,19 @@ namespace Azure.ResourceManager.ApiManagement
         /// Operation Id: ApiManagementService_Restore
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="apiManagementServiceBackupRestoreParameters"> Parameters supplied to the Restore API Management service from backup operation. </param>
+        /// <param name="content"> Parameters supplied to the Restore API Management service from backup operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiManagementServiceBackupRestoreParameters"/> is null. </exception>
-        public virtual ArmOperation<ApiManagementServiceResource> Restore(WaitUntil waitUntil, ApiManagementServiceBackupRestoreParameters apiManagementServiceBackupRestoreParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<ApiManagementServiceResource> Restore(WaitUntil waitUntil, ApiManagementServiceBackupRestoreContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(apiManagementServiceBackupRestoreParameters, nameof(apiManagementServiceBackupRestoreParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _apiManagementServiceResourceApiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.Restore");
+            using var scope = _apiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.Restore");
             scope.Start();
             try
             {
-                var response = _apiManagementServiceResourceApiManagementServiceRestClient.Restore(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiManagementServiceBackupRestoreParameters, cancellationToken);
-                var operation = new ApiManagementArmOperation<ApiManagementServiceResource>(new ApiManagementServiceResourceOperationSource(Client), _apiManagementServiceResourceApiManagementServiceClientDiagnostics, Pipeline, _apiManagementServiceResourceApiManagementServiceRestClient.CreateRestoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiManagementServiceBackupRestoreParameters).Request, response, OperationFinalStateVia.Location);
+                var response = _apiManagementServiceRestClient.Restore(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new ApiManagementArmOperation<ApiManagementServiceResource>(new ApiManagementServiceOperationSource(Client), _apiManagementServiceClientDiagnostics, Pipeline, _apiManagementServiceRestClient.CreateRestoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -1645,19 +1645,19 @@ namespace Azure.ResourceManager.ApiManagement
         /// Operation Id: ApiManagementService_Backup
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="apiManagementServiceBackupRestoreParameters"> Parameters supplied to the ApiManagementService_Backup operation. </param>
+        /// <param name="content"> Parameters supplied to the ApiManagementService_Backup operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiManagementServiceBackupRestoreParameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<ApiManagementServiceResource>> BackupAsync(WaitUntil waitUntil, ApiManagementServiceBackupRestoreParameters apiManagementServiceBackupRestoreParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<ApiManagementServiceResource>> BackupAsync(WaitUntil waitUntil, ApiManagementServiceBackupRestoreContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(apiManagementServiceBackupRestoreParameters, nameof(apiManagementServiceBackupRestoreParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _apiManagementServiceResourceApiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.Backup");
+            using var scope = _apiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.Backup");
             scope.Start();
             try
             {
-                var response = await _apiManagementServiceResourceApiManagementServiceRestClient.BackupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiManagementServiceBackupRestoreParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation<ApiManagementServiceResource>(new ApiManagementServiceResourceOperationSource(Client), _apiManagementServiceResourceApiManagementServiceClientDiagnostics, Pipeline, _apiManagementServiceResourceApiManagementServiceRestClient.CreateBackupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiManagementServiceBackupRestoreParameters).Request, response, OperationFinalStateVia.Location);
+                var response = await _apiManagementServiceRestClient.BackupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new ApiManagementArmOperation<ApiManagementServiceResource>(new ApiManagementServiceOperationSource(Client), _apiManagementServiceClientDiagnostics, Pipeline, _apiManagementServiceRestClient.CreateBackupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1675,19 +1675,19 @@ namespace Azure.ResourceManager.ApiManagement
         /// Operation Id: ApiManagementService_Backup
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="apiManagementServiceBackupRestoreParameters"> Parameters supplied to the ApiManagementService_Backup operation. </param>
+        /// <param name="content"> Parameters supplied to the ApiManagementService_Backup operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiManagementServiceBackupRestoreParameters"/> is null. </exception>
-        public virtual ArmOperation<ApiManagementServiceResource> Backup(WaitUntil waitUntil, ApiManagementServiceBackupRestoreParameters apiManagementServiceBackupRestoreParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<ApiManagementServiceResource> Backup(WaitUntil waitUntil, ApiManagementServiceBackupRestoreContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(apiManagementServiceBackupRestoreParameters, nameof(apiManagementServiceBackupRestoreParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _apiManagementServiceResourceApiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.Backup");
+            using var scope = _apiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.Backup");
             scope.Start();
             try
             {
-                var response = _apiManagementServiceResourceApiManagementServiceRestClient.Backup(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiManagementServiceBackupRestoreParameters, cancellationToken);
-                var operation = new ApiManagementArmOperation<ApiManagementServiceResource>(new ApiManagementServiceResourceOperationSource(Client), _apiManagementServiceResourceApiManagementServiceClientDiagnostics, Pipeline, _apiManagementServiceResourceApiManagementServiceRestClient.CreateBackupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiManagementServiceBackupRestoreParameters).Request, response, OperationFinalStateVia.Location);
+                var response = _apiManagementServiceRestClient.Backup(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new ApiManagementArmOperation<ApiManagementServiceResource>(new ApiManagementServiceOperationSource(Client), _apiManagementServiceClientDiagnostics, Pipeline, _apiManagementServiceRestClient.CreateBackupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -1707,11 +1707,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ApiManagementServiceGetSsoTokenResult>> GetSsoTokenAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _apiManagementServiceResourceApiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.GetSsoToken");
+            using var scope = _apiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.GetSsoToken");
             scope.Start();
             try
             {
-                var response = await _apiManagementServiceResourceApiManagementServiceRestClient.GetSsoTokenAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _apiManagementServiceRestClient.GetSsoTokenAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1729,11 +1729,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ApiManagementServiceGetSsoTokenResult> GetSsoToken(CancellationToken cancellationToken = default)
         {
-            using var scope = _apiManagementServiceResourceApiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.GetSsoToken");
+            using var scope = _apiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.GetSsoToken");
             scope.Start();
             try
             {
-                var response = _apiManagementServiceResourceApiManagementServiceRestClient.GetSsoToken(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _apiManagementServiceRestClient.GetSsoToken(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -1753,12 +1753,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation<ApiManagementServiceResource>> ApplyNetworkConfigurationUpdatesAsync(WaitUntil waitUntil, ApiManagementServiceApplyNetworkConfigurationContent content = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _apiManagementServiceResourceApiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.ApplyNetworkConfigurationUpdates");
+            using var scope = _apiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.ApplyNetworkConfigurationUpdates");
             scope.Start();
             try
             {
-                var response = await _apiManagementServiceResourceApiManagementServiceRestClient.ApplyNetworkConfigurationUpdatesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation<ApiManagementServiceResource>(new ApiManagementServiceResourceOperationSource(Client), _apiManagementServiceResourceApiManagementServiceClientDiagnostics, Pipeline, _apiManagementServiceResourceApiManagementServiceRestClient.CreateApplyNetworkConfigurationUpdatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = await _apiManagementServiceRestClient.ApplyNetworkConfigurationUpdatesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new ApiManagementArmOperation<ApiManagementServiceResource>(new ApiManagementServiceOperationSource(Client), _apiManagementServiceClientDiagnostics, Pipeline, _apiManagementServiceRestClient.CreateApplyNetworkConfigurationUpdatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1780,12 +1780,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation<ApiManagementServiceResource> ApplyNetworkConfigurationUpdates(WaitUntil waitUntil, ApiManagementServiceApplyNetworkConfigurationContent content = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _apiManagementServiceResourceApiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.ApplyNetworkConfigurationUpdates");
+            using var scope = _apiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.ApplyNetworkConfigurationUpdates");
             scope.Start();
             try
             {
-                var response = _apiManagementServiceResourceApiManagementServiceRestClient.ApplyNetworkConfigurationUpdates(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new ApiManagementArmOperation<ApiManagementServiceResource>(new ApiManagementServiceResourceOperationSource(Client), _apiManagementServiceResourceApiManagementServiceClientDiagnostics, Pipeline, _apiManagementServiceResourceApiManagementServiceRestClient.CreateApplyNetworkConfigurationUpdatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = _apiManagementServiceRestClient.ApplyNetworkConfigurationUpdates(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new ApiManagementArmOperation<ApiManagementServiceResource>(new ApiManagementServiceOperationSource(Client), _apiManagementServiceClientDiagnostics, Pipeline, _apiManagementServiceRestClient.CreateApplyNetworkConfigurationUpdatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -1803,12 +1803,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// Operation Id: NetworkStatus_ListByService
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkStatusContractByLocation" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NetworkStatusContractByLocation> GetNetworkStatusByServiceAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NetworkStatusContractWithLocation" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetworkStatusContractWithLocation> GetNetworkStatusesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<NetworkStatusContractByLocation>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<NetworkStatusContractWithLocation>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _networkStatusClientDiagnostics.CreateScope("ApiManagementServiceResource.GetNetworkStatusByService");
+                using var scope = _networkStatusClientDiagnostics.CreateScope("ApiManagementServiceResource.GetNetworkStatuses");
                 scope.Start();
                 try
                 {
@@ -1830,12 +1830,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// Operation Id: NetworkStatus_ListByService
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkStatusContractByLocation" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NetworkStatusContractByLocation> GetNetworkStatusByService(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkStatusContractWithLocation" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetworkStatusContractWithLocation> GetNetworkStatuses(CancellationToken cancellationToken = default)
         {
-            Page<NetworkStatusContractByLocation> FirstPageFunc(int? pageSizeHint)
+            Page<NetworkStatusContractWithLocation> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _networkStatusClientDiagnostics.CreateScope("ApiManagementServiceResource.GetNetworkStatusByService");
+                using var scope = _networkStatusClientDiagnostics.CreateScope("ApiManagementServiceResource.GetNetworkStatuses");
                 scope.Start();
                 try
                 {
@@ -1912,11 +1912,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="OutboundEnvironmentEndpoint" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<OutboundEnvironmentEndpoint> GetOutboundNetworkDependenciesEndpointsByServiceAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<OutboundEnvironmentEndpoint> GetOutboundNetworkDependenciesEndpointsAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<OutboundEnvironmentEndpoint>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _outboundNetworkDependenciesEndpointsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetOutboundNetworkDependenciesEndpointsByService");
+                using var scope = _outboundNetworkDependenciesEndpointsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetOutboundNetworkDependenciesEndpoints");
                 scope.Start();
                 try
                 {
@@ -1939,11 +1939,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="OutboundEnvironmentEndpoint" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<OutboundEnvironmentEndpoint> GetOutboundNetworkDependenciesEndpointsByService(CancellationToken cancellationToken = default)
+        public virtual Pageable<OutboundEnvironmentEndpoint> GetOutboundNetworkDependenciesEndpoints(CancellationToken cancellationToken = default)
         {
             Page<OutboundEnvironmentEndpoint> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _outboundNetworkDependenciesEndpointsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetOutboundNetworkDependenciesEndpointsByService");
+                using var scope = _outboundNetworkDependenciesEndpointsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetOutboundNetworkDependenciesEndpoints");
                 scope.Start();
                 try
                 {
@@ -1966,12 +1966,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="scope"> Policy scope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PolicyDescriptionContract" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PolicyDescriptionContract> GetPolicyDescriptionsByServiceAsync(PolicyScopeContract? scope = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="PolicyDescriptionContractData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PolicyDescriptionContractData> GetPolicyDescriptionsAsync(PolicyScopeContract? scope = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<PolicyDescriptionContract>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<PolicyDescriptionContractData>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope0 = _policyDescriptionClientDiagnostics.CreateScope("ApiManagementServiceResource.GetPolicyDescriptionsByService");
+                using var scope0 = _policyDescriptionClientDiagnostics.CreateScope("ApiManagementServiceResource.GetPolicyDescriptions");
                 scope0.Start();
                 try
                 {
@@ -1994,12 +1994,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="scope"> Policy scope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PolicyDescriptionContract" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PolicyDescriptionContract> GetPolicyDescriptionsByService(PolicyScopeContract? scope = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PolicyDescriptionContractData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PolicyDescriptionContractData> GetPolicyDescriptions(PolicyScopeContract? scope = null, CancellationToken cancellationToken = default)
         {
-            Page<PolicyDescriptionContract> FirstPageFunc(int? pageSizeHint)
+            Page<PolicyDescriptionContractData> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope0 = _policyDescriptionClientDiagnostics.CreateScope("ApiManagementServiceResource.GetPolicyDescriptionsByService");
+                using var scope0 = _policyDescriptionClientDiagnostics.CreateScope("ApiManagementServiceResource.GetPolicyDescriptions");
                 scope0.Start();
                 try
                 {
@@ -2022,15 +2022,15 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PortalSettingsContract" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PortalSettingsContract> GetPortalSettingsByServiceAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PortalSettingsContract> GetPortalSettingsAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<PortalSettingsContract>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope0 = _apiManagementServiceResourcePortalSettingsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetPortalSettingsByService");
+                using var scope0 = _apiManagementServicePortalSettingsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetPortalSettings");
                 scope0.Start();
                 try
                 {
-                    var response = await _apiManagementServiceResourcePortalSettingsRestClient.ListByServiceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _apiManagementServicePortalSettingsRestClient.ListByServiceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -2049,15 +2049,15 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PortalSettingsContract" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PortalSettingsContract> GetPortalSettingsByService(CancellationToken cancellationToken = default)
+        public virtual Pageable<PortalSettingsContract> GetPortalSettings(CancellationToken cancellationToken = default)
         {
             Page<PortalSettingsContract> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope0 = _apiManagementServiceResourcePortalSettingsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetPortalSettingsByService");
+                using var scope0 = _apiManagementServicePortalSettingsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetPortalSettings");
                 scope0.Start();
                 try
                 {
-                    var response = _apiManagementServiceResourcePortalSettingsRestClient.ListByService(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _apiManagementServicePortalSettingsRestClient.ListByService(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -2171,13 +2171,13 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentException"> <paramref name="quotaCounterKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="quotaCounterKey"/> is null. </exception>
         /// <returns> An async collection of <see cref="QuotaCounterContract" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<QuotaCounterContract> GetQuotaByCounterKeysByServiceAsync(string quotaCounterKey, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<QuotaCounterContract> GetQuotaByCounterKeysAsync(string quotaCounterKey, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(quotaCounterKey, nameof(quotaCounterKey));
 
             async Task<Page<QuotaCounterContract>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope0 = _quotaByCounterKeysClientDiagnostics.CreateScope("ApiManagementServiceResource.GetQuotaByCounterKeysByService");
+                using var scope0 = _quotaByCounterKeysClientDiagnostics.CreateScope("ApiManagementServiceResource.GetQuotaByCounterKeys");
                 scope0.Start();
                 try
                 {
@@ -2203,13 +2203,13 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentException"> <paramref name="quotaCounterKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="quotaCounterKey"/> is null. </exception>
         /// <returns> A collection of <see cref="QuotaCounterContract" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<QuotaCounterContract> GetQuotaByCounterKeysByService(string quotaCounterKey, CancellationToken cancellationToken = default)
+        public virtual Pageable<QuotaCounterContract> GetQuotaByCounterKeys(string quotaCounterKey, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(quotaCounterKey, nameof(quotaCounterKey));
 
             Page<QuotaCounterContract> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope0 = _quotaByCounterKeysClientDiagnostics.CreateScope("ApiManagementServiceResource.GetQuotaByCounterKeysByService");
+                using var scope0 = _quotaByCounterKeysClientDiagnostics.CreateScope("ApiManagementServiceResource.GetQuotaByCounterKeys");
                 scope0.Start();
                 try
                 {
@@ -2420,11 +2420,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="RegionContract" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RegionContract> GetRegionsByServiceAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<RegionContract> GetRegionsAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<RegionContract>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope0 = _regionClientDiagnostics.CreateScope("ApiManagementServiceResource.GetRegionsByService");
+                using var scope0 = _regionClientDiagnostics.CreateScope("ApiManagementServiceResource.GetRegions");
                 scope0.Start();
                 try
                 {
@@ -2439,7 +2439,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
             async Task<Page<RegionContract>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope0 = _regionClientDiagnostics.CreateScope("ApiManagementServiceResource.GetRegionsByService");
+                using var scope0 = _regionClientDiagnostics.CreateScope("ApiManagementServiceResource.GetRegions");
                 scope0.Start();
                 try
                 {
@@ -2462,11 +2462,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RegionContract" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RegionContract> GetRegionsByService(CancellationToken cancellationToken = default)
+        public virtual Pageable<RegionContract> GetRegions(CancellationToken cancellationToken = default)
         {
             Page<RegionContract> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope0 = _regionClientDiagnostics.CreateScope("ApiManagementServiceResource.GetRegionsByService");
+                using var scope0 = _regionClientDiagnostics.CreateScope("ApiManagementServiceResource.GetRegions");
                 scope0.Start();
                 try
                 {
@@ -2481,7 +2481,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
             Page<RegionContract> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope0 = _regionClientDiagnostics.CreateScope("ApiManagementServiceResource.GetRegionsByService");
+                using var scope0 = _regionClientDiagnostics.CreateScope("ApiManagementServiceResource.GetRegions");
                 scope0.Start();
                 try
                 {
@@ -3259,11 +3259,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="TagResourceContract" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<TagResourceContract> GetTagResourcesByServiceAsync(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<TagResourceContract> GetTagResourcesAsync(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<TagResourceContract>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope0 = _tagResourceClientDiagnostics.CreateScope("ApiManagementServiceResource.GetTagResourcesByService");
+                using var scope0 = _tagResourceClientDiagnostics.CreateScope("ApiManagementServiceResource.GetTagResources");
                 scope0.Start();
                 try
                 {
@@ -3278,7 +3278,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
             async Task<Page<TagResourceContract>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope0 = _tagResourceClientDiagnostics.CreateScope("ApiManagementServiceResource.GetTagResourcesByService");
+                using var scope0 = _tagResourceClientDiagnostics.CreateScope("ApiManagementServiceResource.GetTagResources");
                 scope0.Start();
                 try
                 {
@@ -3304,11 +3304,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="TagResourceContract" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<TagResourceContract> GetTagResourcesByService(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<TagResourceContract> GetTagResources(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             Page<TagResourceContract> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope0 = _tagResourceClientDiagnostics.CreateScope("ApiManagementServiceResource.GetTagResourcesByService");
+                using var scope0 = _tagResourceClientDiagnostics.CreateScope("ApiManagementServiceResource.GetTagResources");
                 scope0.Start();
                 try
                 {
@@ -3323,7 +3323,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
             Page<TagResourceContract> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope0 = _tagResourceClientDiagnostics.CreateScope("ApiManagementServiceResource.GetTagResourcesByService");
+                using var scope0 = _tagResourceClientDiagnostics.CreateScope("ApiManagementServiceResource.GetTagResources");
                 scope0.Start();
                 try
                 {
@@ -3346,19 +3346,19 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="configurationName"> The identifier of the Git Configuration Operation. </param>
-        /// <param name="deployConfigurationParameters"> Deploy Configuration parameters. </param>
+        /// <param name="content"> Deploy Configuration parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deployConfigurationParameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<OperationResultContract>> DeployTenantConfigurationAsync(WaitUntil waitUntil, ConfigurationIdName configurationName, DeployConfigurationParameters deployConfigurationParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<GitOperationResultContractData>> DeployTenantConfigurationAsync(WaitUntil waitUntil, ConfigurationName configurationName, DeployConfigurationContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(deployConfigurationParameters, nameof(deployConfigurationParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope0 = _tenantConfigurationClientDiagnostics.CreateScope("ApiManagementServiceResource.DeployTenantConfiguration");
             scope0.Start();
             try
             {
-                var response = await _tenantConfigurationRestClient.DeployAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, deployConfigurationParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation<OperationResultContract>(new OperationResultContractOperationSource(), _tenantConfigurationClientDiagnostics, Pipeline, _tenantConfigurationRestClient.CreateDeployRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, deployConfigurationParameters).Request, response, OperationFinalStateVia.Location);
+                var response = await _tenantConfigurationRestClient.DeployAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, content, cancellationToken).ConfigureAwait(false);
+                var operation = new ApiManagementArmOperation<GitOperationResultContractData>(new GitOperationResultContractDataOperationSource(), _tenantConfigurationClientDiagnostics, Pipeline, _tenantConfigurationRestClient.CreateDeployRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -3377,19 +3377,19 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="configurationName"> The identifier of the Git Configuration Operation. </param>
-        /// <param name="deployConfigurationParameters"> Deploy Configuration parameters. </param>
+        /// <param name="content"> Deploy Configuration parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deployConfigurationParameters"/> is null. </exception>
-        public virtual ArmOperation<OperationResultContract> DeployTenantConfiguration(WaitUntil waitUntil, ConfigurationIdName configurationName, DeployConfigurationParameters deployConfigurationParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<GitOperationResultContractData> DeployTenantConfiguration(WaitUntil waitUntil, ConfigurationName configurationName, DeployConfigurationContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(deployConfigurationParameters, nameof(deployConfigurationParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope0 = _tenantConfigurationClientDiagnostics.CreateScope("ApiManagementServiceResource.DeployTenantConfiguration");
             scope0.Start();
             try
             {
-                var response = _tenantConfigurationRestClient.Deploy(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, deployConfigurationParameters, cancellationToken);
-                var operation = new ApiManagementArmOperation<OperationResultContract>(new OperationResultContractOperationSource(), _tenantConfigurationClientDiagnostics, Pipeline, _tenantConfigurationRestClient.CreateDeployRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, deployConfigurationParameters).Request, response, OperationFinalStateVia.Location);
+                var response = _tenantConfigurationRestClient.Deploy(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, content, cancellationToken);
+                var operation = new ApiManagementArmOperation<GitOperationResultContractData>(new GitOperationResultContractDataOperationSource(), _tenantConfigurationClientDiagnostics, Pipeline, _tenantConfigurationRestClient.CreateDeployRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -3411,7 +3411,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="saveConfigurationParameter"> Save Configuration parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="saveConfigurationParameter"/> is null. </exception>
-        public virtual async Task<ArmOperation<OperationResultContract>> SaveTenantConfigurationAsync(WaitUntil waitUntil, ConfigurationIdName configurationName, SaveConfigurationParameter saveConfigurationParameter, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<GitOperationResultContractData>> SaveTenantConfigurationAsync(WaitUntil waitUntil, ConfigurationName configurationName, SaveConfigurationParameter saveConfigurationParameter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(saveConfigurationParameter, nameof(saveConfigurationParameter));
 
@@ -3420,7 +3420,7 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = await _tenantConfigurationRestClient.SaveAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, saveConfigurationParameter, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation<OperationResultContract>(new OperationResultContractOperationSource(), _tenantConfigurationClientDiagnostics, Pipeline, _tenantConfigurationRestClient.CreateSaveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, saveConfigurationParameter).Request, response, OperationFinalStateVia.Location);
+                var operation = new ApiManagementArmOperation<GitOperationResultContractData>(new GitOperationResultContractDataOperationSource(), _tenantConfigurationClientDiagnostics, Pipeline, _tenantConfigurationRestClient.CreateSaveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, saveConfigurationParameter).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -3442,7 +3442,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="saveConfigurationParameter"> Save Configuration parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="saveConfigurationParameter"/> is null. </exception>
-        public virtual ArmOperation<OperationResultContract> SaveTenantConfiguration(WaitUntil waitUntil, ConfigurationIdName configurationName, SaveConfigurationParameter saveConfigurationParameter, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<GitOperationResultContractData> SaveTenantConfiguration(WaitUntil waitUntil, ConfigurationName configurationName, SaveConfigurationParameter saveConfigurationParameter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(saveConfigurationParameter, nameof(saveConfigurationParameter));
 
@@ -3451,7 +3451,7 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = _tenantConfigurationRestClient.Save(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, saveConfigurationParameter, cancellationToken);
-                var operation = new ApiManagementArmOperation<OperationResultContract>(new OperationResultContractOperationSource(), _tenantConfigurationClientDiagnostics, Pipeline, _tenantConfigurationRestClient.CreateSaveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, saveConfigurationParameter).Request, response, OperationFinalStateVia.Location);
+                var operation = new ApiManagementArmOperation<GitOperationResultContractData>(new GitOperationResultContractDataOperationSource(), _tenantConfigurationClientDiagnostics, Pipeline, _tenantConfigurationRestClient.CreateSaveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, saveConfigurationParameter).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -3470,19 +3470,19 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="configurationName"> The identifier of the Git Configuration Operation. </param>
-        /// <param name="deployConfigurationParameters"> Validate Configuration parameters. </param>
+        /// <param name="content"> Validate Configuration parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deployConfigurationParameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<OperationResultContract>> ValidateTenantConfigurationAsync(WaitUntil waitUntil, ConfigurationIdName configurationName, DeployConfigurationParameters deployConfigurationParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<GitOperationResultContractData>> ValidateTenantConfigurationAsync(WaitUntil waitUntil, ConfigurationName configurationName, DeployConfigurationContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(deployConfigurationParameters, nameof(deployConfigurationParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope0 = _tenantConfigurationClientDiagnostics.CreateScope("ApiManagementServiceResource.ValidateTenantConfiguration");
             scope0.Start();
             try
             {
-                var response = await _tenantConfigurationRestClient.ValidateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, deployConfigurationParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation<OperationResultContract>(new OperationResultContractOperationSource(), _tenantConfigurationClientDiagnostics, Pipeline, _tenantConfigurationRestClient.CreateValidateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, deployConfigurationParameters).Request, response, OperationFinalStateVia.Location);
+                var response = await _tenantConfigurationRestClient.ValidateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, content, cancellationToken).ConfigureAwait(false);
+                var operation = new ApiManagementArmOperation<GitOperationResultContractData>(new GitOperationResultContractDataOperationSource(), _tenantConfigurationClientDiagnostics, Pipeline, _tenantConfigurationRestClient.CreateValidateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -3501,19 +3501,19 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="configurationName"> The identifier of the Git Configuration Operation. </param>
-        /// <param name="deployConfigurationParameters"> Validate Configuration parameters. </param>
+        /// <param name="content"> Validate Configuration parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deployConfigurationParameters"/> is null. </exception>
-        public virtual ArmOperation<OperationResultContract> ValidateTenantConfiguration(WaitUntil waitUntil, ConfigurationIdName configurationName, DeployConfigurationParameters deployConfigurationParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<GitOperationResultContractData> ValidateTenantConfiguration(WaitUntil waitUntil, ConfigurationName configurationName, DeployConfigurationContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(deployConfigurationParameters, nameof(deployConfigurationParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope0 = _tenantConfigurationClientDiagnostics.CreateScope("ApiManagementServiceResource.ValidateTenantConfiguration");
             scope0.Start();
             try
             {
-                var response = _tenantConfigurationRestClient.Validate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, deployConfigurationParameters, cancellationToken);
-                var operation = new ApiManagementArmOperation<OperationResultContract>(new OperationResultContractOperationSource(), _tenantConfigurationClientDiagnostics, Pipeline, _tenantConfigurationRestClient.CreateValidateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, deployConfigurationParameters).Request, response, OperationFinalStateVia.Location);
+                var response = _tenantConfigurationRestClient.Validate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, content, cancellationToken);
+                var operation = new ApiManagementArmOperation<GitOperationResultContractData>(new GitOperationResultContractDataOperationSource(), _tenantConfigurationClientDiagnostics, Pipeline, _tenantConfigurationRestClient.CreateValidateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -3532,9 +3532,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="configurationName"> The identifier of the Git Configuration Operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<TenantConfigurationSyncStateContract>> GetSyncStateTenantConfigurationAsync(ConfigurationIdName configurationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TenantConfigurationSyncStateContract>> GetTenantConfigurationSyncStateAsync(ConfigurationName configurationName, CancellationToken cancellationToken = default)
         {
-            using var scope0 = _tenantConfigurationClientDiagnostics.CreateScope("ApiManagementServiceResource.GetSyncStateTenantConfiguration");
+            using var scope0 = _tenantConfigurationClientDiagnostics.CreateScope("ApiManagementServiceResource.GetTenantConfigurationSyncState");
             scope0.Start();
             try
             {
@@ -3555,9 +3555,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="configurationName"> The identifier of the Git Configuration Operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<TenantConfigurationSyncStateContract> GetSyncStateTenantConfiguration(ConfigurationIdName configurationName, CancellationToken cancellationToken = default)
+        public virtual Response<TenantConfigurationSyncStateContract> GetTenantConfigurationSyncState(ConfigurationName configurationName, CancellationToken cancellationToken = default)
         {
-            using var scope0 = _tenantConfigurationClientDiagnostics.CreateScope("ApiManagementServiceResource.GetSyncStateTenantConfiguration");
+            using var scope0 = _tenantConfigurationClientDiagnostics.CreateScope("ApiManagementServiceResource.GetTenantConfigurationSyncState");
             scope0.Start();
             try
             {
@@ -3585,14 +3585,14 @@ namespace Azure.ResourceManager.ApiManagement
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope0 = _apiManagementServiceResourceApiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.AddTag");
+            using var scope0 = _apiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.AddTag");
             scope0.Start();
             try
             {
                 var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues[key] = value;
                 await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _apiManagementServiceResourceApiManagementServiceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _apiManagementServiceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ApiManagementServiceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -3616,14 +3616,14 @@ namespace Azure.ResourceManager.ApiManagement
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope0 = _apiManagementServiceResourceApiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.AddTag");
+            using var scope0 = _apiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.AddTag");
             scope0.Start();
             try
             {
                 var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.TagValues[key] = value;
                 GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _apiManagementServiceResourceApiManagementServiceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var originalResponse = _apiManagementServiceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new ApiManagementServiceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -3645,7 +3645,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope0 = _apiManagementServiceResourceApiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.SetTags");
+            using var scope0 = _apiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.SetTags");
             scope0.Start();
             try
             {
@@ -3653,7 +3653,7 @@ namespace Azure.ResourceManager.ApiManagement
                 var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _apiManagementServiceResourceApiManagementServiceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _apiManagementServiceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ApiManagementServiceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -3675,7 +3675,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope0 = _apiManagementServiceResourceApiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.SetTags");
+            using var scope0 = _apiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.SetTags");
             scope0.Start();
             try
             {
@@ -3683,7 +3683,7 @@ namespace Azure.ResourceManager.ApiManagement
                 var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _apiManagementServiceResourceApiManagementServiceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var originalResponse = _apiManagementServiceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new ApiManagementServiceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -3705,14 +3705,14 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope0 = _apiManagementServiceResourceApiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.RemoveTag");
+            using var scope0 = _apiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.RemoveTag");
             scope0.Start();
             try
             {
                 var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues.Remove(key);
                 await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _apiManagementServiceResourceApiManagementServiceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _apiManagementServiceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ApiManagementServiceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
@@ -3734,14 +3734,14 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope0 = _apiManagementServiceResourceApiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.RemoveTag");
+            using var scope0 = _apiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.RemoveTag");
             scope0.Start();
             try
             {
                 var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.TagValues.Remove(key);
                 GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _apiManagementServiceResourceApiManagementServiceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var originalResponse = _apiManagementServiceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new ApiManagementServiceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)

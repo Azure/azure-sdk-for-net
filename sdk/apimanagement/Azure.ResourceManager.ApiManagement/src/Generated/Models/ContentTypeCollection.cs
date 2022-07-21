@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of ContentTypeCollection. </summary>
         internal ContentTypeCollection()
         {
-            Value = new ChangeTrackingList<ContentTypeContractData>();
+            Value = new ChangeTrackingList<ApiManagementContentTypeData>();
         }
 
         /// <summary> Initializes a new instance of ContentTypeCollection. </summary>
         /// <param name="value"> Collection of content types. </param>
         /// <param name="nextLink"> Next page link, if any. </param>
-        internal ContentTypeCollection(IReadOnlyList<ContentTypeContractData> value, string nextLink)
+        internal ContentTypeCollection(IReadOnlyList<ApiManagementContentTypeData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Collection of content types. </summary>
-        public IReadOnlyList<ContentTypeContractData> Value { get; }
+        public IReadOnlyList<ApiManagementContentTypeData> Value { get; }
         /// <summary> Next page link, if any. </summary>
         public string NextLink { get; }
     }

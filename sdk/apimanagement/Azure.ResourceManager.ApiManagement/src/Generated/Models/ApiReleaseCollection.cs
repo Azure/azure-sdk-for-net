@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of ApiReleaseCollection. </summary>
         internal ApiReleaseCollection()
         {
-            Value = new ChangeTrackingList<ApiReleaseContractData>();
+            Value = new ChangeTrackingList<ApiReleaseData>();
         }
 
         /// <summary> Initializes a new instance of ApiReleaseCollection. </summary>
         /// <param name="value"> Page values. </param>
         /// <param name="count"> Total record count number across all pages. </param>
         /// <param name="nextLink"> Next page link if any. </param>
-        internal ApiReleaseCollection(IReadOnlyList<ApiReleaseContractData> value, long? count, string nextLink)
+        internal ApiReleaseCollection(IReadOnlyList<ApiReleaseData> value, long? count, string nextLink)
         {
             Value = value;
             Count = count;
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Page values. </summary>
-        public IReadOnlyList<ApiReleaseContractData> Value { get; }
+        public IReadOnlyList<ApiReleaseData> Value { get; }
         /// <summary> Total record count number across all pages. </summary>
         public long? Count { get; }
         /// <summary> Next page link if any. </summary>

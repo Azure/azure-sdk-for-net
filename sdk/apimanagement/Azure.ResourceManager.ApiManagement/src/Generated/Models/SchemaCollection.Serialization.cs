@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static SchemaCollection DeserializeSchemaCollection(JsonElement element)
         {
-            Optional<IReadOnlyList<SchemaContractData>> value = default;
+            Optional<IReadOnlyList<ApiSchemaData>> value = default;
             Optional<long> count = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SchemaContractData> array = new List<SchemaContractData>();
+                    List<ApiSchemaData> array = new List<ApiSchemaData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SchemaContractData.DeserializeSchemaContractData(item));
+                        array.Add(ApiSchemaData.DeserializeApiSchemaData(item));
                     }
                     value = array;
                     continue;

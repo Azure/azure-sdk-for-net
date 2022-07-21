@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of CacheCollection. </summary>
         internal CacheCollection()
         {
-            Value = new ChangeTrackingList<CacheContractData>();
+            Value = new ChangeTrackingList<ApiManagementCacheData>();
         }
 
         /// <summary> Initializes a new instance of CacheCollection. </summary>
         /// <param name="value"> Page values. </param>
         /// <param name="count"> Total record count number across all pages. </param>
         /// <param name="nextLink"> Next page link if any. </param>
-        internal CacheCollection(IReadOnlyList<CacheContractData> value, long? count, string nextLink)
+        internal CacheCollection(IReadOnlyList<ApiManagementCacheData> value, long? count, string nextLink)
         {
             Value = value;
             Count = count;
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Page values. </summary>
-        public IReadOnlyList<CacheContractData> Value { get; }
+        public IReadOnlyList<ApiManagementCacheData> Value { get; }
         /// <summary> Total record count number across all pages. </summary>
         public long? Count { get; }
         /// <summary> Next page link if any. </summary>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static ApiVersionSetCollection DeserializeApiVersionSetCollection(JsonElement element)
         {
-            Optional<IReadOnlyList<ApiVersionSetContractData>> value = default;
+            Optional<IReadOnlyList<ApiVersionSetData>> value = default;
             Optional<long> count = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ApiVersionSetContractData> array = new List<ApiVersionSetContractData>();
+                    List<ApiVersionSetData> array = new List<ApiVersionSetData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiVersionSetContractData.DeserializeApiVersionSetContractData(item));
+                        array.Add(ApiVersionSetData.DeserializeApiVersionSetData(item));
                     }
                     value = array;
                     continue;

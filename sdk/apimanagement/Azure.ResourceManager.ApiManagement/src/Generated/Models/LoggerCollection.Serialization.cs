@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static LoggerCollection DeserializeLoggerCollection(JsonElement element)
         {
-            Optional<IReadOnlyList<LoggerContractData>> value = default;
+            Optional<IReadOnlyList<ApiManagementLoggerData>> value = default;
             Optional<long> count = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<LoggerContractData> array = new List<LoggerContractData>();
+                    List<ApiManagementLoggerData> array = new List<ApiManagementLoggerData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LoggerContractData.DeserializeLoggerContractData(item));
+                        array.Add(ApiManagementLoggerData.DeserializeApiManagementLoggerData(item));
                     }
                     value = array;
                     continue;

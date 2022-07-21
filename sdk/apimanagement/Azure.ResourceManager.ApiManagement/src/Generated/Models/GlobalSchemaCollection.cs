@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of GlobalSchemaCollection. </summary>
         internal GlobalSchemaCollection()
         {
-            Value = new ChangeTrackingList<GlobalSchemaContractData>();
+            Value = new ChangeTrackingList<ApiManagementGlobalSchemaData>();
         }
 
         /// <summary> Initializes a new instance of GlobalSchemaCollection. </summary>
         /// <param name="value"> Global Schema Contract value. </param>
         /// <param name="count"> Total record count number. </param>
         /// <param name="nextLink"> Next page link if any. </param>
-        internal GlobalSchemaCollection(IReadOnlyList<GlobalSchemaContractData> value, long? count, string nextLink)
+        internal GlobalSchemaCollection(IReadOnlyList<ApiManagementGlobalSchemaData> value, long? count, string nextLink)
         {
             Value = value;
             Count = count;
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Global Schema Contract value. </summary>
-        public IReadOnlyList<GlobalSchemaContractData> Value { get; }
+        public IReadOnlyList<ApiManagementGlobalSchemaData> Value { get; }
         /// <summary> Total record count number. </summary>
         public long? Count { get; }
         /// <summary> Next page link if any. </summary>

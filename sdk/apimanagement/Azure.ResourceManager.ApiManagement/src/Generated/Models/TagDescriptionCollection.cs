@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of TagDescriptionCollection. </summary>
         internal TagDescriptionCollection()
         {
-            Value = new ChangeTrackingList<TagDescriptionContractData>();
+            Value = new ChangeTrackingList<ApiTagDescriptionData>();
         }
 
         /// <summary> Initializes a new instance of TagDescriptionCollection. </summary>
         /// <param name="value"> Page values. </param>
         /// <param name="count"> Total record count number across all pages. </param>
         /// <param name="nextLink"> Next page link if any. </param>
-        internal TagDescriptionCollection(IReadOnlyList<TagDescriptionContractData> value, long? count, string nextLink)
+        internal TagDescriptionCollection(IReadOnlyList<ApiTagDescriptionData> value, long? count, string nextLink)
         {
             Value = value;
             Count = count;
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Page values. </summary>
-        public IReadOnlyList<TagDescriptionContractData> Value { get; }
+        public IReadOnlyList<ApiTagDescriptionData> Value { get; }
         /// <summary> Total record count number across all pages. </summary>
         public long? Count { get; }
         /// <summary> Next page link if any. </summary>

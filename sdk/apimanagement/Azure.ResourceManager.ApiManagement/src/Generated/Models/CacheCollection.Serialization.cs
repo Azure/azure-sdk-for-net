@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static CacheCollection DeserializeCacheCollection(JsonElement element)
         {
-            Optional<IReadOnlyList<CacheContractData>> value = default;
+            Optional<IReadOnlyList<ApiManagementCacheData>> value = default;
             Optional<long> count = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<CacheContractData> array = new List<CacheContractData>();
+                    List<ApiManagementCacheData> array = new List<ApiManagementCacheData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CacheContractData.DeserializeCacheContractData(item));
+                        array.Add(ApiManagementCacheData.DeserializeApiManagementCacheData(item));
                     }
                     value = array;
                     continue;

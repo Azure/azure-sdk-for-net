@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static AuthorizationServerCollection DeserializeAuthorizationServerCollection(JsonElement element)
         {
-            Optional<IReadOnlyList<AuthorizationServerContractData>> value = default;
+            Optional<IReadOnlyList<ApiManagementAuthorizationServerData>> value = default;
             Optional<long> count = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AuthorizationServerContractData> array = new List<AuthorizationServerContractData>();
+                    List<ApiManagementAuthorizationServerData> array = new List<ApiManagementAuthorizationServerData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AuthorizationServerContractData.DeserializeAuthorizationServerContractData(item));
+                        array.Add(ApiManagementAuthorizationServerData.DeserializeApiManagementAuthorizationServerData(item));
                     }
                     value = array;
                     continue;

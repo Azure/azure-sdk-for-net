@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of BackendCollection. </summary>
         internal BackendCollection()
         {
-            Value = new ChangeTrackingList<BackendContractData>();
+            Value = new ChangeTrackingList<ApiManagementBackendData>();
         }
 
         /// <summary> Initializes a new instance of BackendCollection. </summary>
         /// <param name="value"> Backend values. </param>
         /// <param name="count"> Total record count number across all pages. </param>
         /// <param name="nextLink"> Next page link if any. </param>
-        internal BackendCollection(IReadOnlyList<BackendContractData> value, long? count, string nextLink)
+        internal BackendCollection(IReadOnlyList<ApiManagementBackendData> value, long? count, string nextLink)
         {
             Value = value;
             Count = count;
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Backend values. </summary>
-        public IReadOnlyList<BackendContractData> Value { get; }
+        public IReadOnlyList<ApiManagementBackendData> Value { get; }
         /// <summary> Total record count number across all pages. </summary>
         public long? Count { get; }
         /// <summary> Next page link if any. </summary>

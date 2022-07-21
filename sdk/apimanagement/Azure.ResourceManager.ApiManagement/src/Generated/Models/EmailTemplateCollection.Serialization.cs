@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static EmailTemplateCollection DeserializeEmailTemplateCollection(JsonElement element)
         {
-            Optional<IReadOnlyList<EmailTemplateContractData>> value = default;
+            Optional<IReadOnlyList<ApiManagementEmailTemplateData>> value = default;
             Optional<long> count = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<EmailTemplateContractData> array = new List<EmailTemplateContractData>();
+                    List<ApiManagementEmailTemplateData> array = new List<ApiManagementEmailTemplateData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EmailTemplateContractData.DeserializeEmailTemplateContractData(item));
+                        array.Add(ApiManagementEmailTemplateData.DeserializeApiManagementEmailTemplateData(item));
                     }
                     value = array;
                     continue;

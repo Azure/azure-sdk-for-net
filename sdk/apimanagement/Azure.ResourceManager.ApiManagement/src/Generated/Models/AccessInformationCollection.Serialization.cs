@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static AccessInformationCollection DeserializeAccessInformationCollection(JsonElement element)
         {
-            Optional<IReadOnlyList<AccessInformationContractData>> value = default;
+            Optional<IReadOnlyList<TenantAccessData>> value = default;
             Optional<long> count = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AccessInformationContractData> array = new List<AccessInformationContractData>();
+                    List<TenantAccessData> array = new List<TenantAccessData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AccessInformationContractData.DeserializeAccessInformationContractData(item));
+                        array.Add(TenantAccessData.DeserializeTenantAccessData(item));
                     }
                     value = array;
                     continue;

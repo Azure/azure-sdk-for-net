@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<bool> isOnline = default;
             Optional<string> apiRevisionDescription = default;
             Optional<string> apiVersionDescription = default;
-            Optional<string> apiVersionSetId = default;
+            Optional<ResourceIdentifier> apiVersionSetId = default;
             Optional<bool> subscriptionRequired = default;
             Optional<Uri> termsOfServiceUrl = default;
             Optional<ApiContactInformation> contact = default;
@@ -109,7 +109,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (property.NameEquals("apiVersionSetId"))
                 {
-                    apiVersionSetId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    apiVersionSetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("subscriptionRequired"))

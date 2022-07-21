@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="loggerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="loggerId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<LoggerContractData>> GetAsync(string subscriptionId, string resourceGroupName, string serviceName, string loggerId, CancellationToken cancellationToken = default)
+        public async Task<Response<ApiManagementLoggerData>> GetAsync(string subscriptionId, string resourceGroupName, string serviceName, string loggerId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -267,13 +267,13 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        LoggerContractData value = default;
+                        ApiManagementLoggerData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = LoggerContractData.DeserializeLoggerContractData(document.RootElement);
+                        value = ApiManagementLoggerData.DeserializeApiManagementLoggerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((LoggerContractData)null, message.Response);
+                    return Response.FromValue((ApiManagementLoggerData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="loggerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="loggerId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<LoggerContractData> Get(string subscriptionId, string resourceGroupName, string serviceName, string loggerId, CancellationToken cancellationToken = default)
+        public Response<ApiManagementLoggerData> Get(string subscriptionId, string resourceGroupName, string serviceName, string loggerId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -300,19 +300,19 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        LoggerContractData value = default;
+                        ApiManagementLoggerData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = LoggerContractData.DeserializeLoggerContractData(document.RootElement);
+                        value = ApiManagementLoggerData.DeserializeApiManagementLoggerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((LoggerContractData)null, message.Response);
+                    return Response.FromValue((ApiManagementLoggerData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, string loggerId, LoggerContractData data, string ifMatch)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, string loggerId, ApiManagementLoggerData data, string ifMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="loggerId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="loggerId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<LoggerContractData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, string loggerId, LoggerContractData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ApiManagementLoggerData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, string loggerId, ApiManagementLoggerData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -367,9 +367,9 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                 case 201:
                     {
-                        LoggerContractData value = default;
+                        ApiManagementLoggerData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = LoggerContractData.DeserializeLoggerContractData(document.RootElement);
+                        value = ApiManagementLoggerData.DeserializeApiManagementLoggerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="loggerId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="loggerId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<LoggerContractData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string serviceName, string loggerId, LoggerContractData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public Response<ApiManagementLoggerData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string serviceName, string loggerId, ApiManagementLoggerData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -402,9 +402,9 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                 case 201:
                     {
-                        LoggerContractData value = default;
+                        ApiManagementLoggerData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = LoggerContractData.DeserializeLoggerContractData(document.RootElement);
+                        value = ApiManagementLoggerData.DeserializeApiManagementLoggerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, string loggerId, string ifMatch, LoggerContractPatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, string loggerId, string ifMatch, ApiManagementLoggerPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="loggerId"/>, <paramref name="ifMatch"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="loggerId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<LoggerContractData>> UpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, string loggerId, string ifMatch, LoggerContractPatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response<ApiManagementLoggerData>> UpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, string loggerId, string ifMatch, ApiManagementLoggerPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -464,9 +464,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        LoggerContractData value = default;
+                        ApiManagementLoggerData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = LoggerContractData.DeserializeLoggerContractData(document.RootElement);
+                        value = ApiManagementLoggerData.DeserializeApiManagementLoggerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="loggerId"/>, <paramref name="ifMatch"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="loggerId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<LoggerContractData> Update(string subscriptionId, string resourceGroupName, string serviceName, string loggerId, string ifMatch, LoggerContractPatch patch, CancellationToken cancellationToken = default)
+        public Response<ApiManagementLoggerData> Update(string subscriptionId, string resourceGroupName, string serviceName, string loggerId, string ifMatch, ApiManagementLoggerPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -499,9 +499,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        LoggerContractData value = default;
+                        ApiManagementLoggerData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = LoggerContractData.DeserializeLoggerContractData(document.RootElement);
+                        value = ApiManagementLoggerData.DeserializeApiManagementLoggerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

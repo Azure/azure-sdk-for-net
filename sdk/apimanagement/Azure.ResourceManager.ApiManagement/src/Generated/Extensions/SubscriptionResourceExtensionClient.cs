@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.ApiManagement
     {
         private ClientDiagnostics _deletedServiceContractDeletedServicesClientDiagnostics;
         private DeletedServicesRestOperations _deletedServiceContractDeletedServicesRestClient;
-        private ClientDiagnostics _apiManagementServiceResourceApiManagementServiceClientDiagnostics;
-        private ApiManagementServiceRestOperations _apiManagementServiceResourceApiManagementServiceRestClient;
+        private ClientDiagnostics _apiManagementServiceClientDiagnostics;
+        private ApiManagementServiceRestOperations _apiManagementServiceRestClient;
         private ClientDiagnostics _apiManagementSkusClientDiagnostics;
         private ApiManagementSkusRestOperations _apiManagementSkusRestClient;
 
@@ -41,8 +41,8 @@ namespace Azure.ResourceManager.ApiManagement
 
         private ClientDiagnostics DeletedServiceContractDeletedServicesClientDiagnostics => _deletedServiceContractDeletedServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiManagement", DeletedServiceContractResource.ResourceType.Namespace, Diagnostics);
         private DeletedServicesRestOperations DeletedServiceContractDeletedServicesRestClient => _deletedServiceContractDeletedServicesRestClient ??= new DeletedServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DeletedServiceContractResource.ResourceType));
-        private ClientDiagnostics ApiManagementServiceResourceApiManagementServiceClientDiagnostics => _apiManagementServiceResourceApiManagementServiceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiManagementServiceResource.ResourceType.Namespace, Diagnostics);
-        private ApiManagementServiceRestOperations ApiManagementServiceResourceApiManagementServiceRestClient => _apiManagementServiceResourceApiManagementServiceRestClient ??= new ApiManagementServiceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ApiManagementServiceResource.ResourceType));
+        private ClientDiagnostics ApiManagementServiceClientDiagnostics => _apiManagementServiceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiManagementServiceResource.ResourceType.Namespace, Diagnostics);
+        private ApiManagementServiceRestOperations ApiManagementServiceRestClient => _apiManagementServiceRestClient ??= new ApiManagementServiceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ApiManagementServiceResource.ResourceType));
         private ClientDiagnostics ApiManagementSkusClientDiagnostics => _apiManagementSkusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private ApiManagementSkusRestOperations ApiManagementSkusRestClient => _apiManagementSkusRestClient ??= new ApiManagementSkusRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
@@ -150,15 +150,15 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ApiManagementServiceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApiManagementServiceResource> GetApiManagementServiceResourcesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ApiManagementServiceResource> GetApiManagementServicesAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<ApiManagementServiceResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ApiManagementServiceResourceApiManagementServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetApiManagementServiceResources");
+                using var scope = ApiManagementServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetApiManagementServices");
                 scope.Start();
                 try
                 {
-                    var response = await ApiManagementServiceResourceApiManagementServiceRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await ApiManagementServiceRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ApiManagementServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -169,11 +169,11 @@ namespace Azure.ResourceManager.ApiManagement
             }
             async Task<Page<ApiManagementServiceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = ApiManagementServiceResourceApiManagementServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetApiManagementServiceResources");
+                using var scope = ApiManagementServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetApiManagementServices");
                 scope.Start();
                 try
                 {
-                    var response = await ApiManagementServiceResourceApiManagementServiceRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await ApiManagementServiceRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ApiManagementServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -192,15 +192,15 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApiManagementServiceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApiManagementServiceResource> GetApiManagementServiceResources(CancellationToken cancellationToken = default)
+        public virtual Pageable<ApiManagementServiceResource> GetApiManagementServices(CancellationToken cancellationToken = default)
         {
             Page<ApiManagementServiceResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ApiManagementServiceResourceApiManagementServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetApiManagementServiceResources");
+                using var scope = ApiManagementServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetApiManagementServices");
                 scope.Start();
                 try
                 {
-                    var response = ApiManagementServiceResourceApiManagementServiceRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    var response = ApiManagementServiceRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ApiManagementServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -211,11 +211,11 @@ namespace Azure.ResourceManager.ApiManagement
             }
             Page<ApiManagementServiceResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = ApiManagementServiceResourceApiManagementServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetApiManagementServiceResources");
+                using var scope = ApiManagementServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetApiManagementServices");
                 scope.Start();
                 try
                 {
-                    var response = ApiManagementServiceResourceApiManagementServiceRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    var response = ApiManagementServiceRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ApiManagementServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -236,11 +236,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ApiManagementServiceNameAvailabilityResult>> CheckNameAvailabilityApiManagementServiceAsync(ApiManagementServiceCheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = ApiManagementServiceResourceApiManagementServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityApiManagementService");
+            using var scope = ApiManagementServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityApiManagementService");
             scope.Start();
             try
             {
-                var response = await ApiManagementServiceResourceApiManagementServiceRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
+                var response = await ApiManagementServiceRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -259,11 +259,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ApiManagementServiceNameAvailabilityResult> CheckNameAvailabilityApiManagementService(ApiManagementServiceCheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = ApiManagementServiceResourceApiManagementServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityApiManagementService");
+            using var scope = ApiManagementServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityApiManagementService");
             scope.Start();
             try
             {
-                var response = ApiManagementServiceResourceApiManagementServiceRestClient.CheckNameAvailability(Id.SubscriptionId, content, cancellationToken);
+                var response = ApiManagementServiceRestClient.CheckNameAvailability(Id.SubscriptionId, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -281,11 +281,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ApiManagementServiceGetDomainOwnershipIdentifierResult>> GetDomainOwnershipIdentifierApiManagementServiceAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = ApiManagementServiceResourceApiManagementServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDomainOwnershipIdentifierApiManagementService");
+            using var scope = ApiManagementServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDomainOwnershipIdentifierApiManagementService");
             scope.Start();
             try
             {
-                var response = await ApiManagementServiceResourceApiManagementServiceRestClient.GetDomainOwnershipIdentifierAsync(Id.SubscriptionId, cancellationToken).ConfigureAwait(false);
+                var response = await ApiManagementServiceRestClient.GetDomainOwnershipIdentifierAsync(Id.SubscriptionId, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -303,11 +303,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ApiManagementServiceGetDomainOwnershipIdentifierResult> GetDomainOwnershipIdentifierApiManagementService(CancellationToken cancellationToken = default)
         {
-            using var scope = ApiManagementServiceResourceApiManagementServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDomainOwnershipIdentifierApiManagementService");
+            using var scope = ApiManagementServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDomainOwnershipIdentifierApiManagementService");
             scope.Start();
             try
             {
-                var response = ApiManagementServiceResourceApiManagementServiceRestClient.GetDomainOwnershipIdentifier(Id.SubscriptionId, cancellationToken);
+                var response = ApiManagementServiceRestClient.GetDomainOwnershipIdentifier(Id.SubscriptionId, cancellationToken);
                 return response;
             }
             catch (Exception e)

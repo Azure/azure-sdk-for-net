@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static NotificationCollection DeserializeNotificationCollection(JsonElement element)
         {
-            Optional<IReadOnlyList<NotificationContractData>> value = default;
+            Optional<IReadOnlyList<ApiManagementNotificationData>> value = default;
             Optional<long> count = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<NotificationContractData> array = new List<NotificationContractData>();
+                    List<ApiManagementNotificationData> array = new List<ApiManagementNotificationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NotificationContractData.DeserializeNotificationContractData(item));
+                        array.Add(ApiManagementNotificationData.DeserializeApiManagementNotificationData(item));
                     }
                     value = array;
                     continue;

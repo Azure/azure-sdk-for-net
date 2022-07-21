@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of NamedValueCollection. </summary>
         internal NamedValueCollection()
         {
-            Value = new ChangeTrackingList<NamedValueContractData>();
+            Value = new ChangeTrackingList<ApiManagementNamedValueData>();
         }
 
         /// <summary> Initializes a new instance of NamedValueCollection. </summary>
         /// <param name="value"> Page values. </param>
         /// <param name="count"> Total record count number across all pages. </param>
         /// <param name="nextLink"> Next page link if any. </param>
-        internal NamedValueCollection(IReadOnlyList<NamedValueContractData> value, long? count, string nextLink)
+        internal NamedValueCollection(IReadOnlyList<ApiManagementNamedValueData> value, long? count, string nextLink)
         {
             Value = value;
             Count = count;
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Page values. </summary>
-        public IReadOnlyList<NamedValueContractData> Value { get; }
+        public IReadOnlyList<ApiManagementNamedValueData> Value { get; }
         /// <summary> Total record count number across all pages. </summary>
         public long? Count { get; }
         /// <summary> Next page link if any. </summary>

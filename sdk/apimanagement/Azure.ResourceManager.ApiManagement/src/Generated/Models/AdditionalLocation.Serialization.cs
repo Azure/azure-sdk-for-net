@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
@@ -54,8 +55,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             AzureLocation location = default;
             ApiManagementServiceSkuProperties sku = default;
             Optional<IList<string>> zones = default;
-            Optional<IReadOnlyList<string>> publicIPAddresses = default;
-            Optional<IReadOnlyList<string>> privateIPAddresses = default;
+            Optional<IReadOnlyList<IPAddress>> publicIPAddresses = default;
+            Optional<IReadOnlyList<IPAddress>> privateIPAddresses = default;
             Optional<string> publicIPAddressId = default;
             Optional<VirtualNetworkConfiguration> virtualNetworkConfiguration = default;
             Optional<Uri> gatewayRegionalUrl = default;
@@ -95,10 +96,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<IPAddress> array = new List<IPAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(IPAddress.Parse(item.GetString()));
                     }
                     publicIPAddresses = array;
                     continue;
@@ -110,10 +111,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<IPAddress> array = new List<IPAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(IPAddress.Parse(item.GetString()));
                     }
                     privateIPAddresses = array;
                     continue;

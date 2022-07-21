@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static NamedValueCollection DeserializeNamedValueCollection(JsonElement element)
         {
-            Optional<IReadOnlyList<NamedValueContractData>> value = default;
+            Optional<IReadOnlyList<ApiManagementNamedValueData>> value = default;
             Optional<long> count = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<NamedValueContractData> array = new List<NamedValueContractData>();
+                    List<ApiManagementNamedValueData> array = new List<ApiManagementNamedValueData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NamedValueContractData.DeserializeNamedValueContractData(item));
+                        array.Add(ApiManagementNamedValueData.DeserializeApiManagementNamedValueData(item));
                     }
                     value = array;
                     continue;

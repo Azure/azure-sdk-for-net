@@ -16,20 +16,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of PolicyDescriptionCollection. </summary>
         internal PolicyDescriptionCollection()
         {
-            Value = new ChangeTrackingList<PolicyDescriptionContract>();
+            Value = new ChangeTrackingList<PolicyDescriptionContractData>();
         }
 
         /// <summary> Initializes a new instance of PolicyDescriptionCollection. </summary>
         /// <param name="value"> Descriptions of APIM policies. </param>
         /// <param name="count"> Total record count number. </param>
-        internal PolicyDescriptionCollection(IReadOnlyList<PolicyDescriptionContract> value, long? count)
+        internal PolicyDescriptionCollection(IReadOnlyList<PolicyDescriptionContractData> value, long? count)
         {
             Value = value;
             Count = count;
         }
 
         /// <summary> Descriptions of APIM policies. </summary>
-        public IReadOnlyList<PolicyDescriptionContract> Value { get; }
+        public IReadOnlyList<PolicyDescriptionContractData> Value { get; }
         /// <summary> Total record count number. </summary>
         public long? Count { get; }
     }

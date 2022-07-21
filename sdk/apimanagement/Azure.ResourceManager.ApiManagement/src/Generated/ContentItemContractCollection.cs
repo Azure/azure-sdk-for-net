@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
     /// A class representing a collection of <see cref="ContentItemContractResource" /> and their operations.
-    /// Each <see cref="ContentItemContractResource" /> in the collection will belong to the same instance of <see cref="ContentTypeContractResource" />.
-    /// To get a <see cref="ContentItemContractCollection" /> instance call the GetContentItemContracts method from an instance of <see cref="ContentTypeContractResource" />.
+    /// Each <see cref="ContentItemContractResource" /> in the collection will belong to the same instance of <see cref="ApiManagementContentTypeResource" />.
+    /// To get a <see cref="ContentItemContractCollection" /> instance call the GetContentItemContracts method from an instance of <see cref="ApiManagementContentTypeResource" />.
     /// </summary>
     public partial class ContentItemContractCollection : ArmCollection, IEnumerable<ContentItemContractResource>, IAsyncEnumerable<ContentItemContractResource>
     {
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.ApiManagement
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ContentTypeContractResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ContentTypeContractResource.ResourceType), nameof(id));
+            if (id.ResourceType != ApiManagementContentTypeResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ApiManagementContentTypeResource.ResourceType), nameof(id));
         }
 
         /// <summary>

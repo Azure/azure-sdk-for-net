@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static CertificateCollection DeserializeCertificateCollection(JsonElement element)
         {
-            Optional<IReadOnlyList<CertificateContractData>> value = default;
+            Optional<IReadOnlyList<ApiManagementCertificateData>> value = default;
             Optional<long> count = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<CertificateContractData> array = new List<CertificateContractData>();
+                    List<ApiManagementCertificateData> array = new List<ApiManagementCertificateData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CertificateContractData.DeserializeCertificateContractData(item));
+                        array.Add(ApiManagementCertificateData.DeserializeApiManagementCertificateData(item));
                     }
                     value = array;
                     continue;

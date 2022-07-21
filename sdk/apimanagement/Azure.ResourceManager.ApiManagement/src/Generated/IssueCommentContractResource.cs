@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ApiManagement
     /// A Class representing an IssueCommentContract along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="IssueCommentContractResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetIssueCommentContractResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ServiceApiIssueResource" /> using the GetIssueCommentContract method.
+    /// Otherwise you can get one from its parent resource <see cref="ApiIssueResource" /> using the GetIssueCommentContract method.
     /// </summary>
     public partial class IssueCommentContractResource : ArmResource
     {

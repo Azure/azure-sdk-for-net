@@ -347,17 +347,17 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApiContractResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApiContractResource> GetProductApisAsync(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ApiResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApiResource> GetProductApisAsync(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ApiContractResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ApiResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _productApiClientDiagnostics.CreateScope("ProductContractResource.GetProductApis");
                 scope.Start();
                 try
                 {
                     var response = await _productApiRestClient.ListByProductAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApiContractResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ApiResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -365,14 +365,14 @@ namespace Azure.ResourceManager.ApiManagement
                     throw;
                 }
             }
-            async Task<Page<ApiContractResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ApiResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _productApiClientDiagnostics.CreateScope("ProductContractResource.GetProductApis");
                 scope.Start();
                 try
                 {
                     var response = await _productApiRestClient.ListByProductNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApiContractResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ApiResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -392,17 +392,17 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApiContractResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApiContractResource> GetProductApis(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ApiResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApiResource> GetProductApis(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
-            Page<ApiContractResource> FirstPageFunc(int? pageSizeHint)
+            Page<ApiResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _productApiClientDiagnostics.CreateScope("ProductContractResource.GetProductApis");
                 scope.Start();
                 try
                 {
                     var response = _productApiRestClient.ListByProduct(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApiContractResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ApiResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -410,14 +410,14 @@ namespace Azure.ResourceManager.ApiManagement
                     throw;
                 }
             }
-            Page<ApiContractResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ApiResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _productApiClientDiagnostics.CreateScope("ProductContractResource.GetProductApis");
                 scope.Start();
                 try
                 {
                     var response = _productApiRestClient.ListByProductNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApiContractResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ApiResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="apiId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="apiId"/> is null. </exception>
-        public virtual async Task<Response<ApiContractResource>> CreateOrUpdateProductApiAsync(string apiId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiResource>> CreateOrUpdateProductApiAsync(string apiId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(apiId, nameof(apiId));
 
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = await _productApiRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiId, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ApiContractResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApiResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -518,7 +518,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="apiId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="apiId"/> is null. </exception>
-        public virtual Response<ApiContractResource> CreateOrUpdateProductApi(string apiId, CancellationToken cancellationToken = default)
+        public virtual Response<ApiResource> CreateOrUpdateProductApi(string apiId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(apiId, nameof(apiId));
 
@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = _productApiRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiId, cancellationToken);
-                return Response.FromValue(new ApiContractResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApiResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -599,17 +599,17 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="GroupContractResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GroupContractResource> GetProductGroupsAsync(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ApiManagementGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApiManagementGroupResource> GetProductGroupsAsync(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<GroupContractResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ApiManagementGroupResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _productGroupClientDiagnostics.CreateScope("ProductContractResource.GetProductGroups");
                 scope.Start();
                 try
                 {
                     var response = await _productGroupRestClient.ListByProductAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new GroupContractResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ApiManagementGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -617,14 +617,14 @@ namespace Azure.ResourceManager.ApiManagement
                     throw;
                 }
             }
-            async Task<Page<GroupContractResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ApiManagementGroupResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _productGroupClientDiagnostics.CreateScope("ProductContractResource.GetProductGroups");
                 scope.Start();
                 try
                 {
                     var response = await _productGroupRestClient.ListByProductNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new GroupContractResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ApiManagementGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -644,17 +644,17 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GroupContractResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GroupContractResource> GetProductGroups(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ApiManagementGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApiManagementGroupResource> GetProductGroups(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
-            Page<GroupContractResource> FirstPageFunc(int? pageSizeHint)
+            Page<ApiManagementGroupResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _productGroupClientDiagnostics.CreateScope("ProductContractResource.GetProductGroups");
                 scope.Start();
                 try
                 {
                     var response = _productGroupRestClient.ListByProduct(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new GroupContractResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ApiManagementGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -662,14 +662,14 @@ namespace Azure.ResourceManager.ApiManagement
                     throw;
                 }
             }
-            Page<GroupContractResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ApiManagementGroupResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _productGroupClientDiagnostics.CreateScope("ProductContractResource.GetProductGroups");
                 scope.Start();
                 try
                 {
                     var response = _productGroupRestClient.ListByProductNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new GroupContractResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ApiManagementGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -743,7 +743,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
-        public virtual async Task<Response<GroupContractResource>> CreateOrUpdateProductGroupAsync(string groupId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiManagementGroupResource>> CreateOrUpdateProductGroupAsync(string groupId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
@@ -752,7 +752,7 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = await _productGroupRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, groupId, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new GroupContractResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApiManagementGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -770,7 +770,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
-        public virtual Response<GroupContractResource> CreateOrUpdateProductGroup(string groupId, CancellationToken cancellationToken = default)
+        public virtual Response<ApiManagementGroupResource> CreateOrUpdateProductGroup(string groupId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
@@ -779,7 +779,7 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = _productGroupRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, groupId, cancellationToken);
-                return Response.FromValue(new GroupContractResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApiManagementGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

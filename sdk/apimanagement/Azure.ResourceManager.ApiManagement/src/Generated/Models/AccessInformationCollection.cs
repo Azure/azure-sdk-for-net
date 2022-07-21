@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of AccessInformationCollection. </summary>
         internal AccessInformationCollection()
         {
-            Value = new ChangeTrackingList<AccessInformationContractData>();
+            Value = new ChangeTrackingList<TenantAccessData>();
         }
 
         /// <summary> Initializes a new instance of AccessInformationCollection. </summary>
         /// <param name="value"> Page values. </param>
         /// <param name="count"> Total record count number across all pages. </param>
         /// <param name="nextLink"> Next page link if any. </param>
-        internal AccessInformationCollection(IReadOnlyList<AccessInformationContractData> value, long? count, string nextLink)
+        internal AccessInformationCollection(IReadOnlyList<TenantAccessData> value, long? count, string nextLink)
         {
             Value = value;
             Count = count;
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Page values. </summary>
-        public IReadOnlyList<AccessInformationContractData> Value { get; }
+        public IReadOnlyList<TenantAccessData> Value { get; }
         /// <summary> Total record count number across all pages. </summary>
         public long? Count { get; }
         /// <summary> Next page link if any. </summary>

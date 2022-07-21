@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="productId"/> or <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="productId"/> or <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<GroupContractData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, string productId, string groupId, CancellationToken cancellationToken = default)
+        public async Task<Response<ApiManagementGroupData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, string productId, string groupId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -284,9 +284,9 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                 case 201:
                     {
-                        GroupContractData value = default;
+                        ApiManagementGroupData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = GroupContractData.DeserializeGroupContractData(document.RootElement);
+                        value = ApiManagementGroupData.DeserializeApiManagementGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="productId"/> or <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="productId"/> or <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<GroupContractData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string serviceName, string productId, string groupId, CancellationToken cancellationToken = default)
+        public Response<ApiManagementGroupData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string serviceName, string productId, string groupId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -318,9 +318,9 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                 case 201:
                     {
-                        GroupContractData value = default;
+                        ApiManagementGroupData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = GroupContractData.DeserializeGroupContractData(document.RootElement);
+                        value = ApiManagementGroupData.DeserializeApiManagementGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

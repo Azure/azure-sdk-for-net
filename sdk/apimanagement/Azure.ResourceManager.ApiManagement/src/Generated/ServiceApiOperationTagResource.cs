@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ApiManagement
     /// A Class representing a ServiceApiOperationTag along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ServiceApiOperationTagResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetServiceApiOperationTagResource method.
-    /// Otherwise you can get one from its parent resource <see cref="OperationContractResource" /> using the GetServiceApiOperationTag method.
+    /// Otherwise you can get one from its parent resource <see cref="ApiOperationResource" /> using the GetServiceApiOperationTag method.
     /// </summary>
     public partial class ServiceApiOperationTagResource : ArmResource
     {

@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of AuthorizationServerCollection. </summary>
         internal AuthorizationServerCollection()
         {
-            Value = new ChangeTrackingList<AuthorizationServerContractData>();
+            Value = new ChangeTrackingList<ApiManagementAuthorizationServerData>();
         }
 
         /// <summary> Initializes a new instance of AuthorizationServerCollection. </summary>
         /// <param name="value"> Page values. </param>
         /// <param name="count"> Total record count number across all pages. </param>
         /// <param name="nextLink"> Next page link if any. </param>
-        internal AuthorizationServerCollection(IReadOnlyList<AuthorizationServerContractData> value, long? count, string nextLink)
+        internal AuthorizationServerCollection(IReadOnlyList<ApiManagementAuthorizationServerData> value, long? count, string nextLink)
         {
             Value = value;
             Count = count;
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Page values. </summary>
-        public IReadOnlyList<AuthorizationServerContractData> Value { get; }
+        public IReadOnlyList<ApiManagementAuthorizationServerData> Value { get; }
         /// <summary> Total record count number across all pages. </summary>
         public long? Count { get; }
         /// <summary> Next page link if any. </summary>

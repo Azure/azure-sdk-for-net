@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of SchemaCollection. </summary>
         internal SchemaCollection()
         {
-            Value = new ChangeTrackingList<SchemaContractData>();
+            Value = new ChangeTrackingList<ApiSchemaData>();
         }
 
         /// <summary> Initializes a new instance of SchemaCollection. </summary>
         /// <param name="value"> API Schema Contract value. </param>
         /// <param name="count"> Total record count number. </param>
         /// <param name="nextLink"> Next page link if any. </param>
-        internal SchemaCollection(IReadOnlyList<SchemaContractData> value, long? count, string nextLink)
+        internal SchemaCollection(IReadOnlyList<ApiSchemaData> value, long? count, string nextLink)
         {
             Value = value;
             Count = count;
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> API Schema Contract value. </summary>
-        public IReadOnlyList<SchemaContractData> Value { get; }
+        public IReadOnlyList<ApiSchemaData> Value { get; }
         /// <summary> Total record count number. </summary>
         public long? Count { get; }
         /// <summary> Next page link if any. </summary>

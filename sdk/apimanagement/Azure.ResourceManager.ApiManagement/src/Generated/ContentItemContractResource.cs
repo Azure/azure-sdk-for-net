@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ApiManagement
     /// A Class representing a ContentItemContract along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ContentItemContractResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetContentItemContractResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ContentTypeContractResource" /> using the GetContentItemContract method.
+    /// Otherwise you can get one from its parent resource <see cref="ApiManagementContentTypeResource" /> using the GetContentItemContract method.
     /// </summary>
     public partial class ContentItemContractResource : ArmResource
     {

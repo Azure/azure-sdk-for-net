@@ -412,17 +412,17 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="GroupContractResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GroupContractResource> GetUserGroupsAsync(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ApiManagementGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApiManagementGroupResource> GetUserGroupsAsync(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<GroupContractResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ApiManagementGroupResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _userGroupClientDiagnostics.CreateScope("UserContractResource.GetUserGroups");
                 scope.Start();
                 try
                 {
                     var response = await _userGroupRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new GroupContractResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ApiManagementGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -430,14 +430,14 @@ namespace Azure.ResourceManager.ApiManagement
                     throw;
                 }
             }
-            async Task<Page<GroupContractResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ApiManagementGroupResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _userGroupClientDiagnostics.CreateScope("UserContractResource.GetUserGroups");
                 scope.Start();
                 try
                 {
                     var response = await _userGroupRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new GroupContractResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ApiManagementGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -457,17 +457,17 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GroupContractResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GroupContractResource> GetUserGroups(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ApiManagementGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApiManagementGroupResource> GetUserGroups(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
-            Page<GroupContractResource> FirstPageFunc(int? pageSizeHint)
+            Page<ApiManagementGroupResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _userGroupClientDiagnostics.CreateScope("UserContractResource.GetUserGroups");
                 scope.Start();
                 try
                 {
                     var response = _userGroupRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new GroupContractResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ApiManagementGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -475,14 +475,14 @@ namespace Azure.ResourceManager.ApiManagement
                     throw;
                 }
             }
-            Page<GroupContractResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ApiManagementGroupResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _userGroupClientDiagnostics.CreateScope("UserContractResource.GetUserGroups");
                 scope.Start();
                 try
                 {
                     var response = _userGroupRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new GroupContractResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ApiManagementGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NotificationContractData>> GetAsync(string subscriptionId, string resourceGroupName, string serviceName, NotificationName notificationName, CancellationToken cancellationToken = default)
+        public async Task<Response<ApiManagementNotificationData>> GetAsync(string subscriptionId, string resourceGroupName, string serviceName, NotificationName notificationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -170,13 +170,13 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        NotificationContractData value = default;
+                        ApiManagementNotificationData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = NotificationContractData.DeserializeNotificationContractData(document.RootElement);
+                        value = ApiManagementNotificationData.DeserializeApiManagementNotificationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((NotificationContractData)null, message.Response);
+                    return Response.FromValue((ApiManagementNotificationData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NotificationContractData> Get(string subscriptionId, string resourceGroupName, string serviceName, NotificationName notificationName, CancellationToken cancellationToken = default)
+        public Response<ApiManagementNotificationData> Get(string subscriptionId, string resourceGroupName, string serviceName, NotificationName notificationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -202,13 +202,13 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        NotificationContractData value = default;
+                        ApiManagementNotificationData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = NotificationContractData.DeserializeNotificationContractData(document.RootElement);
+                        value = ApiManagementNotificationData.DeserializeApiManagementNotificationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((NotificationContractData)null, message.Response);
+                    return Response.FromValue((ApiManagementNotificationData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NotificationContractData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, NotificationName notificationName, string ifMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ApiManagementNotificationData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, NotificationName notificationName, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -261,9 +261,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        NotificationContractData value = default;
+                        ApiManagementNotificationData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = NotificationContractData.DeserializeNotificationContractData(document.RootElement);
+                        value = ApiManagementNotificationData.DeserializeApiManagementNotificationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NotificationContractData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string serviceName, NotificationName notificationName, string ifMatch = null, CancellationToken cancellationToken = default)
+        public Response<ApiManagementNotificationData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string serviceName, NotificationName notificationName, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -292,9 +292,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        NotificationContractData value = default;
+                        ApiManagementNotificationData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = NotificationContractData.DeserializeNotificationContractData(document.RootElement);
+                        value = ApiManagementNotificationData.DeserializeApiManagementNotificationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

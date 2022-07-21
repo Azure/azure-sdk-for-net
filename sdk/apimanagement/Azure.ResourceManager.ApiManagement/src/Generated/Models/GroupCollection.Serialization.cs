@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static GroupCollection DeserializeGroupCollection(JsonElement element)
         {
-            Optional<IReadOnlyList<GroupContractData>> value = default;
+            Optional<IReadOnlyList<ApiManagementGroupData>> value = default;
             Optional<long> count = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<GroupContractData> array = new List<GroupContractData>();
+                    List<ApiManagementGroupData> array = new List<ApiManagementGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GroupContractData.DeserializeGroupContractData(item));
+                        array.Add(ApiManagementGroupData.DeserializeApiManagementGroupData(item));
                     }
                     value = array;
                     continue;

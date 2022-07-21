@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="authsid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="authsid"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AuthorizationServerContractData>> GetAsync(string subscriptionId, string resourceGroupName, string serviceName, string authsid, CancellationToken cancellationToken = default)
+        public async Task<Response<ApiManagementAuthorizationServerData>> GetAsync(string subscriptionId, string resourceGroupName, string serviceName, string authsid, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -267,13 +267,13 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        AuthorizationServerContractData value = default;
+                        ApiManagementAuthorizationServerData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AuthorizationServerContractData.DeserializeAuthorizationServerContractData(document.RootElement);
+                        value = ApiManagementAuthorizationServerData.DeserializeApiManagementAuthorizationServerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AuthorizationServerContractData)null, message.Response);
+                    return Response.FromValue((ApiManagementAuthorizationServerData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="authsid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="authsid"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AuthorizationServerContractData> Get(string subscriptionId, string resourceGroupName, string serviceName, string authsid, CancellationToken cancellationToken = default)
+        public Response<ApiManagementAuthorizationServerData> Get(string subscriptionId, string resourceGroupName, string serviceName, string authsid, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -300,19 +300,19 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        AuthorizationServerContractData value = default;
+                        ApiManagementAuthorizationServerData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AuthorizationServerContractData.DeserializeAuthorizationServerContractData(document.RootElement);
+                        value = ApiManagementAuthorizationServerData.DeserializeApiManagementAuthorizationServerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AuthorizationServerContractData)null, message.Response);
+                    return Response.FromValue((ApiManagementAuthorizationServerData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, string authsid, AuthorizationServerContractData data, string ifMatch)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, string authsid, ApiManagementAuthorizationServerData data, string ifMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="authsid"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="authsid"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AuthorizationServerContractData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, string authsid, AuthorizationServerContractData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ApiManagementAuthorizationServerData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, string authsid, ApiManagementAuthorizationServerData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -367,9 +367,9 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                 case 201:
                     {
-                        AuthorizationServerContractData value = default;
+                        ApiManagementAuthorizationServerData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AuthorizationServerContractData.DeserializeAuthorizationServerContractData(document.RootElement);
+                        value = ApiManagementAuthorizationServerData.DeserializeApiManagementAuthorizationServerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="authsid"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="authsid"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AuthorizationServerContractData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string serviceName, string authsid, AuthorizationServerContractData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public Response<ApiManagementAuthorizationServerData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string serviceName, string authsid, ApiManagementAuthorizationServerData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -402,9 +402,9 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                 case 201:
                     {
-                        AuthorizationServerContractData value = default;
+                        ApiManagementAuthorizationServerData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AuthorizationServerContractData.DeserializeAuthorizationServerContractData(document.RootElement);
+                        value = ApiManagementAuthorizationServerData.DeserializeApiManagementAuthorizationServerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, string authsid, string ifMatch, AuthorizationServerContractPatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, string authsid, string ifMatch, ApiManagementAuthorizationServerPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="authsid"/>, <paramref name="ifMatch"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="authsid"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AuthorizationServerContractData>> UpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, string authsid, string ifMatch, AuthorizationServerContractPatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response<ApiManagementAuthorizationServerData>> UpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, string authsid, string ifMatch, ApiManagementAuthorizationServerPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -464,9 +464,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        AuthorizationServerContractData value = default;
+                        ApiManagementAuthorizationServerData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AuthorizationServerContractData.DeserializeAuthorizationServerContractData(document.RootElement);
+                        value = ApiManagementAuthorizationServerData.DeserializeApiManagementAuthorizationServerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="authsid"/>, <paramref name="ifMatch"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="authsid"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AuthorizationServerContractData> Update(string subscriptionId, string resourceGroupName, string serviceName, string authsid, string ifMatch, AuthorizationServerContractPatch patch, CancellationToken cancellationToken = default)
+        public Response<ApiManagementAuthorizationServerData> Update(string subscriptionId, string resourceGroupName, string serviceName, string authsid, string ifMatch, ApiManagementAuthorizationServerPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -499,9 +499,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        AuthorizationServerContractData value = default;
+                        ApiManagementAuthorizationServerData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AuthorizationServerContractData.DeserializeAuthorizationServerContractData(document.RootElement);
+                        value = ApiManagementAuthorizationServerData.DeserializeApiManagementAuthorizationServerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

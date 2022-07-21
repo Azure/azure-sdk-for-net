@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of OperationCollection. </summary>
         internal OperationCollection()
         {
-            Value = new ChangeTrackingList<OperationContractData>();
+            Value = new ChangeTrackingList<ApiOperationData>();
         }
 
         /// <summary> Initializes a new instance of OperationCollection. </summary>
         /// <param name="value"> Page values. </param>
         /// <param name="count"> Total record count number across all pages. </param>
         /// <param name="nextLink"> Next page link if any. </param>
-        internal OperationCollection(IReadOnlyList<OperationContractData> value, long? count, string nextLink)
+        internal OperationCollection(IReadOnlyList<ApiOperationData> value, long? count, string nextLink)
         {
             Value = value;
             Count = count;
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Page values. </summary>
-        public IReadOnlyList<OperationContractData> Value { get; }
+        public IReadOnlyList<ApiOperationData> Value { get; }
         /// <summary> Total record count number across all pages. </summary>
         public long? Count { get; }
         /// <summary> Next page link if any. </summary>

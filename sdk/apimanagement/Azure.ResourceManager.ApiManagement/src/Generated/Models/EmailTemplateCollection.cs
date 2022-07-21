@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of EmailTemplateCollection. </summary>
         internal EmailTemplateCollection()
         {
-            Value = new ChangeTrackingList<EmailTemplateContractData>();
+            Value = new ChangeTrackingList<ApiManagementEmailTemplateData>();
         }
 
         /// <summary> Initializes a new instance of EmailTemplateCollection. </summary>
         /// <param name="value"> Page values. </param>
         /// <param name="count"> Total record count number across all pages. </param>
         /// <param name="nextLink"> Next page link if any. </param>
-        internal EmailTemplateCollection(IReadOnlyList<EmailTemplateContractData> value, long? count, string nextLink)
+        internal EmailTemplateCollection(IReadOnlyList<ApiManagementEmailTemplateData> value, long? count, string nextLink)
         {
             Value = value;
             Count = count;
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Page values. </summary>
-        public IReadOnlyList<EmailTemplateContractData> Value { get; }
+        public IReadOnlyList<ApiManagementEmailTemplateData> Value { get; }
         /// <summary> Total record count number across all pages. </summary>
         public long? Count { get; }
         /// <summary> Next page link if any. </summary>

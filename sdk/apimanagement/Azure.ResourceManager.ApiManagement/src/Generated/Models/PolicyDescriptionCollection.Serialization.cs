@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static PolicyDescriptionCollection DeserializePolicyDescriptionCollection(JsonElement element)
         {
-            Optional<IReadOnlyList<PolicyDescriptionContract>> value = default;
+            Optional<IReadOnlyList<PolicyDescriptionContractData>> value = default;
             Optional<long> count = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<PolicyDescriptionContract> array = new List<PolicyDescriptionContract>();
+                    List<PolicyDescriptionContractData> array = new List<PolicyDescriptionContractData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PolicyDescriptionContract.DeserializePolicyDescriptionContract(item));
+                        array.Add(PolicyDescriptionContractData.DeserializePolicyDescriptionContractData(item));
                     }
                     value = array;
                     continue;

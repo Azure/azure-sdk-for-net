@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="apiId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="apiId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ApiReleaseCollection>> ListByServiceAsync(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        public async Task<Response<Models.ApiReleaseCollection>> ListByServiceAsync(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -96,9 +96,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        ApiReleaseCollection value = default;
+                        Models.ApiReleaseCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ApiReleaseCollection.DeserializeApiReleaseCollection(document.RootElement);
+                        value = Models.ApiReleaseCollection.DeserializeApiReleaseCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="apiId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="apiId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ApiReleaseCollection> ListByService(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        public Response<Models.ApiReleaseCollection> ListByService(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -130,9 +130,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        ApiReleaseCollection value = default;
+                        Models.ApiReleaseCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ApiReleaseCollection.DeserializeApiReleaseCollection(document.RootElement);
+                        value = Models.ApiReleaseCollection.DeserializeApiReleaseCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="apiId"/> or <paramref name="releaseId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="apiId"/> or <paramref name="releaseId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ApiReleaseContractData>> GetAsync(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string releaseId, CancellationToken cancellationToken = default)
+        public async Task<Response<ApiReleaseData>> GetAsync(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string releaseId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -283,13 +283,13 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        ApiReleaseContractData value = default;
+                        ApiReleaseData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ApiReleaseContractData.DeserializeApiReleaseContractData(document.RootElement);
+                        value = ApiReleaseData.DeserializeApiReleaseData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ApiReleaseContractData)null, message.Response);
+                    return Response.FromValue((ApiReleaseData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="apiId"/> or <paramref name="releaseId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="apiId"/> or <paramref name="releaseId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ApiReleaseContractData> Get(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string releaseId, CancellationToken cancellationToken = default)
+        public Response<ApiReleaseData> Get(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string releaseId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -318,19 +318,19 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        ApiReleaseContractData value = default;
+                        ApiReleaseData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ApiReleaseContractData.DeserializeApiReleaseContractData(document.RootElement);
+                        value = ApiReleaseData.DeserializeApiReleaseData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ApiReleaseContractData)null, message.Response);
+                    return Response.FromValue((ApiReleaseData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string releaseId, ApiReleaseContractData data, string ifMatch)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string releaseId, ApiReleaseData data, string ifMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="apiId"/>, <paramref name="releaseId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="apiId"/> or <paramref name="releaseId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ApiReleaseContractData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string releaseId, ApiReleaseContractData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ApiReleaseData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string releaseId, ApiReleaseData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -389,9 +389,9 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                 case 201:
                     {
-                        ApiReleaseContractData value = default;
+                        ApiReleaseData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ApiReleaseContractData.DeserializeApiReleaseContractData(document.RootElement);
+                        value = ApiReleaseData.DeserializeApiReleaseData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="apiId"/>, <paramref name="releaseId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="apiId"/> or <paramref name="releaseId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ApiReleaseContractData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string releaseId, ApiReleaseContractData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public Response<ApiReleaseData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string releaseId, ApiReleaseData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -426,9 +426,9 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                 case 201:
                     {
-                        ApiReleaseContractData value = default;
+                        ApiReleaseData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ApiReleaseContractData.DeserializeApiReleaseContractData(document.RootElement);
+                        value = ApiReleaseData.DeserializeApiReleaseData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string releaseId, string ifMatch, ApiReleaseContractData data)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string releaseId, string ifMatch, ApiReleaseData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="apiId"/>, <paramref name="releaseId"/>, <paramref name="ifMatch"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="apiId"/> or <paramref name="releaseId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ApiReleaseContractData>> UpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string releaseId, string ifMatch, ApiReleaseContractData data, CancellationToken cancellationToken = default)
+        public async Task<Response<ApiReleaseData>> UpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string releaseId, string ifMatch, ApiReleaseData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -492,9 +492,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        ApiReleaseContractData value = default;
+                        ApiReleaseData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ApiReleaseContractData.DeserializeApiReleaseContractData(document.RootElement);
+                        value = ApiReleaseData.DeserializeApiReleaseData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="apiId"/>, <paramref name="releaseId"/>, <paramref name="ifMatch"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="apiId"/> or <paramref name="releaseId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ApiReleaseContractData> Update(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string releaseId, string ifMatch, ApiReleaseContractData data, CancellationToken cancellationToken = default)
+        public Response<ApiReleaseData> Update(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string releaseId, string ifMatch, ApiReleaseData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -529,9 +529,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        ApiReleaseContractData value = default;
+                        ApiReleaseData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ApiReleaseContractData.DeserializeApiReleaseContractData(document.RootElement);
+                        value = ApiReleaseData.DeserializeApiReleaseData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -652,7 +652,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="apiId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="apiId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ApiReleaseCollection>> ListByServiceNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string apiId, string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        public async Task<Response<Models.ApiReleaseCollection>> ListByServiceNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string apiId, string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -666,9 +666,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        ApiReleaseCollection value = default;
+                        Models.ApiReleaseCollection value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ApiReleaseCollection.DeserializeApiReleaseCollection(document.RootElement);
+                        value = Models.ApiReleaseCollection.DeserializeApiReleaseCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -688,7 +688,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="apiId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="apiId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ApiReleaseCollection> ListByServiceNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string apiId, string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        public Response<Models.ApiReleaseCollection> ListByServiceNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string apiId, string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -702,9 +702,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        ApiReleaseCollection value = default;
+                        Models.ApiReleaseCollection value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ApiReleaseCollection.DeserializeApiReleaseCollection(document.RootElement);
+                        value = Models.ApiReleaseCollection.DeserializeApiReleaseCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

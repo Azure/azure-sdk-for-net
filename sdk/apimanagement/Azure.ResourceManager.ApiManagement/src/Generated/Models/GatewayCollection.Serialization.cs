@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static GatewayCollection DeserializeGatewayCollection(JsonElement element)
         {
-            Optional<IReadOnlyList<GatewayContractData>> value = default;
+            Optional<IReadOnlyList<ApiManagementGatewayData>> value = default;
             Optional<long> count = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<GatewayContractData> array = new List<GatewayContractData>();
+                    List<ApiManagementGatewayData> array = new List<ApiManagementGatewayData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GatewayContractData.DeserializeGatewayContractData(item));
+                        array.Add(ApiManagementGatewayData.DeserializeApiManagementGatewayData(item));
                     }
                     value = array;
                     continue;

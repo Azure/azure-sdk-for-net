@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static BackendCollection DeserializeBackendCollection(JsonElement element)
         {
-            Optional<IReadOnlyList<BackendContractData>> value = default;
+            Optional<IReadOnlyList<ApiManagementBackendData>> value = default;
             Optional<long> count = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<BackendContractData> array = new List<BackendContractData>();
+                    List<ApiManagementBackendData> array = new List<ApiManagementBackendData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BackendContractData.DeserializeBackendContractData(item));
+                        array.Add(ApiManagementBackendData.DeserializeApiManagementBackendData(item));
                     }
                     value = array;
                     continue;

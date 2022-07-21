@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="apiId"/> or <paramref name="schemaId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="apiId"/> or <paramref name="schemaId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SchemaContractData>> GetAsync(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string schemaId, CancellationToken cancellationToken = default)
+        public async Task<Response<ApiSchemaData>> GetAsync(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string schemaId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -283,13 +283,13 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        SchemaContractData value = default;
+                        ApiSchemaData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SchemaContractData.DeserializeSchemaContractData(document.RootElement);
+                        value = ApiSchemaData.DeserializeApiSchemaData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SchemaContractData)null, message.Response);
+                    return Response.FromValue((ApiSchemaData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="apiId"/> or <paramref name="schemaId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="apiId"/> or <paramref name="schemaId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SchemaContractData> Get(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string schemaId, CancellationToken cancellationToken = default)
+        public Response<ApiSchemaData> Get(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string schemaId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -318,19 +318,19 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        SchemaContractData value = default;
+                        ApiSchemaData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SchemaContractData.DeserializeSchemaContractData(document.RootElement);
+                        value = ApiSchemaData.DeserializeApiSchemaData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SchemaContractData)null, message.Response);
+                    return Response.FromValue((ApiSchemaData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string schemaId, SchemaContractData data, string ifMatch)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string schemaId, ApiSchemaData data, string ifMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="apiId"/>, <paramref name="schemaId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="apiId"/> or <paramref name="schemaId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string schemaId, SchemaContractData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string schemaId, ApiSchemaData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="apiId"/>, <paramref name="schemaId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="apiId"/> or <paramref name="schemaId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string schemaId, SchemaContractData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string schemaId, ApiSchemaData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));

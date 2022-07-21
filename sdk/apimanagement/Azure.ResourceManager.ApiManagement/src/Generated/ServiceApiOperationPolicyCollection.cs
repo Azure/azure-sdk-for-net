@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
     /// A class representing a collection of <see cref="ServiceApiOperationPolicyResource" /> and their operations.
-    /// Each <see cref="ServiceApiOperationPolicyResource" /> in the collection will belong to the same instance of <see cref="OperationContractResource" />.
-    /// To get a <see cref="ServiceApiOperationPolicyCollection" /> instance call the GetServiceApiOperationPolicies method from an instance of <see cref="OperationContractResource" />.
+    /// Each <see cref="ServiceApiOperationPolicyResource" /> in the collection will belong to the same instance of <see cref="ApiOperationResource" />.
+    /// To get a <see cref="ServiceApiOperationPolicyCollection" /> instance call the GetServiceApiOperationPolicies method from an instance of <see cref="ApiOperationResource" />.
     /// </summary>
     public partial class ServiceApiOperationPolicyCollection : ArmCollection, IEnumerable<ServiceApiOperationPolicyResource>, IAsyncEnumerable<ServiceApiOperationPolicyResource>
     {
@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.ApiManagement
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != OperationContractResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, OperationContractResource.ResourceType), nameof(id));
+            if (id.ResourceType != ApiOperationResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ApiOperationResource.ResourceType), nameof(id));
         }
 
         /// <summary>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static ApiReleaseCollection DeserializeApiReleaseCollection(JsonElement element)
         {
-            Optional<IReadOnlyList<ApiReleaseContractData>> value = default;
+            Optional<IReadOnlyList<ApiReleaseData>> value = default;
             Optional<long> count = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ApiReleaseContractData> array = new List<ApiReleaseContractData>();
+                    List<ApiReleaseData> array = new List<ApiReleaseData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiReleaseContractData.DeserializeApiReleaseContractData(item));
+                        array.Add(ApiReleaseData.DeserializeApiReleaseData(item));
                     }
                     value = array;
                     continue;

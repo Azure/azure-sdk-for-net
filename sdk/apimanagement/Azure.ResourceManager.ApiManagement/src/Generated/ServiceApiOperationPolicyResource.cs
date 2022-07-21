@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ApiManagement
     /// A Class representing a ServiceApiOperationPolicy along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ServiceApiOperationPolicyResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetServiceApiOperationPolicyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="OperationContractResource" /> using the GetServiceApiOperationPolicy method.
+    /// Otherwise you can get one from its parent resource <see cref="ApiOperationResource" /> using the GetServiceApiOperationPolicy method.
     /// </summary>
     public partial class ServiceApiOperationPolicyResource : ArmResource
     {

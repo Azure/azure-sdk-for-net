@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="openId"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="openId"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<OpenIdConnectProviderContractData>> GetAsync(string openId, string subscriptionId, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
+        public async Task<Response<ApiManagementOpenIdConnectProviderData>> GetAsync(string openId, string subscriptionId, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(openId, nameof(openId));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -267,13 +267,13 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        OpenIdConnectProviderContractData value = default;
+                        ApiManagementOpenIdConnectProviderData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = OpenIdConnectProviderContractData.DeserializeOpenIdConnectProviderContractData(document.RootElement);
+                        value = ApiManagementOpenIdConnectProviderData.DeserializeApiManagementOpenIdConnectProviderData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((OpenIdConnectProviderContractData)null, message.Response);
+                    return Response.FromValue((ApiManagementOpenIdConnectProviderData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="openId"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="openId"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<OpenIdConnectProviderContractData> Get(string openId, string subscriptionId, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
+        public Response<ApiManagementOpenIdConnectProviderData> Get(string openId, string subscriptionId, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(openId, nameof(openId));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -300,19 +300,19 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        OpenIdConnectProviderContractData value = default;
+                        ApiManagementOpenIdConnectProviderData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = OpenIdConnectProviderContractData.DeserializeOpenIdConnectProviderContractData(document.RootElement);
+                        value = ApiManagementOpenIdConnectProviderData.DeserializeApiManagementOpenIdConnectProviderData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((OpenIdConnectProviderContractData)null, message.Response);
+                    return Response.FromValue((ApiManagementOpenIdConnectProviderData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string openId, string subscriptionId, string resourceGroupName, string serviceName, OpenIdConnectProviderContractData data, string ifMatch)
+        internal HttpMessage CreateCreateOrUpdateRequest(string openId, string subscriptionId, string resourceGroupName, string serviceName, ApiManagementOpenIdConnectProviderData data, string ifMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="openId"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="openId"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<OpenIdConnectProviderContractData>> CreateOrUpdateAsync(string openId, string subscriptionId, string resourceGroupName, string serviceName, OpenIdConnectProviderContractData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ApiManagementOpenIdConnectProviderData>> CreateOrUpdateAsync(string openId, string subscriptionId, string resourceGroupName, string serviceName, ApiManagementOpenIdConnectProviderData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(openId, nameof(openId));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -367,9 +367,9 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                 case 201:
                     {
-                        OpenIdConnectProviderContractData value = default;
+                        ApiManagementOpenIdConnectProviderData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = OpenIdConnectProviderContractData.DeserializeOpenIdConnectProviderContractData(document.RootElement);
+                        value = ApiManagementOpenIdConnectProviderData.DeserializeApiManagementOpenIdConnectProviderData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="openId"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="openId"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<OpenIdConnectProviderContractData> CreateOrUpdate(string openId, string subscriptionId, string resourceGroupName, string serviceName, OpenIdConnectProviderContractData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public Response<ApiManagementOpenIdConnectProviderData> CreateOrUpdate(string openId, string subscriptionId, string resourceGroupName, string serviceName, ApiManagementOpenIdConnectProviderData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(openId, nameof(openId));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -402,9 +402,9 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                 case 201:
                     {
-                        OpenIdConnectProviderContractData value = default;
+                        ApiManagementOpenIdConnectProviderData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = OpenIdConnectProviderContractData.DeserializeOpenIdConnectProviderContractData(document.RootElement);
+                        value = ApiManagementOpenIdConnectProviderData.DeserializeApiManagementOpenIdConnectProviderData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string openId, string subscriptionId, string resourceGroupName, string serviceName, string ifMatch, OpenIdConnectProviderContractPatch patch)
+        internal HttpMessage CreateUpdateRequest(string openId, string subscriptionId, string resourceGroupName, string serviceName, string ifMatch, ApiManagementOpenIdConnectProviderPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="openId"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="ifMatch"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="openId"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<OpenIdConnectProviderContractData>> UpdateAsync(string openId, string subscriptionId, string resourceGroupName, string serviceName, string ifMatch, OpenIdConnectProviderContractPatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response<ApiManagementOpenIdConnectProviderData>> UpdateAsync(string openId, string subscriptionId, string resourceGroupName, string serviceName, string ifMatch, ApiManagementOpenIdConnectProviderPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(openId, nameof(openId));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -464,9 +464,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        OpenIdConnectProviderContractData value = default;
+                        ApiManagementOpenIdConnectProviderData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = OpenIdConnectProviderContractData.DeserializeOpenIdConnectProviderContractData(document.RootElement);
+                        value = ApiManagementOpenIdConnectProviderData.DeserializeApiManagementOpenIdConnectProviderData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="openId"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="ifMatch"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="openId"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<OpenIdConnectProviderContractData> Update(string openId, string subscriptionId, string resourceGroupName, string serviceName, string ifMatch, OpenIdConnectProviderContractPatch patch, CancellationToken cancellationToken = default)
+        public Response<ApiManagementOpenIdConnectProviderData> Update(string openId, string subscriptionId, string resourceGroupName, string serviceName, string ifMatch, ApiManagementOpenIdConnectProviderPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(openId, nameof(openId));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -499,9 +499,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        OpenIdConnectProviderContractData value = default;
+                        ApiManagementOpenIdConnectProviderData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = OpenIdConnectProviderContractData.DeserializeOpenIdConnectProviderContractData(document.RootElement);
+                        value = ApiManagementOpenIdConnectProviderData.DeserializeApiManagementOpenIdConnectProviderData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
