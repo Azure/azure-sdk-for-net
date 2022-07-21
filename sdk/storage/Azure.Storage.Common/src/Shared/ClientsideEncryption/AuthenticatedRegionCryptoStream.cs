@@ -46,6 +46,7 @@ namespace Azure.Storage.Cryptography
             int regionDataSize,
             CryptoStreamMode streamMode)
         {
+            Console.WriteLine($"regionDataSize: {regionDataSize}");
             _innerStream = innerStream;
             _transform = transform;
             _mode = streamMode;

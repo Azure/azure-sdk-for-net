@@ -42,7 +42,7 @@ namespace Azure.Storage.Blobs.Test
         private static readonly CancellationToken s_cancellationToken = new CancellationTokenSource().Token;
 
         public ClientSideEncryptionTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
-            : base(async, serviceVersion, RecordedTestMode.Live /* RecordedTestMode.Record /* to re-record */)
+            : base(async, serviceVersion, RecordedTestMode.Playback /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
@@ -268,6 +268,28 @@ namespace Azure.Storage.Blobs.Test
             };
         }
 
+        /// <summary>
+        /// V2 tests inject a custom region length for faster testing and smaller recordings. Ensure we are successfully
+        /// testing with those smaller lengths, otherwise we are not testing what we think we are.
+        /// </summary>
+        private async Task AssertExpectedEncryptedRegionDataLengthAsync(BlobClient blob, int expectedLength)
+        {
+            BlobProperties properties = await blob.GetPropertiesAsync();
+            AssertExpectedEncryptedRegionDataLength(properties.Metadata, expectedLength);
+        }
+
+        /// <summary>
+        /// V2 tests inject a custom region length for faster testing and smaller recordings. Ensure we are successfully
+        /// testing with those smaller lengths, otherwise we are not testing what we think we are.
+        /// </summary>
+        private void AssertExpectedEncryptedRegionDataLength(IDictionary<string, string> metadata, int expectedLength)
+        {
+            if (!metadata.TryGetValue("encryptiondata", out string rawEncryptionMetadata))
+                Assert.Fail("Expected encryption metadata but none present");
+
+            Assert.AreEqual(expectedLength, EncryptionDataSerializer.Deserialize(rawEncryptionMetadata)?.EncryptedRegionInfo?.DataLength);
+        }
+
 #pragma warning disable CS0618 // obsolete
         [RecordedTest]
         [TestCase(ClientSideEncryptionVersion.V1_0)]
@@ -328,7 +350,7 @@ namespace Azure.Storage.Blobs.Test
             {
                 var blobName = GetNewBlobName();
                 var blob = InstrumentClient(disposable.Container.GetBlobClient(blobName));
-                blob._clientSideEncryptionV2EncryptionRegionDataLength = V2TestingRegionDataLength;
+                blob.ClientSideEncryptionV2EncryptionRegionDataLength = V2TestingRegionDataLength;
 
                 // upload with encryption
                 await blob.UploadAsync(new MemoryStream(plaintext), cancellationToken: s_cancellationToken);
@@ -338,6 +360,11 @@ namespace Azure.Storage.Blobs.Test
 
                 // compare data
                 Assert.AreEqual(expectedEncryptedData, encryptedData);
+
+                if (version == ClientSideEncryptionVersion.V2_0)
+                {
+                    await AssertExpectedEncryptedRegionDataLengthAsync(blob, V2TestingRegionDataLength);
+                }
             }
         }
 
@@ -364,7 +391,7 @@ namespace Azure.Storage.Blobs.Test
             {
                 var blobName = GetNewBlobName();
                 var blob = InstrumentClient(disposable.Container.GetBlobClient(blobName));
-                blob._clientSideEncryptionV2EncryptionRegionDataLength = V2TestingRegionDataLength;
+                blob.ClientSideEncryptionV2EncryptionRegionDataLength = V2TestingRegionDataLength;
 
                 // upload with encryption
                 using (Stream writeStream = await blob.OpenWriteAsync(true, new BlobOpenWriteOptions
@@ -388,6 +415,11 @@ namespace Azure.Storage.Blobs.Test
 
                 // compare data
                 Assert.AreEqual(expectedEncryptedData, encryptedData);
+
+                if (version == ClientSideEncryptionVersion.V2_0)
+                {
+                    await AssertExpectedEncryptedRegionDataLengthAsync(blob, V2TestingRegionDataLength);
+                }
             }
         }
 
@@ -429,6 +461,11 @@ namespace Azure.Storage.Blobs.Test
 
                 // compare data
                 Assert.AreEqual(expectedEncryptedData, encryptedData);
+
+                if (version == ClientSideEncryptionVersion.V2_0)
+                {
+                    await AssertExpectedEncryptedRegionDataLengthAsync(blob, V2.EncryptionRegionDataSize);
+                }
             }
         }
 
@@ -463,6 +500,11 @@ namespace Azure.Storage.Blobs.Test
 
                 // compare data
                 Assert.AreEqual(expectedEncryptedData, encryptedData);
+
+                if (version == ClientSideEncryptionVersion.V2_0)
+                {
+                    await AssertExpectedEncryptedRegionDataLengthAsync(blob, V2.EncryptionRegionDataSize);
+                }
             }
         }
 
@@ -506,6 +548,11 @@ namespace Azure.Storage.Blobs.Test
 
                 // compare data
                 Assert.AreEqual(expectedEncryptedData, encryptedData);
+
+                if (version == ClientSideEncryptionVersion.V2_0)
+                {
+                    await AssertExpectedEncryptedRegionDataLengthAsync(blob, V2.EncryptionRegionDataSize);
+                }
             }
         }
 
@@ -536,7 +583,7 @@ namespace Azure.Storage.Blobs.Test
                 }))
             {
                 var blob = InstrumentClient(disposable.Container.GetBlobClient(GetNewBlobName()));
-                blob._clientSideEncryptionV2EncryptionRegionDataLength = V2TestingRegionDataLength;
+                blob.ClientSideEncryptionV2EncryptionRegionDataLength = V2TestingRegionDataLength;
 
                 // upload with encryption
                 await blob.UploadAsync(new MemoryStream(data), cancellationToken: s_cancellationToken);
@@ -554,6 +601,11 @@ namespace Azure.Storage.Blobs.Test
                 // compare data
                 Assert.AreEqual(data, downloadData);
                 VerifyUnwrappedKeyWasCached(mockKey);
+
+                if (version == ClientSideEncryptionVersion.V2_0)
+                {
+                    await AssertExpectedEncryptedRegionDataLengthAsync(blob, V2TestingRegionDataLength);
+                }
             }
         }
 
@@ -602,6 +654,11 @@ namespace Azure.Storage.Blobs.Test
                 // compare data
                 Assert.AreEqual(data, downloadData);
                 VerifyUnwrappedKeyWasCached(mockKey);
+
+                if (version == ClientSideEncryptionVersion.V2_0)
+                {
+                    await AssertExpectedEncryptedRegionDataLengthAsync(blob, V2.EncryptionRegionDataSize);
+                }
             }
         }
 
@@ -628,7 +685,7 @@ namespace Azure.Storage.Blobs.Test
                 }))
             {
                 var blob = InstrumentClient(disposable.Container.GetBlobClient(GetNewBlobName()));
-                blob._clientSideEncryptionV2EncryptionRegionDataLength = V2TestingRegionDataLength;
+                blob.ClientSideEncryptionV2EncryptionRegionDataLength = V2TestingRegionDataLength;
 
                 // upload with encryption
                 await blob.UploadAsync(new MemoryStream(data), cancellationToken: s_cancellationToken);
@@ -651,6 +708,11 @@ namespace Azure.Storage.Blobs.Test
                 // compare data
                 Assert.AreEqual(data, downloadData);
                 VerifyUnwrappedKeyWasCached(mockKey);
+
+                if (version == ClientSideEncryptionVersion.V2_0)
+                {
+                    await AssertExpectedEncryptedRegionDataLengthAsync(blob, V2TestingRegionDataLength);
+                }
             }
         }
 
@@ -700,6 +762,11 @@ namespace Azure.Storage.Blobs.Test
                 }
                 Assert.IsTrue(downloadedMetadata.ContainsKey(EncryptionDataKey));
                 Assert.AreEqual(version, EncryptionDataSerializer.Deserialize(downloadedMetadata[EncryptionDataKey]).EncryptionAgent.EncryptionVersion);
+
+                if (version == ClientSideEncryptionVersion.V2_0)
+                {
+                    await AssertExpectedEncryptedRegionDataLengthAsync(blob, V2.EncryptionRegionDataSize);
+                }
             }
         }
 
@@ -735,6 +802,11 @@ namespace Azure.Storage.Blobs.Test
 
                 // compare data
                 Assert.AreEqual(data, downloadData);
+
+                if (version == ClientSideEncryptionVersion.V2_0)
+                {
+                    await AssertExpectedEncryptedRegionDataLengthAsync(InstrumentClient(disposable.Container.GetBlobClient(blobName)), V2.EncryptionRegionDataSize);
+                }
             }
         }
 
@@ -783,7 +855,7 @@ namespace Azure.Storage.Blobs.Test
                 }))
             {
                 var blob = InstrumentClient(disposable.Container.GetBlobClient(GetNewBlobName()));
-                blob._clientSideEncryptionV2EncryptionRegionDataLength = V2TestingRegionDataLength;
+                blob.ClientSideEncryptionV2EncryptionRegionDataLength = V2TestingRegionDataLength;
 
                 // upload with encryption
                 await blob.UploadAsync(new MemoryStream(data), cancellationToken: s_cancellationToken);
@@ -809,6 +881,11 @@ namespace Azure.Storage.Blobs.Test
                     : slice;
                 var sliceArray = slice.ToArray();
                 Assert.AreEqual(sliceArray, downloadData);
+
+                if (version == ClientSideEncryptionVersion.V2_0)
+                {
+                    await AssertExpectedEncryptedRegionDataLengthAsync(blob, V2TestingRegionDataLength);
+                }
             }
         }
 
@@ -930,6 +1007,11 @@ namespace Azure.Storage.Blobs.Test
                 await blob.DownloadToAsync(downloadStream, cancellationToken: s_cancellationToken);
 
                 Assert.AreEqual(data, downloadStream.ToArray());
+
+                if (version == ClientSideEncryptionVersion.V2_0)
+                {
+                    await AssertExpectedEncryptedRegionDataLengthAsync(blob, V2.EncryptionRegionDataSize);
+                }
             }
         }
 
@@ -958,6 +1040,11 @@ namespace Azure.Storage.Blobs.Test
                 await blobStream.CopyToAsync(downloadStream);
 
                 Assert.AreEqual(data, downloadStream.ToArray());
+
+                if (version == ClientSideEncryptionVersion.V2_0)
+                {
+                    await AssertExpectedEncryptedRegionDataLengthAsync(blob, V2.EncryptionRegionDataSize);
+                }
             }
         }
 

@@ -86,6 +86,7 @@ namespace Azure.Storage.Cryptography.Models
             string keyWrapAlgorithm,
             byte[] contentEncryptionKey,
             IKeyEncryptionKey keyEncryptionKey,
+            int encryptionRegionDataLength,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -105,7 +106,7 @@ namespace Azure.Storage.Cryptography.Models
                 },
                 EncryptedRegionInfo = new EncryptedRegionInfo()
                 {
-                    DataLength = Constants.ClientSideEncryption.V2.EncryptionRegionDataSize,
+                    DataLength = encryptionRegionDataLength,
                     NonceLength = Constants.ClientSideEncryption.V2.NonceSize,
                 },
                 KeyWrappingMetadata = new Dictionary<string, string>()

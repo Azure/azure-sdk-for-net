@@ -173,6 +173,7 @@ namespace Azure.Storage.Cryptography
                 keyWrapAlgorithm: _keyWrapAlgorithm,
                 contentEncryptionKey: key,
                 keyEncryptionKey: _keyEncryptionKey,
+                _encryptionRegionDataSize,
                 async: async,
                 cancellationToken: cancellationToken).ConfigureAwait(false);
     }
