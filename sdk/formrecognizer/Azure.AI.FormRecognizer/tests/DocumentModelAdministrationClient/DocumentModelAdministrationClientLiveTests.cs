@@ -258,18 +258,18 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             ValidateOperationSummary(modelOperationFromList.FirstOrDefault());
 
-            DocumentModelOperationInfo operationInfo = await client.GetOperationAsync(modelOperationFromList.FirstOrDefault().OperationId);
+            DocumentModelOperationDetails operationDetails = await client.GetOperationAsync(modelOperationFromList.FirstOrDefault().OperationId);
 
-            ValidateOperationSummary(operationInfo);
-            if (operationInfo.Status == DocumentOperationStatus.Failed)
+            ValidateOperationSummary(operationDetails);
+            if (operationDetails.Status == DocumentOperationStatus.Failed)
             {
-                Assert.NotNull(operationInfo.Error);
-                Assert.NotNull(operationInfo.Error.Code);
-                Assert.NotNull(operationInfo.Error.Message);
+                Assert.NotNull(operationDetails.Error);
+                Assert.NotNull(operationDetails.Error.Code);
+                Assert.NotNull(operationDetails.Error.Message);
             }
             else
             {
-                ValidateDocumentModel(operationInfo.Result);
+                ValidateDocumentModel(operationDetails.Result);
             }
         }
 
@@ -295,9 +295,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             CollectionAssert.AreEquivalent(TestingTags, operationSummary.Tags);
 
-            DocumentModelOperationInfo operationInfo = await client.GetOperationAsync(operation.Id);
+            DocumentModelOperationDetails operationDetails = await client.GetOperationAsync(operation.Id);
 
-            CollectionAssert.AreEquivalent(TestingTags, operationInfo.Tags);
+            CollectionAssert.AreEquivalent(TestingTags, operationDetails.Tags);
 
             await client.DeleteModelAsync(modelId);
         }

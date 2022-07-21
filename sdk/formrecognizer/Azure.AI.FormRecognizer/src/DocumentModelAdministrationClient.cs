@@ -530,7 +530,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="Response{T}"/> representing the result of the operation. It can be cast to a <see cref="DocumentModelDetails"/> containing
         /// information about the requested model.</returns>
-        public virtual Response<DocumentModelOperationInfo> GetOperation(string operationId, CancellationToken cancellationToken = default)
+        public virtual Response<DocumentModelOperationDetails> GetOperation(string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
@@ -556,7 +556,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="Response{T}"/> representing the result of the operation. It can be cast to a <see cref="DocumentModelDetails"/> containing
         /// information about the requested model.</returns>
-        public virtual async Task<Response<DocumentModelOperationInfo>> GetOperationAsync(string operationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DocumentModelOperationDetails>> GetOperationAsync(string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 

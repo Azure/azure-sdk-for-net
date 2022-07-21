@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    public partial class DocumentModelOperationInfo
+    public partial class DocumentModelOperationDetails
     {
-        internal static DocumentModelOperationInfo DeserializeDocumentModelOperationInfo(JsonElement element)
+        internal static DocumentModelOperationDetails DeserializeDocumentModelOperationDetails(JsonElement element)
         {
             Optional<JsonElement> error = default;
             Optional<DocumentModelDetails> result = default;
@@ -105,7 +105,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new DocumentModelOperationInfo(operationId, status, Optional.ToNullable(percentCompleted), createdDateTime, lastUpdatedDateTime, kind, resourceLocation, apiVersion.Value, Optional.ToDictionary(tags), error, result.Value);
+            return new DocumentModelOperationDetails(operationId, status, Optional.ToNullable(percentCompleted), createdDateTime, lastUpdatedDateTime, kind, resourceLocation, apiVersion.Value, Optional.ToDictionary(tags), error, result.Value);
         }
     }
 }

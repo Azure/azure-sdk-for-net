@@ -35,7 +35,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
             int count = 0;
             await foreach (DocumentModelOperationSummary operationSummary in operationSummaries)
             {
-                Console.WriteLine($"Model operation info:");
+                Console.WriteLine($"Model operation summary:");
                 Console.WriteLine($"  Id: {operationSummary.OperationId}");
                 Console.WriteLine($"  Kind: {operationSummary.Kind}");
                 Console.WriteLine($"  Status: {operationSummary.Status}");
@@ -52,22 +52,22 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
             }
 
             // Get an operation by ID
-            DocumentModelOperationInfo operationInfo = await client.GetOperationAsync(operationId);
+            DocumentModelOperationDetails operationDetails = await client.GetOperationAsync(operationId);
 
-            if (operationInfo.Status == DocumentOperationStatus.Succeeded)
+            if (operationDetails.Status == DocumentOperationStatus.Succeeded)
             {
-                Console.WriteLine($"My {operationInfo.Kind} operation is completed.");
-                DocumentModelDetails result = operationInfo.Result;
+                Console.WriteLine($"My {operationDetails.Kind} operation is completed.");
+                DocumentModelDetails result = operationDetails.Result;
                 Console.WriteLine($"Model ID: {result.ModelId}");
             }
-            else if (operationInfo.Status == DocumentOperationStatus.Failed)
+            else if (operationDetails.Status == DocumentOperationStatus.Failed)
             {
-                Console.WriteLine($"My {operationInfo.Kind} operation failed.");
-                ResponseError error = operationInfo.Error;
+                Console.WriteLine($"My {operationDetails.Kind} operation failed.");
+                ResponseError error = operationDetails.Error;
                 Console.WriteLine($"Code: {error.Code}: Message: {error.Message}");
             }
             else
-                Console.WriteLine($"My {operationInfo.Kind} operation status is {operationInfo.Status}");
+                Console.WriteLine($"My {operationDetails.Kind} operation status is {operationDetails.Status}");
             #endregion
         }
     }
