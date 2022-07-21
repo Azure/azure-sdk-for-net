@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Storage.Models
         {
             Optional<bool> enabled = default;
             Optional<DateTimeOffset> lastEnabledTime = default;
-            Optional<StorageKeyType> keyType = default;
+            Optional<StorageEncryptionKeyType> keyType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"))
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Storage.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    keyType = new StorageKeyType(property.Value.GetString());
+                    keyType = new StorageEncryptionKeyType(property.Value.GetString());
                     continue;
                 }
             }

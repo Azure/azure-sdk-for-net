@@ -1,16 +1,33 @@
 # Release History
 
-## 1.0.0-beta.11 (Unreleased)
+## 1.0.0-beta.11 (2022-07-18)
+
+This is the RC release of the Azure Storage management library.
 
 ### Features Added
 
+- Added Update methods in resource classes.
+
 ### Breaking Changes
 
-- Refined quite a few names of types and properties according to internal review comments.
-
-### Bugs Fixed
+Polishing since last public beta release:
+- Prepended `Storage` prefix to all single / simple model names.
+- Corrected the format of all `Guid` type properties / parameters.
+- Corrected the format of all `ResourceIdentifier` type properteis / parameters.
+- Corrected the format of all `ResouceType` type properteis / parameters.
+- Corrected the format of all `ETag` type properteis / parameters.
+- Corrected the format of all `AzureLocation` type properteis / parameters.
+- Corrected the format of all binary type properteis / parameters.
+- Corrected all acronyms which not follow [.Net Naming Guidelines](https://docs.microsoft.com/dotnet/standard/design-guidelines/naming-guidelines).
+- Corrected enumeration name by following [Naming Enumerations Rule](https://docs.microsoft.com/dotnet/standard/design-guidelines/names-of-classes-structs-and-interfaces#naming-enumerations).
+- Corrected the suffix of `DateTimeOffset` properties / parameters.
+- Corrected the name of interval / duration properties / parameters which end with units.
+- Optimized the name of some models and functions.
 
 ### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.2.0
+- Upgraded dependent `Azure.Core` to 1.25.0
 
 ## 1.0.0-beta.10 (2022-06-24)
 

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.IotHub.Models
         {
             Optional<int> maxDeliveryCount = default;
             Optional<TimeSpan> defaultTtlAsIso8601 = default;
-            Optional<FeedbackProperties> feedback = default;
+            Optional<CloudToDeviceFeedbackQueueProperties> feedback = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxDeliveryCount"))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.IotHub.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    feedback = FeedbackProperties.DeserializeFeedbackProperties(property.Value);
+                    feedback = CloudToDeviceFeedbackQueueProperties.DeserializeCloudToDeviceFeedbackQueueProperties(property.Value);
                     continue;
                 }
             }

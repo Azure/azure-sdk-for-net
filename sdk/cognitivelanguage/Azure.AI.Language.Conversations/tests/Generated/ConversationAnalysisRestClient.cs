@@ -130,10 +130,11 @@ namespace Azure.AI.Language.Conversations
             return message;
         }
 
-        /// <summary> Submit a collection of conversations for analysis. Specify one or more unique tasks to be executed. </summary>
+        /// <summary> Submit analysis job for conversations. </summary>
         /// <param name="body"> The collection of conversations to analyze and one or more tasks to execute. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Submit a collection of conversations for analysis. Specify one or more unique tasks to be executed. </remarks>
         public async Task<ResponseWithHeaders<ConversationAnalysisSubmitJobHeaders>> SubmitJobAsync(AnalyzeConversationJobsInput body, CancellationToken cancellationToken = default)
         {
             if (body == null)
@@ -153,10 +154,11 @@ namespace Azure.AI.Language.Conversations
             }
         }
 
-        /// <summary> Submit a collection of conversations for analysis. Specify one or more unique tasks to be executed. </summary>
+        /// <summary> Submit analysis job for conversations. </summary>
         /// <param name="body"> The collection of conversations to analyze and one or more tasks to execute. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Submit a collection of conversations for analysis. Specify one or more unique tasks to be executed. </remarks>
         public ResponseWithHeaders<ConversationAnalysisSubmitJobHeaders> SubmitJob(AnalyzeConversationJobsInput body, CancellationToken cancellationToken = default)
         {
             if (body == null)
@@ -196,10 +198,11 @@ namespace Azure.AI.Language.Conversations
             return message;
         }
 
-        /// <summary> Get the status of an analysis job. A job may consist of one or more tasks. Once all tasks are succeeded, the job will transition to the succeeded state and results will be available for each task. </summary>
+        /// <summary> Get analysis status and results. </summary>
         /// <param name="jobId"> Job ID. </param>
         /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get the status of an analysis job. A job may consist of one or more tasks. Once all tasks are succeeded, the job will transition to the succeeded state and results will be available for each task. </remarks>
         public async Task<Response<AnalyzeConversationJobState>> GetJobStatusAsync(Guid jobId, bool? showStats = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetJobStatusRequest(jobId, showStats);
@@ -218,10 +221,11 @@ namespace Azure.AI.Language.Conversations
             }
         }
 
-        /// <summary> Get the status of an analysis job. A job may consist of one or more tasks. Once all tasks are succeeded, the job will transition to the succeeded state and results will be available for each task. </summary>
+        /// <summary> Get analysis status and results. </summary>
         /// <param name="jobId"> Job ID. </param>
         /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get the status of an analysis job. A job may consist of one or more tasks. Once all tasks are succeeded, the job will transition to the succeeded state and results will be available for each task. </remarks>
         public Response<AnalyzeConversationJobState> GetJobStatus(Guid jobId, bool? showStats = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetJobStatusRequest(jobId, showStats);
@@ -260,6 +264,7 @@ namespace Azure.AI.Language.Conversations
         /// <summary> Cancel a long-running Text Analysis conversations job. </summary>
         /// <param name="jobId"> Job ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Cancel a long-running Text Analysis conversations job. </remarks>
         public async Task<ResponseWithHeaders<ConversationAnalysisCancelJobHeaders>> CancelJobAsync(Guid jobId, CancellationToken cancellationToken = default)
         {
             using var message = CreateCancelJobRequest(jobId);
@@ -277,6 +282,7 @@ namespace Azure.AI.Language.Conversations
         /// <summary> Cancel a long-running Text Analysis conversations job. </summary>
         /// <param name="jobId"> Job ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Cancel a long-running Text Analysis conversations job. </remarks>
         public ResponseWithHeaders<ConversationAnalysisCancelJobHeaders> CancelJob(Guid jobId, CancellationToken cancellationToken = default)
         {
             using var message = CreateCancelJobRequest(jobId);

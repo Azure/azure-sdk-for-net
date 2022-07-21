@@ -71,8 +71,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
             #region Snippet:DocumentAnalysisBadRequest
             try
             {
-                AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-receipt", new Uri("http://invalid.uri"));
-                await operation.WaitForCompletionAsync();
+                AnalyzeDocumentOperation operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, "prebuilt-receipt", new Uri("http://invalid.uri"));
             }
             catch (RequestFailedException e)
             {

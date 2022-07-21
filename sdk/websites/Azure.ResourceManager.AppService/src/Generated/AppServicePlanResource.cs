@@ -129,11 +129,11 @@ namespace Azure.ResourceManager.AppService
             return GetAppServicePlanHybridConnectionNamespaceRelays().Get(namespaceName, relayName, cancellationToken);
         }
 
-        /// <summary> Gets an object representing a HybridConnectionLimitsResource along with the instance operations that can be performed on it in the AppServicePlan. </summary>
-        /// <returns> Returns a <see cref="HybridConnectionLimitsResource" /> object. </returns>
-        public virtual HybridConnectionLimitsResource GetHybridConnectionLimits()
+        /// <summary> Gets an object representing a HybridConnectionLimitResource along with the instance operations that can be performed on it in the AppServicePlan. </summary>
+        /// <returns> Returns a <see cref="HybridConnectionLimitResource" /> object. </returns>
+        public virtual HybridConnectionLimitResource GetHybridConnectionLimit()
         {
-            return new HybridConnectionLimitsResource(Client, new ResourceIdentifier(Id.ToString() + "/hybridConnectionPlanLimits/limit"));
+            return new HybridConnectionLimitResource(Client, new ResourceIdentifier(Id.ToString() + "/hybridConnectionPlanLimits/limit"));
         }
 
         /// <summary> Gets a collection of AppServicePlanVirtualNetworkConnectionResources in the AppServicePlan. </summary>
