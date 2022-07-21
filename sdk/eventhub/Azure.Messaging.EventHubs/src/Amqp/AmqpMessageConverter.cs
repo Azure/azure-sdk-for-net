@@ -1133,7 +1133,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                 case AmqpMap map when allowBodyTypes:
                 {
-                    var dict = new Dictionary<string, object>();
+                    var dict = new Dictionary<string, object>(map.Count);
 
                     foreach (var pair in map)
                     {
@@ -1142,7 +1142,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                     eventPropertyValue = dict;
                     break;
-                };
+                }
 
                 default:
                     var exception = new SerializationException(string.Format(CultureInfo.CurrentCulture, Resources.FailedToSerializeUnsupportedType, amqpPropertyValue.GetType().FullName));

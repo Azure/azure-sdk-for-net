@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="diskIopsReadWrite"> Specifies the Read-Write IOPS for the managed disk. Should be used only when StorageAccountType is UltraSSD_LRS. If not specified, a default value would be assigned based on diskSizeGB. </param>
         /// <param name="diskMBpsReadWrite"> Specifies the bandwidth in MB per second for the managed disk. Should be used only when StorageAccountType is UltraSSD_LRS. If not specified, a default value would be assigned based on diskSizeGB. </param>
         /// <param name="deleteOption"> Specifies whether data disk should be deleted or detached upon VMSS Flex deletion (This feature is available for VMSS with Flexible OrchestrationMode only).&lt;br&gt;&lt;br&gt; Possible values: &lt;br&gt;&lt;br&gt; **Delete** If this value is used, the data disk is deleted when the VMSS Flex VM is deleted.&lt;br&gt;&lt;br&gt; **Detach** If this value is used, the data disk is retained after VMSS Flex VM is deleted.&lt;br&gt;&lt;br&gt; The default value is set to **Delete**. </param>
-        internal VirtualMachineScaleSetDataDisk(string name, int lun, CachingType? caching, bool? writeAcceleratorEnabled, DiskCreateOptionType createOption, int? diskSizeGB, VirtualMachineScaleSetManagedDiskParameters managedDisk, long? diskIopsReadWrite, long? diskMBpsReadWrite, DiskDeleteOptionType? deleteOption)
+        internal VirtualMachineScaleSetDataDisk(string name, int lun, CachingType? caching, bool? writeAcceleratorEnabled, DiskCreateOptionType createOption, int? diskSizeGB, VirtualMachineScaleSetManagedDisk managedDisk, long? diskIopsReadWrite, long? diskMBpsReadWrite, DiskDeleteOptionType? deleteOption)
         {
             Name = name;
             Lun = lun;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Specifies the size of an empty data disk in gigabytes. This element can be used to overwrite the size of the disk in a virtual machine image. &lt;br&gt;&lt;br&gt; This value cannot be larger than 1023 GB. </summary>
         public int? DiskSizeGB { get; set; }
         /// <summary> The managed disk parameters. </summary>
-        public VirtualMachineScaleSetManagedDiskParameters ManagedDisk { get; set; }
+        public VirtualMachineScaleSetManagedDisk ManagedDisk { get; set; }
         /// <summary> Specifies the Read-Write IOPS for the managed disk. Should be used only when StorageAccountType is UltraSSD_LRS. If not specified, a default value would be assigned based on diskSizeGB. </summary>
         public long? DiskIopsReadWrite { get; set; }
         /// <summary> Specifies the bandwidth in MB per second for the managed disk. Should be used only when StorageAccountType is UltraSSD_LRS. If not specified, a default value would be assigned based on diskSizeGB. </summary>

@@ -15,14 +15,19 @@ namespace Azure.ResourceManager.Authorization.Models
     {
         internal static PolicyAssignmentPropertiesPolicy DeserializePolicyAssignmentPropertiesPolicy(JsonElement element)
         {
-            Optional<string> id = default;
+            Optional<ResourceIdentifier> id = default;
             Optional<AzurePrincipal> lastModifiedBy = default;
             Optional<DateTimeOffset> lastModifiedDateTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("lastModifiedBy"))

@@ -23,24 +23,24 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         private const string MD5Value = "MD5";
-        private const string SHA1Value = "SHA1";
-        private const string SHA256Value = "SHA256";
-        private const string SHA384Value = "SHA384";
-        private const string Gcmaes256Value = "GCMAES256";
-        private const string Gcmaes128Value = "GCMAES128";
+        private const string Sha1Value = "SHA1";
+        private const string Sha256Value = "SHA256";
+        private const string Sha384Value = "SHA384";
+        private const string GcmAes256Value = "GCMAES256";
+        private const string GcmAes128Value = "GCMAES128";
 
         /// <summary> MD5. </summary>
         public static IkeIntegrity MD5 { get; } = new IkeIntegrity(MD5Value);
         /// <summary> SHA1. </summary>
-        public static IkeIntegrity SHA1 { get; } = new IkeIntegrity(SHA1Value);
+        public static IkeIntegrity Sha1 { get; } = new IkeIntegrity(Sha1Value);
         /// <summary> SHA256. </summary>
-        public static IkeIntegrity SHA256 { get; } = new IkeIntegrity(SHA256Value);
+        public static IkeIntegrity Sha256 { get; } = new IkeIntegrity(Sha256Value);
         /// <summary> SHA384. </summary>
-        public static IkeIntegrity SHA384 { get; } = new IkeIntegrity(SHA384Value);
+        public static IkeIntegrity Sha384 { get; } = new IkeIntegrity(Sha384Value);
         /// <summary> GCMAES256. </summary>
-        public static IkeIntegrity Gcmaes256 { get; } = new IkeIntegrity(Gcmaes256Value);
+        public static IkeIntegrity GcmAes256 { get; } = new IkeIntegrity(GcmAes256Value);
         /// <summary> GCMAES128. </summary>
-        public static IkeIntegrity Gcmaes128 { get; } = new IkeIntegrity(Gcmaes128Value);
+        public static IkeIntegrity GcmAes128 { get; } = new IkeIntegrity(GcmAes128Value);
         /// <summary> Determines if two <see cref="IkeIntegrity"/> values are the same. </summary>
         public static bool operator ==(IkeIntegrity left, IkeIntegrity right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IkeIntegrity"/> values are not the same. </summary>

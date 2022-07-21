@@ -20,6 +20,7 @@ The Azure Monitor Query client library is used to execute read-only queries agai
 ### Prerequisites
 
 - An [Azure subscription][azure_subscription]
+- A [TokenCredential](https://docs.microsoft.com/dotnet/api/azure.core.tokencredential?view=azure-dotnet) implementation, such as an [Azure Identity library credential type](https://docs.microsoft.com/dotnet/api/overview/azure/Identity-readme#credential-classes).
 - To query Logs, you need an [Azure Log Analytics workspace][azure_monitor_create_using_portal].
 - To query Metrics, you need an Azure resource of any kind (Storage Account, Key Vault, Cosmos DB, etc.).
 
@@ -33,9 +34,9 @@ dotnet add package Azure.Monitor.Query
 
 ### Authenticate the client
 
-An authenticated client is required to query Logs or Metrics. To authenticate, create an instance of a [TokenCredential](https://docs.microsoft.com/dotnet/api/azure.core.tokencredential?view=azure-dotnet) class. Pass it to the constructor of your `LogsQueryClient` or `MetricsQueryClient` class.
+An authenticated client is required to query Logs or Metrics. To authenticate, create an instance of a `TokenCredential` class. Pass it to the constructor of your `LogsQueryClient` or `MetricsQueryClient` class.
 
-To authenticate, the following examples use `DefaultAzureCredential` from the [Azure.Identity](https://www.nuget.org/packages/Azure.Identity) package:
+To authenticate, the following examples use `DefaultAzureCredential` from the `Azure.Identity` package:
 
 ```C# Snippet:CreateLogsClient
 var client = new LogsQueryClient(new DefaultAzureCredential());
@@ -412,7 +413,7 @@ Because the structure of the visualization payload varies by query, a `BinaryDat
 
 ### Metrics query
 
-You can query metrics using the `MetricsQueryClient.QueryResourceAsync` method. For every requested metric, a set of aggregated values is returned inside the `TimeSeries` collection.
+You can query metrics on an Azure resource using the `MetricsQueryClient.QueryResourceAsync` method. For each requested metric, a set of aggregated values is returned inside the `TimeSeries` collection.
 
 A resource ID is required to query metrics. To find the resource ID:
 
@@ -472,11 +473,11 @@ MetricsQueryResult
 
 #### Query metrics with options
 
-A `MetricsQueryOptions` object may be used to support more granular metrics queries. Consider the following Azure Key Vault example. The resource's "Vault requests availability" metric is requested, and the "Avg" aggregation type is included.
+A `MetricsQueryOptions` object may be used to support more granular metrics queries. Consider the following example, which queries an Azure Key Vault resource named *TestVault*. The resource's "Vault requests availability" metric is requested, as indicated by metric ID "Availability". Additionally, the "Avg" aggregation type is included.
 
 ```C# Snippet:QueryMetricsWithAggregations
 string resourceId =
-    "/subscriptions/<subscription_id>/resourceGroups/<resource_group_name>/providers/<resource_provider>/<resource>";
+    "/subscriptions/<subscription_id>/resourceGroups/<resource_group_name>/providers/Microsoft.KeyVault/vaults/TestVault";
 var client = new MetricsQueryClient(new DefaultAzureCredential());
 
 Response<MetricsQueryResult> result = await client.QueryResourceAsync(

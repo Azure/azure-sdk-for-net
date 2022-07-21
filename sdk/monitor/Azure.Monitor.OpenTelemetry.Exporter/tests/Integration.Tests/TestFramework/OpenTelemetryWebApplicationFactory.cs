@@ -1,16 +1,22 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Concurrent;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading;
+
+using Azure.Monitor.OpenTelemetry.Exporter.Models;
 
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 
-using Azure.Monitor.OpenTelemetry.Exporter.Models;
-using OpenTelemetry.Trace;
 using OpenTelemetry;
-using System.Diagnostics;
+using OpenTelemetry.Trace;
+
+using Xunit;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.TestFramework
 {
@@ -38,6 +44,20 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.TestFramework
                         .AddProcessor(this.ActivityProcessor)));
         }
 
-        public void ForceFlush() => this.ActivityProcessor.ForceFlush();
+        /// <summary>
+        /// Wait for End callback to execute because it is executed after response was returned.
+        /// </summary>
+        internal void WaitForActivityExport()
+        {
+            var result = SpinWait.SpinUntil(
+                condition: () =>
+                {
+                    Thread.Sleep(10);
+                    return this.TelemetryItems.Any();
+                },
+                timeout: TimeSpan.FromSeconds(10));
+
+            Assert.True(result, $"{nameof(WaitForActivityExport)} failed.");
+        }
     }
 }

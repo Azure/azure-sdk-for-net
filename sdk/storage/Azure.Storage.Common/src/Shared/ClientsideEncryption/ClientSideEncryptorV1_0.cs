@@ -20,10 +20,12 @@ namespace Azure.Storage.Cryptography
         public ClientSideEncryptorV1_0(ClientSideEncryptionOptions options)
         {
             Argument.AssertNotNull(options, nameof(options));
+#pragma warning disable CS0618 // obsolete
             if (options.EncryptionVersion != ClientSideEncryptionVersion.V1_0)
             {
                 Errors.InvalidArgument(nameof(options.EncryptionVersion));
             }
+#pragma warning restore CS0618 // obsolete
 
             _keyEncryptionKey = options.KeyEncryptionKey;
             _keyWrapAlgorithm = options.KeyWrapAlgorithm;
@@ -37,7 +39,9 @@ namespace Azure.Storage.Cryptography
             }
         }
 
-        public long ExpectedOutputContentLength(long plaintextLength)
+        public long ExpectedOutputContentLength(long plaintextLength) => CalculateExpectedOutputContentLength(plaintextLength);
+
+        public static long CalculateExpectedOutputContentLength(long plaintextLength)
         {
             const int aesBlockSizeBytes = 16;
 

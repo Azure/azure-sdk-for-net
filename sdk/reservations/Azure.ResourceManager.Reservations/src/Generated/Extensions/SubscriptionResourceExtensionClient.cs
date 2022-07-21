@@ -52,13 +52,13 @@ namespace Azure.ResourceManager.Reservations
             return new CurrentQuotaLimitBaseCollection(Client, Id, providerId, location);
         }
 
-        /// <summary> Gets a collection of QuotaRequestDetailsResources in the SubscriptionResource. </summary>
+        /// <summary> Gets a collection of QuotaRequestDetailResources in the SubscriptionResource. </summary>
         /// <param name="providerId"> Azure resource provider ID. </param>
         /// <param name="location"> Azure region. </param>
-        /// <returns> An object representing collection of QuotaRequestDetailsResources and their operations over a QuotaRequestDetailsResource. </returns>
-        public virtual QuotaRequestDetailsCollection GetQuotaRequestDetails(string providerId, AzureLocation location)
+        /// <returns> An object representing collection of QuotaRequestDetailResources and their operations over a QuotaRequestDetailResource. </returns>
+        public virtual QuotaRequestDetailCollection GetQuotaRequestDetails(string providerId, AzureLocation location)
         {
-            return new QuotaRequestDetailsCollection(Client, Id, providerId, location);
+            return new QuotaRequestDetailCollection(Client, Id, providerId, location);
         }
 
         /// <summary>

@@ -1,14 +1,33 @@
 # Release History
 
-## 1.0.0-beta.11 (Unreleased)
+## 1.0.0-beta.11 (2022-07-18)
+
+This is the RC release of the Azure Storage management library.
 
 ### Features Added
 
+- Added Update methods in resource classes.
+
 ### Breaking Changes
 
-### Bugs Fixed
+Polishing since last public beta release:
+- Prepended `Storage` prefix to all single / simple model names.
+- Corrected the format of all `Guid` type properties / parameters.
+- Corrected the format of all `ResourceIdentifier` type properteis / parameters.
+- Corrected the format of all `ResouceType` type properteis / parameters.
+- Corrected the format of all `ETag` type properteis / parameters.
+- Corrected the format of all `AzureLocation` type properteis / parameters.
+- Corrected the format of all binary type properteis / parameters.
+- Corrected all acronyms which not follow [.Net Naming Guidelines](https://docs.microsoft.com/dotnet/standard/design-guidelines/naming-guidelines).
+- Corrected enumeration name by following [Naming Enumerations Rule](https://docs.microsoft.com/dotnet/standard/design-guidelines/names-of-classes-structs-and-interfaces#naming-enumerations).
+- Corrected the suffix of `DateTimeOffset` properties / parameters.
+- Corrected the name of interval / duration properties / parameters which end with units.
+- Optimized the name of some models and functions.
 
 ### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.2.0
+- Upgraded dependent `Azure.Core` to 1.25.0
 
 ## 1.0.0-beta.10 (2022-06-24)
 
@@ -160,10 +179,15 @@ string resourceGroupName = "myResourceGroup";
 ArmClient client = new ArmClient(new DefaultAzureCredential());
 ResourceGroupResource resourceGroup = client.GetDefaultSubscription().GetResourceGroups().Get(resourceGroupName);
 StorageAccountCollection storageAccountCollection = resourceGroup.GetStorageAccounts();
-StorageSku sku = new StorageSku(StorageSkuName.PremiumLRS);
-StorageAccountCreateOrUpdateContent parameters = new StorageAccountCreateOrUpdateContent(new StorageSku(StorageSkuName.StandardGRS), StorageKind.Storage, AzureLocation.WestUS);
-parameters.Tags.Add("key1", "value1");
-parameters.Tags.Add("key2", "value2");
+StorageSku sku = new StorageSku(StorageSkuName.PremiumLrs);
+StorageAccountCreateOrUpdateContent parameters = new StorageAccountCreateOrUpdateContent(sku, StorageKind.Storage, AzureLocation.WestUS)
+{
+    Tags =
+    {
+        ["key1"] = "value1",
+        ["key2"] = "value2"
+    }
+};
 StorageAccountResource account = storageAccountCollection.CreateOrUpdate(WaitUntil.Completed, accountName, parameters).Value;
 ```
 

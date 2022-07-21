@@ -2,6 +2,16 @@
 
 ## 5.8.0-beta.1 (Unreleased)
 
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 5.7.1 (2022-07-07)
+
 ### Acknowledgments
 
 Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
@@ -10,15 +20,19 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 ### Features Added
 
-### Breaking Changes
+- The event processor error handler will now raise warning when an unhandled exception propagated from the event processing handler causing partition processing to fault and restart.
 
 ### Bugs Fixed
 
-- Fixed an issue with the `EventHubBufferedProducerClient` where it was not properly identifying when buffers were empty and should enter an idle state; this caused the background task that manages publishing to spin and consume an unreasonable amount of resources.  
+- Fixed an issue with the `EventHubBufferedProducerClient` where it was not properly identifying when buffers were empty and should enter an idle state; this caused the background task that manages publishing to spin and consume an unreasonable amount of resources. 
+
+- Fixed an issue with event processor startup validation where an invalid consumer group was not properly detected.
 
 ### Other Changes
 
 - Samples now each have a table of contents to help discover and navigate to the topics discussed for a scenario. _(A community contribution, courtesy of [chadvidovcich](https://github.com/chadvidovcich))_
+
+- Enhanced API documentation for the `EventData` properties collection, detailing the types supported by AMQP serialization.
 
 ## 5.7.0 (2022-05-10)
 

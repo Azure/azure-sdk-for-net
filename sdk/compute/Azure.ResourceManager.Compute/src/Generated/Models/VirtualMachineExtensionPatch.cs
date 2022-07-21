@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a Virtual Machine Extension. </summary>
-    public partial class VirtualMachineExtensionPatch : ComputeUpdateResourceData
+    public partial class VirtualMachineExtensionPatch : ComputeResourcePatch
     {
         /// <summary> Initializes a new instance of VirtualMachineExtensionPatch. </summary>
         public VirtualMachineExtensionPatch()

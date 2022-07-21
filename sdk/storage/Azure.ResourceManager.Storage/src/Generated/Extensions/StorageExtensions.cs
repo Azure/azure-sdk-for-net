@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="content"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<Response<CheckNameAvailabilityResult>> CheckStorageAccountNameAvailabilityAsync(this SubscriptionResource subscriptionResource, StorageAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<StorageAccountNameAvailabilityResult>> CheckStorageAccountNameAvailabilityAsync(this SubscriptionResource subscriptionResource, StorageAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="content"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static Response<CheckNameAvailabilityResult> CheckStorageAccountNameAvailability(this SubscriptionResource subscriptionResource, StorageAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static Response<StorageAccountNameAvailabilityResult> CheckStorageAccountNameAvailability(this SubscriptionResource subscriptionResource, StorageAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -297,20 +297,20 @@ namespace Azure.ResourceManager.Storage
         }
         #endregion
 
-        #region ManagementPolicyResource
+        #region StorageAccountManagementPolicyResource
         /// <summary>
-        /// Gets an object representing a <see cref="ManagementPolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ManagementPolicyResource.CreateResourceIdentifier" /> to create a <see cref="ManagementPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="StorageAccountManagementPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StorageAccountManagementPolicyResource.CreateResourceIdentifier" /> to create a <see cref="StorageAccountManagementPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagementPolicyResource" /> object. </returns>
-        public static ManagementPolicyResource GetManagementPolicyResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="StorageAccountManagementPolicyResource" /> object. </returns>
+        public static StorageAccountManagementPolicyResource GetStorageAccountManagementPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ManagementPolicyResource.ValidateResourceId(id);
-                return new ManagementPolicyResource(client, id);
+                StorageAccountManagementPolicyResource.ValidateResourceId(id);
+                return new StorageAccountManagementPolicyResource(client, id);
             }
             );
         }
@@ -373,20 +373,20 @@ namespace Azure.ResourceManager.Storage
         }
         #endregion
 
-        #region LocalUserResource
+        #region StorageAccountLocalUserResource
         /// <summary>
-        /// Gets an object representing a <see cref="LocalUserResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LocalUserResource.CreateResourceIdentifier" /> to create a <see cref="LocalUserResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="StorageAccountLocalUserResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StorageAccountLocalUserResource.CreateResourceIdentifier" /> to create a <see cref="StorageAccountLocalUserResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LocalUserResource" /> object. </returns>
-        public static LocalUserResource GetLocalUserResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="StorageAccountLocalUserResource" /> object. </returns>
+        public static StorageAccountLocalUserResource GetStorageAccountLocalUserResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                LocalUserResource.ValidateResourceId(id);
-                return new LocalUserResource(client, id);
+                StorageAccountLocalUserResource.ValidateResourceId(id);
+                return new StorageAccountLocalUserResource(client, id);
             }
             );
         }

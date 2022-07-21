@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.ServiceBus.Tests.Helpers
             for (int i = 0; i < 10; i++)
             {
                 namespaceName = Recording.GenerateAssetName(prefix);
-                CheckNameAvailabilityResult res = await DefaultSubscription.CheckServiceBusNameAvailabilityAsync(new CheckNameAvailability(namespaceName));
-                if (res.NameAvailable == true)
+                ServiceBusNameAvailabilityResult res = await DefaultSubscription.CheckServiceBusNamespaceNameAvailabilityAsync(new ServiceBusNameAvailabilityContent(namespaceName));
+                if (res.IsNameAvailable == true)
                 {
                     return namespaceName;
                 }

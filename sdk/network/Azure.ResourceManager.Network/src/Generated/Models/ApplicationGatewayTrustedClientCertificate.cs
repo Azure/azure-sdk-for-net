@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure;
 using Azure.Core;
 
@@ -22,14 +23,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="data"> Certificate public data. </param>
         /// <param name="validatedCertData"> Validated certificate data. </param>
         /// <param name="clientCertIssuerDN"> Distinguished name of client certificate issuer. </param>
         /// <param name="provisioningState"> The provisioning state of the trusted client certificate resource. </param>
-        internal ApplicationGatewayTrustedClientCertificate(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? eTag, string data, string validatedCertData, string clientCertIssuerDN, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        internal ApplicationGatewayTrustedClientCertificate(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, BinaryData data, BinaryData validatedCertData, string clientCertIssuerDN, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
-            ETag = eTag;
+            ETag = etag;
             Data = data;
             ValidatedCertData = validatedCertData;
             ClientCertIssuerDN = clientCertIssuerDN;
@@ -39,9 +40,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public ETag? ETag { get; }
         /// <summary> Certificate public data. </summary>
-        public string Data { get; set; }
+        public BinaryData Data { get; set; }
         /// <summary> Validated certificate data. </summary>
-        public string ValidatedCertData { get; }
+        public BinaryData ValidatedCertData { get; }
         /// <summary> Distinguished name of client certificate issuer. </summary>
         public string ClientCertIssuerDN { get; }
         /// <summary> The provisioning state of the trusted client certificate resource. </summary>

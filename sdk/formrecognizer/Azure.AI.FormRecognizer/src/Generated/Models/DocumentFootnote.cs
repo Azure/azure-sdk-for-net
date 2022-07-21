@@ -13,7 +13,7 @@ using Azure.Core;
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     /// <summary> An object representing the location and content of a table footnote. </summary>
-    public partial class DocumentFootnote
+    internal partial class DocumentFootnote
     {
         /// <summary> Initializes a new instance of DocumentFootnote. </summary>
         /// <param name="content"> Table footnote content. </param>

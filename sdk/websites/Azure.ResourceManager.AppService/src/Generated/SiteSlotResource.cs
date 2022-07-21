@@ -864,11 +864,11 @@ namespace Azure.ResourceManager.AppService
             return new MigrateMySqlStatusResource(Client, new ResourceIdentifier(Id.ToString() + "/migratemysql/status"));
         }
 
-        /// <summary> Gets a collection of NetworkFeaturesResources in the SiteSlot. </summary>
-        /// <returns> An object representing collection of NetworkFeaturesResources and their operations over a NetworkFeaturesResource. </returns>
-        public virtual NetworkFeaturesCollection GetNetworkFeatures()
+        /// <summary> Gets a collection of NetworkFeatureResources in the SiteSlot. </summary>
+        /// <returns> An object representing collection of NetworkFeatureResources and their operations over a NetworkFeatureResource. </returns>
+        public virtual NetworkFeatureCollection GetNetworkFeatures()
         {
-            return GetCachedClient(Client => new NetworkFeaturesCollection(Client, Id));
+            return GetCachedClient(Client => new NetworkFeatureCollection(Client, Id));
         }
 
         /// <summary>
@@ -881,7 +881,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="view"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="view"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<NetworkFeaturesResource>> GetNetworkFeaturesAsync(string view, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkFeatureResource>> GetNetworkFeatureAsync(string view, CancellationToken cancellationToken = default)
         {
             return await GetNetworkFeatures().GetAsync(view, cancellationToken).ConfigureAwait(false);
         }
@@ -896,7 +896,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="view"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="view"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<NetworkFeaturesResource> GetNetworkFeatures(string view, CancellationToken cancellationToken = default)
+        public virtual Response<NetworkFeatureResource> GetNetworkFeature(string view, CancellationToken cancellationToken = default)
         {
             return GetNetworkFeatures().Get(view, cancellationToken);
         }

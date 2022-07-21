@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DisasterRecoveryListResult>> ListAsync(string subscriptionId, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
+        public async Task<Response<ArmDisasterRecoveryListResult>> ListAsync(string subscriptionId, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -77,9 +77,9 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 case 200:
                     {
-                        DisasterRecoveryListResult value = default;
+                        ArmDisasterRecoveryListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DisasterRecoveryListResult.DeserializeDisasterRecoveryListResult(document.RootElement);
+                        value = ArmDisasterRecoveryListResult.DeserializeArmDisasterRecoveryListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DisasterRecoveryListResult> List(string subscriptionId, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
+        public Response<ArmDisasterRecoveryListResult> List(string subscriptionId, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 case 200:
                     {
-                        DisasterRecoveryListResult value = default;
+                        ArmDisasterRecoveryListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DisasterRecoveryListResult.DeserializeDisasterRecoveryListResult(document.RootElement);
+                        value = ArmDisasterRecoveryListResult.DeserializeArmDisasterRecoveryListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string namespaceName, string @alias, DisasterRecoveryData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string namespaceName, string @alias, ServiceBusDisasterRecoveryData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="alias"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="alias"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DisasterRecoveryData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string namespaceName, string @alias, DisasterRecoveryData data, CancellationToken cancellationToken = default)
+        public async Task<Response<ServiceBusDisasterRecoveryData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string namespaceName, string @alias, ServiceBusDisasterRecoveryData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -165,13 +165,13 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 case 200:
                     {
-                        DisasterRecoveryData value = default;
+                        ServiceBusDisasterRecoveryData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DisasterRecoveryData.DeserializeDisasterRecoveryData(document.RootElement);
+                        value = ServiceBusDisasterRecoveryData.DeserializeServiceBusDisasterRecoveryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 201:
-                    return Response.FromValue((DisasterRecoveryData)null, message.Response);
+                    return Response.FromValue((ServiceBusDisasterRecoveryData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="alias"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="alias"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DisasterRecoveryData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string namespaceName, string @alias, DisasterRecoveryData data, CancellationToken cancellationToken = default)
+        public Response<ServiceBusDisasterRecoveryData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string namespaceName, string @alias, ServiceBusDisasterRecoveryData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -200,13 +200,13 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 case 200:
                     {
-                        DisasterRecoveryData value = default;
+                        ServiceBusDisasterRecoveryData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DisasterRecoveryData.DeserializeDisasterRecoveryData(document.RootElement);
+                        value = ServiceBusDisasterRecoveryData.DeserializeServiceBusDisasterRecoveryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 201:
-                    return Response.FromValue((DisasterRecoveryData)null, message.Response);
+                    return Response.FromValue((ServiceBusDisasterRecoveryData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="alias"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="alias"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DisasterRecoveryData>> GetAsync(string subscriptionId, string resourceGroupName, string namespaceName, string @alias, CancellationToken cancellationToken = default)
+        public async Task<Response<ServiceBusDisasterRecoveryData>> GetAsync(string subscriptionId, string resourceGroupName, string namespaceName, string @alias, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -331,13 +331,13 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 case 200:
                     {
-                        DisasterRecoveryData value = default;
+                        ServiceBusDisasterRecoveryData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DisasterRecoveryData.DeserializeDisasterRecoveryData(document.RootElement);
+                        value = ServiceBusDisasterRecoveryData.DeserializeServiceBusDisasterRecoveryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DisasterRecoveryData)null, message.Response);
+                    return Response.FromValue((ServiceBusDisasterRecoveryData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="alias"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="alias"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DisasterRecoveryData> Get(string subscriptionId, string resourceGroupName, string namespaceName, string @alias, CancellationToken cancellationToken = default)
+        public Response<ServiceBusDisasterRecoveryData> Get(string subscriptionId, string resourceGroupName, string namespaceName, string @alias, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -364,13 +364,13 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 case 200:
                     {
-                        DisasterRecoveryData value = default;
+                        ServiceBusDisasterRecoveryData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DisasterRecoveryData.DeserializeDisasterRecoveryData(document.RootElement);
+                        value = ServiceBusDisasterRecoveryData.DeserializeServiceBusDisasterRecoveryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DisasterRecoveryData)null, message.Response);
+                    return Response.FromValue((ServiceBusDisasterRecoveryData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -535,7 +535,7 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
-        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, string resourceGroupName, string namespaceName, CheckNameAvailability checkNameAvailability)
+        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, string resourceGroupName, string namespaceName, ServiceBusNameAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -553,9 +553,9 @@ namespace Azure.ResourceManager.ServiceBus
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(checkNameAvailability);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -564,26 +564,26 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="namespaceName"> The namespace name. </param>
-        /// <param name="checkNameAvailability"> Parameters to check availability of the given namespace name. </param>
+        /// <param name="content"> Parameters to check availability of the given namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="checkNameAvailability"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityAsync(string subscriptionId, string resourceGroupName, string namespaceName, CheckNameAvailability checkNameAvailability, CancellationToken cancellationToken = default)
+        public async Task<Response<ServiceBusNameAvailabilityResult>> CheckNameAvailabilityAsync(string subscriptionId, string resourceGroupName, string namespaceName, ServiceBusNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
-            Argument.AssertNotNull(checkNameAvailability, nameof(checkNameAvailability));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCheckNameAvailabilityRequest(subscriptionId, resourceGroupName, namespaceName, checkNameAvailability);
+            using var message = CreateCheckNameAvailabilityRequest(subscriptionId, resourceGroupName, namespaceName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        CheckNameAvailabilityResult value = default;
+                        ServiceBusNameAvailabilityResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CheckNameAvailabilityResult.DeserializeCheckNameAvailabilityResult(document.RootElement);
+                        value = ServiceBusNameAvailabilityResult.DeserializeServiceBusNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -595,26 +595,26 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="namespaceName"> The namespace name. </param>
-        /// <param name="checkNameAvailability"> Parameters to check availability of the given namespace name. </param>
+        /// <param name="content"> Parameters to check availability of the given namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="checkNameAvailability"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CheckNameAvailabilityResult> CheckNameAvailability(string subscriptionId, string resourceGroupName, string namespaceName, CheckNameAvailability checkNameAvailability, CancellationToken cancellationToken = default)
+        public Response<ServiceBusNameAvailabilityResult> CheckNameAvailability(string subscriptionId, string resourceGroupName, string namespaceName, ServiceBusNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
-            Argument.AssertNotNull(checkNameAvailability, nameof(checkNameAvailability));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCheckNameAvailabilityRequest(subscriptionId, resourceGroupName, namespaceName, checkNameAvailability);
+            using var message = CreateCheckNameAvailabilityRequest(subscriptionId, resourceGroupName, namespaceName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        CheckNameAvailabilityResult value = default;
+                        ServiceBusNameAvailabilityResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CheckNameAvailabilityResult.DeserializeCheckNameAvailabilityResult(document.RootElement);
+                        value = ServiceBusNameAvailabilityResult.DeserializeServiceBusNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -644,7 +644,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DisasterRecoveryListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
+        public async Task<Response<ArmDisasterRecoveryListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -657,9 +657,9 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 case 200:
                     {
-                        DisasterRecoveryListResult value = default;
+                        ArmDisasterRecoveryListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DisasterRecoveryListResult.DeserializeDisasterRecoveryListResult(document.RootElement);
+                        value = ArmDisasterRecoveryListResult.DeserializeArmDisasterRecoveryListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -675,7 +675,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DisasterRecoveryListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
+        public Response<ArmDisasterRecoveryListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -688,9 +688,9 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 case 200:
                     {
-                        DisasterRecoveryListResult value = default;
+                        ArmDisasterRecoveryListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DisasterRecoveryListResult.DeserializeDisasterRecoveryListResult(document.RootElement);
+                        value = ArmDisasterRecoveryListResult.DeserializeArmDisasterRecoveryListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

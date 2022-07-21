@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.Authorization
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> scope = default;
-            Optional<string> roleDefinitionId = default;
+            Optional<ResourceIdentifier> roleDefinitionId = default;
             Optional<string> principalId = default;
             Optional<PrincipalType> principalType = default;
-            Optional<string> roleEligibilityScheduleId = default;
+            Optional<ResourceIdentifier> roleEligibilityScheduleId = default;
             Optional<RoleEligibilityScheduleInstanceStatus> status = default;
             Optional<DateTimeOffset> startDateTime = default;
             Optional<DateTimeOffset> endDateTime = default;
@@ -77,7 +77,12 @@ namespace Azure.ResourceManager.Authorization
                         }
                         if (property0.NameEquals("roleDefinitionId"))
                         {
-                            roleDefinitionId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            roleDefinitionId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("principalId"))
@@ -97,7 +102,12 @@ namespace Azure.ResourceManager.Authorization
                         }
                         if (property0.NameEquals("roleEligibilityScheduleId"))
                         {
-                            roleEligibilityScheduleId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            roleEligibilityScheduleId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("status"))
