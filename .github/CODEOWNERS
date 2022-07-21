@@ -319,7 +319,7 @@
 
 # PRLabel: %IoT Models Repository
 # ServiceLabel: %IoT Models Repository %Service Attention
-/sdk/modelsrepository/                              @drwill-ms @timtay-microsoft @abhipsaMisra @digimaun @brycewang-microsoft @andyk-ms @tmahmood-microsoft
+/sdk/modelsrepository/                              @drwill-ms @timtay-microsoft @abhipsaMisra @digimaun @brycewang-microsoft @andyk-ms @tmahmood-microsoft @ngastelum-ms
 
 # PRLabel: %TimeSeriesInsights
 # ServiceLabel: %TimeSeriesInsights %Service Attention
