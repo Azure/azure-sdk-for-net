@@ -56,7 +56,7 @@ namespace Azure.Analytics.Purview.Account
         /// This sample shows how to call GetResourceSetRuleAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
         /// 
         /// Response response = await client.GetResourceSetRuleAsync();
@@ -274,7 +274,7 @@ namespace Azure.Analytics.Purview.Account
         /// This sample shows how to call GetResourceSetRule and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
         /// 
         /// Response response = client.GetResourceSetRule();
@@ -494,7 +494,7 @@ namespace Azure.Analytics.Purview.Account
         /// This sample shows how to call CreateOrUpdateResourceSetRuleAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
         /// 
         /// var data = new {};
@@ -507,7 +507,7 @@ namespace Azure.Analytics.Purview.Account
         /// This sample shows how to call CreateOrUpdateResourceSetRuleAsync with all request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
         /// 
         /// var data = new {
@@ -953,7 +953,7 @@ namespace Azure.Analytics.Purview.Account
         /// This sample shows how to call CreateOrUpdateResourceSetRule and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
         /// 
         /// var data = new {};
@@ -966,7 +966,7 @@ namespace Azure.Analytics.Purview.Account
         /// This sample shows how to call CreateOrUpdateResourceSetRule with all request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
         /// 
         /// var data = new {
@@ -1410,7 +1410,7 @@ namespace Azure.Analytics.Purview.Account
         /// This sample shows how to call DeleteResourceSetRuleAsync.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
         /// 
         /// Response response = await client.DeleteResourceSetRuleAsync();
@@ -1441,7 +1441,7 @@ namespace Azure.Analytics.Purview.Account
         /// This sample shows how to call DeleteResourceSetRule.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewResourceSetRuleClient();
         /// 
         /// Response response = client.DeleteResourceSetRule();

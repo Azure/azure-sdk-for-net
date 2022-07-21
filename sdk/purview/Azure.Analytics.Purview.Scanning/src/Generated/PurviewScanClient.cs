@@ -82,7 +82,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call GetFilterAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
         /// 
         /// Response response = await client.GetFilterAsync();
@@ -135,7 +135,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call GetFilter and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
         /// 
         /// Response response = client.GetFilter();
@@ -189,7 +189,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call CreateOrUpdateFilterAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
         /// 
         /// var data = new {};
@@ -202,7 +202,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call CreateOrUpdateFilterAsync with all request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
         /// 
         /// var data = new {
@@ -280,7 +280,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call CreateOrUpdateFilter and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
         /// 
         /// var data = new {};
@@ -293,7 +293,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call CreateOrUpdateFilter with all request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
         /// 
         /// var data = new {
@@ -372,7 +372,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call CreateOrUpdateAsync with required request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
         /// 
         /// var data = new {
@@ -387,7 +387,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call CreateOrUpdateAsync with all request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
         /// 
         /// var data = new {
@@ -7676,7 +7676,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call CreateOrUpdate with required request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
         /// 
         /// var data = new {
@@ -7691,7 +7691,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call CreateOrUpdate with all request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
         /// 
         /// var data = new {
@@ -14978,7 +14978,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call GetPropertiesAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
         /// 
         /// Response response = await client.GetPropertiesAsync();
@@ -18395,7 +18395,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call GetProperties and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
         /// 
         /// Response response = client.GetProperties();
@@ -21812,7 +21812,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call DeleteAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
         /// 
         /// Response response = await client.DeleteAsync();
@@ -25229,7 +25229,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call Delete and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
         /// 
         /// Response response = client.Delete();
@@ -28650,7 +28650,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call RunScanAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
         /// 
         /// Response response = await client.RunScanAsync("<runId>");
@@ -28661,7 +28661,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call RunScanAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
         /// 
         /// Response response = await client.RunScanAsync("<runId>", "<scanLevel>");
@@ -28737,7 +28737,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call RunScan with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
         /// 
         /// Response response = client.RunScan("<runId>");
@@ -28748,7 +28748,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call RunScan with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
         /// 
         /// Response response = client.RunScan("<runId>", "<scanLevel>");
@@ -28823,7 +28823,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call CancelScanAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
         /// 
         /// Response response = await client.CancelScanAsync("<runId>");
@@ -28898,7 +28898,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call CancelScan with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
         /// 
         /// Response response = client.CancelScan("<runId>");
@@ -28970,7 +28970,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call GetTriggerAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
         /// 
         /// Response response = await client.GetTriggerAsync();
@@ -29065,7 +29065,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call GetTrigger and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
         /// 
         /// Response response = client.GetTrigger();
@@ -29162,7 +29162,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call CreateOrUpdateTriggerAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
         /// 
         /// var data = new {};
@@ -29175,7 +29175,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call CreateOrUpdateTriggerAsync with all request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
         /// 
         /// var data = new {
@@ -29353,7 +29353,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call CreateOrUpdateTrigger and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
         /// 
         /// var data = new {};
@@ -29366,7 +29366,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call CreateOrUpdateTrigger with all request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
         /// 
         /// var data = new {
@@ -29542,7 +29542,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call DeleteTriggerAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
         /// 
         /// Response response = await client.DeleteTriggerAsync();
@@ -29637,7 +29637,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call DeleteTrigger and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
         /// 
         /// Response response = client.DeleteTrigger();
@@ -29732,7 +29732,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call GetRunsAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
         /// 
         /// await foreach (var data in client.GetRunsAsync())
@@ -29845,7 +29845,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call GetRuns and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
         /// 
         /// foreach (var data in client.GetRuns())
