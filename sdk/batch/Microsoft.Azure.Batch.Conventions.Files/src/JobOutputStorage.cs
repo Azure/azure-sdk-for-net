@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Azure.Storage.Blobs;
 using Microsoft.Azure.Batch.Conventions.Files.Utilities;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
@@ -57,12 +58,12 @@ namespace Microsoft.Azure.Batch.Conventions.Files
         /// Initializes a new instance of the <see cref="JobOutputStorage"/> class from a storage account
         /// and job id.
         /// </summary>
-        /// <param name="storageAccount">The storage account linked to the Azure Batch account.</param>
+        /// <param name="blobClient">The blob service client linked to the Azure Batch Storage Account.</param>
         /// <param name="jobId">The id of the Azure Batch job.</param>
         /// <remarks>The job output container must already exist; the JobOutputStorage class does not create
         /// it for you.</remarks>
-        public JobOutputStorage(CloudStorageAccount storageAccount, string jobId)
-            : this(CloudBlobContainerUtils.GetContainerReference(storageAccount, jobId), null)
+        public JobOutputStorage(BlobServiceClient blobClient, string jobId)
+            : this(CloudBlobContainerUtils.GetContainerReference(blobClient, jobId), null)
         {
         }
 
@@ -85,17 +86,17 @@ namespace Microsoft.Azure.Batch.Conventions.Files
         /// Initializes a new instance of the <see cref="JobOutputStorage"/> class from a storage account
         /// and job id.
         /// </summary>
-        /// <param name="storageAccount">The storage account linked to the Azure Batch account.</param>
+        /// <param name="blobClient">The blob service client linked to the Azure Batch Storage Account.</param>
         /// <param name="jobId">The id of the Azure Batch job.</param>
         /// <param name="storageRetryPolicy">The retry policy for storage requests.</param>
         /// <remarks>The job output container must already exist; the JobOutputStorage class does not create
         /// it for you.</remarks>
-        public JobOutputStorage(CloudStorageAccount storageAccount, string jobId, IRetryPolicy storageRetryPolicy)
-            : this(CloudBlobContainerUtils.GetContainerReference(storageAccount, jobId), storageRetryPolicy)
+        public JobOutputStorage(BlobServiceClient blobClient, string jobId, IRetryPolicy storageRetryPolicy)
+            : this(CloudBlobContainerUtils.GetContainerReference(blobClient, jobId), storageRetryPolicy)
         {
         }
 
-        private JobOutputStorage(CloudBlobContainer jobOutputContainer, IRetryPolicy storageRetryPolicy)
+        private JobOutputStorage(BlobContainerClient jobOutputContainer, IRetryPolicy storageRetryPolicy)
         {
             if (jobOutputContainer == null)
             {
