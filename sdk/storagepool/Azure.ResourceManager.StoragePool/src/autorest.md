@@ -20,19 +20,37 @@ format-by-name-rules:
   'tenantId': 'uuid'
   'etag': 'etag'
   'location': 'azure-location'
+  'locations': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
   'SubnetId': 'arm-id'
+  'IPAddress': 'ip-address'
+  'managedDiskAzureResourceId': 'arm-id'
 
 rename-mapping:
+  Acl: DiskPoolIscsiTargetPortalGroupAcl
+  EndpointDependency: OutboundEndpointDependency
+  EndpointDetail: OutboundEndpointDetail
+  EndpointDetail.latency: LatencyInMilliseconds
   IscsiLun: ManagedDiskIscsiLun
-  ResourceSkuZoneDetails: StoragePoolSkuZoneDetails
+  IscsiTarget: DiskPoolIscsiTarget
+  IscsiTargetList: DiskPoolIscsiTargetList
+  IscsiTargetAclMode: DiskPoolIscsiTargetAclMode
+  OperationalStatus: StoragePoolOperationalStatus
+  OutboundEnvironmentEndpoint: StoragePoolOutboundEnvironment
+  OutboundEnvironmentEndpointList: StoragePoolOutboundEnvironmentList
+  ProvisioningStates: DiskPoolIscsiTargetProvisioningState
+  ResourceSkuCapability: StoragePoolSkuCapability
+  ResourceSkuInfo: StoragePoolSkuInfo
+  ResourceSkuListResult: StoragePoolSkuListResult
+  ResourceSkuLocationInfo: StoragePoolSkuLocationInfo
   ResourceSkuRestrictions: StoragePoolSkuRestrictions
   ResourceSkuRestrictionsType: StoragePoolSkuRestrictionsType
+  ResourceSkuRestrictionInfo: StoragePoolSkuRestrictionInfo
   ResourceSkuRestrictionsReasonCode: StoragePoolSkuRestrictionsReasonCode
+  ResourceSkuZoneDetails: StoragePoolSkuZoneDetails
 
-prepend-rp-prefix:
-  - IscsiTarget
+# prepend-rp-prefix:
 
 rename-rules:
   CPU: Cpu

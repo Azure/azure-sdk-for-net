@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.StoragePool.Models
 {
@@ -16,7 +17,7 @@ namespace Azure.ResourceManager.StoragePool.Models
         /// <param name="name"> User defined name for iSCSI LUN; example: &quot;lun0&quot;. </param>
         /// <param name="managedDiskAzureResourceId"> Azure Resource ID of the Managed Disk. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="managedDiskAzureResourceId"/> is null. </exception>
-        public ManagedDiskIscsiLun(string name, string managedDiskAzureResourceId)
+        public ManagedDiskIscsiLun(string name, ResourceIdentifier managedDiskAzureResourceId)
         {
             if (name == null)
             {
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.StoragePool.Models
         /// <param name="name"> User defined name for iSCSI LUN; example: &quot;lun0&quot;. </param>
         /// <param name="managedDiskAzureResourceId"> Azure Resource ID of the Managed Disk. </param>
         /// <param name="lun"> Specifies the Logical Unit Number of the iSCSI LUN. </param>
-        internal ManagedDiskIscsiLun(string name, string managedDiskAzureResourceId, int? lun)
+        internal ManagedDiskIscsiLun(string name, ResourceIdentifier managedDiskAzureResourceId, int? lun)
         {
             Name = name;
             ManagedDiskAzureResourceId = managedDiskAzureResourceId;
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.StoragePool.Models
         /// <summary> User defined name for iSCSI LUN; example: &quot;lun0&quot;. </summary>
         public string Name { get; set; }
         /// <summary> Azure Resource ID of the Managed Disk. </summary>
-        public string ManagedDiskAzureResourceId { get; set; }
+        public ResourceIdentifier ManagedDiskAzureResourceId { get; set; }
         /// <summary> Specifies the Logical Unit Number of the iSCSI LUN. </summary>
         public int? Lun { get; }
     }

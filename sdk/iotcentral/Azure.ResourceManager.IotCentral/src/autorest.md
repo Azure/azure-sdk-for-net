@@ -72,8 +72,4 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
-# directive:
-#  - rename-model:
-#      from: App
-#      to: IotCentralApp
 ```

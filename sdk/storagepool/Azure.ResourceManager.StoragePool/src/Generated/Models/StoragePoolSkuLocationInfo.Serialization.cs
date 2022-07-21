@@ -11,15 +11,26 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StoragePool.Models
 {
-    public partial class StoragePoolSkuZoneDetails
+    public partial class StoragePoolSkuLocationInfo
     {
-        internal static StoragePoolSkuZoneDetails DeserializeStoragePoolSkuZoneDetails(JsonElement element)
+        internal static StoragePoolSkuLocationInfo DeserializeStoragePoolSkuLocationInfo(JsonElement element)
         {
-            Optional<IReadOnlyList<string>> name = default;
-            Optional<IReadOnlyList<StoragePoolSkuCapability>> capabilities = default;
+            Optional<AzureLocation> location = default;
+            Optional<IReadOnlyList<string>> zones = default;
+            Optional<IReadOnlyList<StoragePoolSkuZoneDetails>> zoneDetails = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("location"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("zones"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -31,26 +42,26 @@ namespace Azure.ResourceManager.StoragePool.Models
                     {
                         array.Add(item.GetString());
                     }
-                    name = array;
+                    zones = array;
                     continue;
                 }
-                if (property.NameEquals("capabilities"))
+                if (property.NameEquals("zoneDetails"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<StoragePoolSkuCapability> array = new List<StoragePoolSkuCapability>();
+                    List<StoragePoolSkuZoneDetails> array = new List<StoragePoolSkuZoneDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StoragePoolSkuCapability.DeserializeStoragePoolSkuCapability(item));
+                        array.Add(StoragePoolSkuZoneDetails.DeserializeStoragePoolSkuZoneDetails(item));
                     }
-                    capabilities = array;
+                    zoneDetails = array;
                     continue;
                 }
             }
-            return new StoragePoolSkuZoneDetails(Optional.ToList(name), Optional.ToList(capabilities));
+            return new StoragePoolSkuLocationInfo(Optional.ToNullable(location), Optional.ToList(zones), Optional.ToList(zoneDetails));
         }
     }
 }

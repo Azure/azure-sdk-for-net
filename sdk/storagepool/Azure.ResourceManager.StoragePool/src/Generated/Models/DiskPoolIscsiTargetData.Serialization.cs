@@ -9,100 +9,81 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.StoragePool.Models;
 
 namespace Azure.ResourceManager.StoragePool
 {
-    public partial class DiskPoolData : IUtf8JsonSerializable
+    public partial class DiskPoolIscsiTargetData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Sku))
-            {
-                writer.WritePropertyName("sku");
-                writer.WriteObjectValue(Sku);
-            }
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags");
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            writer.WritePropertyName("location");
-            writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            writer.WritePropertyName("availabilityZones");
-            writer.WriteStartArray();
-            foreach (var item in AvailabilityZones)
+            writer.WritePropertyName("aclMode");
+            writer.WriteStringValue(AclMode.ToString());
+            if (Optional.IsCollectionDefined(StaticAcls))
             {
-                writer.WriteStringValue(item);
-            }
-            writer.WriteEndArray();
-            writer.WritePropertyName("status");
-            writer.WriteStringValue(Status.ToString());
-            if (Optional.IsCollectionDefined(Disks))
-            {
-                writer.WritePropertyName("disks");
+                writer.WritePropertyName("staticAcls");
                 writer.WriteStartArray();
-                foreach (var item in Disks)
+                foreach (var item in StaticAcls)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("subnetId");
-            writer.WriteStringValue(SubnetId);
-            if (Optional.IsCollectionDefined(AdditionalCapabilities))
+            if (Optional.IsCollectionDefined(Luns))
             {
-                writer.WritePropertyName("additionalCapabilities");
+                writer.WritePropertyName("luns");
                 writer.WriteStartArray();
-                foreach (var item in AdditionalCapabilities)
+                foreach (var item in Luns)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            writer.WritePropertyName("targetIqn");
+            writer.WriteStringValue(TargetIqn);
+            writer.WritePropertyName("status");
+            writer.WriteStringValue(Status.ToString());
+            if (Optional.IsCollectionDefined(Endpoints))
+            {
+                writer.WritePropertyName("endpoints");
+                writer.WriteStartArray();
+                foreach (var item in Endpoints)
                 {
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(Port))
+            {
+                writer.WritePropertyName("port");
+                writer.WriteNumberValue(Port.Value);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
-        internal static DiskPoolData DeserializeDiskPoolData(JsonElement element)
+        internal static DiskPoolIscsiTargetData DeserializeDiskPoolIscsiTargetData(JsonElement element)
         {
-            Optional<StoragePoolSku> sku = default;
             Optional<string> managedBy = default;
             Optional<IReadOnlyList<string>> managedByExtended = default;
-            Optional<IDictionary<string, string>> tags = default;
-            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
+            DiskPoolIscsiTargetAclMode aclMode = default;
+            Optional<IList<DiskPoolIscsiTargetPortalGroupAcl>> staticAcls = default;
+            Optional<IList<ManagedDiskIscsiLun>> luns = default;
+            string targetIqn = default;
             DiskPoolIscsiTargetProvisioningState provisioningState = default;
-            IList<string> availabilityZones = default;
             StoragePoolOperationalStatus status = default;
-            Optional<IList<WritableSubResource>> disks = default;
-            ResourceIdentifier subnetId = default;
-            Optional<IList<string>> additionalCapabilities = default;
+            Optional<IList<string>> endpoints = default;
+            Optional<int> port = default;
+            Optional<IReadOnlyList<string>> sessions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sku"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    sku = StoragePoolSku.DeserializeStoragePoolSku(property.Value);
-                    continue;
-                }
                 if (property.NameEquals("managedBy"))
                 {
                     managedBy = property.Value.GetString();
@@ -121,26 +102,6 @@ namespace Azure.ResourceManager.StoragePool
                         array.Add(item.GetString());
                     }
                     managedByExtended = array;
-                    continue;
-                }
-                if (property.NameEquals("tags"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
-                    }
-                    tags = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("location"))
-                {
-                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -177,19 +138,49 @@ namespace Azure.ResourceManager.StoragePool
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("aclMode"))
+                        {
+                            aclMode = new DiskPoolIscsiTargetAclMode(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("staticAcls"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<DiskPoolIscsiTargetPortalGroupAcl> array = new List<DiskPoolIscsiTargetPortalGroupAcl>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(DiskPoolIscsiTargetPortalGroupAcl.DeserializeDiskPoolIscsiTargetPortalGroupAcl(item));
+                            }
+                            staticAcls = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("luns"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<ManagedDiskIscsiLun> array = new List<ManagedDiskIscsiLun>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(ManagedDiskIscsiLun.DeserializeManagedDiskIscsiLun(item));
+                            }
+                            luns = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("targetIqn"))
+                        {
+                            targetIqn = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("provisioningState"))
                         {
                             provisioningState = new DiskPoolIscsiTargetProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("availabilityZones"))
-                        {
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            availabilityZones = array;
                             continue;
                         }
                         if (property0.NameEquals("status"))
@@ -197,27 +188,7 @@ namespace Azure.ResourceManager.StoragePool
                             status = new StoragePoolOperationalStatus(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("disks"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            List<WritableSubResource> array = new List<WritableSubResource>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
-                            }
-                            disks = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("subnetId"))
-                        {
-                            subnetId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("additionalCapabilities"))
+                        if (property0.NameEquals("endpoints"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -229,14 +200,39 @@ namespace Azure.ResourceManager.StoragePool
                             {
                                 array.Add(item.GetString());
                             }
-                            additionalCapabilities = array;
+                            endpoints = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("port"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            port = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("sessions"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            sessions = array;
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new DiskPoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, managedBy.Value, Optional.ToList(managedByExtended), provisioningState, availabilityZones, status, Optional.ToList(disks), subnetId, Optional.ToList(additionalCapabilities));
+            return new DiskPoolIscsiTargetData(id, name, type, systemData.Value, managedBy.Value, Optional.ToList(managedByExtended), aclMode, Optional.ToList(staticAcls), Optional.ToList(luns), targetIqn, provisioningState, status, Optional.ToList(endpoints), Optional.ToNullable(port), Optional.ToList(sessions));
         }
     }
 }

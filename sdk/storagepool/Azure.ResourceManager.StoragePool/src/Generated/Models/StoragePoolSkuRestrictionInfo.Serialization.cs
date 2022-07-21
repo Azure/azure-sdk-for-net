@@ -11,15 +11,30 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StoragePool.Models
 {
-    public partial class StoragePoolSkuZoneDetails
+    public partial class StoragePoolSkuRestrictionInfo
     {
-        internal static StoragePoolSkuZoneDetails DeserializeStoragePoolSkuZoneDetails(JsonElement element)
+        internal static StoragePoolSkuRestrictionInfo DeserializeStoragePoolSkuRestrictionInfo(JsonElement element)
         {
-            Optional<IReadOnlyList<string>> name = default;
-            Optional<IReadOnlyList<StoragePoolSkuCapability>> capabilities = default;
+            Optional<IReadOnlyList<AzureLocation>> locations = default;
+            Optional<IReadOnlyList<string>> zones = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("locations"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<AzureLocation> array = new List<AzureLocation>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(new AzureLocation(item.GetString()));
+                    }
+                    locations = array;
+                    continue;
+                }
+                if (property.NameEquals("zones"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -31,26 +46,11 @@ namespace Azure.ResourceManager.StoragePool.Models
                     {
                         array.Add(item.GetString());
                     }
-                    name = array;
-                    continue;
-                }
-                if (property.NameEquals("capabilities"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    List<StoragePoolSkuCapability> array = new List<StoragePoolSkuCapability>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(StoragePoolSkuCapability.DeserializeStoragePoolSkuCapability(item));
-                    }
-                    capabilities = array;
+                    zones = array;
                     continue;
                 }
             }
-            return new StoragePoolSkuZoneDetails(Optional.ToList(name), Optional.ToList(capabilities));
+            return new StoragePoolSkuRestrictionInfo(Optional.ToList(locations), Optional.ToList(zones));
         }
     }
 }

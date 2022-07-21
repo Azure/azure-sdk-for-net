@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.StoragePool.Models
         /// <param name="values"> The value of restrictions. If the restriction type is set to location. This would be different locations where the SKU is restricted. </param>
         /// <param name="restrictionInfo"> The information about the restriction where the SKU cannot be used. </param>
         /// <param name="reasonCode"> The reason for restriction. </param>
-        internal StoragePoolSkuRestrictions(StoragePoolSkuRestrictionsType? restrictionsType, IReadOnlyList<string> values, ResourceSkuRestrictionInfo restrictionInfo, StoragePoolSkuRestrictionsReasonCode? reasonCode)
+        internal StoragePoolSkuRestrictions(StoragePoolSkuRestrictionsType? restrictionsType, IReadOnlyList<string> values, StoragePoolSkuRestrictionInfo restrictionInfo, StoragePoolSkuRestrictionsReasonCode? reasonCode)
         {
             RestrictionsType = restrictionsType;
             Values = values;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.StoragePool.Models
         /// <summary> The value of restrictions. If the restriction type is set to location. This would be different locations where the SKU is restricted. </summary>
         public IReadOnlyList<string> Values { get; }
         /// <summary> The information about the restriction where the SKU cannot be used. </summary>
-        public ResourceSkuRestrictionInfo RestrictionInfo { get; }
+        public StoragePoolSkuRestrictionInfo RestrictionInfo { get; }
         /// <summary> The reason for restriction. </summary>
         public StoragePoolSkuRestrictionsReasonCode? ReasonCode { get; }
     }

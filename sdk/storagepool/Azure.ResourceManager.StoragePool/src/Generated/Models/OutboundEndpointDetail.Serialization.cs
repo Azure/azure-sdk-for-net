@@ -5,69 +5,64 @@
 
 #nullable disable
 
-using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StoragePool.Models
 {
-    public partial class StoragePoolSkuRestrictions
+    public partial class OutboundEndpointDetail
     {
-        internal static StoragePoolSkuRestrictions DeserializeStoragePoolSkuRestrictions(JsonElement element)
+        internal static OutboundEndpointDetail DeserializeOutboundEndpointDetail(JsonElement element)
         {
-            Optional<StoragePoolSkuRestrictionsType> type = default;
-            Optional<IReadOnlyList<string>> values = default;
-            Optional<StoragePoolSkuRestrictionInfo> restrictionInfo = default;
-            Optional<StoragePoolSkuRestrictionsReasonCode> reasonCode = default;
+            Optional<IPAddress> ipAddress = default;
+            Optional<int> port = default;
+            Optional<double> latency = default;
+            Optional<bool> isAccessible = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("ipAddress"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    type = property.Value.GetString().ToStoragePoolSkuRestrictionsType();
+                    ipAddress = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("values"))
+                if (property.NameEquals("port"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString());
-                    }
-                    values = array;
+                    port = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("restrictionInfo"))
+                if (property.NameEquals("latency"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    restrictionInfo = StoragePoolSkuRestrictionInfo.DeserializeStoragePoolSkuRestrictionInfo(property.Value);
+                    latency = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("reasonCode"))
+                if (property.NameEquals("isAccessible"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    reasonCode = property.Value.GetString().ToStoragePoolSkuRestrictionsReasonCode();
+                    isAccessible = property.Value.GetBoolean();
                     continue;
                 }
             }
-            return new StoragePoolSkuRestrictions(Optional.ToNullable(type), Optional.ToList(values), restrictionInfo.Value, Optional.ToNullable(reasonCode));
+            return new OutboundEndpointDetail(ipAddress.Value, Optional.ToNullable(port), Optional.ToNullable(latency), Optional.ToNullable(isAccessible));
         }
     }
 }

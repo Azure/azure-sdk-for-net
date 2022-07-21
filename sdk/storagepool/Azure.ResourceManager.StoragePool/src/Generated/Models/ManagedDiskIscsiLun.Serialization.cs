@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.StoragePool.Models
         internal static ManagedDiskIscsiLun DeserializeManagedDiskIscsiLun(JsonElement element)
         {
             string name = default;
-            string managedDiskAzureResourceId = default;
+            ResourceIdentifier managedDiskAzureResourceId = default;
             Optional<int> lun = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 }
                 if (property.NameEquals("managedDiskAzureResourceId"))
                 {
-                    managedDiskAzureResourceId = property.Value.GetString();
+                    managedDiskAzureResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("lun"))

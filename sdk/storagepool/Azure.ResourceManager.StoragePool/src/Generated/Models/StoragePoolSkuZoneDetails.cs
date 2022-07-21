@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.StoragePool.Models
         internal StoragePoolSkuZoneDetails()
         {
             Name = new ChangeTrackingList<string>();
-            Capabilities = new ChangeTrackingList<ResourceSkuCapability>();
+            Capabilities = new ChangeTrackingList<StoragePoolSkuCapability>();
         }
 
         /// <summary> Initializes a new instance of StoragePoolSkuZoneDetails. </summary>
         /// <param name="name"> The set of zones that the SKU is available in with the specified capabilities. </param>
         /// <param name="capabilities"> A list of capabilities that are available for the SKU in the specified list of zones. </param>
-        internal StoragePoolSkuZoneDetails(IReadOnlyList<string> name, IReadOnlyList<ResourceSkuCapability> capabilities)
+        internal StoragePoolSkuZoneDetails(IReadOnlyList<string> name, IReadOnlyList<StoragePoolSkuCapability> capabilities)
         {
             Name = name;
             Capabilities = capabilities;
@@ -32,6 +32,6 @@ namespace Azure.ResourceManager.StoragePool.Models
         /// <summary> The set of zones that the SKU is available in with the specified capabilities. </summary>
         public IReadOnlyList<string> Name { get; }
         /// <summary> A list of capabilities that are available for the SKU in the specified list of zones. </summary>
-        public IReadOnlyList<ResourceSkuCapability> Capabilities { get; }
+        public IReadOnlyList<StoragePoolSkuCapability> Capabilities { get; }
     }
 }
