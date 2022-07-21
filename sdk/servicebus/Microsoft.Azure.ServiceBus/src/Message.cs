@@ -464,7 +464,7 @@ namespace Microsoft.Azure.ServiceBus
                 set => this.partitionId = value;
             }
 
-            /// <summary>Gets or sets the original sequence number of the message.</summary>
+            /// <summary>Gets the original sequence number of the message.</summary>
             /// <value>The enqueued sequence number of the message.</value>
             /// <remarks>
             ///    This property is read-only.
