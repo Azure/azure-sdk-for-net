@@ -152,7 +152,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files
             Validate.IsNotNullOrEmpty(destinationRelativePath, nameof(destinationRelativePath));
 
             var blobName = BlobName(kind, destinationRelativePath);
-            var blob = _jobOutputContainer.GetAppendBlobReference(blobName);
+            var blob = _jobOutputContainer.GetAppendBlobClient(blobName);
             await blob.EnsureExistsAsync().ConfigureAwait(false);
             return new TrackedFile(sourcePath, blob, flushInterval);
         }
@@ -169,6 +169,10 @@ namespace Microsoft.Azure.Batch.Conventions.Files
 
         }
 
+        /*
+         * No direct correspondance of GetBlobReferenceFromServerAsync in new SDK which returns either a CloudBlockBlob, CloudAppendBlob, or CloudPageBlob
+         * Alternatives include containerClient.GetBlobBaseClient or containerClient.getBlobClient
+         */
         public async Task<OutputFileReference> GetOutputAsync(IOutputKind kind, string filePath, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (kind == null)
@@ -218,7 +222,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files
 
         internal sealed class JobStoragePath : StoragePath
         {
-            internal JobStoragePath(CloudBlobContainer jobOutputContainer)
+            internal JobStoragePath(BlobContainerClient jobOutputContainer)
                 : base(jobOutputContainer)
             {
             }
