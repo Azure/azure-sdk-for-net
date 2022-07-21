@@ -179,11 +179,11 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                 // CloseAsync method stop new messages from being processed while allowing in-flight messages to be processed.
                 if (_singleDispatch)
                 {
-                    if (_sessionMessageProcessor.IsValueCreated)
+                    if (_isSessionsEnabled)
                     {
                         await _sessionMessageProcessor.Value.Processor.CloseAsync(cancellationToken).ConfigureAwait(false);
                     }
-                    if (_messageProcessor.IsValueCreated)
+                    else
                     {
                         await _messageProcessor.Value.Processor.CloseAsync(cancellationToken).ConfigureAwait(false);
                     }
@@ -191,7 +191,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                 else
                 {
                     await _batchLoop.ConfigureAwait(false);
-                    if (_batchReceiver.IsValueCreated)
+                    if (!_isSessionsEnabled)
                     {
                         await _batchReceiver.Value.CloseAsync(cancellationToken).ConfigureAwait(false);
                     }
