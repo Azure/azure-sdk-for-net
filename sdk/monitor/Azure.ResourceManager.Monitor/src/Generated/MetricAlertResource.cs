@@ -252,11 +252,11 @@ namespace Azure.ResourceManager.Monitor
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MetricAlertStatus" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MetricAlertStatus> GetMetricAlertsStatusesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<MetricAlertStatus> GetMetricAlertsStatusAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<MetricAlertStatus>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _metricAlertsStatusClientDiagnostics.CreateScope("MetricAlertResource.GetMetricAlertsStatuses");
+                using var scope = _metricAlertsStatusClientDiagnostics.CreateScope("MetricAlertResource.GetMetricAlertsStatus");
                 scope.Start();
                 try
                 {
@@ -279,11 +279,11 @@ namespace Azure.ResourceManager.Monitor
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MetricAlertStatus" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MetricAlertStatus> GetMetricAlertsStatuses(CancellationToken cancellationToken = default)
+        public virtual Pageable<MetricAlertStatus> GetMetricAlertsStatus(CancellationToken cancellationToken = default)
         {
             Page<MetricAlertStatus> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _metricAlertsStatusClientDiagnostics.CreateScope("MetricAlertResource.GetMetricAlertsStatuses");
+                using var scope = _metricAlertsStatusClientDiagnostics.CreateScope("MetricAlertResource.GetMetricAlertsStatus");
                 scope.Start();
                 try
                 {
@@ -309,13 +309,13 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="statusName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="statusName"/> is null. </exception>
         /// <returns> An async collection of <see cref="MetricAlertStatus" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MetricAlertStatus> GetMetricAlertsStatusesByNameAsync(string statusName, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<MetricAlertStatus> GetMetricAlertsStatusByNameAsync(string statusName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(statusName, nameof(statusName));
 
             async Task<Page<MetricAlertStatus>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _metricAlertsStatusClientDiagnostics.CreateScope("MetricAlertResource.GetMetricAlertsStatusesByName");
+                using var scope = _metricAlertsStatusClientDiagnostics.CreateScope("MetricAlertResource.GetMetricAlertsStatusByName");
                 scope.Start();
                 try
                 {
@@ -341,13 +341,13 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="statusName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="statusName"/> is null. </exception>
         /// <returns> A collection of <see cref="MetricAlertStatus" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MetricAlertStatus> GetMetricAlertsStatusesByName(string statusName, CancellationToken cancellationToken = default)
+        public virtual Pageable<MetricAlertStatus> GetMetricAlertsStatusByName(string statusName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(statusName, nameof(statusName));
 
             Page<MetricAlertStatus> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _metricAlertsStatusClientDiagnostics.CreateScope("MetricAlertResource.GetMetricAlertsStatusesByName");
+                using var scope = _metricAlertsStatusClientDiagnostics.CreateScope("MetricAlertResource.GetMetricAlertsStatusByName");
                 scope.Start();
                 try
                 {

@@ -57,8 +57,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var encodedUriString = "https://fakeuri.com/blank%20space";
             var decodedUriString = "https://fakeuri.com/blank space";
 
-            await client.StartBuildModelAsync(new Uri(encodedUriString), DocumentBuildMode.Template);
-            await client.StartBuildModelAsync(new Uri(decodedUriString), DocumentBuildMode.Template);
+            await client.BuildModelAsync(WaitUntil.Started, new Uri(encodedUriString), DocumentBuildMode.Template);
+            await client.BuildModelAsync(WaitUntil.Started, new Uri(decodedUriString), DocumentBuildMode.Template);
 
             Assert.AreEqual(2, mockTransport.Requests.Count);
 
@@ -81,7 +81,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var options = new DocumentAnalysisClientOptions() { Transport = mockTransport };
             var client = CreateInstrumentedClient(options);
 
-            await client.StartBuildModelAsync(new Uri("http://localhost"), DocumentBuildMode.Template);
+            await client.BuildModelAsync(WaitUntil.Started, new Uri("http://localhost"), DocumentBuildMode.Template);
 
             var contentString = GetString(mockTransport.Requests.Single().Content);
             string modelId = contentString.Substring(contentString.IndexOf("modelId") + 10, 36);
@@ -99,7 +99,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var options = new DocumentAnalysisClientOptions() { Transport = mockTransport };
             var client = CreateInstrumentedClient(options);
 
-            await client.StartComposeModelAsync(new List<string> { "123123", "34234"} );
+            await client.ComposeModelAsync(WaitUntil.Started, new List<string> { "123123", "34234"} );
 
             var contentString = GetString(mockTransport.Requests.Single().Content);
             string modelId = contentString.Substring(contentString.IndexOf("modelId") + 10, 36);

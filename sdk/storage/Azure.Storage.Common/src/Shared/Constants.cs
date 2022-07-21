@@ -27,6 +27,11 @@ namespace Azure.Storage
         public const string DefaultSasVersion = "2021-08-06";
 
         /// <summary>
+        /// Max download range size while requesting a transactional hash.
+        /// </summary>
+        public const int MaxHashRequestDownloadRange = 4 * Constants.MB;
+
+        /// <summary>
         /// The default size of staged blocks when uploading small blobs.
         /// </summary>
         public const int DefaultBufferSize = 4 * Constants.MB;

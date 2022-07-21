@@ -3387,7 +3387,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="view"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="view"/> is null. </exception>
-        public virtual async Task<Response<NetworkFeaturesResource>> GetNetworkFeaturesAsync(string view, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkFeatureResource>> GetNetworkFeaturesAsync(string view, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(view, nameof(view));
 
@@ -3396,7 +3396,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webSiteWebAppsRestClient.ListNetworkFeaturesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, view, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new NetworkFeaturesResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkFeatureResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -3414,7 +3414,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="view"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="view"/> is null. </exception>
-        public virtual Response<NetworkFeaturesResource> GetNetworkFeatures(string view, CancellationToken cancellationToken = default)
+        public virtual Response<NetworkFeatureResource> GetNetworkFeatures(string view, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(view, nameof(view));
 
@@ -3423,7 +3423,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webSiteWebAppsRestClient.ListNetworkFeatures(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, view, cancellationToken);
-                return Response.FromValue(new NetworkFeaturesResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkFeatureResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
