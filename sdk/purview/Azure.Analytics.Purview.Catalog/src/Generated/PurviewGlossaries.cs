@@ -61,7 +61,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetGlossariesAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = await client.GetGlossariesAsync();
@@ -72,7 +72,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetGlossariesAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = await client.GetGlossariesAsync(1234, 1234, "<sort>", true);
@@ -199,7 +199,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetGlossaries and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = client.GetGlossaries();
@@ -210,7 +210,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetGlossaries with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = client.GetGlossaries(1234, 1234, "<sort>", true);
@@ -335,7 +335,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call CreateGlossaryAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// var data = new {};
@@ -348,7 +348,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call CreateGlossaryAsync with all request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// var data = new {
@@ -927,7 +927,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call CreateGlossary and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// var data = new {};
@@ -940,7 +940,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call CreateGlossary with all request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// var data = new {
@@ -1519,7 +1519,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call CreateGlossaryCategoriesAsync with required request content and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// var data = new[] {
@@ -1782,7 +1782,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call CreateGlossaryCategories with required request content and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// var data = new[] {
@@ -2045,7 +2045,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call CreateGlossaryCategoryAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// var data = new {};
@@ -2058,7 +2058,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call CreateGlossaryCategoryAsync with all request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// var data = new {
@@ -2319,7 +2319,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call CreateGlossaryCategory and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// var data = new {};
@@ -2332,7 +2332,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call CreateGlossaryCategory with all request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// var data = new {
@@ -2594,7 +2594,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetGlossaryCategoryAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = await client.GetGlossaryCategoryAsync("<categoryGuid>");
@@ -2732,7 +2732,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetGlossaryCategory with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = client.GetGlossaryCategory("<categoryGuid>");
@@ -2871,7 +2871,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call UpdateGlossaryCategoryAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// var data = new {};
@@ -2884,7 +2884,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call UpdateGlossaryCategoryAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// var data = new {
@@ -3148,7 +3148,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call UpdateGlossaryCategory with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// var data = new {};
@@ -3161,7 +3161,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call UpdateGlossaryCategory with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// var data = new {
@@ -3424,7 +3424,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call DeleteGlossaryCategoryAsync with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = await client.DeleteGlossaryCategoryAsync("<categoryGuid>");
@@ -3460,7 +3460,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call DeleteGlossaryCategory with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = client.DeleteGlossaryCategory("<categoryGuid>");
@@ -3497,7 +3497,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call PartialUpdateGlossaryCategoryAsync with required parameters and request content and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// var data = new {
@@ -3641,7 +3641,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call PartialUpdateGlossaryCategory with required parameters and request content and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// var data = new {
@@ -3787,7 +3787,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetRelatedCategoriesAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = await client.GetRelatedCategoriesAsync("<categoryGuid>");
@@ -3798,7 +3798,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetRelatedCategoriesAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = await client.GetRelatedCategoriesAsync("<categoryGuid>", 1234, 1234, "<sort>");
@@ -3859,7 +3859,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetRelatedCategories with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = client.GetRelatedCategories("<categoryGuid>");
@@ -3870,7 +3870,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetRelatedCategories with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = client.GetRelatedCategories("<categoryGuid>", 1234, 1234, "<sort>");
@@ -3931,7 +3931,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetCategoryTermsAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = await client.GetCategoryTermsAsync("<categoryGuid>");
@@ -3942,7 +3942,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetCategoryTermsAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = await client.GetCategoryTermsAsync("<categoryGuid>", 1234, 1234, "<sort>");
@@ -4009,7 +4009,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetCategoryTerms with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = client.GetCategoryTerms("<categoryGuid>");
@@ -4020,7 +4020,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetCategoryTerms with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = client.GetCategoryTerms("<categoryGuid>", 1234, 1234, "<sort>");
@@ -4084,7 +4084,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call CreateGlossaryTermAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// var data = new {};
@@ -4097,7 +4097,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call CreateGlossaryTermAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// var data = new {
@@ -4771,7 +4771,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call CreateGlossaryTerm with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// var data = new {};
@@ -4784,7 +4784,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call CreateGlossaryTerm with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// var data = new {
@@ -5460,7 +5460,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetGlossaryTermAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = await client.GetGlossaryTermAsync("<termGuid>");
@@ -5471,7 +5471,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetGlossaryTermAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = await client.GetGlossaryTermAsync("<termGuid>", true, new String[]{"<excludeRelationshipTypeList>"});
@@ -5773,7 +5773,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetGlossaryTerm with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = client.GetGlossaryTerm("<termGuid>");
@@ -5784,7 +5784,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetGlossaryTerm with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = client.GetGlossaryTerm("<termGuid>", true, new String[]{"<excludeRelationshipTypeList>"});
@@ -6086,7 +6086,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call UpdateGlossaryTermAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// var data = new {};
@@ -6099,7 +6099,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call UpdateGlossaryTermAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// var data = new {
@@ -6776,7 +6776,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call UpdateGlossaryTerm with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// var data = new {};
@@ -6789,7 +6789,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call UpdateGlossaryTerm with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// var data = new {
@@ -7464,7 +7464,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call DeleteGlossaryTermAsync with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = await client.DeleteGlossaryTermAsync("<termGuid>");
@@ -7500,7 +7500,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call DeleteGlossaryTerm with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = client.DeleteGlossaryTerm("<termGuid>");
@@ -7538,7 +7538,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call PartialUpdateGlossaryTermAsync with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// var data = new {
@@ -7553,7 +7553,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call PartialUpdateGlossaryTermAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// var data = new {
@@ -7860,7 +7860,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call PartialUpdateGlossaryTerm with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// var data = new {
@@ -7875,7 +7875,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call PartialUpdateGlossaryTerm with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// var data = new {
@@ -8180,7 +8180,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call CreateGlossaryTermsAsync with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// var data = new[] {
@@ -8195,7 +8195,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call CreateGlossaryTermsAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// var data = new[] {
@@ -8871,7 +8871,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call CreateGlossaryTerms with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// var data = new[] {
@@ -8886,7 +8886,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call CreateGlossaryTerms with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// var data = new[] {
@@ -9565,7 +9565,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetEntitiesAssignedWithTermAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = await client.GetEntitiesAssignedWithTermAsync("<termGuid>");
@@ -9576,7 +9576,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetEntitiesAssignedWithTermAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = await client.GetEntitiesAssignedWithTermAsync("<termGuid>", 1234, 1234, "<sort>");
@@ -9651,7 +9651,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetEntitiesAssignedWithTerm with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = client.GetEntitiesAssignedWithTerm("<termGuid>");
@@ -9662,7 +9662,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetEntitiesAssignedWithTerm with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = client.GetEntitiesAssignedWithTerm("<termGuid>", 1234, 1234, "<sort>");
@@ -9735,7 +9735,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call AssignTermToEntitiesAsync with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// var data = new[] {
@@ -9833,7 +9833,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call AssignTermToEntities with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// var data = new[] {
@@ -9931,7 +9931,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call RemoveTermAssignmentFromEntitiesAsync with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// var data = new[] {
@@ -10029,7 +10029,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call RemoveTermAssignmentFromEntities with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// var data = new[] {
@@ -10127,7 +10127,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call DeleteTermAssignmentFromEntitiesAsync with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// var data = new[] {
@@ -10225,7 +10225,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call DeleteTermAssignmentFromEntities with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// var data = new[] {
@@ -10325,7 +10325,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetRelatedTermsAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = await client.GetRelatedTermsAsync("<termGuid>");
@@ -10336,7 +10336,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetRelatedTermsAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = await client.GetRelatedTermsAsync("<termGuid>", 1234, 1234, "<sort>");
@@ -10403,7 +10403,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetRelatedTerms with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = client.GetRelatedTerms("<termGuid>");
@@ -10414,7 +10414,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetRelatedTerms with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = client.GetRelatedTerms("<termGuid>", 1234, 1234, "<sort>");
@@ -10478,7 +10478,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetGlossaryAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = await client.GetGlossaryAsync("<glossaryGuid>");
@@ -10609,7 +10609,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetGlossary with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = client.GetGlossary("<glossaryGuid>");
@@ -10741,7 +10741,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call UpdateGlossaryAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// var data = new {};
@@ -10754,7 +10754,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call UpdateGlossaryAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// var data = new {
@@ -11336,7 +11336,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call UpdateGlossary with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// var data = new {};
@@ -11349,7 +11349,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call UpdateGlossary with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// var data = new {
@@ -11930,7 +11930,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call DeleteGlossaryAsync with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = await client.DeleteGlossaryAsync("<glossaryGuid>");
@@ -11966,7 +11966,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call DeleteGlossary with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = client.DeleteGlossary("<glossaryGuid>");
@@ -12005,7 +12005,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetGlossaryCategoriesAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = await client.GetGlossaryCategoriesAsync("<glossaryGuid>");
@@ -12016,7 +12016,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetGlossaryCategoriesAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = await client.GetGlossaryCategoriesAsync("<glossaryGuid>", 1234, 1234, "<sort>");
@@ -12157,7 +12157,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetGlossaryCategories with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = client.GetGlossaryCategories("<glossaryGuid>");
@@ -12168,7 +12168,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetGlossaryCategories with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = client.GetGlossaryCategories("<glossaryGuid>", 1234, 1234, "<sort>");
@@ -12309,7 +12309,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetGlossaryCategoriesHeadersAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = await client.GetGlossaryCategoriesHeadersAsync("<glossaryGuid>");
@@ -12320,7 +12320,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetGlossaryCategoriesHeadersAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = await client.GetGlossaryCategoriesHeadersAsync("<glossaryGuid>", 1234, 1234, "<sort>");
@@ -12381,7 +12381,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetGlossaryCategoriesHeaders with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = client.GetGlossaryCategoriesHeaders("<glossaryGuid>");
@@ -12392,7 +12392,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetGlossaryCategoriesHeaders with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = client.GetGlossaryCategoriesHeaders("<glossaryGuid>", 1234, 1234, "<sort>");
@@ -12451,7 +12451,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetDetailedGlossaryAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = await client.GetDetailedGlossaryAsync("<glossaryGuid>");
@@ -12462,7 +12462,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetDetailedGlossaryAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = await client.GetDetailedGlossaryAsync("<glossaryGuid>", true);
@@ -12785,7 +12785,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetDetailedGlossary with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = client.GetDetailedGlossary("<glossaryGuid>");
@@ -12796,7 +12796,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetDetailedGlossary with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = client.GetDetailedGlossary("<glossaryGuid>", true);
@@ -13120,7 +13120,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call PartialUpdateGlossaryAsync with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// var data = new {
@@ -13135,7 +13135,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call PartialUpdateGlossaryAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// var data = new {
@@ -13273,7 +13273,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call PartialUpdateGlossary with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// var data = new {
@@ -13288,7 +13288,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call PartialUpdateGlossary with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// var data = new {
@@ -13428,7 +13428,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetGlossaryTermsAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = await client.GetGlossaryTermsAsync("<glossaryGuid>");
@@ -13439,7 +13439,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetGlossaryTermsAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = await client.GetGlossaryTermsAsync("<glossaryGuid>", true, 1234, 1234, "<sort>");
@@ -13743,7 +13743,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetGlossaryTerms with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = client.GetGlossaryTerms("<glossaryGuid>");
@@ -13754,7 +13754,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetGlossaryTerms with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = client.GetGlossaryTerms("<glossaryGuid>", true, 1234, 1234, "<sort>");
@@ -14057,7 +14057,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetGlossaryTermHeadersAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = await client.GetGlossaryTermHeadersAsync("<glossaryGuid>");
@@ -14068,7 +14068,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetGlossaryTermHeadersAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = await client.GetGlossaryTermHeadersAsync("<glossaryGuid>", 1234, 1234, "<sort>");
@@ -14135,7 +14135,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetGlossaryTermHeaders with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = client.GetGlossaryTermHeaders("<glossaryGuid>");
@@ -14146,7 +14146,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetGlossaryTermHeaders with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = client.GetGlossaryTermHeaders("<glossaryGuid>", 1234, 1234, "<sort>");
@@ -14210,7 +14210,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetImportCsvOperationStatusAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = await client.GetImportCsvOperationStatusAsync("<operationGuid>");
@@ -14278,7 +14278,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetImportCsvOperationStatus with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = client.GetImportCsvOperationStatus("<operationGuid>");
@@ -14348,7 +14348,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call ExportGlossaryTermsAsCsvAsync with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// var data = new[] {
@@ -14367,7 +14367,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call ExportGlossaryTermsAsCsvAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// var data = new[] {
@@ -14416,7 +14416,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call ExportGlossaryTermsAsCsv with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// var data = new[] {
@@ -14435,7 +14435,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call ExportGlossaryTermsAsCsv with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// var data = new[] {
@@ -14485,7 +14485,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetTermsByGlossaryNameAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = await client.GetTermsByGlossaryNameAsync("<glossaryName>");
@@ -14496,7 +14496,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetTermsByGlossaryNameAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = await client.GetTermsByGlossaryNameAsync("<glossaryName>", 1234, 1234, true);
@@ -14799,7 +14799,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetTermsByGlossaryName with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = client.GetTermsByGlossaryName("<glossaryName>");
@@ -14810,7 +14810,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetTermsByGlossaryName with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// Response response = client.GetTermsByGlossaryName("<glossaryName>", 1234, 1234, true);
@@ -15113,7 +15113,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call ImportGlossaryTermsViaCsvAsync with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// var data = File.OpenRead("<filePath>");
@@ -15127,7 +15127,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call ImportGlossaryTermsViaCsvAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// var data = File.OpenRead("<filePath>");
@@ -15202,7 +15202,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call ImportGlossaryTermsViaCsv with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// var data = File.OpenRead("<filePath>");
@@ -15216,7 +15216,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call ImportGlossaryTermsViaCsv with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// var data = File.OpenRead("<filePath>");
@@ -15291,7 +15291,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call ImportGlossaryTermsViaCsvByGlossaryNameAsync with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// var data = File.OpenRead("<filePath>");
@@ -15305,7 +15305,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call ImportGlossaryTermsViaCsvByGlossaryNameAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// var data = File.OpenRead("<filePath>");
@@ -15380,7 +15380,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call ImportGlossaryTermsViaCsvByGlossaryName with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// var data = File.OpenRead("<filePath>");
@@ -15394,7 +15394,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call ImportGlossaryTermsViaCsvByGlossaryName with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
         /// 
         /// var data = File.OpenRead("<filePath>");

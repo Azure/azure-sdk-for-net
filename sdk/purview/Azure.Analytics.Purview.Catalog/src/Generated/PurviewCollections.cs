@@ -64,7 +64,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call CreateOrUpdateEntityAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
         /// 
         /// var data = new {};
@@ -77,7 +77,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call CreateOrUpdateEntityAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
         /// 
         /// var data = new {
@@ -470,7 +470,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call CreateOrUpdateEntity with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
         /// 
         /// var data = new {};
@@ -483,7 +483,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call CreateOrUpdateEntity with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
         /// 
         /// var data = new {
@@ -876,7 +876,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call CreateOrUpdateEntityInBulkAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
         /// 
         /// var data = new {};
@@ -889,7 +889,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call CreateOrUpdateEntityInBulkAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
         /// 
         /// var data = new {
@@ -1286,7 +1286,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call CreateOrUpdateEntityInBulk with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
         /// 
         /// var data = new {};
@@ -1299,7 +1299,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call CreateOrUpdateEntityInBulk with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
         /// 
         /// var data = new {
@@ -1692,7 +1692,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call MoveEntitiesToCollectionAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
         /// 
         /// var data = new {};
@@ -1705,7 +1705,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call MoveEntitiesToCollectionAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
         /// 
         /// var data = new {
@@ -1881,7 +1881,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call MoveEntitiesToCollection with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
         /// 
         /// var data = new {};
@@ -1894,7 +1894,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call MoveEntitiesToCollection with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewCollectionsClient();
         /// 
         /// var data = new {

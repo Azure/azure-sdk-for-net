@@ -55,7 +55,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call CreateAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
         /// 
         /// var data = new {};
@@ -68,7 +68,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call CreateAsync with all request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
         /// 
         /// var data = new {
@@ -263,7 +263,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call Create and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
         /// 
         /// var data = new {};
@@ -276,7 +276,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call Create with all request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
         /// 
         /// var data = new {
@@ -471,7 +471,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call UpdateAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
         /// 
         /// var data = new {};
@@ -484,7 +484,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call UpdateAsync with all request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
         /// 
         /// var data = new {
@@ -679,7 +679,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call Update and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
         /// 
         /// var data = new {};
@@ -692,7 +692,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call Update with all request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
         /// 
         /// var data = new {
@@ -889,7 +889,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetPurviewRelationshipAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
         /// 
         /// Response response = await client.GetPurviewRelationshipAsync("<guid>");
@@ -900,7 +900,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetPurviewRelationshipAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
         /// 
         /// Response response = await client.GetPurviewRelationshipAsync("<guid>", true);
@@ -1021,7 +1021,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetPurviewRelationship with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
         /// 
         /// Response response = client.GetPurviewRelationship("<guid>");
@@ -1032,7 +1032,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetPurviewRelationship with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
         /// 
         /// Response response = client.GetPurviewRelationship("<guid>", true);
@@ -1152,7 +1152,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call DeleteAsync with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
         /// 
         /// Response response = await client.DeleteAsync("<guid>");
@@ -1188,7 +1188,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call Delete with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewRelationshipsClient();
         /// 
         /// Response response = client.Delete("<guid>");

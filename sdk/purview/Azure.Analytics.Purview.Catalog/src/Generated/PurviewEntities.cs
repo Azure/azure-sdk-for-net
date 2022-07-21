@@ -60,7 +60,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call CreateOrUpdateAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new {};
@@ -73,7 +73,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call CreateOrUpdateAsync with all request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new {
@@ -463,7 +463,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call CreateOrUpdate and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new {};
@@ -476,7 +476,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call CreateOrUpdate with all request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new {
@@ -865,7 +865,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetByGuidsAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = await client.GetByGuidsAsync(new String[]{"<guids>"});
@@ -876,7 +876,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetByGuidsAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = await client.GetByGuidsAsync(new String[]{"<guids>"}, true, true, new String[]{"<excludeRelationshipTypes>"});
@@ -1071,7 +1071,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetByGuids with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = client.GetByGuids(new String[]{"<guids>"});
@@ -1082,7 +1082,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetByGuids with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = client.GetByGuids(new String[]{"<guids>"}, true, true, new String[]{"<excludeRelationshipTypes>"});
@@ -1278,7 +1278,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call CreateOrUpdateEntitiesAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new {};
@@ -1291,7 +1291,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call CreateOrUpdateEntitiesAsync with all request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new {
@@ -1685,7 +1685,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call CreateOrUpdateEntities and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new {};
@@ -1698,7 +1698,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call CreateOrUpdateEntities with all request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new {
@@ -2088,7 +2088,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call DeleteByGuidsAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = await client.DeleteByGuidsAsync(new String[]{"<guids>"});
@@ -2247,7 +2247,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call DeleteByGuids with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = client.DeleteByGuids(new String[]{"<guids>"});
@@ -2406,7 +2406,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call AddClassificationAsync.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new {};
@@ -2417,7 +2417,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call AddClassificationAsync with all request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new {
@@ -2508,7 +2508,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call AddClassification.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new {};
@@ -2519,7 +2519,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call AddClassification with all request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new {
@@ -2613,7 +2613,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetByGuidAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = await client.GetByGuidAsync("<guid>");
@@ -2624,7 +2624,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetByGuidAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = await client.GetByGuidAsync("<guid>", true, true);
@@ -2817,7 +2817,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetByGuid with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = client.GetByGuid("<guid>");
@@ -2828,7 +2828,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetByGuid with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = client.GetByGuid("<guid>", true, true);
@@ -3026,7 +3026,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call PartialUpdateEntityAttributeByGuidAsync with required parameters and request content and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new {};
@@ -3197,7 +3197,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call PartialUpdateEntityAttributeByGuid with required parameters and request content and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new {};
@@ -3361,7 +3361,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call DeleteByGuidAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = await client.DeleteByGuidAsync("<guid>");
@@ -3521,7 +3521,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call DeleteByGuid with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = client.DeleteByGuid("<guid>");
@@ -3682,7 +3682,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetClassificationAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = await client.GetClassificationAsync("<guid>", "<classificationName>");
@@ -3758,7 +3758,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetClassification with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = client.GetClassification("<guid>", "<classificationName>");
@@ -3834,7 +3834,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call DeleteClassificationAsync with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = await client.DeleteClassificationAsync("<guid>", "<classificationName>");
@@ -3872,7 +3872,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call DeleteClassification with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = client.DeleteClassification("<guid>", "<classificationName>");
@@ -3909,7 +3909,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetClassificationsAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = await client.GetClassificationsAsync("<guid>");
@@ -3969,7 +3969,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetClassifications with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = client.GetClassifications("<guid>");
@@ -4030,7 +4030,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call AddClassificationsAsync with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new[] {
@@ -4118,7 +4118,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call AddClassifications with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new[] {
@@ -4206,7 +4206,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call UpdateClassificationsAsync with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new[] {
@@ -4294,7 +4294,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call UpdateClassifications with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new[] {
@@ -4391,7 +4391,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetByUniqueAttributesAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = await client.GetByUniqueAttributesAsync("<typeName>");
@@ -4402,7 +4402,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetByUniqueAttributesAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = await client.GetByUniqueAttributesAsync("<typeName>", true, true, "<attrQualifiedName>");
@@ -4603,7 +4603,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetByUniqueAttributes with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = client.GetByUniqueAttributes("<typeName>");
@@ -4614,7 +4614,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetByUniqueAttributes with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = client.GetByUniqueAttributes("<typeName>", true, true, "<attrQualifiedName>");
@@ -4816,7 +4816,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call PartialUpdateEntityByUniqueAttributesAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new {};
@@ -4829,7 +4829,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call PartialUpdateEntityByUniqueAttributesAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new {
@@ -5228,7 +5228,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call PartialUpdateEntityByUniqueAttributes with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new {};
@@ -5241,7 +5241,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call PartialUpdateEntityByUniqueAttributes with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new {
@@ -5637,7 +5637,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call DeleteByUniqueAttributeAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = await client.DeleteByUniqueAttributeAsync("<typeName>");
@@ -5648,7 +5648,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call DeleteByUniqueAttributeAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = await client.DeleteByUniqueAttributeAsync("<typeName>", "<attrQualifiedName>");
@@ -5816,7 +5816,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call DeleteByUniqueAttribute with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = client.DeleteByUniqueAttribute("<typeName>");
@@ -5827,7 +5827,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call DeleteByUniqueAttribute with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = client.DeleteByUniqueAttribute("<typeName>", "<attrQualifiedName>");
@@ -5989,7 +5989,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call DeleteClassificationByUniqueAttributeAsync with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = await client.DeleteClassificationByUniqueAttributeAsync("<typeName>", "<classificationName>");
@@ -5998,7 +5998,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call DeleteClassificationByUniqueAttributeAsync with all parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = await client.DeleteClassificationByUniqueAttributeAsync("<typeName>", "<classificationName>", "<attrQualifiedName>");
@@ -6037,7 +6037,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call DeleteClassificationByUniqueAttribute with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = client.DeleteClassificationByUniqueAttribute("<typeName>", "<classificationName>");
@@ -6046,7 +6046,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call DeleteClassificationByUniqueAttribute with all parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = client.DeleteClassificationByUniqueAttribute("<typeName>", "<classificationName>", "<attrQualifiedName>");
@@ -6085,7 +6085,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call AddClassificationsByUniqueAttributeAsync with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new[] {
@@ -6098,7 +6098,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call AddClassificationsByUniqueAttributeAsync with all parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new[] {
@@ -6187,7 +6187,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call AddClassificationsByUniqueAttribute with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new[] {
@@ -6200,7 +6200,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call AddClassificationsByUniqueAttribute with all parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new[] {
@@ -6289,7 +6289,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call UpdateClassificationsByUniqueAttributeAsync with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new[] {
@@ -6302,7 +6302,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call UpdateClassificationsByUniqueAttributeAsync with all parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new[] {
@@ -6391,7 +6391,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call UpdateClassificationsByUniqueAttribute with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new[] {
@@ -6404,7 +6404,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call UpdateClassificationsByUniqueAttribute with all parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new[] {
@@ -6490,7 +6490,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call SetClassificationsAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new {};
@@ -6503,7 +6503,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call SetClassificationsAsync with all request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new {
@@ -6614,7 +6614,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call SetClassifications and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new {};
@@ -6627,7 +6627,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call SetClassifications with all request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new {
@@ -6754,7 +6754,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetEntitiesByUniqueAttributesAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = await client.GetEntitiesByUniqueAttributesAsync("<typeName>");
@@ -6765,7 +6765,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetEntitiesByUniqueAttributesAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = await client.GetEntitiesByUniqueAttributesAsync("<typeName>", true, true, "<attrNQualifiedName>");
@@ -6973,7 +6973,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetEntitiesByUniqueAttributes with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = client.GetEntitiesByUniqueAttributes("<typeName>");
@@ -6984,7 +6984,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetEntitiesByUniqueAttributes with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = client.GetEntitiesByUniqueAttributes("<typeName>", true, true, "<attrNQualifiedName>");
@@ -7177,7 +7177,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetHeaderAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = await client.GetHeaderAsync("<guid>");
@@ -7299,7 +7299,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetHeader with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = client.GetHeader("<guid>");
@@ -7422,7 +7422,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call DeleteBusinessMetadataAsync with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new {
@@ -7463,7 +7463,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call DeleteBusinessMetadata with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new {
@@ -7505,7 +7505,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call AddOrUpdateBusinessMetadataAsync with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new {
@@ -7518,7 +7518,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call AddOrUpdateBusinessMetadataAsync with all parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new {
@@ -7560,7 +7560,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call AddOrUpdateBusinessMetadata with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new {
@@ -7573,7 +7573,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call AddOrUpdateBusinessMetadata with all parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new {
@@ -7615,7 +7615,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call DeleteBusinessMetadataAttributesAsync with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new {
@@ -7658,7 +7658,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call DeleteBusinessMetadataAttributes with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new {
@@ -7701,7 +7701,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call AddOrUpdateBusinessMetadataAttributesAsync with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new {
@@ -7744,7 +7744,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call AddOrUpdateBusinessMetadataAttributes with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new {
@@ -7782,7 +7782,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetSampleBusinessMetadataTemplateAsync.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = await client.GetSampleBusinessMetadataTemplateAsync();
@@ -7813,7 +7813,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetSampleBusinessMetadataTemplate.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// Response response = client.GetSampleBusinessMetadataTemplate();
@@ -7845,7 +7845,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call ImportBusinessMetadataAsync with required request content and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = File.OpenRead("<filePath>");
@@ -7908,7 +7908,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call ImportBusinessMetadata with required request content and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = File.OpenRead("<filePath>");
@@ -7974,7 +7974,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call DeleteLabelsAsync with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new[] {
@@ -8015,7 +8015,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call DeleteLabels with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new[] {
@@ -8056,7 +8056,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call SetLabelsAsync with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new[] {
@@ -8097,7 +8097,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call SetLabels with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new[] {
@@ -8138,7 +8138,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call AddLabelAsync with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new[] {
@@ -8179,7 +8179,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call AddLabel with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new[] {
@@ -8221,7 +8221,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call DeleteLabelsByUniqueAttributeAsync with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new[] {
@@ -8234,7 +8234,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call DeleteLabelsByUniqueAttributeAsync with all parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new[] {
@@ -8276,7 +8276,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call DeleteLabelsByUniqueAttribute with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new[] {
@@ -8289,7 +8289,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call DeleteLabelsByUniqueAttribute with all parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new[] {
@@ -8331,7 +8331,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call SetLabelsByUniqueAttributeAsync with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new[] {
@@ -8344,7 +8344,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call SetLabelsByUniqueAttributeAsync with all parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new[] {
@@ -8386,7 +8386,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call SetLabelsByUniqueAttribute with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new[] {
@@ -8399,7 +8399,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call SetLabelsByUniqueAttribute with all parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new[] {
@@ -8441,7 +8441,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call AddLabelsByUniqueAttributeAsync with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new[] {
@@ -8454,7 +8454,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call AddLabelsByUniqueAttributeAsync with all parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new[] {
@@ -8496,7 +8496,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call AddLabelsByUniqueAttribute with required parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new[] {
@@ -8509,7 +8509,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call AddLabelsByUniqueAttribute with all parameters and request content.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
         /// 
         /// var data = new[] {
