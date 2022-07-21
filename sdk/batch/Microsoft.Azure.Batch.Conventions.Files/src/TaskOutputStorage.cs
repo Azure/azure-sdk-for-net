@@ -60,13 +60,13 @@ namespace Microsoft.Azure.Batch.Conventions.Files
         /// Initializes a new instance of the <see cref="JobOutputStorage"/> class from a storage account,
         /// job id, and task id.
         /// </summary>
-        /// <param name="storageAccount">The storage account linked to the Azure Batch account.</param>
+        /// <param name="blobClient">The blob client linked to the Azure Batch storage account.</param>
         /// <param name="jobId">The id of the Azure Batch job containing the task.</param>
         /// <param name="taskId">The id of the Azure Batch task.</param>
         /// <remarks>The job output container must already exist; the TaskOutputStorage class does not create
         /// it for you.</remarks>
-        public TaskOutputStorage(CloudStorageAccount storageAccount, string jobId, string taskId)
-            : this(CloudBlobContainerUtils.GetContainerReference(storageAccount, jobId), taskId, null)
+        public TaskOutputStorage(BlobServiceClient blobClient, string jobId, string taskId)
+            : this(CloudBlobContainerUtils.GetContainerReference(blobClient, jobId), taskId, null)
         {
         }
 
@@ -90,14 +90,14 @@ namespace Microsoft.Azure.Batch.Conventions.Files
         /// Initializes a new instance of the <see cref="JobOutputStorage"/> class from a storage account,
         /// job id, and task id.
         /// </summary>
-        /// <param name="storageAccount">The storage account linked to the Azure Batch account.</param>
+        /// <param name="blobClient">The blob client linked to the Azure Batch storage account.</param>
         /// <param name="jobId">The id of the Azure Batch job containing the task.</param>
         /// <param name="taskId">The id of the Azure Batch task.</param>
         /// <param name="storageRetryPolicy">The retry policy for storage requests.</param>
         /// <remarks>The job output container must already exist; the TaskOutputStorage class does not create
         /// it for you.</remarks>
-        public TaskOutputStorage(CloudStorageAccount storageAccount, string jobId, string taskId, IRetryPolicy storageRetryPolicy)
-            : this(CloudBlobContainerUtils.GetContainerReference(storageAccount, jobId), taskId, storageRetryPolicy)
+        public TaskOutputStorage(BlobServiceClient blobClient, string jobId, string taskId, IRetryPolicy storageRetryPolicy)
+            : this(CloudBlobContainerUtils.GetContainerReference(blobClient, jobId), taskId, storageRetryPolicy)
         {
         }
 
