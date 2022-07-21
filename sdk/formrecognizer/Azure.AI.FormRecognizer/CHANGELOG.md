@@ -10,6 +10,7 @@
   - Removed the "Start" prefix. For example, `StartAnalyzeDocument` was renamed to `AnalyzeDocument`.
   - Added a new required parameter: `waitUntil`. It specifies whether the operation should run to completion before returning or not, removing the need to call `WaitForCompletion` in most scenarios.
 - Renamed `DocumentModel` to `DocumentModelDetails`.
+- Renamed `DocumentModelInfo` to `DocumentModelSummary`.
 - Renamed `ModelOperation` to `DocumentModelOperationDetails`.
 - Renamed `ModelOperationInfo` to `DocumentModelOperationSummary`.
 - Renamed `AccountProperties` to `ResourceDetails`.
@@ -18,7 +19,6 @@
 - Renamed `BuildModelOptions.ModelDescription` to `Description`.
 - Renamed `modelDescription` parameters to `description` in methods `GetCopyAuthorization` and `StartCreateComposedModel` (now called `StartComposeModel`).
 - Renamed `CopyAuthorization.ExpirationDateTime` to `ExpiresOn`.
-- Renamed `DocumentModelInfo` to `DocumentModelSummary`.
 - Removed `DocumentCaption` and `DocumentFootnote` features.
 - Renamed parameter `analyzeDocumentOptions` to `options` in the `StartAnalyzeDocument` and `StartAnalyzeDocumentFromUri` methods.
 - Renamed parameter `buildModelOptions` to `options` in the `StartBuildModel` method.
