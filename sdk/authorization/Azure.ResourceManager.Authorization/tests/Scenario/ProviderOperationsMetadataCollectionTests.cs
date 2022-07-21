@@ -11,17 +11,17 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Authorization.Tests.Scenario
 {
-    public class ProviderOperationsCollectionTests : AuthorizationManagementTestBase
+    public class ProviderOperationsMetadataCollectionTests : AuthorizationManagementTestBase
     {
-        public ProviderOperationsCollectionTests(bool isAsync)
+        public ProviderOperationsMetadataCollectionTests(bool isAsync)
                     : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
-        private async Task<ProviderOperationsCollection> GetProviderOperationsCollectionAsync()
+        private async Task<ProviderOperationsMetadataCollection> GetProviderOperationsCollectionAsync()
         {
             var tenants = await Client.GetTenants().GetAllAsync().ToEnumerableAsync();
-            return tenants.FirstOrDefault().GetProviderOperations();
+            return tenants.FirstOrDefault().GetAllProviderOperationsMetadata();
         }
 
         [Test]
