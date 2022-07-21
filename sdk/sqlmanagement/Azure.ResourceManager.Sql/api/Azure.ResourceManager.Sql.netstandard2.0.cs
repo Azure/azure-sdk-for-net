@@ -738,11 +738,6 @@ namespace Azure.ResourceManager.Sql
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.LongTermRetentionPolicyResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.LongTermRetentionPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.LongTermRetentionPolicyResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.LongTermRetentionPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class MaintenanceWindowData : Azure.ResourceManager.Models.ResourceData
-    {
-        public MaintenanceWindowData() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Sql.Models.MaintenanceWindowTimeRange> TimeRanges { get { throw null; } }
-    }
     public partial class MaintenanceWindowOptionData : Azure.ResourceManager.Models.ResourceData
     {
         public MaintenanceWindowOptionData() { }
@@ -764,17 +759,22 @@ namespace Azure.ResourceManager.Sql
         public virtual Azure.Response<Azure.ResourceManager.Sql.MaintenanceWindowOptionResource> Get(string maintenanceWindowOptionsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.MaintenanceWindowOptionResource>> GetAsync(string maintenanceWindowOptionsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class MaintenanceWindowResource : Azure.ResourceManager.ArmResource
+    public partial class MaintenanceWindowsData : Azure.ResourceManager.Models.ResourceData
+    {
+        public MaintenanceWindowsData() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Sql.Models.MaintenanceWindowTimeRange> TimeRanges { get { throw null; } }
+    }
+    public partial class MaintenanceWindowsResource : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
-        protected MaintenanceWindowResource() { }
-        public virtual Azure.ResourceManager.Sql.MaintenanceWindowData Data { get { throw null; } }
+        protected MaintenanceWindowsResource() { }
+        public virtual Azure.ResourceManager.Sql.MaintenanceWindowsData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public virtual Azure.ResourceManager.ArmOperation CreateOrUpdate(Azure.WaitUntil waitUntil, string maintenanceWindowName, Azure.ResourceManager.Sql.MaintenanceWindowData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string maintenanceWindowName, Azure.ResourceManager.Sql.MaintenanceWindowData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation CreateOrUpdate(Azure.WaitUntil waitUntil, string maintenanceWindowName, Azure.ResourceManager.Sql.MaintenanceWindowsData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string maintenanceWindowName, Azure.ResourceManager.Sql.MaintenanceWindowsData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Sql.MaintenanceWindowResource> Get(string maintenanceWindowName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.MaintenanceWindowResource>> GetAsync(string maintenanceWindowName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Sql.MaintenanceWindowsResource> Get(string maintenanceWindowName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.MaintenanceWindowsResource>> GetAsync(string maintenanceWindowName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ManagedBackupShortTermRetentionPolicyCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.ManagedBackupShortTermRetentionPolicyResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.ManagedBackupShortTermRetentionPolicyResource>, System.Collections.IEnumerable
     {
@@ -2358,8 +2358,8 @@ namespace Azure.ResourceManager.Sql
         public virtual Azure.ResourceManager.Sql.LongTermRetentionPolicyCollection GetLongTermRetentionPolicies() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Sql.LongTermRetentionPolicyResource> GetLongTermRetentionPolicy(Azure.ResourceManager.Sql.Models.LongTermRetentionPolicyName policyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.LongTermRetentionPolicyResource>> GetLongTermRetentionPolicyAsync(Azure.ResourceManager.Sql.Models.LongTermRetentionPolicyName policyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Sql.MaintenanceWindowResource GetMaintenanceWindow() { throw null; }
         public virtual Azure.ResourceManager.Sql.MaintenanceWindowOptionResource GetMaintenanceWindowOption() { throw null; }
+        public virtual Azure.ResourceManager.Sql.MaintenanceWindowsResource GetMaintenanceWindows() { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Sql.Models.SqlMetricDefinition> GetMetricDefinitions(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Sql.Models.SqlMetricDefinition> GetMetricDefinitionsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Sql.Models.SqlMetric> GetMetrics(string filter, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -2670,7 +2670,7 @@ namespace Azure.ResourceManager.Sql
         public static Azure.AsyncPageable<Azure.ResourceManager.Sql.SubscriptionLongTermRetentionManagedInstanceBackupResource> GetLongTermRetentionManagedInstanceBackupsByResourceGroupLocationAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.Core.AzureLocation locationName, bool? onlyLatestPerDatabase = default(bool?), Azure.ResourceManager.Sql.Models.SqlDatabaseState? databaseState = default(Azure.ResourceManager.Sql.Models.SqlDatabaseState?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Sql.LongTermRetentionPolicyResource GetLongTermRetentionPolicyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Sql.MaintenanceWindowOptionResource GetMaintenanceWindowOptionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Sql.MaintenanceWindowResource GetMaintenanceWindowResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Sql.MaintenanceWindowsResource GetMaintenanceWindowsResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Sql.ManagedBackupShortTermRetentionPolicyResource GetManagedBackupShortTermRetentionPolicyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Sql.ManagedDatabaseColumnResource GetManagedDatabaseColumnResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Sql.ManagedDatabaseResource GetManagedDatabaseResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
