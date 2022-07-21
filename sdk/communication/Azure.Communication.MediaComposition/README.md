@@ -136,11 +136,11 @@ var layout = new MediaCompositionLayout()
 var response = await mediaCompositionClient.UpdateLayoutAsync(mediaCompositionId, layout);
 ```
 
-Note: Updating `GroupCall`, `Room`, and `TeamsMeeting` input kind is currently not supported. A new media composition will need to be created if `GroupCall`, `Room`, or `TeamsMeeting` inputs needs to change.
-You can add or remove an input:
+Note: Upserting `GroupCall`, `Room`, and `TeamsMeeting` input kind is currently not supported if the media composition is running. The media composition will need to be stopped if `GroupCall`, `Room`, or `TeamsMeeting` inputs needs to change.
+You can upsert or remove inputs:
 
-```C# Snippet:AddInputs
-var inputsToAdd = new Dictionary<string, MediaInput>()
+```C# Snippet:UpsertInputs
+var inputsToUpsert = new Dictionary<string, MediaInput>()
 {
     ["james"] = new()
     {
@@ -152,7 +152,7 @@ var inputsToAdd = new Dictionary<string, MediaInput>()
         }
     }
 };
-var response = await mediaCompositionClient.AddInputsAsync(mediaCompositionId, inputsToAdd);
+var response = await mediaCompositionClient.UpsertInputsAsync(mediaCompositionId, inputsToUpsert);
 ```
 
 ```C# Snippet:RemoveInputs
@@ -163,9 +163,9 @@ var inputIdsToRemove = new List<string>()
 var response = await mediaCompositionClient.RemoveInputsAsync(mediaCompositionId, inputIdsToRemove);
 ```
 
-You also can add or remove an output:
-```C# Snippet:AddOutputs
-var outputsToAdd = new Dictionary<string, MediaOutput>()
+You can also upsert or remove outputs:
+```C# Snippet:UpsertOutputs
+var outputsToUpsert = new Dictionary<string, MediaOutput>()
 {
     {
         "youtube",
@@ -175,7 +175,7 @@ var outputsToAdd = new Dictionary<string, MediaOutput>()
         }
     }
 };
-var response = await mediaCompositionClient.AddOutputsAsync(mediaCompositionId, outputsToAdd);
+var response = await mediaCompositionClient.UpsertOutputsAsync(mediaCompositionId, outputsToUpsert);
 ```
 
 ```C# Snippet:RemoveOutputs

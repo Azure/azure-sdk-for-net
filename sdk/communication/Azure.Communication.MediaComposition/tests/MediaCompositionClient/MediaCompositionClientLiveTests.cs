@@ -334,11 +334,11 @@ namespace Azure.Communication.MediaComposition.Tests
         }
 
         [Test]
-        public async Task AddInputsMediaCompositionAsync()
+        public async Task UpsertInputsMediaCompositionAsync()
         {
             var mediaCompositionClient = CreateClient();
             await CreateMediaCompositionHelper(mediaCompositionClient);
-            var inputsToAdd = new Dictionary<string, MediaInput>()
+            var inputsToUpsert = new Dictionary<string, MediaInput>()
             {
                 ["james"] = new()
                 {
@@ -350,12 +350,38 @@ namespace Azure.Communication.MediaComposition.Tests
                     }
                 }
             };
-            var response = await mediaCompositionClient.AddInputsAsync(mediaCompositionId, inputsToAdd);
+            var response = await mediaCompositionClient.UpsertInputsAsync(mediaCompositionId, inputsToUpsert);
             Assert.AreEqual(response.Value.Id, mediaCompositionId);
             response.Value.Inputs.TryGetValue("james", out var james);
             Assert.IsNotNull(james);
             response.Value.Inputs.TryGetValue("presenter", out var presenter);
             Assert.IsNotNull(presenter);
+            await mediaCompositionClient.DeleteAsync(mediaCompositionId);
+        }
+
+        [Test]
+        public async Task UpsertInputsMediaCompositionAsyncUpdateExistingInput()
+        {
+            var mediaCompositionClient = CreateClient();
+            await CreateMediaCompositionHelper(mediaCompositionClient);
+            var updatedUserId = "f3ba9014-6dca-4456-8ec0-fa03cfa2b7b8";
+            var inputsToUpsert = new Dictionary<string, MediaInput>()
+            {
+                ["presenter"] = new()
+                {
+                    Participant = new(
+                       id: new() { MicrosoftTeamsUser = new(updatedUserId) },
+                       call: "teamsMeeting")
+                    {
+                        PlaceholderImageUri = "https://imageendpoint"
+                    }
+                },
+            };
+            var response = await mediaCompositionClient.UpsertInputsAsync(mediaCompositionId, inputsToUpsert);
+            Assert.AreEqual(response.Value.Id, mediaCompositionId);
+            response.Value.Inputs.TryGetValue("presenter", out var presenter);
+            Assert.IsNotNull(presenter);
+            Assert.AreEqual(presenter?.Participant.Id.MicrosoftTeamsUser.UserId, updatedUserId);
             await mediaCompositionClient.DeleteAsync(mediaCompositionId);
         }
 
@@ -409,12 +435,12 @@ namespace Azure.Communication.MediaComposition.Tests
         }
 
         [Test]
-        public async Task AddInputsForNonExistentMediaCompositionShouldThrow()
+        public async Task UpsertInputsForNonExistentMediaCompositionShouldThrow()
         {
             try
             {
                 var mediaCompositionClient = CreateClient();
-                var inputsToAdd = new Dictionary<string, MediaInput>()
+                var inputsToUpsert = new Dictionary<string, MediaInput>()
                 {
                     ["james"] = new()
                     {
@@ -426,7 +452,7 @@ namespace Azure.Communication.MediaComposition.Tests
                         }
                     }
                 };
-                var response = await mediaCompositionClient.AddInputsAsync("nonexistentMediaCompositionId", inputsToAdd);
+                var response = await mediaCompositionClient.UpsertInputsAsync("nonexistentMediaCompositionId", inputsToUpsert);
             }
             catch (RequestFailedException ex)
             {
@@ -439,11 +465,11 @@ namespace Azure.Communication.MediaComposition.Tests
         }
 
         [Test]
-        public async Task AddOutputsMediaCompositionAsync()
+        public async Task UpsertOutputsMediaCompositionAsync()
         {
             var mediaCompositionClient = CreateClient();
             await CreateMediaCompositionHelper(mediaCompositionClient);
-            var outputsToAdd = new Dictionary<string, MediaOutput>()
+            var outputsToUpsert = new Dictionary<string, MediaOutput>()
             {
                 {
                     "youtube",
@@ -453,7 +479,7 @@ namespace Azure.Communication.MediaComposition.Tests
                     }
                 }
             };
-            var response = await mediaCompositionClient.AddOutputsAsync(mediaCompositionId, outputsToAdd);
+            var response = await mediaCompositionClient.UpsertOutputsAsync(mediaCompositionId, outputsToUpsert);
             Assert.AreEqual(response.Value.Id, mediaCompositionId);
             response.Value.Outputs.TryGetValue("youtube", out var youtube);
             Assert.IsNotNull(youtube);

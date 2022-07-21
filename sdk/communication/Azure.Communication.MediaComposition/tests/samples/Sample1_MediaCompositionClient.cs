@@ -89,12 +89,12 @@ namespace Azure.Communication.MediaComposition.Tests.samples
         }
 
         [Test]
-        public async Task AddInputsMediaCompositionAsync()
+        public async Task UpsertInputsMediaCompositionAsync()
         {
             var mediaCompositionClient = CreateClient();
             await CreateMediaCompositionHelper(mediaCompositionClient);
-            #region Snippet:AddInputs
-            var inputsToAdd = new Dictionary<string, MediaInput>()
+            #region Snippet:UpsertInputs
+            var inputsToUpsert = new Dictionary<string, MediaInput>()
             {
                 ["james"] = new()
                 {
@@ -106,8 +106,8 @@ namespace Azure.Communication.MediaComposition.Tests.samples
                     }
                 }
             };
-            var response = await mediaCompositionClient.AddInputsAsync(mediaCompositionId, inputsToAdd);
-            #endregion Snippet:AddInputs
+            var response = await mediaCompositionClient.UpsertInputsAsync(mediaCompositionId, inputsToUpsert);
+            #endregion Snippet:UpsertInputs
             Assert.AreEqual(response.Value.Id, mediaCompositionId);
             response.Value.Inputs.TryGetValue("james", out var james);
             Assert.IsNotNull(james);
@@ -147,12 +147,12 @@ namespace Azure.Communication.MediaComposition.Tests.samples
         }
 
         [Test]
-        public async Task AddOutputsMediaCompositionAsync()
+        public async Task UpsertOutputsMediaCompositionAsync()
         {
             var mediaCompositionClient = CreateClient();
             await CreateMediaCompositionHelper(mediaCompositionClient);
-            #region Snippet:AddOutputs
-            var outputsToAdd = new Dictionary<string, MediaOutput>()
+            #region Snippet:UpsertOutputs
+            var outputsToUpsert = new Dictionary<string, MediaOutput>()
             {
                 {
                     "youtube",
@@ -162,8 +162,8 @@ namespace Azure.Communication.MediaComposition.Tests.samples
                     }
                 }
             };
-            var response = await mediaCompositionClient.AddOutputsAsync(mediaCompositionId, outputsToAdd);
-            #endregion Snippet:AddOutputs
+            var response = await mediaCompositionClient.UpsertOutputsAsync(mediaCompositionId, outputsToUpsert);
+            #endregion Snippet:UpsertOutputs
             Assert.AreEqual(response.Value.Id, mediaCompositionId);
             response.Value.Outputs.TryGetValue("youtube", out var youtube);
             Assert.IsNotNull(youtube);

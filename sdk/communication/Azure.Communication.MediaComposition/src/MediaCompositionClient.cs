@@ -202,11 +202,11 @@ namespace Azure.Communication.MediaComposition
         }
 
         /// <param name="mediaCompositionId"> The media composition id of the composition to update. </param>
-        /// <param name="inputs"> The added inputs. </param>
+        /// <param name="inputs"> The upserted inputs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MediaCompositionBody>> AddInputsAsync(string mediaCompositionId, IDictionary<string, MediaInput> inputs, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MediaCompositionBody>> UpsertInputsAsync(string mediaCompositionId, IDictionary<string, MediaInput> inputs, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("MediaCompositionClient.AddInputs");
+            using var scope = _clientDiagnostics.CreateScope("MediaCompositionClient.UpsertInputs");
             scope.Start();
             try
             {
@@ -220,11 +220,11 @@ namespace Azure.Communication.MediaComposition
         }
 
         /// <param name="mediaCompositionId"> The media composition id of the composition to update. </param>
-        /// <param name="inputs"> The added inputs. </param>
+        /// <param name="inputs"> The upserted inputs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MediaCompositionBody> AddInputs(string mediaCompositionId, IDictionary<string, MediaInput> inputs, CancellationToken cancellationToken = default)
+        public virtual Response<MediaCompositionBody> UpsertInputs(string mediaCompositionId, IDictionary<string, MediaInput> inputs, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("MediaCompositionClient.AddInputs");
+            using var scope = _clientDiagnostics.CreateScope("MediaCompositionClient.UpsertInputs");
             scope.Start();
             try
             {
@@ -276,11 +276,11 @@ namespace Azure.Communication.MediaComposition
         }
 
         /// <param name="mediaCompositionId"> The media composition id of the composition to update. </param>
-        /// <param name="outputs"> The added outputs. </param>
+        /// <param name="outputs"> The upserted outputs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MediaCompositionBody>> AddOutputsAsync(string mediaCompositionId, IDictionary<string, MediaOutput> outputs, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MediaCompositionBody>> UpsertOutputsAsync(string mediaCompositionId, IDictionary<string, MediaOutput> outputs, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("MediaCompositionClient.AddOutputs");
+            using var scope = _clientDiagnostics.CreateScope("MediaCompositionClient.UpsertOutputs");
             scope.Start();
             try
             {
@@ -294,11 +294,11 @@ namespace Azure.Communication.MediaComposition
         }
 
         /// <param name="mediaCompositionId"> The media composition id of the composition to update. </param>
-        /// <param name="outputs"> The added outputs. </param>
+        /// <param name="outputs"> The upserted outputs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MediaCompositionBody> AddOutputs(string mediaCompositionId, IDictionary<string, MediaOutput> outputs, CancellationToken cancellationToken = default)
+        public virtual Response<MediaCompositionBody> UpsertOutputs(string mediaCompositionId, IDictionary<string, MediaOutput> outputs, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("MediaCompositionClient.AddOutputs");
+            using var scope = _clientDiagnostics.CreateScope("MediaCompositionClient.UpsertOutputs");
             scope.Start();
             try
             {
