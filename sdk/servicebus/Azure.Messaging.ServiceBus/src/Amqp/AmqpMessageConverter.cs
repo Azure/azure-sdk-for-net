@@ -145,13 +145,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         private static ArraySegment<byte> ReadStreamToArraySegment(Stream stream)
         {
-            if (stream == null)
-            {
-                return new ArraySegment<byte>();
-            }
-
             switch (stream)
             {
+                case { Length: < 1 }:
+                    return default;
+
                 case BufferListStream bufferListStream:
                     return bufferListStream.ReadBytes((int)stream.Length);
 
@@ -697,7 +695,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 case PropertyValueType.Stream:
                     if (mappingType == MappingType.ApplicationProperty)
                     {
-                        amqpObject = StreamToBytes((Stream)netObject);
+                        amqpObject = ReadStreamToArraySegment((Stream)netObject);
                     }
                     break;
                 case PropertyValueType.Uri:
@@ -714,7 +712,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     {
                         if (mappingType == MappingType.ApplicationProperty)
                         {
-                            amqpObject = StreamToBytes(netObjectAsStream);
+                            amqpObject = ReadStreamToArraySegment(netObjectAsStream);
                         }
                     }
                     else if (mappingType == MappingType.ApplicationProperty)
@@ -828,39 +826,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
 
             return netObject != null;
-        }
-
-        private static ArraySegment<byte> StreamToBytes(Stream stream)
-        {
-            if (stream == null || stream.Length < 1)
-            {
-                return default;
-            }
-
-            switch (stream)
-            {
-                case MemoryStream memStreamSource:
-                    {
-                        using var memStreamCopy = new MemoryStream((int)(memStreamSource.Length - memStreamSource.Position));
-                        memStreamSource.CopyTo(memStreamCopy, StreamBufferSizeInBytes);
-                        if (!memStreamCopy.TryGetBuffer(out ArraySegment<byte> segment))
-                        {
-                            segment = new ArraySegment<byte>(memStreamCopy.ToArray());
-                        }
-                        return segment;
-                    }
-
-                default:
-                    {
-                        using var memStreamCopy = new MemoryStream(StreamBufferSizeInBytes);
-                        stream.CopyTo(memStreamCopy, StreamBufferSizeInBytes);
-                        if (!memStreamCopy.TryGetBuffer(out ArraySegment<byte> segment))
-                        {
-                            segment = new ArraySegment<byte>(memStreamCopy.ToArray());
-                        }
-                        return segment;
-                    }
-            }
         }
 
         internal static AmqpMap GetSqlRuleFilterMap(SqlRuleFilter sqlRuleFilter)
