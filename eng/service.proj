@@ -51,7 +51,7 @@
              SkipNonexistentTargets="true" />
   </Target>
 
-  <Target Name="GenerateTest">
+  <Target Name="GenerateTests">
     <MSBuild Projects="@(ProjectReference)"
              Targets="GenerateTest"
              BuildInParallel="$(BuildInParallel)"
