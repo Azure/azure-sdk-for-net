@@ -6,10 +6,10 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-c33e90aac2752047e9d148f6a7081449-40ad9b76b91de6c4-00",
-        "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220719.1 (.NET 6.0.7; Microsoft Windows 10.0.19044)",
+        "traceparent": "00-954f075bdc554ed117946fb649bf4336-f624ed77a5c69e4f-00",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220721.1 (.NET 6.0.7; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "386bb162acc2bd4aa21d865fbf42992a",
+        "x-ms-client-request-id": "0b83e97ac42158b7d95ea3fad5ee42cf",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -17,19 +17,19 @@
       "ResponseHeaders": {
         "Content-Length": "10142",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 18 Jul 2022 23:58:30 GMT",
+        "Date": "Thu, 21 Jul 2022 09:28:56 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: 0DC63EAEC54747D68CE3B51E8A54CFDF Ref B: PAOEDGE0610 Ref C: 2022-07-18T23:58:31Z"
+        "X-MSEdge-Ref": "Ref A: C5C616C723134C3A95D2F38B04A571F4 Ref B: PAOEDGE0518 Ref C: 2022-07-21T09:28:57Z"
       },
       "ResponseBody": {
         "summary": {
           "query": "coffee",
           "queryType": "NON_NEAR",
-          "queryTime": 7,
+          "queryTime": 9,
           "numResults": 10,
           "offset": 0,
           "totalResults": 1802554,
@@ -769,6 +769,6 @@
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "1637720263"
+    "RandomSeed": "1803628353"
   }
 }

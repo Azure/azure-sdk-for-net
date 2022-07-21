@@ -6,30 +6,30 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-615951fed35266fb85628aaf5f59e0f8-e123337978284acb-00",
-        "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220719.1 (.NET 6.0.7; Microsoft Windows 10.0.19044)",
+        "traceparent": "00-a4ae4f4a6a9c6a915d02906c42b7a36b-2ed932b19cc4b6e2-00",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220721.1 (.NET 6.0.7; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "e4ecb4c446ffdb96598629864217cd51",
+        "x-ms-client-request-id": "10871d03afad0819b67e034266a5faba",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "4855",
+        "Content-Length": "4856",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 18 Jul 2022 23:58:42 GMT",
+        "Date": "Thu, 21 Jul 2022 09:29:08 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: 84FED0C24AD2404C935810738FF9699A Ref B: PAOEDGE0610 Ref C: 2022-07-18T23:58:43Z"
+        "X-MSEdge-Ref": "Ref A: 9C480EE96BD642D286BE6346AFFAB647 Ref B: PAOEDGE0518 Ref C: 2022-07-21T09:29:08Z"
       },
       "ResponseBody": {
         "summary": {
           "query": "road",
           "queryType": "NON_NEAR",
-          "queryTime": 8,
+          "queryTime": 32,
           "numResults": 10,
           "offset": 0,
           "totalResults": 386,
@@ -355,10 +355,10 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-77316f2940e6279f6b697dc0325af7ba-6a7d9785385e10a4-00",
-        "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220719.1 (.NET 6.0.7; Microsoft Windows 10.0.19044)",
+        "traceparent": "00-0be2b8ffb44318f4021fee3f5f3c4a40-c2b5bdb4105f0220-00",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.3-alpha.20220721.1 (.NET 6.0.7; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "6cbbe12c452db82b5d46b6e200543059",
+        "x-ms-client-request-id": "7bba14e7214dd066af915e5d4dcceea9",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -366,19 +366,19 @@
       "ResponseHeaders": {
         "Content-Length": "6791",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 18 Jul 2022 23:58:42 GMT",
+        "Date": "Thu, 21 Jul 2022 09:29:08 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: B43871398E244EFEB554757B850AC430 Ref B: PAOEDGE0610 Ref C: 2022-07-18T23:58:43Z"
+        "X-MSEdge-Ref": "Ref A: 22267B96077A48FCB7372EE4AA3C8727 Ref B: PAOEDGE0518 Ref C: 2022-07-21T09:29:08Z"
       },
       "ResponseBody": {
         "summary": {
           "query": "road",
           "queryType": "NON_NEAR",
-          "queryTime": 6,
+          "queryTime": 7,
           "numResults": 10,
           "offset": 0,
           "totalResults": 25966,
@@ -629,7 +629,7 @@
             "type": "Geography",
             "id": "NZ/GEO/p0/1283",
             "score": 2.0992157459,
-            "entityType": "Neighborhood",
+            "entityType": "Neighbourhood",
             "matchConfidence": {
               "score": 0.8596350221373878
             },
@@ -812,6 +812,6 @@
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "88877445"
+    "RandomSeed": "104564384"
   }
 }

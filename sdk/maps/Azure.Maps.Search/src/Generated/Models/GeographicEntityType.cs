@@ -28,7 +28,7 @@ namespace Azure.Maps.Search.Models
         private const string CountryTertiarySubdivisionValue = "CountryTertiarySubdivision";
         private const string MunicipalityValue = "Municipality";
         private const string MunicipalitySubdivisionValue = "MunicipalitySubdivision";
-        private const string NeighborhoodValue = "Neighborhood";
+        private const string NeighbourhoodValue = "Neighbourhood";
         private const string PostalCodeAreaValue = "PostalCodeArea";
 
         /// <summary> Country. </summary>
@@ -43,8 +43,6 @@ namespace Azure.Maps.Search.Models
         public static GeographicEntityType Municipality { get; } = new GeographicEntityType(MunicipalityValue);
         /// <summary> MunicipalitySubdivision. </summary>
         public static GeographicEntityType MunicipalitySubdivision { get; } = new GeographicEntityType(MunicipalitySubdivisionValue);
-        /// <summary> Neighborhood. </summary>
-        public static GeographicEntityType Neighborhood { get; } = new GeographicEntityType(NeighborhoodValue);
         /// <summary> PostalCodeArea. </summary>
         public static GeographicEntityType PostalCodeArea { get; } = new GeographicEntityType(PostalCodeAreaValue);
         /// <summary> Determines if two <see cref="GeographicEntityType"/> values are the same. </summary>
