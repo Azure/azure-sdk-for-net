@@ -42,7 +42,7 @@ namespace Azure.Analytics.Purview.Administration
         /// This sample shows how to call GetMetadataRolesAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewMetadataRolesClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetMetadataRolesAsync())
@@ -80,7 +80,7 @@ namespace Azure.Analytics.Purview.Administration
         /// This sample shows how to call GetMetadataRoles and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewMetadataRolesClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetMetadataRoles())
