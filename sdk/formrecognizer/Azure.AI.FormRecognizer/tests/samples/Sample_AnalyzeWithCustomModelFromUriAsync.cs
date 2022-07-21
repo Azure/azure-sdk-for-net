@@ -24,10 +24,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
             // https://aka.ms/azsdk/formrecognizer/labelingtool
 
             var adminClient = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
-            BuildModelOperation buildOperation = await adminClient.StartBuildModelAsync(trainingFileUri, DocumentBuildMode.Template);
-
-            await buildOperation.WaitForCompletionAsync();
-
+            BuildModelOperation buildOperation = await adminClient.BuildModelAsync(WaitUntil.Completed, trainingFileUri, DocumentBuildMode.Template);
             DocumentModel customModel = buildOperation.Value;
 
             // Proceed with the custom document recognition.
@@ -43,10 +40,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
             Uri fileUri = DocumentAnalysisTestEnvironment.CreateUri("Form_1.jpg");
 #endif
 
-            AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentFromUriAsync(modelId, fileUri);
-
-            await operation.WaitForCompletionAsync();
-
+            AnalyzeDocumentOperation operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, modelId, fileUri);
             AnalyzeResult result = operation.Value;
 
             Console.WriteLine($"Document was analyzed with model with ID: {result.ModelId}");

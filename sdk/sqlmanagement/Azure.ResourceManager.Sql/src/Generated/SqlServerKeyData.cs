@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="thumbprint"> Thumbprint of the server key. </param>
         /// <param name="createdOn"> The server key creation date. </param>
         /// <param name="isAutoRotationEnabled"> Key auto rotation opt-in flag. Either true or false. </param>
-        internal SqlServerKeyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, AzureLocation? location, string subregion, ServerKeyType? serverKeyType, Uri uri, string thumbprint, DateTimeOffset? createdOn, bool? isAutoRotationEnabled) : base(id, name, resourceType, systemData)
+        internal SqlServerKeyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, AzureLocation? location, string subregion, SqlServerKeyType? serverKeyType, Uri uri, string thumbprint, DateTimeOffset? createdOn, bool? isAutoRotationEnabled) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             Location = location;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Subregion of the server key. </summary>
         public string Subregion { get; }
         /// <summary> The server key type like &apos;ServiceManaged&apos;, &apos;AzureKeyVault&apos;. </summary>
-        public ServerKeyType? ServerKeyType { get; set; }
+        public SqlServerKeyType? ServerKeyType { get; set; }
         /// <summary> The URI of the server key. If the ServerKeyType is AzureKeyVault, then the URI is required. </summary>
         public Uri Uri { get; set; }
         /// <summary> Thumbprint of the server key. </summary>

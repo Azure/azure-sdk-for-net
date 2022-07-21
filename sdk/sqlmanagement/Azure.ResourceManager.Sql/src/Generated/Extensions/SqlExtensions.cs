@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="locationName"> The location name whose capabilities are retrieved. </param>
         /// <param name="include"> If specified, restricts the response to only include the selected item. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response<LocationCapabilities>> GetCapabilitiesByLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, CapabilityGroup? include = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<SqlLocationCapabilities>> GetCapabilitiesByLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, SqlCapabilityGroup? include = null, CancellationToken cancellationToken = default)
         {
             return await GetExtensionClient(subscriptionResource).GetCapabilitiesByLocationAsync(locationName, include, cancellationToken).ConfigureAwait(false);
         }
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="locationName"> The location name whose capabilities are retrieved. </param>
         /// <param name="include"> If specified, restricts the response to only include the selected item. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response<LocationCapabilities> GetCapabilitiesByLocation(this SubscriptionResource subscriptionResource, AzureLocation locationName, CapabilityGroup? include = null, CancellationToken cancellationToken = default)
+        public static Response<SqlLocationCapabilities> GetCapabilitiesByLocation(this SubscriptionResource subscriptionResource, AzureLocation locationName, SqlCapabilityGroup? include = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetCapabilitiesByLocation(locationName, include, cancellationToken);
         }
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SubscriptionLongTermRetentionBackupResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SubscriptionLongTermRetentionBackupResource> GetLongTermRetentionBackupsByLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<SubscriptionLongTermRetentionBackupResource> GetLongTermRetentionBackupsByLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetLongTermRetentionBackupsByLocationAsync(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SubscriptionLongTermRetentionBackupResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SubscriptionLongTermRetentionBackupResource> GetLongTermRetentionBackupsByLocation(this SubscriptionResource subscriptionResource, AzureLocation locationName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        public static Pageable<SubscriptionLongTermRetentionBackupResource> GetLongTermRetentionBackupsByLocation(this SubscriptionResource subscriptionResource, AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetLongTermRetentionBackupsByLocation(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
@@ -506,7 +506,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="longTermRetentionServerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="longTermRetentionServerName"/> is null. </exception>
         /// <returns> An async collection of <see cref="SubscriptionLongTermRetentionBackupResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SubscriptionLongTermRetentionBackupResource> GetLongTermRetentionBackupsByServerAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<SubscriptionLongTermRetentionBackupResource> GetLongTermRetentionBackupsByServerAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
 
@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="longTermRetentionServerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="longTermRetentionServerName"/> is null. </exception>
         /// <returns> A collection of <see cref="SubscriptionLongTermRetentionBackupResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SubscriptionLongTermRetentionBackupResource> GetLongTermRetentionBackupsByServer(this SubscriptionResource subscriptionResource, AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        public static Pageable<SubscriptionLongTermRetentionBackupResource> GetLongTermRetentionBackupsByServer(this SubscriptionResource subscriptionResource, AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
 
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedInstanceName"/> is null. </exception>
         /// <returns> An async collection of <see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SubscriptionLongTermRetentionManagedInstanceBackupResource> GetLongTermRetentionManagedInstanceBackupsByInstanceAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<SubscriptionLongTermRetentionManagedInstanceBackupResource> GetLongTermRetentionManagedInstanceBackupsByInstanceAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
 
@@ -569,7 +569,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedInstanceName"/> is null. </exception>
         /// <returns> A collection of <see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SubscriptionLongTermRetentionManagedInstanceBackupResource> GetLongTermRetentionManagedInstanceBackupsByInstance(this SubscriptionResource subscriptionResource, AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        public static Pageable<SubscriptionLongTermRetentionManagedInstanceBackupResource> GetLongTermRetentionManagedInstanceBackupsByInstance(this SubscriptionResource subscriptionResource, AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
 
@@ -587,7 +587,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SubscriptionLongTermRetentionManagedInstanceBackupResource> GetLongTermRetentionManagedInstanceBackupsByLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<SubscriptionLongTermRetentionManagedInstanceBackupResource> GetLongTermRetentionManagedInstanceBackupsByLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetLongTermRetentionManagedInstanceBackupsByLocationAsync(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
@@ -603,7 +603,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SubscriptionLongTermRetentionManagedInstanceBackupResource> GetLongTermRetentionManagedInstanceBackupsByLocation(this SubscriptionResource subscriptionResource, AzureLocation locationName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        public static Pageable<SubscriptionLongTermRetentionManagedInstanceBackupResource> GetLongTermRetentionManagedInstanceBackupsByLocation(this SubscriptionResource subscriptionResource, AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetLongTermRetentionManagedInstanceBackupsByLocation(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
@@ -1014,7 +1014,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SubscriptionLongTermRetentionBackupResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SubscriptionLongTermRetentionBackupResource> GetLongTermRetentionBackupsByResourceGroupLocationAsync(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<SubscriptionLongTermRetentionBackupResource> GetLongTermRetentionBackupsByResourceGroupLocationAsync(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(resourceGroupResource).GetLongTermRetentionBackupsByResourceGroupLocationAsync(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
@@ -1030,7 +1030,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SubscriptionLongTermRetentionBackupResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SubscriptionLongTermRetentionBackupResource> GetLongTermRetentionBackupsByResourceGroupLocation(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        public static Pageable<SubscriptionLongTermRetentionBackupResource> GetLongTermRetentionBackupsByResourceGroupLocation(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(resourceGroupResource).GetLongTermRetentionBackupsByResourceGroupLocation(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
@@ -1049,7 +1049,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="longTermRetentionServerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="longTermRetentionServerName"/> is null. </exception>
         /// <returns> An async collection of <see cref="SubscriptionLongTermRetentionBackupResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SubscriptionLongTermRetentionBackupResource> GetLongTermRetentionBackupsByResourceGroupServerAsync(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<SubscriptionLongTermRetentionBackupResource> GetLongTermRetentionBackupsByResourceGroupServerAsync(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
 
@@ -1070,7 +1070,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="longTermRetentionServerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="longTermRetentionServerName"/> is null. </exception>
         /// <returns> A collection of <see cref="SubscriptionLongTermRetentionBackupResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SubscriptionLongTermRetentionBackupResource> GetLongTermRetentionBackupsByResourceGroupServer(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        public static Pageable<SubscriptionLongTermRetentionBackupResource> GetLongTermRetentionBackupsByResourceGroupServer(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
 
@@ -1091,7 +1091,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedInstanceName"/> is null. </exception>
         /// <returns> An async collection of <see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SubscriptionLongTermRetentionManagedInstanceBackupResource> GetLongTermRetentionManagedInstanceBackupsByResourceGroupInstanceAsync(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<SubscriptionLongTermRetentionManagedInstanceBackupResource> GetLongTermRetentionManagedInstanceBackupsByResourceGroupInstanceAsync(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
 
@@ -1112,7 +1112,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedInstanceName"/> is null. </exception>
         /// <returns> A collection of <see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SubscriptionLongTermRetentionManagedInstanceBackupResource> GetLongTermRetentionManagedInstanceBackupsByResourceGroupInstance(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        public static Pageable<SubscriptionLongTermRetentionManagedInstanceBackupResource> GetLongTermRetentionManagedInstanceBackupsByResourceGroupInstance(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
 
@@ -1130,7 +1130,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SubscriptionLongTermRetentionManagedInstanceBackupResource> GetLongTermRetentionManagedInstanceBackupsByResourceGroupLocationAsync(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<SubscriptionLongTermRetentionManagedInstanceBackupResource> GetLongTermRetentionManagedInstanceBackupsByResourceGroupLocationAsync(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(resourceGroupResource).GetLongTermRetentionManagedInstanceBackupsByResourceGroupLocationAsync(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
@@ -1146,7 +1146,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SubscriptionLongTermRetentionManagedInstanceBackupResource> GetLongTermRetentionManagedInstanceBackupsByResourceGroupLocation(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        public static Pageable<SubscriptionLongTermRetentionManagedInstanceBackupResource> GetLongTermRetentionManagedInstanceBackupsByResourceGroupLocation(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(resourceGroupResource).GetLongTermRetentionManagedInstanceBackupsByResourceGroupLocation(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
@@ -1569,20 +1569,20 @@ namespace Azure.ResourceManager.Sql
         }
         #endregion
 
-        #region DataWarehouseUserActivitiesResource
+        #region DataWarehouseUserActivityResource
         /// <summary>
-        /// Gets an object representing a <see cref="DataWarehouseUserActivitiesResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataWarehouseUserActivitiesResource.CreateResourceIdentifier" /> to create a <see cref="DataWarehouseUserActivitiesResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataWarehouseUserActivityResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataWarehouseUserActivityResource.CreateResourceIdentifier" /> to create a <see cref="DataWarehouseUserActivityResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataWarehouseUserActivitiesResource" /> object. </returns>
-        public static DataWarehouseUserActivitiesResource GetDataWarehouseUserActivitiesResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataWarehouseUserActivityResource" /> object. </returns>
+        public static DataWarehouseUserActivityResource GetDataWarehouseUserActivityResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DataWarehouseUserActivitiesResource.ValidateResourceId(id);
-                return new DataWarehouseUserActivitiesResource(client, id);
+                DataWarehouseUserActivityResource.ValidateResourceId(id);
+                return new DataWarehouseUserActivityResource(client, id);
             }
             );
         }
@@ -1645,20 +1645,20 @@ namespace Azure.ResourceManager.Sql
         }
         #endregion
 
-        #region FirewallRuleResource
+        #region SqlFirewallRuleResource
         /// <summary>
-        /// Gets an object representing a <see cref="FirewallRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="FirewallRuleResource.CreateResourceIdentifier" /> to create a <see cref="FirewallRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SqlFirewallRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlFirewallRuleResource.CreateResourceIdentifier" /> to create a <see cref="SqlFirewallRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FirewallRuleResource" /> object. </returns>
-        public static FirewallRuleResource GetFirewallRuleResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SqlFirewallRuleResource" /> object. </returns>
+        public static SqlFirewallRuleResource GetSqlFirewallRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                FirewallRuleResource.ValidateResourceId(id);
-                return new FirewallRuleResource(client, id);
+                SqlFirewallRuleResource.ValidateResourceId(id);
+                return new SqlFirewallRuleResource(client, id);
             }
             );
         }
@@ -1911,20 +1911,20 @@ namespace Azure.ResourceManager.Sql
         }
         #endregion
 
-        #region MaintenanceWindowOptionsResource
+        #region MaintenanceWindowOptionResource
         /// <summary>
-        /// Gets an object representing a <see cref="MaintenanceWindowOptionsResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MaintenanceWindowOptionsResource.CreateResourceIdentifier" /> to create a <see cref="MaintenanceWindowOptionsResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MaintenanceWindowOptionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MaintenanceWindowOptionResource.CreateResourceIdentifier" /> to create a <see cref="MaintenanceWindowOptionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MaintenanceWindowOptionsResource" /> object. </returns>
-        public static MaintenanceWindowOptionsResource GetMaintenanceWindowOptionsResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MaintenanceWindowOptionResource" /> object. </returns>
+        public static MaintenanceWindowOptionResource GetMaintenanceWindowOptionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                MaintenanceWindowOptionsResource.ValidateResourceId(id);
-                return new MaintenanceWindowOptionsResource(client, id);
+                MaintenanceWindowOptionResource.ValidateResourceId(id);
+                return new MaintenanceWindowOptionResource(client, id);
             }
             );
         }
@@ -2310,20 +2310,20 @@ namespace Azure.ResourceManager.Sql
         }
         #endregion
 
-        #region RestorePointResource
+        #region SqlServerDatabaseRestorePointResource
         /// <summary>
-        /// Gets an object representing a <see cref="RestorePointResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RestorePointResource.CreateResourceIdentifier" /> to create a <see cref="RestorePointResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SqlServerDatabaseRestorePointResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlServerDatabaseRestorePointResource.CreateResourceIdentifier" /> to create a <see cref="SqlServerDatabaseRestorePointResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RestorePointResource" /> object. </returns>
-        public static RestorePointResource GetRestorePointResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SqlServerDatabaseRestorePointResource" /> object. </returns>
+        public static SqlServerDatabaseRestorePointResource GetSqlServerDatabaseRestorePointResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                RestorePointResource.ValidateResourceId(id);
-                return new RestorePointResource(client, id);
+                SqlServerDatabaseRestorePointResource.ValidateResourceId(id);
+                return new SqlServerDatabaseRestorePointResource(client, id);
             }
             );
         }
@@ -2633,20 +2633,20 @@ namespace Azure.ResourceManager.Sql
         }
         #endregion
 
-        #region VirtualNetworkRuleResource
+        #region SqlServerVirtualNetworkRuleResource
         /// <summary>
-        /// Gets an object representing a <see cref="VirtualNetworkRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VirtualNetworkRuleResource.CreateResourceIdentifier" /> to create a <see cref="VirtualNetworkRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SqlServerVirtualNetworkRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlServerVirtualNetworkRuleResource.CreateResourceIdentifier" /> to create a <see cref="SqlServerVirtualNetworkRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VirtualNetworkRuleResource" /> object. </returns>
-        public static VirtualNetworkRuleResource GetVirtualNetworkRuleResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SqlServerVirtualNetworkRuleResource" /> object. </returns>
+        public static SqlServerVirtualNetworkRuleResource GetSqlServerVirtualNetworkRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                VirtualNetworkRuleResource.ValidateResourceId(id);
-                return new VirtualNetworkRuleResource(client, id);
+                SqlServerVirtualNetworkRuleResource.ValidateResourceId(id);
+                return new SqlServerVirtualNetworkRuleResource(client, id);
             }
             );
         }
@@ -3051,20 +3051,20 @@ namespace Azure.ResourceManager.Sql
         }
         #endregion
 
-        #region ReplicationLinkResource
+        #region SqlServerDatabaseReplicationLinkResource
         /// <summary>
-        /// Gets an object representing a <see cref="ReplicationLinkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ReplicationLinkResource.CreateResourceIdentifier" /> to create a <see cref="ReplicationLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SqlServerDatabaseReplicationLinkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlServerDatabaseReplicationLinkResource.CreateResourceIdentifier" /> to create a <see cref="SqlServerDatabaseReplicationLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ReplicationLinkResource" /> object. </returns>
-        public static ReplicationLinkResource GetReplicationLinkResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SqlServerDatabaseReplicationLinkResource" /> object. </returns>
+        public static SqlServerDatabaseReplicationLinkResource GetSqlServerDatabaseReplicationLinkResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ReplicationLinkResource.ValidateResourceId(id);
-                return new ReplicationLinkResource(client, id);
+                SqlServerDatabaseReplicationLinkResource.ValidateResourceId(id);
+                return new SqlServerDatabaseReplicationLinkResource(client, id);
             }
             );
         }

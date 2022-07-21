@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="supportedMaintenanceConfigurations"> List of supported maintenance configurations. </param>
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
-        internal ElasticPoolPerformanceLevelCapability(PerformanceLevelCapability performanceLevel, SqlSku sku, IReadOnlyList<LicenseTypeCapability> supportedLicenseTypes, int? maxDatabaseCount, MaxSizeCapability includedMaxSize, IReadOnlyList<MaxSizeRangeCapability> supportedMaxSizes, IReadOnlyList<MaxSizeRangeCapability> supportedPerDatabaseMaxSizes, IReadOnlyList<ElasticPoolPerDatabaseMaxPerformanceLevelCapability> supportedPerDatabaseMaxPerformanceLevels, bool? isZoneRedundant, IReadOnlyList<MaintenanceConfigurationCapability> supportedMaintenanceConfigurations, CapabilityStatus? status, string reason)
+        internal ElasticPoolPerformanceLevelCapability(PerformanceLevelCapability performanceLevel, SqlSku sku, IReadOnlyList<LicenseTypeCapability> supportedLicenseTypes, int? maxDatabaseCount, MaxSizeCapability includedMaxSize, IReadOnlyList<MaxSizeRangeCapability> supportedMaxSizes, IReadOnlyList<MaxSizeRangeCapability> supportedPerDatabaseMaxSizes, IReadOnlyList<ElasticPoolPerDatabaseMaxPerformanceLevelCapability> supportedPerDatabaseMaxPerformanceLevels, bool? isZoneRedundant, IReadOnlyList<MaintenanceConfigurationCapability> supportedMaintenanceConfigurations, SqlCapabilityStatus? status, string reason)
         {
             PerformanceLevel = performanceLevel;
             Sku = sku;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> List of supported maintenance configurations. </summary>
         public IReadOnlyList<MaintenanceConfigurationCapability> SupportedMaintenanceConfigurations { get; }
         /// <summary> The status of the capability. </summary>
-        public CapabilityStatus? Status { get; }
+        public SqlCapabilityStatus? Status { get; }
         /// <summary> The reason for the capability not being available. </summary>
         public string Reason { get; }
     }

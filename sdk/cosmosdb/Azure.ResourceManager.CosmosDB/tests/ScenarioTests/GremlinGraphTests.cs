@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.True(ifExists);
 
             // NOT WORKING API
-            //ThroughputSettingsData throughtput = await table.GetGremlinGraphThroughputAsync();
+            //ThroughputSettingData throughtput = await table.GetGremlinGraphThroughputAsync();
             GremlinGraphResource graph2 = await GremlinGraphContainer.GetAsync(_graphName);
             Assert.AreEqual(_graphName, graph2.Data.Resource.GraphName);
             VerifyGremlinGraphCreation(graph2, parameters);
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             GremlinGraphThroughputSettingResource throughput = await graph.GetGremlinGraphThroughputSetting().GetAsync();
             AssertManualThroughput(throughput.Data);
 
-            ThroughputSettingsData throughputData = (await throughput.MigrateGremlinGraphToAutoscaleAsync(WaitUntil.Completed)).Value.Data;
+            ThroughputSettingData throughputData = (await throughput.MigrateGremlinGraphToAutoscaleAsync(WaitUntil.Completed)).Value.Data;
             AssertAutoscale(throughputData);
         }
 
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             GremlinGraphThroughputSettingResource throughput = await graph.GetGremlinGraphThroughputSetting().GetAsync();
             AssertAutoscale(throughput.Data);
 
-            ThroughputSettingsData throughputData = (await throughput.MigrateGremlinGraphToManualThroughputAsync(WaitUntil.Completed)).Value.Data;
+            ThroughputSettingData throughputData = (await throughput.MigrateGremlinGraphToManualThroughputAsync(WaitUntil.Completed)).Value.Data;
             AssertManualThroughput(throughputData);
         }
 
@@ -187,21 +187,21 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 IncludedPaths = { new CosmosDBIncludedPath { Path = "/*" } },
                 ExcludedPaths = { new CosmosDBExcludedPath { Path = "/pathToNotIndex/*" } },
                 CompositeIndexes = {
-                    new List<CompositePath>
+                    new List<CosmosDBCompositePath>
                     {
-                        new CompositePath { Path = "/orderByPath1", Order = CompositePathSortOrder.Ascending },
-                        new CompositePath { Path = "/orderByPath2", Order = CompositePathSortOrder.Descending }
+                        new CosmosDBCompositePath { Path = "/orderByPath1", Order = CompositePathSortOrder.Ascending },
+                        new CosmosDBCompositePath { Path = "/orderByPath2", Order = CompositePathSortOrder.Descending }
                     },
-                    new List<CompositePath>
+                    new List<CosmosDBCompositePath>
                     {
-                        new CompositePath { Path = "/orderByPath3", Order = CompositePathSortOrder.Ascending },
-                        new CompositePath { Path = "/orderByPath4", Order = CompositePathSortOrder.Descending }
+                        new CosmosDBCompositePath { Path = "/orderByPath3", Order = CompositePathSortOrder.Ascending },
+                        new CosmosDBCompositePath { Path = "/orderByPath4", Order = CompositePathSortOrder.Descending }
                     }
                 },
-                SpatialIndexes = { new SpatialSpec("/*", new List<SpatialType> { new SpatialType("Point") }) }
+                SpatialIndexes = { new SpatialSpec("/*", new List<CosmosDBSpatialType> { new CosmosDBSpatialType("Point") }) }
             };
 
-            var containerPartitionKey = new ContainerPartitionKey(new List<string> { "/address" }, PartitionKind.Hash, null, null);
+            var containerPartitionKey = new CosmosDBContainerPartitionKey(new List<string> { "/address" }, CosmosDBPartitionKind.Hash, null, null);
             var uniqueKeyPolicy = new CosmosDBUniqueKeyPolicy()
             {
                 UniqueKeys = { new CosmosDBUniqueKey(new List<string>() { "/testpath" }) },

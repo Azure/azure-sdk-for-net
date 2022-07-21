@@ -19,15 +19,12 @@ var client = new DocumentAnalysisClient(new Uri(endpoint), credential);
 
 ## Use the prebuilt document model to analyze a document from a URI
 
-To analyze a given file at a URI, use the `StartAnalyzeDocumentFromUri` method and pass `prebuilt-document` as the model ID. The returned value is an `AnalyzeResult` object containing data about the submitted document.
+To analyze a given file at a URI, use the `AnalyzeDocumentFromUri` method and pass `prebuilt-document` as the model ID. The returned value is an `AnalyzeResult` object containing data about the submitted document.
 
 ```C# Snippet:FormRecognizerAnalyzePrebuiltDocumentFromUriAsync
 Uri fileUri = new Uri("<fileUri>");
 
-AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-document", fileUri);
-
-await operation.WaitForCompletionAsync();
-
+AnalyzeDocumentOperation operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, "prebuilt-document", fileUri);
 AnalyzeResult result = operation.Value;
 
 Console.WriteLine("Detected key-value pairs:");
@@ -110,16 +107,13 @@ for (int i = 0; i < result.Tables.Count; i++)
 
 ## Use the prebuilt document model to analyze a document from a file stream
 
-To analyze a given file at a file stream, use the `StartAnalyzeDocument` method and pass `prebuilt-document` as the model ID. The returned value is an `AnalyzeResult` object containing data about the submitted document.
+To analyze a given file at a file stream, use the `AnalyzeDocument` method and pass `prebuilt-document` as the model ID. The returned value is an `AnalyzeResult` object containing data about the submitted document.
 
 ```C# Snippet:FormRecognizerAnalyzePrebuiltDocumentFromFileAsync
 string filePath = "<filePath>";
 using var stream = new FileStream(filePath, FileMode.Open);
 
-AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentAsync("prebuilt-document", stream);
-
-await operation.WaitForCompletionAsync();
-
+AnalyzeDocumentOperation operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-document", stream);
 AnalyzeResult result = operation.Value;
 
 Console.WriteLine("Detected key-value pairs:");

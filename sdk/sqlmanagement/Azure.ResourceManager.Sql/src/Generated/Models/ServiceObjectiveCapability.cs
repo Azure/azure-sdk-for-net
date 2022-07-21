@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="supportedMaintenanceConfigurations"> List of supported maintenance configurations. </param>
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
-        internal ServiceObjectiveCapability(Guid? id, string name, IReadOnlyList<MaxSizeRangeCapability> supportedMaxSizes, PerformanceLevelCapability performanceLevel, SqlSku sku, IReadOnlyList<LicenseTypeCapability> supportedLicenseTypes, MaxSizeCapability includedMaxSize, bool? isZoneRedundant, AutoPauseDelayTimeRange supportedAutoPauseDelay, IReadOnlyList<MinCapacityCapability> supportedMinCapacities, string computeModel, IReadOnlyList<MaintenanceConfigurationCapability> supportedMaintenanceConfigurations, CapabilityStatus? status, string reason)
+        internal ServiceObjectiveCapability(Guid? id, string name, IReadOnlyList<MaxSizeRangeCapability> supportedMaxSizes, PerformanceLevelCapability performanceLevel, SqlSku sku, IReadOnlyList<LicenseTypeCapability> supportedLicenseTypes, MaxSizeCapability includedMaxSize, bool? isZoneRedundant, AutoPauseDelayTimeRange supportedAutoPauseDelay, IReadOnlyList<MinCapacityCapability> supportedMinCapacities, string computeModel, IReadOnlyList<MaintenanceConfigurationCapability> supportedMaintenanceConfigurations, SqlCapabilityStatus? status, string reason)
         {
             Id = id;
             Name = name;
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> List of supported maintenance configurations. </summary>
         public IReadOnlyList<MaintenanceConfigurationCapability> SupportedMaintenanceConfigurations { get; }
         /// <summary> The status of the capability. </summary>
-        public CapabilityStatus? Status { get; }
+        public SqlCapabilityStatus? Status { get; }
         /// <summary> The reason for the capability not being available. </summary>
         public string Reason { get; }
     }

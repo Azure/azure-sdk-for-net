@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="temporalType"> The table temporal type. </param>
         /// <param name="isMemoryOptimized"> Whether or not the column belongs to a memory optimized table. </param>
         /// <param name="isComputed"> Whether or not the column is computed. </param>
-        internal DatabaseColumnData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ColumnDataType? columnType, TableTemporalType? temporalType, bool? isMemoryOptimized, bool? isComputed) : base(id, name, resourceType, systemData)
+        internal DatabaseColumnData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SqlColumnDataType? columnType, TableTemporalType? temporalType, bool? isMemoryOptimized, bool? isComputed) : base(id, name, resourceType, systemData)
         {
             ColumnType = columnType;
             TemporalType = temporalType;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> The column data type. </summary>
-        public ColumnDataType? ColumnType { get; set; }
+        public SqlColumnDataType? ColumnType { get; set; }
         /// <summary> The table temporal type. </summary>
         public TableTemporalType? TemporalType { get; set; }
         /// <summary> Whether or not the column belongs to a memory optimized table. </summary>

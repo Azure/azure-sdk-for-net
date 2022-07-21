@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.True(ifExists);
 
             // NOT WORKING API
-            //ThroughputSettingsData throughtput = await database.GetMongoDBCollectionThroughputAsync();
+            //ThroughputSettingData throughtput = await database.GetMongoDBCollectionThroughputAsync();
             GremlinDatabaseResource database2 = await GremlinDatabaseCollection.GetAsync(_databaseName);
             Assert.AreEqual(_databaseName, database2.Data.Resource.DatabaseName);
             //Assert.AreEqual(TestThroughput1, database2.Data.Options.Throughput);
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             GremlinDatabaseThroughputSettingResource throughput = await database.GetGremlinDatabaseThroughputSetting().GetAsync();
             AssertManualThroughput(throughput.Data);
 
-            ThroughputSettingsData throughputData = (await throughput.MigrateGremlinDatabaseToAutoscaleAsync(WaitUntil.Completed)).Value.Data;
+            ThroughputSettingData throughputData = (await throughput.MigrateGremlinDatabaseToAutoscaleAsync(WaitUntil.Completed)).Value.Data;
             AssertAutoscale(throughputData);
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             GremlinDatabaseThroughputSettingResource throughput = await database.GetGremlinDatabaseThroughputSetting().GetAsync();
             AssertAutoscale(throughput.Data);
 
-            ThroughputSettingsData throughputData = (await throughput.MigrateGremlinDatabaseToManualThroughputAsync(WaitUntil.Completed)).Value.Data;
+            ThroughputSettingData throughputData = (await throughput.MigrateGremlinDatabaseToManualThroughputAsync(WaitUntil.Completed)).Value.Data;
             AssertManualThroughput(throughputData);
         }
 

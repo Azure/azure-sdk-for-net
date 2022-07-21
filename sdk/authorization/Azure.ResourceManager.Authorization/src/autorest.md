@@ -223,9 +223,6 @@ directive:
       from: RoleAssignmentScheduleRequestProperties
       to: RoleAssignmentSchedule
   - rename-model:
-      from: ProviderOperationsMetadata
-      to: ProviderOperations
-  - rename-model:
       from: UserSet
       to: UserInfo
 ```

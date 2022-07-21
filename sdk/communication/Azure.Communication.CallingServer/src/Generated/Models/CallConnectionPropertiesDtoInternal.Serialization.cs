@@ -8,10 +8,9 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Communication;
-using Azure.Communication.CallingServer;
 using Azure.Core;
 
-namespace Azure.Communication.CallingServer.Models
+namespace Azure.Communication.CallingServer
 {
     internal partial class CallConnectionPropertiesDtoInternal
     {
@@ -19,8 +18,7 @@ namespace Azure.Communication.CallingServer.Models
         {
             Optional<string> callConnectionId = default;
             Optional<string> serverCallId = default;
-            Optional<CommunicationIdentifierModel> source = default;
-            Optional<PhoneNumberIdentifierModel> alternateCallerId = default;
+            Optional<CallSourceDto> source = default;
             Optional<IReadOnlyList<CommunicationIdentifierModel>> targets = default;
             Optional<CallConnectionState> callConnectionState = default;
             Optional<string> subject = default;
@@ -44,17 +42,7 @@ namespace Azure.Communication.CallingServer.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    source = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("alternateCallerId"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    alternateCallerId = PhoneNumberIdentifierModel.DeserializePhoneNumberIdentifierModel(property.Value);
+                    source = CallSourceDto.DeserializeCallSourceDto(property.Value);
                     continue;
                 }
                 if (property.NameEquals("targets"))
@@ -93,7 +81,7 @@ namespace Azure.Communication.CallingServer.Models
                     continue;
                 }
             }
-            return new CallConnectionPropertiesDtoInternal(callConnectionId.Value, serverCallId.Value, source.Value, alternateCallerId.Value, Optional.ToList(targets), Optional.ToNullable(callConnectionState), subject.Value, callbackUri.Value);
+            return new CallConnectionPropertiesDtoInternal(callConnectionId.Value, serverCallId.Value, source.Value, Optional.ToList(targets), Optional.ToNullable(callConnectionState), subject.Value, callbackUri.Value);
         }
     }
 }

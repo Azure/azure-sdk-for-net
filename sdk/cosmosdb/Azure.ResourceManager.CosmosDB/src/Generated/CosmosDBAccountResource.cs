@@ -1743,14 +1743,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="sourceRegion"/> or <paramref name="targetRegion"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceRegion"/>, <paramref name="targetRegion"/> or <paramref name="filter"/> is null. </exception>
-        /// <returns> An async collection of <see cref="PercentileMetric" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PercentileMetric> GetMetricsPercentileSourceTargetsAsync(string sourceRegion, string targetRegion, string filter, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="CosmosDBPercentileMetric" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CosmosDBPercentileMetric> GetMetricsPercentileSourceTargetsAsync(string sourceRegion, string targetRegion, string filter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sourceRegion, nameof(sourceRegion));
             Argument.AssertNotNullOrEmpty(targetRegion, nameof(targetRegion));
             Argument.AssertNotNull(filter, nameof(filter));
 
-            async Task<Page<PercentileMetric>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<CosmosDBPercentileMetric>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _percentileSourceTargetClientDiagnostics.CreateScope("CosmosDBAccountResource.GetMetricsPercentileSourceTargets");
                 scope.Start();
@@ -1779,14 +1779,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="sourceRegion"/> or <paramref name="targetRegion"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceRegion"/>, <paramref name="targetRegion"/> or <paramref name="filter"/> is null. </exception>
-        /// <returns> A collection of <see cref="PercentileMetric" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PercentileMetric> GetMetricsPercentileSourceTargets(string sourceRegion, string targetRegion, string filter, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CosmosDBPercentileMetric" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CosmosDBPercentileMetric> GetMetricsPercentileSourceTargets(string sourceRegion, string targetRegion, string filter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sourceRegion, nameof(sourceRegion));
             Argument.AssertNotNullOrEmpty(targetRegion, nameof(targetRegion));
             Argument.AssertNotNull(filter, nameof(filter));
 
-            Page<PercentileMetric> FirstPageFunc(int? pageSizeHint)
+            Page<CosmosDBPercentileMetric> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _percentileSourceTargetClientDiagnostics.CreateScope("CosmosDBAccountResource.GetMetricsPercentileSourceTargets");
                 scope.Start();
@@ -1814,13 +1814,13 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="targetRegion"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="targetRegion"/> or <paramref name="filter"/> is null. </exception>
-        /// <returns> An async collection of <see cref="PercentileMetric" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PercentileMetric> GetMetricsPercentileTargetsAsync(string targetRegion, string filter, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="CosmosDBPercentileMetric" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CosmosDBPercentileMetric> GetMetricsPercentileTargetsAsync(string targetRegion, string filter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(targetRegion, nameof(targetRegion));
             Argument.AssertNotNull(filter, nameof(filter));
 
-            async Task<Page<PercentileMetric>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<CosmosDBPercentileMetric>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _percentileTargetClientDiagnostics.CreateScope("CosmosDBAccountResource.GetMetricsPercentileTargets");
                 scope.Start();
@@ -1848,13 +1848,13 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="targetRegion"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="targetRegion"/> or <paramref name="filter"/> is null. </exception>
-        /// <returns> A collection of <see cref="PercentileMetric" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PercentileMetric> GetMetricsPercentileTargets(string targetRegion, string filter, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CosmosDBPercentileMetric" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CosmosDBPercentileMetric> GetMetricsPercentileTargets(string targetRegion, string filter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(targetRegion, nameof(targetRegion));
             Argument.AssertNotNull(filter, nameof(filter));
 
-            Page<PercentileMetric> FirstPageFunc(int? pageSizeHint)
+            Page<CosmosDBPercentileMetric> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _percentileTargetClientDiagnostics.CreateScope("CosmosDBAccountResource.GetMetricsPercentileTargets");
                 scope.Start();
@@ -1880,12 +1880,12 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
-        /// <returns> An async collection of <see cref="PercentileMetric" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PercentileMetric> GetMetricsPercentilesAsync(string filter, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="CosmosDBPercentileMetric" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CosmosDBPercentileMetric> GetMetricsPercentilesAsync(string filter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(filter, nameof(filter));
 
-            async Task<Page<PercentileMetric>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<CosmosDBPercentileMetric>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _percentileClientDiagnostics.CreateScope("CosmosDBAccountResource.GetMetricsPercentiles");
                 scope.Start();
@@ -1911,12 +1911,12 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="filter"> An OData filter expression that describes a subset of metrics to return. The parameters that can be filtered are name.value (name of the metric, can have an or of multiple names), startTime, endTime, and timeGrain. The supported operator is eq. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
-        /// <returns> A collection of <see cref="PercentileMetric" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PercentileMetric> GetMetricsPercentiles(string filter, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CosmosDBPercentileMetric" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CosmosDBPercentileMetric> GetMetricsPercentiles(string filter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(filter, nameof(filter));
 
-            Page<PercentileMetric> FirstPageFunc(int? pageSizeHint)
+            Page<CosmosDBPercentileMetric> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _percentileClientDiagnostics.CreateScope("CosmosDBAccountResource.GetMetricsPercentiles");
                 scope.Start();

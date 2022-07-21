@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Minimal TLS version. Allowed values: &apos;None&apos;, &apos;1.0&apos;, &apos;1.1&apos;, &apos;1.2&apos;. </summary>
         public string MinimalTlsVersion { get; set; }
         /// <summary> The storage account type used to store backups for this instance. The options are Local (LocallyRedundantStorage), Zone (ZoneRedundantStorage), Geo (GeoRedundantStorage) and GeoZone(GeoZoneRedundantStorage). </summary>
-        public BackupStorageRedundancy? CurrentBackupStorageRedundancy { get; }
+        public SqlBackupStorageRedundancy? CurrentBackupStorageRedundancy { get; }
         /// <summary> The storage account type to be used to store backups for this instance. The options are Local (LocallyRedundantStorage), Zone (ZoneRedundantStorage), Geo (GeoRedundantStorage) and GeoZone(GeoZoneRedundantStorage). </summary>
-        public BackupStorageRedundancy? RequestedBackupStorageRedundancy { get; set; }
+        public SqlBackupStorageRedundancy? RequestedBackupStorageRedundancy { get; set; }
         /// <summary> Whether or not the multi-az is enabled. </summary>
         public bool? IsZoneRedundant { get; set; }
         /// <summary> The resource id of a user assigned identity to be used by default. </summary>
@@ -96,6 +96,6 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> The Azure Active Directory administrator of the server. </summary>
         public ManagedInstanceExternalAdministrator Administrators { get; set; }
         /// <summary> The managed instance&apos;s service principal. </summary>
-        public ServicePrincipal ServicePrincipal { get; set; }
+        public SqlServicePrincipal ServicePrincipal { get; set; }
     }
 }
