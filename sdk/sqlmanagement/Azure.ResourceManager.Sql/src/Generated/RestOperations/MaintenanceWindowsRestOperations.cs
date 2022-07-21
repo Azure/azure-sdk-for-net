@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="maintenanceWindowName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MaintenanceWindowData>> GetAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string maintenanceWindowName, CancellationToken cancellationToken = default)
+        public async Task<Response<MaintenanceWindowsData>> GetAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string maintenanceWindowName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -83,13 +83,13 @@ namespace Azure.ResourceManager.Sql
             {
                 case 200:
                     {
-                        MaintenanceWindowData value = default;
+                        MaintenanceWindowsData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MaintenanceWindowData.DeserializeMaintenanceWindowData(document.RootElement);
+                        value = MaintenanceWindowsData.DeserializeMaintenanceWindowsData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((MaintenanceWindowData)null, message.Response);
+                    return Response.FromValue((MaintenanceWindowsData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="maintenanceWindowName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MaintenanceWindowData> Get(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string maintenanceWindowName, CancellationToken cancellationToken = default)
+        public Response<MaintenanceWindowsData> Get(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string maintenanceWindowName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -118,19 +118,19 @@ namespace Azure.ResourceManager.Sql
             {
                 case 200:
                     {
-                        MaintenanceWindowData value = default;
+                        MaintenanceWindowsData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MaintenanceWindowData.DeserializeMaintenanceWindowData(document.RootElement);
+                        value = MaintenanceWindowsData.DeserializeMaintenanceWindowsData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((MaintenanceWindowData)null, message.Response);
+                    return Response.FromValue((MaintenanceWindowsData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string maintenanceWindowName, MaintenanceWindowData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string maintenanceWindowName, MaintenanceWindowsData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -163,11 +163,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="databaseName"> The name of the database to set maintenance windows for. </param>
         /// <param name="maintenanceWindowName"> Maintenance window name. </param>
-        /// <param name="data"> The MaintenanceWindow to use. </param>
+        /// <param name="data"> The MaintenanceWindows to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="maintenanceWindowName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string maintenanceWindowName, MaintenanceWindowData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string maintenanceWindowName, MaintenanceWindowsData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -193,11 +193,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="databaseName"> The name of the database to set maintenance windows for. </param>
         /// <param name="maintenanceWindowName"> Maintenance window name. </param>
-        /// <param name="data"> The MaintenanceWindow to use. </param>
+        /// <param name="data"> The MaintenanceWindows to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="maintenanceWindowName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string maintenanceWindowName, MaintenanceWindowData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string maintenanceWindowName, MaintenanceWindowsData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));

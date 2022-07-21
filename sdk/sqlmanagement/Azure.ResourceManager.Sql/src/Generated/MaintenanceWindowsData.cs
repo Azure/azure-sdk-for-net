@@ -12,22 +12,22 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the MaintenanceWindow data model. </summary>
-    public partial class MaintenanceWindowData : ResourceData
+    /// <summary> A class representing the MaintenanceWindows data model. </summary>
+    public partial class MaintenanceWindowsData : ResourceData
     {
-        /// <summary> Initializes a new instance of MaintenanceWindowData. </summary>
-        public MaintenanceWindowData()
+        /// <summary> Initializes a new instance of MaintenanceWindowsData. </summary>
+        public MaintenanceWindowsData()
         {
             TimeRanges = new ChangeTrackingList<MaintenanceWindowTimeRange>();
         }
 
-        /// <summary> Initializes a new instance of MaintenanceWindowData. </summary>
+        /// <summary> Initializes a new instance of MaintenanceWindowsData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="timeRanges"></param>
-        internal MaintenanceWindowData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<MaintenanceWindowTimeRange> timeRanges) : base(id, name, resourceType, systemData)
+        internal MaintenanceWindowsData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<MaintenanceWindowTimeRange> timeRanges) : base(id, name, resourceType, systemData)
         {
             TimeRanges = timeRanges;
         }

@@ -1930,20 +1930,20 @@ namespace Azure.ResourceManager.Sql
         }
         #endregion
 
-        #region MaintenanceWindowResource
+        #region MaintenanceWindowsResource
         /// <summary>
-        /// Gets an object representing a <see cref="MaintenanceWindowResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MaintenanceWindowResource.CreateResourceIdentifier" /> to create a <see cref="MaintenanceWindowResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MaintenanceWindowsResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MaintenanceWindowsResource.CreateResourceIdentifier" /> to create a <see cref="MaintenanceWindowsResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MaintenanceWindowResource" /> object. </returns>
-        public static MaintenanceWindowResource GetMaintenanceWindowResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MaintenanceWindowsResource" /> object. </returns>
+        public static MaintenanceWindowsResource GetMaintenanceWindowsResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                MaintenanceWindowResource.ValidateResourceId(id);
-                return new MaintenanceWindowResource(client, id);
+                MaintenanceWindowsResource.ValidateResourceId(id);
+                return new MaintenanceWindowsResource(client, id);
             }
             );
         }

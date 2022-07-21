@@ -384,11 +384,11 @@ namespace Azure.ResourceManager.Sql
             return new MaintenanceWindowOptionResource(Client, new ResourceIdentifier(Id.ToString() + "/maintenanceWindowOptions/current"));
         }
 
-        /// <summary> Gets an object representing a MaintenanceWindowResource along with the instance operations that can be performed on it in the SqlDatabase. </summary>
-        /// <returns> Returns a <see cref="MaintenanceWindowResource" /> object. </returns>
-        public virtual MaintenanceWindowResource GetMaintenanceWindow()
+        /// <summary> Gets an object representing a MaintenanceWindowsResource along with the instance operations that can be performed on it in the SqlDatabase. </summary>
+        /// <returns> Returns a <see cref="MaintenanceWindowsResource" /> object. </returns>
+        public virtual MaintenanceWindowsResource GetMaintenanceWindows()
         {
-            return new MaintenanceWindowResource(Client, new ResourceIdentifier(Id.ToString() + "/maintenanceWindows/current"));
+            return new MaintenanceWindowsResource(Client, new ResourceIdentifier(Id.ToString() + "/maintenanceWindows/current"));
         }
 
         /// <summary> Gets a collection of SqlServerDatabaseRestorePointResources in the SqlDatabase. </summary>

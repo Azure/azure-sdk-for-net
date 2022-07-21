@@ -13,7 +13,7 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class MaintenanceWindowData : IUtf8JsonSerializable
+    public partial class MaintenanceWindowsData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Sql
             writer.WriteEndObject();
         }
 
-        internal static MaintenanceWindowData DeserializeMaintenanceWindowData(JsonElement element)
+        internal static MaintenanceWindowsData DeserializeMaintenanceWindowsData(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new MaintenanceWindowData(id, name, type, systemData.Value, Optional.ToList(timeRanges));
+            return new MaintenanceWindowsData(id, name, type, systemData.Value, Optional.ToList(timeRanges));
         }
     }
 }
