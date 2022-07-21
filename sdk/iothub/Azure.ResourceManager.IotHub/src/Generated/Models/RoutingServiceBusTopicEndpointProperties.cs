@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
@@ -61,7 +62,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <summary> Managed identity properties of routing service bus topic endpoint. </summary>
         internal ManagedIdentity Identity { get; set; }
         /// <summary> The user assigned identity. </summary>
-        public string UserAssignedIdentity
+        public ResourceIdentifier UserAssignedIdentity
         {
             get => Identity is null ? default : Identity.UserAssignedIdentity;
             set

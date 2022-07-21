@@ -102,6 +102,7 @@ format-by-name-rules:
   '*Uris': 'Uri'
   'thumbprint': 'any'
   'certificate': 'any'
+  'UserAssignedIdentity': 'arm-id'
 
 rename-rules:
   CPU: Cpu
