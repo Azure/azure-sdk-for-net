@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             Optional<ResourceSkuLocationInfo> locationInfo = default;
             Optional<string> name = default;
             Optional<string> tier = default;
-            Optional<IReadOnlyList<ResourceSkuRestrictions>> restrictions = default;
+            Optional<IReadOnlyList<StoragePoolSkuRestrictions>> restrictions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("apiVersion"))
@@ -76,10 +76,10 @@ namespace Azure.ResourceManager.StoragePool.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ResourceSkuRestrictions> array = new List<ResourceSkuRestrictions>();
+                    List<StoragePoolSkuRestrictions> array = new List<StoragePoolSkuRestrictions>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceSkuRestrictions.DeserializeResourceSkuRestrictions(item));
+                        array.Add(StoragePoolSkuRestrictions.DeserializeStoragePoolSkuRestrictions(item));
                     }
                     restrictions = array;
                     continue;

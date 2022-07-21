@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.StoragePool.Models
         internal ResourceSkuInfo()
         {
             Capabilities = new ChangeTrackingList<ResourceSkuCapability>();
-            Restrictions = new ChangeTrackingList<ResourceSkuRestrictions>();
+            Restrictions = new ChangeTrackingList<StoragePoolSkuRestrictions>();
         }
 
         /// <summary> Initializes a new instance of ResourceSkuInfo. </summary>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.StoragePool.Models
         /// <param name="name"> Sku name. </param>
         /// <param name="tier"> Sku tier. </param>
         /// <param name="restrictions"> The restrictions because of which SKU cannot be used. This is empty if there are no restrictions. </param>
-        internal ResourceSkuInfo(string apiVersion, string resourceType, IReadOnlyList<ResourceSkuCapability> capabilities, ResourceSkuLocationInfo locationInfo, string name, string tier, IReadOnlyList<ResourceSkuRestrictions> restrictions)
+        internal ResourceSkuInfo(string apiVersion, string resourceType, IReadOnlyList<ResourceSkuCapability> capabilities, ResourceSkuLocationInfo locationInfo, string name, string tier, IReadOnlyList<StoragePoolSkuRestrictions> restrictions)
         {
             ApiVersion = apiVersion;
             ResourceType = resourceType;
@@ -52,6 +52,6 @@ namespace Azure.ResourceManager.StoragePool.Models
         /// <summary> Sku tier. </summary>
         public string Tier { get; }
         /// <summary> The restrictions because of which SKU cannot be used. This is empty if there are no restrictions. </summary>
-        public IReadOnlyList<ResourceSkuRestrictions> Restrictions { get; }
+        public IReadOnlyList<StoragePoolSkuRestrictions> Restrictions { get; }
     }
 }

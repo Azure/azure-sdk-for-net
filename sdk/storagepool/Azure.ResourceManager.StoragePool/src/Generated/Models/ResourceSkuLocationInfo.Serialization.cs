@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.StoragePool.Models
         {
             Optional<AzureLocation> location = default;
             Optional<IReadOnlyList<string>> zones = default;
-            Optional<IReadOnlyList<ResourceSkuZoneDetails>> zoneDetails = default;
+            Optional<IReadOnlyList<StoragePoolSkuZoneDetails>> zoneDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"))
@@ -52,10 +52,10 @@ namespace Azure.ResourceManager.StoragePool.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ResourceSkuZoneDetails> array = new List<ResourceSkuZoneDetails>();
+                    List<StoragePoolSkuZoneDetails> array = new List<StoragePoolSkuZoneDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceSkuZoneDetails.DeserializeResourceSkuZoneDetails(item));
+                        array.Add(StoragePoolSkuZoneDetails.DeserializeStoragePoolSkuZoneDetails(item));
                     }
                     zoneDetails = array;
                     continue;

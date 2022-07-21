@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.StoragePool.Models
     {
         internal static IscsiTargetList DeserializeIscsiTargetList(JsonElement element)
         {
-            IReadOnlyList<IscsiTargetData> value = default;
+            IReadOnlyList<StoragePoolIscsiTargetData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<IscsiTargetData> array = new List<IscsiTargetData>();
+                    List<StoragePoolIscsiTargetData> array = new List<StoragePoolIscsiTargetData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IscsiTargetData.DeserializeIscsiTargetData(item));
+                        array.Add(StoragePoolIscsiTargetData.DeserializeStoragePoolIscsiTargetData(item));
                     }
                     value = array;
                     continue;

@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.StoragePool.Models
         internal ResourceSkuLocationInfo()
         {
             Zones = new ChangeTrackingList<string>();
-            ZoneDetails = new ChangeTrackingList<ResourceSkuZoneDetails>();
+            ZoneDetails = new ChangeTrackingList<StoragePoolSkuZoneDetails>();
         }
 
         /// <summary> Initializes a new instance of ResourceSkuLocationInfo. </summary>
         /// <param name="location"> Location of the SKU. </param>
         /// <param name="zones"> List of availability zones where the SKU is supported. </param>
         /// <param name="zoneDetails"> Details of capabilities available to a SKU in specific zones. </param>
-        internal ResourceSkuLocationInfo(AzureLocation? location, IReadOnlyList<string> zones, IReadOnlyList<ResourceSkuZoneDetails> zoneDetails)
+        internal ResourceSkuLocationInfo(AzureLocation? location, IReadOnlyList<string> zones, IReadOnlyList<StoragePoolSkuZoneDetails> zoneDetails)
         {
             Location = location;
             Zones = zones;
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.StoragePool.Models
         /// <summary> List of availability zones where the SKU is supported. </summary>
         public IReadOnlyList<string> Zones { get; }
         /// <summary> Details of capabilities available to a SKU in specific zones. </summary>
-        public IReadOnlyList<ResourceSkuZoneDetails> ZoneDetails { get; }
+        public IReadOnlyList<StoragePoolSkuZoneDetails> ZoneDetails { get; }
     }
 }

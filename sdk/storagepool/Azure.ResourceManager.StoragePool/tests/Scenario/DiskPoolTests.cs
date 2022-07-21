@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.StoragePool.Tests
             var diskPoolCollection = _resourceGroup.GetDiskPools();
 
             var sku = new StoragePoolSku("Standard_S1");
-            var diskPoolCreate = new DiskPoolCreateOrUpdateContent(sku, DefaultLocation, SubnetResourceId) {};
+            var diskPoolCreate = new DiskPoolCreateOrUpdateContent(sku, DefaultLocation, new Core.ResourceIdentifier(SubnetResourceId)) {};
             diskPoolCreate.AvailabilityZones.Add("1");
             // the following additional capability is not needed for non-test disk pools
             diskPoolCreate.AdditionalCapabilities.Add("DiskPool.SkipInfrastructureDeployment");

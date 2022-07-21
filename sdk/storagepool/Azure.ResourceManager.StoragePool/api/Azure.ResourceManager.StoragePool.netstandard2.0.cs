@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.StoragePool
     }
     public partial class DiskPoolData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public DiskPoolData(Azure.Core.AzureLocation location, Azure.ResourceManager.StoragePool.Models.ProvisioningState provisioningState, System.Collections.Generic.IEnumerable<string> availabilityZones, Azure.ResourceManager.StoragePool.Models.OperationalStatus status, string subnetId) : base (default(Azure.Core.AzureLocation)) { }
+        public DiskPoolData(Azure.Core.AzureLocation location, Azure.ResourceManager.StoragePool.Models.ProvisioningState provisioningState, System.Collections.Generic.IEnumerable<string> availabilityZones, Azure.ResourceManager.StoragePool.Models.OperationalStatus status, Azure.Core.ResourceIdentifier subnetId) : base (default(Azure.Core.AzureLocation)) { }
         public System.Collections.Generic.IList<string> AdditionalCapabilities { get { throw null; } }
         public System.Collections.Generic.IList<string> AvailabilityZones { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> Disks { get { throw null; } }
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.StoragePool
         public Azure.ResourceManager.StoragePool.Models.ProvisioningState ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.StoragePool.Models.StoragePoolSku Sku { get { throw null; } set { } }
         public Azure.ResourceManager.StoragePool.Models.OperationalStatus Status { get { throw null; } set { } }
-        public string SubnetId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
     }
     public partial class DiskPoolResource : Azure.ResourceManager.ArmResource
     {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.StoragePool.Models
     }
     public partial class DiskPoolCreateOrUpdateContent : Azure.ResourceManager.Models.ResourceData
     {
-        public DiskPoolCreateOrUpdateContent(Azure.ResourceManager.StoragePool.Models.StoragePoolSku sku, Azure.Core.AzureLocation location, string subnetId) { }
+        public DiskPoolCreateOrUpdateContent(Azure.ResourceManager.StoragePool.Models.StoragePoolSku sku, Azure.Core.AzureLocation location, Azure.Core.ResourceIdentifier subnetId) { }
         public System.Collections.Generic.IList<string> AdditionalCapabilities { get { throw null; } }
         public System.Collections.Generic.IList<string> AvailabilityZones { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> Disks { get { throw null; } }
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.StoragePool.Models
         public string ManagedBy { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> ManagedByExtended { get { throw null; } }
         public Azure.ResourceManager.StoragePool.Models.StoragePoolSku Sku { get { throw null; } }
-        public string SubnetId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class DiskPoolPatch

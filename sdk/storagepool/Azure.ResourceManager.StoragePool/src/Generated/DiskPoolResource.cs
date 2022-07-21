@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.StoragePool
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of IscsiTargetResources in the DiskPool. </summary>
-        /// <returns> An object representing collection of IscsiTargetResources and their operations over a IscsiTargetResource. </returns>
-        public virtual IscsiTargetCollection GetIscsiTargets()
+        /// <summary> Gets a collection of StoragePoolIscsiTargetResources in the DiskPool. </summary>
+        /// <returns> An object representing collection of StoragePoolIscsiTargetResources and their operations over a StoragePoolIscsiTargetResource. </returns>
+        public virtual StoragePoolIscsiTargetCollection GetStoragePoolIscsiTargets()
         {
-            return GetCachedClient(Client => new IscsiTargetCollection(Client, Id));
+            return GetCachedClient(Client => new StoragePoolIscsiTargetCollection(Client, Id));
         }
 
         /// <summary>
@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.StoragePool
         /// <exception cref="ArgumentException"> <paramref name="iscsiTargetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="iscsiTargetName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<IscsiTargetResource>> GetIscsiTargetAsync(string iscsiTargetName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StoragePoolIscsiTargetResource>> GetStoragePoolIscsiTargetAsync(string iscsiTargetName, CancellationToken cancellationToken = default)
         {
-            return await GetIscsiTargets().GetAsync(iscsiTargetName, cancellationToken).ConfigureAwait(false);
+            return await GetStoragePoolIscsiTargets().GetAsync(iscsiTargetName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -121,9 +121,9 @@ namespace Azure.ResourceManager.StoragePool
         /// <exception cref="ArgumentException"> <paramref name="iscsiTargetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="iscsiTargetName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<IscsiTargetResource> GetIscsiTarget(string iscsiTargetName, CancellationToken cancellationToken = default)
+        public virtual Response<StoragePoolIscsiTargetResource> GetStoragePoolIscsiTarget(string iscsiTargetName, CancellationToken cancellationToken = default)
         {
-            return GetIscsiTargets().Get(iscsiTargetName, cancellationToken);
+            return GetStoragePoolIscsiTargets().Get(iscsiTargetName, cancellationToken);
         }
 
         /// <summary>

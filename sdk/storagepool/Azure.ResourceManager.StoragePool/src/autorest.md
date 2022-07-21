@@ -22,6 +22,17 @@ format-by-name-rules:
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
+  'SubnetId': 'arm-id'
+
+rename-mapping:
+  IscsiLun: ManagedDiskIscsiLun
+  ResourceSkuZoneDetails: StoragePoolSkuZoneDetails
+  ResourceSkuRestrictions: StoragePoolSkuRestrictions
+  ResourceSkuRestrictionsType: StoragePoolSkuRestrictionsType
+  ResourceSkuRestrictionsReasonCode: StoragePoolSkuRestrictionsReasonCode
+
+prepend-rp-prefix:
+  - IscsiTarget
 
 rename-rules:
   CPU: Cpu
@@ -47,9 +58,6 @@ rename-rules:
   Etag: ETag|etag
 
 directive:
-  - rename-model:
-      from: Configuration
-      to: ProductConfiguration
   - from: swagger-document
     where: "$.definitions.DiskPool.properties.sku"
     transform: >

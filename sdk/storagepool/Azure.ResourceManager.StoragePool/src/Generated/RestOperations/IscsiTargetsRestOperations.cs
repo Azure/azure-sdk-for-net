@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.StoragePool
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string diskPoolName, string iscsiTargetName, IscsiTargetCreateOrUpdateContent content)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string diskPoolName, string iscsiTargetName, StoragePoolIscsiTargetCreateOrUpdateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="diskPoolName"/>, <paramref name="iscsiTargetName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="diskPoolName"/> or <paramref name="iscsiTargetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string diskPoolName, string iscsiTargetName, IscsiTargetCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string diskPoolName, string iscsiTargetName, StoragePoolIscsiTargetCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="diskPoolName"/>, <paramref name="iscsiTargetName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="diskPoolName"/> or <paramref name="iscsiTargetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string diskPoolName, string iscsiTargetName, IscsiTargetCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string diskPoolName, string iscsiTargetName, StoragePoolIscsiTargetCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.StoragePool
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string diskPoolName, string iscsiTargetName, IscsiTargetPatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string diskPoolName, string iscsiTargetName, StoragePoolIscsiTargetPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="diskPoolName"/>, <paramref name="iscsiTargetName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="diskPoolName"/> or <paramref name="iscsiTargetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string diskPoolName, string iscsiTargetName, IscsiTargetPatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string diskPoolName, string iscsiTargetName, StoragePoolIscsiTargetPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="diskPoolName"/>, <paramref name="iscsiTargetName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="diskPoolName"/> or <paramref name="iscsiTargetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string diskPoolName, string iscsiTargetName, IscsiTargetPatch patch, CancellationToken cancellationToken = default)
+        public Response Update(string subscriptionId, string resourceGroupName, string diskPoolName, string iscsiTargetName, StoragePoolIscsiTargetPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="diskPoolName"/> or <paramref name="iscsiTargetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="diskPoolName"/> or <paramref name="iscsiTargetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IscsiTargetData>> GetAsync(string subscriptionId, string resourceGroupName, string diskPoolName, string iscsiTargetName, CancellationToken cancellationToken = default)
+        public async Task<Response<StoragePoolIscsiTargetData>> GetAsync(string subscriptionId, string resourceGroupName, string diskPoolName, string iscsiTargetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -405,13 +405,13 @@ namespace Azure.ResourceManager.StoragePool
             {
                 case 200:
                     {
-                        IscsiTargetData value = default;
+                        StoragePoolIscsiTargetData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = IscsiTargetData.DeserializeIscsiTargetData(document.RootElement);
+                        value = StoragePoolIscsiTargetData.DeserializeStoragePoolIscsiTargetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((IscsiTargetData)null, message.Response);
+                    return Response.FromValue((StoragePoolIscsiTargetData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="diskPoolName"/> or <paramref name="iscsiTargetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="diskPoolName"/> or <paramref name="iscsiTargetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IscsiTargetData> Get(string subscriptionId, string resourceGroupName, string diskPoolName, string iscsiTargetName, CancellationToken cancellationToken = default)
+        public Response<StoragePoolIscsiTargetData> Get(string subscriptionId, string resourceGroupName, string diskPoolName, string iscsiTargetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -438,13 +438,13 @@ namespace Azure.ResourceManager.StoragePool
             {
                 case 200:
                     {
-                        IscsiTargetData value = default;
+                        StoragePoolIscsiTargetData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = IscsiTargetData.DeserializeIscsiTargetData(document.RootElement);
+                        value = StoragePoolIscsiTargetData.DeserializeStoragePoolIscsiTargetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((IscsiTargetData)null, message.Response);
+                    return Response.FromValue((StoragePoolIscsiTargetData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

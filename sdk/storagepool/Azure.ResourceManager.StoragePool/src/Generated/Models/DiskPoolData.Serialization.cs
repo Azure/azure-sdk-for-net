@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.StoragePool
             IList<string> availabilityZones = default;
             OperationalStatus status = default;
             Optional<IList<WritableSubResource>> disks = default;
-            string subnetId = default;
+            ResourceIdentifier subnetId = default;
             Optional<IList<string>> additionalCapabilities = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.StoragePool
                         }
                         if (property0.NameEquals("subnetId"))
                         {
-                            subnetId = property0.Value.GetString();
+                            subnetId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("additionalCapabilities"))

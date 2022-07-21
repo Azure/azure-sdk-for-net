@@ -178,20 +178,20 @@ namespace Azure.ResourceManager.StoragePool
         }
         #endregion
 
-        #region IscsiTargetResource
+        #region StoragePoolIscsiTargetResource
         /// <summary>
-        /// Gets an object representing an <see cref="IscsiTargetResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="IscsiTargetResource.CreateResourceIdentifier" /> to create an <see cref="IscsiTargetResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="StoragePoolIscsiTargetResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StoragePoolIscsiTargetResource.CreateResourceIdentifier" /> to create a <see cref="StoragePoolIscsiTargetResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IscsiTargetResource" /> object. </returns>
-        public static IscsiTargetResource GetIscsiTargetResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="StoragePoolIscsiTargetResource" /> object. </returns>
+        public static StoragePoolIscsiTargetResource GetStoragePoolIscsiTargetResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                IscsiTargetResource.ValidateResourceId(id);
-                return new IscsiTargetResource(client, id);
+                StoragePoolIscsiTargetResource.ValidateResourceId(id);
+                return new StoragePoolIscsiTargetResource(client, id);
             }
             );
         }
