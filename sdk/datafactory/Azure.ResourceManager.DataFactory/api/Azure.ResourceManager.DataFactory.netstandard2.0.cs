@@ -620,8 +620,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class AmazonRdsForOracleLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
     {
-        public AmazonRdsForOracleLinkedService(System.BinaryData connectionString) { }
-        public System.BinaryData ConnectionString { get { throw null; } set { } }
+        public AmazonRdsForOracleLinkedService(string connectionString) { }
+        public string ConnectionString { get { throw null; } set { } }
         public System.BinaryData EncryptedCredential { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.SecretBase Password { get { throw null; } set { } }
     }
@@ -650,9 +650,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class AmazonRdsForSqlServerLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
     {
-        public AmazonRdsForSqlServerLinkedService(System.BinaryData connectionString) { }
+        public AmazonRdsForSqlServerLinkedService(string connectionString) { }
         public Azure.ResourceManager.DataFactory.Models.SqlAlwaysEncryptedProperties AlwaysEncryptedSettings { get { throw null; } set { } }
-        public System.BinaryData ConnectionString { get { throw null; } set { } }
+        public string ConnectionString { get { throw null; } set { } }
         public System.BinaryData EncryptedCredential { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.SecretBase Password { get { throw null; } set { } }
         public System.BinaryData UserName { get { throw null; } set { } }
@@ -908,7 +908,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public Azure.ResourceManager.DataFactory.Models.AzureKeyVaultSecretReference AccountKey { get { throw null; } set { } }
         public string AccountKind { get { throw null; } set { } }
         public System.BinaryData AzureCloudType { get { throw null; } set { } }
-        public System.BinaryData ConnectionString { get { throw null; } set { } }
+        public string ConnectionString { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.CredentialReference Credential { get { throw null; } set { } }
         public string EncryptedCredential { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.AzureKeyVaultSecretReference SasToken { get { throw null; } set { } }
@@ -1114,7 +1114,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         public AzureFileStorageLinkedService() { }
         public Azure.ResourceManager.DataFactory.Models.AzureKeyVaultSecretReference AccountKey { get { throw null; } set { } }
-        public System.BinaryData ConnectionString { get { throw null; } set { } }
+        public string ConnectionString { get { throw null; } set { } }
         public System.BinaryData EncryptedCredential { get { throw null; } set { } }
         public System.BinaryData FileShare { get { throw null; } set { } }
         public System.BinaryData Host { get { throw null; } set { } }
@@ -1203,7 +1203,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class AzureMariaDBLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
     {
         public AzureMariaDBLinkedService() { }
-        public System.BinaryData ConnectionString { get { throw null; } set { } }
+        public string ConnectionString { get { throw null; } set { } }
         public System.BinaryData EncryptedCredential { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.AzureKeyVaultSecretReference Pwd { get { throw null; } set { } }
     }
@@ -1274,8 +1274,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class AzureMySqlLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
     {
-        public AzureMySqlLinkedService(System.BinaryData connectionString) { }
-        public System.BinaryData ConnectionString { get { throw null; } set { } }
+        public AzureMySqlLinkedService(string connectionString) { }
+        public string ConnectionString { get { throw null; } set { } }
         public System.BinaryData EncryptedCredential { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.AzureKeyVaultSecretReference Password { get { throw null; } set { } }
     }
@@ -1298,7 +1298,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class AzurePostgreSqlLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
     {
         public AzurePostgreSqlLinkedService() { }
-        public System.BinaryData ConnectionString { get { throw null; } set { } }
+        public string ConnectionString { get { throw null; } set { } }
         public System.BinaryData EncryptedCredential { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.AzureKeyVaultSecretReference Password { get { throw null; } set { } }
     }
@@ -1360,10 +1360,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class AzureSqlDatabaseLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
     {
-        public AzureSqlDatabaseLinkedService(System.BinaryData connectionString) { }
+        public AzureSqlDatabaseLinkedService(string connectionString) { }
         public Azure.ResourceManager.DataFactory.Models.SqlAlwaysEncryptedProperties AlwaysEncryptedSettings { get { throw null; } set { } }
         public System.BinaryData AzureCloudType { get { throw null; } set { } }
-        public System.BinaryData ConnectionString { get { throw null; } set { } }
+        public string ConnectionString { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.CredentialReference Credential { get { throw null; } set { } }
         public System.BinaryData EncryptedCredential { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.AzureKeyVaultSecretReference Password { get { throw null; } set { } }
@@ -1373,9 +1373,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class AzureSqlDWLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
     {
-        public AzureSqlDWLinkedService(System.BinaryData connectionString) { }
+        public AzureSqlDWLinkedService(string connectionString) { }
         public System.BinaryData AzureCloudType { get { throw null; } set { } }
-        public System.BinaryData ConnectionString { get { throw null; } set { } }
+        public string ConnectionString { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.CredentialReference Credential { get { throw null; } set { } }
         public System.BinaryData EncryptedCredential { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.AzureKeyVaultSecretReference Password { get { throw null; } set { } }
@@ -1392,10 +1392,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class AzureSqlMILinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
     {
-        public AzureSqlMILinkedService(System.BinaryData connectionString) { }
+        public AzureSqlMILinkedService(string connectionString) { }
         public Azure.ResourceManager.DataFactory.Models.SqlAlwaysEncryptedProperties AlwaysEncryptedSettings { get { throw null; } set { } }
         public System.BinaryData AzureCloudType { get { throw null; } set { } }
-        public System.BinaryData ConnectionString { get { throw null; } set { } }
+        public string ConnectionString { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.CredentialReference Credential { get { throw null; } set { } }
         public System.BinaryData EncryptedCredential { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.AzureKeyVaultSecretReference Password { get { throw null; } set { } }
@@ -1444,7 +1444,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         public AzureStorageLinkedService() { }
         public Azure.ResourceManager.DataFactory.Models.AzureKeyVaultSecretReference AccountKey { get { throw null; } set { } }
-        public System.BinaryData ConnectionString { get { throw null; } set { } }
+        public string ConnectionString { get { throw null; } set { } }
         public string EncryptedCredential { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.AzureKeyVaultSecretReference SasToken { get { throw null; } set { } }
         public System.BinaryData SasUri { get { throw null; } set { } }
@@ -1472,7 +1472,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         public AzureTableStorageLinkedService() { }
         public Azure.ResourceManager.DataFactory.Models.AzureKeyVaultSecretReference AccountKey { get { throw null; } set { } }
-        public System.BinaryData ConnectionString { get { throw null; } set { } }
+        public string ConnectionString { get { throw null; } set { } }
         public string EncryptedCredential { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.AzureKeyVaultSecretReference SasToken { get { throw null; } set { } }
         public System.BinaryData SasUri { get { throw null; } set { } }
@@ -1761,7 +1761,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public Azure.ResourceManager.DataFactory.Models.SecretBase AccountKey { get { throw null; } set { } }
         public System.BinaryData AzureCloudType { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.CosmosDbConnectionMode? ConnectionMode { get { throw null; } set { } }
-        public System.BinaryData ConnectionString { get { throw null; } set { } }
+        public string ConnectionString { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.CredentialReference Credential { get { throw null; } set { } }
         public System.BinaryData Database { get { throw null; } set { } }
         public System.BinaryData EncryptedCredential { get { throw null; } set { } }
@@ -1777,8 +1777,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class CosmosDbMongoDbApiLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
     {
-        public CosmosDbMongoDbApiLinkedService(System.BinaryData connectionString, System.BinaryData database) { }
-        public System.BinaryData ConnectionString { get { throw null; } set { } }
+        public CosmosDbMongoDbApiLinkedService(string connectionString, System.BinaryData database) { }
+        public string ConnectionString { get { throw null; } set { } }
         public System.BinaryData Database { get { throw null; } set { } }
         public System.BinaryData IsServerVersionAbove32 { get { throw null; } set { } }
     }
@@ -1836,7 +1836,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class CouchbaseLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
     {
         public CouchbaseLinkedService() { }
-        public System.BinaryData ConnectionString { get { throw null; } set { } }
+        public string ConnectionString { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.AzureKeyVaultSecretReference CredString { get { throw null; } set { } }
         public System.BinaryData EncryptedCredential { get { throw null; } set { } }
     }
@@ -2279,7 +2279,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public Db2LinkedService() { }
         public Azure.ResourceManager.DataFactory.Models.Db2AuthenticationType? AuthenticationType { get { throw null; } set { } }
         public System.BinaryData CertificateCommonName { get { throw null; } set { } }
-        public System.BinaryData ConnectionString { get { throw null; } set { } }
+        public string ConnectionString { get { throw null; } set { } }
         public System.BinaryData Database { get { throw null; } set { } }
         public System.BinaryData EncryptedCredential { get { throw null; } set { } }
         public System.BinaryData PackageCollection { get { throw null; } set { } }
@@ -2408,7 +2408,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class DrillLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
     {
         public DrillLinkedService() { }
-        public System.BinaryData ConnectionString { get { throw null; } set { } }
+        public string ConnectionString { get { throw null; } set { } }
         public System.BinaryData EncryptedCredential { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.AzureKeyVaultSecretReference Pwd { get { throw null; } set { } }
     }
@@ -3115,7 +3115,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class GreenplumLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
     {
         public GreenplumLinkedService() { }
-        public System.BinaryData ConnectionString { get { throw null; } set { } }
+        public string ConnectionString { get { throw null; } set { } }
         public System.BinaryData EncryptedCredential { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.AzureKeyVaultSecretReference Pwd { get { throw null; } set { } }
     }
@@ -3575,9 +3575,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class InformixLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
     {
-        public InformixLinkedService(System.BinaryData connectionString) { }
+        public InformixLinkedService(string connectionString) { }
         public System.BinaryData AuthenticationType { get { throw null; } set { } }
-        public System.BinaryData ConnectionString { get { throw null; } set { } }
+        public string ConnectionString { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.SecretBase Credential { get { throw null; } set { } }
         public System.BinaryData EncryptedCredential { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.SecretBase Password { get { throw null; } set { } }
@@ -4249,7 +4249,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class MariaDBLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
     {
         public MariaDBLinkedService() { }
-        public System.BinaryData ConnectionString { get { throw null; } set { } }
+        public string ConnectionString { get { throw null; } set { } }
         public System.BinaryData EncryptedCredential { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.AzureKeyVaultSecretReference Pwd { get { throw null; } set { } }
     }
@@ -4292,9 +4292,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class MicrosoftAccessLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
     {
-        public MicrosoftAccessLinkedService(System.BinaryData connectionString) { }
+        public MicrosoftAccessLinkedService(string connectionString) { }
         public System.BinaryData AuthenticationType { get { throw null; } set { } }
-        public System.BinaryData ConnectionString { get { throw null; } set { } }
+        public string ConnectionString { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.SecretBase Credential { get { throw null; } set { } }
         public System.BinaryData EncryptedCredential { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.SecretBase Password { get { throw null; } set { } }
@@ -4323,8 +4323,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class MongoDbAtlasLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
     {
-        public MongoDbAtlasLinkedService(System.BinaryData connectionString, System.BinaryData database) { }
-        public System.BinaryData ConnectionString { get { throw null; } set { } }
+        public MongoDbAtlasLinkedService(string connectionString, System.BinaryData database) { }
+        public string ConnectionString { get { throw null; } set { } }
         public System.BinaryData Database { get { throw null; } set { } }
     }
     public partial class MongoDbAtlasSink : Azure.ResourceManager.DataFactory.Models.CopySink
@@ -4400,8 +4400,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class MongoDbV2LinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
     {
-        public MongoDbV2LinkedService(System.BinaryData connectionString, System.BinaryData database) { }
-        public System.BinaryData ConnectionString { get { throw null; } set { } }
+        public MongoDbV2LinkedService(string connectionString, System.BinaryData database) { }
+        public string ConnectionString { get { throw null; } set { } }
         public System.BinaryData Database { get { throw null; } set { } }
     }
     public partial class MongoDbV2Sink : Azure.ResourceManager.DataFactory.Models.CopySink
@@ -4425,8 +4425,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class MySqlLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
     {
-        public MySqlLinkedService(System.BinaryData connectionString) { }
-        public System.BinaryData ConnectionString { get { throw null; } set { } }
+        public MySqlLinkedService(string connectionString) { }
+        public string ConnectionString { get { throw null; } set { } }
         public System.BinaryData EncryptedCredential { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.AzureKeyVaultSecretReference Password { get { throw null; } set { } }
     }
@@ -4443,7 +4443,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class NetezzaLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
     {
         public NetezzaLinkedService() { }
-        public System.BinaryData ConnectionString { get { throw null; } set { } }
+        public string ConnectionString { get { throw null; } set { } }
         public System.BinaryData EncryptedCredential { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.AzureKeyVaultSecretReference Pwd { get { throw null; } set { } }
     }
@@ -4539,9 +4539,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class OdbcLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
     {
-        public OdbcLinkedService(System.BinaryData connectionString) { }
+        public OdbcLinkedService(string connectionString) { }
         public System.BinaryData AuthenticationType { get { throw null; } set { } }
-        public System.BinaryData ConnectionString { get { throw null; } set { } }
+        public string ConnectionString { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.SecretBase Credential { get { throw null; } set { } }
         public System.BinaryData EncryptedCredential { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.SecretBase Password { get { throw null; } set { } }
@@ -4617,8 +4617,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class OracleLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
     {
-        public OracleLinkedService(System.BinaryData connectionString) { }
-        public System.BinaryData ConnectionString { get { throw null; } set { } }
+        public OracleLinkedService(string connectionString) { }
+        public string ConnectionString { get { throw null; } set { } }
         public System.BinaryData EncryptedCredential { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.AzureKeyVaultSecretReference Password { get { throw null; } set { } }
     }
@@ -4911,8 +4911,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class PostgreSqlLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
     {
-        public PostgreSqlLinkedService(System.BinaryData connectionString) { }
-        public System.BinaryData ConnectionString { get { throw null; } set { } }
+        public PostgreSqlLinkedService(string connectionString) { }
+        public string ConnectionString { get { throw null; } set { } }
         public System.BinaryData EncryptedCredential { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.AzureKeyVaultSecretReference Password { get { throw null; } set { } }
     }
@@ -5562,7 +5562,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         public SapHanaLinkedService() { }
         public Azure.ResourceManager.DataFactory.Models.SapHanaAuthenticationType? AuthenticationType { get { throw null; } set { } }
-        public System.BinaryData ConnectionString { get { throw null; } set { } }
+        public string ConnectionString { get { throw null; } set { } }
         public System.BinaryData EncryptedCredential { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.SecretBase Password { get { throw null; } set { } }
         public System.BinaryData Server { get { throw null; } set { } }
@@ -6093,8 +6093,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class SnowflakeLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
     {
-        public SnowflakeLinkedService(System.BinaryData connectionString) { }
-        public System.BinaryData ConnectionString { get { throw null; } set { } }
+        public SnowflakeLinkedService(string connectionString) { }
+        public string ConnectionString { get { throw null; } set { } }
         public System.BinaryData EncryptedCredential { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.AzureKeyVaultSecretReference Password { get { throw null; } set { } }
     }
@@ -6285,9 +6285,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class SqlServerLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
     {
-        public SqlServerLinkedService(System.BinaryData connectionString) { }
+        public SqlServerLinkedService(string connectionString) { }
         public Azure.ResourceManager.DataFactory.Models.SqlAlwaysEncryptedProperties AlwaysEncryptedSettings { get { throw null; } set { } }
-        public System.BinaryData ConnectionString { get { throw null; } set { } }
+        public string ConnectionString { get { throw null; } set { } }
         public System.BinaryData EncryptedCredential { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.SecretBase Password { get { throw null; } set { } }
         public System.BinaryData UserName { get { throw null; } set { } }
@@ -6724,7 +6724,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         public TeradataLinkedService() { }
         public Azure.ResourceManager.DataFactory.Models.TeradataAuthenticationType? AuthenticationType { get { throw null; } set { } }
-        public System.BinaryData ConnectionString { get { throw null; } set { } }
+        public string ConnectionString { get { throw null; } set { } }
         public System.BinaryData EncryptedCredential { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.SecretBase Password { get { throw null; } set { } }
         public System.BinaryData Server { get { throw null; } set { } }
@@ -6979,7 +6979,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class VerticaLinkedService : Azure.ResourceManager.DataFactory.Models.LinkedService
     {
         public VerticaLinkedService() { }
-        public System.BinaryData ConnectionString { get { throw null; } set { } }
+        public string ConnectionString { get { throw null; } set { } }
         public System.BinaryData EncryptedCredential { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.AzureKeyVaultSecretReference Pwd { get { throw null; } set { } }
     }
