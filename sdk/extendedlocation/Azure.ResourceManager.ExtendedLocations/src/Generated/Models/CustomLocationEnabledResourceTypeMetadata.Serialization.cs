@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ExtendedLocations.Models
 {
-    public partial class EnabledResourceTypePropertiesTypesMetadataItem : IUtf8JsonSerializable
+    public partial class CustomLocationEnabledResourceTypeMetadata : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             writer.WriteEndObject();
         }
 
-        internal static EnabledResourceTypePropertiesTypesMetadataItem DeserializeEnabledResourceTypePropertiesTypesMetadataItem(JsonElement element)
+        internal static CustomLocationEnabledResourceTypeMetadata DeserializeCustomLocationEnabledResourceTypeMetadata(JsonElement element)
         {
             Optional<string> apiVersion = default;
             Optional<string> resourceProviderNamespace = default;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                     continue;
                 }
             }
-            return new EnabledResourceTypePropertiesTypesMetadataItem(apiVersion.Value, resourceProviderNamespace.Value, resourceType.Value);
+            return new CustomLocationEnabledResourceTypeMetadata(apiVersion.Value, resourceProviderNamespace.Value, resourceType.Value);
         }
     }
 }

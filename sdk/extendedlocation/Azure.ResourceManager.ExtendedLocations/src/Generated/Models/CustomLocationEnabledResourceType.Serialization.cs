@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ExtendedLocations.Models
 {
-    public partial class EnabledResourceType : IUtf8JsonSerializable
+    public partial class CustomLocationEnabledResourceType : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -43,15 +43,15 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             writer.WriteEndObject();
         }
 
-        internal static EnabledResourceType DeserializeEnabledResourceType(JsonElement element)
+        internal static CustomLocationEnabledResourceType DeserializeCustomLocationEnabledResourceType(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> clusterExtensionId = default;
+            Optional<ResourceIdentifier> clusterExtensionId = default;
             Optional<string> extensionType = default;
-            Optional<IList<EnabledResourceTypePropertiesTypesMetadataItem>> typesMetadata = default;
+            Optional<IList<CustomLocationEnabledResourceTypeMetadata>> typesMetadata = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -90,7 +90,12 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                     {
                         if (property0.NameEquals("clusterExtensionId"))
                         {
-                            clusterExtensionId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            clusterExtensionId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("extensionType"))
@@ -105,10 +110,10 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<EnabledResourceTypePropertiesTypesMetadataItem> array = new List<EnabledResourceTypePropertiesTypesMetadataItem>();
+                            List<CustomLocationEnabledResourceTypeMetadata> array = new List<CustomLocationEnabledResourceTypeMetadata>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(EnabledResourceTypePropertiesTypesMetadataItem.DeserializeEnabledResourceTypePropertiesTypesMetadataItem(item));
+                                array.Add(CustomLocationEnabledResourceTypeMetadata.DeserializeCustomLocationEnabledResourceTypeMetadata(item));
                             }
                             typesMetadata = array;
                             continue;
@@ -117,7 +122,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                     continue;
                 }
             }
-            return new EnabledResourceType(id, name, type, systemData.Value, clusterExtensionId.Value, extensionType.Value, Optional.ToList(typesMetadata));
+            return new CustomLocationEnabledResourceType(id, name, type, systemData.Value, clusterExtensionId.Value, extensionType.Value, Optional.ToList(typesMetadata));
         }
     }
 }
