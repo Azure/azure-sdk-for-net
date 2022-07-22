@@ -10,7 +10,7 @@ skip-csproj: true
 library-name: MySql
 
 batch:
-  - tag: package-2020-01-01
+#   - tag: package-2020-01-01
   - tag: package-flexibleserver-2021-05-01
 ```
 
@@ -196,10 +196,55 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
-# rename-mapping:
-#   Configuration: MySqlFlexibleServerConfiguration
-#   Database: MySqlFlexibleServerDatabase
-#   FirewallRule: MySqlFlexibleServerFirewallRule
-#   ServerBackup: MySqlFlexibleServerBackup
-#   Server: MySqlFlexibleServer
+rename-mapping:
+  Configuration: MySqlFlexibleServerConfiguration
+  Database: MySqlFlexibleServerDatabase
+  FirewallRule: MySqlFlexibleServerFirewallRule
+  ServerBackup: MySqlFlexibleServerBackup
+  Server: MySqlFlexibleServer
+  ServerVersion: MySqlFlexibleServerVersion
+  EnableStatusEnum: MySqlFlexibleServerEnableStatusEnum
+  ReplicationRole: MySqlFlexibleServerReplicationRole
+  DataEncryption: MySqlFlexibleServerDataEncryption
+  MaintenanceWindow: MySqlFlexibleServerMaintenanceWindow
+  Backup: MySqlFlexibleServerBackupProperties
+  Storage: MySqlFlexibleServerStorage
+  Sku: MySqlFlexibleServerSku
+  Network: MySqlFlexibleServerNetwork
+  HighAvailability: MySqlFlexibleServerHighAvailability
+  HighAvailabilityMode: MySqlFlexibleServerHighAvailabilityMode
+  HighAvailabilityState: MySqlFlexibleServerHighAvailabilityState
+  ServerProperties: MySqlFlexibleServerProperties
+  ServerPropertiesForUpdate: MySqlFlexibleServerPropertiesForUpdate
+  ServerForUpdate: MySqlFlexibleServerForUpdate
+  ServerListResult: MySqlFlexibleServerListResult
+  ServerRestartParameter: MySqlFlexibleServerRestartParameter
+  ServerState: MySqlFlexibleServerState
+  ServerBackupListResult: MySqlFlexibleServerBackupListResult
+  FirewallRuleProperties: MySqlFlexibleServerFirewallRuleProperties
+  FirewallRuleListResult: MySqlFlexibleServerFirewallRuleListResult
+#   DatabaseProperties: MySqlFlexibleServer
+  DatabaseListResult: MySqlFlexibleServerDatabaseListResult
+  ConfigurationSource: MySqlFlexibleServerConfigurationSource
+  ConfigurationListResult: MySqlFlexibleServerConfigurationListResult
+  ConfigurationForBatchUpdate: MySqlFlexibleServerConfigurationForBatchUpdate
+  ConfigurationListForBatchUpdate: MySqlFlexibleServerConfigurationListForBatchUpdate
+  VirtualNetworkSubnetUsageParameter: MySqlFlexibleServerVirtualNetworkSubnetUsageParameter
+  DelegatedSubnetUsage: MySqlFlexibleServerDelegatedSubnetUsage
+  VirtualNetworkSubnetUsageResult: MySqlFlexibleServerVirtualNetworkSubnetUsageResult
+  SkuCapability: MySqlFlexibleServerSkuCapability
+  ServerVersionCapability: MySqlFlexibleServerServerVersionCapability
+  StorageEditionCapability: MySqlFlexibleServerStorageEditionCapability
+  ServerEditionCapability: MySqlFlexibleServerEditionCapability
+  CapabilityProperties: MySqlFlexibleServerCapabilityProperties
+  CapabilitiesListResult: MySqlFlexibleServerCapabilitiesListResult
+  GetPrivateDnsZoneSuffixResponse: MySqlFlexibleServerPrivateDnsZoneSuffixResponse
+  NameAvailabilityRequest: MySqlFlexibleServerNameAvailabilityRequest
+  NameAvailability: MySqlFlexibleServerNameAvailability
+  CreateMode: MySqlFlexibleServerCreateMode
+  DataEncryptionType: MySqlFlexibleServerDataEncryptionType
+  SkuTier: MySqlFlexibleServerSkuTier
+  IsReadOnly: MySqlFlexibleServerConfigReadOnlyState
+  IsDynamicConfig: MySqlFlexibleServerConfigDynamicState
+  IsConfigPendingRestart: MySqlFlexibleServerConfigPendingRestartState
 ```
