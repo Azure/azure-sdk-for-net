@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
 {
     internal class LinkedServiceResourceTests : DataFactoryManagementTestBase
     {
-        private const string _accessKey = "DefaultEndpointsProtocol=https;AccountName=220722datafactory;EndpointSuffix=core.windows.net;AccountKey=th4S/DG4Cz8uq1vbv8a8ooRZqKk+TLmsgSKb004bgen/4epF+E8wYhzFp0pv3PbRF5dy8SDgwHdI+AStU7Ejbw==;";
+        private const string _accessKey = "REDACTED";
         private DataFactoryResource _dataFactory;
         public LinkedServiceResourceTests(bool isAsync) : base(isAsync)
         {
