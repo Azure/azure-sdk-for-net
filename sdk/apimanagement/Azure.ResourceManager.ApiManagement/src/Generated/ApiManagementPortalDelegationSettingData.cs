@@ -12,15 +12,15 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    /// <summary> A class representing the ApiManagementPortalDelegationSettings data model. </summary>
-    public partial class ApiManagementPortalDelegationSettingsData : ResourceData
+    /// <summary> A class representing the ApiManagementPortalDelegationSetting data model. </summary>
+    public partial class ApiManagementPortalDelegationSettingData : ResourceData
     {
-        /// <summary> Initializes a new instance of ApiManagementPortalDelegationSettingsData. </summary>
-        public ApiManagementPortalDelegationSettingsData()
+        /// <summary> Initializes a new instance of ApiManagementPortalDelegationSettingData. </summary>
+        public ApiManagementPortalDelegationSettingData()
         {
         }
 
-        /// <summary> Initializes a new instance of ApiManagementPortalDelegationSettingsData. </summary>
+        /// <summary> Initializes a new instance of ApiManagementPortalDelegationSettingData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="validationKey"> A base64-encoded validation key to validate, that a request is coming from Azure API Management. </param>
         /// <param name="isSubscriptions"> Subscriptions delegation settings. </param>
         /// <param name="isUserRegistration"> User registration delegation settings. </param>
-        internal ApiManagementPortalDelegationSettingsData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri uri, string validationKey, SubscriptionsDelegationSettingsProperties isSubscriptions, RegistrationDelegationSettingsProperties isUserRegistration) : base(id, name, resourceType, systemData)
+        internal ApiManagementPortalDelegationSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri uri, string validationKey, SubscriptionsDelegationSettingsProperties isSubscriptions, RegistrationDelegationSettingsProperties isUserRegistration) : base(id, name, resourceType, systemData)
         {
             Uri = uri;
             ValidationKey = validationKey;

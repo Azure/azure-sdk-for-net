@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.ApiManagement.Models;
@@ -13,47 +12,35 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class PortalDelegationSettingData : IUtf8JsonSerializable
+    public partial class ApiManagementPortalSignUpSettingData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(Uri))
+            if (Optional.IsDefined(IsEnabled))
             {
-                writer.WritePropertyName("url");
-                writer.WriteStringValue(Uri.AbsoluteUri);
+                writer.WritePropertyName("enabled");
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(ValidationKey))
+            if (Optional.IsDefined(TermsOfService))
             {
-                writer.WritePropertyName("validationKey");
-                writer.WriteStringValue(ValidationKey);
-            }
-            if (Optional.IsDefined(Subscriptions))
-            {
-                writer.WritePropertyName("subscriptions");
-                writer.WriteObjectValue(Subscriptions);
-            }
-            if (Optional.IsDefined(UserRegistration))
-            {
-                writer.WritePropertyName("userRegistration");
-                writer.WriteObjectValue(UserRegistration);
+                writer.WritePropertyName("termsOfService");
+                writer.WriteObjectValue(TermsOfService);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
-        internal static PortalDelegationSettingData DeserializePortalDelegationSettingData(JsonElement element)
+        internal static ApiManagementPortalSignUpSettingData DeserializeApiManagementPortalSignUpSettingData(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<Uri> url = default;
-            Optional<string> validationKey = default;
-            Optional<SubscriptionsDelegationSettingsProperties> subscriptions = default;
-            Optional<RegistrationDelegationSettingsProperties> userRegistration = default;
+            Optional<bool> enabled = default;
+            Optional<TermsOfServiceProperties> termsOfService = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -90,46 +77,31 @@ namespace Azure.ResourceManager.ApiManagement
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("url"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                url = null;
-                                continue;
-                            }
-                            url = new Uri(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("validationKey"))
-                        {
-                            validationKey = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("subscriptions"))
+                        if (property0.NameEquals("enabled"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            subscriptions = SubscriptionsDelegationSettingsProperties.DeserializeSubscriptionsDelegationSettingsProperties(property0.Value);
+                            enabled = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("userRegistration"))
+                        if (property0.NameEquals("termsOfService"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            userRegistration = RegistrationDelegationSettingsProperties.DeserializeRegistrationDelegationSettingsProperties(property0.Value);
+                            termsOfService = TermsOfServiceProperties.DeserializeTermsOfServiceProperties(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new PortalDelegationSettingData(id, name, type, systemData.Value, url.Value, validationKey.Value, subscriptions.Value, userRegistration.Value);
+            return new ApiManagementPortalSignUpSettingData(id, name, type, systemData.Value, Optional.ToNullable(enabled), termsOfService.Value);
         }
     }
 }

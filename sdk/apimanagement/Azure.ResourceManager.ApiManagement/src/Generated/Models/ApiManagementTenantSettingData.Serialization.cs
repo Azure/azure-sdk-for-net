@@ -5,42 +5,42 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ApiManagement.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class PortalSignupSettingsData : IUtf8JsonSerializable
+    public partial class ApiManagementTenantSettingData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsCollectionDefined(Settings))
             {
-                writer.WritePropertyName("enabled");
-                writer.WriteBooleanValue(Enabled.Value);
-            }
-            if (Optional.IsDefined(TermsOfService))
-            {
-                writer.WritePropertyName("termsOfService");
-                writer.WriteObjectValue(TermsOfService);
+                writer.WritePropertyName("settings");
+                writer.WriteStartObject();
+                foreach (var item in Settings)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
-        internal static PortalSignupSettingsData DeserializePortalSignupSettingsData(JsonElement element)
+        internal static ApiManagementTenantSettingData DeserializeApiManagementTenantSettingData(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<bool> enabled = default;
-            Optional<TermsOfServiceProperties> termsOfService = default;
+            Optional<IDictionary<string, string>> settings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -77,31 +77,26 @@ namespace Azure.ResourceManager.ApiManagement
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("enabled"))
+                        if (property0.NameEquals("settings"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            enabled = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("termsOfService"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
+                                dictionary.Add(property1.Name, property1.Value.GetString());
                             }
-                            termsOfService = TermsOfServiceProperties.DeserializeTermsOfServiceProperties(property0.Value);
+                            settings = dictionary;
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new PortalSignupSettingsData(id, name, type, systemData.Value, Optional.ToNullable(enabled), termsOfService.Value);
+            return new ApiManagementTenantSettingData(id, name, type, systemData.Value, Optional.ToDictionary(settings));
         }
     }
 }

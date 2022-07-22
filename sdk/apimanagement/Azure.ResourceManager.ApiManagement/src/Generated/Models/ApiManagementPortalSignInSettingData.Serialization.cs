@@ -11,23 +11,23 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class PortalSigninSettingData : IUtf8JsonSerializable
+    public partial class ApiManagementPortalSignInSettingData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled");
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
-        internal static PortalSigninSettingData DeserializePortalSigninSettingData(JsonElement element)
+        internal static ApiManagementPortalSignInSettingData DeserializeApiManagementPortalSignInSettingData(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ApiManagement
                     continue;
                 }
             }
-            return new PortalSigninSettingData(id, name, type, systemData.Value, Optional.ToNullable(enabled));
+            return new ApiManagementPortalSignInSettingData(id, name, type, systemData.Value, Optional.ToNullable(enabled));
         }
     }
 }

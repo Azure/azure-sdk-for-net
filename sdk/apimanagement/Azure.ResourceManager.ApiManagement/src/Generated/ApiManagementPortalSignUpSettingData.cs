@@ -11,29 +11,29 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    /// <summary> A class representing the PortalSignupSettings data model. </summary>
-    public partial class PortalSignupSettingsData : ResourceData
+    /// <summary> A class representing the ApiManagementPortalSignUpSetting data model. </summary>
+    public partial class ApiManagementPortalSignUpSettingData : ResourceData
     {
-        /// <summary> Initializes a new instance of PortalSignupSettingsData. </summary>
-        public PortalSignupSettingsData()
+        /// <summary> Initializes a new instance of ApiManagementPortalSignUpSettingData. </summary>
+        public ApiManagementPortalSignUpSettingData()
         {
         }
 
-        /// <summary> Initializes a new instance of PortalSignupSettingsData. </summary>
+        /// <summary> Initializes a new instance of ApiManagementPortalSignUpSettingData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="enabled"> Allow users to sign up on a developer portal. </param>
+        /// <param name="isEnabled"> Allow users to sign up on a developer portal. </param>
         /// <param name="termsOfService"> Terms of service contract properties. </param>
-        internal PortalSignupSettingsData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? enabled, TermsOfServiceProperties termsOfService) : base(id, name, resourceType, systemData)
+        internal ApiManagementPortalSignUpSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isEnabled, TermsOfServiceProperties termsOfService) : base(id, name, resourceType, systemData)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             TermsOfService = termsOfService;
         }
 
         /// <summary> Allow users to sign up on a developer portal. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
         /// <summary> Terms of service contract properties. </summary>
         public TermsOfServiceProperties TermsOfService { get; set; }
     }

@@ -18,46 +18,46 @@ using Azure.ResourceManager.ApiManagement.Models;
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
-    /// A Class representing an ApiManagementTenantSettings along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ApiManagementTenantSettingsResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetApiManagementTenantSettingsResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource" /> using the GetApiManagementTenantSettings method.
+    /// A Class representing an ApiManagementTenantSetting along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ApiManagementTenantSettingResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetApiManagementTenantSettingResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource" /> using the GetApiManagementTenantSetting method.
     /// </summary>
-    public partial class ApiManagementTenantSettingsResource : ArmResource
+    public partial class ApiManagementTenantSettingResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ApiManagementTenantSettingsResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="ApiManagementTenantSettingResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, SettingsType settingsType)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/settings/{settingsType}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _apiManagementTenantSettingsTenantSettingsClientDiagnostics;
-        private readonly TenantSettingsRestOperations _apiManagementTenantSettingsTenantSettingsRestClient;
-        private readonly ApiManagementTenantSettingsData _data;
+        private readonly ClientDiagnostics _apiManagementTenantSettingTenantSettingsClientDiagnostics;
+        private readonly TenantSettingsRestOperations _apiManagementTenantSettingTenantSettingsRestClient;
+        private readonly ApiManagementTenantSettingData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="ApiManagementTenantSettingsResource"/> class for mocking. </summary>
-        protected ApiManagementTenantSettingsResource()
+        /// <summary> Initializes a new instance of the <see cref="ApiManagementTenantSettingResource"/> class for mocking. </summary>
+        protected ApiManagementTenantSettingResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ApiManagementTenantSettingsResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "ApiManagementTenantSettingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ApiManagementTenantSettingsResource(ArmClient client, ApiManagementTenantSettingsData data) : this(client, data.Id)
+        internal ApiManagementTenantSettingResource(ArmClient client, ApiManagementTenantSettingData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ApiManagementTenantSettingsResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ApiManagementTenantSettingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ApiManagementTenantSettingsResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ApiManagementTenantSettingResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _apiManagementTenantSettingsTenantSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string apiManagementTenantSettingsTenantSettingsApiVersion);
-            _apiManagementTenantSettingsTenantSettingsRestClient = new TenantSettingsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementTenantSettingsTenantSettingsApiVersion);
+            _apiManagementTenantSettingTenantSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string apiManagementTenantSettingTenantSettingsApiVersion);
+            _apiManagementTenantSettingTenantSettingsRestClient = new TenantSettingsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementTenantSettingTenantSettingsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual ApiManagementTenantSettingsData Data
+        public virtual ApiManagementTenantSettingData Data
         {
             get
             {
@@ -93,16 +93,16 @@ namespace Azure.ResourceManager.ApiManagement
         /// Operation Id: TenantSettings_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ApiManagementTenantSettingsResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiManagementTenantSettingResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _apiManagementTenantSettingsTenantSettingsClientDiagnostics.CreateScope("ApiManagementTenantSettingsResource.Get");
+            using var scope = _apiManagementTenantSettingTenantSettingsClientDiagnostics.CreateScope("ApiManagementTenantSettingResource.Get");
             scope.Start();
             try
             {
-                var response = await _apiManagementTenantSettingsTenantSettingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _apiManagementTenantSettingTenantSettingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ApiManagementTenantSettingsResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApiManagementTenantSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,16 +117,16 @@ namespace Azure.ResourceManager.ApiManagement
         /// Operation Id: TenantSettings_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ApiManagementTenantSettingsResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ApiManagementTenantSettingResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _apiManagementTenantSettingsTenantSettingsClientDiagnostics.CreateScope("ApiManagementTenantSettingsResource.Get");
+            using var scope = _apiManagementTenantSettingTenantSettingsClientDiagnostics.CreateScope("ApiManagementTenantSettingResource.Get");
             scope.Start();
             try
             {
-                var response = _apiManagementTenantSettingsTenantSettingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _apiManagementTenantSettingTenantSettingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ApiManagementTenantSettingsResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApiManagementTenantSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -17,46 +17,46 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
-    /// A Class representing a PortalSignupSetting along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PortalSignupSettingResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetPortalSignupSettingResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource" /> using the GetPortalSignupSetting method.
+    /// A Class representing an ApiManagementPortalSignUpSetting along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ApiManagementPortalSignUpSettingResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetApiManagementPortalSignUpSettingResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource" /> using the GetApiManagementPortalSignUpSetting method.
     /// </summary>
-    public partial class PortalSignupSettingResource : ArmResource
+    public partial class ApiManagementPortalSignUpSettingResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="PortalSignupSettingResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="ApiManagementPortalSignUpSettingResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalsettings/signup";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _portalSignupSettingSignUpSettingsClientDiagnostics;
-        private readonly SignUpSettingsRestOperations _portalSignupSettingSignUpSettingsRestClient;
-        private readonly PortalSignupSettingData _data;
+        private readonly ClientDiagnostics _apiManagementPortalSignUpSettingSignUpSettingsClientDiagnostics;
+        private readonly SignUpSettingsRestOperations _apiManagementPortalSignUpSettingSignUpSettingsRestClient;
+        private readonly ApiManagementPortalSignUpSettingData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="PortalSignupSettingResource"/> class for mocking. </summary>
-        protected PortalSignupSettingResource()
+        /// <summary> Initializes a new instance of the <see cref="ApiManagementPortalSignUpSettingResource"/> class for mocking. </summary>
+        protected ApiManagementPortalSignUpSettingResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "PortalSignupSettingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "ApiManagementPortalSignUpSettingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal PortalSignupSettingResource(ArmClient client, PortalSignupSettingData data) : this(client, data.Id)
+        internal ApiManagementPortalSignUpSettingResource(ArmClient client, ApiManagementPortalSignUpSettingData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PortalSignupSettingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ApiManagementPortalSignUpSettingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal PortalSignupSettingResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ApiManagementPortalSignUpSettingResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _portalSignupSettingSignUpSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string portalSignupSettingSignUpSettingsApiVersion);
-            _portalSignupSettingSignUpSettingsRestClient = new SignUpSettingsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, portalSignupSettingSignUpSettingsApiVersion);
+            _apiManagementPortalSignUpSettingSignUpSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string apiManagementPortalSignUpSettingSignUpSettingsApiVersion);
+            _apiManagementPortalSignUpSettingSignUpSettingsRestClient = new SignUpSettingsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementPortalSignUpSettingSignUpSettingsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual PortalSignupSettingData Data
+        public virtual ApiManagementPortalSignUpSettingData Data
         {
             get
             {
@@ -92,16 +92,16 @@ namespace Azure.ResourceManager.ApiManagement
         /// Operation Id: SignUpSettings_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PortalSignupSettingResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiManagementPortalSignUpSettingResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _portalSignupSettingSignUpSettingsClientDiagnostics.CreateScope("PortalSignupSettingResource.Get");
+            using var scope = _apiManagementPortalSignUpSettingSignUpSettingsClientDiagnostics.CreateScope("ApiManagementPortalSignUpSettingResource.Get");
             scope.Start();
             try
             {
-                var response = await _portalSignupSettingSignUpSettingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _apiManagementPortalSignUpSettingSignUpSettingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PortalSignupSettingResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApiManagementPortalSignUpSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -116,16 +116,16 @@ namespace Azure.ResourceManager.ApiManagement
         /// Operation Id: SignUpSettings_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PortalSignupSettingResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ApiManagementPortalSignUpSettingResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _portalSignupSettingSignUpSettingsClientDiagnostics.CreateScope("PortalSignupSettingResource.Get");
+            using var scope = _apiManagementPortalSignUpSettingSignUpSettingsClientDiagnostics.CreateScope("ApiManagementPortalSignUpSettingResource.Get");
             scope.Start();
             try
             {
-                var response = _portalSignupSettingSignUpSettingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
+                var response = _apiManagementPortalSignUpSettingSignUpSettingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PortalSignupSettingResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApiManagementPortalSignUpSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -143,16 +143,16 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="data"> Update Sign-Up settings. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response> UpdateAsync(string ifMatch, PortalSignupSettingData data, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> UpdateAsync(string ifMatch, ApiManagementPortalSignUpSettingData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(ifMatch, nameof(ifMatch));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _portalSignupSettingSignUpSettingsClientDiagnostics.CreateScope("PortalSignupSettingResource.Update");
+            using var scope = _apiManagementPortalSignUpSettingSignUpSettingsClientDiagnostics.CreateScope("ApiManagementPortalSignUpSettingResource.Update");
             scope.Start();
             try
             {
-                var response = await _portalSignupSettingSignUpSettingsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, ifMatch, data, cancellationToken).ConfigureAwait(false);
+                var response = await _apiManagementPortalSignUpSettingSignUpSettingsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, ifMatch, data, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -171,16 +171,16 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="data"> Update Sign-Up settings. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> or <paramref name="data"/> is null. </exception>
-        public virtual Response Update(string ifMatch, PortalSignupSettingData data, CancellationToken cancellationToken = default)
+        public virtual Response Update(string ifMatch, ApiManagementPortalSignUpSettingData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(ifMatch, nameof(ifMatch));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _portalSignupSettingSignUpSettingsClientDiagnostics.CreateScope("PortalSignupSettingResource.Update");
+            using var scope = _apiManagementPortalSignUpSettingSignUpSettingsClientDiagnostics.CreateScope("ApiManagementPortalSignUpSettingResource.Update");
             scope.Start();
             try
             {
-                var response = _portalSignupSettingSignUpSettingsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, ifMatch, data, cancellationToken);
+                var response = _apiManagementPortalSignUpSettingSignUpSettingsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, ifMatch, data, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -200,16 +200,16 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<PortalSignupSettingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, PortalSignupSettingData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ApiManagementPortalSignUpSettingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, ApiManagementPortalSignUpSettingData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _portalSignupSettingSignUpSettingsClientDiagnostics.CreateScope("PortalSignupSettingResource.CreateOrUpdate");
+            using var scope = _apiManagementPortalSignUpSettingSignUpSettingsClientDiagnostics.CreateScope("ApiManagementPortalSignUpSettingResource.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _portalSignupSettingSignUpSettingsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation<PortalSignupSettingResource>(Response.FromValue(new PortalSignupSettingResource(Client, response), response.GetRawResponse()));
+                var response = await _apiManagementPortalSignUpSettingSignUpSettingsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
+                var operation = new ApiManagementArmOperation<ApiManagementPortalSignUpSettingResource>(Response.FromValue(new ApiManagementPortalSignUpSettingResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -231,16 +231,16 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<PortalSignupSettingResource> CreateOrUpdate(WaitUntil waitUntil, PortalSignupSettingData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ApiManagementPortalSignUpSettingResource> CreateOrUpdate(WaitUntil waitUntil, ApiManagementPortalSignUpSettingData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _portalSignupSettingSignUpSettingsClientDiagnostics.CreateScope("PortalSignupSettingResource.CreateOrUpdate");
+            using var scope = _apiManagementPortalSignUpSettingSignUpSettingsClientDiagnostics.CreateScope("ApiManagementPortalSignUpSettingResource.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _portalSignupSettingSignUpSettingsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, ifMatch, cancellationToken);
-                var operation = new ApiManagementArmOperation<PortalSignupSettingResource>(Response.FromValue(new PortalSignupSettingResource(Client, response), response.GetRawResponse()));
+                var response = _apiManagementPortalSignUpSettingSignUpSettingsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, ifMatch, cancellationToken);
+                var operation = new ApiManagementArmOperation<ApiManagementPortalSignUpSettingResource>(Response.FromValue(new ApiManagementPortalSignUpSettingResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -260,11 +260,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<bool>> GetEntityTagAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _portalSignupSettingSignUpSettingsClientDiagnostics.CreateScope("PortalSignupSettingResource.GetEntityTag");
+            using var scope = _apiManagementPortalSignUpSettingSignUpSettingsClientDiagnostics.CreateScope("ApiManagementPortalSignUpSettingResource.GetEntityTag");
             scope.Start();
             try
             {
-                var response = await _portalSignupSettingSignUpSettingsRestClient.GetEntityTagAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _apiManagementPortalSignUpSettingSignUpSettingsRestClient.GetEntityTagAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -282,11 +282,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<bool> GetEntityTag(CancellationToken cancellationToken = default)
         {
-            using var scope = _portalSignupSettingSignUpSettingsClientDiagnostics.CreateScope("PortalSignupSettingResource.GetEntityTag");
+            using var scope = _apiManagementPortalSignUpSettingSignUpSettingsClientDiagnostics.CreateScope("ApiManagementPortalSignUpSettingResource.GetEntityTag");
             scope.Start();
             try
             {
-                var response = _portalSignupSettingSignUpSettingsRestClient.GetEntityTag(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
+                var response = _apiManagementPortalSignUpSettingSignUpSettingsRestClient.GetEntityTag(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)

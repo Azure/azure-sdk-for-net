@@ -18,46 +18,46 @@ using Azure.ResourceManager.ApiManagement.Models;
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
-    /// A Class representing a PortalDelegationSetting along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PortalDelegationSettingResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetPortalDelegationSettingResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource" /> using the GetPortalDelegationSetting method.
+    /// A Class representing an ApiManagementPortalDelegationSetting along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ApiManagementPortalDelegationSettingResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetApiManagementPortalDelegationSettingResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource" /> using the GetApiManagementPortalDelegationSetting method.
     /// </summary>
-    public partial class PortalDelegationSettingResource : ArmResource
+    public partial class ApiManagementPortalDelegationSettingResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="PortalDelegationSettingResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="ApiManagementPortalDelegationSettingResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalsettings/delegation";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _portalDelegationSettingDelegationSettingsClientDiagnostics;
-        private readonly DelegationSettingsRestOperations _portalDelegationSettingDelegationSettingsRestClient;
-        private readonly PortalDelegationSettingData _data;
+        private readonly ClientDiagnostics _apiManagementPortalDelegationSettingDelegationSettingsClientDiagnostics;
+        private readonly DelegationSettingsRestOperations _apiManagementPortalDelegationSettingDelegationSettingsRestClient;
+        private readonly ApiManagementPortalDelegationSettingData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="PortalDelegationSettingResource"/> class for mocking. </summary>
-        protected PortalDelegationSettingResource()
+        /// <summary> Initializes a new instance of the <see cref="ApiManagementPortalDelegationSettingResource"/> class for mocking. </summary>
+        protected ApiManagementPortalDelegationSettingResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "PortalDelegationSettingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "ApiManagementPortalDelegationSettingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal PortalDelegationSettingResource(ArmClient client, PortalDelegationSettingData data) : this(client, data.Id)
+        internal ApiManagementPortalDelegationSettingResource(ArmClient client, ApiManagementPortalDelegationSettingData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PortalDelegationSettingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ApiManagementPortalDelegationSettingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal PortalDelegationSettingResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ApiManagementPortalDelegationSettingResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _portalDelegationSettingDelegationSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string portalDelegationSettingDelegationSettingsApiVersion);
-            _portalDelegationSettingDelegationSettingsRestClient = new DelegationSettingsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, portalDelegationSettingDelegationSettingsApiVersion);
+            _apiManagementPortalDelegationSettingDelegationSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string apiManagementPortalDelegationSettingDelegationSettingsApiVersion);
+            _apiManagementPortalDelegationSettingDelegationSettingsRestClient = new DelegationSettingsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementPortalDelegationSettingDelegationSettingsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual PortalDelegationSettingData Data
+        public virtual ApiManagementPortalDelegationSettingData Data
         {
             get
             {
@@ -93,16 +93,16 @@ namespace Azure.ResourceManager.ApiManagement
         /// Operation Id: DelegationSettings_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PortalDelegationSettingResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiManagementPortalDelegationSettingResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _portalDelegationSettingDelegationSettingsClientDiagnostics.CreateScope("PortalDelegationSettingResource.Get");
+            using var scope = _apiManagementPortalDelegationSettingDelegationSettingsClientDiagnostics.CreateScope("ApiManagementPortalDelegationSettingResource.Get");
             scope.Start();
             try
             {
-                var response = await _portalDelegationSettingDelegationSettingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _apiManagementPortalDelegationSettingDelegationSettingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PortalDelegationSettingResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApiManagementPortalDelegationSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,16 +117,16 @@ namespace Azure.ResourceManager.ApiManagement
         /// Operation Id: DelegationSettings_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PortalDelegationSettingResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ApiManagementPortalDelegationSettingResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _portalDelegationSettingDelegationSettingsClientDiagnostics.CreateScope("PortalDelegationSettingResource.Get");
+            using var scope = _apiManagementPortalDelegationSettingDelegationSettingsClientDiagnostics.CreateScope("ApiManagementPortalDelegationSettingResource.Get");
             scope.Start();
             try
             {
-                var response = _portalDelegationSettingDelegationSettingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
+                var response = _apiManagementPortalDelegationSettingDelegationSettingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PortalDelegationSettingResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApiManagementPortalDelegationSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -144,16 +144,16 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="data"> Update Delegation settings. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response> UpdateAsync(string ifMatch, PortalDelegationSettingData data, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> UpdateAsync(string ifMatch, ApiManagementPortalDelegationSettingData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(ifMatch, nameof(ifMatch));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _portalDelegationSettingDelegationSettingsClientDiagnostics.CreateScope("PortalDelegationSettingResource.Update");
+            using var scope = _apiManagementPortalDelegationSettingDelegationSettingsClientDiagnostics.CreateScope("ApiManagementPortalDelegationSettingResource.Update");
             scope.Start();
             try
             {
-                var response = await _portalDelegationSettingDelegationSettingsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, ifMatch, data, cancellationToken).ConfigureAwait(false);
+                var response = await _apiManagementPortalDelegationSettingDelegationSettingsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, ifMatch, data, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -172,16 +172,16 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="data"> Update Delegation settings. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> or <paramref name="data"/> is null. </exception>
-        public virtual Response Update(string ifMatch, PortalDelegationSettingData data, CancellationToken cancellationToken = default)
+        public virtual Response Update(string ifMatch, ApiManagementPortalDelegationSettingData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(ifMatch, nameof(ifMatch));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _portalDelegationSettingDelegationSettingsClientDiagnostics.CreateScope("PortalDelegationSettingResource.Update");
+            using var scope = _apiManagementPortalDelegationSettingDelegationSettingsClientDiagnostics.CreateScope("ApiManagementPortalDelegationSettingResource.Update");
             scope.Start();
             try
             {
-                var response = _portalDelegationSettingDelegationSettingsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, ifMatch, data, cancellationToken);
+                var response = _apiManagementPortalDelegationSettingDelegationSettingsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, ifMatch, data, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -201,16 +201,16 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<PortalDelegationSettingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, PortalDelegationSettingData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ApiManagementPortalDelegationSettingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, ApiManagementPortalDelegationSettingData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _portalDelegationSettingDelegationSettingsClientDiagnostics.CreateScope("PortalDelegationSettingResource.CreateOrUpdate");
+            using var scope = _apiManagementPortalDelegationSettingDelegationSettingsClientDiagnostics.CreateScope("ApiManagementPortalDelegationSettingResource.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _portalDelegationSettingDelegationSettingsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation<PortalDelegationSettingResource>(Response.FromValue(new PortalDelegationSettingResource(Client, response), response.GetRawResponse()));
+                var response = await _apiManagementPortalDelegationSettingDelegationSettingsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
+                var operation = new ApiManagementArmOperation<ApiManagementPortalDelegationSettingResource>(Response.FromValue(new ApiManagementPortalDelegationSettingResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -232,16 +232,16 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<PortalDelegationSettingResource> CreateOrUpdate(WaitUntil waitUntil, PortalDelegationSettingData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ApiManagementPortalDelegationSettingResource> CreateOrUpdate(WaitUntil waitUntil, ApiManagementPortalDelegationSettingData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _portalDelegationSettingDelegationSettingsClientDiagnostics.CreateScope("PortalDelegationSettingResource.CreateOrUpdate");
+            using var scope = _apiManagementPortalDelegationSettingDelegationSettingsClientDiagnostics.CreateScope("ApiManagementPortalDelegationSettingResource.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _portalDelegationSettingDelegationSettingsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, ifMatch, cancellationToken);
-                var operation = new ApiManagementArmOperation<PortalDelegationSettingResource>(Response.FromValue(new PortalDelegationSettingResource(Client, response), response.GetRawResponse()));
+                var response = _apiManagementPortalDelegationSettingDelegationSettingsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, ifMatch, cancellationToken);
+                var operation = new ApiManagementArmOperation<ApiManagementPortalDelegationSettingResource>(Response.FromValue(new ApiManagementPortalDelegationSettingResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -261,11 +261,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<PortalSettingValidationKeyContract>> GetSecretsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _portalDelegationSettingDelegationSettingsClientDiagnostics.CreateScope("PortalDelegationSettingResource.GetSecrets");
+            using var scope = _apiManagementPortalDelegationSettingDelegationSettingsClientDiagnostics.CreateScope("ApiManagementPortalDelegationSettingResource.GetSecrets");
             scope.Start();
             try
             {
-                var response = await _portalDelegationSettingDelegationSettingsRestClient.ListSecretsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _apiManagementPortalDelegationSettingDelegationSettingsRestClient.ListSecretsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -283,11 +283,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PortalSettingValidationKeyContract> GetSecrets(CancellationToken cancellationToken = default)
         {
-            using var scope = _portalDelegationSettingDelegationSettingsClientDiagnostics.CreateScope("PortalDelegationSettingResource.GetSecrets");
+            using var scope = _apiManagementPortalDelegationSettingDelegationSettingsClientDiagnostics.CreateScope("ApiManagementPortalDelegationSettingResource.GetSecrets");
             scope.Start();
             try
             {
-                var response = _portalDelegationSettingDelegationSettingsRestClient.ListSecrets(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
+                var response = _apiManagementPortalDelegationSettingDelegationSettingsRestClient.ListSecrets(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -305,11 +305,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<bool>> GetEntityTagAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _portalDelegationSettingDelegationSettingsClientDiagnostics.CreateScope("PortalDelegationSettingResource.GetEntityTag");
+            using var scope = _apiManagementPortalDelegationSettingDelegationSettingsClientDiagnostics.CreateScope("ApiManagementPortalDelegationSettingResource.GetEntityTag");
             scope.Start();
             try
             {
-                var response = await _portalDelegationSettingDelegationSettingsRestClient.GetEntityTagAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _apiManagementPortalDelegationSettingDelegationSettingsRestClient.GetEntityTagAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -327,11 +327,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<bool> GetEntityTag(CancellationToken cancellationToken = default)
         {
-            using var scope = _portalDelegationSettingDelegationSettingsClientDiagnostics.CreateScope("PortalDelegationSettingResource.GetEntityTag");
+            using var scope = _apiManagementPortalDelegationSettingDelegationSettingsClientDiagnostics.CreateScope("ApiManagementPortalDelegationSettingResource.GetEntityTag");
             scope.Start();
             try
             {
-                var response = _portalDelegationSettingDelegationSettingsRestClient.GetEntityTag(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
+                var response = _apiManagementPortalDelegationSettingDelegationSettingsRestClient.GetEntityTag(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
