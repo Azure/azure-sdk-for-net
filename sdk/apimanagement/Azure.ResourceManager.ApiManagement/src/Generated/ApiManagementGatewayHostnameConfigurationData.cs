@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="hostname"> Hostname value. Supports valid domain name, partial or full wildcard. </param>
         /// <param name="certificateId"> Identifier of Certificate entity that will be used for TLS connection establishment. </param>
         /// <param name="negotiateClientCertificate"> Determines whether gateway requests client certificate. </param>
-        /// <param name="tls10Enabled"> Specifies if TLS 1.0 is supported. </param>
-        /// <param name="tls11Enabled"> Specifies if TLS 1.1 is supported. </param>
-        /// <param name="http2Enabled"> Specifies if HTTP/2.0 is supported. </param>
-        internal ApiManagementGatewayHostnameConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string hostname, string certificateId, bool? negotiateClientCertificate, bool? tls10Enabled, bool? tls11Enabled, bool? http2Enabled) : base(id, name, resourceType, systemData)
+        /// <param name="isTls10Enabled"> Specifies if TLS 1.0 is supported. </param>
+        /// <param name="isTls11Enabled"> Specifies if TLS 1.1 is supported. </param>
+        /// <param name="isHttp20Enabled"> Specifies if HTTP/2.0 is supported. </param>
+        internal ApiManagementGatewayHostnameConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string hostname, string certificateId, bool? negotiateClientCertificate, bool? isTls10Enabled, bool? isTls11Enabled, bool? isHttp20Enabled) : base(id, name, resourceType, systemData)
         {
             Hostname = hostname;
             CertificateId = certificateId;
             NegotiateClientCertificate = negotiateClientCertificate;
-            Tls10Enabled = tls10Enabled;
-            Tls11Enabled = tls11Enabled;
-            Http2Enabled = http2Enabled;
+            IsTls1_0Enabled = isTls10Enabled;
+            IsTls1_1Enabled = isTls11Enabled;
+            IsHttp2_0Enabled = isHttp20Enabled;
         }
 
         /// <summary> Hostname value. Supports valid domain name, partial or full wildcard. </summary>
@@ -45,11 +45,5 @@ namespace Azure.ResourceManager.ApiManagement
         public string CertificateId { get; set; }
         /// <summary> Determines whether gateway requests client certificate. </summary>
         public bool? NegotiateClientCertificate { get; set; }
-        /// <summary> Specifies if TLS 1.0 is supported. </summary>
-        public bool? Tls10Enabled { get; set; }
-        /// <summary> Specifies if TLS 1.1 is supported. </summary>
-        public bool? Tls11Enabled { get; set; }
-        /// <summary> Specifies if HTTP/2.0 is supported. </summary>
-        public bool? Http2Enabled { get; set; }
     }
 }

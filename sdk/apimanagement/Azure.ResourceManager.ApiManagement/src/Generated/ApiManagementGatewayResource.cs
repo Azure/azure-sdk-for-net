@@ -379,18 +379,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/gateways/{gatewayId}/regenerateKey
         /// Operation Id: Gateway_RegenerateKey
         /// </summary>
-        /// <param name="gatewayKeyRegenerationRequestContract"> The GatewayKeyRegenerationRequestContract to use. </param>
+        /// <param name="content"> The GatewayKeyRegenerateContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="gatewayKeyRegenerationRequestContract"/> is null. </exception>
-        public virtual async Task<Response> RegenerateKeyAsync(GatewayKeyRegenerationRequestContract gatewayKeyRegenerationRequestContract, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response> RegenerateKeyAsync(GatewayKeyRegenerateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(gatewayKeyRegenerationRequestContract, nameof(gatewayKeyRegenerationRequestContract));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _apiManagementGatewayGatewayClientDiagnostics.CreateScope("ApiManagementGatewayResource.RegenerateKey");
             scope.Start();
             try
             {
-                var response = await _apiManagementGatewayGatewayRestClient.RegenerateKeyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, gatewayKeyRegenerationRequestContract, cancellationToken).ConfigureAwait(false);
+                var response = await _apiManagementGatewayGatewayRestClient.RegenerateKeyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -405,18 +405,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/gateways/{gatewayId}/regenerateKey
         /// Operation Id: Gateway_RegenerateKey
         /// </summary>
-        /// <param name="gatewayKeyRegenerationRequestContract"> The GatewayKeyRegenerationRequestContract to use. </param>
+        /// <param name="content"> The GatewayKeyRegenerateContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="gatewayKeyRegenerationRequestContract"/> is null. </exception>
-        public virtual Response RegenerateKey(GatewayKeyRegenerationRequestContract gatewayKeyRegenerationRequestContract, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response RegenerateKey(GatewayKeyRegenerateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(gatewayKeyRegenerationRequestContract, nameof(gatewayKeyRegenerationRequestContract));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _apiManagementGatewayGatewayClientDiagnostics.CreateScope("ApiManagementGatewayResource.RegenerateKey");
             scope.Start();
             try
             {
-                var response = _apiManagementGatewayGatewayRestClient.RegenerateKey(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, gatewayKeyRegenerationRequestContract, cancellationToken);
+                var response = _apiManagementGatewayGatewayRestClient.RegenerateKey(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

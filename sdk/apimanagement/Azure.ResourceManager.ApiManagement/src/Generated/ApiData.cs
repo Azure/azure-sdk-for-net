@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Initializes a new instance of ApiData. </summary>
         public ApiData()
         {
-            Protocols = new ChangeTrackingList<Protocol>();
+            Protocols = new ChangeTrackingList<ApiOperationInvokableProtocol>();
         }
 
         /// <summary> Initializes a new instance of ApiData. </summary>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="path"> Relative URL uniquely identifying this API and all of its resource paths within the API Management service instance. It is appended to the API endpoint base URL specified during the service instance creation to form a public URL for this API. </param>
         /// <param name="protocols"> Describes on which protocols the operations in this API can be invoked. </param>
         /// <param name="apiVersionSet"> Version set details. </param>
-        internal ApiData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, AuthenticationSettingsContract authenticationSettings, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, ResourceIdentifier apiVersionSetId, bool? isSubscriptionRequired, Uri termsOfServiceUri, ApiContactInformation contact, ApiLicenseInformation license, ResourceIdentifier sourceApiId, string displayName, Uri serviceUri, string path, IList<Protocol> protocols, ApiVersionSetContractDetails apiVersionSet) : base(id, name, resourceType, systemData)
+        internal ApiData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, AuthenticationSettingsContract authenticationSettings, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, ResourceIdentifier apiVersionSetId, bool? isSubscriptionRequired, Uri termsOfServiceUri, ApiContactInformation contact, ApiLicenseInformation license, ResourceIdentifier sourceApiId, string displayName, Uri serviceUri, string path, IList<ApiOperationInvokableProtocol> protocols, ApiVersionSetContractDetails apiVersionSet) : base(id, name, resourceType, systemData)
         {
             Description = description;
             AuthenticationSettings = authenticationSettings;
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Relative URL uniquely identifying this API and all of its resource paths within the API Management service instance. It is appended to the API endpoint base URL specified during the service instance creation to form a public URL for this API. </summary>
         public string Path { get; set; }
         /// <summary> Describes on which protocols the operations in this API can be invoked. </summary>
-        public IList<Protocol> Protocols { get; }
+        public IList<ApiOperationInvokableProtocol> Protocols { get; }
         /// <summary> Version set details. </summary>
         public ApiVersionSetContractDetails ApiVersionSet { get; set; }
     }

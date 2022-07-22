@@ -20,25 +20,25 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(IdPropertiesId))
+            if (Optional.IsDefined(OperationResultIdentifier))
             {
                 writer.WritePropertyName("id");
-                writer.WriteStringValue(IdPropertiesId);
+                writer.WriteStringValue(OperationResultIdentifier);
             }
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status");
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (Optional.IsDefined(Started))
+            if (Optional.IsDefined(StartedOn))
             {
                 writer.WritePropertyName("started");
-                writer.WriteStringValue(Started.Value, "O");
+                writer.WriteStringValue(StartedOn.Value, "O");
             }
-            if (Optional.IsDefined(Updated))
+            if (Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updated");
-                writer.WriteStringValue(Updated.Value, "O");
+                writer.WriteStringValue(UpdatedOn.Value, "O");
             }
             if (Optional.IsDefined(ResultInfo))
             {

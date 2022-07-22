@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> The name of the backup file to create/retrieve. </summary>
         public string BackupName { get; }
         /// <summary> The type of access to be used for the storage account. </summary>
-        public AccessType? AccessType { get; set; }
+        public StorageAccountAccessType? AccessType { get; set; }
         /// <summary> Storage account access key. Required only if `accessType` is set to `AccessKey`. </summary>
         public string AccessKey { get; set; }
         /// <summary> The Client ID of user assigned managed identity. Required only if `accessType` is set to `UserAssignedManagedIdentity`. </summary>

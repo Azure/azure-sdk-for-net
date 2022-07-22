@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(GroupType))
+            if (Optional.IsDefined(ApiManagementGroupType))
             {
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(GroupType.Value.ToSerialString());
+                writer.WriteStringValue(ApiManagementGroupType.Value.ToSerialString());
             }
             if (Optional.IsDefined(ExternalId))
             {

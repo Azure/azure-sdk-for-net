@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ApiManagement
             Optional<string> tokenEndpoint = default;
             Optional<bool> supportState = default;
             Optional<string> defaultScope = default;
-            Optional<IList<BearerTokenSendingMethodMode>> bearerTokenSendingMethods = default;
+            Optional<IList<BearerTokenSendingMethod>> bearerTokenSendingMethods = default;
             Optional<string> resourceOwnerUsername = default;
             Optional<string> resourceOwnerPassword = default;
             Optional<string> displayName = default;
@@ -264,10 +264,10 @@ namespace Azure.ResourceManager.ApiManagement
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<BearerTokenSendingMethodMode> array = new List<BearerTokenSendingMethodMode>();
+                            List<BearerTokenSendingMethod> array = new List<BearerTokenSendingMethod>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(new BearerTokenSendingMethodMode(item.GetString()));
+                                array.Add(new BearerTokenSendingMethod(item.GetString()));
                             }
                             bearerTokenSendingMethods = array;
                             continue;

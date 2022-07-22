@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Determines the type of application which send the create user request. Default is legacy portal. </summary>
         public AppType? AppType { get; set; }
         /// <summary> Determines the type of confirmation e-mail that will be sent to the newly created user. </summary>
-        public Confirmation? Confirmation { get; set; }
+        public ConfirmationEmailType? Confirmation { get; set; }
     }
 }

@@ -20,6 +20,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Password for the Certificate. </summary>
         public string Password { get; set; }
         /// <summary> KeyVault location details of the certificate. </summary>
-        public KeyVaultContractCreateProperties KeyVault { get; set; }
+        public KeyVaultContractCreateProperties KeyVaultDetails { get; set; }
     }
 }

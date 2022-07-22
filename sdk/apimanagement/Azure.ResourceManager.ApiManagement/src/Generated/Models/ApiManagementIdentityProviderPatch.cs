@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Identity Provider Type identifier. </summary>
-        public IdentityProviderType? ProviderType { get; set; }
+        public IdentityProviderType? IdentityProviderType { get; set; }
         /// <summary> The TenantId to use instead of Common when logging into Active Directory. </summary>
         public string SignInTenant { get; set; }
         /// <summary> List of Allowed Tenants when configuring Azure Active Directory login. </summary>

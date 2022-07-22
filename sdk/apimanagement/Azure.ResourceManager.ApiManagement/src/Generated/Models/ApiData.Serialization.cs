@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ApiManagement
             Optional<string> displayName = default;
             Optional<Uri> serviceUri = default;
             Optional<string> path = default;
-            Optional<IList<Protocol>> protocols = default;
+            Optional<IList<ApiOperationInvokableProtocol>> protocols = default;
             Optional<ApiVersionSetContractDetails> apiVersionSet = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -355,10 +355,10 @@ namespace Azure.ResourceManager.ApiManagement
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<Protocol> array = new List<Protocol>();
+                            List<ApiOperationInvokableProtocol> array = new List<ApiOperationInvokableProtocol>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(new Protocol(item.GetString()));
+                                array.Add(new ApiOperationInvokableProtocol(item.GetString()));
                             }
                             protocols = array;
                             continue;

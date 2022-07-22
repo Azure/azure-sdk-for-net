@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ApiManagement
             Optional<string> displayName = default;
             Optional<string> description = default;
             Optional<bool> builtIn = default;
-            Optional<GroupType> type0 = default;
+            Optional<ApiManagementGroupType> type0 = default;
             Optional<string> externalId = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ApiManagement
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            type0 = property0.Value.GetString().ToGroupType();
+                            type0 = property0.Value.GetString().ToApiManagementGroupType();
                             continue;
                         }
                         if (property0.NameEquals("externalId"))

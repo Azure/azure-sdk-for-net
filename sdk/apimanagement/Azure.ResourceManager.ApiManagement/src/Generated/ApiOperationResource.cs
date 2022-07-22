@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="format"> Policy Export Format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ApiOperationPolicyResource>> GetApiOperationPolicyAsync(PolicyIdName policyId, PolicyExportFormat? format = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiOperationPolicyResource>> GetApiOperationPolicyAsync(PolicyName policyId, PolicyExportFormat? format = null, CancellationToken cancellationToken = default)
         {
             return await GetApiOperationPolicies().GetAsync(policyId, format, cancellationToken).ConfigureAwait(false);
         }
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="format"> Policy Export Format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<ApiOperationPolicyResource> GetApiOperationPolicy(PolicyIdName policyId, PolicyExportFormat? format = null, CancellationToken cancellationToken = default)
+        public virtual Response<ApiOperationPolicyResource> GetApiOperationPolicy(PolicyName policyId, PolicyExportFormat? format = null, CancellationToken cancellationToken = default)
         {
             return GetApiOperationPolicies().Get(policyId, format, cancellationToken);
         }

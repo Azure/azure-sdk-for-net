@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("password");
                 writer.WriteStringValue(Password);
             }
-            if (Optional.IsDefined(KeyVault))
+            if (Optional.IsDefined(KeyVaultDetails))
             {
                 writer.WritePropertyName("keyVault");
-                writer.WriteObjectValue(KeyVault);
+                writer.WriteObjectValue(KeyVaultDetails);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

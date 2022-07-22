@@ -26,44 +26,44 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="idPropertiesId"> Operation result identifier. </param>
+        /// <param name="operationResultIdentifier"> Operation result identifier. </param>
         /// <param name="status"> Status of an async operation. </param>
-        /// <param name="started">
+        /// <param name="startedOn">
         /// Start time of an async operation. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
         /// 
         /// </param>
-        /// <param name="updated">
+        /// <param name="updatedOn">
         /// Last update time of an async operation. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
         /// 
         /// </param>
         /// <param name="resultInfo"> Optional result info. </param>
         /// <param name="error"> Error Body Contract. </param>
         /// <param name="actionLog"> This property if only provided as part of the TenantConfiguration_Validate operation. It contains the log the entities which will be updated/created/deleted as part of the TenantConfiguration_Deploy operation. </param>
-        internal GitOperationResultContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string idPropertiesId, AsyncOperationStatus? status, DateTimeOffset? started, DateTimeOffset? updated, string resultInfo, ErrorResponseBody error, IReadOnlyList<OperationResultLogItemContract> actionLog) : base(id, name, resourceType, systemData)
+        internal GitOperationResultContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string operationResultIdentifier, AsyncOperationStatus? status, DateTimeOffset? startedOn, DateTimeOffset? updatedOn, string resultInfo, ErrorResponseBody error, IReadOnlyList<OperationResultLogItemContract> actionLog) : base(id, name, resourceType, systemData)
         {
-            IdPropertiesId = idPropertiesId;
+            OperationResultIdentifier = operationResultIdentifier;
             Status = status;
-            Started = started;
-            Updated = updated;
+            StartedOn = startedOn;
+            UpdatedOn = updatedOn;
             ResultInfo = resultInfo;
             Error = error;
             ActionLog = actionLog;
         }
 
         /// <summary> Operation result identifier. </summary>
-        public string IdPropertiesId { get; set; }
+        public string OperationResultIdentifier { get; set; }
         /// <summary> Status of an async operation. </summary>
         public AsyncOperationStatus? Status { get; set; }
         /// <summary>
         /// Start time of an async operation. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
         /// 
         /// </summary>
-        public DateTimeOffset? Started { get; set; }
+        public DateTimeOffset? StartedOn { get; set; }
         /// <summary>
         /// Last update time of an async operation. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
         /// 
         /// </summary>
-        public DateTimeOffset? Updated { get; set; }
+        public DateTimeOffset? UpdatedOn { get; set; }
         /// <summary> Optional result info. </summary>
         public string ResultInfo { get; set; }
         /// <summary> Error Body Contract. </summary>

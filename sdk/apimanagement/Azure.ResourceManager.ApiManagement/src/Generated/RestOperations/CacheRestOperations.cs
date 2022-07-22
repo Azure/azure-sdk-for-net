@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CacheCollection>> ListByServiceAsync(string subscriptionId, string resourceGroupName, string serviceName, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        public async Task<Response<CacheListResult>> ListByServiceAsync(string subscriptionId, string resourceGroupName, string serviceName, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -87,9 +87,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        CacheCollection value = default;
+                        CacheListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CacheCollection.DeserializeCacheCollection(document.RootElement);
+                        value = CacheListResult.DeserializeCacheListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CacheCollection> ListByService(string subscriptionId, string resourceGroupName, string serviceName, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        public Response<CacheListResult> ListByService(string subscriptionId, string resourceGroupName, string serviceName, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -118,9 +118,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        CacheCollection value = default;
+                        CacheListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CacheCollection.DeserializeCacheCollection(document.RootElement);
+                        value = CacheListResult.DeserializeCacheListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -608,7 +608,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CacheCollection>> ListByServiceNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        public async Task<Response<CacheListResult>> ListByServiceNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -621,9 +621,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        CacheCollection value = default;
+                        CacheListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CacheCollection.DeserializeCacheCollection(document.RootElement);
+                        value = CacheListResult.DeserializeCacheListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -641,7 +641,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CacheCollection> ListByServiceNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        public Response<CacheListResult> ListByServiceNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -654,9 +654,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        CacheCollection value = default;
+                        CacheListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CacheCollection.DeserializeCacheCollection(document.RootElement);
+                        value = CacheListResult.DeserializeCacheListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

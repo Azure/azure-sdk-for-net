@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string AccessValue = "access";
-        private const string GitAccessValue = "gitAccess";
+        private const string TenantAccessValue = "access";
+        private const string TenantGitAccessValue = "gitAccess";
 
         /// <summary> access. </summary>
-        public static AccessName Access { get; } = new AccessName(AccessValue);
+        public static AccessName TenantAccess { get; } = new AccessName(TenantAccessValue);
         /// <summary> gitAccess. </summary>
-        public static AccessName GitAccess { get; } = new AccessName(GitAccessValue);
+        public static AccessName TenantGitAccess { get; } = new AccessName(TenantGitAccessValue);
         /// <summary> Determines if two <see cref="AccessName"/> values are the same. </summary>
         public static bool operator ==(AccessName left, AccessName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AccessName"/> values are not the same. </summary>

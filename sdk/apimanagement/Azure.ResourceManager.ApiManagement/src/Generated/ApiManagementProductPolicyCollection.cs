@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ApiManagementProductPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, PolicyIdName policyId, PolicyContractData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ApiManagementProductPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, PolicyName policyId, PolicyContractData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ApiManagementProductPolicyResource> CreateOrUpdate(WaitUntil waitUntil, PolicyIdName policyId, PolicyContractData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ApiManagementProductPolicyResource> CreateOrUpdate(WaitUntil waitUntil, PolicyName policyId, PolicyContractData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="policyId"> The identifier of the Policy. </param>
         /// <param name="format"> Policy Export Format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ApiManagementProductPolicyResource>> GetAsync(PolicyIdName policyId, PolicyExportFormat? format = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiManagementProductPolicyResource>> GetAsync(PolicyName policyId, PolicyExportFormat? format = null, CancellationToken cancellationToken = default)
         {
             using var scope = _apiManagementProductPolicyProductPolicyClientDiagnostics.CreateScope("ApiManagementProductPolicyCollection.Get");
             scope.Start();
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="policyId"> The identifier of the Policy. </param>
         /// <param name="format"> Policy Export Format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ApiManagementProductPolicyResource> Get(PolicyIdName policyId, PolicyExportFormat? format = null, CancellationToken cancellationToken = default)
+        public virtual Response<ApiManagementProductPolicyResource> Get(PolicyName policyId, PolicyExportFormat? format = null, CancellationToken cancellationToken = default)
         {
             using var scope = _apiManagementProductPolicyProductPolicyClientDiagnostics.CreateScope("ApiManagementProductPolicyCollection.Get");
             scope.Start();
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="policyId"> The identifier of the Policy. </param>
         /// <param name="format"> Policy Export Format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<bool>> ExistsAsync(PolicyIdName policyId, PolicyExportFormat? format = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(PolicyName policyId, PolicyExportFormat? format = null, CancellationToken cancellationToken = default)
         {
             using var scope = _apiManagementProductPolicyProductPolicyClientDiagnostics.CreateScope("ApiManagementProductPolicyCollection.Exists");
             scope.Start();
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="policyId"> The identifier of the Policy. </param>
         /// <param name="format"> Policy Export Format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> Exists(PolicyIdName policyId, PolicyExportFormat? format = null, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(PolicyName policyId, PolicyExportFormat? format = null, CancellationToken cancellationToken = default)
         {
             using var scope = _apiManagementProductPolicyProductPolicyClientDiagnostics.CreateScope("ApiManagementProductPolicyCollection.Exists");
             scope.Start();

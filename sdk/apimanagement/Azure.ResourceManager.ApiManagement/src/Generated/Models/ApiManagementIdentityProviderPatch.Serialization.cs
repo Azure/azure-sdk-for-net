@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProviderType))
+            if (Optional.IsDefined(IdentityProviderType))
             {
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(ProviderType.Value.ToString());
+                writer.WriteStringValue(IdentityProviderType.Value.ToString());
             }
             if (Optional.IsDefined(SignInTenant))
             {

@@ -33,20 +33,20 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("negotiateClientCertificate");
                 writer.WriteBooleanValue(NegotiateClientCertificate.Value);
             }
-            if (Optional.IsDefined(Tls10Enabled))
+            if (Optional.IsDefined(IsTls1_0Enabled))
             {
                 writer.WritePropertyName("tls10Enabled");
-                writer.WriteBooleanValue(Tls10Enabled.Value);
+                writer.WriteBooleanValue(IsTls1_0Enabled.Value);
             }
-            if (Optional.IsDefined(Tls11Enabled))
+            if (Optional.IsDefined(IsTls1_1Enabled))
             {
                 writer.WritePropertyName("tls11Enabled");
-                writer.WriteBooleanValue(Tls11Enabled.Value);
+                writer.WriteBooleanValue(IsTls1_1Enabled.Value);
             }
-            if (Optional.IsDefined(Http2Enabled))
+            if (Optional.IsDefined(IsHttp2_0Enabled))
             {
                 writer.WritePropertyName("http2Enabled");
-                writer.WriteBooleanValue(Http2Enabled.Value);
+                writer.WriteBooleanValue(IsHttp2_0Enabled.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Date and time when the issue was created. </summary>
         public DateTimeOffset? CreatedOn { get; set; }
         /// <summary> Status of the issue. </summary>
-        public State? State { get; set; }
+        public IssueState? State { get; set; }
         /// <summary> A resource identifier for the API the issue was created for. </summary>
         public ResourceIdentifier ApiId { get; set; }
         /// <summary> The issue title. </summary>

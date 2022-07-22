@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="format"> Policy Export Format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ApiPolicyResource>> GetApiPolicyAsync(PolicyIdName policyId, PolicyExportFormat? format = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiPolicyResource>> GetApiPolicyAsync(PolicyName policyId, PolicyExportFormat? format = null, CancellationToken cancellationToken = default)
         {
             return await GetApiPolicies().GetAsync(policyId, format, cancellationToken).ConfigureAwait(false);
         }
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="format"> Policy Export Format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<ApiPolicyResource> GetApiPolicy(PolicyIdName policyId, PolicyExportFormat? format = null, CancellationToken cancellationToken = default)
+        public virtual Response<ApiPolicyResource> GetApiPolicy(PolicyName policyId, PolicyExportFormat? format = null, CancellationToken cancellationToken = default)
         {
             return GetApiPolicies().Get(policyId, format, cancellationToken);
         }
@@ -752,10 +752,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="includeNotTaggedOperations"> Include not tagged Operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="TagResourceContract" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<TagResourceContract> GetOperationsByTagsAsync(string filter = null, int? top = null, int? skip = null, bool? includeNotTaggedOperations = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="TagResourceContractDetails" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<TagResourceContractDetails> GetOperationsByTagsAsync(string filter = null, int? top = null, int? skip = null, bool? includeNotTaggedOperations = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<TagResourceContract>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<TagResourceContractDetails>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _operationClientDiagnostics.CreateScope("ApiResource.GetOperationsByTags");
                 scope.Start();
@@ -770,7 +770,7 @@ namespace Azure.ResourceManager.ApiManagement
                     throw;
                 }
             }
-            async Task<Page<TagResourceContract>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<TagResourceContractDetails>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _operationClientDiagnostics.CreateScope("ApiResource.GetOperationsByTags");
                 scope.Start();
@@ -798,10 +798,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="includeNotTaggedOperations"> Include not tagged Operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TagResourceContract" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<TagResourceContract> GetOperationsByTags(string filter = null, int? top = null, int? skip = null, bool? includeNotTaggedOperations = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="TagResourceContractDetails" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<TagResourceContractDetails> GetOperationsByTags(string filter = null, int? top = null, int? skip = null, bool? includeNotTaggedOperations = null, CancellationToken cancellationToken = default)
         {
-            Page<TagResourceContract> FirstPageFunc(int? pageSizeHint)
+            Page<TagResourceContractDetails> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _operationClientDiagnostics.CreateScope("ApiResource.GetOperationsByTags");
                 scope.Start();
@@ -816,7 +816,7 @@ namespace Azure.ResourceManager.ApiManagement
                     throw;
                 }
             }
-            Page<TagResourceContract> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<TagResourceContractDetails> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _operationClientDiagnostics.CreateScope("ApiResource.GetOperationsByTags");
                 scope.Start();

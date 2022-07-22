@@ -106,6 +106,8 @@ rename-mapping:
   AccessInformationContract.properties.enabled: IsEnabled
   AccessInformationContract.properties.id: AccessInfoType
   AccessIdName: AccessName
+  AccessIdName.access: TenantAccess
+  AccessIdName.gitAccess: TenantGitAccess
   ApiContract: Api
   ApiCollection: ApiListResult
   NetworkStatusContractByLocation: NetworkStatusContractWithLocation
@@ -126,6 +128,7 @@ rename-mapping:
   CertificateContract: ApiManagementCertificate
   CertificateContract.properties.expirationDate: ExpiresOn
   CertificateContract.properties.keyVault: KeyVaultDetails
+  CertificateCreateOrUpdateParameters.properties.keyVault: KeyVaultDetails
   ContentTypeContract: ApiManagementContentType
   ContentTypeContract.properties.id: ContentTypeIdentifier
   ContentTypeContract.properties.name: ContentTypeName
@@ -176,18 +179,68 @@ rename-mapping:
   NameAvailabilityReason: ApiManagementServiceNameUnavailableReason
   ApiType.websocket: WebSocket
   ApiType.graphql: GraphQL
+  ProvisioningState: AssociationEntityProvisioningState
+  AuthenticationSettingsContract.openid: OpenId
+  CertificateInformation.expiry: ExpiresOn
+  Confirmation: ConfirmationEmailType
+  Confirmation.signup: SignUp
+  ConnectivityCheckProtocol.TCP: Tcp
+  ConnectivityStatusContract.lastUpdated: LastUpdatedOn
+  ConnectivityStatusContract.lastStatusChange: lastStatusChangedOn
+  ContentFormat.openapi: OpenApi
+  ContentFormat.openapi+json: OpenApiJson
+  ContentFormat.openapi-link: OpenApiLink
+  ContentFormat.openapi+json-link: OpenApiJsonLink
+  ContentFormat.graphql-link: GraphQLLink
+  ConnectivityCheckRequestProtocolConfigurationHttpConfiguration: ConnectivityCheckRequestHttpConfiguration
+  Method: HttpMethodConfiguration
+  Method.GET: Get
+  HttpHeader: HttpHeaderConfiguration
+  NotificationName.BCC: Bcc
+  OpenIdAuthenticationSettingsContract.openidProviderId: OpenIdProviderId
+  OperationResultContract.properties.id: OperationResultIdentifier
+  OperationResultContract.properties.started: StartedOn
+  OperationResultContract.properties.updated: UpdatedOn
+  PolicyContentFormat.rawxml: RawXml
+  PolicyContentFormat.rawxml-link: RawXmlLink
+  PolicyIdName: PolicyName
+  ProductEntityBaseParameters: ProductEntityBaseProperties
+  SubscriptionUpdateParameters.properties.expirationDate: ExpiresOn
+  SettingsTypeName: SettingsType
+  TagResourceContract: TagResourceContractDetails
+  TagResourceContractProperties: AssociatedTagProperties
+  ApiTagResourceContractProperties: AssociatedApiProperties
+  OperationTagResourceContractProperties: AssociatedOperationProperties
+  ProductTagResourceContractProperties: AssociatedProductProperties
+  UserTokenParameters.properties.expiry: ExpiresOn
+  AuthorizationMethod.GET: Get
+  AuthorizationMethod.PUT: Put
+  GroupContractProperties.builtIn: IsBuiltIn
+  GroupType: ApiManagementGroupType
+  AccessType: StorageAccountAccessType
+  GatewayKeyRegenerationRequestContract: GatewayKeyRegenerateContent
+  KeyType: TokenGenerationUsedKeyType
+  Verbosity: TraceVerbosityLevel
+  State: IssueState
+  Severity: IssueSeverity
+  Origin: IssueOrigin
+  Protocol: ApiOperationInvokableProtocol
+  PolicyExportFormat.rawxml: RawXml
+  ResourceSkuResult: AvailableApiManagementServiceSkuResult
+  SkuType: ApiManagementServiceSkuType
 
 directive:
   - remove-operation: 'ApiManagementOperations_List'
   - from: definitions.json
     where: $.definitions
     transform: >
-      $.AuthorizationServerContractBaseProperties.properties.bearerTokenSendingMethods.items['x-ms-enum']['name'] = 'BearerTokenSendingMethodMode';
+      $.AuthorizationServerContractBaseProperties.properties.bearerTokenSendingMethods.items['x-ms-enum']['name'] = 'BearerTokenSendingMethod';
       $.AuthorizationServerContractBaseProperties.properties.clientAuthenticationMethod['x-ms-client-name'] = 'ClientAuthenticationMethods';
-      $.BearerTokenSendingMethodsContract['x-ms-enum']['name'] = 'BearerTokenSendingMethodContract';
+      $.BearerTokenSendingMethodsContract['x-ms-enum']['name'] = 'BearerTokenSendingMethod';
       $.ApiEntityBaseContract.properties.subscriptionRequired['x-ms-client-name'] = 'IsSubscriptionRequired';
       $.CacheContractProperties.properties.resourceId['x-ms-client-name'] = 'resourceUri';
       $.CacheUpdateProperties.properties.resourceId['x-ms-client-name'] = 'resourceUri';
+      $.IdentityProviderBaseParameters.properties.type['x-ms-client-name'] = 'IdentityProviderType';
       $.IdentityProviderBaseParameters.properties.signinTenant['x-ms-client-name'] = 'SignInTenant';
       $.IdentityProviderBaseParameters.properties.signupPolicyName['x-ms-client-name'] = 'SignUpPolicyName';
       $.IdentityProviderBaseParameters.properties.signinPolicyName['x-ms-client-name'] = 'SignInPolicyName';
@@ -197,10 +250,31 @@ directive:
       $.NamedValueEntityBaseParameters.properties.secret['x-ms-client-name'] = 'IsSecret';
       $.ProductEntityBaseParameters.properties.subscriptionRequired['x-ms-client-name'] = 'IsSubscriptionRequired';
       $.ProductEntityBaseParameters.properties.approvalRequired['x-ms-client-name'] = 'IsApprovalRequired';
+      $.ApiVersionSetContractDetails.properties.versioningScheme['x-ms-enum'] = {
+          "name": "versioningScheme",
+          "modelAsString": true
+        }
+      $.ConnectivityHop.properties.address['x-ms-format'] = 'ip-address';
+      $.ConnectivityHop.properties.resourceId['x-ms-format'] = 'arm-id';
+      $.RemotePrivateEndpointConnectionWrapper.properties.id['x-ms-format'] = 'arm-id';
+      $.RemotePrivateEndpointConnectionWrapper.properties.type['x-ms-format'] = 'resource-type';
+      $.ApiReleaseContractProperties.properties.apiId['x-ms-format'] = 'arm-id';
+      $.GatewayKeyRegenerationRequestContract.properties.keyType['x-ms-enum']['name'] = 'GatewayRegenerateKeyType';
+      for (var key in $) {
+          if (key.endsWith('Collection')) {
+              for (var property in $[key].properties) {
+                  if (property === 'value' && $[key].properties[property].type === 'array') {
+                      $[key]['x-ms-client-name'] = key.replace('Collection', 'ListResult');
+                  }
+              }
+          }
+        }
   - from: apimdeployment.json
     where: $.definitions
     transform: >
       $.Operation['x-ms-client-name'] = 'RestApiOperation';
+      $.VirtualNetworkConfiguration.properties.vnetid['format'] = 'uuid';
+      $.VirtualNetworkConfiguration.properties.subnetResourceId['x-ms-format'] = 'arm-id';
   - from: apimanagement.json
     where: $.parameters
     transform: >

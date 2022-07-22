@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="httpCorrelationProtocol"> Sets correlation protocol to use for Application Insights diagnostics. </param>
         /// <param name="verbosity"> The verbosity level applied to traces emitted by trace policies. </param>
         /// <param name="operationNameFormat"> The format of the Operation Name for Application Insights telemetries. Default is Name. </param>
-        internal DiagnosticContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlwaysLog? alwaysLog, string loggerId, SamplingSettings sampling, PipelineDiagnosticSettings frontend, PipelineDiagnosticSettings backend, bool? logClientIP, HttpCorrelationProtocol? httpCorrelationProtocol, Verbosity? verbosity, OperationNameFormat? operationNameFormat) : base(id, name, resourceType, systemData)
+        internal DiagnosticContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlwaysLog? alwaysLog, string loggerId, SamplingSettings sampling, PipelineDiagnosticSettings frontend, PipelineDiagnosticSettings backend, bool? logClientIP, HttpCorrelationProtocol? httpCorrelationProtocol, TraceVerbosityLevel? verbosity, OperationNameFormat? operationNameFormat) : base(id, name, resourceType, systemData)
         {
             AlwaysLog = alwaysLog;
             LoggerId = loggerId;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Sets correlation protocol to use for Application Insights diagnostics. </summary>
         public HttpCorrelationProtocol? HttpCorrelationProtocol { get; set; }
         /// <summary> The verbosity level applied to traces emitted by trace policies. </summary>
-        public Verbosity? Verbosity { get; set; }
+        public TraceVerbosityLevel? Verbosity { get; set; }
         /// <summary> The format of the Operation Name for Application Insights telemetries. Default is Name. </summary>
         public OperationNameFormat? OperationNameFormat { get; set; }
     }

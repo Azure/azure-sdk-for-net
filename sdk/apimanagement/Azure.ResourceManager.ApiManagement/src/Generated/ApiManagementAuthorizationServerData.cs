@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ApiManagement
             AuthorizationMethods = new ChangeTrackingList<AuthorizationMethod>();
             ClientAuthenticationMethods = new ChangeTrackingList<ClientAuthenticationMethod>();
             TokenBodyParameters = new ChangeTrackingList<TokenBodyParameterContract>();
-            BearerTokenSendingMethods = new ChangeTrackingList<BearerTokenSendingMethodMode>();
+            BearerTokenSendingMethods = new ChangeTrackingList<BearerTokenSendingMethod>();
             GrantTypes = new ChangeTrackingList<GrantType>();
         }
 
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="grantTypes"> Form of an authorization grant, which the client uses to request the access token. </param>
         /// <param name="clientId"> Client or app id registered with this authorization server. </param>
         /// <param name="clientSecret"> Client or app secret registered with this authorization server. This property will not be filled on &apos;GET&apos; operations! Use &apos;/listSecrets&apos; POST request to get the value. </param>
-        internal ApiManagementAuthorizationServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, IList<AuthorizationMethod> authorizationMethods, IList<ClientAuthenticationMethod> clientAuthenticationMethods, IList<TokenBodyParameterContract> tokenBodyParameters, string tokenEndpoint, bool? supportState, string defaultScope, IList<BearerTokenSendingMethodMode> bearerTokenSendingMethods, string resourceOwnerUsername, string resourceOwnerPassword, string displayName, string clientRegistrationEndpoint, string authorizationEndpoint, IList<GrantType> grantTypes, string clientId, string clientSecret) : base(id, name, resourceType, systemData)
+        internal ApiManagementAuthorizationServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, IList<AuthorizationMethod> authorizationMethods, IList<ClientAuthenticationMethod> clientAuthenticationMethods, IList<TokenBodyParameterContract> tokenBodyParameters, string tokenEndpoint, bool? supportState, string defaultScope, IList<BearerTokenSendingMethod> bearerTokenSendingMethods, string resourceOwnerUsername, string resourceOwnerPassword, string displayName, string clientRegistrationEndpoint, string authorizationEndpoint, IList<GrantType> grantTypes, string clientId, string clientSecret) : base(id, name, resourceType, systemData)
         {
             Description = description;
             AuthorizationMethods = authorizationMethods;
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Access token scope that is going to be requested by default. Can be overridden at the API level. Should be provided in the form of a string containing space-delimited values. </summary>
         public string DefaultScope { get; set; }
         /// <summary> Specifies the mechanism by which access token is passed to the API. </summary>
-        public IList<BearerTokenSendingMethodMode> BearerTokenSendingMethods { get; }
+        public IList<BearerTokenSendingMethod> BearerTokenSendingMethods { get; }
         /// <summary> Can be optionally specified when resource owner password grant type is supported by this authorization server. Default resource owner username. </summary>
         public string ResourceOwnerUsername { get; set; }
         /// <summary> Can be optionally specified when resource owner password grant type is supported by this authorization server. Default resource owner password. </summary>

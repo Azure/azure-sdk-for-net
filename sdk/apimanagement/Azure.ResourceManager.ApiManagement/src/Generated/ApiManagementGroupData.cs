@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="isBuiltIn"> true if the group is one of the three system groups (Administrators, Developers, or Guests); otherwise false. </param>
         /// <param name="groupType"> Group type. </param>
         /// <param name="externalId"> For external groups, this property contains the id of the group from the external identity provider, e.g. for Azure Active Directory `aad://&lt;tenant&gt;.onmicrosoft.com/groups/&lt;group object id&gt;`; otherwise the value is null. </param>
-        internal ApiManagementGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string description, bool? isBuiltIn, GroupType? groupType, string externalId) : base(id, name, resourceType, systemData)
+        internal ApiManagementGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string description, bool? isBuiltIn, ApiManagementGroupType? groupType, string externalId) : base(id, name, resourceType, systemData)
         {
             DisplayName = displayName;
             Description = description;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> true if the group is one of the three system groups (Administrators, Developers, or Guests); otherwise false. </summary>
         public bool? IsBuiltIn { get; }
         /// <summary> Group type. </summary>
-        public GroupType? GroupType { get; set; }
+        public ApiManagementGroupType? GroupType { get; set; }
         /// <summary> For external groups, this property contains the id of the group from the external identity provider, e.g. for Azure Active Directory `aad://&lt;tenant&gt;.onmicrosoft.com/groups/&lt;group object id&gt;`; otherwise the value is null. </summary>
         public string ExternalId { get; set; }
     }

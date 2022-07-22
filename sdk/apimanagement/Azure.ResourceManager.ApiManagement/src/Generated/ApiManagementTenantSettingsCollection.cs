@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="settingsType"> The identifier of the settings. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ApiManagementTenantSettingsResource>> GetAsync(SettingsTypeName settingsType, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiManagementTenantSettingsResource>> GetAsync(SettingsType settingsType, CancellationToken cancellationToken = default)
         {
             using var scope = _apiManagementTenantSettingsTenantSettingsClientDiagnostics.CreateScope("ApiManagementTenantSettingsCollection.Get");
             scope.Start();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="settingsType"> The identifier of the settings. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ApiManagementTenantSettingsResource> Get(SettingsTypeName settingsType, CancellationToken cancellationToken = default)
+        public virtual Response<ApiManagementTenantSettingsResource> Get(SettingsType settingsType, CancellationToken cancellationToken = default)
         {
             using var scope = _apiManagementTenantSettingsTenantSettingsClientDiagnostics.CreateScope("ApiManagementTenantSettingsCollection.Get");
             scope.Start();
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="settingsType"> The identifier of the settings. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<bool>> ExistsAsync(SettingsTypeName settingsType, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(SettingsType settingsType, CancellationToken cancellationToken = default)
         {
             using var scope = _apiManagementTenantSettingsTenantSettingsClientDiagnostics.CreateScope("ApiManagementTenantSettingsCollection.Exists");
             scope.Start();
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="settingsType"> The identifier of the settings. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> Exists(SettingsTypeName settingsType, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(SettingsType settingsType, CancellationToken cancellationToken = default)
         {
             using var scope = _apiManagementTenantSettingsTenantSettingsClientDiagnostics.CreateScope("ApiManagementTenantSettingsCollection.Exists");
             scope.Start();

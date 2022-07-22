@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<DateTimeOffset> createdDate = default;
-            Optional<State> state = default;
+            Optional<IssueState> state = default;
             Optional<ResourceIdentifier> apiId = default;
             Optional<string> title = default;
             Optional<string> description = default;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ApiManagement
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            state = new State(property0.Value.GetString());
+                            state = new IssueState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("apiId"))

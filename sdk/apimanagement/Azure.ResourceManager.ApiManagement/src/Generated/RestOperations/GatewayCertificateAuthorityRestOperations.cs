@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="gatewayId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="gatewayId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<GatewayCertificateAuthorityCollection>> ListByServiceAsync(string subscriptionId, string resourceGroupName, string serviceName, string gatewayId, string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        public async Task<Response<GatewayCertificateAuthorityListResult>> ListByServiceAsync(string subscriptionId, string resourceGroupName, string serviceName, string gatewayId, string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -96,9 +96,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        GatewayCertificateAuthorityCollection value = default;
+                        GatewayCertificateAuthorityListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = GatewayCertificateAuthorityCollection.DeserializeGatewayCertificateAuthorityCollection(document.RootElement);
+                        value = GatewayCertificateAuthorityListResult.DeserializeGatewayCertificateAuthorityListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="gatewayId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="gatewayId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<GatewayCertificateAuthorityCollection> ListByService(string subscriptionId, string resourceGroupName, string serviceName, string gatewayId, string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        public Response<GatewayCertificateAuthorityListResult> ListByService(string subscriptionId, string resourceGroupName, string serviceName, string gatewayId, string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -130,9 +130,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        GatewayCertificateAuthorityCollection value = default;
+                        GatewayCertificateAuthorityListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = GatewayCertificateAuthorityCollection.DeserializeGatewayCertificateAuthorityCollection(document.RootElement);
+                        value = GatewayCertificateAuthorityListResult.DeserializeGatewayCertificateAuthorityListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -549,7 +549,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="gatewayId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="gatewayId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<GatewayCertificateAuthorityCollection>> ListByServiceNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string gatewayId, string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        public async Task<Response<GatewayCertificateAuthorityListResult>> ListByServiceNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string gatewayId, string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -563,9 +563,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        GatewayCertificateAuthorityCollection value = default;
+                        GatewayCertificateAuthorityListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = GatewayCertificateAuthorityCollection.DeserializeGatewayCertificateAuthorityCollection(document.RootElement);
+                        value = GatewayCertificateAuthorityListResult.DeserializeGatewayCertificateAuthorityListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -585,7 +585,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="gatewayId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="gatewayId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<GatewayCertificateAuthorityCollection> ListByServiceNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string gatewayId, string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        public Response<GatewayCertificateAuthorityListResult> ListByServiceNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string gatewayId, string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -599,9 +599,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        GatewayCertificateAuthorityCollection value = default;
+                        GatewayCertificateAuthorityListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = GatewayCertificateAuthorityCollection.DeserializeGatewayCertificateAuthorityCollection(document.RootElement);
+                        value = GatewayCertificateAuthorityListResult.DeserializeGatewayCertificateAuthorityListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

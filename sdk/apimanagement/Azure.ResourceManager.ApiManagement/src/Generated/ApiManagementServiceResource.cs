@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="format"> Policy Export Format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ApiManagementPolicyResource>> GetApiManagementPolicyAsync(PolicyIdName policyId, PolicyExportFormat? format = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiManagementPolicyResource>> GetApiManagementPolicyAsync(PolicyName policyId, PolicyExportFormat? format = null, CancellationToken cancellationToken = default)
         {
             return await GetApiManagementPolicies().GetAsync(policyId, format, cancellationToken).ConfigureAwait(false);
         }
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="format"> Policy Export Format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<ApiManagementPolicyResource> GetApiManagementPolicy(PolicyIdName policyId, PolicyExportFormat? format = null, CancellationToken cancellationToken = default)
+        public virtual Response<ApiManagementPolicyResource> GetApiManagementPolicy(PolicyName policyId, PolicyExportFormat? format = null, CancellationToken cancellationToken = default)
         {
             return GetApiManagementPolicies().Get(policyId, format, cancellationToken);
         }
@@ -1058,7 +1058,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="settingsType"> The identifier of the settings. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ApiManagementTenantSettingsResource>> GetApiManagementTenantSettingsAsync(SettingsTypeName settingsType, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiManagementTenantSettingsResource>> GetApiManagementTenantSettingsAsync(SettingsType settingsType, CancellationToken cancellationToken = default)
         {
             return await GetAllApiManagementTenantSettings().GetAsync(settingsType, cancellationToken).ConfigureAwait(false);
         }
@@ -1071,7 +1071,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="settingsType"> The identifier of the settings. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<ApiManagementTenantSettingsResource> GetApiManagementTenantSettings(SettingsTypeName settingsType, CancellationToken cancellationToken = default)
+        public virtual Response<ApiManagementTenantSettingsResource> GetApiManagementTenantSettings(SettingsType settingsType, CancellationToken cancellationToken = default)
         {
             return GetAllApiManagementTenantSettings().Get(settingsType, cancellationToken);
         }
@@ -1353,10 +1353,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="includeNotTaggedApis"> Include not tagged APIs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="TagResourceContract" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<TagResourceContract> GetApisByTagsAsync(string filter = null, int? top = null, int? skip = null, bool? includeNotTaggedApis = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="TagResourceContractDetails" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<TagResourceContractDetails> GetApisByTagsAsync(string filter = null, int? top = null, int? skip = null, bool? includeNotTaggedApis = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<TagResourceContract>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<TagResourceContractDetails>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _apiClientDiagnostics.CreateScope("ApiManagementServiceResource.GetApisByTags");
                 scope.Start();
@@ -1371,7 +1371,7 @@ namespace Azure.ResourceManager.ApiManagement
                     throw;
                 }
             }
-            async Task<Page<TagResourceContract>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<TagResourceContractDetails>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _apiClientDiagnostics.CreateScope("ApiManagementServiceResource.GetApisByTags");
                 scope.Start();
@@ -1399,10 +1399,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="includeNotTaggedApis"> Include not tagged APIs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TagResourceContract" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<TagResourceContract> GetApisByTags(string filter = null, int? top = null, int? skip = null, bool? includeNotTaggedApis = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="TagResourceContractDetails" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<TagResourceContractDetails> GetApisByTags(string filter = null, int? top = null, int? skip = null, bool? includeNotTaggedApis = null, CancellationToken cancellationToken = default)
         {
-            Page<TagResourceContract> FirstPageFunc(int? pageSizeHint)
+            Page<TagResourceContractDetails> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _apiClientDiagnostics.CreateScope("ApiManagementServiceResource.GetApisByTags");
                 scope.Start();
@@ -1417,7 +1417,7 @@ namespace Azure.ResourceManager.ApiManagement
                     throw;
                 }
             }
-            Page<TagResourceContract> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<TagResourceContractDetails> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _apiClientDiagnostics.CreateScope("ApiManagementServiceResource.GetApisByTags");
                 scope.Start();
@@ -1501,10 +1501,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// Operation Id: ApiManagementServiceSkus_ListAvailableServiceSkus
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ResourceSkuResult" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ResourceSkuResult> GetAvailableApiManagementServiceSkusAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AvailableApiManagementServiceSkuResult" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AvailableApiManagementServiceSkuResult> GetAvailableApiManagementServiceSkusAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ResourceSkuResult>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<AvailableApiManagementServiceSkuResult>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _apiManagementServiceSkusClientDiagnostics.CreateScope("ApiManagementServiceResource.GetAvailableApiManagementServiceSkus");
                 scope.Start();
@@ -1519,7 +1519,7 @@ namespace Azure.ResourceManager.ApiManagement
                     throw;
                 }
             }
-            async Task<Page<ResourceSkuResult>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<AvailableApiManagementServiceSkuResult>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _apiManagementServiceSkusClientDiagnostics.CreateScope("ApiManagementServiceResource.GetAvailableApiManagementServiceSkus");
                 scope.Start();
@@ -1543,10 +1543,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// Operation Id: ApiManagementServiceSkus_ListAvailableServiceSkus
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceSkuResult" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ResourceSkuResult> GetAvailableApiManagementServiceSkus(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AvailableApiManagementServiceSkuResult" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AvailableApiManagementServiceSkuResult> GetAvailableApiManagementServiceSkus(CancellationToken cancellationToken = default)
         {
-            Page<ResourceSkuResult> FirstPageFunc(int? pageSizeHint)
+            Page<AvailableApiManagementServiceSkuResult> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _apiManagementServiceSkusClientDiagnostics.CreateScope("ApiManagementServiceResource.GetAvailableApiManagementServiceSkus");
                 scope.Start();
@@ -1561,7 +1561,7 @@ namespace Azure.ResourceManager.ApiManagement
                     throw;
                 }
             }
-            Page<ResourceSkuResult> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<AvailableApiManagementServiceSkuResult> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _apiManagementServiceSkusClientDiagnostics.CreateScope("ApiManagementServiceResource.GetAvailableApiManagementServiceSkus");
                 scope.Start();
@@ -2079,10 +2079,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="includeNotTaggedProducts"> Include not tagged Products. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="TagResourceContract" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<TagResourceContract> GetProductsByTagsAsync(string filter = null, int? top = null, int? skip = null, bool? includeNotTaggedProducts = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="TagResourceContractDetails" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<TagResourceContractDetails> GetProductsByTagsAsync(string filter = null, int? top = null, int? skip = null, bool? includeNotTaggedProducts = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<TagResourceContract>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<TagResourceContractDetails>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope0 = _apiManagementProductProductClientDiagnostics.CreateScope("ApiManagementServiceResource.GetProductsByTags");
                 scope0.Start();
@@ -2097,7 +2097,7 @@ namespace Azure.ResourceManager.ApiManagement
                     throw;
                 }
             }
-            async Task<Page<TagResourceContract>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<TagResourceContractDetails>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope0 = _apiManagementProductProductClientDiagnostics.CreateScope("ApiManagementServiceResource.GetProductsByTags");
                 scope0.Start();
@@ -2125,10 +2125,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="includeNotTaggedProducts"> Include not tagged Products. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TagResourceContract" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<TagResourceContract> GetProductsByTags(string filter = null, int? top = null, int? skip = null, bool? includeNotTaggedProducts = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="TagResourceContractDetails" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<TagResourceContractDetails> GetProductsByTags(string filter = null, int? top = null, int? skip = null, bool? includeNotTaggedProducts = null, CancellationToken cancellationToken = default)
         {
-            Page<TagResourceContract> FirstPageFunc(int? pageSizeHint)
+            Page<TagResourceContractDetails> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope0 = _apiManagementProductProductClientDiagnostics.CreateScope("ApiManagementServiceResource.GetProductsByTags");
                 scope0.Start();
@@ -2143,7 +2143,7 @@ namespace Azure.ResourceManager.ApiManagement
                     throw;
                 }
             }
-            Page<TagResourceContract> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<TagResourceContractDetails> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope0 = _apiManagementProductProductClientDiagnostics.CreateScope("ApiManagementServiceResource.GetProductsByTags");
                 scope0.Start();
@@ -3258,10 +3258,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="TagResourceContract" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<TagResourceContract> GetTagResourcesAsync(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="TagResourceContractDetails" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<TagResourceContractDetails> GetTagResourcesAsync(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<TagResourceContract>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<TagResourceContractDetails>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope0 = _tagResourceClientDiagnostics.CreateScope("ApiManagementServiceResource.GetTagResources");
                 scope0.Start();
@@ -3276,7 +3276,7 @@ namespace Azure.ResourceManager.ApiManagement
                     throw;
                 }
             }
-            async Task<Page<TagResourceContract>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<TagResourceContractDetails>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope0 = _tagResourceClientDiagnostics.CreateScope("ApiManagementServiceResource.GetTagResources");
                 scope0.Start();
@@ -3303,10 +3303,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TagResourceContract" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<TagResourceContract> GetTagResources(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="TagResourceContractDetails" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<TagResourceContractDetails> GetTagResources(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
-            Page<TagResourceContract> FirstPageFunc(int? pageSizeHint)
+            Page<TagResourceContractDetails> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope0 = _tagResourceClientDiagnostics.CreateScope("ApiManagementServiceResource.GetTagResources");
                 scope0.Start();
@@ -3321,7 +3321,7 @@ namespace Azure.ResourceManager.ApiManagement
                     throw;
                 }
             }
-            Page<TagResourceContract> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<TagResourceContractDetails> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope0 = _tagResourceClientDiagnostics.CreateScope("ApiManagementServiceResource.GetTagResources");
                 scope0.Start();
