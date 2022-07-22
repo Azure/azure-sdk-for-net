@@ -1,0 +1,451 @@
+﻿{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/resourcegroups/csmrg1796?api-version=2020-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDU5MThjODMtYTIyYS00ZTdkLTgwMjYtY2NlYzRiYjYzNTg5L3Jlc291cmNlZ3JvdXBzL2NzbXJnMTc5Nj9hcGktdmVyc2lvbj0yMDIwLTEwLTAx",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"westus2\"\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "4847b67c-0990-4a8a-8929-8afced1982b9"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.30411.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.11.1.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "29"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "399e9259-6082-43af-b9c8-8b9ad53f168a"
+        ],
+        "x-ms-correlation-request-id": [
+          "399e9259-6082-43af-b9c8-8b9ad53f168a"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHCENTRALUS:20210921T154242Z:399e9259-6082-43af-b9c8-8b9ad53f168a"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 21 Sep 2021 15:42:41 GMT"
+        ],
+        "Content-Length": [
+          "216"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/resourceGroups/csmrg1796\",\r\n  \"name\": \"csmrg1796\",\r\n  \"type\": \"Microsoft.Resources/resourceGroups\",\r\n  \"location\": \"westus2\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/resourceGroups/csmrg1796/providers/Microsoft.Orbital/contactProfiles/azsmnet7199?api-version=2021-04-04-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDU5MThjODMtYTIyYS00ZTdkLTgwMjYtY2NlYzRiYjYzNTg5L3Jlc291cmNlR3JvdXBzL2NzbXJnMTc5Ni9wcm92aWRlcnMvTWljcm9zb2Z0Lk9yYml0YWwvY29udGFjdFByb2ZpbGVzL2F6c21uZXQ3MTk5P2FwaS12ZXJzaW9uPTIwMjEtMDQtMDQtcHJldmlldw==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"minimumViableContactDuration\": \"PT1M\",\r\n    \"minimumElevationDegrees\": 5.0,\r\n    \"autoTrackingConfiguration\": \"xBand\",\r\n    \"links\": [\r\n      {\r\n        \"polarization\": \"RHCP\",\r\n        \"direction\": \"Downlink\",\r\n        \"gainOverTemperature\": 25.0,\r\n        \"eirpdBW\": 0.0,\r\n        \"channels\": [\r\n          {\r\n            \"centerFrequencyMHz\": 8160.0,\r\n            \"bandwidthMHz\": 150.0,\r\n            \"endPoint\": {\r\n              \"ipAddress\": \"10.2.0.3\",\r\n              \"endPointName\": \"AQUA_directplayback\",\r\n              \"port\": \"4000\",\r\n              \"protocol\": \"TCP\"\r\n            },\r\n            \"demodulationConfiguration\": \"<config factory=\\\"Attribute\\\" factoryType=\\\"generic\\\">\\r\\n\\t<projectName>quantumRX</projectName>\\r\\n\\t<projectVersion>1.0.0</projectVersion></config>\\r\\n\"\r\n          }\r\n        ]\r\n      }\r\n    ]\r\n  },\r\n  \"location\": \"westus2\"\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "502f849f-6bc0-4e45-b03b-a8c949f4b1b0"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.30411.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Orbital.AzureOrbitalClient/1.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "888"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": [
+          "2c38d597-60c1-41d3-99f5-f9dbeb794121"
+        ],
+        "x-ms-correlation-request-id": [
+          "2c38d597-60c1-41d3-99f5-f9dbeb794121"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHCENTRALUS:20210921T154245Z:2c38d597-60c1-41d3-99f5-f9dbeb794121"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 21 Sep 2021 15:42:44 GMT"
+        ],
+        "Content-Length": [
+          "896"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"location\": \"westus2\",\r\n  \"tags\": null,\r\n  \"id\": \"/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/resourceGroups/csmrg1796/providers/Microsoft.Orbital/contactProfiles/azsmnet7199\",\r\n  \"name\": \"azsmnet7199\",\r\n  \"type\": \"Microsoft.Orbital/contactProfiles\",\r\n  \"properties\": {\r\n    \"minimumViableContactDuration\": \"PT1M\",\r\n    \"minimumElevationDegrees\": 5.0,\r\n    \"autoTrackingConfiguration\": \"xBand\",\r\n    \"links\": [\r\n      {\r\n        \"polarization\": \"RHCP\",\r\n        \"direction\": \"Downlink\",\r\n        \"gainOverTemperature\": 25.0,\r\n        \"eirpdBW\": 0.0,\r\n        \"channels\": [\r\n          {\r\n            \"centerFrequencyMHz\": 8160.0,\r\n            \"bandwidthMHz\": 150.0,\r\n            \"endPoint\": {\r\n              \"ipAddress\": \"10.2.0.3\",\r\n              \"endPointName\": \"AQUA_directplayback\",\r\n              \"port\": \"4000\",\r\n              \"protocol\": \"TCP\"\r\n            },\r\n            \"modulationConfiguration\": null,\r\n            \"demodulationConfiguration\": \"<config factory=\\\"Attribute\\\" factoryType=\\\"generic\\\">\\r\\n\\t<projectName>quantumRX</projectName>\\r\\n\\t<projectVersion>1.0.0</projectVersion></config>\\r\\n\",\r\n            \"encodingConfiguration\": null,\r\n            \"decodingConfiguration\": null\r\n          }\r\n        ]\r\n      }\r\n    ]\r\n  }\r\n}",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/resourceGroups/csmrg1796/providers/Microsoft.Orbital/contactProfiles/azsmnet7199?api-version=2021-04-04-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDU5MThjODMtYTIyYS00ZTdkLTgwMjYtY2NlYzRiYjYzNTg5L3Jlc291cmNlR3JvdXBzL2NzbXJnMTc5Ni9wcm92aWRlcnMvTWljcm9zb2Z0Lk9yYml0YWwvY29udGFjdFByb2ZpbGVzL2F6c21uZXQ3MTk5P2FwaS12ZXJzaW9uPTIwMjEtMDQtMDQtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.30411.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Orbital.AzureOrbitalClient/1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": [
+          "a5c03e26-c571-4262-a522-dea865faa9ca"
+        ],
+        "x-ms-correlation-request-id": [
+          "a5c03e26-c571-4262-a522-dea865faa9ca"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHCENTRALUS:20210921T154315Z:a5c03e26-c571-4262-a522-dea865faa9ca"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 21 Sep 2021 15:43:15 GMT"
+        ],
+        "Content-Length": [
+          "896"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"location\": \"westus2\",\r\n  \"tags\": null,\r\n  \"id\": \"/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/resourceGroups/csmrg1796/providers/Microsoft.Orbital/contactProfiles/azsmnet7199\",\r\n  \"name\": \"azsmnet7199\",\r\n  \"type\": \"Microsoft.Orbital/contactProfiles\",\r\n  \"properties\": {\r\n    \"minimumViableContactDuration\": \"PT1M\",\r\n    \"minimumElevationDegrees\": 5.0,\r\n    \"autoTrackingConfiguration\": \"xBand\",\r\n    \"links\": [\r\n      {\r\n        \"polarization\": \"RHCP\",\r\n        \"direction\": \"Downlink\",\r\n        \"gainOverTemperature\": 25.0,\r\n        \"eirpdBW\": 0.0,\r\n        \"channels\": [\r\n          {\r\n            \"centerFrequencyMHz\": 8160.0,\r\n            \"bandwidthMHz\": 150.0,\r\n            \"endPoint\": {\r\n              \"ipAddress\": \"10.2.0.3\",\r\n              \"endPointName\": \"AQUA_directplayback\",\r\n              \"port\": \"4000\",\r\n              \"protocol\": \"TCP\"\r\n            },\r\n            \"modulationConfiguration\": null,\r\n            \"demodulationConfiguration\": \"<config factory=\\\"Attribute\\\" factoryType=\\\"generic\\\">\\r\\n\\t<projectName>quantumRX</projectName>\\r\\n\\t<projectVersion>1.0.0</projectVersion></config>\\r\\n\",\r\n            \"encodingConfiguration\": null,\r\n            \"decodingConfiguration\": null\r\n          }\r\n        ]\r\n      }\r\n    ]\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/resourceGroups/csmrg1796/providers/Microsoft.Orbital/contactProfiles/azsmnet7199?api-version=2021-04-04-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDU5MThjODMtYTIyYS00ZTdkLTgwMjYtY2NlYzRiYjYzNTg5L3Jlc291cmNlR3JvdXBzL2NzbXJnMTc5Ni9wcm92aWRlcnMvTWljcm9zb2Z0Lk9yYml0YWwvY29udGFjdFByb2ZpbGVzL2F6c21uZXQ3MTk5P2FwaS12ZXJzaW9uPTIwMjEtMDQtMDQtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "e568dd98-da06-440b-bf65-8859d4a6ef9b"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.30411.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Orbital.AzureOrbitalClient/1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11998"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": [
+          "f816dd8a-867b-4259-9952-62820ca767f0"
+        ],
+        "x-ms-correlation-request-id": [
+          "f816dd8a-867b-4259-9952-62820ca767f0"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHCENTRALUS:20210921T154315Z:f816dd8a-867b-4259-9952-62820ca767f0"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 21 Sep 2021 15:43:15 GMT"
+        ],
+        "Content-Length": [
+          "896"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"location\": \"westus2\",\r\n  \"tags\": null,\r\n  \"id\": \"/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/resourceGroups/csmrg1796/providers/Microsoft.Orbital/contactProfiles/azsmnet7199\",\r\n  \"name\": \"azsmnet7199\",\r\n  \"type\": \"Microsoft.Orbital/contactProfiles\",\r\n  \"properties\": {\r\n    \"minimumViableContactDuration\": \"PT1M\",\r\n    \"minimumElevationDegrees\": 5.0,\r\n    \"autoTrackingConfiguration\": \"xBand\",\r\n    \"links\": [\r\n      {\r\n        \"polarization\": \"RHCP\",\r\n        \"direction\": \"Downlink\",\r\n        \"gainOverTemperature\": 25.0,\r\n        \"eirpdBW\": 0.0,\r\n        \"channels\": [\r\n          {\r\n            \"centerFrequencyMHz\": 8160.0,\r\n            \"bandwidthMHz\": 150.0,\r\n            \"endPoint\": {\r\n              \"ipAddress\": \"10.2.0.3\",\r\n              \"endPointName\": \"AQUA_directplayback\",\r\n              \"port\": \"4000\",\r\n              \"protocol\": \"TCP\"\r\n            },\r\n            \"modulationConfiguration\": null,\r\n            \"demodulationConfiguration\": \"<config factory=\\\"Attribute\\\" factoryType=\\\"generic\\\">\\r\\n\\t<projectName>quantumRX</projectName>\\r\\n\\t<projectVersion>1.0.0</projectVersion></config>\\r\\n\",\r\n            \"encodingConfiguration\": null,\r\n            \"decodingConfiguration\": null\r\n          }\r\n        ]\r\n      }\r\n    ]\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/resourceGroups/csmrg1796/providers/Microsoft.Orbital/contactProfiles?api-version=2021-04-04-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDU5MThjODMtYTIyYS00ZTdkLTgwMjYtY2NlYzRiYjYzNTg5L3Jlc291cmNlR3JvdXBzL2NzbXJnMTc5Ni9wcm92aWRlcnMvTWljcm9zb2Z0Lk9yYml0YWwvY29udGFjdFByb2ZpbGVzP2FwaS12ZXJzaW9uPTIwMjEtMDQtMDQtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "95e7f502-a2a2-43e4-b1e8-59e041b2323a"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.30411.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Orbital.AzureOrbitalClient/1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11997"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": [
+          "a04c634e-d3dd-420e-8afd-2fc6d58aacb7"
+        ],
+        "x-ms-correlation-request-id": [
+          "a04c634e-d3dd-420e-8afd-2fc6d58aacb7"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHCENTRALUS:20210921T154315Z:a04c634e-d3dd-420e-8afd-2fc6d58aacb7"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 21 Sep 2021 15:43:15 GMT"
+        ],
+        "Content-Length": [
+          "924"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"nextLink\": null,\r\n  \"value\": [\r\n    {\r\n      \"location\": \"westus2\",\r\n      \"tags\": null,\r\n      \"id\": \"/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/resourceGroups/csmrg1796/providers/Microsoft.Orbital/contactProfiles/azsmnet7199\",\r\n      \"name\": \"azsmnet7199\",\r\n      \"type\": \"Microsoft.Orbital/contactProfiles\",\r\n      \"properties\": {\r\n        \"minimumViableContactDuration\": \"PT1M\",\r\n        \"minimumElevationDegrees\": 5.0,\r\n        \"autoTrackingConfiguration\": \"xBand\",\r\n        \"links\": [\r\n          {\r\n            \"polarization\": \"RHCP\",\r\n            \"direction\": \"Downlink\",\r\n            \"gainOverTemperature\": 25.0,\r\n            \"eirpdBW\": 0.0,\r\n            \"channels\": [\r\n              {\r\n                \"centerFrequencyMHz\": 8160.0,\r\n                \"bandwidthMHz\": 150.0,\r\n                \"endPoint\": {\r\n                  \"ipAddress\": \"10.2.0.3\",\r\n                  \"endPointName\": \"AQUA_directplayback\",\r\n                  \"port\": \"4000\",\r\n                  \"protocol\": \"TCP\"\r\n                },\r\n                \"modulationConfiguration\": null,\r\n                \"demodulationConfiguration\": \"<config factory=\\\"Attribute\\\" factoryType=\\\"generic\\\">\\r\\n\\t<projectName>quantumRX</projectName>\\r\\n\\t<projectVersion>1.0.0</projectVersion></config>\\r\\n\",\r\n                \"encodingConfiguration\": null,\r\n                \"decodingConfiguration\": null\r\n              }\r\n            ]\r\n          }\r\n        ]\r\n      }\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/resourceGroups/csmrg1796/providers/Microsoft.Orbital/contactProfiles?api-version=2021-04-04-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDU5MThjODMtYTIyYS00ZTdkLTgwMjYtY2NlYzRiYjYzNTg5L3Jlc291cmNlR3JvdXBzL2NzbXJnMTc5Ni9wcm92aWRlcnMvTWljcm9zb2Z0Lk9yYml0YWwvY29udGFjdFByb2ZpbGVzP2FwaS12ZXJzaW9uPTIwMjEtMDQtMDQtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "2f844153-57c1-4d4e-ae6e-46ac529f195e"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.30411.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Orbital.AzureOrbitalClient/1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11996"
+        ],
+        "x-ms-request-id": [
+          "1bc11a90-df8d-4c23-82d4-77f034946c29"
+        ],
+        "x-ms-correlation-request-id": [
+          "1bc11a90-df8d-4c23-82d4-77f034946c29"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHCENTRALUS:20210921T154316Z:1bc11a90-df8d-4c23-82d4-77f034946c29"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 21 Sep 2021 15:43:16 GMT"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "12"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": []\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/45918c83-a22a-4e7d-8026-ccec4bb63589/resourceGroups/csmrg1796/providers/Microsoft.Orbital/contactProfiles/azsmnet7199?api-version=2021-04-04-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDU5MThjODMtYTIyYS00ZTdkLTgwMjYtY2NlYzRiYjYzNTg5L3Jlc291cmNlR3JvdXBzL2NzbXJnMTc5Ni9wcm92aWRlcnMvTWljcm9zb2Z0Lk9yYml0YWwvY29udGFjdFByb2ZpbGVzL2F6c21uZXQ3MTk5P2FwaS12ZXJzaW9uPTIwMjEtMDQtMDQtcHJldmlldw==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "37f48adc-aa21-410c-9ae0-fcb33141452e"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.30411.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19043.",
+          "Microsoft.Azure.Management.Orbital.AzureOrbitalClient/1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-deletes": [
+          "14999"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": [
+          "83f92706-fc1a-4442-a350-7cce32af5aef"
+        ],
+        "x-ms-correlation-request-id": [
+          "83f92706-fc1a-4442-a350-7cce32af5aef"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHCENTRALUS:20210921T154316Z:83f92706-fc1a-4442-a350-7cce32af5aef"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 21 Sep 2021 15:43:16 GMT"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {
+    "ContactProfileApiTests": [
+      "csmrg1796",
+      "azsmnet7199"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "45918c83-a22a-4e7d-8026-ccec4bb63589"
+  }
+}

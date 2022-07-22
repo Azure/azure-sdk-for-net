@@ -1,0 +1,30 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Orbital.Tests", "tests\Microsoft.Orbital.Tests.csproj", "{CCDAE481-FF4A-4018-88EF-C3FE4AEB4C8B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Orbital", "src\Microsoft.Orbital.csproj", "{6BE0F301-94E5-4EDB-BDE0-77699C11B459}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CCDAE481-FF4A-4018-88EF-C3FE4AEB4C8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCDAE481-FF4A-4018-88EF-C3FE4AEB4C8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCDAE481-FF4A-4018-88EF-C3FE4AEB4C8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCDAE481-FF4A-4018-88EF-C3FE4AEB4C8B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6BE0F301-94E5-4EDB-BDE0-77699C11B459}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BE0F301-94E5-4EDB-BDE0-77699C11B459}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BE0F301-94E5-4EDB-BDE0-77699C11B459}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BE0F301-94E5-4EDB-BDE0-77699C11B459}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BDC7F7D2-B72C-48AD-8B69-2C8BC83C30FC}
+	EndGlobalSection
+EndGlobal
