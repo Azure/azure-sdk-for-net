@@ -4,9 +4,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ```yaml
 azure-arm: true
-# use: $(this-folder)/../../../../../autorest.csharp/artifacts/bin/AutoRest.CSharp/Debug/netcoreapp3.1/
-# csharpgen:
-#   attach: true
+csharp: true
 clear-output-folder: true
 skip-csproj: true
 library-name: MySql
@@ -54,6 +52,77 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
+prepend-rp-prefix:
+  - Advisor
+  - Configuration
+  - Database
+  - FirewallRule
+  - QueryStatistic
+  - QueryText
+  - RecommendationAction
+  - Server
+  - ServerKey
+  - ServerSecurityAlertPolicy
+  - ServerVersion
+  - VirtualNetworkRule
+  - WaitStatistic
+  - AdministratorType
+  - AdvisorResultList
+  - ConfigurationListContent
+  - ConfigurationListResult
+  - CreateMode
+  - DatabaseListResult
+  - FirewallRuleListResult
+  - LogFile
+  - LogFileListResult
+  - MinimalTlsVersionEnum
+  - GeoRedundantBackup
+  - InfrastructureEncryption
+  - NameAvailability
+  - NameAvailabilityRequest
+  - PerformanceTierListResult
+  - PerformanceTierProperties
+  - PerformanceTierServiceLevelObjectives
+  - PrivateEndpointProvisioningState
+  - PrivateLinkServiceConnectionStateStatus
+  - PublicNetworkAccessEnum
+  - QueryPerformanceInsightResetDataResult
+  - QueryPerformanceInsightResetDataResultState
+  - RecommendedActionSessionsOperationStatus
+  - StorageProfile
+  - ServerPropertiesForCreate
+  - ServerPropertiesForDefaultCreate
+  - ServerPropertiesForRestore
+  - ServerPropertiesForGeoRestore
+  - ServerPropertiesForReplica
+  - SecurityAlertPolicyName
+  - ServerKeyListResult
+  - ServerKeyType
+  - ServerListResult
+  - ServerPrivateEndpointConnection
+  - ServerPrivateEndpointConnectionProperties
+  - ServerPrivateLinkServiceConnectionStateProperty
+  - ServerSecurityAlertPolicyListResult
+  - ServerSecurityAlertPolicyState
+  - ServerState
+  - ServerUpgradeParameters
+  - SslEnforcementEnum
+  - StorageAutogrow
+  - TopQueryStatisticsInput
+  - VirtualNetworkRuleListResult
+  - VirtualNetworkRuleState
+  - WaitStatisticsInput
+rename-mapping:
+  ServerAdministratorResource: MySqlServerAdministrator
+  ServerAdministratorResourceListResult: MySqlServerAdministratorListResult
+  AdvisorsResultList: MySqlAdvisorListResult
+  QueryTextsResultList: MySqlQueryTextListResult
+  TopQueryStatisticsResultList: MySqlTopQueryStatisticsListResult
+  RecommendationActionsResultList: MySqlRecommendationActionListResult
+  WaitStatisticsResultList: MySqlWaitStatisticsListResult
+  PrivateLinkServiceConnectionStateActionsRequire: MySqlPrivateLinkServiceConnectionStateRequiredActions
+  RecoverableServerResource: MySqlRecoverableServerResourceData
+
 override-operation-name:
   ServerParameters_ListUpdateConfigurations: UpdateConfigurations
 
@@ -83,10 +152,9 @@ directive:
           "description": "A list of server configurations."
         };
       $.ConfigurationListResult.properties.value.readOnly = true;
-    reason: The generator will not treat the model as the schema for a list method without value being a IReadOnlyList.
+    reason: The generator will not treat the model as the schema for a list method without value being a IReadOnlyList. Need to have separate models for input and output.
   - from: mysql.json
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/servers/{serverName}/updateConfigurations'].post.parameters[?(@.name === 'value')]
-    debug: true
     transform: >
       $.schema['$ref'] = $.schema['$ref'].replace('ConfigurationListResult', 'ConfigurationListContent');
 ```
@@ -128,4 +196,10 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
+# rename-mapping:
+#   Configuration: MySqlFlexibleServerConfiguration
+#   Database: MySqlFlexibleServerDatabase
+#   FirewallRule: MySqlFlexibleServerFirewallRule
+#   ServerBackup: MySqlFlexibleServerBackup
+#   Server: MySqlFlexibleServer
 ```

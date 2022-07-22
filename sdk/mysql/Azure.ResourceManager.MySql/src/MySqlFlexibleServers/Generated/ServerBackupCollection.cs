@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
 {
     /// <summary>
     /// A class representing a collection of <see cref="ServerBackupResource" /> and their operations.
-    /// Each <see cref="ServerBackupResource" /> in the collection will belong to the same instance of <see cref="ServerResource" />.
-    /// To get a <see cref="ServerBackupCollection" /> instance call the GetServerBackups method from an instance of <see cref="ServerResource" />.
+    /// Each <see cref="ServerBackupResource" /> in the collection will belong to the same instance of <see cref="FlexibleServersServerResource" />.
+    /// To get a <see cref="ServerBackupCollection" /> instance call the GetServerBackups method from an instance of <see cref="FlexibleServersServerResource" />.
     /// </summary>
     public partial class ServerBackupCollection : ArmCollection, IEnumerable<ServerBackupResource>, IAsyncEnumerable<ServerBackupResource>
     {
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ServerResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ServerResource.ResourceType), nameof(id));
+            if (id.ResourceType != FlexibleServersServerResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, FlexibleServersServerResource.ResourceType), nameof(id));
         }
 
         /// <summary>

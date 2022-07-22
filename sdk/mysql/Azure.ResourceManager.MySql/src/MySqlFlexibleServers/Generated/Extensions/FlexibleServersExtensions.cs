@@ -68,10 +68,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServerResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ServerResource> GetServersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="FlexibleServersServerResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<FlexibleServersServerResource> GetFlexibleServersServersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetServersAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetFlexibleServersServersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -81,10 +81,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServerResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ServerResource> GetServers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="FlexibleServersServerResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<FlexibleServersServerResource> GetFlexibleServersServers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetServers(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetFlexibleServersServers(cancellationToken);
         }
 
         /// <summary>
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="content"/> is null. </exception>
-        public static async Task<Response<NameAvailability>> ExecuteCheckNameAvailabilityAsync(this SubscriptionResource subscriptionResource, string locationName, NameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<FlexibleServersNameAvailability>> ExecuteCheckNameAvailabilityAsync(this SubscriptionResource subscriptionResource, string locationName, FlexibleServersNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
             Argument.AssertNotNull(content, nameof(content));
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="content"/> is null. </exception>
-        public static Response<NameAvailability> ExecuteCheckNameAvailability(this SubscriptionResource subscriptionResource, string locationName, NameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static Response<FlexibleServersNameAvailability> ExecuteCheckNameAvailability(this SubscriptionResource subscriptionResource, string locationName, FlexibleServersNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
             Argument.AssertNotNull(content, nameof(content));
@@ -208,12 +208,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             );
         }
 
-        /// <summary> Gets a collection of ServerResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of FlexibleServersServerResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of ServerResources and their operations over a ServerResource. </returns>
-        public static ServerCollection GetServers(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of FlexibleServersServerResources and their operations over a FlexibleServersServerResource. </returns>
+        public static FlexibleServersServerCollection GetFlexibleServersServers(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetServers();
+            return GetExtensionClient(resourceGroupResource).GetFlexibleServersServers();
         }
 
         /// <summary>
@@ -227,9 +227,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <exception cref="ArgumentException"> <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ServerResource>> GetServerAsync(this ResourceGroupResource resourceGroupResource, string serverName, CancellationToken cancellationToken = default)
+        public static async Task<Response<FlexibleServersServerResource>> GetFlexibleServersServerAsync(this ResourceGroupResource resourceGroupResource, string serverName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetServers().GetAsync(serverName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetFlexibleServersServers().GetAsync(serverName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -243,25 +243,25 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <exception cref="ArgumentException"> <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ServerResource> GetServer(this ResourceGroupResource resourceGroupResource, string serverName, CancellationToken cancellationToken = default)
+        public static Response<FlexibleServersServerResource> GetFlexibleServersServer(this ResourceGroupResource resourceGroupResource, string serverName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetServers().Get(serverName, cancellationToken);
+            return resourceGroupResource.GetFlexibleServersServers().Get(serverName, cancellationToken);
         }
 
-        #region ServerResource
+        #region FlexibleServersServerResource
         /// <summary>
-        /// Gets an object representing a <see cref="ServerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServerResource.CreateResourceIdentifier" /> to create a <see cref="ServerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="FlexibleServersServerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FlexibleServersServerResource.CreateResourceIdentifier" /> to create a <see cref="FlexibleServersServerResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerResource" /> object. </returns>
-        public static ServerResource GetServerResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="FlexibleServersServerResource" /> object. </returns>
+        public static FlexibleServersServerResource GetFlexibleServersServerResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServerResource.ValidateResourceId(id);
-                return new ServerResource(client, id);
+                FlexibleServersServerResource.ValidateResourceId(id);
+                return new FlexibleServersServerResource(client, id);
             }
             );
         }
@@ -286,58 +286,58 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         }
         #endregion
 
-        #region FirewallRuleResource
+        #region FlexibleServersFirewallRuleResource
         /// <summary>
-        /// Gets an object representing a <see cref="FirewallRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="FirewallRuleResource.CreateResourceIdentifier" /> to create a <see cref="FirewallRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="FlexibleServersFirewallRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FlexibleServersFirewallRuleResource.CreateResourceIdentifier" /> to create a <see cref="FlexibleServersFirewallRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FirewallRuleResource" /> object. </returns>
-        public static FirewallRuleResource GetFirewallRuleResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="FlexibleServersFirewallRuleResource" /> object. </returns>
+        public static FlexibleServersFirewallRuleResource GetFlexibleServersFirewallRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                FirewallRuleResource.ValidateResourceId(id);
-                return new FirewallRuleResource(client, id);
+                FlexibleServersFirewallRuleResource.ValidateResourceId(id);
+                return new FlexibleServersFirewallRuleResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DatabaseResource
+        #region FlexibleServersDatabaseResource
         /// <summary>
-        /// Gets an object representing a <see cref="DatabaseResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DatabaseResource.CreateResourceIdentifier" /> to create a <see cref="DatabaseResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="FlexibleServersDatabaseResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FlexibleServersDatabaseResource.CreateResourceIdentifier" /> to create a <see cref="FlexibleServersDatabaseResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DatabaseResource" /> object. </returns>
-        public static DatabaseResource GetDatabaseResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="FlexibleServersDatabaseResource" /> object. </returns>
+        public static FlexibleServersDatabaseResource GetFlexibleServersDatabaseResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DatabaseResource.ValidateResourceId(id);
-                return new DatabaseResource(client, id);
+                FlexibleServersDatabaseResource.ValidateResourceId(id);
+                return new FlexibleServersDatabaseResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ConfigurationResource
+        #region FlexibleServersConfigurationResource
         /// <summary>
-        /// Gets an object representing a <see cref="ConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="ConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="FlexibleServersConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FlexibleServersConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="FlexibleServersConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ConfigurationResource" /> object. </returns>
-        public static ConfigurationResource GetConfigurationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="FlexibleServersConfigurationResource" /> object. </returns>
+        public static FlexibleServersConfigurationResource GetFlexibleServersConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ConfigurationResource.ValidateResourceId(id);
-                return new ConfigurationResource(client, id);
+                FlexibleServersConfigurationResource.ValidateResourceId(id);
+                return new FlexibleServersConfigurationResource(client, id);
             }
             );
         }

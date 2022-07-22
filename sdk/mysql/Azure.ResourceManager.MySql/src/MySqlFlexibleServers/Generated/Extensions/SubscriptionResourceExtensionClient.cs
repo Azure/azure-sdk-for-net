@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _serverClientDiagnostics;
-        private ServersRestOperations _serverRestClient;
+        private ClientDiagnostics _flexibleServersServerServersClientDiagnostics;
+        private ServersRestOperations _flexibleServersServerServersRestClient;
         private ClientDiagnostics _locationBasedCapabilitiesClientDiagnostics;
         private LocationBasedCapabilitiesRestOperations _locationBasedCapabilitiesRestClient;
         private ClientDiagnostics _checkVirtualNetworkSubnetUsageClientDiagnostics;
@@ -41,8 +41,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
         }
 
-        private ClientDiagnostics ServerClientDiagnostics => _serverClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", ServerResource.ResourceType.Namespace, Diagnostics);
-        private ServersRestOperations ServerRestClient => _serverRestClient ??= new ServersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ServerResource.ResourceType));
+        private ClientDiagnostics FlexibleServersServerServersClientDiagnostics => _flexibleServersServerServersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", FlexibleServersServerResource.ResourceType.Namespace, Diagnostics);
+        private ServersRestOperations FlexibleServersServerServersRestClient => _flexibleServersServerServersRestClient ??= new ServersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(FlexibleServersServerResource.ResourceType));
         private ClientDiagnostics LocationBasedCapabilitiesClientDiagnostics => _locationBasedCapabilitiesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private LocationBasedCapabilitiesRestOperations LocationBasedCapabilitiesRestClient => _locationBasedCapabilitiesRestClient ??= new LocationBasedCapabilitiesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics CheckVirtualNetworkSubnetUsageClientDiagnostics => _checkVirtualNetworkSubnetUsageClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
@@ -62,17 +62,17 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// Operation Id: Servers_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServerResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServerResource> GetServersAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="FlexibleServersServerResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<FlexibleServersServerResource> GetFlexibleServersServersAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ServerResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<FlexibleServersServerResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ServerClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetServers");
+                using var scope = FlexibleServersServerServersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetFlexibleServersServers");
                 scope.Start();
                 try
                 {
-                    var response = await ServerRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await FlexibleServersServerServersRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new FlexibleServersServerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -80,14 +80,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                     throw;
                 }
             }
-            async Task<Page<ServerResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<FlexibleServersServerResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = ServerClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetServers");
+                using var scope = FlexibleServersServerServersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetFlexibleServersServers");
                 scope.Start();
                 try
                 {
-                    var response = await ServerRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await FlexibleServersServerServersRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new FlexibleServersServerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -104,17 +104,17 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// Operation Id: Servers_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServerResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServerResource> GetServers(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="FlexibleServersServerResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<FlexibleServersServerResource> GetFlexibleServersServers(CancellationToken cancellationToken = default)
         {
-            Page<ServerResource> FirstPageFunc(int? pageSizeHint)
+            Page<FlexibleServersServerResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ServerClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetServers");
+                using var scope = FlexibleServersServerServersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetFlexibleServersServers");
                 scope.Start();
                 try
                 {
-                    var response = ServerRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = FlexibleServersServerServersRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new FlexibleServersServerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -122,14 +122,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                     throw;
                 }
             }
-            Page<ServerResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<FlexibleServersServerResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = ServerClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetServers");
+                using var scope = FlexibleServersServerServersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetFlexibleServersServers");
                 scope.Start();
                 try
                 {
-                    var response = ServerRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = FlexibleServersServerServersRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new FlexibleServersServerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="content"> The required parameters for checking if server name is available. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<NameAvailability>> ExecuteCheckNameAvailabilityAsync(string locationName, NameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FlexibleServersNameAvailability>> ExecuteCheckNameAvailabilityAsync(string locationName, FlexibleServersNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             using var scope = CheckNameAvailabilityClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ExecuteCheckNameAvailability");
             scope.Start();
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="content"> The required parameters for checking if server name is available. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<NameAvailability> ExecuteCheckNameAvailability(string locationName, NameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<FlexibleServersNameAvailability> ExecuteCheckNameAvailability(string locationName, FlexibleServersNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             using var scope = CheckNameAvailabilityClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ExecuteCheckNameAvailability");
             scope.Start();

@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of ServerResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ServerResources and their operations over a ServerResource. </returns>
-        public virtual ServerCollection GetServers()
+        /// <summary> Gets a collection of FlexibleServersServerResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of FlexibleServersServerResources and their operations over a FlexibleServersServerResource. </returns>
+        public virtual FlexibleServersServerCollection GetFlexibleServersServers()
         {
-            return GetCachedClient(Client => new ServerCollection(Client, Id));
+            return GetCachedClient(Client => new FlexibleServersServerCollection(Client, Id));
         }
     }
 }
