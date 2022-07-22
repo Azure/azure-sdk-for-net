@@ -12,46 +12,59 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    public partial class DocumentModel
+    public partial class DocumentModelOperationSummary
     {
-        internal static DocumentModel DeserializeDocumentModel(JsonElement element)
+        internal static DocumentModelOperationSummary DeserializeDocumentModelOperationSummary(JsonElement element)
         {
-            Optional<IReadOnlyDictionary<string, DocTypeInfo>> docTypes = default;
-            string modelId = default;
-            Optional<string> description = default;
+            string operationId = default;
+            DocumentOperationStatus status = default;
+            Optional<int> percentCompleted = default;
             DateTimeOffset createdDateTime = default;
+            DateTimeOffset lastUpdatedDateTime = default;
+            DocumentOperationKind kind = default;
+            string resourceLocation = default;
             Optional<string> apiVersion = default;
             Optional<IReadOnlyDictionary<string, string>> tags = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("docTypes"))
+                if (property.NameEquals("operationId"))
+                {
+                    operationId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("status"))
+                {
+                    status = property.Value.GetString().ToDocumentOperationStatus();
+                    continue;
+                }
+                if (property.NameEquals("percentCompleted"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    Dictionary<string, DocTypeInfo> dictionary = new Dictionary<string, DocTypeInfo>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, DocTypeInfo.DeserializeDocTypeInfo(property0.Value));
-                    }
-                    docTypes = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("modelId"))
-                {
-                    modelId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("description"))
-                {
-                    description = property.Value.GetString();
+                    percentCompleted = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("createdDateTime"))
                 {
                     createdDateTime = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("lastUpdatedDateTime"))
+                {
+                    lastUpdatedDateTime = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("kind"))
+                {
+                    kind = new DocumentOperationKind(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("resourceLocation"))
+                {
+                    resourceLocation = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("apiVersion"))
@@ -75,7 +88,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new DocumentModel(modelId, description.Value, createdDateTime, apiVersion.Value, Optional.ToDictionary(tags), Optional.ToDictionary(docTypes));
+            return new DocumentModelOperationSummary(operationId, status, Optional.ToNullable(percentCompleted), createdDateTime, lastUpdatedDateTime, kind, resourceLocation, apiVersion.Value, Optional.ToDictionary(tags));
         }
     }
 }

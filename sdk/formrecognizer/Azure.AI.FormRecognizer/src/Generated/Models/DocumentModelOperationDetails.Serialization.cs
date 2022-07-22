@@ -12,12 +12,12 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    public partial class ModelOperation
+    public partial class DocumentModelOperationDetails
     {
-        internal static ModelOperation DeserializeModelOperation(JsonElement element)
+        internal static DocumentModelOperationDetails DeserializeDocumentModelOperationDetails(JsonElement element)
         {
             Optional<JsonElement> error = default;
-            Optional<DocumentModel> result = default;
+            Optional<DocumentModelDetails> result = default;
             string operationId = default;
             DocumentOperationStatus status = default;
             Optional<int> percentCompleted = default;
@@ -41,7 +41,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    result = DocumentModel.DeserializeDocumentModel(property.Value);
+                    result = DocumentModelDetails.DeserializeDocumentModelDetails(property.Value);
                     continue;
                 }
                 if (property.NameEquals("operationId"))
@@ -105,7 +105,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new ModelOperation(operationId, status, Optional.ToNullable(percentCompleted), createdDateTime, lastUpdatedDateTime, kind, resourceLocation, apiVersion.Value, Optional.ToDictionary(tags), error, result.Value);
+            return new DocumentModelOperationDetails(operationId, status, Optional.ToNullable(percentCompleted), createdDateTime, lastUpdatedDateTime, kind, resourceLocation, apiVersion.Value, Optional.ToDictionary(tags), error, result.Value);
         }
     }
 }

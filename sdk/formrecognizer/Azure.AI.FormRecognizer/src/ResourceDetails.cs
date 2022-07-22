@@ -6,7 +6,7 @@ using Azure.Core;
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     [CodeGenModel("CustomDocumentModelsInfo")]
-    public partial class AccountProperties
+    public partial class ResourceDetails
     {
         /// <summary>
         /// Number of custom models in the current resource.

@@ -7,14 +7,14 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    /// <summary> Get Operation response object. </summary>
-    public partial class ModelOperation : ModelOperationInfo
+    /// <summary> Operation info. </summary>
+    public partial class DocumentModelOperationSummary
     {
-        /// <summary> Initializes a new instance of ModelOperation. </summary>
+        /// <summary> Initializes a new instance of DocumentModelOperationSummary. </summary>
         /// <param name="operationId"> Operation ID. </param>
         /// <param name="status"> Operation status. </param>
         /// <param name="createdOn"> Date and time (UTC) when the operation was created. </param>
@@ -22,7 +22,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="kind"> Type of operation. </param>
         /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> or <paramref name="resourceLocation"/> is null. </exception>
-        internal ModelOperation(string operationId, DocumentOperationStatus status, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, DocumentOperationKind kind, string resourceLocation) : base(operationId, status, createdOn, lastUpdatedOn, kind, resourceLocation)
+        internal DocumentModelOperationSummary(string operationId, DocumentOperationStatus status, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, DocumentOperationKind kind, string resourceLocation)
         {
             if (operationId == null)
             {
@@ -32,9 +32,17 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             {
                 throw new ArgumentNullException(nameof(resourceLocation));
             }
+
+            OperationId = operationId;
+            Status = status;
+            CreatedOn = createdOn;
+            LastUpdatedOn = lastUpdatedOn;
+            Kind = kind;
+            ResourceLocation = resourceLocation;
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ModelOperation. </summary>
+        /// <summary> Initializes a new instance of DocumentModelOperationSummary. </summary>
         /// <param name="operationId"> Operation ID. </param>
         /// <param name="status"> Operation status. </param>
         /// <param name="percentCompleted"> Operation progress (0-100). </param>
@@ -44,12 +52,28 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
         /// <param name="apiVersion"> API version used to create this operation. </param>
         /// <param name="tags"> List of key-value tag attributes associated with the model. </param>
-        /// <param name="error"> Encountered error. </param>
-        /// <param name="result"> Operation result upon success. </param>
-        internal ModelOperation(string operationId, DocumentOperationStatus status, int? percentCompleted, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, DocumentOperationKind kind, string resourceLocation, string apiVersion, IReadOnlyDictionary<string, string> tags, JsonElement error, DocumentModel result) : base(operationId, status, percentCompleted, createdOn, lastUpdatedOn, kind, resourceLocation, apiVersion, tags)
+        internal DocumentModelOperationSummary(string operationId, DocumentOperationStatus status, int? percentCompleted, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, DocumentOperationKind kind, string resourceLocation, string apiVersion, IReadOnlyDictionary<string, string> tags)
         {
-            _error = error;
-            Result = result;
+            OperationId = operationId;
+            Status = status;
+            PercentCompleted = percentCompleted;
+            CreatedOn = createdOn;
+            LastUpdatedOn = lastUpdatedOn;
+            Kind = kind;
+            ResourceLocation = resourceLocation;
+            ApiVersion = apiVersion;
+            Tags = tags;
         }
+
+        /// <summary> Operation ID. </summary>
+        public string OperationId { get; }
+        /// <summary> Operation status. </summary>
+        public DocumentOperationStatus Status { get; }
+        /// <summary> Operation progress (0-100). </summary>
+        public int? PercentCompleted { get; }
+        /// <summary> Type of operation. </summary>
+        public DocumentOperationKind Kind { get; }
+        /// <summary> URL of the resource targeted by this operation. </summary>
+        public string ResourceLocation { get; }
     }
 }
