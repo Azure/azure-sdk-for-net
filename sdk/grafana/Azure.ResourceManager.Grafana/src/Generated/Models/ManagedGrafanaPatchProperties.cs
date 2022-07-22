@@ -8,10 +8,10 @@
 namespace Azure.ResourceManager.Grafana.Models
 {
     /// <summary> The properties parameters for a PATCH request to a grafana resource. </summary>
-    public partial class ManagedGrafanaPropertiesUpdateParameters
+    public partial class ManagedGrafanaPatchProperties
     {
-        /// <summary> Initializes a new instance of ManagedGrafanaPropertiesUpdateParameters. </summary>
-        public ManagedGrafanaPropertiesUpdateParameters()
+        /// <summary> Initializes a new instance of ManagedGrafanaPatchProperties. </summary>
+        public ManagedGrafanaPatchProperties()
         {
         }
 

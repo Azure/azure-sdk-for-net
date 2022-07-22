@@ -294,8 +294,16 @@ namespace Azure.ResourceManager.Grafana.Models
     {
         public ManagedGrafanaPatch() { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
-        public Azure.ResourceManager.Grafana.Models.ManagedGrafanaPropertiesUpdateParameters Properties { get { throw null; } set { } }
+        public Azure.ResourceManager.Grafana.Models.ManagedGrafanaPatchProperties Properties { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+    }
+    public partial class ManagedGrafanaPatchProperties
+    {
+        public ManagedGrafanaPatchProperties() { }
+        public Azure.ResourceManager.Grafana.Models.GrafanaApiKey? ApiKey { get { throw null; } set { } }
+        public Azure.ResourceManager.Grafana.Models.DeterministicOutboundIP? DeterministicOutboundIP { get { throw null; } set { } }
+        public Azure.ResourceManager.Grafana.Models.GrafanaPublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
+        public Azure.ResourceManager.Grafana.Models.GrafanaZoneRedundancy? ZoneRedundancy { get { throw null; } set { } }
     }
     public partial class ManagedGrafanaProperties
     {
@@ -308,14 +316,6 @@ namespace Azure.ResourceManager.Grafana.Models
         public System.Collections.Generic.IReadOnlyList<string> OutboundIPs { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Grafana.GrafanaPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public Azure.ResourceManager.Grafana.Models.GrafanaProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.Grafana.Models.GrafanaPublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
-        public Azure.ResourceManager.Grafana.Models.GrafanaZoneRedundancy? ZoneRedundancy { get { throw null; } set { } }
-    }
-    public partial class ManagedGrafanaPropertiesUpdateParameters
-    {
-        public ManagedGrafanaPropertiesUpdateParameters() { }
-        public Azure.ResourceManager.Grafana.Models.GrafanaApiKey? ApiKey { get { throw null; } set { } }
-        public Azure.ResourceManager.Grafana.Models.DeterministicOutboundIP? DeterministicOutboundIP { get { throw null; } set { } }
         public Azure.ResourceManager.Grafana.Models.GrafanaPublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
         public Azure.ResourceManager.Grafana.Models.GrafanaZoneRedundancy? ZoneRedundancy { get { throw null; } set { } }
     }

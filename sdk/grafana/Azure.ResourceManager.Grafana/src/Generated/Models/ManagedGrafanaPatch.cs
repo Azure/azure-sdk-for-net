@@ -25,6 +25,6 @@ namespace Azure.ResourceManager.Grafana.Models
         /// <summary> The new tags of the grafana resource. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> Properties specific to the managed grafana resource. </summary>
-        public ManagedGrafanaPropertiesUpdateParameters Properties { get; set; }
+        public ManagedGrafanaPatchProperties Properties { get; set; }
     }
 }

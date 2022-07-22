@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Grafana
 
         internal static ManagedGrafanaData DeserializeManagedGrafanaData(JsonElement element)
         {
-            Optional<GrafanaSku> sku = default;
+            Optional<ManagedGrafanaSku> sku = default;
             Optional<ManagedGrafanaProperties> properties = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Grafana
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = GrafanaSku.DeserializeGrafanaSku(property.Value);
+                    sku = ManagedGrafanaSku.DeserializeManagedGrafanaSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"))

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Grafana.Tests.Helpers
         {
             return new ManagedGrafanaData(location)
             {
-                Sku = new GrafanaSku("Standard")
+                Sku = new ManagedGrafanaSku("Standard")
             };
         }
 

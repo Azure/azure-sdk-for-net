@@ -9,13 +9,13 @@ using System;
 
 namespace Azure.ResourceManager.Grafana.Models
 {
-    /// <summary> The GrafanaSku. </summary>
-    internal partial class GrafanaSku
+    /// <summary> The ManagedGrafanaSku. </summary>
+    internal partial class ManagedGrafanaSku
     {
-        /// <summary> Initializes a new instance of GrafanaSku. </summary>
+        /// <summary> Initializes a new instance of ManagedGrafanaSku. </summary>
         /// <param name="name"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public GrafanaSku(string name)
+        public ManagedGrafanaSku(string name)
         {
             if (name == null)
             {

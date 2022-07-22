@@ -17,7 +17,8 @@ modelerfour:
   flatten-payloads: false
 
 rename-mapping:
-  ResourceSku: GrafanaSku
+  ResourceSku: ManagedGrafanaSku
+  ManagedGrafanaPropertiesUpdateParameters: ManagedGrafanaPatchProperties
 
 prepend-rp-prefix:
   - ApiKey

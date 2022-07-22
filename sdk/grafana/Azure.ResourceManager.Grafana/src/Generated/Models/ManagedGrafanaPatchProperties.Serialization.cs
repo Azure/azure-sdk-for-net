@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Grafana.Models
 {
-    public partial class ManagedGrafanaPropertiesUpdateParameters : IUtf8JsonSerializable
+    public partial class ManagedGrafanaPatchProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
