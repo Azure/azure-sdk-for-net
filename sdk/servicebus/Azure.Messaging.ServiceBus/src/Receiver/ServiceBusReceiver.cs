@@ -155,14 +155,14 @@ namespace Azure.Messaging.ServiceBus
                 Argument.AssertNotNullOrWhiteSpace(entityPath, nameof(entityPath));
                 connection.ThrowIfClosed();
 
-                options = options?.Clone() ?? new ServiceBusReceiverOptions();
-                Identifier = options.Identifier ?? DiagnosticUtilities.GenerateIdentifier(entityPath);
+                var clonedOptions = options?.Clone() ?? new ServiceBusReceiverOptions();
+                Identifier = clonedOptions.Identifier ?? DiagnosticUtilities.GenerateIdentifier(entityPath);
                 _connection = connection;
                 _retryPolicy = connection.RetryOptions.ToRetryPolicy();
-                ReceiveMode = options.ReceiveMode;
-                PrefetchCount = options.PrefetchCount;
+                ReceiveMode = clonedOptions.ReceiveMode;
+                PrefetchCount = clonedOptions.PrefetchCount;
 
-                EntityPath = EntityNameFormatter.FormatEntityPath(entityPath, options.SubQueue);
+                EntityPath = EntityNameFormatter.FormatEntityPath(entityPath, clonedOptions.SubQueue);
 
                 IsSessionReceiver = isSessionEntity;
                 _innerReceiver = _connection.CreateTransportReceiver(

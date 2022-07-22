@@ -151,7 +151,7 @@ namespace Azure.Messaging.ServiceBus
             _options = options?.Clone() ?? new ServiceBusClientOptions();
             Connection = new ServiceBusConnection(connectionString, _options);
             Logger.ClientCreateStart(typeof(ServiceBusClient), FullyQualifiedNamespace);
-            Identifier = options.Identifier ?? DiagnosticUtilities.GenerateIdentifier(FullyQualifiedNamespace);
+            Identifier = _options.Identifier ?? DiagnosticUtilities.GenerateIdentifier(FullyQualifiedNamespace);
             TransportType = _options.TransportType;
             Logger.ClientCreateComplete(typeof(ServiceBusClient), Identifier);
         }
@@ -231,7 +231,7 @@ namespace Azure.Messaging.ServiceBus
         {
             Logger.ClientCreateStart(typeof(ServiceBusClient), fullyQualifiedNamespace);
             _options = options?.Clone() ?? new ServiceBusClientOptions();
-            Identifier = DiagnosticUtilities.GenerateIdentifier(fullyQualifiedNamespace);
+            Identifier = _options.Identifier ?? DiagnosticUtilities.GenerateIdentifier(fullyQualifiedNamespace);
             Connection = ServiceBusConnection.CreateWithCredential(
                 fullyQualifiedNamespace,
                 credential,
@@ -285,7 +285,7 @@ namespace Azure.Messaging.ServiceBus
             return new ServiceBusSender(
                 entityPath: queueOrTopicName,
                 connection: Connection,
-                options: new ServiceBusSenderOptions());
+                options: options);
         }
 
         /// <summary>

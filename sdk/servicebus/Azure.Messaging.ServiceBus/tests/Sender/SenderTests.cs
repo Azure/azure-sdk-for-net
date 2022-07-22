@@ -309,7 +309,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
             await using var sender = client.CreateSender("fake", options);
 
             var identifier = sender.Identifier;
-            Assert.Equals(setIdentifier, identifier);
+            Assert.AreEqual(setIdentifier, identifier);
         }
     }
 }

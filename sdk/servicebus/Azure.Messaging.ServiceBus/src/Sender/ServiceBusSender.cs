@@ -9,6 +9,7 @@ using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Messaging.ServiceBus.Core;
@@ -108,6 +109,8 @@ namespace Azure.Messaging.ServiceBus
                 Argument.AssertNotNull(connection.RetryOptions, nameof(connection.RetryOptions));
                 Argument.AssertNotNullOrWhiteSpace(entityPath, nameof(entityPath));
                 connection.ThrowIfClosed();
+
+                options = options?.Clone() ?? new ServiceBusSenderOptions();
 
                 EntityPath = entityPath;
                 Identifier = options.Identifier ?? DiagnosticUtilities.GenerateIdentifier(EntityPath);

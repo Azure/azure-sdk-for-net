@@ -91,6 +91,7 @@ namespace Azure.Messaging.ServiceBus
                 ReceiveMode = ReceiveMode,
                 PrefetchCount = PrefetchCount,
                 SubQueue = SubQueue,
+                Identifier = Identifier
             };
     }
 }

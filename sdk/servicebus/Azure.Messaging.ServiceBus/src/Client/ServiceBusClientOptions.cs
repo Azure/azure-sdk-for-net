@@ -41,7 +41,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         /// <remarks>Every new client has a unique ID.</remarks>
         ///
-        public string Identifier { get; }
+        public string Identifier { get; set; }
 
         /// <summary>
         ///   A custom endpoint address that can be used when establishing the connection to the Service Bus
@@ -130,7 +130,8 @@ namespace Azure.Messaging.ServiceBus
                 RetryOptions = RetryOptions.Clone(),
                 EnableCrossEntityTransactions = EnableCrossEntityTransactions,
                 EnableTransportMetrics = EnableTransportMetrics,
-                CustomEndpointAddress = CustomEndpointAddress
+                CustomEndpointAddress = CustomEndpointAddress,
+                Identifier = Identifier
             };
     }
 }
