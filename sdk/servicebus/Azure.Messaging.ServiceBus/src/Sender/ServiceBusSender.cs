@@ -9,7 +9,6 @@ using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Messaging.ServiceBus.Core;

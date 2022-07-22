@@ -184,7 +184,8 @@ namespace Azure.Messaging.ServiceBus
                 MaxAutoLockRenewalDuration = MaxAutoLockRenewalDuration,
                 MaxReceiveWaitTime = MaxReceiveWaitTime,
                 MaxConcurrentCalls = MaxConcurrentCalls,
-                SubQueue = SubQueue
+                SubQueue = SubQueue,
+                Identifier = Identifier
             };
         }
     }
