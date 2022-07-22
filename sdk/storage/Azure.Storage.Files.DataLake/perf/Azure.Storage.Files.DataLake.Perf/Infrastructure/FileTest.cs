@@ -33,18 +33,34 @@ namespace Azure.Storage.Files.DataLake.Perf
         public override async Task GlobalSetupAsync()
         {
             await base.GlobalSetupAsync();
-            if (_createFile && _singletonFile)
+            if (_singletonFile)
             {
-                await CreateFileAsync();
+                if (_createFile)
+                {
+                    await CreateFileAsync();
+                }
+                else
+                {
+                    // resource is available to work with
+                    await FileClient.CreateIfNotExistsAsync();
+                }
             }
         }
 
         public override async Task SetupAsync()
         {
             await base.SetupAsync();
-            if (_createFile && !_singletonFile)
+            if (!_singletonFile)
             {
-                await CreateFileAsync();
+                if (_createFile)
+                {
+                    await CreateFileAsync();
+                }
+                else
+                {
+                    // resource is available to work with
+                    await FileClient.CreateIfNotExistsAsync();
+                }
             }
         }
 

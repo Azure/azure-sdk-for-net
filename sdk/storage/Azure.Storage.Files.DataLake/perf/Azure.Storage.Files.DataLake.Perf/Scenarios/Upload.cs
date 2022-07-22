@@ -38,7 +38,6 @@ namespace Azure.Storage.Files.DataLake.Perf.Scenarios
         /// <param name="cancellationToken">The token used to signal when cancellation is requested.</param>
         public override void Run(CancellationToken cancellationToken)
         {
-            FileClient.CreateIfNotExists(cancellationToken: cancellationToken);
             _stream.Seek(0, SeekOrigin.Begin);
             FileClient.Upload(
                 _stream,
@@ -52,7 +51,6 @@ namespace Azure.Storage.Files.DataLake.Perf.Scenarios
         /// <param name="cancellationToken">The token used to signal when cancellation is requested.</param>
         public override async Task RunAsync(CancellationToken cancellationToken)
         {
-            await FileClient.CreateIfNotExistsAsync(cancellationToken: cancellationToken);
             _stream.Seek(0, SeekOrigin.Begin);
             await FileClient.UploadAsync(
                 _stream,
