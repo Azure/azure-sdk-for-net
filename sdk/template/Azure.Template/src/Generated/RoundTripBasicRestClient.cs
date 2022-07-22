@@ -16,7 +16,7 @@ using Azure.Template.Models;
 
 namespace Azure.Template
 {
-    internal partial class InputBasicRestClient
+    internal partial class RoundTripBasicRestClient
     {
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
@@ -24,19 +24,19 @@ namespace Azure.Template
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        /// <summary> Initializes a new instance of InputBasicRestClient. </summary>
+        /// <summary> Initializes a new instance of RoundTripBasicRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/> or <paramref name="pipeline"/> is null. </exception>
-        public InputBasicRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null)
+        public RoundTripBasicRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null)
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("http://localhost:3000");
         }
 
-        internal HttpMessage CreateGetModelRequest()
+        internal HttpMessage CreateGetModelRequest(RoundTripModel input)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -46,21 +46,32 @@ namespace Azure.Template
             uri.AppendPath("/models", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(input);
+            request.Content = content;
             return message;
         }
 
+        /// <param name="input"> The RoundTripModel to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<OutputModel>> GetModelAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
+        public async Task<Response<RoundTripModel>> GetModelAsync(RoundTripModel input, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetModelRequest();
+            if (input == null)
+            {
+                throw new ArgumentNullException(nameof(input));
+            }
+
+            using var message = CreateGetModelRequest(input);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        OutputModel value = default;
+                        RoundTripModel value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = OutputModel.DeserializeOutputModel(document.RootElement);
+                        value = RoundTripModel.DeserializeRoundTripModel(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -68,18 +79,25 @@ namespace Azure.Template
             }
         }
 
+        /// <param name="input"> The RoundTripModel to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<OutputModel> GetModel(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
+        public Response<RoundTripModel> GetModel(RoundTripModel input, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetModelRequest();
+            if (input == null)
+            {
+                throw new ArgumentNullException(nameof(input));
+            }
+
+            using var message = CreateGetModelRequest(input);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        OutputModel value = default;
+                        RoundTripModel value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = OutputModel.DeserializeOutputModel(document.RootElement);
+                        value = RoundTripModel.DeserializeRoundTripModel(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

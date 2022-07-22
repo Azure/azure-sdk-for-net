@@ -1,9 +1,9 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "OutputBasicClient",
+    "title": "RoundTripBasicClient",
     "version": "1.0.0",
-    "description": "Illustrates an output-only model with required reference and value type properties.",
+    "description": "Illustrates a round-trip model with required reference and value type properties.",
     "x-cadl-generated": [
       {
         "emitter": "@azure-tools/cadl-autorest"
@@ -24,13 +24,22 @@
   "paths": {
     "/models": {
       "get": {
-        "operationId": "InputBasic_GetModel",
-        "parameters": [],
+        "operationId": "RoundTripBasic_GetModel",
+        "parameters": [
+          {
+            "name": "input",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/RoundTripModel"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "The request has succeeded.",
             "schema": {
-              "$ref": "#/definitions/OutputModel"
+              "$ref": "#/definitions/RoundTripModel"
             }
           },
           "default": {
@@ -105,7 +114,7 @@
         "code"
       ]
     },
-    "OutputModel": {
+    "RoundTripModel": {
       "type": "object",
       "properties": {
         "requiredString": {
@@ -118,7 +127,7 @@
           "description": "Required int, illustrating a value type property."
         }
       },
-      "description": "Output Model",
+      "description": "Round-trip Model",
       "required": [
         "requiredString",
         "requiredInt"

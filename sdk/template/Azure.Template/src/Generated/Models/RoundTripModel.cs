@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.Template.Models
 {
-    /// <summary> Output Model. </summary>
-    public partial class OutputModel
+    /// <summary> Round-trip Model. </summary>
+    public partial class RoundTripModel
     {
-        /// <summary> Initializes a new instance of OutputModel. </summary>
+        /// <summary> Initializes a new instance of RoundTripModel. </summary>
         /// <param name="requiredString"> Required string, illustrating a reference type property. </param>
         /// <param name="requiredInt"> Required int, illustrating a value type property. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="requiredString"/> is null. </exception>
-        internal OutputModel(string requiredString, int requiredInt)
+        public RoundTripModel(string requiredString, int requiredInt)
         {
             Argument.AssertNotNull(requiredString, nameof(requiredString));
 
@@ -26,8 +26,8 @@ namespace Azure.Template.Models
         }
 
         /// <summary> Required string, illustrating a reference type property. </summary>
-        public string RequiredString { get; }
+        public string RequiredString { get; set; }
         /// <summary> Required int, illustrating a value type property. </summary>
-        public int RequiredInt { get; }
+        public int RequiredInt { get; set; }
     }
 }

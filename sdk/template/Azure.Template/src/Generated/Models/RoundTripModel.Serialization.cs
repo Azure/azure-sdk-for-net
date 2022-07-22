@@ -6,12 +6,23 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.Template.Models
 {
-    public partial class OutputModel
+    public partial class RoundTripModel : IUtf8JsonSerializable
     {
-        internal static OutputModel DeserializeOutputModel(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("requiredString");
+            writer.WriteStringValue(RequiredString);
+            writer.WritePropertyName("requiredInt");
+            writer.WriteNumberValue(RequiredInt);
+            writer.WriteEndObject();
+        }
+
+        internal static RoundTripModel DeserializeRoundTripModel(JsonElement element)
         {
             string requiredString = default;
             int requiredInt = default;
@@ -28,7 +39,7 @@ namespace Azure.Template.Models
                     continue;
                 }
             }
-            return new OutputModel(requiredString, requiredInt);
+            return new RoundTripModel(requiredString, requiredInt);
         }
     }
 }
