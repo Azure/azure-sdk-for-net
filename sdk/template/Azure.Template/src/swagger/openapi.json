@@ -1,9 +1,9 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "InputBasicClient",
+    "title": "OutputBasicClient",
     "version": "1.0.0",
-    "description": "Illustrates an input-only model with required reference and value type properties.",
+    "description": "Illustrates an output-only model with required reference and value type properties.",
     "x-cadl-generated": [
       {
         "emitter": "@azure-tools/cadl-autorest"
@@ -25,19 +25,13 @@
     "/models": {
       "get": {
         "operationId": "InputBasic_GetModel",
-        "parameters": [
-          {
-            "name": "input",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/InputModel"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
-            "description": "Http response with status code"
+            "description": "The request has succeeded.",
+            "schema": {
+              "$ref": "#/definitions/OutputModel"
+            }
           },
           "default": {
             "description": "A response containing error details.",
@@ -111,7 +105,7 @@
         "code"
       ]
     },
-    "InputModel": {
+    "OutputModel": {
       "type": "object",
       "properties": {
         "requiredString": {
@@ -124,7 +118,7 @@
           "description": "Required int, illustrating a value type property."
         }
       },
-      "description": "Input Model",
+      "description": "Output Model",
       "required": [
         "requiredString",
         "requiredInt"

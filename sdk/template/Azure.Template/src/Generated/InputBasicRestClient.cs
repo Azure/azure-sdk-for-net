@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -35,7 +36,7 @@ namespace Azure.Template
             _endpoint = endpoint ?? new Uri("http://localhost:3000");
         }
 
-        internal HttpMessage CreateGetModelRequest(InputModel input)
+        internal HttpMessage CreateGetModelRequest()
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -45,50 +46,42 @@ namespace Azure.Template
             uri.AppendPath("/models", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(input);
-            request.Content = content;
             return message;
         }
 
-        /// <param name="input"> The InputModel to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public async Task<Response> GetModelAsync(InputModel input, CancellationToken cancellationToken = default)
+        public async Task<Response<OutputModel>> GetModelAsync(CancellationToken cancellationToken = default)
         {
-            if (input == null)
-            {
-                throw new ArgumentNullException(nameof(input));
-            }
-
-            using var message = CreateGetModelRequest(input);
+            using var message = CreateGetModelRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
-                    return message.Response;
+                    {
+                        OutputModel value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = OutputModel.DeserializeOutputModel(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
                     throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
-        /// <param name="input"> The InputModel to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public Response GetModel(InputModel input, CancellationToken cancellationToken = default)
+        public Response<OutputModel> GetModel(CancellationToken cancellationToken = default)
         {
-            if (input == null)
-            {
-                throw new ArgumentNullException(nameof(input));
-            }
-
-            using var message = CreateGetModelRequest(input);
+            using var message = CreateGetModelRequest();
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
-                    return message.Response;
+                    {
+                        OutputModel value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = OutputModel.DeserializeOutputModel(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
                     throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }

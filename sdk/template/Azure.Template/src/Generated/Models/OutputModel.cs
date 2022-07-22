@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.Template.Models
 {
-    /// <summary> Input Model. </summary>
-    public partial class InputModel
+    /// <summary> Output Model. </summary>
+    public partial class OutputModel
     {
-        /// <summary> Initializes a new instance of InputModel. </summary>
+        /// <summary> Initializes a new instance of OutputModel. </summary>
         /// <param name="requiredString"> Required string, illustrating a reference type property. </param>
         /// <param name="requiredInt"> Required int, illustrating a value type property. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="requiredString"/> is null. </exception>
-        public InputModel(string requiredString, int requiredInt)
+        internal OutputModel(string requiredString, int requiredInt)
         {
             Argument.AssertNotNull(requiredString, nameof(requiredString));
 
