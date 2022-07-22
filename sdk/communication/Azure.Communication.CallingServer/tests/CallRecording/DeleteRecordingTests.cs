@@ -6,9 +6,9 @@ using System.Net;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
-namespace Azure.Communication.CallingServer.Tests
+namespace Azure.Communication.CallingServer
 {
-    public class CallingServerClientTests : CallingServerTestBase
+    public class DeleteRecordingTests : CallingServerTestBase
     {
         private const string AmsDeleteUrl = "https://dummyurl.com/v1/objects/documentid";
 
