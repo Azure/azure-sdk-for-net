@@ -45,7 +45,7 @@ namespace Azure.AI.Language.Conversations
         /// This sample shows how to call AnalyzeConversationAsync with required request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAnalysisClient(endpoint, credential);
         /// 
         /// var data = new {
@@ -71,7 +71,7 @@ namespace Azure.AI.Language.Conversations
         /// This sample shows how to call AnalyzeConversationAsync with all request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAnalysisClient(endpoint, credential);
         /// 
         /// var data = new {
@@ -193,7 +193,7 @@ namespace Azure.AI.Language.Conversations
         /// This sample shows how to call AnalyzeConversation with required request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAnalysisClient(endpoint, credential);
         /// 
         /// var data = new {
@@ -219,7 +219,7 @@ namespace Azure.AI.Language.Conversations
         /// This sample shows how to call AnalyzeConversation with all request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAnalysisClient(endpoint, credential);
         /// 
         /// var data = new {
@@ -341,7 +341,7 @@ namespace Azure.AI.Language.Conversations
         /// This sample shows how to call GetAnalyzeConversationJobStatusAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAnalysisClient(endpoint, credential);
         /// 
         /// Response response = await client.GetAnalyzeConversationJobStatusAsync(Guid.NewGuid());
@@ -360,7 +360,7 @@ namespace Azure.AI.Language.Conversations
         /// This sample shows how to call GetAnalyzeConversationJobStatusAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAnalysisClient(endpoint, credential);
         /// 
         /// Response response = await client.GetAnalyzeConversationJobStatusAsync(Guid.NewGuid(), true);
@@ -482,7 +482,7 @@ namespace Azure.AI.Language.Conversations
         /// This sample shows how to call GetAnalyzeConversationJobStatus with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAnalysisClient(endpoint, credential);
         /// 
         /// Response response = client.GetAnalyzeConversationJobStatus(Guid.NewGuid());
@@ -501,7 +501,7 @@ namespace Azure.AI.Language.Conversations
         /// This sample shows how to call GetAnalyzeConversationJobStatus with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAnalysisClient(endpoint, credential);
         /// 
         /// Response response = client.GetAnalyzeConversationJobStatus(Guid.NewGuid(), true);
@@ -624,7 +624,7 @@ namespace Azure.AI.Language.Conversations
         /// This sample shows how to call StartAnalyzeConversationAsync with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAnalysisClient(endpoint, credential);
         /// 
         /// var data = new {
@@ -668,7 +668,7 @@ namespace Azure.AI.Language.Conversations
         /// This sample shows how to call StartAnalyzeConversationAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAnalysisClient(endpoint, credential);
         /// 
         /// var data = new {
@@ -857,7 +857,7 @@ namespace Azure.AI.Language.Conversations
         /// This sample shows how to call StartAnalyzeConversation with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAnalysisClient(endpoint, credential);
         /// 
         /// var data = new {
@@ -901,7 +901,7 @@ namespace Azure.AI.Language.Conversations
         /// This sample shows how to call StartAnalyzeConversation with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAnalysisClient(endpoint, credential);
         /// 
         /// var data = new {
@@ -1089,7 +1089,7 @@ namespace Azure.AI.Language.Conversations
         /// This sample shows how to call CancelAnalyzeConversationJobAsync with required parameters.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAnalysisClient(endpoint, credential);
         /// 
         /// var operation = await client.CancelAnalyzeConversationJobAsync(WaitUntil.Completed, Guid.NewGuid());
@@ -1125,7 +1125,7 @@ namespace Azure.AI.Language.Conversations
         /// This sample shows how to call CancelAnalyzeConversationJob with required parameters.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConversationAnalysisClient(endpoint, credential);
         /// 
         /// var operation = client.CancelAnalyzeConversationJob(WaitUntil.Completed, Guid.NewGuid());

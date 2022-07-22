@@ -70,7 +70,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// This sample shows how to call CheckPrincipalAccessAsync with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new RoleAssignmentsClient(endpoint, credential);
         /// 
         /// var data = new {
@@ -94,7 +94,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// This sample shows how to call CheckPrincipalAccessAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new RoleAssignmentsClient(endpoint, credential);
         /// 
         /// var data = new {
@@ -196,7 +196,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// This sample shows how to call CheckPrincipalAccess with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new RoleAssignmentsClient(endpoint, credential);
         /// 
         /// var data = new {
@@ -220,7 +220,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// This sample shows how to call CheckPrincipalAccess with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new RoleAssignmentsClient(endpoint, credential);
         /// 
         /// var data = new {
@@ -323,7 +323,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// This sample shows how to call GetRoleAssignmentsAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new RoleAssignmentsClient(endpoint, credential);
         /// 
         /// Response response = await client.GetRoleAssignmentsAsync();
@@ -334,7 +334,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// This sample shows how to call GetRoleAssignmentsAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new RoleAssignmentsClient(endpoint, credential);
         /// 
         /// Response response = await client.GetRoleAssignmentsAsync("<roleId>", "<principalId>", "<scope>", "<continuationToken>");
@@ -397,7 +397,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// This sample shows how to call GetRoleAssignments and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new RoleAssignmentsClient(endpoint, credential);
         /// 
         /// Response response = client.GetRoleAssignments();
@@ -408,7 +408,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// This sample shows how to call GetRoleAssignments with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new RoleAssignmentsClient(endpoint, credential);
         /// 
         /// Response response = client.GetRoleAssignments("<roleId>", "<principalId>", "<scope>", "<continuationToken>");
@@ -472,7 +472,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// This sample shows how to call CreateRoleAssignmentAsync with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new RoleAssignmentsClient(endpoint, credential);
         /// 
         /// var data = new {
@@ -489,7 +489,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// This sample shows how to call CreateRoleAssignmentAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new RoleAssignmentsClient(endpoint, credential);
         /// 
         /// var data = new {
@@ -568,7 +568,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// This sample shows how to call CreateRoleAssignment with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new RoleAssignmentsClient(endpoint, credential);
         /// 
         /// var data = new {
@@ -585,7 +585,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// This sample shows how to call CreateRoleAssignment with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new RoleAssignmentsClient(endpoint, credential);
         /// 
         /// var data = new {
@@ -662,7 +662,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// This sample shows how to call GetRoleAssignmentByIdAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new RoleAssignmentsClient(endpoint, credential);
         /// 
         /// Response response = await client.GetRoleAssignmentByIdAsync("<roleAssignmentId>");
@@ -720,7 +720,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// This sample shows how to call GetRoleAssignmentById with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new RoleAssignmentsClient(endpoint, credential);
         /// 
         /// Response response = client.GetRoleAssignmentById("<roleAssignmentId>");
@@ -779,7 +779,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// This sample shows how to call DeleteRoleAssignmentByIdAsync with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new RoleAssignmentsClient(endpoint, credential);
         /// 
         /// Response response = await client.DeleteRoleAssignmentByIdAsync("<roleAssignmentId>");
@@ -788,7 +788,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// This sample shows how to call DeleteRoleAssignmentByIdAsync with all parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new RoleAssignmentsClient(endpoint, credential);
         /// 
         /// Response response = await client.DeleteRoleAssignmentByIdAsync("<roleAssignmentId>", "<scope>");
@@ -825,7 +825,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// This sample shows how to call DeleteRoleAssignmentById with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new RoleAssignmentsClient(endpoint, credential);
         /// 
         /// Response response = client.DeleteRoleAssignmentById("<roleAssignmentId>");
@@ -834,7 +834,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// This sample shows how to call DeleteRoleAssignmentById with all parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new RoleAssignmentsClient(endpoint, credential);
         /// 
         /// Response response = client.DeleteRoleAssignmentById("<roleAssignmentId>", "<scope>");

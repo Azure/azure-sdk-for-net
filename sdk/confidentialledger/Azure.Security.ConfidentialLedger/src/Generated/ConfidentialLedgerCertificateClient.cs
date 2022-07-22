@@ -45,7 +45,7 @@ namespace Azure.Security.ConfidentialLedger.Certificate
         /// This sample shows how to call GetLedgerIdentityAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConfidentialLedgerCertificateClient(endpoint, credential);
         /// 
         /// Response response = await client.GetLedgerIdentityAsync("<ledgerId>");
@@ -97,7 +97,7 @@ namespace Azure.Security.ConfidentialLedger.Certificate
         /// This sample shows how to call GetLedgerIdentity with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConfidentialLedgerCertificateClient(endpoint, credential);
         /// 
         /// Response response = client.GetLedgerIdentity("<ledgerId>");

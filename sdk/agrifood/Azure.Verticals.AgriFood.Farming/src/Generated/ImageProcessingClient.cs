@@ -70,7 +70,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetRasterizeJobAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ImageProcessingClient(endpoint, credential);
         /// 
         /// Response response = await client.GetRasterizeJobAsync("<jobId>");
@@ -150,7 +150,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetRasterizeJob with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ImageProcessingClient(endpoint, credential);
         /// 
         /// Response response = client.GetRasterizeJob("<jobId>");
@@ -232,7 +232,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateRasterizeJobAsync with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ImageProcessingClient(endpoint, credential);
         /// 
         /// var data = new {
@@ -254,7 +254,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateRasterizeJobAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ImageProcessingClient(endpoint, credential);
         /// 
         /// var data = new {
@@ -375,7 +375,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateRasterizeJob with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ImageProcessingClient(endpoint, credential);
         /// 
         /// var data = new {
@@ -397,7 +397,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateRasterizeJob with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ImageProcessingClient(endpoint, credential);
         /// 
         /// var data = new {

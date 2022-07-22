@@ -70,7 +70,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetDataIngestionJobDetailsAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new FarmClient(endpoint, credential);
         /// 
         /// Response response = await client.GetDataIngestionJobDetailsAsync("<jobId>");
@@ -152,7 +152,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call GetDataIngestionJobDetails with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new FarmClient(endpoint, credential);
         /// 
         /// Response response = client.GetDataIngestionJobDetails("<jobId>");
@@ -236,7 +236,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateDataIngestionJobAsync with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new FarmClient(endpoint, credential);
         /// 
         /// var data = new {
@@ -256,7 +256,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateDataIngestionJobAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new FarmClient(endpoint, credential);
         /// 
         /// var data = new {
@@ -381,7 +381,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateDataIngestionJob with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new FarmClient(endpoint, credential);
         /// 
         /// var data = new {
@@ -401,7 +401,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// This sample shows how to call CreateDataIngestionJob with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new FarmClient(endpoint, credential);
         /// 
         /// var data = new {

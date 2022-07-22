@@ -64,7 +64,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetLineageGraphAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
         /// 
         /// Response response = await client.GetLineageGraphAsync("<guid>", "<direction>");
@@ -75,7 +75,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetLineageGraphAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
         /// 
         /// Response response = await client.GetLineageGraphAsync("<guid>", "<direction>", 1234, 1234, true, true);
@@ -195,7 +195,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetLineageGraph with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
         /// 
         /// Response response = client.GetLineageGraph("<guid>", "<direction>");
@@ -206,7 +206,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetLineageGraph with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
         /// 
         /// Response response = client.GetLineageGraph("<guid>", "<direction>", 1234, 1234, true, true);
@@ -325,7 +325,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call NextPageLineageAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
         /// 
         /// Response response = await client.NextPageLineageAsync("<guid>", "<direction>");
@@ -336,7 +336,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call NextPageLineageAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
         /// 
         /// Response response = await client.NextPageLineageAsync("<guid>", "<direction>", true, 1234, 1234);
@@ -455,7 +455,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call NextPageLineage with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
         /// 
         /// Response response = client.NextPageLineage("<guid>", "<direction>");
@@ -466,7 +466,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call NextPageLineage with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
         /// 
         /// Response response = client.NextPageLineage("<guid>", "<direction>", true, 1234, 1234);
@@ -594,7 +594,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetLineageByUniqueAttributeAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
         /// 
         /// Response response = await client.GetLineageByUniqueAttributeAsync("<typeName>", "<direction>");
@@ -605,7 +605,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetLineageByUniqueAttributeAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
         /// 
         /// Response response = await client.GetLineageByUniqueAttributeAsync("<typeName>", "<direction>", 1234, 1234, true, true);
@@ -733,7 +733,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetLineageByUniqueAttribute with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
         /// 
         /// Response response = client.GetLineageByUniqueAttribute("<typeName>", "<direction>");
@@ -744,7 +744,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// This sample shows how to call GetLineageByUniqueAttribute with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewLineagesClient();
         /// 
         /// Response response = client.GetLineageByUniqueAttribute("<typeName>", "<direction>", 1234, 1234, true, true);

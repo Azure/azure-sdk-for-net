@@ -284,6 +284,12 @@
       ]
     },
     {
+      "filename": "**/sdk/iothub/**/*.cs",
+      "words": [
+        "fqdns"
+      ]
+    },
+    {
       "filename": "**/sdk/logic/**/*.cs",
       "words": [
         "Edifact",
