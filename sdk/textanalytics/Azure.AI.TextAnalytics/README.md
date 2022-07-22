@@ -29,6 +29,7 @@ This table shows the relationship between SDK versions and supported API version
 
 |SDK version|Supported API version of service
 |-|- |
+|5.2.0-beta.4 | 3.0, 3.1, 2022-05-01 (default)
 |5.2.0-beta.3 | 3.0, 3.1, 3.2-preview.2, 2022-04-01-preview (default)
 |5.1.X  | 3.0, 3.1 (default)
 |5.0.0  | 3.0

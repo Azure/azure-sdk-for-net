@@ -454,7 +454,7 @@ namespace Azure.AI.TextAnalytics
 
         #endregion Extract KeyPhrase
 
-        #region Multi Category Classify
+        #region Multi Label Classify
         /// <summary>
         /// Initializes a new instance of <see cref="TextAnalytics.LabelClassifyResult"/> for mocking purposes.
         /// </summary>
@@ -503,7 +503,7 @@ namespace Azure.AI.TextAnalytics
         }
         #endregion
 
-        #region Single Category Classify
+        #region Single Label Classify
         /// <summary>
         /// Initializes a new instance of <see cref="TextAnalytics.SingleLabelClassifyResult"/> for mocking purposes.
         /// </summary>

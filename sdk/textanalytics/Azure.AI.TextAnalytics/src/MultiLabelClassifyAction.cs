@@ -5,7 +5,7 @@ namespace Azure.AI.TextAnalytics
 {
     /// <summary>
     /// Configurations that allow callers to specify details about how to execute
-    /// a Multi Category Classification action on a set of documents. This corresponds
+    /// a Multi Label Classification action on a set of documents. This corresponds
     /// to a Multi Classification task in the Language service.
     /// For example, the target project and deployment names are required
     /// for a successful custom classification action.
@@ -15,7 +15,7 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Initializes a new instance of the <see cref="MultiLabelClassifyAction"/>
         /// class which allows callers to specify details about how to execute
-        /// a Multi Category Classification action on a set of documents.
+        /// a Multi Label Classification action on a set of documents.
         /// Sets the <see cref="ProjectName"/> and <see cref="DeploymentName"/> properties.
         /// </summary>
         public MultiLabelClassifyAction(string projectName, string deploymentName)

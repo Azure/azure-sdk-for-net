@@ -7,7 +7,7 @@ using System.Collections.Generic;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// The result of the Multi Category Classification operation on a document,
+    /// The result of the Multi Label Classification operation on a document,
     /// containing the collection of <see cref="ClassificationCategory"/> objects
     /// predicted for that document.
     /// </summary>

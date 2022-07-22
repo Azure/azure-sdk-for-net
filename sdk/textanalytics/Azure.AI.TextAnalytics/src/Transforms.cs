@@ -410,7 +410,7 @@ namespace Azure.AI.TextAnalytics
 
         #endregion
 
-        #region Single Category Classify
+        #region Single Label Classify
         internal static SingleLabelClassifyResultCollection ConvertToSingleLabelClassifyResultCollection(CustomLabelClassificationResult results, IDictionary<string, int> idToIndexMap)
         {
             var classifiedCustomCategoryResults = new List<SingleLabelClassifyResult>(results.Errors.Count);

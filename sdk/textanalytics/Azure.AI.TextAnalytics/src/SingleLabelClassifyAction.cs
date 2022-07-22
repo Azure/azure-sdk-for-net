@@ -5,8 +5,8 @@ namespace Azure.AI.TextAnalytics
 {
     /// <summary>
     /// Configurations that allow callers to specify details about how to execute
-    /// a Single Category Classification action on a set of documents. This corresponds
-    /// to a Single Category Classification task in the Language service.
+    /// a Single Label Classification action on a set of documents. This corresponds
+    /// to a Single Label Classification task in the Language service.
     /// For example, the target project and deployment names are required
     /// for a successful custom classification action.
     /// </summary>
@@ -15,11 +15,11 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Initializes a new instance of the <see cref="SingleLabelClassifyAction"/>
         /// class which allows callers to specify details about how to execute
-        /// a Single Category Classification action on a set of documents.
+        /// a Single Label Classification action on a set of documents.
         /// Sets the <see cref="ProjectName"/> and <see cref="DeploymentName"/> properties.
         /// </summary>
-        /// <param name = "projectName">The target project name used in the Single Category Classification action.</param>
-        /// <param name = "deploymentName">The deployment name used in the Single Category Classification action.</param>
+        /// <param name = "projectName">The target project name used in the Single Label Classification action.</param>
+        /// <param name = "deploymentName">The deployment name used in the Single Label Classification action.</param>
         public SingleLabelClassifyAction(string projectName, string deploymentName)
         {
             DeploymentName = deploymentName;

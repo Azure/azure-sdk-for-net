@@ -1407,7 +1407,7 @@ namespace Azure.AI.TextAnalytics
         /// <item><description>Sentiment Analysis</description></item>
         /// <item><description>Extractive Text Summarization</description></item>
         /// <item><description>Custom Entity Recognition</description></item>
-        /// <item><description>Custom Single and Multi Category Classification</description></item>
+        /// <item><description>Custom Single and Multi Label Classification</description></item>
         /// </list>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see more information
         /// <see href="https://aka.ms/azsdk/textanalytics/data-limits">here</see>.
@@ -1435,7 +1435,7 @@ namespace Azure.AI.TextAnalytics
         /// <item><description>Sentiment Analysis</description></item>
         /// <item><description>Extractive Text Summarization</description></item>
         /// <item><description>Custom Entity Recognition</description></item>
-        /// <item><description>Custom Single and Multi Category Classification</description></item>
+        /// <item><description>Custom Single and Multi Label Classification</description></item>
         /// </list>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
         /// <see href="https://aka.ms/azsdk/textanalytics/data-limits">here</see>.
@@ -1463,7 +1463,7 @@ namespace Azure.AI.TextAnalytics
         /// <item><description>Sentiment Analysis</description></item>
         /// <item><description>Extractive Text Summarization</description></item>
         /// <item><description>Custom Entity Recognition</description></item>
-        /// <item><description>Custom Single and Multi Category Classification</description></item>
+        /// <item><description>Custom Single and Multi Label Classification</description></item>
         /// </list>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
         /// <see href="https://aka.ms/azsdk/textanalytics/data-limits">here</see>.
@@ -1490,7 +1490,7 @@ namespace Azure.AI.TextAnalytics
         /// <item><description>Sentiment Analysis</description></item>
         /// <item><description>Extractive Text Summarization</description></item>
         /// <item><description>Custom Entity Recognition</description></item>
-        /// <item><description>Custom Single and Multi Category Classification</description></item>
+        /// <item><description>Custom Single and Multi Label Classification</description></item>
         /// </list>
         /// <para>For document length limits, maximum batch size, and supported text encoding, see
         /// <see href="https://aka.ms/azsdk/textanalytics/data-limits">here</see>.
