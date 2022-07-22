@@ -11,32 +11,12 @@ using Azure.Core;
 
 namespace Azure.Template.Models
 {
-    public partial class RoundTripModel : IUtf8JsonSerializable
+    public partial class OutputModel
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        internal static OutputModel DeserializeOutputModel(JsonElement element)
         {
-            writer.WriteStartObject();
-            writer.WritePropertyName("requiredStringList");
-            writer.WriteStartArray();
-            foreach (var item in RequiredStringList)
-            {
-                writer.WriteStringValue(item);
-            }
-            writer.WriteEndArray();
-            writer.WritePropertyName("requiredIntList");
-            writer.WriteStartArray();
-            foreach (var item in RequiredIntList)
-            {
-                writer.WriteNumberValue(item);
-            }
-            writer.WriteEndArray();
-            writer.WriteEndObject();
-        }
-
-        internal static RoundTripModel DeserializeRoundTripModel(JsonElement element)
-        {
-            IList<string> requiredStringList = default;
-            IList<int> requiredIntList = default;
+            IReadOnlyList<string> requiredStringList = default;
+            IReadOnlyList<int> requiredIntList = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("requiredStringList"))
@@ -60,7 +40,7 @@ namespace Azure.Template.Models
                     continue;
                 }
             }
-            return new RoundTripModel(requiredStringList, requiredIntList);
+            return new OutputModel(requiredStringList, requiredIntList);
         }
     }
 }

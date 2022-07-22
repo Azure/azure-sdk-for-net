@@ -11,14 +11,14 @@ using System.Linq;
 
 namespace Azure.Template.Models
 {
-    /// <summary> Round-trip model with collection properties. </summary>
-    public partial class RoundTripModel
+    /// <summary> Output model with collection properties. </summary>
+    public partial class OutputModel
     {
-        /// <summary> Initializes a new instance of RoundTripModel. </summary>
+        /// <summary> Initializes a new instance of OutputModel. </summary>
         /// <param name="requiredStringList"> Required collection of strings, illustrating a collection of reference types. </param>
         /// <param name="requiredIntList"> Required collection of ints, illustrating a collection of value types. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="requiredStringList"/> or <paramref name="requiredIntList"/> is null. </exception>
-        public RoundTripModel(IEnumerable<string> requiredStringList, IEnumerable<int> requiredIntList)
+        internal OutputModel(IEnumerable<string> requiredStringList, IEnumerable<int> requiredIntList)
         {
             if (requiredStringList == null)
             {
@@ -33,18 +33,18 @@ namespace Azure.Template.Models
             RequiredIntList = requiredIntList.ToList();
         }
 
-        /// <summary> Initializes a new instance of RoundTripModel. </summary>
+        /// <summary> Initializes a new instance of OutputModel. </summary>
         /// <param name="requiredStringList"> Required collection of strings, illustrating a collection of reference types. </param>
         /// <param name="requiredIntList"> Required collection of ints, illustrating a collection of value types. </param>
-        internal RoundTripModel(IList<string> requiredStringList, IList<int> requiredIntList)
+        internal OutputModel(IReadOnlyList<string> requiredStringList, IReadOnlyList<int> requiredIntList)
         {
             RequiredStringList = requiredStringList;
             RequiredIntList = requiredIntList;
         }
 
         /// <summary> Required collection of strings, illustrating a collection of reference types. </summary>
-        public IList<string> RequiredStringList { get; }
+        public IReadOnlyList<string> RequiredStringList { get; }
         /// <summary> Required collection of ints, illustrating a collection of value types. </summary>
-        public IList<int> RequiredIntList { get; }
+        public IReadOnlyList<int> RequiredIntList { get; }
     }
 }

@@ -11,14 +11,14 @@ using System.Linq;
 
 namespace Azure.Template.Models
 {
-    /// <summary> Round-trip model with collection properties. </summary>
-    public partial class RoundTripModel
+    /// <summary> Input model with collection properties. </summary>
+    public partial class InputModel
     {
-        /// <summary> Initializes a new instance of RoundTripModel. </summary>
+        /// <summary> Initializes a new instance of InputModel. </summary>
         /// <param name="requiredStringList"> Required collection of strings, illustrating a collection of reference types. </param>
         /// <param name="requiredIntList"> Required collection of ints, illustrating a collection of value types. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="requiredStringList"/> or <paramref name="requiredIntList"/> is null. </exception>
-        public RoundTripModel(IEnumerable<string> requiredStringList, IEnumerable<int> requiredIntList)
+        public InputModel(IEnumerable<string> requiredStringList, IEnumerable<int> requiredIntList)
         {
             if (requiredStringList == null)
             {
@@ -31,15 +31,6 @@ namespace Azure.Template.Models
 
             RequiredStringList = requiredStringList.ToList();
             RequiredIntList = requiredIntList.ToList();
-        }
-
-        /// <summary> Initializes a new instance of RoundTripModel. </summary>
-        /// <param name="requiredStringList"> Required collection of strings, illustrating a collection of reference types. </param>
-        /// <param name="requiredIntList"> Required collection of ints, illustrating a collection of value types. </param>
-        internal RoundTripModel(IList<string> requiredStringList, IList<int> requiredIntList)
-        {
-            RequiredStringList = requiredStringList;
-            RequiredIntList = requiredIntList;
         }
 
         /// <summary> Required collection of strings, illustrating a collection of reference types. </summary>
