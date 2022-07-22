@@ -46,6 +46,10 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
+rename-mapping:
+  StorageSKU: StorageSku
+  FluidRelayServer.properties.storagesku: StorageSku
+  
 directive:
   - from: fluidrelay.json
     where: "$.definitions"
