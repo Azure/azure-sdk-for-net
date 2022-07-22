@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.Template.Models
 {
@@ -20,14 +21,8 @@ namespace Azure.Template.Models
         /// <exception cref="ArgumentNullException"> <paramref name="requiredStringList"/> or <paramref name="requiredIntList"/> is null. </exception>
         public RoundTripModel(IEnumerable<string> requiredStringList, IEnumerable<int> requiredIntList)
         {
-            if (requiredStringList == null)
-            {
-                throw new ArgumentNullException(nameof(requiredStringList));
-            }
-            if (requiredIntList == null)
-            {
-                throw new ArgumentNullException(nameof(requiredIntList));
-            }
+            Argument.AssertNotNull(requiredStringList, nameof(requiredStringList));
+            Argument.AssertNotNull(requiredIntList, nameof(requiredIntList));
 
             RequiredStringList = requiredStringList.ToList();
             RequiredIntList = requiredIntList.ToList();
