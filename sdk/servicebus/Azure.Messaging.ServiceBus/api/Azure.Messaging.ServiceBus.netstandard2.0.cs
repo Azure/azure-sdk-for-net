@@ -111,7 +111,7 @@ namespace Azure.Messaging.ServiceBus
         public ServiceBusClientOptions() { }
         public System.Uri CustomEndpointAddress { get { throw null; } set { } }
         public bool EnableCrossEntityTransactions { get { throw null; } set { } }
-        public string Identifier { get { throw null; } }
+        public string Identifier { get { throw null; } set { } }
         public Azure.Messaging.ServiceBus.ServiceBusRetryOptions RetryOptions { get { throw null; } set { } }
         public Azure.Messaging.ServiceBus.ServiceBusTransportType TransportType { get { throw null; } set { } }
         public System.Net.IWebProxy WebProxy { get { throw null; } set { } }
@@ -411,6 +411,7 @@ namespace Azure.Messaging.ServiceBus
     }
     public partial class ServiceBusSender : System.IAsyncDisposable
     {
+        protected ServiceBusSender() { }
         protected ServiceBusSender(Azure.Messaging.ServiceBus.ServiceBusClient client, string queueOrTopicName) { }
         protected ServiceBusSender(Azure.Messaging.ServiceBus.ServiceBusClient client, string queueOrTopicName, Azure.Messaging.ServiceBus.ServiceBusSenderOptions options) { }
         public virtual string EntityPath { get { throw null; } }
