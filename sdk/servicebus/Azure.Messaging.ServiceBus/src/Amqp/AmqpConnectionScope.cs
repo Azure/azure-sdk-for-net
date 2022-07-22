@@ -180,6 +180,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="useSingleSession">If true, all links will use a single session.</param>
         /// <param name="operationTimeout">The timeout for operations associated with the connection.</param>
         /// <param name="metrics">The metrics instance to populate transport metrics. May be null.</param>
+        /// <param name="identifier">The unique identifier to assign this scope, if null, one will be generated.</param>
         public AmqpConnectionScope(
             Uri serviceEndpoint,
             Uri connectionEndpoint,
@@ -188,7 +189,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
             IWebProxy proxy,
             bool useSingleSession,
             TimeSpan operationTimeout,
-            ServiceBusTransportMetrics metrics)
+            ServiceBusTransportMetrics metrics,
+            string identifier = default)
         {
             Argument.AssertNotNull(serviceEndpoint, nameof(serviceEndpoint));
             Argument.AssertNotNull(credential, nameof(credential));
@@ -198,7 +200,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             ServiceEndpoint = serviceEndpoint;
             Transport = transport;
             Proxy = proxy;
-            Id = $"{ServiceEndpoint}-{Guid.NewGuid().ToString("D", CultureInfo.InvariantCulture).Substring(0, 8)}";
+            Id = identifier ?? $"{ServiceEndpoint}-{Guid.NewGuid().ToString("D", CultureInfo.InvariantCulture).Substring(0, 8)}";
             TokenProvider = new CbsTokenProvider(new ServiceBusTokenCredential(credential), AuthorizationTokenExpirationBuffer, OperationCancellationSource.Token);
             _useSingleSession = useSingleSession;
 #pragma warning disable CA2214 // Do not call overridable methods in constructors. This internal method is virtual for testing purposes.
