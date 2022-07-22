@@ -6,7 +6,10 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -21,7 +24,7 @@ namespace Azure.ResourceManager.MySql
     /// Each <see cref="ConfigurationResource" /> in the collection will belong to the same instance of <see cref="ServerResource" />.
     /// To get a <see cref="ConfigurationCollection" /> instance call the GetConfigurations method from an instance of <see cref="ServerResource" />.
     /// </summary>
-    public partial class ConfigurationCollection : ArmCollection
+    public partial class ConfigurationCollection : ArmCollection, IEnumerable<ConfigurationResource>, IAsyncEnumerable<ConfigurationResource>
     {
         private readonly ClientDiagnostics _configurationClientDiagnostics;
         private readonly ConfigurationsRestOperations _configurationRestClient;
@@ -175,6 +178,60 @@ namespace Azure.ResourceManager.MySql
         }
 
         /// <summary>
+        /// List all the configurations in a given server.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/servers/{serverName}/configurations
+        /// Operation Id: Configurations_ListByServer
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ConfigurationResource> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<ConfigurationResource>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _configurationClientDiagnostics.CreateScope("ConfigurationCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _configurationRestClient.ListByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ConfigurationResource(Client, value)), null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary>
+        /// List all the configurations in a given server.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/servers/{serverName}/configurations
+        /// Operation Id: Configurations_ListByServer
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ConfigurationResource> GetAll(CancellationToken cancellationToken = default)
+        {
+            Page<ConfigurationResource> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _configurationClientDiagnostics.CreateScope("ConfigurationCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _configurationRestClient.ListByServer(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ConfigurationResource(Client, value)), null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary>
         /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/servers/{serverName}/configurations/{configurationName}
         /// Operation Id: Configurations_Get
@@ -226,6 +283,21 @@ namespace Azure.ResourceManager.MySql
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        IEnumerator<ConfigurationResource> IEnumerable<ConfigurationResource>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<ConfigurationResource> IAsyncEnumerable<ConfigurationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

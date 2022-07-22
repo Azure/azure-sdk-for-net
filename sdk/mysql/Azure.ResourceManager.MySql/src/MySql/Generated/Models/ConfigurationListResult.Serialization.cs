@@ -12,27 +12,11 @@ using Azure.ResourceManager.MySql;
 
 namespace Azure.ResourceManager.MySql.Models
 {
-    public partial class ConfigurationListResult : IUtf8JsonSerializable
+    public partial class ConfigurationListResult
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
-            {
-                writer.WritePropertyName("value");
-                writer.WriteStartArray();
-                foreach (var item in Value)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
-        }
-
         internal static ConfigurationListResult DeserializeConfigurationListResult(JsonElement element)
         {
-            Optional<IList<ConfigurationData>> value = default;
+            Optional<IReadOnlyList<ConfigurationData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))

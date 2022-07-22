@@ -4,7 +4,9 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ```yaml
 azure-arm: true
-csharp: true
+# use: $(this-folder)/../../../../../autorest.csharp/artifacts/bin/AutoRest.CSharp/Debug/netcoreapp3.1/
+# csharpgen:
+#   attach: true
 clear-output-folder: true
 skip-csproj: true
 library-name: MySql
@@ -52,8 +54,8 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
-list-exception:
-- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/servers/{serverName}/configurations/{configurationName}
+override-operation-name:
+  ServerParameters_ListUpdateConfigurations: UpdateConfigurations
 
 directive:
   - rename-operation:
@@ -65,6 +67,28 @@ directive:
   - rename-operation:
       from: Servers_Upgrade
       to: MySqlServers_Upgrade
+  - from: mysql.json
+    where: $.definitions
+    transform: >
+      $.ConfigurationListContent = {
+          "properties": {
+            "value": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Configuration"
+              },
+              "description": "The list of server configurations."
+            }
+          },
+          "description": "A list of server configurations."
+        };
+      $.ConfigurationListResult.properties.value.readOnly = true;
+    reason: The generator will not treat the model as the schema for a list method without value being a IReadOnlyList.
+  - from: mysql.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/servers/{serverName}/updateConfigurations'].post.parameters[?(@.name === 'value')]
+    debug: true
+    transform: >
+      $.schema['$ref'] = $.schema['$ref'].replace('ConfigurationListResult', 'ConfigurationListContent');
 ```
 
 ``` yaml $(tag) == 'package-flexibleserver-2021-05-01'

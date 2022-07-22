@@ -15,19 +15,19 @@ namespace Azure.ResourceManager.MySql.Models
     public partial class ConfigurationListResult
     {
         /// <summary> Initializes a new instance of ConfigurationListResult. </summary>
-        public ConfigurationListResult()
+        internal ConfigurationListResult()
         {
             Value = new ChangeTrackingList<ConfigurationData>();
         }
 
         /// <summary> Initializes a new instance of ConfigurationListResult. </summary>
         /// <param name="value"> The list of server configurations. </param>
-        internal ConfigurationListResult(IList<ConfigurationData> value)
+        internal ConfigurationListResult(IReadOnlyList<ConfigurationData> value)
         {
             Value = value;
         }
 
         /// <summary> The list of server configurations. </summary>
-        public IList<ConfigurationData> Value { get; }
+        public IReadOnlyList<ConfigurationData> Value { get; }
     }
 }

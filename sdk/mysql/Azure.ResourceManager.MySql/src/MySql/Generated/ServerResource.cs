@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -37,8 +36,6 @@ namespace Azure.ResourceManager.MySql
 
         private readonly ClientDiagnostics _serverClientDiagnostics;
         private readonly ServersRestOperations _serverRestClient;
-        private readonly ClientDiagnostics _configurationClientDiagnostics;
-        private readonly ConfigurationsRestOperations _configurationRestClient;
         private readonly ClientDiagnostics _serverParametersClientDiagnostics;
         private readonly ServerParametersRestOperations _serverParametersRestClient;
         private readonly ClientDiagnostics _logFilesClientDiagnostics;
@@ -75,9 +72,6 @@ namespace Azure.ResourceManager.MySql
             _serverClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MySql", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string serverApiVersion);
             _serverRestClient = new ServersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serverApiVersion);
-            _configurationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MySql", ConfigurationResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ConfigurationResource.ResourceType, out string configurationApiVersion);
-            _configurationRestClient = new ConfigurationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, configurationApiVersion);
             _serverParametersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MySql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _serverParametersRestClient = new ServerParametersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _logFilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MySql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
@@ -779,78 +773,24 @@ namespace Azure.ResourceManager.MySql
         }
 
         /// <summary>
-        /// List all the configurations in a given server.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/servers/{serverName}/configurations
-        /// Operation Id: Configurations_ListByServer
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ConfigurationResource> GetByServerConfigurationAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<ConfigurationResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _configurationClientDiagnostics.CreateScope("ServerResource.GetByServerConfiguration");
-                scope.Start();
-                try
-                {
-                    var response = await _configurationRestClient.ListByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ConfigurationResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
-        }
-
-        /// <summary>
-        /// List all the configurations in a given server.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/servers/{serverName}/configurations
-        /// Operation Id: Configurations_ListByServer
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ConfigurationResource> GetByServerConfiguration(CancellationToken cancellationToken = default)
-        {
-            Page<ConfigurationResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _configurationClientDiagnostics.CreateScope("ServerResource.GetByServerConfiguration");
-                scope.Start();
-                try
-                {
-                    var response = _configurationRestClient.ListByServer(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ConfigurationResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
-        }
-
-        /// <summary>
         /// Update a list of configurations in a given server.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/servers/{serverName}/updateConfigurations
         /// Operation Id: ServerParameters_ListUpdateConfigurations
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="value"> The parameters for updating a list of server configuration. </param>
+        /// <param name="content"> The parameters for updating a list of server configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public virtual async Task<ArmOperation<ConfigurationListResult>> GetUpdateConfigurationsServerParameterAsync(WaitUntil waitUntil, ConfigurationListResult value, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<ConfigurationListResult>> UpdateConfigurationsAsync(WaitUntil waitUntil, ConfigurationListContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _serverParametersClientDiagnostics.CreateScope("ServerResource.GetUpdateConfigurationsServerParameter");
+            using var scope = _serverParametersClientDiagnostics.CreateScope("ServerResource.UpdateConfigurations");
             scope.Start();
             try
             {
-                var response = await _serverParametersRestClient.ListUpdateConfigurationsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, value, cancellationToken).ConfigureAwait(false);
-                var operation = new MySqlArmOperation<ConfigurationListResult>(new ConfigurationListResultOperationSource(), _serverParametersClientDiagnostics, Pipeline, _serverParametersRestClient.CreateListUpdateConfigurationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, value).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _serverParametersRestClient.ListUpdateConfigurationsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new MySqlArmOperation<ConfigurationListResult>(new ConfigurationListResultOperationSource(), _serverParametersClientDiagnostics, Pipeline, _serverParametersRestClient.CreateListUpdateConfigurationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -868,19 +808,19 @@ namespace Azure.ResourceManager.MySql
         /// Operation Id: ServerParameters_ListUpdateConfigurations
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="value"> The parameters for updating a list of server configuration. </param>
+        /// <param name="content"> The parameters for updating a list of server configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public virtual ArmOperation<ConfigurationListResult> GetUpdateConfigurationsServerParameter(WaitUntil waitUntil, ConfigurationListResult value, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<ConfigurationListResult> UpdateConfigurations(WaitUntil waitUntil, ConfigurationListContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _serverParametersClientDiagnostics.CreateScope("ServerResource.GetUpdateConfigurationsServerParameter");
+            using var scope = _serverParametersClientDiagnostics.CreateScope("ServerResource.UpdateConfigurations");
             scope.Start();
             try
             {
-                var response = _serverParametersRestClient.ListUpdateConfigurations(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, value, cancellationToken);
-                var operation = new MySqlArmOperation<ConfigurationListResult>(new ConfigurationListResultOperationSource(), _serverParametersClientDiagnostics, Pipeline, _serverParametersRestClient.CreateListUpdateConfigurationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, value).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _serverParametersRestClient.ListUpdateConfigurations(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new MySqlArmOperation<ConfigurationListResult>(new ConfigurationListResultOperationSource(), _serverParametersClientDiagnostics, Pipeline, _serverParametersRestClient.CreateListUpdateConfigurationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
