@@ -66,7 +66,11 @@ namespace Azure.ResourceManager.DataFactory.Models
 #endif
             }
             writer.WritePropertyName("connectionString");
-            writer.WriteStringValue(ConnectionString);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ConnectionString);
+#else
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(ConnectionString.ToString()).RootElement);
+#endif
             writer.WritePropertyName("database");
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Database);
@@ -94,7 +98,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IDictionary<string, ParameterSpecification>> parameters = default;
             Optional<IList<BinaryData>> annotations = default;
             Optional<BinaryData> isServerVersionAbove32 = default;
-            string connectionString = default;
+            BinaryData connectionString = default;
             BinaryData database = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -171,7 +175,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         if (property0.NameEquals("connectionString"))
                         {
-                            connectionString = property0.Value.GetString();
+                            connectionString = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("database"))

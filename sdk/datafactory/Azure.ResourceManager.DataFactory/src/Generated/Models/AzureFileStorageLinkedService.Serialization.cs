@@ -82,7 +82,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString");
-                writer.WriteStringValue(ConnectionString);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ConnectionString);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ConnectionString.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(AccountKey))
             {
@@ -153,7 +157,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<BinaryData> host = default;
             Optional<BinaryData> userId = default;
             Optional<SecretBase> password = default;
-            Optional<string> connectionString = default;
+            Optional<BinaryData> connectionString = default;
             Optional<AzureKeyVaultSecretReference> accountKey = default;
             Optional<BinaryData> sasUri = default;
             Optional<AzureKeyVaultSecretReference> sasToken = default;
@@ -255,7 +259,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         if (property0.NameEquals("connectionString"))
                         {
-                            connectionString = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            connectionString = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("accountKey"))

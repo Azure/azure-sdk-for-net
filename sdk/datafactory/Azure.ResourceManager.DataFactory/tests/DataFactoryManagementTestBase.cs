@@ -7,6 +7,7 @@ using Azure.ResourceManager.DataFactory.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
+using System;
 using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.DataFactory.Tests
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.DataFactory.Tests
             return lro.Value;
         }
 
-        protected async Task<DataFactoryResource> CreateDataFactory(ResourceGroupResource resourceGroup,string dataFactoryName)
+        protected async Task<DataFactoryResource> CreateDataFactory(ResourceGroupResource resourceGroup, string dataFactoryName)
         {
             DataFactoryData data = new DataFactoryData(resourceGroup.Data.Location);
             var dataFactory = await resourceGroup.GetDataFactories().CreateOrUpdateAsync(WaitUntil.Completed, dataFactoryName, data);
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.DataFactory.Tests
         {
             AzureBlobStorageLinkedService azureBlobStorageLinkedService = new AzureBlobStorageLinkedService()
             {
-                ConnectionString = accessKey
+                ConnectionString = BinaryData.FromString($"\"{accessKey}\""),
             };
             LinkedServiceResourceData data = new LinkedServiceResourceData(azureBlobStorageLinkedService);
             var linkedService = await dataFactory.GetLinkedServiceResources().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
