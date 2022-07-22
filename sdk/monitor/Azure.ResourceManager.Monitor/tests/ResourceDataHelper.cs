@@ -200,16 +200,16 @@ namespace Azure.ResourceManager.Monitor.Tests
         #endregion
 
         #region DiagnosticSettings
-        public static void AssertDiagnosticSetting(DiagnosticSettingsData data1, DiagnosticSettingsData data2)
+        public static void AssertDiagnosticSetting(DiagnosticSettingData data1, DiagnosticSettingData data2)
         {
             //AssertTrackedResource(data1, data2);
             Assert.AreEqual(data1.Id, data2.Id);
             Assert.AreEqual(data1.Name, data2.Name);
         }
 
-        public static DiagnosticSettingsData GetBasicDiagnosticSettingsData()
+        public static DiagnosticSettingData GetBasicDiagnosticSettingsData()
         {
-            var data = new DiagnosticSettingsData()
+            var data = new DiagnosticSettingData()
             {
                 StorageAccountId = new ResourceIdentifier("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/lockformonitor/providers/Microsoft.Storage/storageAccounts/testaccountforlog2"),
                 //ServiceBusRuleId = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testservicebusRG-9432/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt7892/AuthorizationRules/testfordiagnostic",

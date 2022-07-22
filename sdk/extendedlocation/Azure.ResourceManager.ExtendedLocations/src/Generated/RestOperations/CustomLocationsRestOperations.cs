@@ -37,61 +37,6 @@ namespace Azure.ResourceManager.ExtendedLocations
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateListOperationsRequest()
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.ExtendedLocation/operations", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Lists all available Custom Locations operations. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<CustomLocationOperationsList>> ListOperationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var message = CreateListOperationsRequest();
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        CustomLocationOperationsList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CustomLocationOperationsList.DeserializeCustomLocationOperationsList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Lists all available Custom Locations operations. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<CustomLocationOperationsList> ListOperations(CancellationToken cancellationToken = default)
-        {
-            using var message = CreateListOperationsRequest();
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        CustomLocationOperationsList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CustomLocationOperationsList.DeserializeCustomLocationOperationsList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
         internal HttpMessage CreateListBySubscriptionRequest(string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
@@ -576,7 +521,7 @@ namespace Azure.ResourceManager.ExtendedLocations
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<EnabledResourceTypesListResult>> ListEnabledResourceTypesAsync(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
+        public async Task<Response<CustomLocationEnabledResourceTypesResult>> ListEnabledResourceTypesAsync(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -588,9 +533,9 @@ namespace Azure.ResourceManager.ExtendedLocations
             {
                 case 200:
                     {
-                        EnabledResourceTypesListResult value = default;
+                        CustomLocationEnabledResourceTypesResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = EnabledResourceTypesListResult.DeserializeEnabledResourceTypesListResult(document.RootElement);
+                        value = CustomLocationEnabledResourceTypesResult.DeserializeCustomLocationEnabledResourceTypesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -605,7 +550,7 @@ namespace Azure.ResourceManager.ExtendedLocations
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<EnabledResourceTypesListResult> ListEnabledResourceTypes(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
+        public Response<CustomLocationEnabledResourceTypesResult> ListEnabledResourceTypes(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -617,71 +562,9 @@ namespace Azure.ResourceManager.ExtendedLocations
             {
                 case 200:
                     {
-                        EnabledResourceTypesListResult value = default;
+                        CustomLocationEnabledResourceTypesResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = EnabledResourceTypesListResult.DeserializeEnabledResourceTypesListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateListOperationsNextPageRequest(string nextLink)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Lists all available Custom Locations operations. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<CustomLocationOperationsList>> ListOperationsNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-
-            using var message = CreateListOperationsNextPageRequest(nextLink);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        CustomLocationOperationsList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CustomLocationOperationsList.DeserializeCustomLocationOperationsList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Lists all available Custom Locations operations. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<CustomLocationOperationsList> ListOperationsNextPage(string nextLink, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-
-            using var message = CreateListOperationsNextPageRequest(nextLink);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        CustomLocationOperationsList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CustomLocationOperationsList.DeserializeCustomLocationOperationsList(document.RootElement);
+                        value = CustomLocationEnabledResourceTypesResult.DeserializeCustomLocationEnabledResourceTypesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -851,7 +734,7 @@ namespace Azure.ResourceManager.ExtendedLocations
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<EnabledResourceTypesListResult>> ListEnabledResourceTypesNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
+        public async Task<Response<CustomLocationEnabledResourceTypesResult>> ListEnabledResourceTypesNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -864,9 +747,9 @@ namespace Azure.ResourceManager.ExtendedLocations
             {
                 case 200:
                     {
-                        EnabledResourceTypesListResult value = default;
+                        CustomLocationEnabledResourceTypesResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = EnabledResourceTypesListResult.DeserializeEnabledResourceTypesListResult(document.RootElement);
+                        value = CustomLocationEnabledResourceTypesResult.DeserializeCustomLocationEnabledResourceTypesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -882,7 +765,7 @@ namespace Azure.ResourceManager.ExtendedLocations
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<EnabledResourceTypesListResult> ListEnabledResourceTypesNextPage(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
+        public Response<CustomLocationEnabledResourceTypesResult> ListEnabledResourceTypesNextPage(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -895,9 +778,9 @@ namespace Azure.ResourceManager.ExtendedLocations
             {
                 case 200:
                     {
-                        EnabledResourceTypesListResult value = default;
+                        CustomLocationEnabledResourceTypesResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = EnabledResourceTypesListResult.DeserializeEnabledResourceTypesListResult(document.RootElement);
+                        value = CustomLocationEnabledResourceTypesResult.DeserializeCustomLocationEnabledResourceTypesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

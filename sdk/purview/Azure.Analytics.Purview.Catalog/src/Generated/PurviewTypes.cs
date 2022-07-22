@@ -55,6 +55,62 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetBusinessMetadataDefByGuidAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+        /// 
+        /// Response response = await client.GetBusinessMetadataDefByGuidAsync("<guid>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -159,6 +215,62 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetBusinessMetadataDefByGuid with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+        /// 
+        /// Response response = client.GetBusinessMetadataDefByGuid("<guid>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -263,6 +375,62 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetBusinessMetadataDefByNameAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+        /// 
+        /// Response response = await client.GetBusinessMetadataDefByNameAsync("<name>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -367,6 +535,62 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetBusinessMetadataDefByName with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+        /// 
+        /// Response response = client.GetBusinessMetadataDefByName("<name>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -471,6 +695,65 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetClassificationDefByGuidAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+        /// 
+        /// Response response = await client.GetClassificationDefByGuidAsync("<guid>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("entityTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("subTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("superTypes")[0].ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -587,6 +870,65 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetClassificationDefByGuid with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+        /// 
+        /// Response response = client.GetClassificationDefByGuid("<guid>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("entityTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("subTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("superTypes")[0].ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -703,6 +1045,65 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetClassificationDefByNameAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+        /// 
+        /// Response response = await client.GetClassificationDefByNameAsync("<name>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("entityTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("subTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("superTypes")[0].ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -819,6 +1220,65 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetClassificationDefByName with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+        /// 
+        /// Response response = client.GetClassificationDefByName("<name>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("entityTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("subTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("superTypes")[0].ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -935,6 +1395,80 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetEntityDefinitionByGuidAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+        /// 
+        /// Response response = await client.GetEntityDefinitionByGuidAsync("<guid>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("subTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("superTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("relationshipTypeName").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -1060,6 +1594,80 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetEntityDefinitionByGuid with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+        /// 
+        /// Response response = client.GetEntityDefinitionByGuid("<guid>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("subTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("superTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("relationshipTypeName").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -1185,6 +1793,80 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetEntityDefinitionByNameAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+        /// 
+        /// Response response = await client.GetEntityDefinitionByNameAsync("<name>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("subTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("superTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("relationshipTypeName").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -1310,6 +1992,80 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetEntityDefinitionByName with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+        /// 
+        /// Response response = client.GetEntityDefinitionByName("<name>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("subTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("superTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("relationshipTypeName").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -1435,6 +2191,52 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetEnumDefByGuidAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+        /// 
+        /// Response response = await client.GetEnumDefByGuidAsync("<guid>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("ordinal").ToString());
+        /// Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("value").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -1525,6 +2327,52 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetEnumDefByGuid with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+        /// 
+        /// Response response = client.GetEnumDefByGuid("<guid>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("ordinal").ToString());
+        /// Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("value").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -1615,6 +2463,52 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetEnumDefByNameAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+        /// 
+        /// Response response = await client.GetEnumDefByNameAsync("<name>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("ordinal").ToString());
+        /// Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("value").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -1705,6 +2599,52 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetEnumDefByName with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+        /// 
+        /// Response response = client.GetEnumDefByName("<name>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("ordinal").ToString());
+        /// Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("value").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -1795,6 +2735,76 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetRelationshipDefByGuidAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+        /// 
+        /// Response response = await client.GetRelationshipDefByGuidAsync("<guid>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("isContainer").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("isContainer").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipCategory").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipLabel").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -1920,6 +2930,76 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetRelationshipDefByGuid with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+        /// 
+        /// Response response = client.GetRelationshipDefByGuid("<guid>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("isContainer").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("isContainer").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipCategory").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipLabel").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -2045,6 +3125,76 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetRelationshipDefByNameAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+        /// 
+        /// Response response = await client.GetRelationshipDefByNameAsync("<name>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("isContainer").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("isContainer").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipCategory").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipLabel").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -2170,6 +3320,76 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetRelationshipDefByName with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+        /// 
+        /// Response response = client.GetRelationshipDefByName("<name>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("isContainer").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("isContainer").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipCategory").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipLabel").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -2295,6 +3515,62 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetStructDefByGuidAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+        /// 
+        /// Response response = await client.GetStructDefByGuidAsync("<guid>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -2748,6 +4024,62 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetStructDefByGuid with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+        /// 
+        /// Response response = client.GetStructDefByGuid("<guid>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -3201,6 +4533,62 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetStructDefByNameAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+        /// 
+        /// Response response = await client.GetStructDefByNameAsync("<name>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -3654,6 +5042,62 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetStructDefByName with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+        /// 
+        /// Response response = client.GetStructDefByName("<name>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -4107,6 +5551,99 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetTypeDefinitionByGuidAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+        /// 
+        /// Response response = await client.GetTypeDefinitionByGuidAsync("<guid>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("entityTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("subTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("superTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("relationshipTypeName").ToString());
+        /// Console.WriteLine(result.GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("ordinal").ToString());
+        /// Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("isContainer").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("isContainer").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipCategory").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipLabel").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -4271,6 +5808,99 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetTypeDefinitionByGuid with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+        /// 
+        /// Response response = client.GetTypeDefinitionByGuid("<guid>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("entityTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("subTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("superTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("relationshipTypeName").ToString());
+        /// Console.WriteLine(result.GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("ordinal").ToString());
+        /// Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("isContainer").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("isContainer").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipCategory").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipLabel").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -4435,6 +6065,99 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetTypeDefinitionByNameAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+        /// 
+        /// Response response = await client.GetTypeDefinitionByNameAsync("<name>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("entityTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("subTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("superTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("relationshipTypeName").ToString());
+        /// Console.WriteLine(result.GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("ordinal").ToString());
+        /// Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("isContainer").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("isContainer").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipCategory").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipLabel").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -4599,6 +6322,99 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetTypeDefinitionByName with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+        /// 
+        /// Response response = client.GetTypeDefinitionByName("<name>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("entityTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("subTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("superTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("relationshipTypeName").ToString());
+        /// Console.WriteLine(result.GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("ordinal").ToString());
+        /// Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("isContainer").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef1").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("isContainer").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("endDef2").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipCategory").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipLabel").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -4763,6 +6579,17 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call DeleteTypeByNameAsync with required parameters.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+        /// 
+        /// Response response = await client.DeleteTypeByNameAsync("<name>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         public virtual async Task<Response> DeleteTypeByNameAsync(string name, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -4788,6 +6615,17 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call DeleteTypeByName with required parameters.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+        /// 
+        /// Response response = client.DeleteTypeByName("<name>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         public virtual Response DeleteTypeByName(string name, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -4815,6 +6653,362 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetAllTypeDefinitionsAsync and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+        /// 
+        /// Response response = await client.GetAllTypeDefinitionsAsync();
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call GetAllTypeDefinitionsAsync with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+        /// 
+        /// Response response = await client.GetAllTypeDefinitionsAsync(true, "<type>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("entityTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("subTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("superTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("subTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("superTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("relationshipTypeName").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("ordinal").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("isContainer").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("isContainer").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("relationshipCategory").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("relationshipLabel").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("lastModifiedTS").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -5098,6 +7292,362 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetAllTypeDefinitions and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+        /// 
+        /// Response response = client.GetAllTypeDefinitions();
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call GetAllTypeDefinitions with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+        /// 
+        /// Response response = client.GetAllTypeDefinitions(true, "<type>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("entityTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("subTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("superTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("subTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("superTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("relationshipTypeName").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("ordinal").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("isContainer").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("isContainer").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("relationshipCategory").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("relationshipLabel").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("lastModifiedTS").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -5381,6 +7931,940 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call CreateTypeDefinitionsAsync and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = await client.CreateTypeDefinitionsAsync(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call CreateTypeDefinitionsAsync with all request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+        /// 
+        /// var data = new {
+        ///     businessMetadataDefs = new[] {
+        ///         new {
+        ///             attributeDefs = new[] {
+        ///                 new {
+        ///                     cardinality = "<SINGLE>",
+        ///                     constraints = new[] {
+        ///                         new {
+        ///                             params = new {
+        ///                                 key = new {},
+        ///                             },
+        ///                             type = "<AtlasConstraintDefType>",
+        ///                         }
+        ///                     },
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     includeInNotification = true,
+        ///                     isIndexable = true,
+        ///                     isOptional = true,
+        ///                     isUnique = true,
+        ///                     name = "<AtlasAttributeDefName>",
+        ///                     options = new {
+        ///                         key = "<String>",
+        ///                     },
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     valuesMaxCount = 1234,
+        ///                     valuesMinCount = 1234,
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
+        ///                 }
+        ///             },
+        ///             category = "<PRIMITIVE>",
+        ///             createTime = 1234,
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             dateFormatter = new {
+        ///                 availableLocales = new[] {
+        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                 },
+        ///                 calendar = 1234,
+        ///                 lenient = true,
+        ///                 numberFormat = new {
+        ///                     availableLocales = new[] {
+        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                     },
+        ///                     currency = "<NumberFormatCurrency>",
+        ///                     groupingUsed = true,
+        ///                     maximumFractionDigits = 1234,
+        ///                     maximumIntegerDigits = 1234,
+        ///                     minimumFractionDigits = 1234,
+        ///                     minimumIntegerDigits = 1234,
+        ///                     parseIntegerOnly = true,
+        ///                     roundingMode = "<UP>",
+        ///                 },
+        ///                 timeZone = new {
+        ///                     dstSavings = 1234,
+        ///                     id = "<TimeZoneId>",
+        ///                     availableIds = new[] {
+        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                     },
+        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     rawOffset = 1234,
+        ///                 },
+        ///             },
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
+        ///             options = new {
+        ///                 key = "<String>",
+        ///             },
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
+        ///             updateTime = 1234,
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
+        ///             version = 1234,
+        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///         }
+        ///     },
+        ///     classificationDefs = new[] {
+        ///         new {
+        ///             attributeDefs = new[] {
+        ///                 new {
+        ///                     cardinality = "<SINGLE>",
+        ///                     constraints = new[] {
+        ///                         new {
+        ///                             params = new {
+        ///                                 key = new {},
+        ///                             },
+        ///                             type = "<AtlasConstraintDefType>",
+        ///                         }
+        ///                     },
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     includeInNotification = true,
+        ///                     isIndexable = true,
+        ///                     isOptional = true,
+        ///                     isUnique = true,
+        ///                     name = "<AtlasAttributeDefName>",
+        ///                     options = new {
+        ///                         key = "<String>",
+        ///                     },
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     valuesMaxCount = 1234,
+        ///                     valuesMinCount = 1234,
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
+        ///                 }
+        ///             },
+        ///             category = "<PRIMITIVE>",
+        ///             createTime = 1234,
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             dateFormatter = new {
+        ///                 availableLocales = new[] {
+        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                 },
+        ///                 calendar = 1234,
+        ///                 lenient = true,
+        ///                 numberFormat = new {
+        ///                     availableLocales = new[] {
+        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                     },
+        ///                     currency = "<NumberFormatCurrency>",
+        ///                     groupingUsed = true,
+        ///                     maximumFractionDigits = 1234,
+        ///                     maximumIntegerDigits = 1234,
+        ///                     minimumFractionDigits = 1234,
+        ///                     minimumIntegerDigits = 1234,
+        ///                     parseIntegerOnly = true,
+        ///                     roundingMode = "<UP>",
+        ///                 },
+        ///                 timeZone = new {
+        ///                     dstSavings = 1234,
+        ///                     id = "<TimeZoneId>",
+        ///                     availableIds = new[] {
+        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                     },
+        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     rawOffset = 1234,
+        ///                 },
+        ///             },
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
+        ///             options = new {
+        ///                 key = "<String>",
+        ///             },
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
+        ///             updateTime = 1234,
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
+        ///             version = 1234,
+        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///             entityTypes = new[] {
+        ///                 "<AtlasClassificationDefEntityTypesItem>"
+        ///             },
+        ///             subTypes = new[] {
+        ///                 "<AtlasClassificationDefSubTypesItem>"
+        ///             },
+        ///             superTypes = new[] {
+        ///                 "<AtlasClassificationDefSuperTypesItem>"
+        ///             },
+        ///         }
+        ///     },
+        ///     entityDefs = new[] {
+        ///         new {
+        ///             attributeDefs = new[] {
+        ///                 new {
+        ///                     cardinality = "<SINGLE>",
+        ///                     constraints = new[] {
+        ///                         new {
+        ///                             params = new {
+        ///                                 key = new {},
+        ///                             },
+        ///                             type = "<AtlasConstraintDefType>",
+        ///                         }
+        ///                     },
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     includeInNotification = true,
+        ///                     isIndexable = true,
+        ///                     isOptional = true,
+        ///                     isUnique = true,
+        ///                     name = "<AtlasAttributeDefName>",
+        ///                     options = new {
+        ///                         key = "<String>",
+        ///                     },
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     valuesMaxCount = 1234,
+        ///                     valuesMinCount = 1234,
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
+        ///                 }
+        ///             },
+        ///             category = "<PRIMITIVE>",
+        ///             createTime = 1234,
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             dateFormatter = new {
+        ///                 availableLocales = new[] {
+        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                 },
+        ///                 calendar = 1234,
+        ///                 lenient = true,
+        ///                 numberFormat = new {
+        ///                     availableLocales = new[] {
+        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                     },
+        ///                     currency = "<NumberFormatCurrency>",
+        ///                     groupingUsed = true,
+        ///                     maximumFractionDigits = 1234,
+        ///                     maximumIntegerDigits = 1234,
+        ///                     minimumFractionDigits = 1234,
+        ///                     minimumIntegerDigits = 1234,
+        ///                     parseIntegerOnly = true,
+        ///                     roundingMode = "<UP>",
+        ///                 },
+        ///                 timeZone = new {
+        ///                     dstSavings = 1234,
+        ///                     id = "<TimeZoneId>",
+        ///                     availableIds = new[] {
+        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                     },
+        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     rawOffset = 1234,
+        ///                 },
+        ///             },
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
+        ///             options = new {
+        ///                 key = "<String>",
+        ///             },
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
+        ///             updateTime = 1234,
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
+        ///             version = 1234,
+        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///             subTypes = new[] {
+        ///                 "<AtlasEntityDefSubTypesItem>"
+        ///             },
+        ///             superTypes = new[] {
+        ///                 "<AtlasEntityDefSuperTypesItem>"
+        ///             },
+        ///             relationshipAttributeDefs = new[] {
+        ///                 new {
+        ///                     cardinality = "<SINGLE>",
+        ///                     constraints = new[] {
+        ///                         new {
+        ///                             params = new {
+        ///                                 key = new {},
+        ///                             },
+        ///                             type = "<AtlasConstraintDefType>",
+        ///                         }
+        ///                     },
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     includeInNotification = true,
+        ///                     isIndexable = true,
+        ///                     isOptional = true,
+        ///                     isUnique = true,
+        ///                     name = "<AtlasAttributeDefName>",
+        ///                     options = new {
+        ///                         key = "<String>",
+        ///                     },
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     valuesMaxCount = 1234,
+        ///                     valuesMinCount = 1234,
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
+        ///                 }
+        ///             },
+        ///         }
+        ///     },
+        ///     enumDefs = new[] {
+        ///         new {
+        ///             category = "<PRIMITIVE>",
+        ///             createTime = 1234,
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             dateFormatter = new {
+        ///                 availableLocales = new[] {
+        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                 },
+        ///                 calendar = 1234,
+        ///                 lenient = true,
+        ///                 numberFormat = new {
+        ///                     availableLocales = new[] {
+        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                     },
+        ///                     currency = "<NumberFormatCurrency>",
+        ///                     groupingUsed = true,
+        ///                     maximumFractionDigits = 1234,
+        ///                     maximumIntegerDigits = 1234,
+        ///                     minimumFractionDigits = 1234,
+        ///                     minimumIntegerDigits = 1234,
+        ///                     parseIntegerOnly = true,
+        ///                     roundingMode = "<UP>",
+        ///                 },
+        ///                 timeZone = new {
+        ///                     dstSavings = 1234,
+        ///                     id = "<TimeZoneId>",
+        ///                     availableIds = new[] {
+        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                     },
+        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     rawOffset = 1234,
+        ///                 },
+        ///             },
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
+        ///             options = new {
+        ///                 key = "<String>",
+        ///             },
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
+        ///             updateTime = 1234,
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
+        ///             version = 1234,
+        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///             defaultValue = "<AtlasEnumDefDefaultValue>",
+        ///             elementDefs = new[] {
+        ///                 new {
+        ///                     description = "<AtlasEnumElementDefDescription>",
+        ///                     ordinal = 1234,
+        ///                     value = "<AtlasEnumElementDefValue>",
+        ///                 }
+        ///             },
+        ///         }
+        ///     },
+        ///     relationshipDefs = new[] {
+        ///         new {
+        ///             attributeDefs = new[] {
+        ///                 new {
+        ///                     cardinality = "<SINGLE>",
+        ///                     constraints = new[] {
+        ///                         new {
+        ///                             params = new {
+        ///                                 key = new {},
+        ///                             },
+        ///                             type = "<AtlasConstraintDefType>",
+        ///                         }
+        ///                     },
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     includeInNotification = true,
+        ///                     isIndexable = true,
+        ///                     isOptional = true,
+        ///                     isUnique = true,
+        ///                     name = "<AtlasAttributeDefName>",
+        ///                     options = new {
+        ///                         key = "<String>",
+        ///                     },
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     valuesMaxCount = 1234,
+        ///                     valuesMinCount = 1234,
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
+        ///                 }
+        ///             },
+        ///             category = "<PRIMITIVE>",
+        ///             createTime = 1234,
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             dateFormatter = new {
+        ///                 availableLocales = new[] {
+        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                 },
+        ///                 calendar = 1234,
+        ///                 lenient = true,
+        ///                 numberFormat = new {
+        ///                     availableLocales = new[] {
+        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                     },
+        ///                     currency = "<NumberFormatCurrency>",
+        ///                     groupingUsed = true,
+        ///                     maximumFractionDigits = 1234,
+        ///                     maximumIntegerDigits = 1234,
+        ///                     minimumFractionDigits = 1234,
+        ///                     minimumIntegerDigits = 1234,
+        ///                     parseIntegerOnly = true,
+        ///                     roundingMode = "<UP>",
+        ///                 },
+        ///                 timeZone = new {
+        ///                     dstSavings = 1234,
+        ///                     id = "<TimeZoneId>",
+        ///                     availableIds = new[] {
+        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                     },
+        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     rawOffset = 1234,
+        ///                 },
+        ///             },
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
+        ///             options = new {
+        ///                 key = "<String>",
+        ///             },
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
+        ///             updateTime = 1234,
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
+        ///             version = 1234,
+        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///             endDef1 = new {
+        ///                 cardinality = "<SINGLE>",
+        ///                 description = "<AtlasRelationshipEndDefDescription>",
+        ///                 isContainer = true,
+        ///                 isLegacyAttribute = true,
+        ///                 name = "<AtlasRelationshipEndDefName>",
+        ///                 type = "<AtlasRelationshipEndDefType>",
+        ///             },
+        ///             endDef2 = new {
+        ///                 cardinality = "<SINGLE>",
+        ///                 description = "<AtlasRelationshipEndDefDescription>",
+        ///                 isContainer = true,
+        ///                 isLegacyAttribute = true,
+        ///                 name = "<AtlasRelationshipEndDefName>",
+        ///                 type = "<AtlasRelationshipEndDefType>",
+        ///             },
+        ///             relationshipCategory = "<ASSOCIATION>",
+        ///             relationshipLabel = "<AtlasRelationshipDefRelationshipLabel>",
+        ///         }
+        ///     },
+        ///     structDefs = new[] {
+        ///         new {
+        ///             attributeDefs = new[] {
+        ///                 new {
+        ///                     cardinality = "<SINGLE>",
+        ///                     constraints = new[] {
+        ///                         new {
+        ///                             params = new {
+        ///                                 key = new {},
+        ///                             },
+        ///                             type = "<AtlasConstraintDefType>",
+        ///                         }
+        ///                     },
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     includeInNotification = true,
+        ///                     isIndexable = true,
+        ///                     isOptional = true,
+        ///                     isUnique = true,
+        ///                     name = "<AtlasAttributeDefName>",
+        ///                     options = new {
+        ///                         key = "<String>",
+        ///                     },
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     valuesMaxCount = 1234,
+        ///                     valuesMinCount = 1234,
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
+        ///                 }
+        ///             },
+        ///             category = "<PRIMITIVE>",
+        ///             createTime = 1234,
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             dateFormatter = new {
+        ///                 availableLocales = new[] {
+        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                 },
+        ///                 calendar = 1234,
+        ///                 lenient = true,
+        ///                 numberFormat = new {
+        ///                     availableLocales = new[] {
+        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                     },
+        ///                     currency = "<NumberFormatCurrency>",
+        ///                     groupingUsed = true,
+        ///                     maximumFractionDigits = 1234,
+        ///                     maximumIntegerDigits = 1234,
+        ///                     minimumFractionDigits = 1234,
+        ///                     minimumIntegerDigits = 1234,
+        ///                     parseIntegerOnly = true,
+        ///                     roundingMode = "<UP>",
+        ///                 },
+        ///                 timeZone = new {
+        ///                     dstSavings = 1234,
+        ///                     id = "<TimeZoneId>",
+        ///                     availableIds = new[] {
+        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                     },
+        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     rawOffset = 1234,
+        ///                 },
+        ///             },
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
+        ///             options = new {
+        ///                 key = "<String>",
+        ///             },
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
+        ///             updateTime = 1234,
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
+        ///             version = 1234,
+        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///         }
+        ///     },
+        ///     termTemplateDefs = new[] {
+        ///         new {
+        ///             attributeDefs = new[] {
+        ///                 new {
+        ///                     cardinality = "<SINGLE>",
+        ///                     constraints = new[] {
+        ///                         new {
+        ///                             params = new {
+        ///                                 key = new {},
+        ///                             },
+        ///                             type = "<AtlasConstraintDefType>",
+        ///                         }
+        ///                     },
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     includeInNotification = true,
+        ///                     isIndexable = true,
+        ///                     isOptional = true,
+        ///                     isUnique = true,
+        ///                     name = "<AtlasAttributeDefName>",
+        ///                     options = new {
+        ///                         key = "<String>",
+        ///                     },
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     valuesMaxCount = 1234,
+        ///                     valuesMinCount = 1234,
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
+        ///                 }
+        ///             },
+        ///             category = "<PRIMITIVE>",
+        ///             createTime = 1234,
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             dateFormatter = new {
+        ///                 availableLocales = new[] {
+        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                 },
+        ///                 calendar = 1234,
+        ///                 lenient = true,
+        ///                 numberFormat = new {
+        ///                     availableLocales = new[] {
+        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                     },
+        ///                     currency = "<NumberFormatCurrency>",
+        ///                     groupingUsed = true,
+        ///                     maximumFractionDigits = 1234,
+        ///                     maximumIntegerDigits = 1234,
+        ///                     minimumFractionDigits = 1234,
+        ///                     minimumIntegerDigits = 1234,
+        ///                     parseIntegerOnly = true,
+        ///                     roundingMode = "<UP>",
+        ///                 },
+        ///                 timeZone = new {
+        ///                     dstSavings = 1234,
+        ///                     id = "<TimeZoneId>",
+        ///                     availableIds = new[] {
+        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                     },
+        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     rawOffset = 1234,
+        ///                 },
+        ///             },
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
+        ///             options = new {
+        ///                 key = "<String>",
+        ///             },
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
+        ///             updateTime = 1234,
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
+        ///             version = 1234,
+        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///         }
+        ///     },
+        /// };
+        /// 
+        /// Response response = await client.CreateTypeDefinitionsAsync(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("entityTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("subTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("superTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("subTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("superTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("relationshipTypeName").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("ordinal").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("isContainer").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("isContainer").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("relationshipCategory").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("relationshipLabel").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("lastModifiedTS").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
         /// 
@@ -5920,6 +9404,940 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call CreateTypeDefinitions and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = client.CreateTypeDefinitions(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call CreateTypeDefinitions with all request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+        /// 
+        /// var data = new {
+        ///     businessMetadataDefs = new[] {
+        ///         new {
+        ///             attributeDefs = new[] {
+        ///                 new {
+        ///                     cardinality = "<SINGLE>",
+        ///                     constraints = new[] {
+        ///                         new {
+        ///                             params = new {
+        ///                                 key = new {},
+        ///                             },
+        ///                             type = "<AtlasConstraintDefType>",
+        ///                         }
+        ///                     },
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     includeInNotification = true,
+        ///                     isIndexable = true,
+        ///                     isOptional = true,
+        ///                     isUnique = true,
+        ///                     name = "<AtlasAttributeDefName>",
+        ///                     options = new {
+        ///                         key = "<String>",
+        ///                     },
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     valuesMaxCount = 1234,
+        ///                     valuesMinCount = 1234,
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
+        ///                 }
+        ///             },
+        ///             category = "<PRIMITIVE>",
+        ///             createTime = 1234,
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             dateFormatter = new {
+        ///                 availableLocales = new[] {
+        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                 },
+        ///                 calendar = 1234,
+        ///                 lenient = true,
+        ///                 numberFormat = new {
+        ///                     availableLocales = new[] {
+        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                     },
+        ///                     currency = "<NumberFormatCurrency>",
+        ///                     groupingUsed = true,
+        ///                     maximumFractionDigits = 1234,
+        ///                     maximumIntegerDigits = 1234,
+        ///                     minimumFractionDigits = 1234,
+        ///                     minimumIntegerDigits = 1234,
+        ///                     parseIntegerOnly = true,
+        ///                     roundingMode = "<UP>",
+        ///                 },
+        ///                 timeZone = new {
+        ///                     dstSavings = 1234,
+        ///                     id = "<TimeZoneId>",
+        ///                     availableIds = new[] {
+        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                     },
+        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     rawOffset = 1234,
+        ///                 },
+        ///             },
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
+        ///             options = new {
+        ///                 key = "<String>",
+        ///             },
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
+        ///             updateTime = 1234,
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
+        ///             version = 1234,
+        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///         }
+        ///     },
+        ///     classificationDefs = new[] {
+        ///         new {
+        ///             attributeDefs = new[] {
+        ///                 new {
+        ///                     cardinality = "<SINGLE>",
+        ///                     constraints = new[] {
+        ///                         new {
+        ///                             params = new {
+        ///                                 key = new {},
+        ///                             },
+        ///                             type = "<AtlasConstraintDefType>",
+        ///                         }
+        ///                     },
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     includeInNotification = true,
+        ///                     isIndexable = true,
+        ///                     isOptional = true,
+        ///                     isUnique = true,
+        ///                     name = "<AtlasAttributeDefName>",
+        ///                     options = new {
+        ///                         key = "<String>",
+        ///                     },
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     valuesMaxCount = 1234,
+        ///                     valuesMinCount = 1234,
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
+        ///                 }
+        ///             },
+        ///             category = "<PRIMITIVE>",
+        ///             createTime = 1234,
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             dateFormatter = new {
+        ///                 availableLocales = new[] {
+        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                 },
+        ///                 calendar = 1234,
+        ///                 lenient = true,
+        ///                 numberFormat = new {
+        ///                     availableLocales = new[] {
+        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                     },
+        ///                     currency = "<NumberFormatCurrency>",
+        ///                     groupingUsed = true,
+        ///                     maximumFractionDigits = 1234,
+        ///                     maximumIntegerDigits = 1234,
+        ///                     minimumFractionDigits = 1234,
+        ///                     minimumIntegerDigits = 1234,
+        ///                     parseIntegerOnly = true,
+        ///                     roundingMode = "<UP>",
+        ///                 },
+        ///                 timeZone = new {
+        ///                     dstSavings = 1234,
+        ///                     id = "<TimeZoneId>",
+        ///                     availableIds = new[] {
+        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                     },
+        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     rawOffset = 1234,
+        ///                 },
+        ///             },
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
+        ///             options = new {
+        ///                 key = "<String>",
+        ///             },
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
+        ///             updateTime = 1234,
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
+        ///             version = 1234,
+        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///             entityTypes = new[] {
+        ///                 "<AtlasClassificationDefEntityTypesItem>"
+        ///             },
+        ///             subTypes = new[] {
+        ///                 "<AtlasClassificationDefSubTypesItem>"
+        ///             },
+        ///             superTypes = new[] {
+        ///                 "<AtlasClassificationDefSuperTypesItem>"
+        ///             },
+        ///         }
+        ///     },
+        ///     entityDefs = new[] {
+        ///         new {
+        ///             attributeDefs = new[] {
+        ///                 new {
+        ///                     cardinality = "<SINGLE>",
+        ///                     constraints = new[] {
+        ///                         new {
+        ///                             params = new {
+        ///                                 key = new {},
+        ///                             },
+        ///                             type = "<AtlasConstraintDefType>",
+        ///                         }
+        ///                     },
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     includeInNotification = true,
+        ///                     isIndexable = true,
+        ///                     isOptional = true,
+        ///                     isUnique = true,
+        ///                     name = "<AtlasAttributeDefName>",
+        ///                     options = new {
+        ///                         key = "<String>",
+        ///                     },
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     valuesMaxCount = 1234,
+        ///                     valuesMinCount = 1234,
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
+        ///                 }
+        ///             },
+        ///             category = "<PRIMITIVE>",
+        ///             createTime = 1234,
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             dateFormatter = new {
+        ///                 availableLocales = new[] {
+        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                 },
+        ///                 calendar = 1234,
+        ///                 lenient = true,
+        ///                 numberFormat = new {
+        ///                     availableLocales = new[] {
+        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                     },
+        ///                     currency = "<NumberFormatCurrency>",
+        ///                     groupingUsed = true,
+        ///                     maximumFractionDigits = 1234,
+        ///                     maximumIntegerDigits = 1234,
+        ///                     minimumFractionDigits = 1234,
+        ///                     minimumIntegerDigits = 1234,
+        ///                     parseIntegerOnly = true,
+        ///                     roundingMode = "<UP>",
+        ///                 },
+        ///                 timeZone = new {
+        ///                     dstSavings = 1234,
+        ///                     id = "<TimeZoneId>",
+        ///                     availableIds = new[] {
+        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                     },
+        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     rawOffset = 1234,
+        ///                 },
+        ///             },
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
+        ///             options = new {
+        ///                 key = "<String>",
+        ///             },
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
+        ///             updateTime = 1234,
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
+        ///             version = 1234,
+        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///             subTypes = new[] {
+        ///                 "<AtlasEntityDefSubTypesItem>"
+        ///             },
+        ///             superTypes = new[] {
+        ///                 "<AtlasEntityDefSuperTypesItem>"
+        ///             },
+        ///             relationshipAttributeDefs = new[] {
+        ///                 new {
+        ///                     cardinality = "<SINGLE>",
+        ///                     constraints = new[] {
+        ///                         new {
+        ///                             params = new {
+        ///                                 key = new {},
+        ///                             },
+        ///                             type = "<AtlasConstraintDefType>",
+        ///                         }
+        ///                     },
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     includeInNotification = true,
+        ///                     isIndexable = true,
+        ///                     isOptional = true,
+        ///                     isUnique = true,
+        ///                     name = "<AtlasAttributeDefName>",
+        ///                     options = new {
+        ///                         key = "<String>",
+        ///                     },
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     valuesMaxCount = 1234,
+        ///                     valuesMinCount = 1234,
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
+        ///                 }
+        ///             },
+        ///         }
+        ///     },
+        ///     enumDefs = new[] {
+        ///         new {
+        ///             category = "<PRIMITIVE>",
+        ///             createTime = 1234,
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             dateFormatter = new {
+        ///                 availableLocales = new[] {
+        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                 },
+        ///                 calendar = 1234,
+        ///                 lenient = true,
+        ///                 numberFormat = new {
+        ///                     availableLocales = new[] {
+        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                     },
+        ///                     currency = "<NumberFormatCurrency>",
+        ///                     groupingUsed = true,
+        ///                     maximumFractionDigits = 1234,
+        ///                     maximumIntegerDigits = 1234,
+        ///                     minimumFractionDigits = 1234,
+        ///                     minimumIntegerDigits = 1234,
+        ///                     parseIntegerOnly = true,
+        ///                     roundingMode = "<UP>",
+        ///                 },
+        ///                 timeZone = new {
+        ///                     dstSavings = 1234,
+        ///                     id = "<TimeZoneId>",
+        ///                     availableIds = new[] {
+        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                     },
+        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     rawOffset = 1234,
+        ///                 },
+        ///             },
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
+        ///             options = new {
+        ///                 key = "<String>",
+        ///             },
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
+        ///             updateTime = 1234,
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
+        ///             version = 1234,
+        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///             defaultValue = "<AtlasEnumDefDefaultValue>",
+        ///             elementDefs = new[] {
+        ///                 new {
+        ///                     description = "<AtlasEnumElementDefDescription>",
+        ///                     ordinal = 1234,
+        ///                     value = "<AtlasEnumElementDefValue>",
+        ///                 }
+        ///             },
+        ///         }
+        ///     },
+        ///     relationshipDefs = new[] {
+        ///         new {
+        ///             attributeDefs = new[] {
+        ///                 new {
+        ///                     cardinality = "<SINGLE>",
+        ///                     constraints = new[] {
+        ///                         new {
+        ///                             params = new {
+        ///                                 key = new {},
+        ///                             },
+        ///                             type = "<AtlasConstraintDefType>",
+        ///                         }
+        ///                     },
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     includeInNotification = true,
+        ///                     isIndexable = true,
+        ///                     isOptional = true,
+        ///                     isUnique = true,
+        ///                     name = "<AtlasAttributeDefName>",
+        ///                     options = new {
+        ///                         key = "<String>",
+        ///                     },
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     valuesMaxCount = 1234,
+        ///                     valuesMinCount = 1234,
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
+        ///                 }
+        ///             },
+        ///             category = "<PRIMITIVE>",
+        ///             createTime = 1234,
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             dateFormatter = new {
+        ///                 availableLocales = new[] {
+        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                 },
+        ///                 calendar = 1234,
+        ///                 lenient = true,
+        ///                 numberFormat = new {
+        ///                     availableLocales = new[] {
+        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                     },
+        ///                     currency = "<NumberFormatCurrency>",
+        ///                     groupingUsed = true,
+        ///                     maximumFractionDigits = 1234,
+        ///                     maximumIntegerDigits = 1234,
+        ///                     minimumFractionDigits = 1234,
+        ///                     minimumIntegerDigits = 1234,
+        ///                     parseIntegerOnly = true,
+        ///                     roundingMode = "<UP>",
+        ///                 },
+        ///                 timeZone = new {
+        ///                     dstSavings = 1234,
+        ///                     id = "<TimeZoneId>",
+        ///                     availableIds = new[] {
+        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                     },
+        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     rawOffset = 1234,
+        ///                 },
+        ///             },
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
+        ///             options = new {
+        ///                 key = "<String>",
+        ///             },
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
+        ///             updateTime = 1234,
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
+        ///             version = 1234,
+        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///             endDef1 = new {
+        ///                 cardinality = "<SINGLE>",
+        ///                 description = "<AtlasRelationshipEndDefDescription>",
+        ///                 isContainer = true,
+        ///                 isLegacyAttribute = true,
+        ///                 name = "<AtlasRelationshipEndDefName>",
+        ///                 type = "<AtlasRelationshipEndDefType>",
+        ///             },
+        ///             endDef2 = new {
+        ///                 cardinality = "<SINGLE>",
+        ///                 description = "<AtlasRelationshipEndDefDescription>",
+        ///                 isContainer = true,
+        ///                 isLegacyAttribute = true,
+        ///                 name = "<AtlasRelationshipEndDefName>",
+        ///                 type = "<AtlasRelationshipEndDefType>",
+        ///             },
+        ///             relationshipCategory = "<ASSOCIATION>",
+        ///             relationshipLabel = "<AtlasRelationshipDefRelationshipLabel>",
+        ///         }
+        ///     },
+        ///     structDefs = new[] {
+        ///         new {
+        ///             attributeDefs = new[] {
+        ///                 new {
+        ///                     cardinality = "<SINGLE>",
+        ///                     constraints = new[] {
+        ///                         new {
+        ///                             params = new {
+        ///                                 key = new {},
+        ///                             },
+        ///                             type = "<AtlasConstraintDefType>",
+        ///                         }
+        ///                     },
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     includeInNotification = true,
+        ///                     isIndexable = true,
+        ///                     isOptional = true,
+        ///                     isUnique = true,
+        ///                     name = "<AtlasAttributeDefName>",
+        ///                     options = new {
+        ///                         key = "<String>",
+        ///                     },
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     valuesMaxCount = 1234,
+        ///                     valuesMinCount = 1234,
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
+        ///                 }
+        ///             },
+        ///             category = "<PRIMITIVE>",
+        ///             createTime = 1234,
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             dateFormatter = new {
+        ///                 availableLocales = new[] {
+        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                 },
+        ///                 calendar = 1234,
+        ///                 lenient = true,
+        ///                 numberFormat = new {
+        ///                     availableLocales = new[] {
+        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                     },
+        ///                     currency = "<NumberFormatCurrency>",
+        ///                     groupingUsed = true,
+        ///                     maximumFractionDigits = 1234,
+        ///                     maximumIntegerDigits = 1234,
+        ///                     minimumFractionDigits = 1234,
+        ///                     minimumIntegerDigits = 1234,
+        ///                     parseIntegerOnly = true,
+        ///                     roundingMode = "<UP>",
+        ///                 },
+        ///                 timeZone = new {
+        ///                     dstSavings = 1234,
+        ///                     id = "<TimeZoneId>",
+        ///                     availableIds = new[] {
+        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                     },
+        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     rawOffset = 1234,
+        ///                 },
+        ///             },
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
+        ///             options = new {
+        ///                 key = "<String>",
+        ///             },
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
+        ///             updateTime = 1234,
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
+        ///             version = 1234,
+        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///         }
+        ///     },
+        ///     termTemplateDefs = new[] {
+        ///         new {
+        ///             attributeDefs = new[] {
+        ///                 new {
+        ///                     cardinality = "<SINGLE>",
+        ///                     constraints = new[] {
+        ///                         new {
+        ///                             params = new {
+        ///                                 key = new {},
+        ///                             },
+        ///                             type = "<AtlasConstraintDefType>",
+        ///                         }
+        ///                     },
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     includeInNotification = true,
+        ///                     isIndexable = true,
+        ///                     isOptional = true,
+        ///                     isUnique = true,
+        ///                     name = "<AtlasAttributeDefName>",
+        ///                     options = new {
+        ///                         key = "<String>",
+        ///                     },
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     valuesMaxCount = 1234,
+        ///                     valuesMinCount = 1234,
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
+        ///                 }
+        ///             },
+        ///             category = "<PRIMITIVE>",
+        ///             createTime = 1234,
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             dateFormatter = new {
+        ///                 availableLocales = new[] {
+        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                 },
+        ///                 calendar = 1234,
+        ///                 lenient = true,
+        ///                 numberFormat = new {
+        ///                     availableLocales = new[] {
+        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                     },
+        ///                     currency = "<NumberFormatCurrency>",
+        ///                     groupingUsed = true,
+        ///                     maximumFractionDigits = 1234,
+        ///                     maximumIntegerDigits = 1234,
+        ///                     minimumFractionDigits = 1234,
+        ///                     minimumIntegerDigits = 1234,
+        ///                     parseIntegerOnly = true,
+        ///                     roundingMode = "<UP>",
+        ///                 },
+        ///                 timeZone = new {
+        ///                     dstSavings = 1234,
+        ///                     id = "<TimeZoneId>",
+        ///                     availableIds = new[] {
+        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                     },
+        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     rawOffset = 1234,
+        ///                 },
+        ///             },
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
+        ///             options = new {
+        ///                 key = "<String>",
+        ///             },
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
+        ///             updateTime = 1234,
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
+        ///             version = 1234,
+        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///         }
+        ///     },
+        /// };
+        /// 
+        /// Response response = client.CreateTypeDefinitions(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("entityTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("subTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("superTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("subTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("superTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("relationshipTypeName").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("ordinal").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("isContainer").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("isContainer").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("relationshipCategory").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("relationshipLabel").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("lastModifiedTS").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
         /// 
@@ -6456,6 +10874,940 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call UpdateAtlasTypeDefinitionsAsync and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = await client.UpdateAtlasTypeDefinitionsAsync(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call UpdateAtlasTypeDefinitionsAsync with all request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+        /// 
+        /// var data = new {
+        ///     businessMetadataDefs = new[] {
+        ///         new {
+        ///             attributeDefs = new[] {
+        ///                 new {
+        ///                     cardinality = "<SINGLE>",
+        ///                     constraints = new[] {
+        ///                         new {
+        ///                             params = new {
+        ///                                 key = new {},
+        ///                             },
+        ///                             type = "<AtlasConstraintDefType>",
+        ///                         }
+        ///                     },
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     includeInNotification = true,
+        ///                     isIndexable = true,
+        ///                     isOptional = true,
+        ///                     isUnique = true,
+        ///                     name = "<AtlasAttributeDefName>",
+        ///                     options = new {
+        ///                         key = "<String>",
+        ///                     },
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     valuesMaxCount = 1234,
+        ///                     valuesMinCount = 1234,
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
+        ///                 }
+        ///             },
+        ///             category = "<PRIMITIVE>",
+        ///             createTime = 1234,
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             dateFormatter = new {
+        ///                 availableLocales = new[] {
+        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                 },
+        ///                 calendar = 1234,
+        ///                 lenient = true,
+        ///                 numberFormat = new {
+        ///                     availableLocales = new[] {
+        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                     },
+        ///                     currency = "<NumberFormatCurrency>",
+        ///                     groupingUsed = true,
+        ///                     maximumFractionDigits = 1234,
+        ///                     maximumIntegerDigits = 1234,
+        ///                     minimumFractionDigits = 1234,
+        ///                     minimumIntegerDigits = 1234,
+        ///                     parseIntegerOnly = true,
+        ///                     roundingMode = "<UP>",
+        ///                 },
+        ///                 timeZone = new {
+        ///                     dstSavings = 1234,
+        ///                     id = "<TimeZoneId>",
+        ///                     availableIds = new[] {
+        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                     },
+        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     rawOffset = 1234,
+        ///                 },
+        ///             },
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
+        ///             options = new {
+        ///                 key = "<String>",
+        ///             },
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
+        ///             updateTime = 1234,
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
+        ///             version = 1234,
+        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///         }
+        ///     },
+        ///     classificationDefs = new[] {
+        ///         new {
+        ///             attributeDefs = new[] {
+        ///                 new {
+        ///                     cardinality = "<SINGLE>",
+        ///                     constraints = new[] {
+        ///                         new {
+        ///                             params = new {
+        ///                                 key = new {},
+        ///                             },
+        ///                             type = "<AtlasConstraintDefType>",
+        ///                         }
+        ///                     },
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     includeInNotification = true,
+        ///                     isIndexable = true,
+        ///                     isOptional = true,
+        ///                     isUnique = true,
+        ///                     name = "<AtlasAttributeDefName>",
+        ///                     options = new {
+        ///                         key = "<String>",
+        ///                     },
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     valuesMaxCount = 1234,
+        ///                     valuesMinCount = 1234,
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
+        ///                 }
+        ///             },
+        ///             category = "<PRIMITIVE>",
+        ///             createTime = 1234,
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             dateFormatter = new {
+        ///                 availableLocales = new[] {
+        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                 },
+        ///                 calendar = 1234,
+        ///                 lenient = true,
+        ///                 numberFormat = new {
+        ///                     availableLocales = new[] {
+        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                     },
+        ///                     currency = "<NumberFormatCurrency>",
+        ///                     groupingUsed = true,
+        ///                     maximumFractionDigits = 1234,
+        ///                     maximumIntegerDigits = 1234,
+        ///                     minimumFractionDigits = 1234,
+        ///                     minimumIntegerDigits = 1234,
+        ///                     parseIntegerOnly = true,
+        ///                     roundingMode = "<UP>",
+        ///                 },
+        ///                 timeZone = new {
+        ///                     dstSavings = 1234,
+        ///                     id = "<TimeZoneId>",
+        ///                     availableIds = new[] {
+        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                     },
+        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     rawOffset = 1234,
+        ///                 },
+        ///             },
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
+        ///             options = new {
+        ///                 key = "<String>",
+        ///             },
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
+        ///             updateTime = 1234,
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
+        ///             version = 1234,
+        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///             entityTypes = new[] {
+        ///                 "<AtlasClassificationDefEntityTypesItem>"
+        ///             },
+        ///             subTypes = new[] {
+        ///                 "<AtlasClassificationDefSubTypesItem>"
+        ///             },
+        ///             superTypes = new[] {
+        ///                 "<AtlasClassificationDefSuperTypesItem>"
+        ///             },
+        ///         }
+        ///     },
+        ///     entityDefs = new[] {
+        ///         new {
+        ///             attributeDefs = new[] {
+        ///                 new {
+        ///                     cardinality = "<SINGLE>",
+        ///                     constraints = new[] {
+        ///                         new {
+        ///                             params = new {
+        ///                                 key = new {},
+        ///                             },
+        ///                             type = "<AtlasConstraintDefType>",
+        ///                         }
+        ///                     },
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     includeInNotification = true,
+        ///                     isIndexable = true,
+        ///                     isOptional = true,
+        ///                     isUnique = true,
+        ///                     name = "<AtlasAttributeDefName>",
+        ///                     options = new {
+        ///                         key = "<String>",
+        ///                     },
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     valuesMaxCount = 1234,
+        ///                     valuesMinCount = 1234,
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
+        ///                 }
+        ///             },
+        ///             category = "<PRIMITIVE>",
+        ///             createTime = 1234,
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             dateFormatter = new {
+        ///                 availableLocales = new[] {
+        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                 },
+        ///                 calendar = 1234,
+        ///                 lenient = true,
+        ///                 numberFormat = new {
+        ///                     availableLocales = new[] {
+        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                     },
+        ///                     currency = "<NumberFormatCurrency>",
+        ///                     groupingUsed = true,
+        ///                     maximumFractionDigits = 1234,
+        ///                     maximumIntegerDigits = 1234,
+        ///                     minimumFractionDigits = 1234,
+        ///                     minimumIntegerDigits = 1234,
+        ///                     parseIntegerOnly = true,
+        ///                     roundingMode = "<UP>",
+        ///                 },
+        ///                 timeZone = new {
+        ///                     dstSavings = 1234,
+        ///                     id = "<TimeZoneId>",
+        ///                     availableIds = new[] {
+        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                     },
+        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     rawOffset = 1234,
+        ///                 },
+        ///             },
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
+        ///             options = new {
+        ///                 key = "<String>",
+        ///             },
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
+        ///             updateTime = 1234,
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
+        ///             version = 1234,
+        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///             subTypes = new[] {
+        ///                 "<AtlasEntityDefSubTypesItem>"
+        ///             },
+        ///             superTypes = new[] {
+        ///                 "<AtlasEntityDefSuperTypesItem>"
+        ///             },
+        ///             relationshipAttributeDefs = new[] {
+        ///                 new {
+        ///                     cardinality = "<SINGLE>",
+        ///                     constraints = new[] {
+        ///                         new {
+        ///                             params = new {
+        ///                                 key = new {},
+        ///                             },
+        ///                             type = "<AtlasConstraintDefType>",
+        ///                         }
+        ///                     },
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     includeInNotification = true,
+        ///                     isIndexable = true,
+        ///                     isOptional = true,
+        ///                     isUnique = true,
+        ///                     name = "<AtlasAttributeDefName>",
+        ///                     options = new {
+        ///                         key = "<String>",
+        ///                     },
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     valuesMaxCount = 1234,
+        ///                     valuesMinCount = 1234,
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
+        ///                 }
+        ///             },
+        ///         }
+        ///     },
+        ///     enumDefs = new[] {
+        ///         new {
+        ///             category = "<PRIMITIVE>",
+        ///             createTime = 1234,
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             dateFormatter = new {
+        ///                 availableLocales = new[] {
+        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                 },
+        ///                 calendar = 1234,
+        ///                 lenient = true,
+        ///                 numberFormat = new {
+        ///                     availableLocales = new[] {
+        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                     },
+        ///                     currency = "<NumberFormatCurrency>",
+        ///                     groupingUsed = true,
+        ///                     maximumFractionDigits = 1234,
+        ///                     maximumIntegerDigits = 1234,
+        ///                     minimumFractionDigits = 1234,
+        ///                     minimumIntegerDigits = 1234,
+        ///                     parseIntegerOnly = true,
+        ///                     roundingMode = "<UP>",
+        ///                 },
+        ///                 timeZone = new {
+        ///                     dstSavings = 1234,
+        ///                     id = "<TimeZoneId>",
+        ///                     availableIds = new[] {
+        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                     },
+        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     rawOffset = 1234,
+        ///                 },
+        ///             },
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
+        ///             options = new {
+        ///                 key = "<String>",
+        ///             },
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
+        ///             updateTime = 1234,
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
+        ///             version = 1234,
+        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///             defaultValue = "<AtlasEnumDefDefaultValue>",
+        ///             elementDefs = new[] {
+        ///                 new {
+        ///                     description = "<AtlasEnumElementDefDescription>",
+        ///                     ordinal = 1234,
+        ///                     value = "<AtlasEnumElementDefValue>",
+        ///                 }
+        ///             },
+        ///         }
+        ///     },
+        ///     relationshipDefs = new[] {
+        ///         new {
+        ///             attributeDefs = new[] {
+        ///                 new {
+        ///                     cardinality = "<SINGLE>",
+        ///                     constraints = new[] {
+        ///                         new {
+        ///                             params = new {
+        ///                                 key = new {},
+        ///                             },
+        ///                             type = "<AtlasConstraintDefType>",
+        ///                         }
+        ///                     },
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     includeInNotification = true,
+        ///                     isIndexable = true,
+        ///                     isOptional = true,
+        ///                     isUnique = true,
+        ///                     name = "<AtlasAttributeDefName>",
+        ///                     options = new {
+        ///                         key = "<String>",
+        ///                     },
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     valuesMaxCount = 1234,
+        ///                     valuesMinCount = 1234,
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
+        ///                 }
+        ///             },
+        ///             category = "<PRIMITIVE>",
+        ///             createTime = 1234,
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             dateFormatter = new {
+        ///                 availableLocales = new[] {
+        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                 },
+        ///                 calendar = 1234,
+        ///                 lenient = true,
+        ///                 numberFormat = new {
+        ///                     availableLocales = new[] {
+        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                     },
+        ///                     currency = "<NumberFormatCurrency>",
+        ///                     groupingUsed = true,
+        ///                     maximumFractionDigits = 1234,
+        ///                     maximumIntegerDigits = 1234,
+        ///                     minimumFractionDigits = 1234,
+        ///                     minimumIntegerDigits = 1234,
+        ///                     parseIntegerOnly = true,
+        ///                     roundingMode = "<UP>",
+        ///                 },
+        ///                 timeZone = new {
+        ///                     dstSavings = 1234,
+        ///                     id = "<TimeZoneId>",
+        ///                     availableIds = new[] {
+        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                     },
+        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     rawOffset = 1234,
+        ///                 },
+        ///             },
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
+        ///             options = new {
+        ///                 key = "<String>",
+        ///             },
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
+        ///             updateTime = 1234,
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
+        ///             version = 1234,
+        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///             endDef1 = new {
+        ///                 cardinality = "<SINGLE>",
+        ///                 description = "<AtlasRelationshipEndDefDescription>",
+        ///                 isContainer = true,
+        ///                 isLegacyAttribute = true,
+        ///                 name = "<AtlasRelationshipEndDefName>",
+        ///                 type = "<AtlasRelationshipEndDefType>",
+        ///             },
+        ///             endDef2 = new {
+        ///                 cardinality = "<SINGLE>",
+        ///                 description = "<AtlasRelationshipEndDefDescription>",
+        ///                 isContainer = true,
+        ///                 isLegacyAttribute = true,
+        ///                 name = "<AtlasRelationshipEndDefName>",
+        ///                 type = "<AtlasRelationshipEndDefType>",
+        ///             },
+        ///             relationshipCategory = "<ASSOCIATION>",
+        ///             relationshipLabel = "<AtlasRelationshipDefRelationshipLabel>",
+        ///         }
+        ///     },
+        ///     structDefs = new[] {
+        ///         new {
+        ///             attributeDefs = new[] {
+        ///                 new {
+        ///                     cardinality = "<SINGLE>",
+        ///                     constraints = new[] {
+        ///                         new {
+        ///                             params = new {
+        ///                                 key = new {},
+        ///                             },
+        ///                             type = "<AtlasConstraintDefType>",
+        ///                         }
+        ///                     },
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     includeInNotification = true,
+        ///                     isIndexable = true,
+        ///                     isOptional = true,
+        ///                     isUnique = true,
+        ///                     name = "<AtlasAttributeDefName>",
+        ///                     options = new {
+        ///                         key = "<String>",
+        ///                     },
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     valuesMaxCount = 1234,
+        ///                     valuesMinCount = 1234,
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
+        ///                 }
+        ///             },
+        ///             category = "<PRIMITIVE>",
+        ///             createTime = 1234,
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             dateFormatter = new {
+        ///                 availableLocales = new[] {
+        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                 },
+        ///                 calendar = 1234,
+        ///                 lenient = true,
+        ///                 numberFormat = new {
+        ///                     availableLocales = new[] {
+        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                     },
+        ///                     currency = "<NumberFormatCurrency>",
+        ///                     groupingUsed = true,
+        ///                     maximumFractionDigits = 1234,
+        ///                     maximumIntegerDigits = 1234,
+        ///                     minimumFractionDigits = 1234,
+        ///                     minimumIntegerDigits = 1234,
+        ///                     parseIntegerOnly = true,
+        ///                     roundingMode = "<UP>",
+        ///                 },
+        ///                 timeZone = new {
+        ///                     dstSavings = 1234,
+        ///                     id = "<TimeZoneId>",
+        ///                     availableIds = new[] {
+        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                     },
+        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     rawOffset = 1234,
+        ///                 },
+        ///             },
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
+        ///             options = new {
+        ///                 key = "<String>",
+        ///             },
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
+        ///             updateTime = 1234,
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
+        ///             version = 1234,
+        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///         }
+        ///     },
+        ///     termTemplateDefs = new[] {
+        ///         new {
+        ///             attributeDefs = new[] {
+        ///                 new {
+        ///                     cardinality = "<SINGLE>",
+        ///                     constraints = new[] {
+        ///                         new {
+        ///                             params = new {
+        ///                                 key = new {},
+        ///                             },
+        ///                             type = "<AtlasConstraintDefType>",
+        ///                         }
+        ///                     },
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     includeInNotification = true,
+        ///                     isIndexable = true,
+        ///                     isOptional = true,
+        ///                     isUnique = true,
+        ///                     name = "<AtlasAttributeDefName>",
+        ///                     options = new {
+        ///                         key = "<String>",
+        ///                     },
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     valuesMaxCount = 1234,
+        ///                     valuesMinCount = 1234,
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
+        ///                 }
+        ///             },
+        ///             category = "<PRIMITIVE>",
+        ///             createTime = 1234,
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             dateFormatter = new {
+        ///                 availableLocales = new[] {
+        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                 },
+        ///                 calendar = 1234,
+        ///                 lenient = true,
+        ///                 numberFormat = new {
+        ///                     availableLocales = new[] {
+        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                     },
+        ///                     currency = "<NumberFormatCurrency>",
+        ///                     groupingUsed = true,
+        ///                     maximumFractionDigits = 1234,
+        ///                     maximumIntegerDigits = 1234,
+        ///                     minimumFractionDigits = 1234,
+        ///                     minimumIntegerDigits = 1234,
+        ///                     parseIntegerOnly = true,
+        ///                     roundingMode = "<UP>",
+        ///                 },
+        ///                 timeZone = new {
+        ///                     dstSavings = 1234,
+        ///                     id = "<TimeZoneId>",
+        ///                     availableIds = new[] {
+        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                     },
+        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     rawOffset = 1234,
+        ///                 },
+        ///             },
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
+        ///             options = new {
+        ///                 key = "<String>",
+        ///             },
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
+        ///             updateTime = 1234,
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
+        ///             version = 1234,
+        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///         }
+        ///     },
+        /// };
+        /// 
+        /// Response response = await client.UpdateAtlasTypeDefinitionsAsync(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("entityTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("subTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("superTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("subTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("superTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("relationshipTypeName").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("ordinal").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("isContainer").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("isContainer").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("relationshipCategory").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("relationshipLabel").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("lastModifiedTS").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
         /// 
@@ -6992,6 +12344,940 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call UpdateAtlasTypeDefinitions and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = client.UpdateAtlasTypeDefinitions(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call UpdateAtlasTypeDefinitions with all request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+        /// 
+        /// var data = new {
+        ///     businessMetadataDefs = new[] {
+        ///         new {
+        ///             attributeDefs = new[] {
+        ///                 new {
+        ///                     cardinality = "<SINGLE>",
+        ///                     constraints = new[] {
+        ///                         new {
+        ///                             params = new {
+        ///                                 key = new {},
+        ///                             },
+        ///                             type = "<AtlasConstraintDefType>",
+        ///                         }
+        ///                     },
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     includeInNotification = true,
+        ///                     isIndexable = true,
+        ///                     isOptional = true,
+        ///                     isUnique = true,
+        ///                     name = "<AtlasAttributeDefName>",
+        ///                     options = new {
+        ///                         key = "<String>",
+        ///                     },
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     valuesMaxCount = 1234,
+        ///                     valuesMinCount = 1234,
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
+        ///                 }
+        ///             },
+        ///             category = "<PRIMITIVE>",
+        ///             createTime = 1234,
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             dateFormatter = new {
+        ///                 availableLocales = new[] {
+        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                 },
+        ///                 calendar = 1234,
+        ///                 lenient = true,
+        ///                 numberFormat = new {
+        ///                     availableLocales = new[] {
+        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                     },
+        ///                     currency = "<NumberFormatCurrency>",
+        ///                     groupingUsed = true,
+        ///                     maximumFractionDigits = 1234,
+        ///                     maximumIntegerDigits = 1234,
+        ///                     minimumFractionDigits = 1234,
+        ///                     minimumIntegerDigits = 1234,
+        ///                     parseIntegerOnly = true,
+        ///                     roundingMode = "<UP>",
+        ///                 },
+        ///                 timeZone = new {
+        ///                     dstSavings = 1234,
+        ///                     id = "<TimeZoneId>",
+        ///                     availableIds = new[] {
+        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                     },
+        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     rawOffset = 1234,
+        ///                 },
+        ///             },
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
+        ///             options = new {
+        ///                 key = "<String>",
+        ///             },
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
+        ///             updateTime = 1234,
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
+        ///             version = 1234,
+        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///         }
+        ///     },
+        ///     classificationDefs = new[] {
+        ///         new {
+        ///             attributeDefs = new[] {
+        ///                 new {
+        ///                     cardinality = "<SINGLE>",
+        ///                     constraints = new[] {
+        ///                         new {
+        ///                             params = new {
+        ///                                 key = new {},
+        ///                             },
+        ///                             type = "<AtlasConstraintDefType>",
+        ///                         }
+        ///                     },
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     includeInNotification = true,
+        ///                     isIndexable = true,
+        ///                     isOptional = true,
+        ///                     isUnique = true,
+        ///                     name = "<AtlasAttributeDefName>",
+        ///                     options = new {
+        ///                         key = "<String>",
+        ///                     },
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     valuesMaxCount = 1234,
+        ///                     valuesMinCount = 1234,
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
+        ///                 }
+        ///             },
+        ///             category = "<PRIMITIVE>",
+        ///             createTime = 1234,
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             dateFormatter = new {
+        ///                 availableLocales = new[] {
+        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                 },
+        ///                 calendar = 1234,
+        ///                 lenient = true,
+        ///                 numberFormat = new {
+        ///                     availableLocales = new[] {
+        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                     },
+        ///                     currency = "<NumberFormatCurrency>",
+        ///                     groupingUsed = true,
+        ///                     maximumFractionDigits = 1234,
+        ///                     maximumIntegerDigits = 1234,
+        ///                     minimumFractionDigits = 1234,
+        ///                     minimumIntegerDigits = 1234,
+        ///                     parseIntegerOnly = true,
+        ///                     roundingMode = "<UP>",
+        ///                 },
+        ///                 timeZone = new {
+        ///                     dstSavings = 1234,
+        ///                     id = "<TimeZoneId>",
+        ///                     availableIds = new[] {
+        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                     },
+        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     rawOffset = 1234,
+        ///                 },
+        ///             },
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
+        ///             options = new {
+        ///                 key = "<String>",
+        ///             },
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
+        ///             updateTime = 1234,
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
+        ///             version = 1234,
+        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///             entityTypes = new[] {
+        ///                 "<AtlasClassificationDefEntityTypesItem>"
+        ///             },
+        ///             subTypes = new[] {
+        ///                 "<AtlasClassificationDefSubTypesItem>"
+        ///             },
+        ///             superTypes = new[] {
+        ///                 "<AtlasClassificationDefSuperTypesItem>"
+        ///             },
+        ///         }
+        ///     },
+        ///     entityDefs = new[] {
+        ///         new {
+        ///             attributeDefs = new[] {
+        ///                 new {
+        ///                     cardinality = "<SINGLE>",
+        ///                     constraints = new[] {
+        ///                         new {
+        ///                             params = new {
+        ///                                 key = new {},
+        ///                             },
+        ///                             type = "<AtlasConstraintDefType>",
+        ///                         }
+        ///                     },
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     includeInNotification = true,
+        ///                     isIndexable = true,
+        ///                     isOptional = true,
+        ///                     isUnique = true,
+        ///                     name = "<AtlasAttributeDefName>",
+        ///                     options = new {
+        ///                         key = "<String>",
+        ///                     },
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     valuesMaxCount = 1234,
+        ///                     valuesMinCount = 1234,
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
+        ///                 }
+        ///             },
+        ///             category = "<PRIMITIVE>",
+        ///             createTime = 1234,
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             dateFormatter = new {
+        ///                 availableLocales = new[] {
+        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                 },
+        ///                 calendar = 1234,
+        ///                 lenient = true,
+        ///                 numberFormat = new {
+        ///                     availableLocales = new[] {
+        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                     },
+        ///                     currency = "<NumberFormatCurrency>",
+        ///                     groupingUsed = true,
+        ///                     maximumFractionDigits = 1234,
+        ///                     maximumIntegerDigits = 1234,
+        ///                     minimumFractionDigits = 1234,
+        ///                     minimumIntegerDigits = 1234,
+        ///                     parseIntegerOnly = true,
+        ///                     roundingMode = "<UP>",
+        ///                 },
+        ///                 timeZone = new {
+        ///                     dstSavings = 1234,
+        ///                     id = "<TimeZoneId>",
+        ///                     availableIds = new[] {
+        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                     },
+        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     rawOffset = 1234,
+        ///                 },
+        ///             },
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
+        ///             options = new {
+        ///                 key = "<String>",
+        ///             },
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
+        ///             updateTime = 1234,
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
+        ///             version = 1234,
+        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///             subTypes = new[] {
+        ///                 "<AtlasEntityDefSubTypesItem>"
+        ///             },
+        ///             superTypes = new[] {
+        ///                 "<AtlasEntityDefSuperTypesItem>"
+        ///             },
+        ///             relationshipAttributeDefs = new[] {
+        ///                 new {
+        ///                     cardinality = "<SINGLE>",
+        ///                     constraints = new[] {
+        ///                         new {
+        ///                             params = new {
+        ///                                 key = new {},
+        ///                             },
+        ///                             type = "<AtlasConstraintDefType>",
+        ///                         }
+        ///                     },
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     includeInNotification = true,
+        ///                     isIndexable = true,
+        ///                     isOptional = true,
+        ///                     isUnique = true,
+        ///                     name = "<AtlasAttributeDefName>",
+        ///                     options = new {
+        ///                         key = "<String>",
+        ///                     },
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     valuesMaxCount = 1234,
+        ///                     valuesMinCount = 1234,
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
+        ///                 }
+        ///             },
+        ///         }
+        ///     },
+        ///     enumDefs = new[] {
+        ///         new {
+        ///             category = "<PRIMITIVE>",
+        ///             createTime = 1234,
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             dateFormatter = new {
+        ///                 availableLocales = new[] {
+        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                 },
+        ///                 calendar = 1234,
+        ///                 lenient = true,
+        ///                 numberFormat = new {
+        ///                     availableLocales = new[] {
+        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                     },
+        ///                     currency = "<NumberFormatCurrency>",
+        ///                     groupingUsed = true,
+        ///                     maximumFractionDigits = 1234,
+        ///                     maximumIntegerDigits = 1234,
+        ///                     minimumFractionDigits = 1234,
+        ///                     minimumIntegerDigits = 1234,
+        ///                     parseIntegerOnly = true,
+        ///                     roundingMode = "<UP>",
+        ///                 },
+        ///                 timeZone = new {
+        ///                     dstSavings = 1234,
+        ///                     id = "<TimeZoneId>",
+        ///                     availableIds = new[] {
+        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                     },
+        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     rawOffset = 1234,
+        ///                 },
+        ///             },
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
+        ///             options = new {
+        ///                 key = "<String>",
+        ///             },
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
+        ///             updateTime = 1234,
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
+        ///             version = 1234,
+        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///             defaultValue = "<AtlasEnumDefDefaultValue>",
+        ///             elementDefs = new[] {
+        ///                 new {
+        ///                     description = "<AtlasEnumElementDefDescription>",
+        ///                     ordinal = 1234,
+        ///                     value = "<AtlasEnumElementDefValue>",
+        ///                 }
+        ///             },
+        ///         }
+        ///     },
+        ///     relationshipDefs = new[] {
+        ///         new {
+        ///             attributeDefs = new[] {
+        ///                 new {
+        ///                     cardinality = "<SINGLE>",
+        ///                     constraints = new[] {
+        ///                         new {
+        ///                             params = new {
+        ///                                 key = new {},
+        ///                             },
+        ///                             type = "<AtlasConstraintDefType>",
+        ///                         }
+        ///                     },
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     includeInNotification = true,
+        ///                     isIndexable = true,
+        ///                     isOptional = true,
+        ///                     isUnique = true,
+        ///                     name = "<AtlasAttributeDefName>",
+        ///                     options = new {
+        ///                         key = "<String>",
+        ///                     },
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     valuesMaxCount = 1234,
+        ///                     valuesMinCount = 1234,
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
+        ///                 }
+        ///             },
+        ///             category = "<PRIMITIVE>",
+        ///             createTime = 1234,
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             dateFormatter = new {
+        ///                 availableLocales = new[] {
+        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                 },
+        ///                 calendar = 1234,
+        ///                 lenient = true,
+        ///                 numberFormat = new {
+        ///                     availableLocales = new[] {
+        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                     },
+        ///                     currency = "<NumberFormatCurrency>",
+        ///                     groupingUsed = true,
+        ///                     maximumFractionDigits = 1234,
+        ///                     maximumIntegerDigits = 1234,
+        ///                     minimumFractionDigits = 1234,
+        ///                     minimumIntegerDigits = 1234,
+        ///                     parseIntegerOnly = true,
+        ///                     roundingMode = "<UP>",
+        ///                 },
+        ///                 timeZone = new {
+        ///                     dstSavings = 1234,
+        ///                     id = "<TimeZoneId>",
+        ///                     availableIds = new[] {
+        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                     },
+        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     rawOffset = 1234,
+        ///                 },
+        ///             },
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
+        ///             options = new {
+        ///                 key = "<String>",
+        ///             },
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
+        ///             updateTime = 1234,
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
+        ///             version = 1234,
+        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///             endDef1 = new {
+        ///                 cardinality = "<SINGLE>",
+        ///                 description = "<AtlasRelationshipEndDefDescription>",
+        ///                 isContainer = true,
+        ///                 isLegacyAttribute = true,
+        ///                 name = "<AtlasRelationshipEndDefName>",
+        ///                 type = "<AtlasRelationshipEndDefType>",
+        ///             },
+        ///             endDef2 = new {
+        ///                 cardinality = "<SINGLE>",
+        ///                 description = "<AtlasRelationshipEndDefDescription>",
+        ///                 isContainer = true,
+        ///                 isLegacyAttribute = true,
+        ///                 name = "<AtlasRelationshipEndDefName>",
+        ///                 type = "<AtlasRelationshipEndDefType>",
+        ///             },
+        ///             relationshipCategory = "<ASSOCIATION>",
+        ///             relationshipLabel = "<AtlasRelationshipDefRelationshipLabel>",
+        ///         }
+        ///     },
+        ///     structDefs = new[] {
+        ///         new {
+        ///             attributeDefs = new[] {
+        ///                 new {
+        ///                     cardinality = "<SINGLE>",
+        ///                     constraints = new[] {
+        ///                         new {
+        ///                             params = new {
+        ///                                 key = new {},
+        ///                             },
+        ///                             type = "<AtlasConstraintDefType>",
+        ///                         }
+        ///                     },
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     includeInNotification = true,
+        ///                     isIndexable = true,
+        ///                     isOptional = true,
+        ///                     isUnique = true,
+        ///                     name = "<AtlasAttributeDefName>",
+        ///                     options = new {
+        ///                         key = "<String>",
+        ///                     },
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     valuesMaxCount = 1234,
+        ///                     valuesMinCount = 1234,
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
+        ///                 }
+        ///             },
+        ///             category = "<PRIMITIVE>",
+        ///             createTime = 1234,
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             dateFormatter = new {
+        ///                 availableLocales = new[] {
+        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                 },
+        ///                 calendar = 1234,
+        ///                 lenient = true,
+        ///                 numberFormat = new {
+        ///                     availableLocales = new[] {
+        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                     },
+        ///                     currency = "<NumberFormatCurrency>",
+        ///                     groupingUsed = true,
+        ///                     maximumFractionDigits = 1234,
+        ///                     maximumIntegerDigits = 1234,
+        ///                     minimumFractionDigits = 1234,
+        ///                     minimumIntegerDigits = 1234,
+        ///                     parseIntegerOnly = true,
+        ///                     roundingMode = "<UP>",
+        ///                 },
+        ///                 timeZone = new {
+        ///                     dstSavings = 1234,
+        ///                     id = "<TimeZoneId>",
+        ///                     availableIds = new[] {
+        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                     },
+        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     rawOffset = 1234,
+        ///                 },
+        ///             },
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
+        ///             options = new {
+        ///                 key = "<String>",
+        ///             },
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
+        ///             updateTime = 1234,
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
+        ///             version = 1234,
+        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///         }
+        ///     },
+        ///     termTemplateDefs = new[] {
+        ///         new {
+        ///             attributeDefs = new[] {
+        ///                 new {
+        ///                     cardinality = "<SINGLE>",
+        ///                     constraints = new[] {
+        ///                         new {
+        ///                             params = new {
+        ///                                 key = new {},
+        ///                             },
+        ///                             type = "<AtlasConstraintDefType>",
+        ///                         }
+        ///                     },
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     includeInNotification = true,
+        ///                     isIndexable = true,
+        ///                     isOptional = true,
+        ///                     isUnique = true,
+        ///                     name = "<AtlasAttributeDefName>",
+        ///                     options = new {
+        ///                         key = "<String>",
+        ///                     },
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     valuesMaxCount = 1234,
+        ///                     valuesMinCount = 1234,
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
+        ///                 }
+        ///             },
+        ///             category = "<PRIMITIVE>",
+        ///             createTime = 1234,
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             dateFormatter = new {
+        ///                 availableLocales = new[] {
+        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                 },
+        ///                 calendar = 1234,
+        ///                 lenient = true,
+        ///                 numberFormat = new {
+        ///                     availableLocales = new[] {
+        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                     },
+        ///                     currency = "<NumberFormatCurrency>",
+        ///                     groupingUsed = true,
+        ///                     maximumFractionDigits = 1234,
+        ///                     maximumIntegerDigits = 1234,
+        ///                     minimumFractionDigits = 1234,
+        ///                     minimumIntegerDigits = 1234,
+        ///                     parseIntegerOnly = true,
+        ///                     roundingMode = "<UP>",
+        ///                 },
+        ///                 timeZone = new {
+        ///                     dstSavings = 1234,
+        ///                     id = "<TimeZoneId>",
+        ///                     availableIds = new[] {
+        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                     },
+        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     rawOffset = 1234,
+        ///                 },
+        ///             },
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
+        ///             options = new {
+        ///                 key = "<String>",
+        ///             },
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
+        ///             updateTime = 1234,
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
+        ///             version = 1234,
+        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///         }
+        ///     },
+        /// };
+        /// 
+        /// Response response = client.UpdateAtlasTypeDefinitions(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("entityTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("subTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("superTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("subTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("superTypes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("relationshipTypeName").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("ordinal").ToString());
+        /// Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("isContainer").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("isContainer").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("isLegacyAttribute").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("relationshipCategory").ToString());
+        /// Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("relationshipLabel").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("lastModifiedTS").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
         /// 
@@ -7528,6 +13814,604 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call DeleteTypeDefinitionsAsync.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = await client.DeleteTypeDefinitionsAsync(RequestContent.Create(data));
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// This sample shows how to call DeleteTypeDefinitionsAsync with all request content.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+        /// 
+        /// var data = new {
+        ///     businessMetadataDefs = new[] {
+        ///         new {
+        ///             attributeDefs = new[] {
+        ///                 new {
+        ///                     cardinality = "<SINGLE>",
+        ///                     constraints = new[] {
+        ///                         new {
+        ///                             params = new {
+        ///                                 key = new {},
+        ///                             },
+        ///                             type = "<AtlasConstraintDefType>",
+        ///                         }
+        ///                     },
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     includeInNotification = true,
+        ///                     isIndexable = true,
+        ///                     isOptional = true,
+        ///                     isUnique = true,
+        ///                     name = "<AtlasAttributeDefName>",
+        ///                     options = new {
+        ///                         key = "<String>",
+        ///                     },
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     valuesMaxCount = 1234,
+        ///                     valuesMinCount = 1234,
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
+        ///                 }
+        ///             },
+        ///             category = "<PRIMITIVE>",
+        ///             createTime = 1234,
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             dateFormatter = new {
+        ///                 availableLocales = new[] {
+        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                 },
+        ///                 calendar = 1234,
+        ///                 lenient = true,
+        ///                 numberFormat = new {
+        ///                     availableLocales = new[] {
+        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                     },
+        ///                     currency = "<NumberFormatCurrency>",
+        ///                     groupingUsed = true,
+        ///                     maximumFractionDigits = 1234,
+        ///                     maximumIntegerDigits = 1234,
+        ///                     minimumFractionDigits = 1234,
+        ///                     minimumIntegerDigits = 1234,
+        ///                     parseIntegerOnly = true,
+        ///                     roundingMode = "<UP>",
+        ///                 },
+        ///                 timeZone = new {
+        ///                     dstSavings = 1234,
+        ///                     id = "<TimeZoneId>",
+        ///                     availableIds = new[] {
+        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                     },
+        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     rawOffset = 1234,
+        ///                 },
+        ///             },
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
+        ///             options = new {
+        ///                 key = "<String>",
+        ///             },
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
+        ///             updateTime = 1234,
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
+        ///             version = 1234,
+        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///         }
+        ///     },
+        ///     classificationDefs = new[] {
+        ///         new {
+        ///             attributeDefs = new[] {
+        ///                 new {
+        ///                     cardinality = "<SINGLE>",
+        ///                     constraints = new[] {
+        ///                         new {
+        ///                             params = new {
+        ///                                 key = new {},
+        ///                             },
+        ///                             type = "<AtlasConstraintDefType>",
+        ///                         }
+        ///                     },
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     includeInNotification = true,
+        ///                     isIndexable = true,
+        ///                     isOptional = true,
+        ///                     isUnique = true,
+        ///                     name = "<AtlasAttributeDefName>",
+        ///                     options = new {
+        ///                         key = "<String>",
+        ///                     },
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     valuesMaxCount = 1234,
+        ///                     valuesMinCount = 1234,
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
+        ///                 }
+        ///             },
+        ///             category = "<PRIMITIVE>",
+        ///             createTime = 1234,
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             dateFormatter = new {
+        ///                 availableLocales = new[] {
+        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                 },
+        ///                 calendar = 1234,
+        ///                 lenient = true,
+        ///                 numberFormat = new {
+        ///                     availableLocales = new[] {
+        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                     },
+        ///                     currency = "<NumberFormatCurrency>",
+        ///                     groupingUsed = true,
+        ///                     maximumFractionDigits = 1234,
+        ///                     maximumIntegerDigits = 1234,
+        ///                     minimumFractionDigits = 1234,
+        ///                     minimumIntegerDigits = 1234,
+        ///                     parseIntegerOnly = true,
+        ///                     roundingMode = "<UP>",
+        ///                 },
+        ///                 timeZone = new {
+        ///                     dstSavings = 1234,
+        ///                     id = "<TimeZoneId>",
+        ///                     availableIds = new[] {
+        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                     },
+        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     rawOffset = 1234,
+        ///                 },
+        ///             },
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
+        ///             options = new {
+        ///                 key = "<String>",
+        ///             },
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
+        ///             updateTime = 1234,
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
+        ///             version = 1234,
+        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///             entityTypes = new[] {
+        ///                 "<AtlasClassificationDefEntityTypesItem>"
+        ///             },
+        ///             subTypes = new[] {
+        ///                 "<AtlasClassificationDefSubTypesItem>"
+        ///             },
+        ///             superTypes = new[] {
+        ///                 "<AtlasClassificationDefSuperTypesItem>"
+        ///             },
+        ///         }
+        ///     },
+        ///     entityDefs = new[] {
+        ///         new {
+        ///             attributeDefs = new[] {
+        ///                 new {
+        ///                     cardinality = "<SINGLE>",
+        ///                     constraints = new[] {
+        ///                         new {
+        ///                             params = new {
+        ///                                 key = new {},
+        ///                             },
+        ///                             type = "<AtlasConstraintDefType>",
+        ///                         }
+        ///                     },
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     includeInNotification = true,
+        ///                     isIndexable = true,
+        ///                     isOptional = true,
+        ///                     isUnique = true,
+        ///                     name = "<AtlasAttributeDefName>",
+        ///                     options = new {
+        ///                         key = "<String>",
+        ///                     },
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     valuesMaxCount = 1234,
+        ///                     valuesMinCount = 1234,
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
+        ///                 }
+        ///             },
+        ///             category = "<PRIMITIVE>",
+        ///             createTime = 1234,
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             dateFormatter = new {
+        ///                 availableLocales = new[] {
+        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                 },
+        ///                 calendar = 1234,
+        ///                 lenient = true,
+        ///                 numberFormat = new {
+        ///                     availableLocales = new[] {
+        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                     },
+        ///                     currency = "<NumberFormatCurrency>",
+        ///                     groupingUsed = true,
+        ///                     maximumFractionDigits = 1234,
+        ///                     maximumIntegerDigits = 1234,
+        ///                     minimumFractionDigits = 1234,
+        ///                     minimumIntegerDigits = 1234,
+        ///                     parseIntegerOnly = true,
+        ///                     roundingMode = "<UP>",
+        ///                 },
+        ///                 timeZone = new {
+        ///                     dstSavings = 1234,
+        ///                     id = "<TimeZoneId>",
+        ///                     availableIds = new[] {
+        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                     },
+        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     rawOffset = 1234,
+        ///                 },
+        ///             },
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
+        ///             options = new {
+        ///                 key = "<String>",
+        ///             },
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
+        ///             updateTime = 1234,
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
+        ///             version = 1234,
+        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///             subTypes = new[] {
+        ///                 "<AtlasEntityDefSubTypesItem>"
+        ///             },
+        ///             superTypes = new[] {
+        ///                 "<AtlasEntityDefSuperTypesItem>"
+        ///             },
+        ///             relationshipAttributeDefs = new[] {
+        ///                 new {
+        ///                     cardinality = "<SINGLE>",
+        ///                     constraints = new[] {
+        ///                         new {
+        ///                             params = new {
+        ///                                 key = new {},
+        ///                             },
+        ///                             type = "<AtlasConstraintDefType>",
+        ///                         }
+        ///                     },
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     includeInNotification = true,
+        ///                     isIndexable = true,
+        ///                     isOptional = true,
+        ///                     isUnique = true,
+        ///                     name = "<AtlasAttributeDefName>",
+        ///                     options = new {
+        ///                         key = "<String>",
+        ///                     },
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     valuesMaxCount = 1234,
+        ///                     valuesMinCount = 1234,
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
+        ///                 }
+        ///             },
+        ///         }
+        ///     },
+        ///     enumDefs = new[] {
+        ///         new {
+        ///             category = "<PRIMITIVE>",
+        ///             createTime = 1234,
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             dateFormatter = new {
+        ///                 availableLocales = new[] {
+        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                 },
+        ///                 calendar = 1234,
+        ///                 lenient = true,
+        ///                 numberFormat = new {
+        ///                     availableLocales = new[] {
+        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                     },
+        ///                     currency = "<NumberFormatCurrency>",
+        ///                     groupingUsed = true,
+        ///                     maximumFractionDigits = 1234,
+        ///                     maximumIntegerDigits = 1234,
+        ///                     minimumFractionDigits = 1234,
+        ///                     minimumIntegerDigits = 1234,
+        ///                     parseIntegerOnly = true,
+        ///                     roundingMode = "<UP>",
+        ///                 },
+        ///                 timeZone = new {
+        ///                     dstSavings = 1234,
+        ///                     id = "<TimeZoneId>",
+        ///                     availableIds = new[] {
+        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                     },
+        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     rawOffset = 1234,
+        ///                 },
+        ///             },
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
+        ///             options = new {
+        ///                 key = "<String>",
+        ///             },
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
+        ///             updateTime = 1234,
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
+        ///             version = 1234,
+        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///             defaultValue = "<AtlasEnumDefDefaultValue>",
+        ///             elementDefs = new[] {
+        ///                 new {
+        ///                     description = "<AtlasEnumElementDefDescription>",
+        ///                     ordinal = 1234,
+        ///                     value = "<AtlasEnumElementDefValue>",
+        ///                 }
+        ///             },
+        ///         }
+        ///     },
+        ///     relationshipDefs = new[] {
+        ///         new {
+        ///             attributeDefs = new[] {
+        ///                 new {
+        ///                     cardinality = "<SINGLE>",
+        ///                     constraints = new[] {
+        ///                         new {
+        ///                             params = new {
+        ///                                 key = new {},
+        ///                             },
+        ///                             type = "<AtlasConstraintDefType>",
+        ///                         }
+        ///                     },
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     includeInNotification = true,
+        ///                     isIndexable = true,
+        ///                     isOptional = true,
+        ///                     isUnique = true,
+        ///                     name = "<AtlasAttributeDefName>",
+        ///                     options = new {
+        ///                         key = "<String>",
+        ///                     },
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     valuesMaxCount = 1234,
+        ///                     valuesMinCount = 1234,
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
+        ///                 }
+        ///             },
+        ///             category = "<PRIMITIVE>",
+        ///             createTime = 1234,
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             dateFormatter = new {
+        ///                 availableLocales = new[] {
+        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                 },
+        ///                 calendar = 1234,
+        ///                 lenient = true,
+        ///                 numberFormat = new {
+        ///                     availableLocales = new[] {
+        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                     },
+        ///                     currency = "<NumberFormatCurrency>",
+        ///                     groupingUsed = true,
+        ///                     maximumFractionDigits = 1234,
+        ///                     maximumIntegerDigits = 1234,
+        ///                     minimumFractionDigits = 1234,
+        ///                     minimumIntegerDigits = 1234,
+        ///                     parseIntegerOnly = true,
+        ///                     roundingMode = "<UP>",
+        ///                 },
+        ///                 timeZone = new {
+        ///                     dstSavings = 1234,
+        ///                     id = "<TimeZoneId>",
+        ///                     availableIds = new[] {
+        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                     },
+        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     rawOffset = 1234,
+        ///                 },
+        ///             },
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
+        ///             options = new {
+        ///                 key = "<String>",
+        ///             },
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
+        ///             updateTime = 1234,
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
+        ///             version = 1234,
+        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///             endDef1 = new {
+        ///                 cardinality = "<SINGLE>",
+        ///                 description = "<AtlasRelationshipEndDefDescription>",
+        ///                 isContainer = true,
+        ///                 isLegacyAttribute = true,
+        ///                 name = "<AtlasRelationshipEndDefName>",
+        ///                 type = "<AtlasRelationshipEndDefType>",
+        ///             },
+        ///             endDef2 = new {
+        ///                 cardinality = "<SINGLE>",
+        ///                 description = "<AtlasRelationshipEndDefDescription>",
+        ///                 isContainer = true,
+        ///                 isLegacyAttribute = true,
+        ///                 name = "<AtlasRelationshipEndDefName>",
+        ///                 type = "<AtlasRelationshipEndDefType>",
+        ///             },
+        ///             relationshipCategory = "<ASSOCIATION>",
+        ///             relationshipLabel = "<AtlasRelationshipDefRelationshipLabel>",
+        ///         }
+        ///     },
+        ///     structDefs = new[] {
+        ///         new {
+        ///             attributeDefs = new[] {
+        ///                 new {
+        ///                     cardinality = "<SINGLE>",
+        ///                     constraints = new[] {
+        ///                         new {
+        ///                             params = new {
+        ///                                 key = new {},
+        ///                             },
+        ///                             type = "<AtlasConstraintDefType>",
+        ///                         }
+        ///                     },
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     includeInNotification = true,
+        ///                     isIndexable = true,
+        ///                     isOptional = true,
+        ///                     isUnique = true,
+        ///                     name = "<AtlasAttributeDefName>",
+        ///                     options = new {
+        ///                         key = "<String>",
+        ///                     },
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     valuesMaxCount = 1234,
+        ///                     valuesMinCount = 1234,
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
+        ///                 }
+        ///             },
+        ///             category = "<PRIMITIVE>",
+        ///             createTime = 1234,
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             dateFormatter = new {
+        ///                 availableLocales = new[] {
+        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                 },
+        ///                 calendar = 1234,
+        ///                 lenient = true,
+        ///                 numberFormat = new {
+        ///                     availableLocales = new[] {
+        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                     },
+        ///                     currency = "<NumberFormatCurrency>",
+        ///                     groupingUsed = true,
+        ///                     maximumFractionDigits = 1234,
+        ///                     maximumIntegerDigits = 1234,
+        ///                     minimumFractionDigits = 1234,
+        ///                     minimumIntegerDigits = 1234,
+        ///                     parseIntegerOnly = true,
+        ///                     roundingMode = "<UP>",
+        ///                 },
+        ///                 timeZone = new {
+        ///                     dstSavings = 1234,
+        ///                     id = "<TimeZoneId>",
+        ///                     availableIds = new[] {
+        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                     },
+        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     rawOffset = 1234,
+        ///                 },
+        ///             },
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
+        ///             options = new {
+        ///                 key = "<String>",
+        ///             },
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
+        ///             updateTime = 1234,
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
+        ///             version = 1234,
+        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///         }
+        ///     },
+        ///     termTemplateDefs = new[] {
+        ///         new {
+        ///             attributeDefs = new[] {
+        ///                 new {
+        ///                     cardinality = "<SINGLE>",
+        ///                     constraints = new[] {
+        ///                         new {
+        ///                             params = new {
+        ///                                 key = new {},
+        ///                             },
+        ///                             type = "<AtlasConstraintDefType>",
+        ///                         }
+        ///                     },
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     includeInNotification = true,
+        ///                     isIndexable = true,
+        ///                     isOptional = true,
+        ///                     isUnique = true,
+        ///                     name = "<AtlasAttributeDefName>",
+        ///                     options = new {
+        ///                         key = "<String>",
+        ///                     },
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     valuesMaxCount = 1234,
+        ///                     valuesMinCount = 1234,
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
+        ///                 }
+        ///             },
+        ///             category = "<PRIMITIVE>",
+        ///             createTime = 1234,
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             dateFormatter = new {
+        ///                 availableLocales = new[] {
+        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                 },
+        ///                 calendar = 1234,
+        ///                 lenient = true,
+        ///                 numberFormat = new {
+        ///                     availableLocales = new[] {
+        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                     },
+        ///                     currency = "<NumberFormatCurrency>",
+        ///                     groupingUsed = true,
+        ///                     maximumFractionDigits = 1234,
+        ///                     maximumIntegerDigits = 1234,
+        ///                     minimumFractionDigits = 1234,
+        ///                     minimumIntegerDigits = 1234,
+        ///                     parseIntegerOnly = true,
+        ///                     roundingMode = "<UP>",
+        ///                 },
+        ///                 timeZone = new {
+        ///                     dstSavings = 1234,
+        ///                     id = "<TimeZoneId>",
+        ///                     availableIds = new[] {
+        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                     },
+        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     rawOffset = 1234,
+        ///                 },
+        ///             },
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
+        ///             options = new {
+        ///                 key = "<String>",
+        ///             },
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
+        ///             updateTime = 1234,
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
+        ///             version = 1234,
+        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///         }
+        ///     },
+        /// };
+        /// 
+        /// Response response = await client.DeleteTypeDefinitionsAsync(RequestContent.Create(data));
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request payload.
         /// 
@@ -7810,6 +14694,604 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call DeleteTypeDefinitions.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = client.DeleteTypeDefinitions(RequestContent.Create(data));
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// This sample shows how to call DeleteTypeDefinitions with all request content.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+        /// 
+        /// var data = new {
+        ///     businessMetadataDefs = new[] {
+        ///         new {
+        ///             attributeDefs = new[] {
+        ///                 new {
+        ///                     cardinality = "<SINGLE>",
+        ///                     constraints = new[] {
+        ///                         new {
+        ///                             params = new {
+        ///                                 key = new {},
+        ///                             },
+        ///                             type = "<AtlasConstraintDefType>",
+        ///                         }
+        ///                     },
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     includeInNotification = true,
+        ///                     isIndexable = true,
+        ///                     isOptional = true,
+        ///                     isUnique = true,
+        ///                     name = "<AtlasAttributeDefName>",
+        ///                     options = new {
+        ///                         key = "<String>",
+        ///                     },
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     valuesMaxCount = 1234,
+        ///                     valuesMinCount = 1234,
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
+        ///                 }
+        ///             },
+        ///             category = "<PRIMITIVE>",
+        ///             createTime = 1234,
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             dateFormatter = new {
+        ///                 availableLocales = new[] {
+        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                 },
+        ///                 calendar = 1234,
+        ///                 lenient = true,
+        ///                 numberFormat = new {
+        ///                     availableLocales = new[] {
+        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                     },
+        ///                     currency = "<NumberFormatCurrency>",
+        ///                     groupingUsed = true,
+        ///                     maximumFractionDigits = 1234,
+        ///                     maximumIntegerDigits = 1234,
+        ///                     minimumFractionDigits = 1234,
+        ///                     minimumIntegerDigits = 1234,
+        ///                     parseIntegerOnly = true,
+        ///                     roundingMode = "<UP>",
+        ///                 },
+        ///                 timeZone = new {
+        ///                     dstSavings = 1234,
+        ///                     id = "<TimeZoneId>",
+        ///                     availableIds = new[] {
+        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                     },
+        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     rawOffset = 1234,
+        ///                 },
+        ///             },
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
+        ///             options = new {
+        ///                 key = "<String>",
+        ///             },
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
+        ///             updateTime = 1234,
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
+        ///             version = 1234,
+        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///         }
+        ///     },
+        ///     classificationDefs = new[] {
+        ///         new {
+        ///             attributeDefs = new[] {
+        ///                 new {
+        ///                     cardinality = "<SINGLE>",
+        ///                     constraints = new[] {
+        ///                         new {
+        ///                             params = new {
+        ///                                 key = new {},
+        ///                             },
+        ///                             type = "<AtlasConstraintDefType>",
+        ///                         }
+        ///                     },
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     includeInNotification = true,
+        ///                     isIndexable = true,
+        ///                     isOptional = true,
+        ///                     isUnique = true,
+        ///                     name = "<AtlasAttributeDefName>",
+        ///                     options = new {
+        ///                         key = "<String>",
+        ///                     },
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     valuesMaxCount = 1234,
+        ///                     valuesMinCount = 1234,
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
+        ///                 }
+        ///             },
+        ///             category = "<PRIMITIVE>",
+        ///             createTime = 1234,
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             dateFormatter = new {
+        ///                 availableLocales = new[] {
+        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                 },
+        ///                 calendar = 1234,
+        ///                 lenient = true,
+        ///                 numberFormat = new {
+        ///                     availableLocales = new[] {
+        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                     },
+        ///                     currency = "<NumberFormatCurrency>",
+        ///                     groupingUsed = true,
+        ///                     maximumFractionDigits = 1234,
+        ///                     maximumIntegerDigits = 1234,
+        ///                     minimumFractionDigits = 1234,
+        ///                     minimumIntegerDigits = 1234,
+        ///                     parseIntegerOnly = true,
+        ///                     roundingMode = "<UP>",
+        ///                 },
+        ///                 timeZone = new {
+        ///                     dstSavings = 1234,
+        ///                     id = "<TimeZoneId>",
+        ///                     availableIds = new[] {
+        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                     },
+        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     rawOffset = 1234,
+        ///                 },
+        ///             },
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
+        ///             options = new {
+        ///                 key = "<String>",
+        ///             },
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
+        ///             updateTime = 1234,
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
+        ///             version = 1234,
+        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///             entityTypes = new[] {
+        ///                 "<AtlasClassificationDefEntityTypesItem>"
+        ///             },
+        ///             subTypes = new[] {
+        ///                 "<AtlasClassificationDefSubTypesItem>"
+        ///             },
+        ///             superTypes = new[] {
+        ///                 "<AtlasClassificationDefSuperTypesItem>"
+        ///             },
+        ///         }
+        ///     },
+        ///     entityDefs = new[] {
+        ///         new {
+        ///             attributeDefs = new[] {
+        ///                 new {
+        ///                     cardinality = "<SINGLE>",
+        ///                     constraints = new[] {
+        ///                         new {
+        ///                             params = new {
+        ///                                 key = new {},
+        ///                             },
+        ///                             type = "<AtlasConstraintDefType>",
+        ///                         }
+        ///                     },
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     includeInNotification = true,
+        ///                     isIndexable = true,
+        ///                     isOptional = true,
+        ///                     isUnique = true,
+        ///                     name = "<AtlasAttributeDefName>",
+        ///                     options = new {
+        ///                         key = "<String>",
+        ///                     },
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     valuesMaxCount = 1234,
+        ///                     valuesMinCount = 1234,
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
+        ///                 }
+        ///             },
+        ///             category = "<PRIMITIVE>",
+        ///             createTime = 1234,
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             dateFormatter = new {
+        ///                 availableLocales = new[] {
+        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                 },
+        ///                 calendar = 1234,
+        ///                 lenient = true,
+        ///                 numberFormat = new {
+        ///                     availableLocales = new[] {
+        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                     },
+        ///                     currency = "<NumberFormatCurrency>",
+        ///                     groupingUsed = true,
+        ///                     maximumFractionDigits = 1234,
+        ///                     maximumIntegerDigits = 1234,
+        ///                     minimumFractionDigits = 1234,
+        ///                     minimumIntegerDigits = 1234,
+        ///                     parseIntegerOnly = true,
+        ///                     roundingMode = "<UP>",
+        ///                 },
+        ///                 timeZone = new {
+        ///                     dstSavings = 1234,
+        ///                     id = "<TimeZoneId>",
+        ///                     availableIds = new[] {
+        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                     },
+        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     rawOffset = 1234,
+        ///                 },
+        ///             },
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
+        ///             options = new {
+        ///                 key = "<String>",
+        ///             },
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
+        ///             updateTime = 1234,
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
+        ///             version = 1234,
+        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///             subTypes = new[] {
+        ///                 "<AtlasEntityDefSubTypesItem>"
+        ///             },
+        ///             superTypes = new[] {
+        ///                 "<AtlasEntityDefSuperTypesItem>"
+        ///             },
+        ///             relationshipAttributeDefs = new[] {
+        ///                 new {
+        ///                     cardinality = "<SINGLE>",
+        ///                     constraints = new[] {
+        ///                         new {
+        ///                             params = new {
+        ///                                 key = new {},
+        ///                             },
+        ///                             type = "<AtlasConstraintDefType>",
+        ///                         }
+        ///                     },
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     includeInNotification = true,
+        ///                     isIndexable = true,
+        ///                     isOptional = true,
+        ///                     isUnique = true,
+        ///                     name = "<AtlasAttributeDefName>",
+        ///                     options = new {
+        ///                         key = "<String>",
+        ///                     },
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     valuesMaxCount = 1234,
+        ///                     valuesMinCount = 1234,
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
+        ///                 }
+        ///             },
+        ///         }
+        ///     },
+        ///     enumDefs = new[] {
+        ///         new {
+        ///             category = "<PRIMITIVE>",
+        ///             createTime = 1234,
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             dateFormatter = new {
+        ///                 availableLocales = new[] {
+        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                 },
+        ///                 calendar = 1234,
+        ///                 lenient = true,
+        ///                 numberFormat = new {
+        ///                     availableLocales = new[] {
+        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                     },
+        ///                     currency = "<NumberFormatCurrency>",
+        ///                     groupingUsed = true,
+        ///                     maximumFractionDigits = 1234,
+        ///                     maximumIntegerDigits = 1234,
+        ///                     minimumFractionDigits = 1234,
+        ///                     minimumIntegerDigits = 1234,
+        ///                     parseIntegerOnly = true,
+        ///                     roundingMode = "<UP>",
+        ///                 },
+        ///                 timeZone = new {
+        ///                     dstSavings = 1234,
+        ///                     id = "<TimeZoneId>",
+        ///                     availableIds = new[] {
+        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                     },
+        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     rawOffset = 1234,
+        ///                 },
+        ///             },
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
+        ///             options = new {
+        ///                 key = "<String>",
+        ///             },
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
+        ///             updateTime = 1234,
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
+        ///             version = 1234,
+        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///             defaultValue = "<AtlasEnumDefDefaultValue>",
+        ///             elementDefs = new[] {
+        ///                 new {
+        ///                     description = "<AtlasEnumElementDefDescription>",
+        ///                     ordinal = 1234,
+        ///                     value = "<AtlasEnumElementDefValue>",
+        ///                 }
+        ///             },
+        ///         }
+        ///     },
+        ///     relationshipDefs = new[] {
+        ///         new {
+        ///             attributeDefs = new[] {
+        ///                 new {
+        ///                     cardinality = "<SINGLE>",
+        ///                     constraints = new[] {
+        ///                         new {
+        ///                             params = new {
+        ///                                 key = new {},
+        ///                             },
+        ///                             type = "<AtlasConstraintDefType>",
+        ///                         }
+        ///                     },
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     includeInNotification = true,
+        ///                     isIndexable = true,
+        ///                     isOptional = true,
+        ///                     isUnique = true,
+        ///                     name = "<AtlasAttributeDefName>",
+        ///                     options = new {
+        ///                         key = "<String>",
+        ///                     },
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     valuesMaxCount = 1234,
+        ///                     valuesMinCount = 1234,
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
+        ///                 }
+        ///             },
+        ///             category = "<PRIMITIVE>",
+        ///             createTime = 1234,
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             dateFormatter = new {
+        ///                 availableLocales = new[] {
+        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                 },
+        ///                 calendar = 1234,
+        ///                 lenient = true,
+        ///                 numberFormat = new {
+        ///                     availableLocales = new[] {
+        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                     },
+        ///                     currency = "<NumberFormatCurrency>",
+        ///                     groupingUsed = true,
+        ///                     maximumFractionDigits = 1234,
+        ///                     maximumIntegerDigits = 1234,
+        ///                     minimumFractionDigits = 1234,
+        ///                     minimumIntegerDigits = 1234,
+        ///                     parseIntegerOnly = true,
+        ///                     roundingMode = "<UP>",
+        ///                 },
+        ///                 timeZone = new {
+        ///                     dstSavings = 1234,
+        ///                     id = "<TimeZoneId>",
+        ///                     availableIds = new[] {
+        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                     },
+        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     rawOffset = 1234,
+        ///                 },
+        ///             },
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
+        ///             options = new {
+        ///                 key = "<String>",
+        ///             },
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
+        ///             updateTime = 1234,
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
+        ///             version = 1234,
+        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///             endDef1 = new {
+        ///                 cardinality = "<SINGLE>",
+        ///                 description = "<AtlasRelationshipEndDefDescription>",
+        ///                 isContainer = true,
+        ///                 isLegacyAttribute = true,
+        ///                 name = "<AtlasRelationshipEndDefName>",
+        ///                 type = "<AtlasRelationshipEndDefType>",
+        ///             },
+        ///             endDef2 = new {
+        ///                 cardinality = "<SINGLE>",
+        ///                 description = "<AtlasRelationshipEndDefDescription>",
+        ///                 isContainer = true,
+        ///                 isLegacyAttribute = true,
+        ///                 name = "<AtlasRelationshipEndDefName>",
+        ///                 type = "<AtlasRelationshipEndDefType>",
+        ///             },
+        ///             relationshipCategory = "<ASSOCIATION>",
+        ///             relationshipLabel = "<AtlasRelationshipDefRelationshipLabel>",
+        ///         }
+        ///     },
+        ///     structDefs = new[] {
+        ///         new {
+        ///             attributeDefs = new[] {
+        ///                 new {
+        ///                     cardinality = "<SINGLE>",
+        ///                     constraints = new[] {
+        ///                         new {
+        ///                             params = new {
+        ///                                 key = new {},
+        ///                             },
+        ///                             type = "<AtlasConstraintDefType>",
+        ///                         }
+        ///                     },
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     includeInNotification = true,
+        ///                     isIndexable = true,
+        ///                     isOptional = true,
+        ///                     isUnique = true,
+        ///                     name = "<AtlasAttributeDefName>",
+        ///                     options = new {
+        ///                         key = "<String>",
+        ///                     },
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     valuesMaxCount = 1234,
+        ///                     valuesMinCount = 1234,
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
+        ///                 }
+        ///             },
+        ///             category = "<PRIMITIVE>",
+        ///             createTime = 1234,
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             dateFormatter = new {
+        ///                 availableLocales = new[] {
+        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                 },
+        ///                 calendar = 1234,
+        ///                 lenient = true,
+        ///                 numberFormat = new {
+        ///                     availableLocales = new[] {
+        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                     },
+        ///                     currency = "<NumberFormatCurrency>",
+        ///                     groupingUsed = true,
+        ///                     maximumFractionDigits = 1234,
+        ///                     maximumIntegerDigits = 1234,
+        ///                     minimumFractionDigits = 1234,
+        ///                     minimumIntegerDigits = 1234,
+        ///                     parseIntegerOnly = true,
+        ///                     roundingMode = "<UP>",
+        ///                 },
+        ///                 timeZone = new {
+        ///                     dstSavings = 1234,
+        ///                     id = "<TimeZoneId>",
+        ///                     availableIds = new[] {
+        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                     },
+        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     rawOffset = 1234,
+        ///                 },
+        ///             },
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
+        ///             options = new {
+        ///                 key = "<String>",
+        ///             },
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
+        ///             updateTime = 1234,
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
+        ///             version = 1234,
+        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///         }
+        ///     },
+        ///     termTemplateDefs = new[] {
+        ///         new {
+        ///             attributeDefs = new[] {
+        ///                 new {
+        ///                     cardinality = "<SINGLE>",
+        ///                     constraints = new[] {
+        ///                         new {
+        ///                             params = new {
+        ///                                 key = new {},
+        ///                             },
+        ///                             type = "<AtlasConstraintDefType>",
+        ///                         }
+        ///                     },
+        ///                     defaultValue = "<AtlasAttributeDefDefaultValue>",
+        ///                     description = "<AtlasAttributeDefDescription>",
+        ///                     includeInNotification = true,
+        ///                     isIndexable = true,
+        ///                     isOptional = true,
+        ///                     isUnique = true,
+        ///                     name = "<AtlasAttributeDefName>",
+        ///                     options = new {
+        ///                         key = "<String>",
+        ///                     },
+        ///                     typeName = "<AtlasAttributeDefTypeName>",
+        ///                     valuesMaxCount = 1234,
+        ///                     valuesMinCount = 1234,
+        ///                     isLegacyAttribute = true,
+        ///                     relationshipTypeName = "<AtlasRelationshipAttributeDefRelationshipTypeName>",
+        ///                 }
+        ///             },
+        ///             category = "<PRIMITIVE>",
+        ///             createTime = 1234,
+        ///             createdBy = "<AtlasBaseTypeDefCreatedBy>",
+        ///             dateFormatter = new {
+        ///                 availableLocales = new[] {
+        ///                     "<DateFormatAvailableLocalesItem>"
+        ///                 },
+        ///                 calendar = 1234,
+        ///                 lenient = true,
+        ///                 numberFormat = new {
+        ///                     availableLocales = new[] {
+        ///                         "<NumberFormatAvailableLocalesItem>"
+        ///                     },
+        ///                     currency = "<NumberFormatCurrency>",
+        ///                     groupingUsed = true,
+        ///                     maximumFractionDigits = 1234,
+        ///                     maximumIntegerDigits = 1234,
+        ///                     minimumFractionDigits = 1234,
+        ///                     minimumIntegerDigits = 1234,
+        ///                     parseIntegerOnly = true,
+        ///                     roundingMode = "<UP>",
+        ///                 },
+        ///                 timeZone = new {
+        ///                     dstSavings = 1234,
+        ///                     id = "<TimeZoneId>",
+        ///                     availableIds = new[] {
+        ///                         "<TimeZoneAvailableIdsItem>"
+        ///                     },
+        ///                     displayName = "<TimeZoneDisplayName>",
+        ///                     rawOffset = 1234,
+        ///                 },
+        ///             },
+        ///             description = "<AtlasBaseTypeDefDescription>",
+        ///             guid = "<AtlasBaseTypeDefGuid>",
+        ///             name = "<AtlasBaseTypeDefName>",
+        ///             options = new {
+        ///                 key = "<String>",
+        ///             },
+        ///             serviceType = "<AtlasBaseTypeDefServiceType>",
+        ///             typeVersion = "<AtlasBaseTypeDefTypeVersion>",
+        ///             updateTime = 1234,
+        ///             updatedBy = "<AtlasBaseTypeDefUpdatedBy>",
+        ///             version = 1234,
+        ///             lastModifiedTS = "<LastModifiedTS>",
+        ///         }
+        ///     },
+        /// };
+        /// 
+        /// Response response = client.DeleteTypeDefinitions(RequestContent.Create(data));
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request payload.
         /// 
@@ -8095,6 +15577,32 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetTypeDefinitionHeadersAsync and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+        /// 
+        /// Response response = await client.GetTypeDefinitionHeadersAsync();
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result[0].ToString());
+        /// ]]></code>
+        /// This sample shows how to call GetTypeDefinitionHeadersAsync with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+        /// 
+        /// Response response = await client.GetTypeDefinitionHeadersAsync(true, "<type>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result[0].GetProperty("category").ToString());
+        /// Console.WriteLine(result[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("name").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -8134,6 +15642,32 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetTypeDefinitionHeaders and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+        /// 
+        /// Response response = client.GetTypeDefinitionHeaders();
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result[0].ToString());
+        /// ]]></code>
+        /// This sample shows how to call GetTypeDefinitionHeaders with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+        /// 
+        /// Response response = client.GetTypeDefinitionHeaders(true, "<type>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result[0].GetProperty("category").ToString());
+        /// Console.WriteLine(result[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("name").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -8171,6 +15705,62 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetTermTemplateDefByGuidAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+        /// 
+        /// Response response = await client.GetTermTemplateDefByGuidAsync("<guid>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -8275,6 +15865,62 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetTermTemplateDefByGuid with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+        /// 
+        /// Response response = client.GetTermTemplateDefByGuid("<guid>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -8379,6 +16025,62 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetTermTemplateDefByNameAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+        /// 
+        /// Response response = await client.GetTermTemplateDefByNameAsync("<name>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -8483,6 +16185,62 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetTermTemplateDefByName with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+        /// 
+        /// Response response = client.GetTermTemplateDefByName("<name>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
+        /// Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+        /// Console.WriteLine(result.GetProperty("category").ToString());
+        /// Console.WriteLine(result.GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("calendar").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("lenient").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("options").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("serviceType").ToString());
+        /// Console.WriteLine(result.GetProperty("typeVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 

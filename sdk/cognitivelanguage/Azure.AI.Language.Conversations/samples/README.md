@@ -3,7 +3,6 @@ page_type: sample
 languages:
 - csharp
 products:
-- azure
 - azure-cognitive-services
 - azure-language-understanding
 - language-service

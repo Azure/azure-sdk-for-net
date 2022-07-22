@@ -1,0 +1,38 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://chrisss.confidential-ledger.azure.com/app/governance/members?api-version=2022-05-13",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-Security.ConfidentialLedger/1.1.0-alpha.20220719.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "45a486dc7d4c4546de2da2af3e187f88",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "860",
+        "Content-Type": "application/json",
+        "x-ms-ccf-transaction-id": "5.878",
+        "x-ms-client-request-id": "45a486dc7d4c4546de2da2af3e187f88",
+        "x-ms-request-id": "136416706"
+      },
+      "ResponseBody": {
+        "members": [
+          {
+            "certificate": "-----BEGIN CERTIFICATE-----\nMIIB\u002BDCCAX2gAwIBAgIQO/REa2bET6CGy\u002BjfJxItajAKBggqhkjOPQQDAzAgMR4w\nHAYDVQQDExVDQ0YgR292ZXJub3IgSWRlbnRpdHkwHhcNMjIwNzE1MTY1NTQ4WhcN\nMjIxMDE1MTcwNTQ4WjAgMR4wHAYDVQQDExVDQ0YgR292ZXJub3IgSWRlbnRpdHkw\ndjAQBgcqhkjOPQIBBgUrgQQAIgNiAASdFrnDp9o8otAxR4gOmfmek\u002BZ3aLI4TF/l\nfcok6S6SKVB1VfnKtNZ0d4S8XaVMvpIEOz529DoVI9Oivcm8ZA/2gQfnpqG3Ca6l\nunRS49Rv5gkyLMnIG8nM\u002Bqi6xEE51XSjfDB6MA4GA1UdDwEB/wQEAwIHgDAJBgNV\nHRMEAjAAMB0GA1UdJQQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjAfBgNVHSMEGDAW\ngBRnVJTFDjkP8b7OSEdHtQjR2SqRTzAdBgNVHQ4EFgQUZ1SUxQ45D/G\u002BzkhHR7UI\n0dkqkU8wCgYIKoZIzj0EAwMDaQAwZgIxAObMnIwPkA2kfYePup/y19pkArisCZcA\nmsSRENeUpIg/SWBJEGuRi\u002Bm3jpZe88zu6wIxAL2KZDA4OnAZiYbOaptPOrvHXXQv\npygsUgXF6iHLUOyf8xsPD4BkbyE5Nz92w5Z\u002BLQ==\n-----END CERTIFICATE-----",
+            "id": "c5ad347f61a6741f7e4476caf90902c0f8b87c8d3fc313332a2b7c50874fc792"
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "CONFIDENTIALLEDGER_IDENTITY_URL": "https://identity.confidential-ledger.core.azure.com",
+    "CONFIDENTIALLEDGER_URL": "https://chrisss.confidential-ledger.azure.com",
+    "RandomSeed": "784176368"
+  }
+}

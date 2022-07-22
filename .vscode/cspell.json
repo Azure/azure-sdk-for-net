@@ -111,7 +111,8 @@
       "filename": "**/sdk/apimanagement/**/*.cs",
       "words": [
         "signin",
-        "Wadl"
+        "Wadl",
+        "Invokable"
       ]
     },
     {
@@ -281,6 +282,12 @@
         "aadds",
         "ldaps",
         "oaep"
+      ]
+    },
+    {
+      "filename": "**/sdk/iothub/**/*.cs",
+      "words": [
+        "fqdns"
       ]
     },
     {

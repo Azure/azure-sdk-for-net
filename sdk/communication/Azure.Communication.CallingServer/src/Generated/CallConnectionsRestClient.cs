@@ -57,7 +57,6 @@ namespace Azure.Communication.CallingServer
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
-        /// <remarks> Get call connection. </remarks>
         public async Task<Response<CallConnectionPropertiesDtoInternal>> GetCallAsync(string callConnectionId, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
@@ -85,7 +84,6 @@ namespace Azure.Communication.CallingServer
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
-        /// <remarks> Get call connection. </remarks>
         public Response<CallConnectionPropertiesDtoInternal> GetCall(string callConnectionId, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
@@ -127,7 +125,6 @@ namespace Azure.Communication.CallingServer
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
-        /// <remarks> Hangup the call. </remarks>
         public async Task<Response> HangupCallAsync(string callConnectionId, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
@@ -150,7 +147,6 @@ namespace Azure.Communication.CallingServer
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
-        /// <remarks> Hangup the call. </remarks>
         public Response HangupCall(string callConnectionId, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
@@ -188,7 +184,6 @@ namespace Azure.Communication.CallingServer
         /// <param name="callConnectionId"> The terminate call request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
-        /// <remarks> Terminate a call using CallConnectionId. </remarks>
         public async Task<Response> TerminateCallAsync(string callConnectionId, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
@@ -211,7 +206,6 @@ namespace Azure.Communication.CallingServer
         /// <param name="callConnectionId"> The terminate call request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
-        /// <remarks> Terminate a call using CallConnectionId. </remarks>
         public Response TerminateCall(string callConnectionId, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
@@ -255,7 +249,6 @@ namespace Azure.Communication.CallingServer
         /// <param name="transferToParticipantRequest"> The transfer to participant request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="transferToParticipantRequest"/> is null. </exception>
-        /// <remarks> Transfer the call to a participant. </remarks>
         public async Task<Response<TransferCallToParticipantResult>> TransferToParticipantAsync(string callConnectionId, TransferToParticipantRequestInternal transferToParticipantRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
@@ -288,7 +281,6 @@ namespace Azure.Communication.CallingServer
         /// <param name="transferToParticipantRequest"> The transfer to participant request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="transferToParticipantRequest"/> is null. </exception>
-        /// <remarks> Transfer the call to a participant. </remarks>
         public Response<TransferCallToParticipantResult> TransferToParticipant(string callConnectionId, TransferToParticipantRequestInternal transferToParticipantRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
@@ -336,7 +328,6 @@ namespace Azure.Communication.CallingServer
         /// <param name="callConnectionId"> The call connection Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
-        /// <remarks> Get participants from a call. </remarks>
         public async Task<Response<GetParticipantsResponseInternal>> GetParticipantsAsync(string callConnectionId, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
@@ -364,7 +355,6 @@ namespace Azure.Communication.CallingServer
         /// <param name="callConnectionId"> The call connection Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
-        /// <remarks> Get participants from a call. </remarks>
         public Response<GetParticipantsResponseInternal> GetParticipants(string callConnectionId, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
@@ -413,7 +403,6 @@ namespace Azure.Communication.CallingServer
         /// <param name="addParticipantsRequest"> The add participants request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="addParticipantsRequest"/> is null. </exception>
-        /// <remarks> Add participants to the call. </remarks>
         public async Task<Response<AddParticipantsResponseInternal>> AddParticipantAsync(string callConnectionId, AddParticipantsRequestInternal addParticipantsRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
@@ -446,7 +435,6 @@ namespace Azure.Communication.CallingServer
         /// <param name="addParticipantsRequest"> The add participants request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="addParticipantsRequest"/> is null. </exception>
-        /// <remarks> Add participants to the call. </remarks>
         public Response<AddParticipantsResponseInternal> AddParticipant(string callConnectionId, AddParticipantsRequestInternal addParticipantsRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
@@ -499,7 +487,6 @@ namespace Azure.Communication.CallingServer
         /// <param name="removeParticipantsRequest"> The participants to be removed from the call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="removeParticipantsRequest"/> is null. </exception>
-        /// <remarks> Remove participant from the call using identifier. </remarks>
         public async Task<Response<RemoveParticipantsResult>> RemoveParticipantsAsync(string callConnectionId, RemoveParticipantsRequestInternal removeParticipantsRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
@@ -532,7 +519,6 @@ namespace Azure.Communication.CallingServer
         /// <param name="removeParticipantsRequest"> The participants to be removed from the call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="removeParticipantsRequest"/> is null. </exception>
-        /// <remarks> Remove participant from the call using identifier. </remarks>
         public Response<RemoveParticipantsResult> RemoveParticipants(string callConnectionId, RemoveParticipantsRequestInternal removeParticipantsRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
@@ -582,7 +568,6 @@ namespace Azure.Communication.CallingServer
         /// <param name="participantMri"> MRI of the participants to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="participantMri"/> is null. </exception>
-        /// <remarks> Get participant from a call. </remarks>
         public async Task<Response<AcsCallParticipantDtoInternal>> GetParticipantAsync(string callConnectionId, string participantMri, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
@@ -615,7 +600,6 @@ namespace Azure.Communication.CallingServer
         /// <param name="participantMri"> MRI of the participants to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="participantMri"/> is null. </exception>
-        /// <remarks> Get participant from a call. </remarks>
         public Response<AcsCallParticipantDtoInternal> GetParticipant(string callConnectionId, string participantMri, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)

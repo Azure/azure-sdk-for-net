@@ -297,18 +297,18 @@ namespace Azure.ResourceManager.Reservations
             return subscriptionResource.GetCurrentQuotaLimitBases(providerId, location).Get(resourceName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of QuotaRequestDetailsResources in the SubscriptionResource. </summary>
+        /// <summary> Gets a collection of QuotaRequestDetailResources in the SubscriptionResource. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="providerId"> Azure resource provider ID. </param>
         /// <param name="location"> Azure region. </param>
         /// <exception cref="ArgumentException"> <paramref name="providerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="providerId"/> is null. </exception>
-        /// <returns> An object representing collection of QuotaRequestDetailsResources and their operations over a QuotaRequestDetailsResource. </returns>
-        public static QuotaRequestDetailsCollection GetAllQuotaRequestDetails(this SubscriptionResource subscriptionResource, string providerId, AzureLocation location)
+        /// <returns> An object representing collection of QuotaRequestDetailResources and their operations over a QuotaRequestDetailResource. </returns>
+        public static QuotaRequestDetailCollection GetQuotaRequestDetails(this SubscriptionResource subscriptionResource, string providerId, AzureLocation location)
         {
             Argument.AssertNotNullOrEmpty(providerId, nameof(providerId));
 
-            return GetExtensionClient(subscriptionResource).GetAllQuotaRequestDetails(providerId, location);
+            return GetExtensionClient(subscriptionResource).GetQuotaRequestDetails(providerId, location);
         }
 
         /// <summary>
@@ -324,9 +324,9 @@ namespace Azure.ResourceManager.Reservations
         /// <exception cref="ArgumentException"> <paramref name="providerId"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="providerId"/> or <paramref name="id"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<QuotaRequestDetailsResource>> GetQuotaRequestDetailsAsync(this SubscriptionResource subscriptionResource, string providerId, AzureLocation location, string id, CancellationToken cancellationToken = default)
+        public static async Task<Response<QuotaRequestDetailResource>> GetQuotaRequestDetailAsync(this SubscriptionResource subscriptionResource, string providerId, AzureLocation location, string id, CancellationToken cancellationToken = default)
         {
-            return await subscriptionResource.GetAllQuotaRequestDetails(providerId, location).GetAsync(id, cancellationToken).ConfigureAwait(false);
+            return await subscriptionResource.GetQuotaRequestDetails(providerId, location).GetAsync(id, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -342,9 +342,9 @@ namespace Azure.ResourceManager.Reservations
         /// <exception cref="ArgumentException"> <paramref name="providerId"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="providerId"/> or <paramref name="id"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<QuotaRequestDetailsResource> GetQuotaRequestDetails(this SubscriptionResource subscriptionResource, string providerId, AzureLocation location, string id, CancellationToken cancellationToken = default)
+        public static Response<QuotaRequestDetailResource> GetQuotaRequestDetail(this SubscriptionResource subscriptionResource, string providerId, AzureLocation location, string id, CancellationToken cancellationToken = default)
         {
-            return subscriptionResource.GetAllQuotaRequestDetails(providerId, location).Get(id, cancellationToken);
+            return subscriptionResource.GetQuotaRequestDetails(providerId, location).Get(id, cancellationToken);
         }
 
         /// <summary>
@@ -464,20 +464,20 @@ namespace Azure.ResourceManager.Reservations
         }
         #endregion
 
-        #region QuotaRequestDetailsResource
+        #region QuotaRequestDetailResource
         /// <summary>
-        /// Gets an object representing a <see cref="QuotaRequestDetailsResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="QuotaRequestDetailsResource.CreateResourceIdentifier" /> to create a <see cref="QuotaRequestDetailsResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="QuotaRequestDetailResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="QuotaRequestDetailResource.CreateResourceIdentifier" /> to create a <see cref="QuotaRequestDetailResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="QuotaRequestDetailsResource" /> object. </returns>
-        public static QuotaRequestDetailsResource GetQuotaRequestDetailsResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="QuotaRequestDetailResource" /> object. </returns>
+        public static QuotaRequestDetailResource GetQuotaRequestDetailResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                QuotaRequestDetailsResource.ValidateResourceId(id);
-                return new QuotaRequestDetailsResource(client, id);
+                QuotaRequestDetailResource.ValidateResourceId(id);
+                return new QuotaRequestDetailResource(client, id);
             }
             );
         }

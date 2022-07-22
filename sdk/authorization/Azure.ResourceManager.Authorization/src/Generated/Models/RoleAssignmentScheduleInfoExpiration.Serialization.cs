@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Authorization.Models
             if (Optional.IsDefined(Duration))
             {
                 writer.WritePropertyName("duration");
-                writer.WriteStringValue(Duration);
+                writer.WriteStringValue(Duration.Value, "P");
             }
             writer.WriteEndObject();
         }
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Authorization.Models
         {
             Optional<RoleAssignmentScheduleType> type = default;
             Optional<DateTimeOffset> endDateTime = default;
-            Optional<string> duration = default;
+            Optional<TimeSpan> duration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -63,11 +63,16 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 if (property.NameEquals("duration"))
                 {
-                    duration = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    duration = property.Value.GetTimeSpan("P");
                     continue;
                 }
             }
-            return new RoleAssignmentScheduleInfoExpiration(Optional.ToNullable(type), Optional.ToNullable(endDateTime), duration.Value);
+            return new RoleAssignmentScheduleInfoExpiration(Optional.ToNullable(type), Optional.ToNullable(endDateTime), Optional.ToNullable(duration));
         }
     }
 }
