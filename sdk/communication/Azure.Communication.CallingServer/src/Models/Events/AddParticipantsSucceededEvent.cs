@@ -21,7 +21,7 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> Initializes a new instance of AddParticipantsSucceededEventInternal. </summary>
         /// <param name="internalEvent"> Internal Representation of the AddParticipantsSucceededEvent. </param>
-        internal AddParticipantsSucceededEvent(AddParticipantsFailedEventInternal internalEvent)
+        internal AddParticipantsSucceededEvent(AddParticipantsSucceededEventInternal internalEvent)
         {
             OperationContext = internalEvent.OperationContext;
             ResultInfo = internalEvent.ResultInfo;
@@ -56,7 +56,7 @@ namespace Azure.Communication.CallingServer
             using var document = JsonDocument.Parse(content);
             JsonElement element = document.RootElement;
 
-            var internalEvent = AddParticipantsFailedEventInternal.DeserializeAddParticipantsFailedEventInternal(element);
+            var internalEvent = AddParticipantsSucceededEventInternal.DeserializeAddParticipantsSucceededEventInternal(element);
             return new AddParticipantsSucceededEvent(internalEvent);
         }
     }
