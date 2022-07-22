@@ -12,15 +12,15 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ExtendedLocations.Models
 {
     /// <summary> EnabledResourceType definition. </summary>
-    public partial class EnabledResourceType : ResourceData
+    public partial class CustomLocationEnabledResourceType : ResourceData
     {
-        /// <summary> Initializes a new instance of EnabledResourceType. </summary>
-        public EnabledResourceType()
+        /// <summary> Initializes a new instance of CustomLocationEnabledResourceType. </summary>
+        public CustomLocationEnabledResourceType()
         {
-            TypesMetadata = new ChangeTrackingList<EnabledResourceTypePropertiesTypesMetadataItem>();
+            TypesMetadata = new ChangeTrackingList<CustomLocationEnabledResourceTypeMetadata>();
         }
 
-        /// <summary> Initializes a new instance of EnabledResourceType. </summary>
+        /// <summary> Initializes a new instance of CustomLocationEnabledResourceType. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
         /// <param name="clusterExtensionId"> Cluster Extension ID. </param>
         /// <param name="extensionType"> Cluster Extension Type. </param>
         /// <param name="typesMetadata"> Metadata of the Resource Type. </param>
-        internal EnabledResourceType(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string clusterExtensionId, string extensionType, IList<EnabledResourceTypePropertiesTypesMetadataItem> typesMetadata) : base(id, name, resourceType, systemData)
+        internal CustomLocationEnabledResourceType(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier clusterExtensionId, string extensionType, IList<CustomLocationEnabledResourceTypeMetadata> typesMetadata) : base(id, name, resourceType, systemData)
         {
             ClusterExtensionId = clusterExtensionId;
             ExtensionType = extensionType;
@@ -36,10 +36,10 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
         }
 
         /// <summary> Cluster Extension ID. </summary>
-        public string ClusterExtensionId { get; set; }
+        public ResourceIdentifier ClusterExtensionId { get; set; }
         /// <summary> Cluster Extension Type. </summary>
         public string ExtensionType { get; set; }
         /// <summary> Metadata of the Resource Type. </summary>
-        public IList<EnabledResourceTypePropertiesTypesMetadataItem> TypesMetadata { get; }
+        public IList<CustomLocationEnabledResourceTypeMetadata> TypesMetadata { get; }
     }
 }

@@ -8,18 +8,18 @@
 namespace Azure.ResourceManager.ExtendedLocations.Models
 {
     /// <summary> Metadata of the Resource Type. </summary>
-    public partial class EnabledResourceTypePropertiesTypesMetadataItem
+    public partial class CustomLocationEnabledResourceTypeMetadata
     {
-        /// <summary> Initializes a new instance of EnabledResourceTypePropertiesTypesMetadataItem. </summary>
-        public EnabledResourceTypePropertiesTypesMetadataItem()
+        /// <summary> Initializes a new instance of CustomLocationEnabledResourceTypeMetadata. </summary>
+        public CustomLocationEnabledResourceTypeMetadata()
         {
         }
 
-        /// <summary> Initializes a new instance of EnabledResourceTypePropertiesTypesMetadataItem. </summary>
+        /// <summary> Initializes a new instance of CustomLocationEnabledResourceTypeMetadata. </summary>
         /// <param name="apiVersion"> Api Version of Resource Type. </param>
         /// <param name="resourceProviderNamespace"> Resource Provider Namespace of Resource Type. </param>
         /// <param name="resourceType"> Resource Type. </param>
-        internal EnabledResourceTypePropertiesTypesMetadataItem(string apiVersion, string resourceProviderNamespace, string resourceType)
+        internal CustomLocationEnabledResourceTypeMetadata(string apiVersion, string resourceProviderNamespace, string resourceType)
         {
             ApiVersion = apiVersion;
             ResourceProviderNamespace = resourceProviderNamespace;

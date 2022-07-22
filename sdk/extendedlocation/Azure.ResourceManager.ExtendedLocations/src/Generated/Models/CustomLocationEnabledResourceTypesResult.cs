@@ -11,18 +11,18 @@ using Azure.Core;
 namespace Azure.ResourceManager.ExtendedLocations.Models
 {
     /// <summary> List of EnabledResourceTypes definition. </summary>
-    internal partial class EnabledResourceTypesListResult
+    internal partial class CustomLocationEnabledResourceTypesResult
     {
-        /// <summary> Initializes a new instance of EnabledResourceTypesListResult. </summary>
-        internal EnabledResourceTypesListResult()
+        /// <summary> Initializes a new instance of CustomLocationEnabledResourceTypesResult. </summary>
+        internal CustomLocationEnabledResourceTypesResult()
         {
-            Value = new ChangeTrackingList<EnabledResourceType>();
+            Value = new ChangeTrackingList<CustomLocationEnabledResourceType>();
         }
 
-        /// <summary> Initializes a new instance of EnabledResourceTypesListResult. </summary>
+        /// <summary> Initializes a new instance of CustomLocationEnabledResourceTypesResult. </summary>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
         /// <param name="value"> The list of EnabledResourceTypes available for a customLocation. </param>
-        internal EnabledResourceTypesListResult(string nextLink, IReadOnlyList<EnabledResourceType> value)
+        internal CustomLocationEnabledResourceTypesResult(string nextLink, IReadOnlyList<CustomLocationEnabledResourceType> value)
         {
             NextLink = nextLink;
             Value = value;
@@ -31,6 +31,6 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
         /// <summary> The URL to use for getting the next set of results. </summary>
         public string NextLink { get; }
         /// <summary> The list of EnabledResourceTypes available for a customLocation. </summary>
-        public IReadOnlyList<EnabledResourceType> Value { get; }
+        public IReadOnlyList<CustomLocationEnabledResourceType> Value { get; }
     }
 }

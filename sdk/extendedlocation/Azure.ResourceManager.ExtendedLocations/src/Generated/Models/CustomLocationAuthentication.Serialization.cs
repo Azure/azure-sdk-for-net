@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ExtendedLocations.Models
 {
-    public partial class CustomLocationPropertiesAuthentication : IUtf8JsonSerializable
+    public partial class CustomLocationAuthentication : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             writer.WriteEndObject();
         }
 
-        internal static CustomLocationPropertiesAuthentication DeserializeCustomLocationPropertiesAuthentication(JsonElement element)
+        internal static CustomLocationAuthentication DeserializeCustomLocationAuthentication(JsonElement element)
         {
             Optional<string> type = default;
             Optional<string> value = default;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                     continue;
                 }
             }
-            return new CustomLocationPropertiesAuthentication(type.Value, value.Value);
+            return new CustomLocationAuthentication(type.Value, value.Value);
         }
     }
 }

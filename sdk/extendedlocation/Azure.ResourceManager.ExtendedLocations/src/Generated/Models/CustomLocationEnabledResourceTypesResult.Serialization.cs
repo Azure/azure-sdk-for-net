@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ExtendedLocations.Models
 {
-    internal partial class CustomLocationOperationsList
+    internal partial class CustomLocationEnabledResourceTypesResult
     {
-        internal static CustomLocationOperationsList DeserializeCustomLocationOperationsList(JsonElement element)
+        internal static CustomLocationEnabledResourceTypesResult DeserializeCustomLocationEnabledResourceTypesResult(JsonElement element)
         {
             Optional<string> nextLink = default;
-            IReadOnlyList<CustomLocationOperation> value = default;
+            Optional<IReadOnlyList<CustomLocationEnabledResourceType>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"))
@@ -26,16 +26,21 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                 }
                 if (property.NameEquals("value"))
                 {
-                    List<CustomLocationOperation> array = new List<CustomLocationOperation>();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<CustomLocationEnabledResourceType> array = new List<CustomLocationEnabledResourceType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CustomLocationOperation.DeserializeCustomLocationOperation(item));
+                        array.Add(CustomLocationEnabledResourceType.DeserializeCustomLocationEnabledResourceType(item));
                     }
                     value = array;
                     continue;
                 }
             }
-            return new CustomLocationOperationsList(nextLink.Value, value);
+            return new CustomLocationEnabledResourceTypesResult(nextLink.Value, Optional.ToList(value));
         }
     }
 }
