@@ -6,30 +6,28 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Template.Models
 {
-    /// <summary> The InputModel. </summary>
+    /// <summary> Input Model. </summary>
     public partial class InputModel
     {
         /// <summary> Initializes a new instance of InputModel. </summary>
-        /// <param name="requiredString"></param>
-        /// <param name="requiredInt"></param>
+        /// <param name="requiredString"> Required string, illustrating a reference type property. </param>
+        /// <param name="requiredInt"> Required int, illustrating a value type property. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="requiredString"/> is null. </exception>
         public InputModel(string requiredString, int requiredInt)
         {
-            if (requiredString == null)
-            {
-                throw new ArgumentNullException(nameof(requiredString));
-            }
+            Argument.AssertNotNull(requiredString, nameof(requiredString));
 
             RequiredString = requiredString;
             RequiredInt = requiredInt;
         }
 
-        /// <summary> Gets the required string. </summary>
+        /// <summary> Required string, illustrating a reference type property. </summary>
         public string RequiredString { get; }
-        /// <summary> Gets the required int. </summary>
+        /// <summary> Required int, illustrating a value type property. </summary>
         public int RequiredInt { get; }
     }
 }

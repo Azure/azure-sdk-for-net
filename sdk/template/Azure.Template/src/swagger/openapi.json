@@ -1,9 +1,9 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "DPGClient",
+    "title": "InputBasicClient",
     "version": "1.0.0",
-    "description": "DPG Swagger that tests our ability to grow up.",
+    "description": "Illustrates an input-only model with required reference and value type properties.",
     "x-cadl-generated": [
       {
         "emitter": "@azure-tools/cadl-autorest"
@@ -24,7 +24,7 @@
   "paths": {
     "/models": {
       "get": {
-        "operationId": "Testserver_GetModel",
+        "operationId": "InputBasic_GetModel",
         "parameters": [
           {
             "name": "input",
@@ -115,13 +115,16 @@
       "type": "object",
       "properties": {
         "requiredString": {
-          "type": "string"
+          "type": "string",
+          "description": "Required string, illustrating a reference type property."
         },
         "requiredInt": {
           "type": "integer",
-          "format": "int32"
+          "format": "int32",
+          "description": "Required int, illustrating a value type property."
         }
       },
+      "description": "Input Model",
       "required": [
         "requiredString",
         "requiredInt"
