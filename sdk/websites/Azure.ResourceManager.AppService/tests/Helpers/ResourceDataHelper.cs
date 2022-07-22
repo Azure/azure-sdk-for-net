@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.AppService.Tests.Helpers
                 {
                     NetFrameworkVersion = "v4.6",
                     IsLocalMySqlEnabled = false,
-                    IsHttp20Enabled = true
+                    IsHttp2Enabled = true
                 },
                 ScmSiteAlsoStopped = false,
             };
