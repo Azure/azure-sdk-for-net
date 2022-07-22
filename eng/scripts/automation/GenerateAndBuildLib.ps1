@@ -93,8 +93,8 @@ function CreateOrUpdateAutorestConfigFile() {
     }
     if (![String]::IsNullOrWhiteSpace($fileContent)) {
         if (($readme -ne "") -or ($inputfile -ne "")) {
-            $requirRex = "require.*:.*";
-            $inputfileRex = "input-file.*:.*"
+            $requirRex = "require *:.*";
+            $inputfileRex = "input-file *:.*"
 
             # clear
             $fileContent = $fileContent -notmatch $requirRex
