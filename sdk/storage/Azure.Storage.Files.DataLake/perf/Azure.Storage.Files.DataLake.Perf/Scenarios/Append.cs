@@ -27,12 +27,6 @@ namespace Azure.Storage.Files.DataLake.Perf.Scenarios
             _stream = RandomStream.Create(options.Size);
         }
 
-        public override async Task SetupAsync()
-        {
-            await base.SetupAsync();
-            await FileClient.CreateIfNotExistsAsync();
-        }
-
         public override void Dispose(bool disposing)
         {
             _stream.Dispose();
