@@ -70,6 +70,21 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> or <paramref name="sentShareInvitationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetSentShareInvitationAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new SentShareInvitationsClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// Response response = await client.GetSentShareInvitationAsync("<sentShareName>", "<sentShareInvitationName>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("invitationKind").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Get a sent share invitation
         /// 
@@ -153,6 +168,21 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> or <paramref name="sentShareInvitationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetSentShareInvitation with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new SentShareInvitationsClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// Response response = client.GetSentShareInvitation("<sentShareName>", "<sentShareInvitationName>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("invitationKind").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Get a sent share invitation
         /// 
@@ -237,6 +267,49 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> or <paramref name="sentShareInvitationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call CreateOrUpdateAsync with required parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new SentShareInvitationsClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// var data = new {
+        ///     invitationKind = "Application",
+        ///     properties = new {
+        ///         targetActiveDirectoryId = "<ApplicationInvitationPropertiesTargetActiveDirectoryId>",
+        ///         targetObjectId = "<ApplicationInvitationPropertiesTargetObjectId>",
+        ///     },
+        /// };
+        /// 
+        /// Response response = await client.CreateOrUpdateAsync("<sentShareName>", "<sentShareInvitationName>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new SentShareInvitationsClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// var data = new {
+        ///     invitationKind = "Application",
+        ///     properties = new {
+        ///         expirationDate = "<2022-05-10T14:57:31.2311892-04:00>",
+        ///         shareKind = "<InPlace>",
+        ///         targetActiveDirectoryId = "<ApplicationInvitationPropertiesTargetActiveDirectoryId>",
+        ///         targetObjectId = "<ApplicationInvitationPropertiesTargetObjectId>",
+        ///     },
+        /// };
+        /// 
+        /// Response response = await client.CreateOrUpdateAsync("<sentShareName>", "<sentShareInvitationName>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("invitationKind").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Create a sent share invitation
         /// 
@@ -372,6 +445,49 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> or <paramref name="sentShareInvitationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call CreateOrUpdate with required parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new SentShareInvitationsClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// var data = new {
+        ///     invitationKind = "Application",
+        ///     properties = new {
+        ///         targetActiveDirectoryId = "<ApplicationInvitationPropertiesTargetActiveDirectoryId>",
+        ///         targetObjectId = "<ApplicationInvitationPropertiesTargetObjectId>",
+        ///     },
+        /// };
+        /// 
+        /// Response response = client.CreateOrUpdate("<sentShareName>", "<sentShareInvitationName>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new SentShareInvitationsClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// var data = new {
+        ///     invitationKind = "Application",
+        ///     properties = new {
+        ///         expirationDate = "<2022-05-10T14:57:31.2311892-04:00>",
+        ///         shareKind = "<InPlace>",
+        ///         targetActiveDirectoryId = "<ApplicationInvitationPropertiesTargetActiveDirectoryId>",
+        ///         targetObjectId = "<ApplicationInvitationPropertiesTargetObjectId>",
+        ///     },
+        /// };
+        /// 
+        /// Response response = client.CreateOrUpdate("<sentShareName>", "<sentShareInvitationName>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("invitationKind").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Create a sent share invitation
         /// 
@@ -506,6 +622,16 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> or <paramref name="sentShareInvitationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call DeleteAsync with required parameters.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new SentShareInvitationsClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// Response response = await client.DeleteAsync("<sentShareName>", "<sentShareInvitationName>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         /// <remarks> Delete a sent share invitation. </remarks>
         public virtual async Task<Response> DeleteAsync(string sentShareName, string sentShareInvitationName, RequestContext context = null)
         {
@@ -534,6 +660,16 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> or <paramref name="sentShareInvitationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call Delete with required parameters.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new SentShareInvitationsClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// Response response = client.Delete("<sentShareName>", "<sentShareInvitationName>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         /// <remarks> Delete a sent share invitation. </remarks>
         public virtual Response Delete(string sentShareName, string sentShareInvitationName, RequestContext context = null)
         {
@@ -564,6 +700,33 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetSentShareInvitationsAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new SentShareInvitationsClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// await foreach (var data in client.GetSentShareInvitationsAsync("<sentShareName>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.ToString());
+        /// }
+        /// ]]></code>
+        /// This sample shows how to call GetSentShareInvitationsAsync with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new SentShareInvitationsClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// await foreach (var data in client.GetSentShareInvitationsAsync("<sentShareName>", "<skipToken>", "<filter>", "<orderby>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("type").ToString());
+        ///     Console.WriteLine(result.GetProperty("invitationKind").ToString());
+        /// }
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// List sent share invitations
         /// 
@@ -615,6 +778,33 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetSentShareInvitations with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new SentShareInvitationsClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// foreach (var data in client.GetSentShareInvitations("<sentShareName>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.ToString());
+        /// }
+        /// ]]></code>
+        /// This sample shows how to call GetSentShareInvitations with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new SentShareInvitationsClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// foreach (var data in client.GetSentShareInvitations("<sentShareName>", "<skipToken>", "<filter>", "<orderby>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("type").ToString());
+        ///     Console.WriteLine(result.GetProperty("invitationKind").ToString());
+        /// }
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// List sent share invitations
         /// 

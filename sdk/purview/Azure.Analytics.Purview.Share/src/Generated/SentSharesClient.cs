@@ -69,6 +69,21 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetSentShareAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new SentSharesClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// Response response = await client.GetSentShareAsync("<sentShareName>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("shareKind").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Get a sent share
         /// 
@@ -124,6 +139,21 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetSentShare with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new SentSharesClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// Response response = client.GetSentShare("<sentShareName>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("shareKind").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Get a sent share
         /// 
@@ -180,6 +210,52 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call CreateOrUpdateAsync with required parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new SentSharesClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// var data = new {
+        ///     shareKind = "InPlace",
+        ///     properties = new {
+        ///         collection = new {
+        ///             referenceName = "<CollectionReferenceName>",
+        ///             type = "<CollectionType>",
+        ///         },
+        ///     },
+        /// };
+        /// 
+        /// Response response = await client.CreateOrUpdateAsync("<sentShareName>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new SentSharesClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// var data = new {
+        ///     shareKind = "InPlace",
+        ///     properties = new {
+        ///         collection = new {
+        ///             referenceName = "<CollectionReferenceName>",
+        ///             type = "<CollectionType>",
+        ///         },
+        ///         description = "<InPlaceSentSharePropertiesDescription>",
+        ///     },
+        /// };
+        /// 
+        /// Response response = await client.CreateOrUpdateAsync("<sentShareName>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("shareKind").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Create a sent share
         /// 
@@ -261,6 +337,52 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call CreateOrUpdate with required parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new SentSharesClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// var data = new {
+        ///     shareKind = "InPlace",
+        ///     properties = new {
+        ///         collection = new {
+        ///             referenceName = "<CollectionReferenceName>",
+        ///             type = "<CollectionType>",
+        ///         },
+        ///     },
+        /// };
+        /// 
+        /// Response response = client.CreateOrUpdate("<sentShareName>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new SentSharesClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// var data = new {
+        ///     shareKind = "InPlace",
+        ///     properties = new {
+        ///         collection = new {
+        ///             referenceName = "<CollectionReferenceName>",
+        ///             type = "<CollectionType>",
+        ///         },
+        ///         description = "<InPlaceSentSharePropertiesDescription>",
+        ///     },
+        /// };
+        /// 
+        /// Response response = client.CreateOrUpdate("<sentShareName>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("shareKind").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Create a sent share
         /// 
@@ -341,6 +463,33 @@ namespace Azure.Analytics.Purview.Share
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetSentSharesAsync and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new SentSharesClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// await foreach (var data in client.GetSentSharesAsync())
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.ToString());
+        /// }
+        /// ]]></code>
+        /// This sample shows how to call GetSentSharesAsync with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new SentSharesClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// await foreach (var data in client.GetSentSharesAsync("<skipToken>", "<filter>", "<orderby>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("type").ToString());
+        ///     Console.WriteLine(result.GetProperty("shareKind").ToString());
+        /// }
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Get list of sent shares
         /// 
@@ -387,6 +536,33 @@ namespace Azure.Analytics.Purview.Share
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetSentShares and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new SentSharesClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// foreach (var data in client.GetSentShares())
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.ToString());
+        /// }
+        /// ]]></code>
+        /// This sample shows how to call GetSentShares with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new SentSharesClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// foreach (var data in client.GetSentShares("<skipToken>", "<filter>", "<orderby>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("type").ToString());
+        ///     Console.WriteLine(result.GetProperty("shareKind").ToString());
+        /// }
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Get list of sent shares
         /// 
@@ -434,6 +610,18 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <example>
+        /// This sample shows how to call DeleteAsync with required parameters.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new SentSharesClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// var operation = await client.DeleteAsync(WaitUntil.Completed, "<sentShareName>");
+        /// 
+        /// var response = await operation.WaitForCompletionResponseAsync();
+        /// Console.WriteLine(response.Status)
+        /// ]]></code>
+        /// </example>
         /// <remarks> Delete a sent share. </remarks>
         public virtual async Task<Operation> DeleteAsync(WaitUntil waitUntil, string sentShareName, RequestContext context = null)
         {
@@ -461,6 +649,18 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="sentShareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <example>
+        /// This sample shows how to call Delete with required parameters.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new SentSharesClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// var operation = client.Delete(WaitUntil.Completed, "<sentShareName>");
+        /// 
+        /// var response = operation.WaitForCompletionResponse();
+        /// Console.WriteLine(response.Status)
+        /// ]]></code>
+        /// </example>
         /// <remarks> Delete a sent share. </remarks>
         public virtual Operation Delete(WaitUntil waitUntil, string sentShareName, RequestContext context = null)
         {

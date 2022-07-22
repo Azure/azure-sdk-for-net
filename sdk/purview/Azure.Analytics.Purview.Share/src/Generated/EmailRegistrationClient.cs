@@ -66,6 +66,43 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call ActivateAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new EmailRegistrationClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = await client.ActivateAsync(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call ActivateAsync with all parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new EmailRegistrationClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// var data = new {
+        ///     properties = new {
+        ///         activationCode = "<TenantEmailRegistrationPropertiesActivationCode>",
+        ///     },
+        /// };
+        /// 
+        /// Response response = await client.ActivateAsync(RequestContent.Create(data), "<repeatabilityRequestId>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("activationCode").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("activationExpiration").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("email").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("registrationStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("tenantId").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Activates the email registration for current tenant
         /// 
@@ -131,6 +168,43 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call Activate with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new EmailRegistrationClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = client.Activate(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call Activate with all parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new EmailRegistrationClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// var data = new {
+        ///     properties = new {
+        ///         activationCode = "<TenantEmailRegistrationPropertiesActivationCode>",
+        ///     },
+        /// };
+        /// 
+        /// Response response = client.Activate(RequestContent.Create(data), "<repeatabilityRequestId>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("activationCode").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("activationExpiration").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("email").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("registrationStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("tenantId").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Activates the email registration for current tenant
         /// 
@@ -194,6 +268,35 @@ namespace Azure.Analytics.Purview.Share
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call RegisterAsync and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new EmailRegistrationClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// Response response = await client.RegisterAsync();
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call RegisterAsync with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new EmailRegistrationClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// Response response = await client.RegisterAsync("<repeatabilityRequestId>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("activationCode").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("activationExpiration").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("email").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("registrationStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("tenantId").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Register an email for the current tenant
         /// 
@@ -238,6 +341,35 @@ namespace Azure.Analytics.Purview.Share
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call Register and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new EmailRegistrationClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// Response response = client.Register();
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call Register with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new EmailRegistrationClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// Response response = client.Register("<repeatabilityRequestId>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("activationCode").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("activationExpiration").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("email").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("registrationStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("tenantId").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Register an email for the current tenant
         /// 

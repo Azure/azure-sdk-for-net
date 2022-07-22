@@ -69,6 +69,21 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="receivedShareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetReceivedShareAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// Response response = await client.GetReceivedShareAsync("<receivedShareName>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("shareKind").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Get a received share
         /// 
@@ -133,6 +148,21 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="receivedShareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetReceivedShare with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// Response response = client.GetReceivedShare("<receivedShareName>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("shareKind").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Get a received share
         /// 
@@ -198,6 +228,57 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="receivedShareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call CreateAsync with required parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// var data = new {
+        ///     shareKind = "InPlace",
+        ///     properties = new {
+        ///         collection = new {
+        ///             referenceName = "<CollectionReferenceName>",
+        ///             type = "<CollectionType>",
+        ///         },
+        ///         invitationId = "<InPlaceReceivedSharePropertiesInvitationId>",
+        ///         sentShareLocation = "<InPlaceReceivedSharePropertiesSentShareLocation>",
+        ///     },
+        /// };
+        /// 
+        /// Response response = await client.CreateAsync("<receivedShareName>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call CreateAsync with all parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// var data = new {
+        ///     shareKind = "InPlace",
+        ///     properties = new {
+        ///         collection = new {
+        ///             referenceName = "<CollectionReferenceName>",
+        ///             type = "<CollectionType>",
+        ///         },
+        ///         expirationDate = "<2022-05-10T14:57:31.2311892-04:00>",
+        ///         invitationId = "<InPlaceReceivedSharePropertiesInvitationId>",
+        ///         sentShareDescription = "<InPlaceReceivedSharePropertiesSentShareDescription>",
+        ///         sentShareLocation = "<InPlaceReceivedSharePropertiesSentShareLocation>",
+        ///     },
+        /// };
+        /// 
+        /// Response response = await client.CreateAsync("<receivedShareName>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("shareKind").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Create a received share
         /// 
@@ -297,6 +378,57 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="receivedShareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call Create with required parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// var data = new {
+        ///     shareKind = "InPlace",
+        ///     properties = new {
+        ///         collection = new {
+        ///             referenceName = "<CollectionReferenceName>",
+        ///             type = "<CollectionType>",
+        ///         },
+        ///         invitationId = "<InPlaceReceivedSharePropertiesInvitationId>",
+        ///         sentShareLocation = "<InPlaceReceivedSharePropertiesSentShareLocation>",
+        ///     },
+        /// };
+        /// 
+        /// Response response = client.Create("<receivedShareName>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call Create with all parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// var data = new {
+        ///     shareKind = "InPlace",
+        ///     properties = new {
+        ///         collection = new {
+        ///             referenceName = "<CollectionReferenceName>",
+        ///             type = "<CollectionType>",
+        ///         },
+        ///         expirationDate = "<2022-05-10T14:57:31.2311892-04:00>",
+        ///         invitationId = "<InPlaceReceivedSharePropertiesInvitationId>",
+        ///         sentShareDescription = "<InPlaceReceivedSharePropertiesSentShareDescription>",
+        ///         sentShareLocation = "<InPlaceReceivedSharePropertiesSentShareLocation>",
+        ///     },
+        /// };
+        /// 
+        /// Response response = client.Create("<receivedShareName>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("shareKind").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Create a received share
         /// 
@@ -395,6 +527,33 @@ namespace Azure.Analytics.Purview.Share
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetReceivedSharesAsync and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// await foreach (var data in client.GetReceivedSharesAsync())
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.ToString());
+        /// }
+        /// ]]></code>
+        /// This sample shows how to call GetReceivedSharesAsync with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// await foreach (var data in client.GetReceivedSharesAsync("<skipToken>", "<filter>", "<orderby>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("type").ToString());
+        ///     Console.WriteLine(result.GetProperty("shareKind").ToString());
+        /// }
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// List received shares
         /// 
@@ -441,6 +600,33 @@ namespace Azure.Analytics.Purview.Share
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetReceivedShares and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// foreach (var data in client.GetReceivedShares())
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.ToString());
+        /// }
+        /// ]]></code>
+        /// This sample shows how to call GetReceivedShares with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// foreach (var data in client.GetReceivedShares("<skipToken>", "<filter>", "<orderby>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("type").ToString());
+        ///     Console.WriteLine(result.GetProperty("shareKind").ToString());
+        /// }
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// List received shares
         /// 
@@ -488,6 +674,18 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="receivedShareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <example>
+        /// This sample shows how to call DeleteAsync with required parameters.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// var operation = await client.DeleteAsync(WaitUntil.Completed, "<receivedShareName>");
+        /// 
+        /// var response = await operation.WaitForCompletionResponseAsync();
+        /// Console.WriteLine(response.Status)
+        /// ]]></code>
+        /// </example>
         /// <remarks> Delete a received share. </remarks>
         public virtual async Task<Operation> DeleteAsync(WaitUntil waitUntil, string receivedShareName, RequestContext context = null)
         {
@@ -515,6 +713,18 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="receivedShareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <example>
+        /// This sample shows how to call Delete with required parameters.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new ReceivedSharesClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// var operation = client.Delete(WaitUntil.Completed, "<receivedShareName>");
+        /// 
+        /// var response = operation.WaitForCompletionResponse();
+        /// Console.WriteLine(response.Status)
+        /// ]]></code>
+        /// </example>
         /// <remarks> Delete a received share. </remarks>
         public virtual Operation Delete(WaitUntil waitUntil, string receivedShareName, RequestContext context = null)
         {

@@ -69,6 +69,21 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="receivedInvitationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetReceivedInvitationAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new ReceivedInvitationsClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// Response response = await client.GetReceivedInvitationAsync("<receivedInvitationName>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("invitationKind").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Get a received invitation
         /// 
@@ -158,6 +173,21 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="receivedInvitationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetReceivedInvitation with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new ReceivedInvitationsClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// Response response = client.GetReceivedInvitation("<receivedInvitationName>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("invitationKind").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Get a received invitation
         /// 
@@ -249,6 +279,48 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="receivedInvitationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call RejectAsync with required parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new ReceivedInvitationsClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// var data = new {
+        ///     invitationKind = "Application",
+        ///     properties = new {
+        ///         targetActiveDirectoryId = "<ApplicationReceivedInvitationPropertiesTargetActiveDirectoryId>",
+        ///         targetObjectId = "<ApplicationReceivedInvitationPropertiesTargetObjectId>",
+        ///     },
+        /// };
+        /// 
+        /// Response response = await client.RejectAsync("<receivedInvitationName>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call RejectAsync with all parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new ReceivedInvitationsClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// var data = new {
+        ///     invitationKind = "Application",
+        ///     properties = new {
+        ///         shareKind = "<InPlace>",
+        ///         targetActiveDirectoryId = "<ApplicationReceivedInvitationPropertiesTargetActiveDirectoryId>",
+        ///         targetObjectId = "<ApplicationReceivedInvitationPropertiesTargetObjectId>",
+        ///     },
+        /// };
+        /// 
+        /// Response response = await client.RejectAsync("<receivedInvitationName>", RequestContent.Create(data), "<repeatabilityRequestId>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("invitationKind").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Reject a received invitation
         /// 
@@ -399,6 +471,48 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="receivedInvitationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call Reject with required parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new ReceivedInvitationsClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// var data = new {
+        ///     invitationKind = "Application",
+        ///     properties = new {
+        ///         targetActiveDirectoryId = "<ApplicationReceivedInvitationPropertiesTargetActiveDirectoryId>",
+        ///         targetObjectId = "<ApplicationReceivedInvitationPropertiesTargetObjectId>",
+        ///     },
+        /// };
+        /// 
+        /// Response response = client.Reject("<receivedInvitationName>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call Reject with all parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new ReceivedInvitationsClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// var data = new {
+        ///     invitationKind = "Application",
+        ///     properties = new {
+        ///         shareKind = "<InPlace>",
+        ///         targetActiveDirectoryId = "<ApplicationReceivedInvitationPropertiesTargetActiveDirectoryId>",
+        ///         targetObjectId = "<ApplicationReceivedInvitationPropertiesTargetObjectId>",
+        ///     },
+        /// };
+        /// 
+        /// Response response = client.Reject("<receivedInvitationName>", RequestContent.Create(data), "<repeatabilityRequestId>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("invitationKind").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Reject a received invitation
         /// 
@@ -547,6 +661,33 @@ namespace Azure.Analytics.Purview.Share
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetReceivedInvitationsAsync and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new ReceivedInvitationsClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// await foreach (var data in client.GetReceivedInvitationsAsync())
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.ToString());
+        /// }
+        /// ]]></code>
+        /// This sample shows how to call GetReceivedInvitationsAsync with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new ReceivedInvitationsClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// await foreach (var data in client.GetReceivedInvitationsAsync("<skipToken>", "<filter>", "<orderby>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("type").ToString());
+        ///     Console.WriteLine(result.GetProperty("invitationKind").ToString());
+        /// }
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// List received invitations
         /// 
@@ -593,6 +734,33 @@ namespace Azure.Analytics.Purview.Share
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetReceivedInvitations and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new ReceivedInvitationsClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// foreach (var data in client.GetReceivedInvitations())
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.ToString());
+        /// }
+        /// ]]></code>
+        /// This sample shows how to call GetReceivedInvitations with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new ReceivedInvitationsClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// foreach (var data in client.GetReceivedInvitations("<skipToken>", "<filter>", "<orderby>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("type").ToString());
+        ///     Console.WriteLine(result.GetProperty("invitationKind").ToString());
+        /// }
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// List received invitations
         /// 

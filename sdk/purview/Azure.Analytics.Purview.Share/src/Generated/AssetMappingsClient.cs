@@ -70,6 +70,21 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="receivedShareName"/> or <paramref name="assetMappingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetAssetMappingAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new AssetMappingsClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// Response response = await client.GetAssetMappingAsync("<receivedShareName>", "<assetMappingName>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("kind").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Get an asset mapping for a received share
         /// 
@@ -146,6 +161,21 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="receivedShareName"/> or <paramref name="assetMappingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetAssetMapping with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new AssetMappingsClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// Response response = client.GetAssetMapping("<receivedShareName>", "<assetMappingName>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("kind").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Get an asset mapping for a received share
         /// 
@@ -224,6 +254,33 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="receivedShareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetAssetMappingsAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new AssetMappingsClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// await foreach (var data in client.GetAssetMappingsAsync("<receivedShareName>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.ToString());
+        /// }
+        /// ]]></code>
+        /// This sample shows how to call GetAssetMappingsAsync with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new AssetMappingsClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// await foreach (var data in client.GetAssetMappingsAsync("<receivedShareName>", "<skipToken>", "<filter>", "<orderby>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("type").ToString());
+        ///     Console.WriteLine(result.GetProperty("kind").ToString());
+        /// }
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// List asset mappings for a received share
         /// 
@@ -275,6 +332,33 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="receivedShareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetAssetMappings with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new AssetMappingsClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// foreach (var data in client.GetAssetMappings("<receivedShareName>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.ToString());
+        /// }
+        /// ]]></code>
+        /// This sample shows how to call GetAssetMappings with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new AssetMappingsClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// foreach (var data in client.GetAssetMappings("<receivedShareName>", "<skipToken>", "<filter>", "<orderby>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("type").ToString());
+        ///     Console.WriteLine(result.GetProperty("kind").ToString());
+        /// }
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// List asset mappings for a received share
         /// 
@@ -326,6 +410,54 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="receivedShareName"/> or <paramref name="assetMappingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call CreateAsync with required parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new AssetMappingsClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// var data = new {
+        ///     kind = "AdlsGen2Account",
+        ///     properties = new {
+        ///         assetId = "<73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a>",
+        ///         containerName = "<AdlsGen2AccountAssetMappingPropertiesContainerName>",
+        ///         folder = "<AdlsGen2AccountAssetMappingPropertiesFolder>",
+        ///         storageAccountResourceId = "<AdlsGen2AccountAssetMappingPropertiesStorageAccountResourceId>",
+        ///     },
+        /// };
+        /// 
+        /// var operation = await client.CreateAsync(WaitUntil.Completed, "<receivedShareName>", "<assetMappingName>", RequestContent.Create(data));
+        /// 
+        /// BinaryData data = await operation.WaitForCompletionAsync();
+        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call CreateAsync with all parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new AssetMappingsClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// var data = new {
+        ///     kind = "AdlsGen2Account",
+        ///     properties = new {
+        ///         assetId = "<73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a>",
+        ///         containerName = "<AdlsGen2AccountAssetMappingPropertiesContainerName>",
+        ///         folder = "<AdlsGen2AccountAssetMappingPropertiesFolder>",
+        ///         mountPath = "<AdlsGen2AccountAssetMappingPropertiesMountPath>",
+        ///         storageAccountResourceId = "<AdlsGen2AccountAssetMappingPropertiesStorageAccountResourceId>",
+        ///     },
+        /// };
+        /// 
+        /// var operation = await client.CreateAsync(WaitUntil.Completed, "<receivedShareName>", "<assetMappingName>", RequestContent.Create(data));
+        /// 
+        /// BinaryData data = await operation.WaitForCompletionAsync();
+        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("kind").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Create an asset mapping on a received share
         /// 
@@ -448,6 +580,54 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="receivedShareName"/> or <paramref name="assetMappingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call Create with required parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new AssetMappingsClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// var data = new {
+        ///     kind = "AdlsGen2Account",
+        ///     properties = new {
+        ///         assetId = "<73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a>",
+        ///         containerName = "<AdlsGen2AccountAssetMappingPropertiesContainerName>",
+        ///         folder = "<AdlsGen2AccountAssetMappingPropertiesFolder>",
+        ///         storageAccountResourceId = "<AdlsGen2AccountAssetMappingPropertiesStorageAccountResourceId>",
+        ///     },
+        /// };
+        /// 
+        /// var operation = client.Create(WaitUntil.Completed, "<receivedShareName>", "<assetMappingName>", RequestContent.Create(data));
+        /// 
+        /// BinaryData data = operation.WaitForCompletion();
+        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call Create with all parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new AssetMappingsClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// var data = new {
+        ///     kind = "AdlsGen2Account",
+        ///     properties = new {
+        ///         assetId = "<73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a>",
+        ///         containerName = "<AdlsGen2AccountAssetMappingPropertiesContainerName>",
+        ///         folder = "<AdlsGen2AccountAssetMappingPropertiesFolder>",
+        ///         mountPath = "<AdlsGen2AccountAssetMappingPropertiesMountPath>",
+        ///         storageAccountResourceId = "<AdlsGen2AccountAssetMappingPropertiesStorageAccountResourceId>",
+        ///     },
+        /// };
+        /// 
+        /// var operation = client.Create(WaitUntil.Completed, "<receivedShareName>", "<assetMappingName>", RequestContent.Create(data));
+        /// 
+        /// BinaryData data = operation.WaitForCompletion();
+        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("type").ToString());
+        /// Console.WriteLine(result.GetProperty("kind").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Create an asset mapping on a received share
         /// 
@@ -569,6 +749,18 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="receivedShareName"/> or <paramref name="assetMappingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <example>
+        /// This sample shows how to call DeleteAsync with required parameters.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new AssetMappingsClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// var operation = await client.DeleteAsync(WaitUntil.Completed, "<receivedShareName>", "<assetMappingName>");
+        /// 
+        /// var response = await operation.WaitForCompletionResponseAsync();
+        /// Console.WriteLine(response.Status)
+        /// ]]></code>
+        /// </example>
         /// <remarks> Delete an asset mapping for a received share. </remarks>
         public virtual async Task<Operation> DeleteAsync(WaitUntil waitUntil, string receivedShareName, string assetMappingName, RequestContext context = null)
         {
@@ -598,6 +790,18 @@ namespace Azure.Analytics.Purview.Share
         /// <exception cref="ArgumentException"> <paramref name="receivedShareName"/> or <paramref name="assetMappingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <example>
+        /// This sample shows how to call Delete with required parameters.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new AssetMappingsClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// var operation = client.Delete(WaitUntil.Completed, "<receivedShareName>", "<assetMappingName>");
+        /// 
+        /// var response = operation.WaitForCompletionResponse();
+        /// Console.WriteLine(response.Status)
+        /// ]]></code>
+        /// </example>
         /// <remarks> Delete an asset mapping for a received share. </remarks>
         public virtual Operation Delete(WaitUntil waitUntil, string receivedShareName, string assetMappingName, RequestContext context = null)
         {
