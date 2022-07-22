@@ -100,6 +100,31 @@ namespace Azure.Communication
         }
 
         [Test]
+        public void TestEqualityOperators()
+        {
+            CommunicationUserIdentifier communicationUserIdentifier = new("8:acs:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130");
+            CommunicationIdentifier communicationIdentifier = new CommunicationUserIdentifier("8:acs:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130");
+            CommunicationIdentifier phoneNumberIdentifier = new PhoneNumberIdentifier("8:acs:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130");
+
+            Assert.AreEqual(communicationIdentifier, communicationUserIdentifier);
+            Assert.IsTrue(communicationIdentifier == communicationUserIdentifier);
+            Assert.IsFalse(communicationIdentifier != communicationUserIdentifier);
+            Assert.IsFalse(communicationIdentifier == phoneNumberIdentifier);
+            Assert.IsTrue(communicationIdentifier != phoneNumberIdentifier);
+        }
+
+        [Test]
+        public void TestImplicitConversionOperator()
+        {
+            CommunicationIdentifier communicationUserIdentifier = "8:acs:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130";
+            CommunicationIdentifier microsoftTeamsUserIdentifier = "8:orgid:45ab2481-1c1c-4005-be24-0ffb879b1130";
+            CommunicationIdentifier phoneNumberIdentifier = "4:112345556789";
+            Assert.IsInstanceOf(typeof(CommunicationUserIdentifier), communicationUserIdentifier);
+            Assert.IsInstanceOf(typeof(MicrosoftTeamsUserIdentifier), microsoftTeamsUserIdentifier);
+            Assert.IsInstanceOf(typeof(PhoneNumberIdentifier), phoneNumberIdentifier);
+        }
+
+        [Test]
         public void RawIdIsOverriddenBySubTypes()
         {
             var baseType = typeof(CommunicationIdentifier);
