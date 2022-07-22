@@ -13,7 +13,6 @@
 // limitations under the License.
 
 ﻿using Microsoft.Azure.Batch.Conventions.Files.Utilities;
-using Microsoft.WindowsAzure.Storage.Blob;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
 using System;
@@ -169,11 +168,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files
 
         }
 
-        /*
-         * No direct correspondance of GetBlobReferenceFromServerAsync in new SDK which returns either a CloudBlockBlob, CloudAppendBlob, or CloudPageBlob
-         * Alternatives include containerClient.GetBlobBaseClient or containerClient.getBlobClient
-         */
-        public async Task<OutputFileReference> GetOutputAsync(IOutputKind kind, string filePath, CancellationToken cancellationToken = default(CancellationToken))
+        public OutputFileReference GetOutputAsync(IOutputKind kind, string filePath, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (kind == null)
             {
@@ -182,7 +177,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files
 
             Validate.IsNotNullOrEmpty(filePath, nameof(filePath));
 
-            var blob = await _jobOutputContainer.GetBlobReferenceFromServerAsync(BlobName(kind, filePath), null, null, null, cancellationToken).ConfigureAwait(false);
+            var blob = _jobOutputContainer.GetBlobBaseClient(BlobName(kind, filePath));
 
             return new OutputFileReference(blob);
         }
