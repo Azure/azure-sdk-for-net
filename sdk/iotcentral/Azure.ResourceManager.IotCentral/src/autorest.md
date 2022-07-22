@@ -25,6 +25,8 @@ rename-mapping:
   OperationInputs: IotCentralAppNameAvailabilityContent
   AppAvailabilityInfo: IotCentralAppNameAvailabilityResponse
   AppAvailabilityInfo.reason: IotCentralAppNameUnavailableReason
+  NetworkRuleSets.applyToIoTCentral: ApplyToIotCentral
+  AppTemplateLocations.id: location
 
 prepend-rp-prefix:
   - App

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.IotCentral.Models
 {
     /// <summary> IoT Central Application Template Locations. </summary>
@@ -16,16 +18,16 @@ namespace Azure.ResourceManager.IotCentral.Models
         }
 
         /// <summary> Initializes a new instance of IotCentralAppTemplateLocation. </summary>
-        /// <param name="id"> The ID of the location. </param>
+        /// <param name="location"> The ID of the location. </param>
         /// <param name="displayName"> The display name of the location. </param>
-        internal IotCentralAppTemplateLocation(string id, string displayName)
+        internal IotCentralAppTemplateLocation(AzureLocation? location, string displayName)
         {
-            Id = id;
+            Location = location;
             DisplayName = displayName;
         }
 
         /// <summary> The ID of the location. </summary>
-        public string Id { get; }
+        public AzureLocation? Location { get; }
         /// <summary> The display name of the location. </summary>
         public string DisplayName { get; }
     }
