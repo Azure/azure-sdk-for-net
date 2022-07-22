@@ -14,7 +14,6 @@
 
 using Azure.Storage.Blobs;
 using Microsoft.Azure.Batch.Conventions.Files.Utilities;
-using Microsoft.WindowsAzure.Storage;
 using System;
 using System.Collections.Generic;
 using System.Linq;

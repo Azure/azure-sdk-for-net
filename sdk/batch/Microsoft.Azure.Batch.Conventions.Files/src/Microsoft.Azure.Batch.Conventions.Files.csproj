@@ -20,7 +20,6 @@
   <ItemGroup>
     <PackageReference Include="Azure.Storage.Blobs" VersionOverride="12.12.0" />
     <PackageReference Include="Microsoft.Azure.Batch" />
-    <PackageReference Include="WindowsAzure.Storage" />
   </ItemGroup>
 
 </Project>
