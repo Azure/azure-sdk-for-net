@@ -10,8 +10,8 @@ namespace Azure.ResourceManager.AppService
     {
         public ApiKeyVaultReferenceData() { }
         public string ActiveVersion { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity AppServiceIdentity { get { throw null; } set { } }
         public string Details { get { throw null; } set { } }
-        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }
         public string Reference { get { throw null; } set { } }
         public string SecretName { get { throw null; } set { } }
@@ -173,6 +173,7 @@ namespace Azure.ResourceManager.AppService
     public partial class AppServiceDomainData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public AppServiceDomainData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public bool? AppServiceHasPrivacy { get { throw null; } set { } }
         public string AuthCode { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.DomainPurchaseConsent Consent { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.ContactInformation ContactAdmin { get { throw null; } set { } }
@@ -184,7 +185,6 @@ namespace Azure.ResourceManager.AppService
         public string DnsZoneId { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppService.Models.DomainNotRenewableReason> DomainNotRenewableReasons { get { throw null; } }
         public System.DateTimeOffset? ExpireOn { get { throw null; } }
-        public bool? HasPrivacy { get { throw null; } set { } }
         public bool? IsAutoRenew { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }
         public System.DateTimeOffset? LastRenewedOn { get { throw null; } }
@@ -6865,7 +6865,7 @@ namespace Azure.ResourceManager.AppService.Models
         public bool? IsAlwaysOn { get { throw null; } set { } }
         public bool? IsDetailedErrorLoggingEnabled { get { throw null; } set { } }
         public bool? IsFunctionsRuntimeScaleMonitoringEnabled { get { throw null; } set { } }
-        public bool? IsHttp20Enabled { get { throw null; } set { } }
+        public bool? IsHttp2Enabled { get { throw null; } set { } }
         public bool? IsHttpLoggingEnabled { get { throw null; } set { } }
         public bool? IsLocalMySqlEnabled { get { throw null; } set { } }
         public bool? IsRemoteDebuggingEnabled { get { throw null; } set { } }

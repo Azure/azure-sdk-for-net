@@ -132,7 +132,7 @@ rename-mapping:
   AppServiceCertificatePatchResource: AppServiceCertificatePatch
   AppServiceEnvironmentPatchResource: AppServiceEnvironmentPatchContent
   AppserviceGithubToken: AppServiceGithubToken
-  AppServicePlanPatchResource: AppServicePlanPatchOptions
+  AppServicePlanPatchResource: AppServicePlanPatchContent
   Contact: ContactInformation 
   Login: LoginInformation
   MSDeploy: MsDeploy
@@ -147,12 +147,12 @@ rename-mapping:
 # rename property
   ValidateResourceTypes.Site: WebSite
   CheckNameResourceTypes.Site: WebSite
-  ApiKVReference.properties.identityType: Identity
+  ApiKVReference.properties.identityType: AppServiceIdentity
   AppServiceCertificateOrder.properties.autoRenew: IsAutoRenew
   AppServiceCertificateOrder.properties.expirationTime: ExpireOn
   AppServiceCertificateOrder.properties.lastCertificateIssuanceTime: LastCertificateIssuedOn
   AppServiceCertificateOrder.properties.nextAutoRenewalTimeStamp: NextAutoRenewTimeStamp
-  Domain.properties.privacy: HasPrivacy
+  Domain.properties.privacy: AppServiceHasPrivacy
   Domain.properties.expirationTime: ExpireOn
   Domain.properties.autoRenew: IsAutoRenew
   AppServiceEnvironment.properties.ipsslAddressCount: IPSslAddressCount
@@ -276,7 +276,7 @@ rename-mapping:
   SiteConfigProperties.functionsRuntimeScaleMonitoringEnabled: IsFunctionsRuntimeScaleMonitoringEnabled
   SiteConfigProperties.detailedErrorLoggingEnabled: IsDetailedErrorLoggingEnabled
   SiteConfigProperties.httpLoggingEnabled: IsHttpLoggingEnabled
-  SiteConfigProperties.http20Enabled: IsHttp20Enabled
+  SiteConfigProperties.http20Enabled: IsHttp2Enabled
   SiteConfigProperties.localMySqlEnabled: IsLocalMySqlEnabled
   SiteConfigProperties.remoteDebuggingEnabled: IsRemoteDebuggingEnabled
   SiteConfigProperties.requestTracingEnabled: IsRequestTracingEnabled
@@ -299,7 +299,7 @@ rename-mapping:
   SiteSealRequest.lightTheme: IsLightTheme
   SkuDescription.locations: AzureLocations
   SnapshotRestoreRequest.properties.ignoreConflictingHostNames: IsIgnoreConflictingHostNames
-  SnapshotRestoreRequest.properties.overwrite: IsOverwrite
+  SnapshotRestoreRequest.properties.overwrite: EnabledOverwrite
   SnapshotRestoreRequest.properties.recoverConfiguration: IsRecoverConfiguration
   StackMajorVersion.applicationInsights: IsApplicationInsights
   StampCapacity.excludeFromCapacityAllocation: IsExcludeFromCapacityAllocation
@@ -351,7 +351,7 @@ rename-mapping:
   StaticSiteUserInvitationResponseResource: StaticSiteUserInvitationResponseInfo
   StaticSiteZipDeploymentARMResource: StaticSiteZipDeploymentARM
   StorageMigrationResponse: StorageMigrationResponseInfo
-  Status: StatusInfo
+  Status: AppServiceStatusInfo
 
 directive:
   - rename-model:

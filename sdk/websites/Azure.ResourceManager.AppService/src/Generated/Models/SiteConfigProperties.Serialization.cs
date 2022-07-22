@@ -700,12 +700,12 @@ namespace Azure.ResourceManager.AppService.Models
                     writer.WriteNull("scmIpSecurityRestrictionsUseMain");
                 }
             }
-            if (Optional.IsDefined(IsHttp20Enabled))
+            if (Optional.IsDefined(IsHttp2Enabled))
             {
-                if (IsHttp20Enabled != null)
+                if (IsHttp2Enabled != null)
                 {
                     writer.WritePropertyName("http20Enabled");
-                    writer.WriteBooleanValue(IsHttp20Enabled.Value);
+                    writer.WriteBooleanValue(IsHttp2Enabled.Value);
                 }
                 else
                 {

@@ -59,10 +59,10 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("contactTech");
                 writer.WriteObjectValue(ContactTech);
             }
-            if (Optional.IsDefined(HasPrivacy))
+            if (Optional.IsDefined(AppServiceHasPrivacy))
             {
                 writer.WritePropertyName("privacy");
-                writer.WriteBooleanValue(HasPrivacy.Value);
+                writer.WriteBooleanValue(AppServiceHasPrivacy.Value);
             }
             if (Optional.IsDefined(IsAutoRenew))
             {
