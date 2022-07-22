@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Grafana.Models
 {
-    internal partial class ResourceSku : IUtf8JsonSerializable
+    internal partial class ManagedGrafanaSku : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Grafana.Models
             writer.WriteEndObject();
         }
 
-        internal static ResourceSku DeserializeResourceSku(JsonElement element)
+        internal static ManagedGrafanaSku DeserializeManagedGrafanaSku(JsonElement element)
         {
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Grafana.Models
                     continue;
                 }
             }
-            return new ResourceSku(name);
+            return new ManagedGrafanaSku(name);
         }
     }
 }
