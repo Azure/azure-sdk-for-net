@@ -14,7 +14,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.Analytics.Share
+namespace Azure.Analytics.Purview.Share
 {
     /// <summary> The ReceivedInvitations service client. </summary>
     public partial class ReceivedInvitationsClient

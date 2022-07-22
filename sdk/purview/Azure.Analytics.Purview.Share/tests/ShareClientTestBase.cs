@@ -6,7 +6,7 @@ using Azure.Analytics.Purview.Tests;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 
-namespace Azure.Analytics.Share.Tests
+namespace Azure.Analytics.Purview.Share.Tests
 {
     public class ShareClientTestBase : RecordedTestBase<PurviewShareTestEnvironment>
     {

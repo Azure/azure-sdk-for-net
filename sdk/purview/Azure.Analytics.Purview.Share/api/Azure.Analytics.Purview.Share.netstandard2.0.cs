@@ -1,10 +1,10 @@
-namespace Azure.Analytics.Share
+namespace Azure.Analytics.Purview.Share
 {
     public partial class AcceptedSentSharesClient
     {
         protected AcceptedSentSharesClient() { }
         public AcceptedSentSharesClient(string endpoint, Azure.Core.TokenCredential credential) { }
-        public AcceptedSentSharesClient(string endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Share.PurviewShareClientOptions options) { }
+        public AcceptedSentSharesClient(string endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Purview.Share.PurviewShareClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response GetAcceptedSentShare(string sentShareName, string acceptedSentShareName, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetAcceptedSentShareAsync(string sentShareName, string acceptedSentShareName, Azure.RequestContext context = null) { throw null; }
@@ -21,7 +21,7 @@ namespace Azure.Analytics.Share
     {
         protected AssetMappingsClient() { }
         public AssetMappingsClient(string endpoint, Azure.Core.TokenCredential credential) { }
-        public AssetMappingsClient(string endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Share.PurviewShareClientOptions options) { }
+        public AssetMappingsClient(string endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Purview.Share.PurviewShareClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Operation<System.BinaryData> Create(Azure.WaitUntil waitUntil, string receivedShareName, string assetMappingName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> CreateAsync(Azure.WaitUntil waitUntil, string receivedShareName, string assetMappingName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
@@ -36,7 +36,7 @@ namespace Azure.Analytics.Share
     {
         protected AssetsClient() { }
         public AssetsClient(string endpoint, Azure.Core.TokenCredential credential) { }
-        public AssetsClient(string endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Share.PurviewShareClientOptions options) { }
+        public AssetsClient(string endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Purview.Share.PurviewShareClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Operation<System.BinaryData> Create(Azure.WaitUntil waitUntil, string sentShareName, string assetName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> CreateAsync(Azure.WaitUntil waitUntil, string sentShareName, string assetName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
@@ -51,7 +51,7 @@ namespace Azure.Analytics.Share
     {
         protected EmailRegistrationClient() { }
         public EmailRegistrationClient(string endpoint, Azure.Core.TokenCredential credential) { }
-        public EmailRegistrationClient(string endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Share.PurviewShareClientOptions options) { }
+        public EmailRegistrationClient(string endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Purview.Share.PurviewShareClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response Activate(Azure.Core.RequestContent content, string repeatabilityRequestId = null, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> ActivateAsync(Azure.Core.RequestContent content, string repeatabilityRequestId = null, Azure.RequestContext context = null) { throw null; }
@@ -60,7 +60,7 @@ namespace Azure.Analytics.Share
     }
     public partial class PurviewShareClientOptions : Azure.Core.ClientOptions
     {
-        public PurviewShareClientOptions(Azure.Analytics.Share.PurviewShareClientOptions.ServiceVersion version = Azure.Analytics.Share.PurviewShareClientOptions.ServiceVersion.V2021_09_01_Preview) { }
+        public PurviewShareClientOptions(Azure.Analytics.Purview.Share.PurviewShareClientOptions.ServiceVersion version = Azure.Analytics.Purview.Share.PurviewShareClientOptions.ServiceVersion.V2021_09_01_Preview) { }
         public enum ServiceVersion
         {
             V2021_09_01_Preview = 1,
@@ -70,7 +70,7 @@ namespace Azure.Analytics.Share
     {
         protected ReceivedAssetsClient() { }
         public ReceivedAssetsClient(string endpoint, Azure.Core.TokenCredential credential) { }
-        public ReceivedAssetsClient(string endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Share.PurviewShareClientOptions options) { }
+        public ReceivedAssetsClient(string endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Purview.Share.PurviewShareClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Pageable<System.BinaryData> GetReceivedAssets(string receivedShareName, string skipToken = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetReceivedAssetsAsync(string receivedShareName, string skipToken = null, Azure.RequestContext context = null) { throw null; }
@@ -79,7 +79,7 @@ namespace Azure.Analytics.Share
     {
         protected ReceivedInvitationsClient() { }
         public ReceivedInvitationsClient(string endpoint, Azure.Core.TokenCredential credential) { }
-        public ReceivedInvitationsClient(string endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Share.PurviewShareClientOptions options) { }
+        public ReceivedInvitationsClient(string endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Purview.Share.PurviewShareClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response GetReceivedInvitation(string receivedInvitationName, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetReceivedInvitationAsync(string receivedInvitationName, Azure.RequestContext context = null) { throw null; }
@@ -92,7 +92,7 @@ namespace Azure.Analytics.Share
     {
         protected ReceivedSharesClient() { }
         public ReceivedSharesClient(string endpoint, Azure.Core.TokenCredential credential) { }
-        public ReceivedSharesClient(string endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Share.PurviewShareClientOptions options) { }
+        public ReceivedSharesClient(string endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Purview.Share.PurviewShareClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response Create(string receivedShareName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateAsync(string receivedShareName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
@@ -107,7 +107,7 @@ namespace Azure.Analytics.Share
     {
         protected SentShareInvitationsClient() { }
         public SentShareInvitationsClient(string endpoint, Azure.Core.TokenCredential credential) { }
-        public SentShareInvitationsClient(string endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Share.PurviewShareClientOptions options) { }
+        public SentShareInvitationsClient(string endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Purview.Share.PurviewShareClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response CreateOrUpdate(string sentShareName, string sentShareInvitationName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateAsync(string sentShareName, string sentShareInvitationName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
@@ -122,7 +122,7 @@ namespace Azure.Analytics.Share
     {
         protected SentSharesClient() { }
         public SentSharesClient(string endpoint, Azure.Core.TokenCredential credential) { }
-        public SentSharesClient(string endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Share.PurviewShareClientOptions options) { }
+        public SentSharesClient(string endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Purview.Share.PurviewShareClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response CreateOrUpdate(string sentShareName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateAsync(string sentShareName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }

@@ -10,7 +10,7 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.Analytics.Share.Tests
+namespace Azure.Analytics.Purview.Share.Tests
 {
     public class ShareClientTest : ShareClientTestBase
     {
