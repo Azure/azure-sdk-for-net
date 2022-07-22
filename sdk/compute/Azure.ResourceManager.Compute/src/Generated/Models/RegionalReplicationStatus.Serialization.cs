@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal static RegionalReplicationStatus DeserializeRegionalReplicationStatus(JsonElement element)
         {
             Optional<string> region = default;
-            Optional<ReplicationState> state = default;
+            Optional<RegionalReplicationState> state = default;
             Optional<string> details = default;
             Optional<int> progress = default;
             foreach (var property in element.EnumerateObject())
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    state = new ReplicationState(property.Value.GetString());
+                    state = new RegionalReplicationState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("details"))

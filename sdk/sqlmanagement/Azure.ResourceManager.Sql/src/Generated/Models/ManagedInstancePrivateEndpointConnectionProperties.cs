@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Initializes a new instance of ManagedInstancePrivateEndpointConnectionProperties. </summary>
         /// <param name="privateEndpoint"> Private endpoint which the connection belongs to. </param>
-        /// <param name="connectionState"> Connection State of the Private Endpoint Connection. </param>
+        /// <param name="privateLinkServiceConnectionState"> Connection State of the Private Endpoint Connection. </param>
         /// <param name="provisioningState"> State of the Private Endpoint Connection. </param>
-        internal ManagedInstancePrivateEndpointConnectionProperties(WritableSubResource privateEndpoint, ManagedInstancePrivateLinkServiceConnectionStateProperty connectionState, string provisioningState)
+        internal ManagedInstancePrivateEndpointConnectionProperties(WritableSubResource privateEndpoint, ManagedInstancePrivateLinkServiceConnectionStateProperty privateLinkServiceConnectionState, string provisioningState)
         {
             PrivateEndpoint = privateEndpoint;
-            ConnectionState = connectionState;
+            PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
             ProvisioningState = provisioningState;
         }
 
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Connection State of the Private Endpoint Connection. </summary>
-        public ManagedInstancePrivateLinkServiceConnectionStateProperty ConnectionState { get; }
+        public ManagedInstancePrivateLinkServiceConnectionStateProperty PrivateLinkServiceConnectionState { get; }
         /// <summary> State of the Private Endpoint Connection. </summary>
         public string ProvisioningState { get; }
     }

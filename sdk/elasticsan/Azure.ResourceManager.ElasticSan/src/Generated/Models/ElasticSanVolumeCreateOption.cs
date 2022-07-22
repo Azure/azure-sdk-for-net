@@ -5,18 +5,44 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.ResourceManager.ElasticSan.Models
 {
     /// <summary> This enumerates the possible sources of a volume creation. </summary>
-    public enum ElasticSanVolumeCreateOption
+    public readonly partial struct ElasticSanVolumeCreateOption : IEquatable<ElasticSanVolumeCreateOption>
     {
+        private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="ElasticSanVolumeCreateOption"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ElasticSanVolumeCreateOption(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        private const string NoneValue = "None";
+
         /// <summary> None. </summary>
-        None,
-        /// <summary> FromVolume. </summary>
-        FromElasticSanVolume,
-        /// <summary> FromDiskSnapshot. </summary>
-        FromDiskSnapshot,
-        /// <summary> Export. </summary>
-        Export
+        public static ElasticSanVolumeCreateOption None { get; } = new ElasticSanVolumeCreateOption(NoneValue);
+        /// <summary> Determines if two <see cref="ElasticSanVolumeCreateOption"/> values are the same. </summary>
+        public static bool operator ==(ElasticSanVolumeCreateOption left, ElasticSanVolumeCreateOption right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="ElasticSanVolumeCreateOption"/> values are not the same. </summary>
+        public static bool operator !=(ElasticSanVolumeCreateOption left, ElasticSanVolumeCreateOption right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="ElasticSanVolumeCreateOption"/>. </summary>
+        public static implicit operator ElasticSanVolumeCreateOption(string value) => new ElasticSanVolumeCreateOption(value);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is ElasticSanVolumeCreateOption other && Equals(other);
+        /// <inheritdoc />
+        public bool Equals(ElasticSanVolumeCreateOption other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        /// <inheritdoc />
+        public override string ToString() => _value;
     }
 }

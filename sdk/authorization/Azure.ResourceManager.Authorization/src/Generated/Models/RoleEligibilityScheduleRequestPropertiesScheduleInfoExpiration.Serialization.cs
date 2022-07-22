@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Authorization.Models
             if (Optional.IsDefined(Duration))
             {
                 writer.WritePropertyName("duration");
-                writer.WriteStringValue(Duration.Value, "c");
+                writer.WriteStringValue(Duration.Value, "P");
             }
             writer.WriteEndObject();
         }
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Authorization.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    duration = property.Value.GetTimeSpan("c");
+                    duration = property.Value.GetTimeSpan("P");
                     continue;
                 }
             }

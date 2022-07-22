@@ -9,6 +9,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Identity.Tests.Mock;
+using Microsoft.Identity.Client;
 using NUnit.Framework;
 
 namespace Azure.Identity.Tests
@@ -216,6 +217,25 @@ namespace Azure.Identity.Tests
             var token = await credential.GetTokenAsync(context);
 
             Assert.AreEqual(token.Token, expectedToken, "Should be the expected token value");
+        }
+
+        [Test]
+        public void VerifyMsalClientRegionalAuthority()
+        {
+            string[] authorities = { null, ConfidentialClientApplication.AttemptRegionDiscovery, "westus" };
+
+            foreach (string regionalAuthority in authorities)
+            {
+                using (new TestEnvVar("AZURE_REGIONAL_AUTHORITY_NAME", regionalAuthority))
+                {
+                    var expectedTenantId = Guid.NewGuid().ToString();
+                    var expectedClientId = Guid.NewGuid().ToString();
+                    var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
+
+                    var cred = new ClientCertificateCredential(expectedTenantId, expectedClientId, certificatePath);
+                    Assert.AreEqual(regionalAuthority, cred.Client.RegionalAuthority);
+                }
+            }
         }
     }
 }

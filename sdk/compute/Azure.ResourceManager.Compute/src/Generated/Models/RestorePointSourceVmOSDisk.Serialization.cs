@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<string> name = default;
             Optional<CachingType> caching = default;
             Optional<int> diskSizeGB = default;
-            Optional<ManagedDiskParameters> managedDisk = default;
+            Optional<VirtualMachineManagedDisk> managedDisk = default;
             Optional<WritableSubResource> diskRestorePoint = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    managedDisk = ManagedDiskParameters.DeserializeManagedDiskParameters(property.Value);
+                    managedDisk = VirtualMachineManagedDisk.DeserializeVirtualMachineManagedDisk(property.Value);
                     continue;
                 }
                 if (property.NameEquals("diskRestorePoint"))

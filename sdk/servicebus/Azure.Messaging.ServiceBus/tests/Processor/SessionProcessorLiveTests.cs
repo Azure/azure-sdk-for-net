@@ -141,6 +141,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                 async Task SessionInitHandler(ProcessSessionEventArgs args)
                 {
+                    Assert.AreEqual(processor.EntityPath, args.EntityPath);
+                    Assert.AreEqual(processor.FullyQualifiedNamespace, args.FullyQualifiedNamespace);
                     Interlocked.Increment(ref sessionOpenEventCt);
                     byte[] state = ServiceBusTestUtilities.GetRandomBuffer(100);
                     await args.SetSessionStateAsync(new BinaryData(state));
@@ -149,6 +151,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                 async Task SessionCloseHandler(ProcessSessionEventArgs args)
                 {
+                    Assert.AreEqual(processor.EntityPath, args.EntityPath);
+                    Assert.AreEqual(processor.FullyQualifiedNamespace, args.FullyQualifiedNamespace);
                     Interlocked.Increment(ref sessionCloseEventCt);
                     var setIndex = Interlocked.Increment(ref completionSourceIndex);
                     completionSources[setIndex].SetResult(true);
@@ -159,6 +163,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                 async Task ProcessMessage(ProcessSessionMessageEventArgs args)
                 {
+                    Assert.AreEqual(processor.EntityPath, args.EntityPath);
+                    Assert.AreEqual(processor.FullyQualifiedNamespace, args.FullyQualifiedNamespace);
                     var message = args.Message;
                     if (!autoComplete)
                     {
@@ -1786,7 +1792,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         [TestCase(1)]
         [TestCase(5)]
         [TestCase(10)]
-        public async Task CanCloseSession(int maxCallsPerSession)
+        public async Task CanReleaseSession(int maxCallsPerSession)
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
@@ -1853,6 +1859,72 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                 // verify all messages were autocompleted
                 await AsyncAssert.ThrowsAsync<ServiceBusException>(async () => await client.AcceptNextSessionAsync(scope.QueueName));
+            }
+        }
+
+        [Test]
+        [TestCase(1)]
+        [TestCase(5)]
+        [TestCase(10)]
+        public async Task CanReleaseAndRenewSessionDuringInitializationAndClosing(int maxCallsPerSession)
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
+            {
+                await using var client = CreateNoRetryClient();
+                var sender = client.CreateSender(scope.QueueName);
+                int messageCount = 10;
+
+                await sender.SendMessagesAsync(ServiceBusTestUtilities.GetMessages(messageCount, "sessionId"));
+
+                await using var processor = client.CreateSessionProcessor(scope.QueueName, new ServiceBusSessionProcessorOptions
+                {
+                    MaxConcurrentSessions = 1,
+                    MaxConcurrentCallsPerSession = maxCallsPerSession
+                });
+
+                var tcs = new TaskCompletionSource<bool>();
+
+                Task ProcessMessage(ProcessSessionMessageEventArgs args)
+                {
+                    throw new Exception("Should not be called");
+                }
+
+                async Task SessionOpenHandler(ProcessSessionEventArgs args)
+                {
+                    // verify we can renew the session lock
+                    await args.RenewSessionLockAsync();
+
+                    args.ReleaseSession();
+                }
+
+                async Task SessionCloseHandler(ProcessSessionEventArgs args)
+                {
+                    // verify we can renew the session lock
+                    await args.RenewSessionLockAsync();
+
+                    // this is basically a no-op since we are already closing the session. Ideally we wouldn't even have this on the session close handler,
+                    // but it is not worth introducing a separate type.
+                    args.ReleaseSession();
+                    tcs.TrySetResult(true);
+                }
+
+                processor.ProcessMessageAsync += ProcessMessage;
+                processor.ProcessErrorAsync += SessionErrorHandler;
+                processor.SessionClosingAsync += SessionCloseHandler;
+                processor.SessionInitializingAsync += SessionOpenHandler;
+
+                await processor.StartProcessingAsync();
+                await tcs.Task;
+                await processor.CloseAsync();
+
+                // verify all messages are still present
+                var receiver = await client.AcceptNextSessionAsync(scope.QueueName);
+                var remaining = messageCount;
+                while (remaining > 0)
+                {
+                    var messages = await receiver.ReceiveMessagesAsync(remaining);
+                    remaining -= messages.Count;
+                }
             }
         }
 

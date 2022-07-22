@@ -41,6 +41,82 @@ namespace Azure.AI.Language.Conversations
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call AnalyzeConversationAsync with required request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new AzureKeyCredential("<key>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ConversationAnalysisClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     kind = "Conversation",
+        ///     analysisInput = new {
+        ///         conversationItem = new {
+        ///             id = "<ConversationItemBaseId>",
+        ///             participantId = "<ConversationItemBaseParticipantId>",
+        ///             text = "<TextConversationItemText>",
+        ///         },
+        ///     },
+        ///     parameters = new {
+        ///         projectName = "<ConversationTaskParametersProjectName>",
+        ///         deploymentName = "<ConversationTaskParametersDeploymentName>",
+        ///     },
+        /// };
+        /// 
+        /// Response response = await client.AnalyzeConversationAsync(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("kind").ToString());
+        /// ]]></code>
+        /// This sample shows how to call AnalyzeConversationAsync with all request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new AzureKeyCredential("<key>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ConversationAnalysisClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     kind = "Conversation",
+        ///     analysisInput = new {
+        ///         conversationItem = new {
+        ///             id = "<ConversationItemBaseId>",
+        ///             participantId = "<ConversationItemBaseParticipantId>",
+        ///             language = "<ConversationItemBaseLanguage>",
+        ///             modality = "<transcript>",
+        ///             role = "<agent>",
+        ///             text = "<TextConversationItemText>",
+        ///         },
+        ///     },
+        ///     parameters = new {
+        ///         projectName = "<ConversationTaskParametersProjectName>",
+        ///         deploymentName = "<ConversationTaskParametersDeploymentName>",
+        ///         verbose = true,
+        ///         isLoggingEnabled = true,
+        ///         stringIndexType = "<Utf16CodeUnit>",
+        ///         directTarget = "<ConversationTaskParametersDirectTarget>",
+        ///         targetProjectParameters = new {
+        ///             key = new {
+        ///                 targetProjectKind = "Luis",
+        ///                 apiVersion = "<AnalysisParametersApiVersion>",
+        ///                 query = "<LuisParametersQuery>",
+        ///                 callingOptions = new {
+        ///                     verbose = true,
+        ///                     log = true,
+        ///                     show-all-intents = true,
+        ///                     timezoneOffset = 1234,
+        ///                     spellCheck = true,
+        ///                     bing-spell-check-subscription-key = "<LuisCallingOptionsBingSpellCheckSubscriptionKey>",
+        ///                 },
+        ///             },
+        ///         },
+        ///     },
+        /// };
+        /// 
+        /// Response response = await client.AnalyzeConversationAsync(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("kind").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
         /// 
@@ -55,6 +131,7 @@ namespace Azure.AI.Language.Conversations
         ///       participantId: string, # Required. The participant ID of a conversation item.
         ///       language: string, # Optional. The override language of a conversation item in BCP 47 language representation.
         ///       modality: &quot;transcript&quot; | &quot;text&quot;, # Optional. Enumeration of supported conversational modalities.
+        ///       role: &quot;agent&quot; | &quot;customer&quot; | &quot;generic&quot;, # Optional. The role of the participant.
         ///     }, # Required. The abstract base for a user input formatted conversation (e.g., Text, Transcript).
         ///   }, # Required. The input ConversationItem and its optional parameters
         ///   parameters: {
@@ -112,6 +189,82 @@ namespace Azure.AI.Language.Conversations
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call AnalyzeConversation with required request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new AzureKeyCredential("<key>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ConversationAnalysisClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     kind = "Conversation",
+        ///     analysisInput = new {
+        ///         conversationItem = new {
+        ///             id = "<ConversationItemBaseId>",
+        ///             participantId = "<ConversationItemBaseParticipantId>",
+        ///             text = "<TextConversationItemText>",
+        ///         },
+        ///     },
+        ///     parameters = new {
+        ///         projectName = "<ConversationTaskParametersProjectName>",
+        ///         deploymentName = "<ConversationTaskParametersDeploymentName>",
+        ///     },
+        /// };
+        /// 
+        /// Response response = client.AnalyzeConversation(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("kind").ToString());
+        /// ]]></code>
+        /// This sample shows how to call AnalyzeConversation with all request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new AzureKeyCredential("<key>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ConversationAnalysisClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     kind = "Conversation",
+        ///     analysisInput = new {
+        ///         conversationItem = new {
+        ///             id = "<ConversationItemBaseId>",
+        ///             participantId = "<ConversationItemBaseParticipantId>",
+        ///             language = "<ConversationItemBaseLanguage>",
+        ///             modality = "<transcript>",
+        ///             role = "<agent>",
+        ///             text = "<TextConversationItemText>",
+        ///         },
+        ///     },
+        ///     parameters = new {
+        ///         projectName = "<ConversationTaskParametersProjectName>",
+        ///         deploymentName = "<ConversationTaskParametersDeploymentName>",
+        ///         verbose = true,
+        ///         isLoggingEnabled = true,
+        ///         stringIndexType = "<Utf16CodeUnit>",
+        ///         directTarget = "<ConversationTaskParametersDirectTarget>",
+        ///         targetProjectParameters = new {
+        ///             key = new {
+        ///                 targetProjectKind = "Luis",
+        ///                 apiVersion = "<AnalysisParametersApiVersion>",
+        ///                 query = "<LuisParametersQuery>",
+        ///                 callingOptions = new {
+        ///                     verbose = true,
+        ///                     log = true,
+        ///                     show-all-intents = true,
+        ///                     timezoneOffset = 1234,
+        ///                     spellCheck = true,
+        ///                     bing-spell-check-subscription-key = "<LuisCallingOptionsBingSpellCheckSubscriptionKey>",
+        ///                 },
+        ///             },
+        ///         },
+        ///     },
+        /// };
+        /// 
+        /// Response response = client.AnalyzeConversation(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("kind").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
         /// 
@@ -126,6 +279,7 @@ namespace Azure.AI.Language.Conversations
         ///       participantId: string, # Required. The participant ID of a conversation item.
         ///       language: string, # Optional. The override language of a conversation item in BCP 47 language representation.
         ///       modality: &quot;transcript&quot; | &quot;text&quot;, # Optional. Enumeration of supported conversational modalities.
+        ///       role: &quot;agent&quot; | &quot;customer&quot; | &quot;generic&quot;, # Optional. The role of the participant.
         ///     }, # Required. The abstract base for a user input formatted conversation (e.g., Text, Transcript).
         ///   }, # Required. The input ConversationItem and its optional parameters
         ///   parameters: {
@@ -177,6 +331,826 @@ namespace Azure.AI.Language.Conversations
             }
         }
 
+        /// <summary> Get analysis status and results. </summary>
+        /// <param name="jobId"> Job ID. </param>
+        /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetAnalyzeConversationJobStatusAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new AzureKeyCredential("<key>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ConversationAnalysisClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetAnalyzeConversationJobStatusAsync(Guid.NewGuid());
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("jobId").ToString());
+        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call GetAnalyzeConversationJobStatusAsync with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new AzureKeyCredential("<key>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ConversationAnalysisClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetAnalyzeConversationJobStatusAsync(Guid.NewGuid(), true);
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("jobId").ToString());
+        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("lastUpdateDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("taskName").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("kind").ToString());
+        /// Console.WriteLine(result.GetProperty("statistics").GetProperty("transactionsCount").ToString());
+        /// Console.WriteLine(result.GetProperty("statistics").GetProperty("conversationsCount").ToString());
+        /// Console.WriteLine(result.GetProperty("statistics").GetProperty("validConversationsCount").ToString());
+        /// Console.WriteLine(result.GetProperty("statistics").GetProperty("erroneousConversationsCount").ToString());
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Get the status of an analysis job. A job may consist of one or more tasks. Once all tasks are succeeded, the job will transition to the succeeded state and results will be available for each task.
+        /// 
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AnalyzeConversationJobState</c>:
+        /// <code>{
+        ///   displayName: string, # Optional.
+        ///   createdDateTime: string (ISO 8601 Format), # Required.
+        ///   expirationDateTime: string (ISO 8601 Format), # Optional.
+        ///   jobId: string, # Required.
+        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;partiallyCompleted&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot;, # Required.
+        ///   errors: [
+        ///     {
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
+        ///       message: string, # Required. A human-readable representation of the error.
+        ///       target: string, # Optional. The target of the error.
+        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
+        ///       innererror: {
+        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
+        ///         message: string, # Required. Error message.
+        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
+        ///         target: string, # Optional. Error target.
+        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
+        ///       }, # Optional. An object containing more specific information than the current object about the error.
+        ///     }
+        ///   ], # Optional.
+        ///   nextLink: string, # Optional.
+        ///   tasks: {
+        ///     completed: number, # Required. Count of tasks completed successfully.
+        ///     failed: number, # Required. Count of tasks that failed.
+        ///     inProgress: number, # Required. Count of tasks in progress currently.
+        ///     total: number, # Required. Total count of tasks submitted as part of the job.
+        ///     items: [
+        ///       {
+        ///         lastUpdateDateTime: string (ISO 8601 Format), # Required. The last updated time in UTC for the task.
+        ///         status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot;, # Required. The status of the task at the mentioned last update time.
+        ///         taskName: string, # Optional.
+        ///         kind: &quot;ConversationalPIIResults&quot; | &quot;ConversationalSummarizationResults&quot;, # Required. Enumeration of supported Conversation Analysis task results.
+        ///       }
+        ///     ], # Optional. List of results from tasks (if available).
+        ///   }, # Required.
+        ///   statistics: {
+        ///     transactionsCount: number, # Required. Number of transactions for the request.
+        ///     conversationsCount: number, # Required. Number of conversations submitted in the request.
+        ///     validConversationsCount: number, # Required. Number of conversations documents. This excludes empty, over-size limit or non-supported languages documents.
+        ///     erroneousConversationsCount: number, # Required. Number of invalid documents. This includes empty, over-size limit or non-supported languages documents.
+        ///   }, # Optional. if showStats=true was specified in the request this field will contain information about the request payload.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> GetAnalyzeConversationJobStatusAsync(Guid jobId, bool? showStats = null, RequestContext context = null)
+        {
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisClient.GetAnalyzeConversationJobStatus");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetAnalyzeConversationJobStatusRequest(jobId, showStats, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get analysis status and results. </summary>
+        /// <param name="jobId"> Job ID. </param>
+        /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetAnalyzeConversationJobStatus with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new AzureKeyCredential("<key>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ConversationAnalysisClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetAnalyzeConversationJobStatus(Guid.NewGuid());
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("jobId").ToString());
+        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call GetAnalyzeConversationJobStatus with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new AzureKeyCredential("<key>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ConversationAnalysisClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetAnalyzeConversationJobStatus(Guid.NewGuid(), true);
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("jobId").ToString());
+        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("lastUpdateDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("taskName").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("kind").ToString());
+        /// Console.WriteLine(result.GetProperty("statistics").GetProperty("transactionsCount").ToString());
+        /// Console.WriteLine(result.GetProperty("statistics").GetProperty("conversationsCount").ToString());
+        /// Console.WriteLine(result.GetProperty("statistics").GetProperty("validConversationsCount").ToString());
+        /// Console.WriteLine(result.GetProperty("statistics").GetProperty("erroneousConversationsCount").ToString());
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Get the status of an analysis job. A job may consist of one or more tasks. Once all tasks are succeeded, the job will transition to the succeeded state and results will be available for each task.
+        /// 
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AnalyzeConversationJobState</c>:
+        /// <code>{
+        ///   displayName: string, # Optional.
+        ///   createdDateTime: string (ISO 8601 Format), # Required.
+        ///   expirationDateTime: string (ISO 8601 Format), # Optional.
+        ///   jobId: string, # Required.
+        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;partiallyCompleted&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot;, # Required.
+        ///   errors: [
+        ///     {
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
+        ///       message: string, # Required. A human-readable representation of the error.
+        ///       target: string, # Optional. The target of the error.
+        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
+        ///       innererror: {
+        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
+        ///         message: string, # Required. Error message.
+        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
+        ///         target: string, # Optional. Error target.
+        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
+        ///       }, # Optional. An object containing more specific information than the current object about the error.
+        ///     }
+        ///   ], # Optional.
+        ///   nextLink: string, # Optional.
+        ///   tasks: {
+        ///     completed: number, # Required. Count of tasks completed successfully.
+        ///     failed: number, # Required. Count of tasks that failed.
+        ///     inProgress: number, # Required. Count of tasks in progress currently.
+        ///     total: number, # Required. Total count of tasks submitted as part of the job.
+        ///     items: [
+        ///       {
+        ///         lastUpdateDateTime: string (ISO 8601 Format), # Required. The last updated time in UTC for the task.
+        ///         status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot;, # Required. The status of the task at the mentioned last update time.
+        ///         taskName: string, # Optional.
+        ///         kind: &quot;ConversationalPIIResults&quot; | &quot;ConversationalSummarizationResults&quot;, # Required. Enumeration of supported Conversation Analysis task results.
+        ///       }
+        ///     ], # Optional. List of results from tasks (if available).
+        ///   }, # Required.
+        ///   statistics: {
+        ///     transactionsCount: number, # Required. Number of transactions for the request.
+        ///     conversationsCount: number, # Required. Number of conversations submitted in the request.
+        ///     validConversationsCount: number, # Required. Number of conversations documents. This excludes empty, over-size limit or non-supported languages documents.
+        ///     erroneousConversationsCount: number, # Required. Number of invalid documents. This includes empty, over-size limit or non-supported languages documents.
+        ///   }, # Optional. if showStats=true was specified in the request this field will contain information about the request payload.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response GetAnalyzeConversationJobStatus(Guid jobId, bool? showStats = null, RequestContext context = null)
+        {
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisClient.GetAnalyzeConversationJobStatus");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetAnalyzeConversationJobStatusRequest(jobId, showStats, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Submit analysis job for conversations. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call StartAnalyzeConversationAsync with required parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new AzureKeyCredential("<key>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ConversationAnalysisClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     analysisInput = new {
+        ///         conversations = new[] {
+        ///             new {
+        ///                 id = "<ConversationId>",
+        ///                 language = "<ConversationLanguage>",
+        ///                 modality = "text",
+        ///                 conversationItems = new[] {
+        ///                     new {
+        ///                         id = "<ConversationItemBaseId>",
+        ///                         participantId = "<ConversationItemBaseParticipantId>",
+        ///                         text = "<TextConversationItemText>",
+        ///                     }
+        ///                 },
+        ///             }
+        ///         },
+        ///     },
+        ///     tasks = new[] {
+        ///         new {
+        ///             kind = "ConversationalPIITask",
+        ///         }
+        ///     },
+        /// };
+        /// 
+        /// var operation = await client.StartAnalyzeConversationAsync(WaitUntil.Completed, RequestContent.Create(data));
+        /// 
+        /// BinaryData data = await operation.WaitForCompletionAsync();
+        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("jobId").ToString());
+        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call StartAnalyzeConversationAsync with all parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new AzureKeyCredential("<key>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ConversationAnalysisClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     displayName = "<AnalyzeConversationJobsInputDisplayName>",
+        ///     analysisInput = new {
+        ///         conversations = new[] {
+        ///             new {
+        ///                 id = "<ConversationId>",
+        ///                 language = "<ConversationLanguage>",
+        ///                 modality = "text",
+        ///                 domain = "<finance>",
+        ///                 conversationItems = new[] {
+        ///                     new {
+        ///                         id = "<ConversationItemBaseId>",
+        ///                         participantId = "<ConversationItemBaseParticipantId>",
+        ///                         language = "<ConversationItemBaseLanguage>",
+        ///                         modality = "<transcript>",
+        ///                         role = "<agent>",
+        ///                         text = "<TextConversationItemText>",
+        ///                     }
+        ///                 },
+        ///             }
+        ///         },
+        ///     },
+        ///     tasks = new[] {
+        ///         new {
+        ///             kind = "ConversationalPIITask",
+        ///             taskName = "<TaskIdentifierTaskName>",
+        ///             parameters = new {
+        ///                 modelVersion = "<latest>",
+        ///                 loggingOptOut = false,
+        ///                 piiCategories = new[] {
+        ///                     "<Address>"
+        ///                 },
+        ///                 includeAudioRedaction = false,
+        ///                 redactionSource = "<lexical>",
+        ///             },
+        ///         }
+        ///     },
+        /// };
+        /// 
+        /// var operation = await client.StartAnalyzeConversationAsync(WaitUntil.Completed, RequestContent.Create(data));
+        /// 
+        /// BinaryData data = await operation.WaitForCompletionAsync();
+        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        /// Console.WriteLine(result.GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("jobId").ToString());
+        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("lastUpdateDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("taskName").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("kind").ToString());
+        /// Console.WriteLine(result.GetProperty("statistics").GetProperty("transactionsCount").ToString());
+        /// Console.WriteLine(result.GetProperty("statistics").GetProperty("conversationsCount").ToString());
+        /// Console.WriteLine(result.GetProperty("statistics").GetProperty("validConversationsCount").ToString());
+        /// Console.WriteLine(result.GetProperty("statistics").GetProperty("erroneousConversationsCount").ToString());
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Submit a collection of conversations for analysis. Specify one or more unique tasks to be executed.
+        /// 
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>AnalyzeConversationJobsInput</c>:
+        /// <code>{
+        ///   displayName: string, # Optional. Optional display name for the analysis job.
+        ///   analysisInput: {
+        ///     conversations: [
+        ///       {
+        ///         id: string, # Required. Unique identifier for the conversation.
+        ///         language: string, # Required. The language of the conversation item in BCP-47 format.
+        ///         modality: &quot;transcript&quot; | &quot;text&quot;, # Required. Enumeration of supported conversational modalities.
+        ///         domain: &quot;finance&quot; | &quot;healthcare&quot; | &quot;generic&quot;, # Optional. Enumeration of supported conversational domains.
+        ///       }
+        ///     ], # Required.
+        ///   }, # Required.
+        ///   tasks: [
+        ///     {
+        ///       taskName: string, # Optional.
+        ///       kind: &quot;ConversationalPIITask&quot; | &quot;ConversationalSummarizationTask&quot;, # Required. Enumeration of supported analysis tasks on a collection of conversations.
+        ///     }
+        ///   ], # Required. The set of tasks to execute on the input conversation.
+        /// }
+        /// </code>
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AnalyzeConversationJobState</c>:
+        /// <code>{
+        ///   displayName: string, # Optional.
+        ///   createdDateTime: string (ISO 8601 Format), # Required.
+        ///   expirationDateTime: string (ISO 8601 Format), # Optional.
+        ///   jobId: string, # Required.
+        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;partiallyCompleted&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot;, # Required.
+        ///   errors: [
+        ///     {
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
+        ///       message: string, # Required. A human-readable representation of the error.
+        ///       target: string, # Optional. The target of the error.
+        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
+        ///       innererror: {
+        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
+        ///         message: string, # Required. Error message.
+        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
+        ///         target: string, # Optional. Error target.
+        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
+        ///       }, # Optional. An object containing more specific information than the current object about the error.
+        ///     }
+        ///   ], # Optional.
+        ///   nextLink: string, # Optional.
+        ///   tasks: {
+        ///     completed: number, # Required. Count of tasks completed successfully.
+        ///     failed: number, # Required. Count of tasks that failed.
+        ///     inProgress: number, # Required. Count of tasks in progress currently.
+        ///     total: number, # Required. Total count of tasks submitted as part of the job.
+        ///     items: [
+        ///       {
+        ///         lastUpdateDateTime: string (ISO 8601 Format), # Required. The last updated time in UTC for the task.
+        ///         status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot;, # Required. The status of the task at the mentioned last update time.
+        ///         taskName: string, # Optional.
+        ///         kind: &quot;ConversationalPIIResults&quot; | &quot;ConversationalSummarizationResults&quot;, # Required. Enumeration of supported Conversation Analysis task results.
+        ///       }
+        ///     ], # Optional. List of results from tasks (if available).
+        ///   }, # Required.
+        ///   statistics: {
+        ///     transactionsCount: number, # Required. Number of transactions for the request.
+        ///     conversationsCount: number, # Required. Number of conversations submitted in the request.
+        ///     validConversationsCount: number, # Required. Number of conversations documents. This excludes empty, over-size limit or non-supported languages documents.
+        ///     erroneousConversationsCount: number, # Required. Number of invalid documents. This includes empty, over-size limit or non-supported languages documents.
+        ///   }, # Optional. if showStats=true was specified in the request this field will contain information about the request payload.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        internal virtual async Task<Operation<BinaryData>> StartAnalyzeConversationAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisClient.StartAnalyzeConversation");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateStartAnalyzeConversationRequest(content, context);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "ConversationAnalysisClient.StartAnalyzeConversation", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Submit analysis job for conversations. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call StartAnalyzeConversation with required parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new AzureKeyCredential("<key>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ConversationAnalysisClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     analysisInput = new {
+        ///         conversations = new[] {
+        ///             new {
+        ///                 id = "<ConversationId>",
+        ///                 language = "<ConversationLanguage>",
+        ///                 modality = "text",
+        ///                 conversationItems = new[] {
+        ///                     new {
+        ///                         id = "<ConversationItemBaseId>",
+        ///                         participantId = "<ConversationItemBaseParticipantId>",
+        ///                         text = "<TextConversationItemText>",
+        ///                     }
+        ///                 },
+        ///             }
+        ///         },
+        ///     },
+        ///     tasks = new[] {
+        ///         new {
+        ///             kind = "ConversationalPIITask",
+        ///         }
+        ///     },
+        /// };
+        /// 
+        /// var operation = client.StartAnalyzeConversation(WaitUntil.Completed, RequestContent.Create(data));
+        /// 
+        /// BinaryData data = operation.WaitForCompletion();
+        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("jobId").ToString());
+        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call StartAnalyzeConversation with all parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new AzureKeyCredential("<key>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ConversationAnalysisClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     displayName = "<AnalyzeConversationJobsInputDisplayName>",
+        ///     analysisInput = new {
+        ///         conversations = new[] {
+        ///             new {
+        ///                 id = "<ConversationId>",
+        ///                 language = "<ConversationLanguage>",
+        ///                 modality = "text",
+        ///                 domain = "<finance>",
+        ///                 conversationItems = new[] {
+        ///                     new {
+        ///                         id = "<ConversationItemBaseId>",
+        ///                         participantId = "<ConversationItemBaseParticipantId>",
+        ///                         language = "<ConversationItemBaseLanguage>",
+        ///                         modality = "<transcript>",
+        ///                         role = "<agent>",
+        ///                         text = "<TextConversationItemText>",
+        ///                     }
+        ///                 },
+        ///             }
+        ///         },
+        ///     },
+        ///     tasks = new[] {
+        ///         new {
+        ///             kind = "ConversationalPIITask",
+        ///             taskName = "<TaskIdentifierTaskName>",
+        ///             parameters = new {
+        ///                 modelVersion = "<latest>",
+        ///                 loggingOptOut = false,
+        ///                 piiCategories = new[] {
+        ///                     "<Address>"
+        ///                 },
+        ///                 includeAudioRedaction = false,
+        ///                 redactionSource = "<lexical>",
+        ///             },
+        ///         }
+        ///     },
+        /// };
+        /// 
+        /// var operation = client.StartAnalyzeConversation(WaitUntil.Completed, RequestContent.Create(data));
+        /// 
+        /// BinaryData data = operation.WaitForCompletion();
+        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        /// Console.WriteLine(result.GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("jobId").ToString());
+        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("lastUpdateDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("taskName").ToString());
+        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("kind").ToString());
+        /// Console.WriteLine(result.GetProperty("statistics").GetProperty("transactionsCount").ToString());
+        /// Console.WriteLine(result.GetProperty("statistics").GetProperty("conversationsCount").ToString());
+        /// Console.WriteLine(result.GetProperty("statistics").GetProperty("validConversationsCount").ToString());
+        /// Console.WriteLine(result.GetProperty("statistics").GetProperty("erroneousConversationsCount").ToString());
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Submit a collection of conversations for analysis. Specify one or more unique tasks to be executed.
+        /// 
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>AnalyzeConversationJobsInput</c>:
+        /// <code>{
+        ///   displayName: string, # Optional. Optional display name for the analysis job.
+        ///   analysisInput: {
+        ///     conversations: [
+        ///       {
+        ///         id: string, # Required. Unique identifier for the conversation.
+        ///         language: string, # Required. The language of the conversation item in BCP-47 format.
+        ///         modality: &quot;transcript&quot; | &quot;text&quot;, # Required. Enumeration of supported conversational modalities.
+        ///         domain: &quot;finance&quot; | &quot;healthcare&quot; | &quot;generic&quot;, # Optional. Enumeration of supported conversational domains.
+        ///       }
+        ///     ], # Required.
+        ///   }, # Required.
+        ///   tasks: [
+        ///     {
+        ///       taskName: string, # Optional.
+        ///       kind: &quot;ConversationalPIITask&quot; | &quot;ConversationalSummarizationTask&quot;, # Required. Enumeration of supported analysis tasks on a collection of conversations.
+        ///     }
+        ///   ], # Required. The set of tasks to execute on the input conversation.
+        /// }
+        /// </code>
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AnalyzeConversationJobState</c>:
+        /// <code>{
+        ///   displayName: string, # Optional.
+        ///   createdDateTime: string (ISO 8601 Format), # Required.
+        ///   expirationDateTime: string (ISO 8601 Format), # Optional.
+        ///   jobId: string, # Required.
+        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;partiallyCompleted&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot;, # Required.
+        ///   errors: [
+        ///     {
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;, # Required. One of a server-defined set of error codes.
+        ///       message: string, # Required. A human-readable representation of the error.
+        ///       target: string, # Optional. The target of the error.
+        ///       details: [Error], # Optional. An array of details about specific errors that led to this reported error.
+        ///       innererror: {
+        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;, # Required. One of a server-defined set of error codes.
+        ///         message: string, # Required. Error message.
+        ///         details: Dictionary&lt;string, string&gt;, # Optional. Error details.
+        ///         target: string, # Optional. Error target.
+        ///         innererror: InnerErrorModel, # Optional. An object containing more specific information than the current object about the error.
+        ///       }, # Optional. An object containing more specific information than the current object about the error.
+        ///     }
+        ///   ], # Optional.
+        ///   nextLink: string, # Optional.
+        ///   tasks: {
+        ///     completed: number, # Required. Count of tasks completed successfully.
+        ///     failed: number, # Required. Count of tasks that failed.
+        ///     inProgress: number, # Required. Count of tasks in progress currently.
+        ///     total: number, # Required. Total count of tasks submitted as part of the job.
+        ///     items: [
+        ///       {
+        ///         lastUpdateDateTime: string (ISO 8601 Format), # Required. The last updated time in UTC for the task.
+        ///         status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot;, # Required. The status of the task at the mentioned last update time.
+        ///         taskName: string, # Optional.
+        ///         kind: &quot;ConversationalPIIResults&quot; | &quot;ConversationalSummarizationResults&quot;, # Required. Enumeration of supported Conversation Analysis task results.
+        ///       }
+        ///     ], # Optional. List of results from tasks (if available).
+        ///   }, # Required.
+        ///   statistics: {
+        ///     transactionsCount: number, # Required. Number of transactions for the request.
+        ///     conversationsCount: number, # Required. Number of conversations submitted in the request.
+        ///     validConversationsCount: number, # Required. Number of conversations documents. This excludes empty, over-size limit or non-supported languages documents.
+        ///     erroneousConversationsCount: number, # Required. Number of invalid documents. This includes empty, over-size limit or non-supported languages documents.
+        ///   }, # Optional. if showStats=true was specified in the request this field will contain information about the request payload.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        internal virtual Operation<BinaryData> StartAnalyzeConversation(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisClient.StartAnalyzeConversation");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateStartAnalyzeConversationRequest(content, context);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "ConversationAnalysisClient.StartAnalyzeConversation", OperationFinalStateVia.Location, context, waitUntil);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Cancel a long-running Text Analysis conversations job. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="jobId"> Job ID. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <example>
+        /// This sample shows how to call CancelAnalyzeConversationJobAsync with required parameters.
+        /// <code><![CDATA[
+        /// var credential = new AzureKeyCredential("<key>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ConversationAnalysisClient(endpoint, credential);
+        /// 
+        /// var operation = await client.CancelAnalyzeConversationJobAsync(WaitUntil.Completed, Guid.NewGuid());
+        /// 
+        /// var response = await operation.WaitForCompletionResponseAsync();
+        /// Console.WriteLine(response.Status)
+        /// ]]></code>
+        /// </example>
+        /// <remarks> Cancel a long-running Text Analysis conversations job. </remarks>
+        public virtual async Task<Operation> CancelAnalyzeConversationJobAsync(WaitUntil waitUntil, Guid jobId, RequestContext context = null)
+        {
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisClient.CancelAnalyzeConversationJob");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCancelAnalyzeConversationJobRequest(jobId, context);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "ConversationAnalysisClient.CancelAnalyzeConversationJob", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Cancel a long-running Text Analysis conversations job. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="jobId"> Job ID. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <example>
+        /// This sample shows how to call CancelAnalyzeConversationJob with required parameters.
+        /// <code><![CDATA[
+        /// var credential = new AzureKeyCredential("<key>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new ConversationAnalysisClient(endpoint, credential);
+        /// 
+        /// var operation = client.CancelAnalyzeConversationJob(WaitUntil.Completed, Guid.NewGuid());
+        /// 
+        /// var response = operation.WaitForCompletionResponse();
+        /// Console.WriteLine(response.Status)
+        /// ]]></code>
+        /// </example>
+        /// <remarks> Cancel a long-running Text Analysis conversations job. </remarks>
+        public virtual Operation CancelAnalyzeConversationJob(WaitUntil waitUntil, Guid jobId, RequestContext context = null)
+        {
+            using var scope = ClientDiagnostics.CreateScope("ConversationAnalysisClient.CancelAnalyzeConversationJob");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCancelAnalyzeConversationJobRequest(jobId, context);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "ConversationAnalysisClient.CancelAnalyzeConversationJob", OperationFinalStateVia.Location, context, waitUntil);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         internal HttpMessage CreateAnalyzeConversationRequest(RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -194,7 +1168,65 @@ namespace Azure.AI.Language.Conversations
             return message;
         }
 
+        internal HttpMessage CreateStartAnalyzeConversationRequest(RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200202);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/analyze-conversations/jobs", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateGetAnalyzeConversationJobStatusRequest(Guid jobId, bool? showStats, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/analyze-conversations/jobs/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (showStats != null)
+            {
+                uri.AppendQuery("showStats", showStats.Value, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateCancelAnalyzeConversationJobRequest(Guid jobId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/analyze-conversations/jobs/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendPath(":cancel", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
         private static ResponseClassifier _responseClassifier200;
         private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
+        private static ResponseClassifier _responseClassifier200202;
+        private static ResponseClassifier ResponseClassifier200202 => _responseClassifier200202 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 202 });
+        private static ResponseClassifier _responseClassifier202;
+        private static ResponseClassifier ResponseClassifier202 => _responseClassifier202 ??= new StatusCodeClassifier(stackalloc ushort[] { 202 });
     }
 }

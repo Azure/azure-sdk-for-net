@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    public partial class DocumentCaption
+    internal partial class DocumentCaption
     {
         internal static DocumentCaption DeserializeDocumentCaption(JsonElement element)
         {

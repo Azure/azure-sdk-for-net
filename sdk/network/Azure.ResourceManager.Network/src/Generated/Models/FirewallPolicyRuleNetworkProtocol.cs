@@ -22,15 +22,15 @@ namespace Azure.ResourceManager.Network.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string TCPValue = "TCP";
-        private const string UDPValue = "UDP";
+        private const string TcpValue = "TCP";
+        private const string UdpValue = "UDP";
         private const string AnyValue = "Any";
         private const string IcmpValue = "ICMP";
 
         /// <summary> TCP. </summary>
-        public static FirewallPolicyRuleNetworkProtocol TCP { get; } = new FirewallPolicyRuleNetworkProtocol(TCPValue);
+        public static FirewallPolicyRuleNetworkProtocol Tcp { get; } = new FirewallPolicyRuleNetworkProtocol(TcpValue);
         /// <summary> UDP. </summary>
-        public static FirewallPolicyRuleNetworkProtocol UDP { get; } = new FirewallPolicyRuleNetworkProtocol(UDPValue);
+        public static FirewallPolicyRuleNetworkProtocol Udp { get; } = new FirewallPolicyRuleNetworkProtocol(UdpValue);
         /// <summary> Any. </summary>
         public static FirewallPolicyRuleNetworkProtocol Any { get; } = new FirewallPolicyRuleNetworkProtocol(AnyValue);
         /// <summary> ICMP. </summary>

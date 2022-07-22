@@ -28,21 +28,6 @@ namespace Azure.ResourceManager.EventHubs.Tests
             EventHubsNamespaceResource eHNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new EventHubsNamespaceData(DefaultLocation))).Value;
             _schemaGroupCollection = eHNamespace.GetEventHubsSchemaGroups();
         }
-        [TearDown]
-        public async Task ClearNamespaces()
-        {
-            //remove all namespaces under current resource group
-            if (_resourceGroup != null)
-            {
-                EventHubsNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubsNamespaces();
-                List<EventHubsNamespaceResource> namespaceList = await namespaceCollection.GetAllAsync().ToEnumerableAsync();
-                foreach (EventHubsNamespaceResource eventHubNamespace in namespaceList)
-                {
-                    await eventHubNamespace.DeleteAsync(WaitUntil.Completed);
-                }
-                _resourceGroup = null;
-            }
-        }
 
         [Test]
         [RecordedTest]
@@ -53,7 +38,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             string schemaGroupName = Recording.GenerateAssetName("schemagroup");
             EventHubsSchemaGroupData parameters = new EventHubsSchemaGroupData()
             {
-                SchemaType = SchemaType.Avro
+                SchemaType = EventHubsSchemaType.Avro
             };
             EventHubsSchemaGroupResource schemaGroup = (await _schemaGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, schemaGroupName, parameters)).Value;
             Assert.NotNull(schemaGroup);
@@ -81,7 +66,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             string schemaGroupName1 = Recording.GenerateAssetName("schemagroup1");
             EventHubsSchemaGroupData parameters = new EventHubsSchemaGroupData()
             {
-                SchemaType = SchemaType.Avro
+                SchemaType = EventHubsSchemaType.Avro
             };
             _ = (await _schemaGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, schemaGroupName1, parameters)).Value;
 
