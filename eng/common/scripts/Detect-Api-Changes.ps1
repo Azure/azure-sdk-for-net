@@ -27,6 +27,7 @@ function Submit-Request($filePath, $packageName)
     if (!$repoName) {
         $repoName = "azure/azure-sdk-for-$LanguageShort"
     }
+    $reviewFileName = "$($packageName)_$($LanguageShort).json"
     $query = [System.Web.HttpUtility]::ParseQueryString('')
     $query.Add('artifactName', $ArtifactName)
     $query.Add('buildId', $BuildId)
@@ -35,6 +36,12 @@ function Submit-Request($filePath, $packageName)
     $query.Add('repoName', $repoName)
     $query.Add('pullRequestNumber', $PullRequestNumber)
     $query.Add('packageName', $packageName)
+    $query.Add('language', $LanguageShort)
+    $reviewFileFullName = Join-Path -Path $ArtifactPath $packageName $reviewFileName
+    if (Test-Path $reviewFileFullName)
+    {
+        $query.Add('codeFile', $reviewFileName)
+    }
     $uri = [System.UriBuilder]$APIViewUri
     $uri.query = $query.toString()
     Write-Host "Request URI: $($uri.Uri.OriginalString)"
