@@ -1,4 +1,26 @@
 #Requires -Version 7.0
+<#
+.SYNOPSIS
+script for azure-sdk-for-net CI check in Unified Pipeline
+
+.DESCRIPTION
+Automatically generate and verify the SDK for both management-plane and data-plane.
+Unified pipeline will run this script.
+
+.PARAMETER inputJsonFile
+Path to the input json file to contain all the input paramters.
+
+.PARAMETER outputJsonFile
+Path to the script output json file.
+
+.EXAMPLE
+Run script with default parameters.
+
+Invoke-GenerateAndBuildV2.ps1 -inputJsonFile <inputJsonFile> -outputJsonFile <outputJsonFile>
+
+please refer to eng/scripts/automation/unified-pipeline-test.md for more test scenaros and the sample inputJson and outputJson.
+
+#>
 param (
   [string]$inputJsonFile,
   [string]$outputJsonFile
@@ -9,7 +31,9 @@ param (
 
 $inputJson = Get-Content $inputJsonFile | Out-String | ConvertFrom-Json
 $swaggerDir = $inputJson.specFolder
-$swaggerDir = Resolve-Path $swaggerDir
+if($swaggerDir) {
+    $swaggerDir = Resolve-Path $swaggerDir
+}
 $swaggerDir = $swaggerDir -replace "\\", "/"
 [string[]] $inputFilePaths = $inputJson.changedFiles;
 $readmeFiles = $inputJson.relatedReadmeMdFiles

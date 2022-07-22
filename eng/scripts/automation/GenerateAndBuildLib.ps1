@@ -3,12 +3,11 @@ $CI_YAML_FILE = "ci.yml"
 
 . (Join-Path $PSScriptRoot ".." ".." "common" "scripts" "Helpers" PSModule-Helpers.ps1)
 
-#mgmt: resourceProvider to sdk package name map
+#mgmt: swagger directory name to sdk directory name map
 $packageNameHash = [ordered]@{"vmware" = "avs"; 
     "azure-kusto" = "kusto";
     "cosmos-db" = "cosmosdb";
     "customer-insights" = "customerinsights";
-    "monitor" = "insights";
     "msi" = "managedserviceidentity";
     "web" = "appservice"
 }
@@ -48,6 +47,37 @@ function Get-SwaggerInfo()
     exit 1
 }
 
+<#
+.SYNOPSIS
+create or update the autorest config file for sdk (autorest.md)
+
+.DESCRIPTION
+1. update input-file or require block according to the input parameter. If readme parameter is provided, autorest.md will 
+contain only require block, if input-file parameter is provided, autorest.md will contain only require block.
+2. merge the autorestConfig to the autorest.md
+
+.PARAMETER autorestFilePath
+Path to the sdk autorest config file (autorest.md).
+
+.PARAMETER namespace
+The service namespace, it is equal to the SDK package folder name.
+
+.PARAMETER inputfile
+Paths to input-file.
+e.g http://***/*.json for one input-file.
+If more than one input-file path provided, please write as followin:
+- http://****/*.json
+- http://****/**.json
+
+.PARAMETER readme
+Path to readme file. If readme is provided, we will ignore inputfile parameter.
+
+.EXAMPLE
+Call function with default parameters.
+
+CreateOrUpdateAutorestConfigFile -autorestFilePath <autorestFilePath> -namespace <namespace>
+
+#>
 function CreateOrUpdateAutorestConfigFile() {
     param (
         [string]$autorestFilePath,
@@ -57,11 +87,15 @@ function CreateOrUpdateAutorestConfigFile() {
         [string]$autorestConfigYaml = ""
     )
 
-    if ((Test-Path -Path $autorestFilePath) -and (![String]::IsNullOrWhiteSpace((Get-Content -Path $autorestFilePath)))) {
+    $fileContent = ""
+    if (Test-Path -Path $autorestFilePath) {
+        $fileContent = Get-Content -Path $autorestFilePath
+    }
+    if (![String]::IsNullOrWhiteSpace($fileContent)) {
         if (($readme -ne "") -or ($inputfile -ne "")) {
             $requirRex = "require.*:.*";
             $inputfileRex = "input-file.*:.*"
-            $fileContent = Get-Content -Path $autorestFilePath
+
             # clear
             $fileContent = $fileContent -notmatch $requirRex
             $fileContent = $fileContent -notmatch "- .*.md"
@@ -110,10 +144,10 @@ function CreateOrUpdateAutorestConfigFile() {
                 }
                 $match = ($fileContent | Select-String -Pattern $key).LineNumber
                 if ($match.count -gt 0) {
-                    $fileContent[$match[0] - 1] = $key + ":" + $yml[$key];
+                    $fileContent[$match[0] - 1] = $key + ": " + $yml[$key];
                 } else {
                     $startNum = ($fileContent | Select-String -Pattern '```').LineNumber[0]
-                    $fileContent[$startNum - 1] += ([Environment]::NewLine + $key + ":" + $yml[$key])
+                    $fileContent[$startNum - 1] += ([Environment]::NewLine + $key + ": " + $yml[$key])
                 }
             }
 
@@ -153,6 +187,12 @@ function Update-CIYmlFile() {
     }
 }
 
+<#
+.SYNOPSIS
+Prepare the SDK pacakge for data-plane.
+If it does not exist, create SDK package via dotnet template, or update the autorest.md if it already exists.
+
+#>
 function New-DataPlanePackageFolder() {
   param(
       [string]$service,
@@ -265,6 +305,12 @@ function New-DataPlanePackageFolder() {
   return $projectFolder
 }
 
+<#
+.SYNOPSIS
+Prepare the SDK pacakge for mangement-plane.
+If it does not exist, create SDK package via dotnet template, or update the autorest.md if it already exists.
+
+#>
 function New-MgmtPackageFolder() {
     param(
         [string]$service = "",
@@ -323,29 +369,7 @@ function New-MgmtPackageFolder() {
   
     return $projectFolder
 }
-function Invoke-Generate() {
-    param(
-        [string]$sdkfolder= ""
-    )
-    $sdkfolder = $sdkfolder -replace "\\", "/"
-    dotnet build /t:GenerateCode  $sdkfolder/src
-}
 
-function Invoke-Build() {
-    param(
-        [string]$sdkfolder= ""
-    )
-    $sdkfolder = $sdkfolder -replace "\\", "/"
-    dotnet build $sdkfolder
-}
-
-function Invoke-Pack() {
-    param(
-        [string]$sdkfolder= ""
-    )
-    $sdkfolder = $sdkfolder -replace "\\", "/"
-    dotnet pack $sdkfolder /p:RunApiCompat=$false
-}
 function Get-ResourceProviderFromReadme($readmeFile) {
     $readmeFile = $readmeFile -replace "\\", "/"
     $pathArray = $readmeFile.Split("/");
@@ -362,6 +386,34 @@ function Get-ResourceProviderFromReadme($readmeFile) {
     return $specName, $serviceType
 }
 
+<#
+.SYNOPSIS
+Generate and Build SDK via readme.md configuration file.
+
+.DESCRIPTION
+Generate and Build SDK for a service by readme.md file.
+
+.PARAMETER readmeAbsolutePath
+The absolute Path to the readme.md configuration file.
+
+.PARAMETER sdkRootPath
+Path to the root directory of azure-sdk-for-net repo.
+
+.PARAMETER autorestConfigYaml
+The autorest config string in yaml format
+
+.PARAMETER downloadUrlPrefix
+The download url prefix
+
+.PARAMETER generatedSDKPackages
+The out parameter which will store the genarated package information. It is an object array.
+
+.EXAMPLE
+Run script with default parameters.
+
+Invoke-GenerateAndBuildSDK -readmeAbsolutePath <path-to-readme> -sdkRootPath <path-to-sdk-root-directory> -generatedSDKPackages <package-object-list>
+
+#>
 function Invoke-GenerateAndBuildSDK () {
     param(
         [string]$readmeAbsolutePath,
@@ -427,7 +479,9 @@ function Invoke-GenerateAndBuildSDK () {
             $packagesToGen = $packagesToGen + @($newPackageOutputJson)
             Remove-Item $newPackageOutput
         } else {
+            # handle scenaro: multiple SDK packages one md file.
             npx autorest --version=3.8.4 --csharp $readmeFile --csharp-sdks-folder=$sdkRootPath --skip-csproj --clear-output-folder=true
+            # handle the sdk package already exists. The service may be onboarded before.
             $serviceSDKDirectory = (Join-Path $sdkRootPath "sdk" $service)
             $folders = Get-ChildItem $serviceSDKDirectory -Directory -exclude *.*Management*,Azure.ResourceManager*
             foreach ($item in $folders) {
@@ -479,53 +533,53 @@ function GeneratePackage()
 
     # Generate Code
     Write-Host "Start to generate sdk $projectFolder"
-    Invoke-Generate -sdkfolder $projectFolder
+    $srcPath = Join-Path $projectFolder 'src'
+    dotnet build /t:GenerateCode $srcPath
     if ( !$?) {
         Write-Error "Failed to generate sdk. exit code: $?"
         $result = "failed"
     } else {
         # Build
         Write-Host "Start to build sdk: $projectFolder"
-        Invoke-Build -sdkfolder $projectFolder
+        dotnet build $projectFolder
         if ( !$? ) {
             Write-Error "Failed to build sdk. exit code: $?"
             $result = "failed"
-        } else {
-            # pack
-            Write-Host "Start to pack sdk"
-            Invoke-Pack -sdkfolder $projectFolder
-            if ( !$? ) {
-                Write-Error "Failed to packe sdk. exit code: $?"
-            }
-            # Generate APIs
-            Write-Host "Start to export api for $service"
-            & $sdkRootPath/eng/scripts/Export-API.ps1 $service
-            if ( !$? ) {
-                Write-Error "Failed to export api for sdk. exit code: $?"
-            }
-            # breaking change validation
-            $srcPath = Join-Path $projectFolder 'src'
-            Write-Host "Start to validate breaking change. srcPath:$srcPath"
-            $logFilePath = Join-Path "$srcPath" 'log.txt'
-            if (!(Test-Path $logFilePath)) {
-                New-Item $logFilePath
-            }
-            dotnet build "$srcPath" /t:RunApiCompat /p:TargetFramework=netstandard2.0 /flp:v=m`;LogFile=$logFilePath
-            if (!$LASTEXITCODE) {
-                $hasBreakingChange = $false
-            }
-            else {
-                $logFile = Get-Content -Path $logFilePath | select-object -skip 2
-                $breakingChanges = $logFile -join ",`n"
-                $content = "Breaking Changes: $breakingChanges"
-                $hasBreakingChange = $true
-            }
-
-            if (Test-Path $logFilePath) {
-                Remove-Item $logFilePath
-            }
+        }
+        # pack
+        Write-Host "Start to pack sdk"
+        dotnet pack $projectFolder /p:RunApiCompat=$false
+        if ( !$? ) {
+            Write-Error "Failed to packe sdk. exit code: $?"
+            $result = "failed"
+        }
+        # Generate APIs
+        Write-Host "Start to export api for $service"
+        & $sdkRootPath/eng/scripts/Export-API.ps1 $service
+        if ( !$? ) {
+            Write-Error "Failed to export api for sdk. exit code: $?"
+            $result = "failed"
+        }
+        # breaking change validation
+        Write-Host "Start to validate breaking change. srcPath:$srcPath"
+        $logFilePath = Join-Path "$srcPath" 'log.txt'
+        if (!(Test-Path $logFilePath)) {
+            New-Item $logFilePath
+        }
+        dotnet build "$srcPath" /t:RunApiCompat /p:TargetFramework=netstandard2.0 /flp:v=m`;LogFile=$logFilePath
+        if (!$LASTEXITCODE) {
+            $hasBreakingChange = $false
+        }
+        else {
+            $logFile = Get-Content -Path $logFilePath | select-object -skip 2
+            $breakingChanges = $logFile -join ",`n"
+            $content = "Breaking Changes: $breakingChanges"
+            $hasBreakingChange = $true
         }
 
+        if (Test-Path $logFilePath) {
+            Remove-Item $logFilePath
+        }
     }
     
     $changelog = [PSCustomObject]@{
