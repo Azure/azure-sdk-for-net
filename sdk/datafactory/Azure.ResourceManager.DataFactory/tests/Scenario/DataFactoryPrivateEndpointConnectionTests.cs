@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
         [Ignore("Must be manually operate.Error: Private Endpoint connection is requesting a status change for 'Approved', while current status is: 'Approved'.")]
         public async Task CreateOrUpdate()
         {
-            string dataFactoryName = SessionRecording.GenerateAssetName("DataFactory-");
+            string dataFactoryName = Recording.GenerateAssetName("DataFactory-");
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             var resourceGroup = await CreateResourceGroup(subscription, "DataFactory-RG-", AzureLocation.WestUS2);
             var dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);

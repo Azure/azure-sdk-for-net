@@ -16,58 +16,80 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
 {
     internal class LinkedServiceResourceTests : DataFactoryManagementTestBase
     {
-        private ResourceIdentifier _dataFactoryIdentifier;
+        private const string _accessKey = "DefaultEndpointsProtocol=https;AccountName=220722datafactory;EndpointSuffix=core.windows.net;AccountKey=th4S/DG4Cz8uq1vbv8a8ooRZqKk+TLmsgSKb004bgen/4epF+E8wYhzFp0pv3PbRF5dy8SDgwHdI+AStU7Ejbw==;";
         private DataFactoryResource _dataFactory;
         public LinkedServiceResourceTests(bool isAsync) : base(isAsync)
         {
         }
 
-        [OneTimeSetUp]
-        public async Task GlobalSetUp()
-        {
-            string rgName = SessionRecording.GenerateAssetName("DataFactory-RG-");
-            string dataFactoryName = SessionRecording.GenerateAssetName("DataFactory-");
-            rgName = "datafactory-rg-custom-0000";
-            dataFactoryName = "datafactory-custom-0000";
-            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(AzureLocation.WestUS2));
-            var dataFactoryLro = await CreateDataFactory(rgLro.Value, dataFactoryName);
-            _dataFactoryIdentifier = dataFactoryLro.Id;
-            await StopSessionRecordingAsync();
-        }
-
         [SetUp]
         public async Task TestSetUp()
         {
-            _dataFactory = await Client.GetDataFactoryResource(_dataFactoryIdentifier).GetAsync();
+            string dataFactoryName = Recording.GenerateAssetName("DataFactory-");
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            var resourceGroup = await CreateResourceGroup(subscription, "DataFactory-RG-", AzureLocation.WestUS2);
+            _dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
         }
 
         [Test]
         [RecordedTest]
+        [PlaybackOnly("Add ref Storage mgmt package. Temporarily use a known AccessKey instead")]
+        public async Task CreateOrUpdate()
+        {
+            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
+            var linkedService = await CreateLinkedService(_dataFactory, linkedServiceName, _accessKey);
+            Assert.IsNotNull(linkedService);
+            Assert.AreEqual(linkedServiceName, linkedService.Data.Name);
+        }
+
+        [Test]
+        [RecordedTest]
+        [PlaybackOnly("Add ref Storage mgmt package. Temporarily use a known AccessKey instead")]
+        public async Task Exist()
+        {
+            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
+            await CreateLinkedService(_dataFactory, linkedServiceName, _accessKey);
+            bool flag = await _dataFactory.GetLinkedServiceResources().ExistsAsync(linkedServiceName);
+            Assert.IsTrue(flag);
+        }
+
+        [Test]
+        [RecordedTest]
+        [PlaybackOnly("Add ref Storage mgmt package. Temporarily use a known AccessKey instead")]
+        public async Task Get()
+        {
+            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
+            await CreateLinkedService(_dataFactory, linkedServiceName, _accessKey);
+            var linkedService = await _dataFactory.GetLinkedServiceResources().GetAsync(linkedServiceName);
+            Assert.IsNotNull(linkedService);
+            Assert.AreEqual(linkedServiceName, linkedService.Value.Data.Name);
+        }
+
+        [Test]
+        [RecordedTest]
+        [PlaybackOnly("Add ref Storage mgmt package. Temporarily use a known AccessKey instead")]
         public async Task GetAll()
         {
+            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
+            await CreateLinkedService(_dataFactory, linkedServiceName, _accessKey);
             var list = await _dataFactory.GetLinkedServiceResources().GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
+            Assert.AreEqual(1, list.Count);
+        }
 
-            System.Console.WriteLine(list[2].Data.Properties);
+        [Test]
+        [RecordedTest]
+        [PlaybackOnly("Add ref Storage mgmt package. Temporarily use a known AccessKey instead")]
+        public async Task Delete()
+        {
+            string linkedServiceName = Recording.GenerateAssetName("LinkedService");
+            var linkedService = await CreateLinkedService(_dataFactory, linkedServiceName, _accessKey);
+            bool flag = await _dataFactory.GetLinkedServiceResources().ExistsAsync(linkedServiceName);
+            Assert.IsTrue(flag);
 
-            string key = "th4S/DG4Cz8uq1vbv8a8ooRZqKk+TLmsgSKb004bgen/4epF+E8wYhzFp0pv3PbRF5dy8SDgwHdI+AStU7Ejbw==";
-
-            LinkedService linkedService = new LinkedService()
-            {
-                LinkedServiceType = "AzureBlobStorage",
-            };
-            KeyValuePair<string, ParameterSpecification> dic = new KeyValuePair<string, ParameterSpecification>(
-                "connectionString",
-                new ParameterSpecification(ParameterType.SecureString)
-                {
-                    //DefaultValue = new BinaryData("DefaultEndpointsProtocol=https;AccountName=storagefordatafac220721;EndpointSuffix=core.windows.net;")
-                    //DefaultValue = new BinaryData("{\"connectionString\":\"DefaultEndpointsProtocol=https;AccountName=storagefordatafac220721;EndpointSuffix=core.windows.net;\"}")
-                    DefaultValue = $"DefaultEndpointsProtocol=https;AccountName=220722datafactory;AccountKey={key}"
-                });
-            linkedService.Parameters.Add(dic);
-            //linkedService.AdditionalProperties.Add(dic);
-            LinkedServiceResourceData data = new LinkedServiceResourceData(linkedService);
-            await _dataFactory.GetLinkedServiceResources().CreateOrUpdateAsync(WaitUntil.Completed, "link4", data);
+            await linkedService.DeleteAsync(WaitUntil.Completed);
+            flag = await _dataFactory.GetLinkedServiceResources().ExistsAsync(linkedServiceName);
+            Assert.IsFalse(flag);
         }
     }
 }
