@@ -59,11 +59,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ConnectionString);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(ConnectionString.ToString()).RootElement);
-#endif
+                writer.WriteStringValue(ConnectionString);
             }
             if (Optional.IsDefined(Server))
             {
@@ -149,7 +145,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> description = default;
             Optional<IDictionary<string, ParameterSpecification>> parameters = default;
             Optional<IList<BinaryData>> annotations = default;
-            Optional<BinaryData> connectionString = default;
+            Optional<string> connectionString = default;
             Optional<BinaryData> server = default;
             Optional<BinaryData> database = default;
             Optional<Db2AuthenticationType> authenticationType = default;
@@ -223,12 +219,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("connectionString"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            connectionString = BinaryData.FromString(property0.Value.GetRawText());
+                            connectionString = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("server"))

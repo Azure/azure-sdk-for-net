@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="connectionMode"> The connection mode used to access CosmosDB account. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
         /// <param name="credential"> The credential reference containing authentication information. </param>
-        internal CosmosDbLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData connectionString, BinaryData accountEndpoint, BinaryData database, SecretBase accountKey, BinaryData servicePrincipalId, CosmosDbServicePrincipalCredentialType? servicePrincipalCredentialType, SecretBase servicePrincipalCredential, BinaryData tenant, BinaryData azureCloudType, CosmosDbConnectionMode? connectionMode, BinaryData encryptedCredential, CredentialReference credential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal CosmosDbLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, string connectionString, BinaryData accountEndpoint, BinaryData database, SecretBase accountKey, BinaryData servicePrincipalId, CosmosDbServicePrincipalCredentialType? servicePrincipalCredentialType, SecretBase servicePrincipalCredential, BinaryData tenant, BinaryData azureCloudType, CosmosDbConnectionMode? connectionMode, BinaryData encryptedCredential, CredentialReference credential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             ConnectionString = connectionString;
             AccountEndpoint = accountEndpoint;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
-        public BinaryData ConnectionString { get; set; }
+        public string ConnectionString { get; set; }
         /// <summary> The endpoint of the Azure CosmosDB account. Type: string (or Expression with resultType string). </summary>
         public BinaryData AccountEndpoint { get; set; }
         /// <summary> The name of the database. Type: string (or Expression with resultType string). </summary>
