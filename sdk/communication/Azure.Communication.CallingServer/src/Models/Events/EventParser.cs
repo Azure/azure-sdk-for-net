@@ -30,9 +30,9 @@ namespace Azure.Communication.CallingServer
 
             internal const string AddParticipantsFailedEventType = "Microsoft.Communication.AddParticipantsFailed";
 
-            internal const string TransferCallAcceptedEventType = "Microsoft.Communication.TransferCallAccepted";
+            internal const string CallTransferAcceptedEventType = "Microsoft.Communication.CallTransferAccepted";
 
-            internal const string TransferCallFailedEventType = "Microsoft.Communication.TransferCallFailed";
+            internal const string CallTransferFailedEventType = "Microsoft.Communication.CallTransferFailed";
         }
         #endregion
 
@@ -62,11 +62,11 @@ namespace Azure.Communication.CallingServer
                 {
                     return CallDisconnectedEvent.Deserialize(cloudEvent.Data.ToString());
                 }
-                else if (cloudEvent.Type.Equals(EventTypes.TransferCallAcceptedEventType))
+                else if (cloudEvent.Type.Equals(EventTypes.CallTransferAcceptedEventType))
                 {
                     return CallTransferAcceptedEvent.Deserialize(cloudEvent.Data.ToString());
                 }
-                else if (cloudEvent.Type.Equals(EventTypes.TransferCallFailedEventType))
+                else if (cloudEvent.Type.Equals(EventTypes.CallTransferFailedEventType))
                 {
                     return CallTransferFailedEvent.Deserialize(cloudEvent.Data.ToString());
                 }
