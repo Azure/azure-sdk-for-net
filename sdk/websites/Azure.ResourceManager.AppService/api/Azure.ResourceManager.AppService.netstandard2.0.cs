@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.AppService
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.DiagnosticInfo> Dataset { get { throw null; } }
         public string Kind { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.DetectorInfo Metadata { get { throw null; } set { } }
-        public Azure.ResourceManager.AppService.Models.StatusInfo Status { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.AppServiceStatusInfo Status { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.QueryUtterancesResults SuggestedUtterances { get { throw null; } set { } }
     }
     public partial class AppServiceDomainCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppService.AppServiceDomainResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.AppServiceDomainResource>, System.Collections.IEnumerable
@@ -4717,6 +4717,12 @@ namespace Azure.ResourceManager.AppService.Models
         public static bool operator !=(Azure.ResourceManager.AppService.Models.AppServiceSkuName left, Azure.ResourceManager.AppService.Models.AppServiceSkuName right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class AppServiceStatusInfo
+    {
+        public AppServiceStatusInfo() { }
+        public string Message { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.InsightStatus? StatusId { get { throw null; } set { } }
+    }
     public partial class AppServiceUsage : Azure.ResourceManager.Models.ResourceData
     {
         public AppServiceUsage() { }
@@ -7103,8 +7109,8 @@ namespace Azure.ResourceManager.AppService.Models
     public partial class SnapshotRestoreRequest : Azure.ResourceManager.Models.ResourceData
     {
         public SnapshotRestoreRequest() { }
+        public bool? EnabledOverwrite { get { throw null; } set { } }
         public bool? IsIgnoreConflictingHostNames { get { throw null; } set { } }
-        public bool? IsOverwrite { get { throw null; } set { } }
         public bool? IsRecoverConfiguration { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.SnapshotRecoverySource RecoverySource { get { throw null; } set { } }
@@ -7317,12 +7323,6 @@ namespace Azure.ResourceManager.AppService.Models
         public string Path { get { throw null; } set { } }
         public string StatusCodes { get { throw null; } set { } }
         public string TimeInterval { get { throw null; } set { } }
-    }
-    public partial class StatusInfo
-    {
-        public StatusInfo() { }
-        public string Message { get { throw null; } set { } }
-        public Azure.ResourceManager.AppService.Models.InsightStatus? StatusId { get { throw null; } set { } }
     }
     public enum StatusOption
     {

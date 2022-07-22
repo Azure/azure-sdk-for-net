@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class StatusInfo : IUtf8JsonSerializable
+    public partial class AppServiceStatusInfo : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteEndObject();
         }
 
-        internal static StatusInfo DeserializeStatusInfo(JsonElement element)
+        internal static AppServiceStatusInfo DeserializeAppServiceStatusInfo(JsonElement element)
         {
             Optional<string> message = default;
             Optional<InsightStatus> statusId = default;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new StatusInfo(message.Value, Optional.ToNullable(statusId));
+            return new AppServiceStatusInfo(message.Value, Optional.ToNullable(statusId));
         }
     }
 }

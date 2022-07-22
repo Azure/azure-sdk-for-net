@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="dataProvidersMetadata"> Additional configuration for different data providers to be used by the UI. </param>
         /// <param name="suggestedUtterances"> Suggested utterances where the detector can be applicable. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal AppServiceDetectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DetectorInfo metadata, IList<DiagnosticInfo> dataset, StatusInfo status, IList<DataProviderMetadata> dataProvidersMetadata, QueryUtterancesResults suggestedUtterances, string kind) : base(id, name, resourceType, systemData)
+        internal AppServiceDetectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DetectorInfo metadata, IList<DiagnosticInfo> dataset, AppServiceStatusInfo status, IList<DataProviderMetadata> dataProvidersMetadata, QueryUtterancesResults suggestedUtterances, string kind) : base(id, name, resourceType, systemData)
         {
             Metadata = metadata;
             Dataset = dataset;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Data Set. </summary>
         public IList<DiagnosticInfo> Dataset { get; }
         /// <summary> Indicates status of the most severe insight. </summary>
-        public StatusInfo Status { get; set; }
+        public AppServiceStatusInfo Status { get; set; }
         /// <summary> Additional configuration for different data providers to be used by the UI. </summary>
         public IList<DataProviderMetadata> DataProvidersMetadata { get; }
         /// <summary> Suggested utterances where the detector can be applicable. </summary>

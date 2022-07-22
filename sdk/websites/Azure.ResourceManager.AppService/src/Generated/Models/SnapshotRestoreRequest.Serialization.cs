@@ -33,10 +33,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("recoverySource");
                 writer.WriteObjectValue(RecoverySource);
             }
-            if (Optional.IsDefined(IsOverwrite))
+            if (Optional.IsDefined(EnabledOverwrite))
             {
                 writer.WritePropertyName("overwrite");
-                writer.WriteBooleanValue(IsOverwrite.Value);
+                writer.WriteBooleanValue(EnabledOverwrite.Value);
             }
             if (Optional.IsDefined(IsRecoverConfiguration))
             {

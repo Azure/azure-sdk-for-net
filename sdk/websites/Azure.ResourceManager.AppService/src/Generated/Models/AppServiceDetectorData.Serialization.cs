@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.AppService
             Optional<SystemData> systemData = default;
             Optional<DetectorInfo> metadata = default;
             Optional<IList<DiagnosticInfo>> dataset = default;
-            Optional<StatusInfo> status = default;
+            Optional<AppServiceStatusInfo> status = default;
             Optional<IList<DataProviderMetadata>> dataProvidersMetadata = default;
             Optional<QueryUtterancesResults> suggestedUtterances = default;
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.AppService
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            status = StatusInfo.DeserializeStatusInfo(property0.Value);
+                            status = AppServiceStatusInfo.DeserializeAppServiceStatusInfo(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("dataProvidersMetadata"))
