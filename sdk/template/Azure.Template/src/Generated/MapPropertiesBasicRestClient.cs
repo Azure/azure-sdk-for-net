@@ -16,7 +16,7 @@ using Azure.Template.Models;
 
 namespace Azure.Template
 {
-    internal partial class CollectionPropertiesBasicRestClient
+    internal partial class MapPropertiesBasicRestClient
     {
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
@@ -24,19 +24,19 @@ namespace Azure.Template
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        /// <summary> Initializes a new instance of CollectionPropertiesBasicRestClient. </summary>
+        /// <summary> Initializes a new instance of MapPropertiesBasicRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/> or <paramref name="pipeline"/> is null. </exception>
-        public CollectionPropertiesBasicRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null)
+        public MapPropertiesBasicRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null)
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("http://localhost:3000");
         }
 
-        internal HttpMessage CreateSendCollectionModelRequest(InputModel input)
+        internal HttpMessage CreateSendMapModelRequest(InputModel input)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -56,14 +56,14 @@ namespace Azure.Template
         /// <param name="input"> The InputModel to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public async Task<Response> SendCollectionModelAsync(InputModel input, CancellationToken cancellationToken = default)
+        public async Task<Response> SendMapModelAsync(InputModel input, CancellationToken cancellationToken = default)
         {
             if (input == null)
             {
                 throw new ArgumentNullException(nameof(input));
             }
 
-            using var message = CreateSendCollectionModelRequest(input);
+            using var message = CreateSendMapModelRequest(input);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -77,14 +77,14 @@ namespace Azure.Template
         /// <param name="input"> The InputModel to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public Response SendCollectionModel(InputModel input, CancellationToken cancellationToken = default)
+        public Response SendMapModel(InputModel input, CancellationToken cancellationToken = default)
         {
             if (input == null)
             {
                 throw new ArgumentNullException(nameof(input));
             }
 
-            using var message = CreateSendCollectionModelRequest(input);
+            using var message = CreateSendMapModelRequest(input);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -95,7 +95,7 @@ namespace Azure.Template
             }
         }
 
-        internal HttpMessage CreateGetCollectionModelRequest()
+        internal HttpMessage CreateGetMapModelRequest()
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -109,9 +109,9 @@ namespace Azure.Template
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<OutputModel>> GetCollectionModelAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<OutputModel>> GetMapModelAsync(CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetCollectionModelRequest();
+            using var message = CreateGetMapModelRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -128,9 +128,9 @@ namespace Azure.Template
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<OutputModel> GetCollectionModel(CancellationToken cancellationToken = default)
+        public Response<OutputModel> GetMapModel(CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetCollectionModelRequest();
+            using var message = CreateGetMapModelRequest();
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -146,7 +146,7 @@ namespace Azure.Template
             }
         }
 
-        internal HttpMessage CreateSetCollectionModelRequest(RoundTripModel input)
+        internal HttpMessage CreateSetMapModelRequest(RoundTripModel input)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -166,14 +166,14 @@ namespace Azure.Template
         /// <param name="input"> The RoundTripModel to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public async Task<Response<RoundTripModel>> SetCollectionModelAsync(RoundTripModel input, CancellationToken cancellationToken = default)
+        public async Task<Response<RoundTripModel>> SetMapModelAsync(RoundTripModel input, CancellationToken cancellationToken = default)
         {
             if (input == null)
             {
                 throw new ArgumentNullException(nameof(input));
             }
 
-            using var message = CreateSetCollectionModelRequest(input);
+            using var message = CreateSetMapModelRequest(input);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -192,14 +192,14 @@ namespace Azure.Template
         /// <param name="input"> The RoundTripModel to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public Response<RoundTripModel> SetCollectionModel(RoundTripModel input, CancellationToken cancellationToken = default)
+        public Response<RoundTripModel> SetMapModel(RoundTripModel input, CancellationToken cancellationToken = default)
         {
             if (input == null)
             {
                 throw new ArgumentNullException(nameof(input));
             }
 
-            using var message = CreateSetCollectionModelRequest(input);
+            using var message = CreateSetMapModelRequest(input);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

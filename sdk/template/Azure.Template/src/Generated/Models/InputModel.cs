@@ -7,30 +7,39 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Azure.Core;
 
 namespace Azure.Template.Models
 {
-    /// <summary> Input model with collection properties. </summary>
+    /// <summary> Input model with map properties. </summary>
     public partial class InputModel
     {
         /// <summary> Initializes a new instance of InputModel. </summary>
-        /// <param name="requiredStringList"> Required collection of strings, illustrating a collection of reference types. </param>
-        /// <param name="requiredIntList"> Required collection of ints, illustrating a collection of value types. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="requiredStringList"/> or <paramref name="requiredIntList"/> is null. </exception>
-        public InputModel(IEnumerable<string> requiredStringList, IEnumerable<int> requiredIntList)
+        /// <param name="requiredStringStringMap"> Required map from string to string. </param>
+        /// <param name="requiredStringIntMap"> Required map from string to int. </param>
+        /// <param name="requiredIntStringMap"> Required map from int to string. </param>
+        /// <param name="requiredIntIntMap"> Required map from int to int. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="requiredStringStringMap"/>, <paramref name="requiredStringIntMap"/>, <paramref name="requiredIntStringMap"/> or <paramref name="requiredIntIntMap"/> is null. </exception>
+        public InputModel(IDictionary<string, string> requiredStringStringMap, IDictionary<string, int> requiredStringIntMap, IDictionary<string, string> requiredIntStringMap, IDictionary<string, int> requiredIntIntMap)
         {
-            Argument.AssertNotNull(requiredStringList, nameof(requiredStringList));
-            Argument.AssertNotNull(requiredIntList, nameof(requiredIntList));
+            Argument.AssertNotNull(requiredStringStringMap, nameof(requiredStringStringMap));
+            Argument.AssertNotNull(requiredStringIntMap, nameof(requiredStringIntMap));
+            Argument.AssertNotNull(requiredIntStringMap, nameof(requiredIntStringMap));
+            Argument.AssertNotNull(requiredIntIntMap, nameof(requiredIntIntMap));
 
-            RequiredStringList = requiredStringList.ToList();
-            RequiredIntList = requiredIntList.ToList();
+            RequiredStringStringMap = requiredStringStringMap;
+            RequiredStringIntMap = requiredStringIntMap;
+            RequiredIntStringMap = requiredIntStringMap;
+            RequiredIntIntMap = requiredIntIntMap;
         }
 
-        /// <summary> Required collection of strings, illustrating a collection of reference types. </summary>
-        public IList<string> RequiredStringList { get; }
-        /// <summary> Required collection of ints, illustrating a collection of value types. </summary>
-        public IList<int> RequiredIntList { get; }
+        /// <summary> Required map from string to string. </summary>
+        public IDictionary<string, string> RequiredStringStringMap { get; }
+        /// <summary> Required map from string to int. </summary>
+        public IDictionary<string, int> RequiredStringIntMap { get; }
+        /// <summary> Required map from int to string. </summary>
+        public IDictionary<string, string> RequiredIntStringMap { get; }
+        /// <summary> Required map from int to int. </summary>
+        public IDictionary<string, int> RequiredIntIntMap { get; }
     }
 }

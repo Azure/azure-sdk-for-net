@@ -7,39 +7,50 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using Azure.Core;
 
 namespace Azure.Template.Models
 {
-    /// <summary> Round-trip model with collection properties. </summary>
+    /// <summary> Round-trip model with map properties. </summary>
     public partial class RoundTripModel
     {
         /// <summary> Initializes a new instance of RoundTripModel. </summary>
-        /// <param name="requiredStringList"> Required collection of strings, illustrating a collection of reference types. </param>
-        /// <param name="requiredIntList"> Required collection of ints, illustrating a collection of value types. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="requiredStringList"/> or <paramref name="requiredIntList"/> is null. </exception>
-        public RoundTripModel(IEnumerable<string> requiredStringList, IEnumerable<int> requiredIntList)
+        /// <param name="requiredStringMap"> Required map from string to string. </param>
+        /// <param name="requiredStringIntMap"> Required map from string to int. </param>
+        /// <param name="requiredIntStringMap"> Required map from int to string. </param>
+        /// <param name="requiredIntMap"> Required map from int to int. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="requiredStringMap"/>, <paramref name="requiredStringIntMap"/>, <paramref name="requiredIntStringMap"/> or <paramref name="requiredIntMap"/> is null. </exception>
+        public RoundTripModel(IDictionary<string, string> requiredStringMap, IDictionary<string, int> requiredStringIntMap, IDictionary<string, string> requiredIntStringMap, IDictionary<string, int> requiredIntMap)
         {
-            Argument.AssertNotNull(requiredStringList, nameof(requiredStringList));
-            Argument.AssertNotNull(requiredIntList, nameof(requiredIntList));
+            if (requiredStringMap == null)
+            {
+                throw new ArgumentNullException(nameof(requiredStringMap));
+            }
+            if (requiredStringIntMap == null)
+            {
+                throw new ArgumentNullException(nameof(requiredStringIntMap));
+            }
+            if (requiredIntStringMap == null)
+            {
+                throw new ArgumentNullException(nameof(requiredIntStringMap));
+            }
+            if (requiredIntMap == null)
+            {
+                throw new ArgumentNullException(nameof(requiredIntMap));
+            }
 
-            RequiredStringList = requiredStringList.ToList();
-            RequiredIntList = requiredIntList.ToList();
+            RequiredStringMap = requiredStringMap;
+            RequiredStringIntMap = requiredStringIntMap;
+            RequiredIntStringMap = requiredIntStringMap;
+            RequiredIntMap = requiredIntMap;
         }
 
-        /// <summary> Initializes a new instance of RoundTripModel. </summary>
-        /// <param name="requiredStringList"> Required collection of strings, illustrating a collection of reference types. </param>
-        /// <param name="requiredIntList"> Required collection of ints, illustrating a collection of value types. </param>
-        internal RoundTripModel(IList<string> requiredStringList, IList<int> requiredIntList)
-        {
-            RequiredStringList = requiredStringList;
-            RequiredIntList = requiredIntList;
-        }
-
-        /// <summary> Required collection of strings, illustrating a collection of reference types. </summary>
-        public IList<string> RequiredStringList { get; }
-        /// <summary> Required collection of ints, illustrating a collection of value types. </summary>
-        public IList<int> RequiredIntList { get; }
+        /// <summary> Required map from string to string. </summary>
+        public IDictionary<string, string> RequiredStringMap { get; }
+        /// <summary> Required map from string to int. </summary>
+        public IDictionary<string, int> RequiredStringIntMap { get; }
+        /// <summary> Required map from int to string. </summary>
+        public IDictionary<string, string> RequiredIntStringMap { get; }
+        /// <summary> Required map from int to int. </summary>
+        public IDictionary<string, int> RequiredIntMap { get; }
     }
 }

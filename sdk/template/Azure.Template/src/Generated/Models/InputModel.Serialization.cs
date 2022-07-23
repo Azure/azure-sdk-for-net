@@ -15,20 +15,38 @@ namespace Azure.Template.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("requiredStringList");
-            writer.WriteStartArray();
-            foreach (var item in RequiredStringList)
+            writer.WritePropertyName("requiredStringStringMap");
+            writer.WriteStartObject();
+            foreach (var item in RequiredStringStringMap)
             {
-                writer.WriteStringValue(item);
+                writer.WritePropertyName(item.Key);
+                writer.WriteStringValue(item.Value);
             }
-            writer.WriteEndArray();
-            writer.WritePropertyName("requiredIntList");
-            writer.WriteStartArray();
-            foreach (var item in RequiredIntList)
+            writer.WriteEndObject();
+            writer.WritePropertyName("requiredStringIntMap");
+            writer.WriteStartObject();
+            foreach (var item in RequiredStringIntMap)
             {
-                writer.WriteNumberValue(item);
+                writer.WritePropertyName(item.Key);
+                writer.WriteNumberValue(item.Value);
             }
-            writer.WriteEndArray();
+            writer.WriteEndObject();
+            writer.WritePropertyName("requiredIntStringMap");
+            writer.WriteStartObject();
+            foreach (var item in RequiredIntStringMap)
+            {
+                writer.WritePropertyName(item.Key);
+                writer.WriteStringValue(item.Value);
+            }
+            writer.WriteEndObject();
+            writer.WritePropertyName("requiredIntIntMap");
+            writer.WriteStartObject();
+            foreach (var item in RequiredIntIntMap)
+            {
+                writer.WritePropertyName(item.Key);
+                writer.WriteNumberValue(item.Value);
+            }
+            writer.WriteEndObject();
             writer.WriteEndObject();
         }
     }

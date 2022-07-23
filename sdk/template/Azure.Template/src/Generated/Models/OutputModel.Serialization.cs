@@ -15,32 +15,54 @@ namespace Azure.Template.Models
     {
         internal static OutputModel DeserializeOutputModel(JsonElement element)
         {
-            IReadOnlyList<string> requiredStringList = default;
-            IReadOnlyList<int> requiredIntList = default;
+            IReadOnlyDictionary<string, string> requiredStringStringMap = default;
+            IReadOnlyDictionary<string, int> requiredStringIntMap = default;
+            IReadOnlyDictionary<string, string> requiredIntStringMap = default;
+            IReadOnlyDictionary<string, int> requiredIntIntMap = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("requiredStringList"))
+                if (property.NameEquals("requiredStringStringMap"))
                 {
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        array.Add(item.GetString());
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
-                    requiredStringList = array;
+                    requiredStringStringMap = dictionary;
                     continue;
                 }
-                if (property.NameEquals("requiredIntList"))
+                if (property.NameEquals("requiredStringIntMap"))
                 {
-                    List<int> array = new List<int>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    Dictionary<string, int> dictionary = new Dictionary<string, int>();
+                    foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        array.Add(item.GetInt32());
+                        dictionary.Add(property0.Name, property0.Value.GetInt32());
                     }
-                    requiredIntList = array;
+                    requiredStringIntMap = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("requiredIntStringMap"))
+                {
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    requiredIntStringMap = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("requiredIntIntMap"))
+                {
+                    Dictionary<string, int> dictionary = new Dictionary<string, int>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetInt32());
+                    }
+                    requiredIntIntMap = dictionary;
                     continue;
                 }
             }
-            return new OutputModel(requiredStringList, requiredIntList);
+            return new OutputModel(requiredStringStringMap, requiredStringIntMap, requiredIntStringMap, requiredIntIntMap);
         }
     }
 }

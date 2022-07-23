@@ -1,9 +1,9 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "CollectionPropertiesBasicClient",
+    "title": "MapPropertiesBasicClient",
     "version": "1.0.0",
-    "description": "Illustrates input, output, and round-trip models with required collection type properties.",
+    "description": "Illustrates input, output, and round-trip models with required map type properties.",
     "x-cadl-generated": [
       {
         "emitter": "@azure-tools/cadl-autorest"
@@ -24,7 +24,7 @@
   "paths": {
     "/models": {
       "post": {
-        "operationId": "CollectionPropertiesBasic_SendCollectionModel",
+        "operationId": "MapPropertiesBasic_SendMapModel",
         "parameters": [
           {
             "name": "input",
@@ -48,7 +48,7 @@
         }
       },
       "get": {
-        "operationId": "CollectionPropertiesBasic_GetCollectionModel",
+        "operationId": "MapPropertiesBasic_GetMapModel",
         "parameters": [],
         "responses": {
           "200": {
@@ -66,7 +66,7 @@
         }
       },
       "put": {
-        "operationId": "CollectionPropertiesBasic_SetCollectionModel",
+        "operationId": "MapPropertiesBasic_SetMapModel",
         "parameters": [
           {
             "name": "input",
@@ -159,82 +159,127 @@
     "InputModel": {
       "type": "object",
       "properties": {
-        "requiredStringList": {
-          "type": "array",
-          "items": {
+        "requiredStringStringMap": {
+          "type": "object",
+          "additionalProperties": {
             "type": "string"
           },
-          "x-cadl-name": "string[]",
-          "description": "Required collection of strings, illustrating a collection of reference types."
+          "description": "Required map from string to string."
         },
-        "requiredIntList": {
-          "type": "array",
-          "items": {
+        "requiredStringIntMap": {
+          "type": "object",
+          "additionalProperties": {
             "type": "integer",
             "format": "int32"
           },
-          "x-cadl-name": "int32[]",
-          "description": "Required collection of ints, illustrating a collection of value types."
+          "description": "Required map from string to int."
+        },
+        "requiredIntStringMap": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Required map from int to string."
+        },
+        "requiredIntIntMap": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "description": "Required map from int to int."
         }
       },
-      "description": "Input model with collection properties",
+      "description": "Input model with map properties",
       "required": [
-        "requiredStringList",
-        "requiredIntList"
+        "requiredStringStringMap",
+        "requiredStringIntMap",
+        "requiredIntStringMap",
+        "requiredIntIntMap"
       ]
     },
     "OutputModel": {
       "type": "object",
       "properties": {
-        "requiredStringList": {
-          "type": "array",
-          "items": {
+        "requiredStringStringMap": {
+          "type": "object",
+          "additionalProperties": {
             "type": "string"
           },
-          "x-cadl-name": "string[]",
-          "description": "Required collection of strings, illustrating a collection of reference types."
+          "description": "Required map from string to string."
         },
-        "requiredIntList": {
-          "type": "array",
-          "items": {
+        "requiredStringIntMap": {
+          "type": "object",
+          "additionalProperties": {
             "type": "integer",
             "format": "int32"
           },
-          "x-cadl-name": "int32[]",
-          "description": "Required collection of ints, illustrating a collection of value types."
+          "description": "Required map from string to int."
+        },
+        "requiredIntStringMap": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Required map from int to string."
+        },
+        "requiredIntIntMap": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "description": "Required map from int to int."
         }
       },
-      "description": "Output model with collection properties",
+      "description": "Output model with map properties",
       "required": [
-        "requiredStringList",
-        "requiredIntList"
+        "requiredStringStringMap",
+        "requiredStringIntMap",
+        "requiredIntStringMap",
+        "requiredIntIntMap"
       ]
     },
     "RoundTripModel": {
       "type": "object",
       "properties": {
-        "requiredStringList": {
-          "type": "array",
-          "items": {
+        "requiredStringStringMap": {
+          "type": "object",
+          "additionalProperties": {
             "type": "string"
           },
-          "x-cadl-name": "string[]",
-          "description": "Required collection of strings, illustrating a collection of reference types."
+          "description": "Required map from string to string."
         },
-        "requiredIntList": {
-          "type": "array",
-          "items": {
+        "requiredStringIntMap": {
+          "type": "object",
+          "additionalProperties": {
             "type": "integer",
             "format": "int32"
           },
-          "x-cadl-name": "int32[]",
-          "description": "Required collection of ints, illustrating a collection of value types."
+          "description": "Required map from string to int."
+        },
+        "requiredIntStringMap": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Required map from int to string."
+        },
+        "requiredIntIntMap": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "description": "Required map from int to int."
         }
       },
-      "description": "Round-trip model with collection properties",
+      "description": "Round-trip model with map properties",
       "required": [
-        "requiredStringList",
-        "requiredIntList"
+        "requiredStringStringMap",
+        "requiredStringIntMap",
+        "requiredIntStringMap",
+        "requiredIntIntMap"
       ]
     }
   },

@@ -16,51 +16,91 @@ namespace Azure.Template.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("requiredStringList");
-            writer.WriteStartArray();
-            foreach (var item in RequiredStringList)
+            writer.WritePropertyName("requiredStringStringMap");
+            writer.WriteStartObject();
+            foreach (var item in RequiredStringMap)
             {
-                writer.WriteStringValue(item);
+                writer.WritePropertyName(item.Key);
+                writer.WriteStringValue(item.Value);
             }
-            writer.WriteEndArray();
-            writer.WritePropertyName("requiredIntList");
-            writer.WriteStartArray();
-            foreach (var item in RequiredIntList)
+            writer.WriteEndObject();
+            writer.WritePropertyName("requiredStringIntMap");
+            writer.WriteStartObject();
+            foreach (var item in RequiredStringIntMap)
             {
-                writer.WriteNumberValue(item);
+                writer.WritePropertyName(item.Key);
+                writer.WriteNumberValue(item.Value);
             }
-            writer.WriteEndArray();
+            writer.WriteEndObject();
+            writer.WritePropertyName("requiredIntStringMap");
+            writer.WriteStartObject();
+            foreach (var item in RequiredIntStringMap)
+            {
+                writer.WritePropertyName(item.Key);
+                writer.WriteStringValue(item.Value);
+            }
+            writer.WriteEndObject();
+            writer.WritePropertyName("requiredIntIntMap");
+            writer.WriteStartObject();
+            foreach (var item in RequiredIntMap)
+            {
+                writer.WritePropertyName(item.Key);
+                writer.WriteNumberValue(item.Value);
+            }
+            writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
         internal static RoundTripModel DeserializeRoundTripModel(JsonElement element)
         {
-            IList<string> requiredStringList = default;
-            IList<int> requiredIntList = default;
+            IDictionary<string, string> requiredStringStringMap = default;
+            IDictionary<string, int> requiredStringIntMap = default;
+            IDictionary<string, string> requiredIntStringMap = default;
+            IDictionary<string, int> requiredIntIntMap = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("requiredStringList"))
+                if (property.NameEquals("requiredStringStringMap"))
                 {
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        array.Add(item.GetString());
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
-                    requiredStringList = array;
+                    requiredStringStringMap = dictionary;
                     continue;
                 }
-                if (property.NameEquals("requiredIntList"))
+                if (property.NameEquals("requiredStringIntMap"))
                 {
-                    List<int> array = new List<int>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    Dictionary<string, int> dictionary = new Dictionary<string, int>();
+                    foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        array.Add(item.GetInt32());
+                        dictionary.Add(property0.Name, property0.Value.GetInt32());
                     }
-                    requiredIntList = array;
+                    requiredStringIntMap = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("requiredIntStringMap"))
+                {
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    requiredIntStringMap = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("requiredIntIntMap"))
+                {
+                    Dictionary<string, int> dictionary = new Dictionary<string, int>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetInt32());
+                    }
+                    requiredIntIntMap = dictionary;
                     continue;
                 }
             }
-            return new RoundTripModel(requiredStringList, requiredIntList);
+            return new RoundTripModel(requiredStringStringMap, requiredStringIntMap, requiredIntStringMap, requiredIntIntMap);
         }
     }
 }
