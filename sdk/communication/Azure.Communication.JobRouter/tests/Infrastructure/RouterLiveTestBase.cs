@@ -8,6 +8,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.Communication.JobRouter.Models;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -64,22 +65,29 @@ namespace Azure.Communication.JobRouter.Tests.Infrastructure
             return instrumentedRouterClient;
         }
 
+        protected RouterAdministrationClient CreateRouterAdministrationClientWithConnectionString()
+        {
+            var connectionString = TestEnvironment.LiveTestDynamicConnectionString;
+            var client = new RouterAdministrationClient(connectionString, CreateRouterClientOptionsWithCorrelationVectorLogs());
+            var instrumentedRouterClient = InstrumentClient(client);
+            return instrumentedRouterClient;
+        }
+
         #region CRUD Helpers
 
         protected async Task<Response<ClassificationPolicy>> CreateQueueSelectionCPAsync(string? uniqueIdentifier = default)
         {
-            RouterClient routerClient = CreateRouterClientWithConnectionString();
+            RouterAdministrationClient routerClient = CreateRouterAdministrationClientWithConnectionString();
 
             var classificationPolicyId = GenerateUniqueId($"{IdPrefix}{uniqueIdentifier}");
             var classificationPolicyName = $"QueueSelection-ClassificationPolicy";
             var createQueueResponse = await CreateQueueAsync(nameof(CreateQueueSelectionCPAsync));
             var queueSelectionRule = new List<QueueSelectorAttachment>()
             {
-                new StaticQueueSelector(new QueueSelector("Id", LabelOperator.Equal, new LabelValue(createQueueResponse.Value.Id)))
+                new StaticQueueSelectorAttachment(new QueueSelector("Id", LabelOperator.Equal, new LabelValue(createQueueResponse.Value.Id)))
             };
             var createClassificationPolicyResponse = await routerClient.CreateClassificationPolicyAsync(
-                id: classificationPolicyId,
-                new CreateClassificationPolicyOptions()
+                new CreateClassificationPolicyOptions(classificationPolicyId)
                 {
                     Name = classificationPolicyName,
                     QueueSelectors = queueSelectionRule,
@@ -92,15 +100,13 @@ namespace Azure.Communication.JobRouter.Tests.Infrastructure
 
         protected async Task<Response<JobQueue>> CreateQueueAsync(string? uniqueIdentifier = default)
         {
-            RouterClient routerClient = CreateRouterClientWithConnectionString();
+            RouterAdministrationClient routerClient = CreateRouterAdministrationClientWithConnectionString();
             var createDistributionPolicyResponse = await CreateDistributionPolicy(uniqueIdentifier);
             var queueId = GenerateUniqueId($"{IdPrefix}-{uniqueIdentifier}");
             var queueName = "DefaultQueue-Sdk-Test" + queueId;
-            var queueLabels = new LabelCollection() { ["Label_1"] = new LabelValue("Value_1") };
+            var queueLabels = new Dictionary<string, LabelValue>() { ["Label_1"] = new LabelValue("Value_1") };
             var createQueueResponse = await routerClient.CreateQueueAsync(
-                queueId,
-                createDistributionPolicyResponse.Value.Id,
-                new CreateQueueOptions()
+                new CreateQueueOptions(queueId, createDistributionPolicyResponse.Value.Id)
                 {
                     Name = queueName,
                     Labels = queueLabels
@@ -113,14 +119,11 @@ namespace Azure.Communication.JobRouter.Tests.Infrastructure
 
         protected async Task<Response<DistributionPolicy>> CreateDistributionPolicy(string? uniqueIdentifier = default)
         {
-            RouterClient routerClient = CreateRouterClientWithConnectionString();
+            RouterAdministrationClient routerClient = CreateRouterAdministrationClientWithConnectionString();
             var distributionId = GenerateUniqueId($"{IdPrefix}{uniqueIdentifier}");
             var distributionPolicyName = "LongestIdleDistributionPolicy" + distributionId;
             var createDistributionPolicyResponse = await routerClient.CreateDistributionPolicyAsync(
-                distributionId,
-                30,
-                new LongestIdleMode(1, 1),
-                new CreateDistributionPolicyOptions()
+                new CreateDistributionPolicyOptions(distributionId, TimeSpan.FromSeconds(30), new LongestIdleMode(1,1))
                 {
                     Name = distributionPolicyName,
                 });
@@ -137,7 +140,7 @@ namespace Azure.Communication.JobRouter.Tests.Infrastructure
 
         #region Support assertions
 
-        protected void AssertQueueResponseIsEqual(Response<JobQueue> upsertQueueResponse, string queueId, string distributionPolicyId, string? queueName = default, LabelCollection? queueLabels = default, string? exceptionPolicyId = default)
+        protected void AssertQueueResponseIsEqual(Response<JobQueue> upsertQueueResponse, string queueId, string distributionPolicyId, string? queueName = default, IDictionary<string, LabelValue>? queueLabels = default, string? exceptionPolicyId = default)
         {
             var response = upsertQueueResponse.Value;
 
@@ -148,7 +151,7 @@ namespace Azure.Communication.JobRouter.Tests.Infrastructure
             {
                 var labelsWithID = queueLabels.ToDictionary(k => k.Key, k => k.Value);
                 labelsWithID.Add("Id", new LabelValue(queueId));
-                Assert.AreEqual(labelsWithID, response.Labels);
+                Assert.AreEqual(labelsWithID.ToDictionary(x => x.Key, x => x.Value.Value), response.Labels.ToDictionary(x => x.Key, x => x.Value.Value));
             }
 
             if (exceptionPolicyId != default)
@@ -157,7 +160,7 @@ namespace Azure.Communication.JobRouter.Tests.Infrastructure
             }
         }
 
-        protected void AssertRegisteredWorkerIsValid(Response<RouterWorker> routerWorkerResponse, string workerId, IEnumerable<string> queueAssignmentList, int? totalCapacity, LabelCollection? workerLabels = default, Dictionary<string, ChannelConfiguration>? channelConfigList = default)
+        protected void AssertRegisteredWorkerIsValid(Response<RouterWorker> routerWorkerResponse, string workerId, IEnumerable<string> queueAssignmentList, int? totalCapacity, IDictionary<string, LabelValue>? workerLabels = default, Dictionary<string, ChannelConfiguration>? channelConfigList = default)
         {
             var response = routerWorkerResponse.Value;
 

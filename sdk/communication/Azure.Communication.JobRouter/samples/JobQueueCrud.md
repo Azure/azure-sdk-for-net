@@ -12,6 +12,7 @@ Create a `RouterClient`.
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateClient
 var routerClient = new RouterClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
+var routerAdministrationClient = new RouterAdministrationClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
 ```
 
 ## Create a job queue
@@ -20,10 +21,8 @@ var routerClient = new RouterClient(Environment.GetEnvironmentVariable("AZURE_CO
 // set `distributionPolicyId` to an existing distribution policy
 var jobQueueId = "job-queue-id";
 
-var jobQueue = routerClient.CreateQueue(
-    id: jobQueueId,
-    distributionPolicyId: distributionPolicyId,
-    options: new CreateQueueOptions() // this is optional
+var jobQueue = routerAdministrationClient.CreateQueue(
+    options: new CreateQueueOptions(jobQueueId, distributionPolicyId) // this is optional
     {
         Name = "My job queue"
     });
@@ -34,7 +33,7 @@ Console.WriteLine($"Job queue successfully create with id: {jobQueue.Value.Id}")
 ## Get a job queue
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetJobQueue
-var queriedJobQueue = routerClient.GetQueue(jobQueueId);
+var queriedJobQueue = routerAdministrationClient.GetQueue(jobQueueId);
 
 Console.WriteLine($"Successfully fetched queue with id: {queriedJobQueue.Value.Id}");
 ```
@@ -42,7 +41,7 @@ Console.WriteLine($"Successfully fetched queue with id: {queriedJobQueue.Value.I
 ## Get queue statistics
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetJobQueueStat
-var queueStatistics = routerClient.GetQueueStatistics(id: jobQueueId);
+var queueStatistics = routerClient.GetQueueStatistics(queueId: jobQueueId);
 
 Console.WriteLine($"Queue statistics successfully retrieved for queue: {JsonSerializer.Serialize(queueStatistics.Value)}");
 ```
@@ -50,11 +49,10 @@ Console.WriteLine($"Queue statistics successfully retrieved for queue: {JsonSeri
 ## Update a job queue
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateGetJobQueue
-var updatedJobQueue = routerClient.UpdateQueue(
-    id: jobQueueId,
-    options: new UpdateQueueOptions()
+var updatedJobQueue = routerAdministrationClient.UpdateQueue(
+    options: new UpdateQueueOptions(jobQueueId)
     {
-        Labels = new LabelCollection()
+        Labels = new Dictionary<string, LabelValue>()
         {
             ["Additional-Queue-Label"] = new LabelValue("ChatQueue")
         }
@@ -64,12 +62,12 @@ var updatedJobQueue = routerClient.UpdateQueue(
 ## List job queues
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetJobQueues
-var jobQueues = routerClient.GetQueues();
+var jobQueues = routerAdministrationClient.GetQueues();
 foreach (var asPage in jobQueues.AsPages(pageSizeHint: 10))
 {
     foreach (var policy in asPage.Values)
     {
-        Console.WriteLine($"Listing job queue with id: {policy.Id}");
+        Console.WriteLine($"Listing job queue with id: {policy.JobQueue.Id}");
     }
 }
 ```
@@ -77,5 +75,5 @@ foreach (var asPage in jobQueues.AsPages(pageSizeHint: 10))
 ## Delete a job queue
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_DeleteJobQueue
-_ = routerClient.DeleteQueue(jobQueueId);
+_ = routerAdministrationClient.DeleteQueue(jobQueueId);
 ```

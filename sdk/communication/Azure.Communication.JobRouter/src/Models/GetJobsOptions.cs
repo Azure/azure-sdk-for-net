@@ -15,7 +15,7 @@ namespace Azure.Communication.JobRouter
         /// <summary>
         /// If specified, filter jobs by status.
         /// </summary>
-        public JobStateSelector? Status { get; set; }
+        public JobStateSelector Status { get; set; }
 
         /// <summary>
         /// If specified, filter jobs by queue.

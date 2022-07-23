@@ -11,20 +11,20 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class QueueCollection
+    internal partial class QueueCollection
     {
         internal static QueueCollection DeserializeQueueCollection(JsonElement element)
         {
-            IReadOnlyList<PagedQueue> value = default;
+            IReadOnlyList<JobQueueItem> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<PagedQueue> array = new List<PagedQueue>();
+                    List<JobQueueItem> array = new List<JobQueueItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PagedQueue.DeserializePagedQueue(item));
+                        array.Add(JobQueueItem.DeserializeJobQueueItem(item));
                     }
                     value = array;
                     continue;

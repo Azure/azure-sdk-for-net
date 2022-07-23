@@ -5,15 +5,15 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Azure.Communication.JobRouter
+namespace Azure.Communication.JobRouter.Models
 {
     /// <summary>
     /// Response received after successful job closure.
     /// </summary>
-    public class CloseJobResult: EmptyPlaceholderObject
+    public class CloseJobResult
     {
         /// <inheritdoc />
-        public CloseJobResult(object value) : base(value)
+        public CloseJobResult()
         {
         }
     }

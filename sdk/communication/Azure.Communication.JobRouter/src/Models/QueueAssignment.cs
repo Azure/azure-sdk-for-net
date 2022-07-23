@@ -13,20 +13,25 @@ namespace Azure.Communication.JobRouter
     /// <summary>
     /// An assignment of a worker to a queue.
     /// </summary>
-    public class QueueAssignment : EmptyPlaceholderObject
+    public class QueueAssignment : IUtf8JsonSerializable
     {
-        /// <summary>
-        /// Default constructor.
-        /// </summary>
-        internal QueueAssignment(object value) : base(value)
-        {
-        }
-
         /// <summary>
         /// Public constructor
         /// </summary>
-        public QueueAssignment(): this(null)
+        public QueueAssignment()
         {
         }
+
+#pragma warning disable AZC0014 // Avoid using banned types in public API
+        /// <summary>
+        /// Write empty object.
+        /// </summary>
+        /// <param name="writer"></param>
+        public void Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WriteEndObject();
+        }
+#pragma warning restore AZC0014 // Avoid using banned types in public API
     }
 }

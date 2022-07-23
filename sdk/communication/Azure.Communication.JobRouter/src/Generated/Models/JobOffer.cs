@@ -7,9 +7,9 @@
 
 using System;
 
-namespace Azure.Communication.JobRouter
+namespace Azure.Communication.JobRouter.Models
 {
-    /// <summary> An offer of an assignment of work to a worker. </summary>
+    /// <summary> An offer of a job to a worker. </summary>
     public partial class JobOffer
     {
         /// <summary> Initializes a new instance of JobOffer. </summary>

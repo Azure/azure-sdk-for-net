@@ -21,34 +21,30 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
         public async Task Scenario()
         {
             RouterClient client = CreateRouterClientWithConnectionString();
+            RouterAdministrationClient routerAdministrationClient = CreateRouterAdministrationClientWithConnectionString();
 
             var channelResponse = GenerateUniqueId($"Channel-{IdPrefix}-{nameof(AssignmentScenario)}");
             var distributionPolicyId = GenerateUniqueId($"{IdPrefix}-dist-policy");
-            var distributionPolicyResponse = await client.CreateDistributionPolicyAsync(
-                distributionPolicyId,
-                10 * 60,
-                new LongestIdleMode(1, 1),
-                new CreateDistributionPolicyOptions()
+            var distributionPolicyResponse = await routerAdministrationClient.CreateDistributionPolicyAsync(
+                new CreateDistributionPolicyOptions(distributionPolicyId,
+                    TimeSpan.FromMinutes(10),
+                    new LongestIdleMode(1, 1))
                 {
                     Name = "test",
                 });
-            AddForCleanup(new Task(async () => await client.DeleteDistributionPolicyAsync(distributionPolicyId)));
+            AddForCleanup(new Task(async () => await routerAdministrationClient.DeleteDistributionPolicyAsync(distributionPolicyId)));
 
             var queueId = GenerateUniqueId($"{IdPrefix}-queue");
-            var queueResponse = await client.CreateQueueAsync(
-                queueId,
-                distributionPolicyResponse.Value.Id,
-                new CreateQueueOptions()
+            var queueResponse = await routerAdministrationClient.CreateQueueAsync(
+                new CreateQueueOptions(queueId, distributionPolicyResponse.Value.Id)
                 {
                     Name = "test",
                 });
-            AddForCleanup(new Task(async () => await client.DeleteQueueAsync(queueId)));
+            AddForCleanup(new Task(async () => await routerAdministrationClient.DeleteQueueAsync(queueId)));
 
             var workerId1 = GenerateUniqueId($"{IdPrefix}-w1");
             var registerWorker = await client.CreateWorkerAsync(
-                id: workerId1,
-                totalCapacity: 1,
-                new CreateWorkerOptions()
+                new CreateWorkerOptions(workerId: workerId1, totalCapacity: 1)
                 {
                     QueueIds = new Dictionary<string, QueueAssignment>() { [queueResponse.Value.Id] = new QueueAssignment()},
                     ChannelConfigurations = new Dictionary<string, ChannelConfiguration>
@@ -57,14 +53,11 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
                     },
                     AvailableForOffers = true,
                 });
-            AddForCleanup(new Task(async () => await client.UpdateWorkerAsync(workerId1, new UpdateWorkerOptions(){ AvailableForOffers = false })));
+            AddForCleanup(new Task(async () => await client.UpdateWorkerAsync(new UpdateWorkerOptions(workerId1) { AvailableForOffers = false })));
 
             var jobId = GenerateUniqueId($"{IdPrefix}-JobId-{nameof(AssignmentScenario)}");
             var createJob = await client.CreateJobAsync(
-                id: jobId,
-                channelId: channelResponse,
-                queueId: queueResponse.Value.Id,
-                new CreateJobOptions()
+                new CreateJobOptions(jobId: jobId, channelId: channelResponse, queueId: queueResponse.Value.Id)
                 {
                     Priority = 1
                 });
@@ -87,10 +80,10 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
 
             Assert.ThrowsAsync<RequestFailedException>(async () => await client.DeclineJobOfferAsync(worker.Value.Id, offer.Id));
 
-            var complete = await client.CompleteJobAsync(createJob.Value.Id, accept.Value.AssignmentId);
+            var complete = await client.CompleteJobAsync(new CompleteJobOptions(createJob.Value.Id, accept.Value.AssignmentId));
             Assert.AreEqual(200, complete.GetRawResponse().Status);
 
-            var close = await client.CloseJobAsync(createJob.Value.Id, accept.Value.AssignmentId);
+            var close = await client.CloseJobAsync(new CloseJobOptions(createJob.Value.Id, accept.Value.AssignmentId));
             Assert.AreEqual(200, complete.GetRawResponse().Status);
 
             var finalJobState = await client.GetJobAsync(createJob.Value.Id);

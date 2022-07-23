@@ -1,8 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable enable
+using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
@@ -11,7 +12,36 @@ namespace Azure.Communication.JobRouter
     /// </summary>
     public class CreateExceptionPolicyOptions
     {
+        /// <summary>
+        /// Public constructor.
+        /// </summary>
+        /// <param name="exceptionPolicyId"> Id of the policy. </param>
+        /// <param name="exceptionRules"> A dictionary collection of exception rules on the exception policy. Key is the Id of each exception rule. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="exceptionPolicyId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="exceptionRules"/> is null. </exception>
+        public CreateExceptionPolicyOptions(string exceptionPolicyId, IDictionary<string, ExceptionRule> exceptionRules)
+        {
+            Argument.AssertNotNullOrWhiteSpace(exceptionPolicyId, nameof(exceptionPolicyId));
+            Argument.AssertNotNullOrEmpty(exceptionRules, nameof(exceptionRules));
+
+            ExceptionPolicyId = exceptionPolicyId;
+            ExceptionRules = exceptionRules;
+        }
+
+        /// <summary>
+        /// The Id of this policy.
+        /// </summary>
+        public string ExceptionPolicyId { get; set; }
+
+        /// <summary>
+        /// A dictionary collection of exception rules on the exception policy. Key is the Id of each exception rule.
+        /// </summary>
+#pragma warning disable CA2227 // Collection properties should be read only
+        public IDictionary<string, ExceptionRule> ExceptionRules { get; set; } =
+#pragma warning restore CA2227 // Collection properties should be read only
+            new Dictionary<string, ExceptionRule>();
+
         /// <summary> (Optional) The name of the exception policy. </summary>
-        public string? Name { get; set; }
+        public string Name { get; set; }
     }
 }

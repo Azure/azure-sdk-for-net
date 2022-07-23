@@ -20,11 +20,12 @@ namespace Azure.Communication.JobRouter.Tests.Samples
         {
 #if !SNIPPET
             // create a client
+            var routerAdministrationClient = new RouterAdministrationClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
             var routerClient = new RouterClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
 
             var distributionPolicyId = "distribution-policy-id";
-            var distributionPolicy = await routerClient.CreateDistributionPolicyAsync(id: distributionPolicyId,
-                offerTtlSeconds: 5 * 60, mode: new LongestIdleMode());
+            var distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(
+                options: new CreateDistributionPolicyOptions(distributionPolicyId, TimeSpan.FromMinutes(5), new LongestIdleMode()));
 #endif
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_CreateJobQueue_Async
@@ -32,10 +33,8 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             // set `distributionPolicyId` to an existing distribution policy
             var jobQueueId = "job-queue-id";
 
-            var jobQueue = await routerClient.CreateQueueAsync(
-                id: jobQueueId,
-                distributionPolicyId: distributionPolicyId,
-                options: new CreateQueueOptions() // this is optional
+            var jobQueue = await routerAdministrationClient.CreateQueueAsync(
+                options: new CreateQueueOptions(jobQueueId, distributionPolicyId)
                 {
                     Name = "My job queue"
                 });
@@ -46,7 +45,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetJobQueue_Async
 
-            var queriedJobQueue = await routerClient.GetQueueAsync(jobQueueId);
+            var queriedJobQueue = await routerAdministrationClient.GetQueueAsync(jobQueueId);
 
             Console.WriteLine($"Successfully fetched queue with id: {queriedJobQueue.Value.Id}");
 
@@ -54,7 +53,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetJobQueueStat_Async
 
-            var queueStatistics = await routerClient.GetQueueStatisticsAsync(id: jobQueueId);
+            var queueStatistics = await routerClient.GetQueueStatisticsAsync(queueId: jobQueueId);
 
             Console.WriteLine($"Queue statistics successfully retrieved for queue: {JsonSerializer.Serialize(queueStatistics.Value)}");
 
@@ -62,11 +61,10 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateGetJobQueue_Async
 
-            var updatedJobQueue = await routerClient.UpdateQueueAsync(
-                id: jobQueueId,
-                options: new UpdateQueueOptions()
+            var updatedJobQueue = await routerAdministrationClient.UpdateQueueAsync(
+                options: new UpdateQueueOptions(jobQueueId)
                 {
-                    Labels = new LabelCollection()
+                    Labels = new Dictionary<string, LabelValue>()
                     {
                         ["Additional-Queue-Label"] = new LabelValue("ChatQueue")
                     }
@@ -76,12 +74,12 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetJobQueues_Async
 
-            var jobQueues = routerClient.GetQueuesAsync();
+            var jobQueues = routerAdministrationClient.GetQueuesAsync();
             await foreach (var asPage in jobQueues.AsPages(pageSizeHint: 10))
             {
                 foreach (var policy in asPage.Values)
                 {
-                    Console.WriteLine($"Listing job queue with id: {policy.Id}");
+                    Console.WriteLine($"Listing job queue with id: {policy.JobQueue.Id}");
                 }
             }
 
@@ -89,7 +87,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_DeleteJobQueue_Async
 
-            _ = await routerClient.DeleteQueueAsync(jobQueueId);
+            _ = await routerAdministrationClient.DeleteQueueAsync(jobQueueId);
 
             #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_DeleteJobQueue_Async
 

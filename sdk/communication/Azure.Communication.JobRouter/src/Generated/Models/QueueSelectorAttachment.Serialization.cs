@@ -26,11 +26,11 @@ namespace Azure.Communication.JobRouter
             {
                 switch (discriminator.GetString())
                 {
-                    case "conditional": return ConditionalQueueSelector.DeserializeConditionalQueueSelector(element);
-                    case "pass-through": return PassThroughQueueSelector.DeserializePassThroughQueueSelector(element);
-                    case "rule-engine": return RuleEngineQueueSelector.DeserializeRuleEngineQueueSelector(element);
-                    case "static": return StaticQueueSelector.DeserializeStaticQueueSelector(element);
-                    case "weighted-allocation-queue-selector": return WeightedAllocationQueueSelector.DeserializeWeightedAllocationQueueSelector(element);
+                    case "conditional": return ConditionalQueueSelectorAttachment.DeserializeConditionalQueueSelectorAttachment(element);
+                    case "pass-through": return PassThroughQueueSelectorAttachment.DeserializePassThroughQueueSelectorAttachment(element);
+                    case "rule-engine": return RuleEngineQueueSelectorAttachment.DeserializeRuleEngineQueueSelectorAttachment(element);
+                    case "static": return StaticQueueSelectorAttachment.DeserializeStaticQueueSelectorAttachment(element);
+                    case "weighted-allocation-queue-selector": return WeightedAllocationQueueSelectorAttachment.DeserializeWeightedAllocationQueueSelectorAttachment(element);
                 }
             }
             string kind = default;

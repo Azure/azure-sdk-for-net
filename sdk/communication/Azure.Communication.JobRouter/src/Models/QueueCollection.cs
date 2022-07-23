@@ -6,7 +6,7 @@ using Azure.Core;
 namespace Azure.Communication.JobRouter
 {
     [CodeGenModel("QueueCollection")]
-    public partial class QueueCollection
+    internal partial class QueueCollection
     {
     }
 }

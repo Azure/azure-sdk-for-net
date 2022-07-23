@@ -13,12 +13,6 @@ namespace Azure.Communication.JobRouter
     /// <summary> A container for the rules that govern how jobs are classified. </summary>
     public partial class ClassificationPolicy
     {
-        /// <summary> Initializes a new instance of ClassificationPolicy. </summary>
-        public ClassificationPolicy()
-        {
-            QueueSelectors = new ChangeTrackingList<QueueSelectorAttachment>();
-            WorkerSelectors = new ChangeTrackingList<WorkerSelectorAttachment>();
-        }
 
         /// <summary> Initializes a new instance of ClassificationPolicy. </summary>
         /// <param name="id"> Unique identifier of this policy. </param>

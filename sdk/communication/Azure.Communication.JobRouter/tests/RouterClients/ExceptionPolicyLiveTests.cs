@@ -24,7 +24,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         [Test]
         public async Task CreateExceptionPolicyTest()
         {
-            RouterClient routerClient = CreateRouterClientWithConnectionString();
+            RouterAdministrationClient routerClient = CreateRouterAdministrationClientWithConnectionString();
 
             var exceptionPolicyId = GenerateUniqueId($"{IdPrefix}{nameof(CreateExceptionPolicyTest)}");
 
@@ -44,7 +44,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                 )
             };
 
-            var createExceptionPolicyResponse = await routerClient.CreateExceptionPolicyAsync(exceptionPolicyId, rules);
+            var createExceptionPolicyResponse = await routerClient.CreateExceptionPolicyAsync(new CreateExceptionPolicyOptions(exceptionPolicyId, rules));
 
             Assert.NotNull(createExceptionPolicyResponse.Value);
 
@@ -72,8 +72,8 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
 
             // with name
             var exceptionPolicyName = $"{exceptionPolicyId}-ExceptionPolicyName";
-            createExceptionPolicyResponse = await routerClient.UpdateExceptionPolicyAsync(exceptionPolicyId,
-                new UpdateExceptionPolicyOptions()
+            createExceptionPolicyResponse = await routerClient.UpdateExceptionPolicyAsync(
+                new UpdateExceptionPolicyOptions(exceptionPolicyId)
                 {
                     Name = exceptionPolicyName
                 });

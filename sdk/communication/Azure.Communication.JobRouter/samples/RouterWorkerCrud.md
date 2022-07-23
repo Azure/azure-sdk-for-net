@@ -12,6 +12,7 @@ Create a `RouterClient`.
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateClient
 var routerClient = new RouterClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
+var routerAdministrationClient = new RouterAdministrationClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
 ```
 
 ## Create a worker
@@ -20,9 +21,9 @@ var routerClient = new RouterClient(Environment.GetEnvironmentVariable("AZURE_CO
 var routerWorkerId = "my-router-worker";
 
 var worker = routerClient.CreateWorker(
-    id: routerWorkerId,
-    totalCapacity: 100,
-    new CreateWorkerOptions() // this is optional
+    new CreateWorkerOptions(
+            workerId: routerWorkerId,
+            totalCapacity: 100)
     {
         QueueIds = new Dictionary<string, QueueAssignment>()
         {
@@ -35,14 +36,14 @@ var worker = routerClient.CreateWorker(
             ["WebChatEscalated"] = new ChannelConfiguration(20),
             ["Voip"] = new ChannelConfiguration(100)
         },
-        Labels = new LabelCollection()
+        Labels = new Dictionary<string, LabelValue>()
         {
             ["Location"] = new LabelValue("NA"),
             ["English"] = new LabelValue(7),
             ["O365"] = new LabelValue(true),
             ["Xbox_Support"] = new LabelValue(false)
         },
-        Tags = new LabelCollection()
+        Tags = new Dictionary<string, LabelValue>()
         {
             ["Name"] = new LabelValue("John Doe"),
             ["Department"] = new LabelValue("IT_HelpDesk")
@@ -73,21 +74,20 @@ Console.WriteLine($"Worker associated with queues: {queriedWorker.Value.QueueAss
 // 5. Increase capacityCostPerJob for channel `WebChatEscalated` to 50
 
 var updateWorker = routerClient.UpdateWorker(
-    routerWorkerId,
-    new UpdateWorkerOptions()
+    new UpdateWorkerOptions(routerWorkerId)
     {
         QueueIds = new Dictionary<string, QueueAssignment?>()
         {
             ["worker-q-3"] = new QueueAssignment()
         },
-        ChannelConfigurations = new Dictionary<string, ChannelConfiguration>()
+        ChannelConfigurations = new Dictionary<string, ChannelConfiguration?>()
         {
             ["WebChatEscalated"] = new ChannelConfiguration(50),
         },
-        Labels = new LabelCollection()
+        Labels = new Dictionary<string, LabelValue>()
         {
             ["O365"] = new LabelValue("Supported"),
-            ["Xbox_Support"] = null,
+            ["Xbox_Support"] = new LabelValue(null),
             ["Xbox_Support_EN"] = new LabelValue(true),
         }
     });
@@ -100,8 +100,7 @@ Console.Write($"Worker now associated with {updateWorker.Value.QueueAssignments.
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_RegisterRouterWorker
 updateWorker = routerClient.UpdateWorker(
-    id: routerWorkerId,
-    options: new UpdateWorkerOptions() { AvailableForOffers = true, });
+    options: new UpdateWorkerOptions(workerId: routerWorkerId) { AvailableForOffers = true, });
 
 Console.WriteLine($"Worker successfully registered with status set to: {updateWorker.Value.State}");
 ```
@@ -110,8 +109,7 @@ Console.WriteLine($"Worker successfully registered with status set to: {updateWo
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_DeregisterRouterWorker
 updateWorker = routerClient.UpdateWorker(
-    id: routerWorkerId,
-    options: new UpdateWorkerOptions() { AvailableForOffers = false, });
+    options: new UpdateWorkerOptions(workerId: routerWorkerId) { AvailableForOffers = false, });
 
 Console.WriteLine($"Worker successfully de-registered with status set to: {updateWorker.Value.State}");
 ```
@@ -124,7 +122,7 @@ foreach (var asPage in workers.AsPages(pageSizeHint: 10))
 {
     foreach (var workerPaged in asPage.Values)
     {
-        Console.WriteLine($"Listing exception policy with id: {workerPaged.Id}");
+        Console.WriteLine($"Listing exception policy with id: {workerPaged.RouterWorker.Id}");
     }
 }
 
@@ -138,7 +136,7 @@ foreach (var asPage in workers.AsPages(pageSizeHint: 10))
 {
     foreach (var workerPaged in asPage.Values)
     {
-        Console.WriteLine($"Listing exception policy with id: {workerPaged.Id}");
+        Console.WriteLine($"Listing exception policy with id: {workerPaged.RouterWorker.Id}");
     }
 }
 ```

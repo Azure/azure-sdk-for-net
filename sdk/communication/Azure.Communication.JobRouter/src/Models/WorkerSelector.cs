@@ -13,6 +13,21 @@ namespace Azure.Communication.JobRouter
     [CodeGenSuppress("WorkerSelector", typeof(string), typeof(LabelOperator), typeof(object))]
     public partial class WorkerSelector
     {
+        /// <summary> Describes how long this label selector is valid in seconds. </summary>
+        public TimeSpan? Ttl { get; set; }
+
+        [CodeGenMember("TtlSeconds")]
+        internal double? _ttlSeconds {
+            get
+            {
+                return Ttl?.TotalSeconds is null or 0 ? null : Ttl?.TotalSeconds;
+            }
+            set
+            {
+                Ttl = value != null ? TimeSpan.FromSeconds(value.Value) : null;
+            }
+        }
+
         [CodeGenMember("Value")]
         private object _value
         {
@@ -33,29 +48,14 @@ namespace Azure.Communication.JobRouter
         /// <param name="key"> The label key to query against. </param>
         /// <param name="labelOperator"> Describes how the value of the label is compared to the value defined on the label selector. </param>
         /// <param name="value"> The value to compare against the actual label value with the given operator. </param>
-        /// <param name="ttlSeconds"> Describes how long this label selector is valid in seconds. </param>
+        /// <param name="ttl"> Describes how long this label selector is valid. </param>
         /// <param name="expedite"> Pushes the job to the front of the queue as long as this selector is active. </param>
-        public WorkerSelector(string key, LabelOperator labelOperator, LabelValue value, double? ttlSeconds = default, bool? expedite = default)
+        public WorkerSelector(string key, LabelOperator labelOperator, LabelValue value, TimeSpan? ttl = default, bool? expedite = default)
         {
             Key = key;
             LabelOperator = labelOperator;
             Value = value;
-            TtlSeconds = ttlSeconds;
-            Expedite = expedite;
-        }
-
-        /// <summary> Initializes a new instance of WorkerSelector. Used for deserializing raw json. </summary>
-        /// <param name="key"> The label key to query against. </param>
-        /// <param name="labelOperator"> Describes how the value of the label is compared to the value defined on the label selector. </param>
-        /// <param name="value"> The value to compare against the actual label value with the given operator. </param>
-        /// <param name="ttlSeconds"> Describes how long this label selector is valid in seconds. </param>
-        /// <param name="expedite"> Pushes the job to the front of the queue as long as this selector is active. </param>
-        private WorkerSelector(string key, LabelOperator labelOperator, object value, double? ttlSeconds = default, bool? expedite = default)
-        {
-            Key = key;
-            LabelOperator = labelOperator;
-            Value = new LabelValue(value);
-            TtlSeconds = ttlSeconds;
+            Ttl = ttl;
             Expedite = expedite;
         }
     }

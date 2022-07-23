@@ -13,13 +13,34 @@ namespace Azure.Communication.JobRouter
     public partial class WorkerSelector
     {
 
+        /// <summary> Initializes a new instance of WorkerSelector. </summary>
+        /// <param name="key"> The label key to query against. </param>
+        /// <param name="labelOperator"> Describes how the value of the label is compared to the value defined on the label selector. </param>
+        /// <param name="value"> The value to compare against the actual label value with the given operator. </param>
+        /// <param name="ttlSeconds"> Describes how long this label selector is valid in seconds. </param>
+        /// <param name="expedite"> Pushes the job to the front of the queue as long as this selector is active. </param>
+        /// <param name="state"> The state of the worker selector. </param>
+        /// <param name="expireTime"> The time at which this worker selector expires in UTC. </param>
+        internal WorkerSelector(string key, LabelOperator labelOperator, object value, double? ttlSeconds, bool? expedite, WorkerSelectorState? state, DateTimeOffset? expireTime)
+        {
+            Key = key;
+            LabelOperator = labelOperator;
+            _value = value;
+            _ttlSeconds = ttlSeconds;
+            Expedite = expedite;
+            State = state;
+            ExpireTime = expireTime;
+        }
+
         /// <summary> The label key to query against. </summary>
         public string Key { get; set; }
         /// <summary> Describes how the value of the label is compared to the value defined on the label selector. </summary>
         public LabelOperator LabelOperator { get; set; }
-        /// <summary> Describes how long this label selector is valid in seconds. </summary>
-        public double? TtlSeconds { get; set; }
         /// <summary> Pushes the job to the front of the queue as long as this selector is active. </summary>
         public bool? Expedite { get; set; }
+        /// <summary> The state of the worker selector. </summary>
+        public WorkerSelectorState? State { get; }
+        /// <summary> The time at which this worker selector expires in UTC. </summary>
+        public DateTimeOffset? ExpireTime { get; }
     }
 }

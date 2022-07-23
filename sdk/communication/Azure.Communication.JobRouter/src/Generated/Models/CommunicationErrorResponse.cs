@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Communication.JobRouter.Models;
 
 namespace Azure.Communication.JobRouter
 {

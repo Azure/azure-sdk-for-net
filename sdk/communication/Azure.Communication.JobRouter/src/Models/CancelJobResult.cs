@@ -1,15 +1,20 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Text.Json;
+using Azure.Core;
+
 namespace Azure.Communication.JobRouter
 {
     /// <summary>
     /// Response received after successful job cancellation.
     /// </summary>
-    public class CancelJobResult: EmptyPlaceholderObject
+    public class CancelJobResult
     {
-        /// <inheritdoc />
-        public CancelJobResult(object value) : base(value)
+        /// <summary>
+        /// Internal constructor.
+        /// </summary>
+        internal CancelJobResult()
         {
         }
     }

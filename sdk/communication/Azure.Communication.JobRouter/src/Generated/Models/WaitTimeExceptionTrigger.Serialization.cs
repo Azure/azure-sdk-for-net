@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -16,8 +15,8 @@ namespace Azure.Communication.JobRouter
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("threshold");
-            writer.WriteStringValue(Threshold);
+            writer.WritePropertyName("thresholdSeconds");
+            writer.WriteNumberValue(_thresholdSeconds);
             writer.WritePropertyName("kind");
             writer.WriteStringValue(Kind);
             writer.WriteEndObject();
@@ -25,13 +24,13 @@ namespace Azure.Communication.JobRouter
 
         internal static WaitTimeExceptionTrigger DeserializeWaitTimeExceptionTrigger(JsonElement element)
         {
-            TimeSpan threshold = default;
+            double thresholdSeconds = default;
             string kind = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("threshold"))
+                if (property.NameEquals("thresholdSeconds"))
                 {
-                    threshold = property.Value.GetTimeSpan();
+                    thresholdSeconds = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("kind"))
@@ -40,7 +39,7 @@ namespace Azure.Communication.JobRouter
                     continue;
                 }
             }
-            return new WaitTimeExceptionTrigger(kind, threshold);
+            return new WaitTimeExceptionTrigger(kind, thresholdSeconds);
         }
     }
 }

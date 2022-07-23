@@ -12,6 +12,7 @@ Create a `RouterClient` and send a request.
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateClient
 var routerClient = new RouterClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
+var routerAdministrationClient = new RouterAdministrationClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
 ```
 
 ## Using WaitTimeExceptionTrigger to trigger job reclassification
@@ -31,16 +32,15 @@ var routerClient = new RouterClient(Environment.GetEnvironmentVariable("AZURE_CO
 // Create distribution policy
 var distributionPolicyId = "distribution-policy-id-9";
 
-var distributionPolicy = await routerClient.CreateDistributionPolicyAsync(
-    id: distributionPolicyId,
-    offerTtlSeconds: 5,
-    mode: new RoundRobinMode());
+var distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(new CreateDistributionPolicyOptions(distributionPolicyId: distributionPolicyId,
+    offerTtl: TimeSpan.FromSeconds(5),
+    mode: new RoundRobinMode()));
 
 // Create fallback queue
 var fallbackQueueId = "fallback-q-id";
-var fallbackQueue = await routerClient.CreateQueueAsync(
-    id: fallbackQueueId,
-    distributionPolicyId: distributionPolicyId);
+var fallbackQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions(
+    queueId: fallbackQueueId,
+    distributionPolicyId: distributionPolicyId));
 
 // Create exception policy
 // define trigger
@@ -56,8 +56,8 @@ var action = new ManualReclassifyExceptionAction(
     });
 
 var exceptionPolicyId = "execption-policy-id";
-var exceptionPolicy = await routerClient.CreateExceptionPolicyAsync(
-    id: exceptionPolicyId,
+var exceptionPolicy = await routerAdministrationClient.CreateExceptionPolicyAsync(new CreateExceptionPolicyOptions(
+    exceptionPolicyId: exceptionPolicyId,
     exceptionRules: new Dictionary<string, ExceptionRule>()
     {
         ["WaitTimeTriggerExceptionRule"] = new ExceptionRule(
@@ -66,24 +66,24 @@ var exceptionPolicy = await routerClient.CreateExceptionPolicyAsync(
             {
                 ["EscalateJobToFallbackQueueAction"] = action,
             })
-    });
+    }));
 
 // Create initial queue
 var jobQueueId = "job-queue-id";
-var jobQueue = await routerClient.CreateQueueAsync(
-    id: jobQueueId,
-    distributionPolicyId: distributionPolicyId,
-    options: new CreateQueueOptions()
+var jobQueue = await routerAdministrationClient.CreateQueueAsync(
+    options: new CreateQueueOptions(
+        queueId: jobQueueId,
+        distributionPolicyId: distributionPolicyId)
     {
         ExceptionPolicyId = exceptionPolicyId,
     });
 
 // create job
 var jobId = "router-job-id";
-var job = await routerClient.CreateJobAsync(
-    id: jobId,
+var job = await routerClient.CreateJobAsync(new CreateJobOptions(
+    jobId: jobId,
     channelId: "general",
-    queueId: jobQueueId);
+    queueId: jobQueueId));
 
 var queriedJob = await routerClient.GetJobAsync(jobId);
 

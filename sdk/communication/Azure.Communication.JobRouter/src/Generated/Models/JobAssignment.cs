@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.Communication.JobRouter
 {
-    /// <summary> Assigns a job to a worker. </summary>
+    /// <summary> Assignment details of a job to a worker. </summary>
     public partial class JobAssignment
     {
         /// <summary> Initializes a new instance of JobAssignment. </summary>

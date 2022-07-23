@@ -3,10 +3,10 @@
 
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter
+namespace Azure.Communication.JobRouter.Models
 {
     [CodeGenModel("JobCollection")]
-    public partial class JobCollection
+    internal partial class JobCollection
     {
     }
 }

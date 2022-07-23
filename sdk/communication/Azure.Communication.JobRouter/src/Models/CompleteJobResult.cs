@@ -5,15 +5,17 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Azure.Communication.JobRouter
+namespace Azure.Communication.JobRouter.Models
 {
     /// <summary>
     /// Response received after successful job completion.
     /// </summary>
-    public class CompleteJobResult: EmptyPlaceholderObject
+    public class CompleteJobResult
     {
-        /// <inheritdoc />
-        public CompleteJobResult(object value) : base(value)
+        /// <summary>
+        /// Internal constructor.
+        /// </summary>
+        internal CompleteJobResult()
         {
         }
     }

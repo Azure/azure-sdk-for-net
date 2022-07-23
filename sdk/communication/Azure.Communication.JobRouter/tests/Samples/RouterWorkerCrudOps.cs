@@ -28,9 +28,9 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             var routerWorkerId = "my-router-worker";
 
             var worker = routerClient.CreateWorker(
-                id: routerWorkerId,
-                totalCapacity: 100,
-                new CreateWorkerOptions() // this is optional
+                new CreateWorkerOptions(
+                        workerId: routerWorkerId,
+                        totalCapacity: 100)
                 {
                     QueueIds = new Dictionary<string, QueueAssignment>()
                     {
@@ -43,14 +43,14 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                         ["WebChatEscalated"] = new ChannelConfiguration(20),
                         ["Voip"] = new ChannelConfiguration(100)
                     },
-                    Labels = new LabelCollection()
+                    Labels = new Dictionary<string, LabelValue>()
                     {
                         ["Location"] = new LabelValue("NA"),
                         ["English"] = new LabelValue(7),
                         ["O365"] = new LabelValue(true),
                         ["Xbox_Support"] = new LabelValue(false)
                     },
-                    Tags = new LabelCollection()
+                    Tags = new Dictionary<string, LabelValue>()
                     {
                         ["Name"] = new LabelValue("John Doe"),
                         ["Department"] = new LabelValue("IT_HelpDesk")
@@ -81,21 +81,20 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             // 5. Increase capacityCostPerJob for channel `WebChatEscalated` to 50
 
             var updateWorker = routerClient.UpdateWorker(
-                routerWorkerId,
-                new UpdateWorkerOptions()
+                new UpdateWorkerOptions(routerWorkerId)
                 {
                     QueueIds = new Dictionary<string, QueueAssignment?>()
                     {
                         ["worker-q-3"] = new QueueAssignment()
                     },
-                    ChannelConfigurations = new Dictionary<string, ChannelConfiguration>()
+                    ChannelConfigurations = new Dictionary<string, ChannelConfiguration?>()
                     {
                         ["WebChatEscalated"] = new ChannelConfiguration(50),
                     },
-                    Labels = new LabelCollection()
+                    Labels = new Dictionary<string, LabelValue>()
                     {
                         ["O365"] = new LabelValue("Supported"),
-                        ["Xbox_Support"] = null,
+                        ["Xbox_Support"] = new LabelValue(null),
                         ["Xbox_Support_EN"] = new LabelValue(true),
                     }
                 });
@@ -108,8 +107,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_RegisterRouterWorker
 
             updateWorker = routerClient.UpdateWorker(
-                id: routerWorkerId,
-                options: new UpdateWorkerOptions() { AvailableForOffers = true, });
+                options: new UpdateWorkerOptions(workerId: routerWorkerId) { AvailableForOffers = true, });
 
             Console.WriteLine($"Worker successfully registered with status set to: {updateWorker.Value.State}");
 
@@ -118,8 +116,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_DeregisterRouterWorker
 
             updateWorker = routerClient.UpdateWorker(
-                id: routerWorkerId,
-                options: new UpdateWorkerOptions() { AvailableForOffers = false, });
+                options: new UpdateWorkerOptions(workerId: routerWorkerId) { AvailableForOffers = false, });
 
             Console.WriteLine($"Worker successfully de-registered with status set to: {updateWorker.Value.State}");
 
@@ -132,7 +129,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             {
                 foreach (var workerPaged in asPage.Values)
                 {
-                    Console.WriteLine($"Listing exception policy with id: {workerPaged.Id}");
+                    Console.WriteLine($"Listing exception policy with id: {workerPaged.RouterWorker.Id}");
                 }
             }
 
@@ -146,7 +143,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             {
                 foreach (var workerPaged in asPage.Values)
                 {
-                    Console.WriteLine($"Listing exception policy with id: {workerPaged.Id}");
+                    Console.WriteLine($"Listing exception policy with id: {workerPaged.RouterWorker.Id}");
                 }
             }
 

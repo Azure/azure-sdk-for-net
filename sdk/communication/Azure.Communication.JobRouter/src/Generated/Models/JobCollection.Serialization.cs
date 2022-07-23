@@ -7,24 +7,25 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Communication.JobRouter;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter
+namespace Azure.Communication.JobRouter.Models
 {
-    public partial class JobCollection
+    internal partial class JobCollection
     {
         internal static JobCollection DeserializeJobCollection(JsonElement element)
         {
-            IReadOnlyList<PagedJob> value = default;
+            IReadOnlyList<RouterJobItem> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<PagedJob> array = new List<PagedJob>();
+                    List<RouterJobItem> array = new List<RouterJobItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PagedJob.DeserializePagedJob(item));
+                        array.Add(RouterJobItem.DeserializeRouterJobItem(item));
                     }
                     value = array;
                     continue;

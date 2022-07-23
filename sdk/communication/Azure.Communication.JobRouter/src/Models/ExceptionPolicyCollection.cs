@@ -3,10 +3,10 @@
 
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter
+namespace Azure.Communication.JobRouter.Models
 {
     [CodeGenModel("ExceptionPolicyCollection")]
-    public partial class ExceptionPolicyCollection
+    internal partial class ExceptionPolicyCollection
     {
     }
 }

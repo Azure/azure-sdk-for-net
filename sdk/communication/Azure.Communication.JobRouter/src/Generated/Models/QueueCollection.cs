@@ -12,12 +12,12 @@ using System.Linq;
 namespace Azure.Communication.JobRouter
 {
     /// <summary> A paged collection of queues. </summary>
-    public partial class QueueCollection
+    internal partial class QueueCollection
     {
         /// <summary> Initializes a new instance of QueueCollection. </summary>
         /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal QueueCollection(IEnumerable<PagedQueue> value)
+        internal QueueCollection(IEnumerable<JobQueueItem> value)
         {
             if (value == null)
             {
@@ -30,14 +30,14 @@ namespace Azure.Communication.JobRouter
         /// <summary> Initializes a new instance of QueueCollection. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"></param>
-        internal QueueCollection(IReadOnlyList<PagedQueue> value, string nextLink)
+        internal QueueCollection(IReadOnlyList<JobQueueItem> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Gets the value. </summary>
-        public IReadOnlyList<PagedQueue> Value { get; }
+        public IReadOnlyList<JobQueueItem> Value { get; }
         /// <summary> Gets the next link. </summary>
         public string NextLink { get; }
     }

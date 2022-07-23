@@ -17,7 +17,7 @@ namespace Azure.Communication.JobRouter
         /// <summary> Initializes a new instance of WorkerCollection. </summary>
         /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal WorkerCollection(IEnumerable<PagedWorker> value)
+        internal WorkerCollection(IEnumerable<RouterWorkerItem> value)
         {
             if (value == null)
             {
@@ -30,14 +30,14 @@ namespace Azure.Communication.JobRouter
         /// <summary> Initializes a new instance of WorkerCollection. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"></param>
-        internal WorkerCollection(IReadOnlyList<PagedWorker> value, string nextLink)
+        internal WorkerCollection(IReadOnlyList<RouterWorkerItem> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Gets the value. </summary>
-        public IReadOnlyList<PagedWorker> Value { get; }
+        public IReadOnlyList<RouterWorkerItem> Value { get; }
         /// <summary> Gets the next link. </summary>
         public string NextLink { get; }
     }

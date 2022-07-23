@@ -17,10 +17,6 @@ namespace Azure.Communication.JobRouter
     /// </summary>
     public partial class RouterRule
     {
-        /// <summary> Initializes a new instance of RouterRule. </summary>
-        public RouterRule()
-        {
-        }
 
         /// <summary> Initializes a new instance of RouterRule. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of Rule. </param>

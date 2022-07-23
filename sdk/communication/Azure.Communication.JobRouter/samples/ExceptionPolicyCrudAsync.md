@@ -12,6 +12,7 @@ Create a `RouterClient`.
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateClient
 var routerClient = new RouterClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
+var routerAdministrationClient = new RouterAdministrationClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
 ```
 
 ## Create an exception policy
@@ -31,7 +32,7 @@ var queueLengthExceptionTrigger = new QueueLengthExceptionTrigger(10);
 // define exception actions that needs to be executed when trigger condition is satisfied
 var escalateJobOnQueueOverFlow = new ReclassifyExceptionAction(
     classificationPolicyId: "escalation-on-q-over-flow",
-    labelsToUpsert: new LabelCollection()
+    labelsToUpsert: new Dictionary<string, LabelValue>()
     {
         ["EscalateJob"] = new LabelValue(true),
         ["EscalationReasonCode"] = new LabelValue("QueueOverFlow")
@@ -44,7 +45,7 @@ var waitTimeExceptionTrigger = new WaitTimeExceptionTrigger(TimeSpan.FromMinutes
 
 var escalateJobOnWaitTimeExceeded = new ReclassifyExceptionAction(
     classificationPolicyId: "escalation-on-wait-time-exceeded",
-    labelsToUpsert: new LabelCollection()
+    labelsToUpsert: new Dictionary<string, LabelValue>()
     {
         ["EscalateJob"] = new LabelValue(true),
         ["EscalationReasonCode"] = new LabelValue("WaitTimeExceeded")
@@ -68,9 +69,9 @@ var exceptionRule = new Dictionary<string, ExceptionRule>()
 };
 
 var exceptionPolicy = await routerClient.CreateExceptionPolicyAsync(
-    id: exceptionPolicyId,
-    exceptionRules: exceptionRule,
-    new CreateExceptionPolicyOptions() // this is optional
+    new CreateExceptionPolicyOptions(
+            exceptionPolicyId: exceptionPolicyId,
+            exceptionRules: exceptionRule) // this is optional
     {
         Name = "My exception policy"
     }
@@ -103,15 +104,14 @@ var escalateJobOnWaitTimeExceed2 = new WaitTimeExceptionTrigger(TimeSpan.FromMin
 // define exception action
 var escalateJobOnWaitTimeExceeded2 = new ReclassifyExceptionAction(
     classificationPolicyId: "escalation-on-wait-time-exceeded",
-    labelsToUpsert: new LabelCollection()
+    labelsToUpsert: new Dictionary<string, LabelValue>()
     {
         ["EscalateJob"] = new LabelValue(true),
         ["EscalationReasonCode"] = new LabelValue("WaitTimeExceeded2Min")
     });
 
 var updateExceptionPolicy = await routerClient.UpdateExceptionPolicyAsync(
-    exceptionPolicyId,
-    new UpdateExceptionPolicyOptions()
+    new UpdateExceptionPolicyOptions(exceptionPolicyId)
     {
         // you can update one or more properties of exception policy - here we are adding one additional exception rule
         Name = "My updated exception policy",
@@ -150,7 +150,7 @@ await foreach (var asPage in exceptionPolicies.AsPages(pageSizeHint: 10))
 {
     foreach (var policy in asPage.Values)
     {
-        Console.WriteLine($"Listing exception policy with id: {policy.Id}");
+        Console.WriteLine($"Listing exception policy with id: {policy.ExceptionPolicy.Id}");
     }
 }
 ```

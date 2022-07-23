@@ -33,40 +33,33 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
 #if !SNIPPET
             var routerClient = new RouterClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
+            var routerAdministrationClient = new RouterAdministrationClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
 #endif
-            var distributionPolicy = await routerClient.CreateDistributionPolicyAsync(
-                id: "distribution-policy-id-2",
-                offerTtlSeconds: 30,
-                mode: new LongestIdleMode(),
-                new CreateDistributionPolicyOptions()
+            var distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(
+                new CreateDistributionPolicyOptions(distributionPolicyId: "distribution-policy-id-2", offerTtl: TimeSpan.FromSeconds(30), mode: new LongestIdleMode())
                 {
                     Name = "My LongestIdle Distribution Policy",
                 }
                 );
 
-            var queue1 = await routerClient.CreateQueueAsync(
-                id: "Queue-1",
-                distributionPolicyId: distributionPolicy.Value.Id,
-                new CreateQueueOptions()
+            var queue1 = await routerAdministrationClient.CreateQueueAsync(
+                new CreateQueueOptions(queueId: "Queue-1", distributionPolicyId: distributionPolicy.Value.Id)
                 {
                     Name = "Queue_365",
                 });
 
-            var queue2 = await routerClient.CreateQueueAsync(
-                id: "Queue-2",
-                distributionPolicyId: distributionPolicy.Value.Id,
-                new CreateQueueOptions()
+            var queue2 = await routerAdministrationClient.CreateQueueAsync(
+                new CreateQueueOptions(queueId: "Queue-2", distributionPolicyId: distributionPolicy.Value.Id)
                 {
                     Name = "Queue_XBox",
                 });
 
             var cp1QueueLabelAttachments = new List<QueueSelectorAttachment>()
             {
-                new StaticQueueSelector(new QueueSelector("Id", LabelOperator.Equal, new LabelValue(queue1.Value.Id)))
+                new StaticQueueSelectorAttachment(new QueueSelector("Id", LabelOperator.Equal, new LabelValue(queue1.Value.Id)))
             };
-            var cp1 = await routerClient.CreateClassificationPolicyAsync(
-                id: "classification-policy-o365",
-                new CreateClassificationPolicyOptions()
+            var cp1 = await routerAdministrationClient.CreateClassificationPolicyAsync(
+                new CreateClassificationPolicyOptions(classificationPolicyId: "classification-policy-o365")
                 {
                     Name = "Classification_Policy_O365",
                     QueueSelectors = cp1QueueLabelAttachments,
@@ -74,30 +67,29 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             var cp2QueueLabelAttachments = new List<QueueSelectorAttachment>()
             {
-                new StaticQueueSelector(new QueueSelector("Id", LabelOperator.Equal, new LabelValue(queue2.Value.Id)))
+                new StaticQueueSelectorAttachment(new QueueSelector("Id", LabelOperator.Equal, new LabelValue(queue2.Value.Id)))
             };
-            var cp2 = await routerClient.CreateClassificationPolicyAsync(
-                id: "classification-policy-xbox",
-                new CreateClassificationPolicyOptions()
+            var cp2 = await routerAdministrationClient.CreateClassificationPolicyAsync(
+                new CreateClassificationPolicyOptions(classificationPolicyId: "classification-policy-xbox")
                 {
                     Name = "Classification_Policy_XBox",
                     QueueSelectors = cp2QueueLabelAttachments,
                 });
 
-            var jobO365 = await routerClient.CreateJobWithClassificationPolicyAsync(
-                id: "jobO365",
-                channelId: "general",
-                classificationPolicyId: cp1.Value.Id,
-                new CreateJobWithClassificationPolicyOptions()
+            var jobO365 = await routerClient.CreateJobAsync(
+                new CreateJobWithClassificationPolicyOptions(
+                    jobId: "jobO365",
+                    channelId: "general",
+                    classificationPolicyId: cp1.Value.Id)
                 {
                     ChannelReference = "12345",
                 });
 
-            var jobXbox = await routerClient.CreateJobWithClassificationPolicyAsync(
-                id: "jobXbox",
-                channelId: "general",
-                classificationPolicyId: cp2.Value.Id,
-                new CreateJobWithClassificationPolicyOptions()
+            var jobXbox = await routerClient.CreateJobAsync(
+                new CreateJobWithClassificationPolicyOptions(
+                    jobId: "jobXbox",
+                    channelId: "general",
+                    classificationPolicyId: cp2.Value.Id)
                 {
                     ChannelReference = "12345",
                 });
@@ -110,8 +102,8 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             {
                 var jobO365Dto = await routerClient.GetJobAsync(jobO365.Value.Id);
                 var jobXBoxDto = await routerClient.GetJobAsync(jobXbox.Value.Id);
-                condition = jobO365Dto.Value.JobStatus == JobStatus.Queued &&
-                            jobXBoxDto.Value.JobStatus == JobStatus.Queued;
+                condition = jobO365Dto.Value.JobStatus == RouterJobStatus.Queued &&
+                            jobXBoxDto.Value.JobStatus == RouterJobStatus.Queued;
                 await Task.Delay(TimeSpan.FromSeconds(1));
             }
 #endif
@@ -151,36 +143,37 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
 #if !SNIPPET
             var routerClient = new RouterClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
+            var routerAdministrationClient = new RouterAdministrationClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
 #endif
-            var distributionPolicy = await routerClient.CreateDistributionPolicyAsync(
-                id: "distribution-policy-id-3",
-                offerTtlSeconds: 30,
-                mode: new LongestIdleMode(),
-                new CreateDistributionPolicyOptions()
+            var distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(
+                new CreateDistributionPolicyOptions(
+                    distributionPolicyId: "distribution-policy-id-3",
+                    offerTtl: TimeSpan.FromSeconds(30),
+                    mode: new LongestIdleMode())
                 {
                     Name = "My LongestIdle Distribution Policy",
                 }
             );
 
-            var queue1 = await routerClient.CreateQueueAsync(
-                id: "Queue-1",
-                distributionPolicyId: distributionPolicy.Value.Id,
-                new CreateQueueOptions()
+            var queue1 = await routerAdministrationClient.CreateQueueAsync(
+                new CreateQueueOptions(
+                    queueId: "Queue-1",
+                    distributionPolicyId: distributionPolicy.Value.Id)
                 {
                     Name = "Queue_365",
-                    Labels = new LabelCollection()
+                    Labels = new Dictionary<string, LabelValue>()
                     {
                         ["ProductDetail"] = new LabelValue("Office_Support")
                     }
                 });
 
-            var queue2 = await routerClient.CreateQueueAsync(
-                id: "Queue-2",
-                distributionPolicyId: distributionPolicy.Value.Id,
-                new CreateQueueOptions()
+            var queue2 = await routerAdministrationClient.CreateQueueAsync(
+                new CreateQueueOptions(
+                    queueId: "Queue-2",
+                    distributionPolicyId: distributionPolicy.Value.Id)
                 {
                     Name = "Queue_XBox",
-                    Labels = new LabelCollection()
+                    Labels = new Dictionary<string, LabelValue>()
                     {
                         ["ProductDetail"] = new LabelValue("XBox_Support")
                     }
@@ -188,13 +181,13 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             var queueSelectorAttachments = new List<QueueSelectorAttachment>()
             {
-                new ConditionalQueueSelector(
+                new ConditionalQueueSelectorAttachment(
                     condition: new ExpressionRule("If(job.Product = \"O365\", true, false)"),
                     labelSelectors: new List<QueueSelector>()
                     {
                         new QueueSelector("ProductDetail", LabelOperator.Equal, new LabelValue("Office_Support"))
                     }),
-                new ConditionalQueueSelector(
+                new ConditionalQueueSelectorAttachment(
                     condition: new ExpressionRule("If(job.Product = \"XBx\", true, false)"),
                     labelSelectors: new List<QueueSelector>()
                     {
@@ -202,22 +195,21 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     })
             };
 
-            var classificationPolicy = await routerClient.CreateClassificationPolicyAsync(
-                id: "classification-policy",
-                new CreateClassificationPolicyOptions()
+            var classificationPolicy = await routerAdministrationClient.CreateClassificationPolicyAsync(
+                new CreateClassificationPolicyOptions(classificationPolicyId: "classification-policy")
                 {
                     Name = "Classification_Policy_O365_And_XBox",
                     QueueSelectors = queueSelectorAttachments,
                 });
 
-            var jobO365 = await routerClient.CreateJobWithClassificationPolicyAsync(
-                id: "jobO365",
-                channelId: "general",
-                classificationPolicyId: classificationPolicy.Value.Id,
-                new CreateJobWithClassificationPolicyOptions()
+            var jobO365 = await routerClient.CreateJobAsync(
+                new CreateJobWithClassificationPolicyOptions(
+                    jobId: "jobO365",
+                    channelId: "general",
+                    classificationPolicyId: classificationPolicy.Value.Id)
                 {
                     ChannelReference = "12345",
-                    Labels = new LabelCollection()
+                    Labels = new Dictionary<string, LabelValue>()
                     {
                         ["Language"] = new LabelValue("en"),
                         ["Product"] = new LabelValue("O365"),
@@ -225,14 +217,14 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     },
                 });
 
-            var jobXbox = await routerClient.CreateJobWithClassificationPolicyAsync(
-                id: "jobXbox",
-                channelId: "general",
-                classificationPolicyId: classificationPolicy.Value.Id,
-                new CreateJobWithClassificationPolicyOptions()
+            var jobXbox = await routerClient.CreateJobAsync(
+                new CreateJobWithClassificationPolicyOptions(
+                    jobId: "jobXbox",
+                    channelId: "general",
+                    classificationPolicyId: classificationPolicy.Value.Id)
                 {
                     ChannelReference = "12345",
-                    Labels = new LabelCollection()
+                    Labels = new Dictionary<string, LabelValue>()
                     {
                         ["Language"] = new LabelValue("en"),
                         ["Product"] = new LabelValue("XBx"),
@@ -248,8 +240,8 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             {
                 var jobO365Dto = await routerClient.GetJobAsync(jobO365.Value.Id);
                 var jobXBoxDto = await routerClient.GetJobAsync(jobXbox.Value.Id);
-                condition = jobO365Dto.Value.JobStatus == JobStatus.Queued &&
-                            jobXBoxDto.Value.JobStatus == JobStatus.Queued;
+                condition = jobO365Dto.Value.JobStatus == RouterJobStatus.Queued &&
+                            jobXBoxDto.Value.JobStatus == RouterJobStatus.Queued;
                 await Task.Delay(TimeSpan.FromSeconds(1));
             }
 #endif
@@ -291,24 +283,25 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
 #if !SNIPPET
             var routerClient = new RouterClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
+            var routerAdministrationClient = new RouterAdministrationClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
 #endif
-            var distributionPolicy = await routerClient.CreateDistributionPolicyAsync(
-                id: "distribution-policy-id-4",
-                offerTtlSeconds: 30,
-                mode: new LongestIdleMode(),
-                new CreateDistributionPolicyOptions()
+            var distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(
+                new CreateDistributionPolicyOptions(
+                    distributionPolicyId: "distribution-policy-id-4",
+                    offerTtl: TimeSpan.FromSeconds(30),
+                    mode: new LongestIdleMode())
                 {
                     Name = "My LongestIdle Distribution Policy",
                 }
                 );
 
-            var queue1 = await routerClient.CreateQueueAsync(
-                id: "Queue-1",
-                distributionPolicyId: distributionPolicy.Value.Id,
-                new CreateQueueOptions()
+            var queue1 = await routerAdministrationClient.CreateQueueAsync(
+                new CreateQueueOptions(
+                    queueId: "Queue-1",
+                    distributionPolicyId: distributionPolicy.Value.Id)
                 {
                     Name = "Queue_365_EN_EMEA",
-                    Labels = new LabelCollection()
+                    Labels = new Dictionary<string, LabelValue>()
                     {
                         ["ProductDetail"] = new LabelValue("Office_Support"),
                         ["Language"] = new LabelValue("en"),
@@ -316,13 +309,13 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     },
                 });
 
-            var queue2 = await routerClient.CreateQueueAsync(
-                id: "Queue-2",
-                distributionPolicyId: distributionPolicy.Value.Id,
-                new CreateQueueOptions()
+            var queue2 = await routerAdministrationClient.CreateQueueAsync(
+                new CreateQueueOptions(
+                    queueId: "Queue-2",
+                    distributionPolicyId: distributionPolicy.Value.Id)
                 {
                     Name = "Queue_365_FR_EMEA",
-                    Labels = new LabelCollection()
+                    Labels = new Dictionary<string, LabelValue>()
                     {
                         ["ProductDetail"] = new LabelValue("Office_Support"),
                         ["Language"] = new LabelValue("fr"),
@@ -330,13 +323,13 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     },
                 });
 
-            var queue3 = await routerClient.CreateQueueAsync(
-                id: "Queue-3",
-                distributionPolicyId: distributionPolicy.Value.Id,
-                new CreateQueueOptions()
+            var queue3 = await routerAdministrationClient.CreateQueueAsync(
+                new CreateQueueOptions(
+                    queueId: "Queue-3",
+                    distributionPolicyId: distributionPolicy.Value.Id)
                 {
                     Name = "Queue_365_EN_NA",
-                    Labels = new LabelCollection()
+                    Labels = new Dictionary<string, LabelValue>()
                     {
                         ["ProductDetail"] = new LabelValue("Office_Support"),
                         ["Language"] = new LabelValue("en"),
@@ -346,27 +339,26 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             var queueSelectorAttachments = new List<QueueSelectorAttachment>()
             {
-                new PassThroughQueueSelector("ProductDetail", LabelOperator.Equal),
-                new PassThroughQueueSelector("Language", LabelOperator.Equal),
-                new PassThroughQueueSelector("Region", LabelOperator.Equal),
+                new PassThroughQueueSelectorAttachment("ProductDetail", LabelOperator.Equal),
+                new PassThroughQueueSelectorAttachment("Language", LabelOperator.Equal),
+                new PassThroughQueueSelectorAttachment("Region", LabelOperator.Equal),
             };
 
-            var classificationPolicy = await routerClient.CreateClassificationPolicyAsync(
-                id: "classification-policy",
-                new CreateClassificationPolicyOptions()
+            var classificationPolicy = await routerAdministrationClient.CreateClassificationPolicyAsync(
+                new CreateClassificationPolicyOptions(classificationPolicyId: "classification-policy")
                 {
                     Name = "Classification_Policy_O365_EMEA_NA",
                     QueueSelectors = queueSelectorAttachments,
                 });
 
-            var jobENEmea = await routerClient.CreateJobWithClassificationPolicyAsync(
-                id: "jobENEmea",
-                channelId: "general",
-                classificationPolicyId: classificationPolicy.Value.Id,
-                new CreateJobWithClassificationPolicyOptions()
+            var jobENEmea = await routerClient.CreateJobAsync(
+                new CreateJobWithClassificationPolicyOptions(
+                    jobId: "jobENEmea",
+                    channelId: "general",
+                    classificationPolicyId: classificationPolicy.Value.Id)
                 {
                     ChannelReference = "12345",
-                    Labels = new LabelCollection()
+                    Labels = new Dictionary<string, LabelValue>()
                     {
                         ["Language"] = new LabelValue("en"),
                         ["Product"] = new LabelValue("O365"),
@@ -376,14 +368,14 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     },
                 });
 
-            var jobFREmea = await routerClient.CreateJobWithClassificationPolicyAsync(
-                id: "jobFREmea",
-                channelId: "general",
-                classificationPolicyId: classificationPolicy.Value.Id,
-                new CreateJobWithClassificationPolicyOptions()
+            var jobFREmea = await routerClient.CreateJobAsync(
+                new CreateJobWithClassificationPolicyOptions(
+                    jobId: "jobFREmea",
+                    channelId: "general",
+                    classificationPolicyId: classificationPolicy.Value.Id)
                 {
                     ChannelReference = "12345",
-                    Labels = new LabelCollection()
+                    Labels = new Dictionary<string, LabelValue>()
                     {
                         ["Language"] = new LabelValue("fr"),
                         ["Product"] = new LabelValue("O365"),
@@ -393,14 +385,14 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     },
                 });
 
-            var jobENNa = await routerClient.CreateJobWithClassificationPolicyAsync(
-                id: "jobENNa",
-                channelId: "general",
-                classificationPolicyId: classificationPolicy.Value.Id,
-                new CreateJobWithClassificationPolicyOptions()
+            var jobENNa = await routerClient.CreateJobAsync(
+                new CreateJobWithClassificationPolicyOptions(
+                    jobId: "jobENNa",
+                    channelId: "general",
+                    classificationPolicyId: classificationPolicy.Value.Id)
                 {
                     ChannelReference = "12345",
-                    Labels = new LabelCollection()
+                    Labels = new Dictionary<string, LabelValue>()
                     {
                         ["Language"] = new LabelValue("en"),
                         ["Product"] = new LabelValue("O365"),
@@ -419,9 +411,9 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 var jobEnEmeaDto = await routerClient.GetJobAsync(jobENEmea.Value.Id);
                 var jobFrEmeaDto = await routerClient.GetJobAsync(jobFREmea.Value.Id);
                 var jobEnNaDto = await routerClient.GetJobAsync(jobENNa.Value.Id);
-                condition = jobEnEmeaDto.Value.JobStatus == JobStatus.Queued &&
-                            jobFrEmeaDto.Value.JobStatus == JobStatus.Queued &&
-                            jobEnNaDto.Value.JobStatus == JobStatus.Queued;
+                condition = jobEnEmeaDto.Value.JobStatus == RouterJobStatus.Queued &&
+                            jobFrEmeaDto.Value.JobStatus == RouterJobStatus.Queued &&
+                            jobEnNaDto.Value.JobStatus == RouterJobStatus.Queued;
                 await Task.Delay(TimeSpan.FromSeconds(1));
             }
 #endif

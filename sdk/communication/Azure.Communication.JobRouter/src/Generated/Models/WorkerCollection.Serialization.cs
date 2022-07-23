@@ -15,16 +15,16 @@ namespace Azure.Communication.JobRouter
     {
         internal static WorkerCollection DeserializeWorkerCollection(JsonElement element)
         {
-            IReadOnlyList<PagedWorker> value = default;
+            IReadOnlyList<RouterWorkerItem> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<PagedWorker> array = new List<PagedWorker>();
+                    List<RouterWorkerItem> array = new List<RouterWorkerItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PagedWorker.DeserializePagedWorker(item));
+                        array.Add(RouterWorkerItem.DeserializeRouterWorkerItem(item));
                     }
                     value = array;
                     continue;

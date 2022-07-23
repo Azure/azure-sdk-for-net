@@ -6,18 +6,14 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Communication.JobRouter;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter
+namespace Azure.Communication.JobRouter.Models
 {
     /// <summary> A policy that defines actions to execute when exception are triggered. </summary>
     public partial class ExceptionPolicy
     {
-        /// <summary> Initializes a new instance of ExceptionPolicy. </summary>
-        public ExceptionPolicy()
-        {
-            ExceptionRules = new ChangeTrackingDictionary<string, ExceptionRule>();
-        }
 
         /// <summary> Initializes a new instance of ExceptionPolicy. </summary>
         /// <param name="id"> The Id of the exception policy. </param>

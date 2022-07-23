@@ -12,12 +12,12 @@ using System.Linq;
 namespace Azure.Communication.JobRouter
 {
     /// <summary> A paged collection of classification policies. </summary>
-    public partial class ClassificationPolicyCollection
+    internal partial class ClassificationPolicyCollection
     {
         /// <summary> Initializes a new instance of ClassificationPolicyCollection. </summary>
         /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal ClassificationPolicyCollection(IEnumerable<PagedClassificationPolicy> value)
+        internal ClassificationPolicyCollection(IEnumerable<ClassificationPolicyItem> value)
         {
             if (value == null)
             {
@@ -30,14 +30,14 @@ namespace Azure.Communication.JobRouter
         /// <summary> Initializes a new instance of ClassificationPolicyCollection. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"></param>
-        internal ClassificationPolicyCollection(IReadOnlyList<PagedClassificationPolicy> value, string nextLink)
+        internal ClassificationPolicyCollection(IReadOnlyList<ClassificationPolicyItem> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Gets the value. </summary>
-        public IReadOnlyList<PagedClassificationPolicy> Value { get; }
+        public IReadOnlyList<ClassificationPolicyItem> Value { get; }
         /// <summary> Gets the next link. </summary>
         public string NextLink { get; }
     }

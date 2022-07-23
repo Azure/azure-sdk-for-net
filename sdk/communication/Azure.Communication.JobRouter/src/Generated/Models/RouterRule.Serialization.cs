@@ -27,7 +27,7 @@ namespace Azure.Communication.JobRouter
             {
                 switch (discriminator.GetString())
                 {
-                    case "azure-function-rule": return AzureFunctionRule.DeserializeAzureFunctionRule(element);
+                    case "azure-function-rule": return FunctionRule.DeserializeFunctionRule(element);
                     case "direct-map-rule": return DirectMapRule.DeserializeDirectMapRule(element);
                     case "expression-rule": return ExpressionRule.DeserializeExpressionRule(element);
                     case "static-rule": return StaticRule.DeserializeStaticRule(element);

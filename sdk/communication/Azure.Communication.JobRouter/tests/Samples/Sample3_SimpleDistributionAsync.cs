@@ -32,29 +32,25 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
 #if !SNIPPET
             var routerClient = new RouterClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
+            var routerAdministrationClient = new RouterAdministrationClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
 #endif
             // Create distribution policy
             var distributionPolicyId = "distribution-policy-id-5";
-            var distributionPolicy = await routerClient.CreateDistributionPolicyAsync(
-                id: distributionPolicyId,
-                offerTtlSeconds: 5 * 60,
-                mode: new LongestIdleMode(),
-                options: new CreateDistributionPolicyOptions() { Name = "Simple longest idle" });
+            var distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(
+                options: new CreateDistributionPolicyOptions(distributionPolicyId: distributionPolicyId, offerTtl: TimeSpan.FromMinutes(5), mode: new LongestIdleMode()) { Name = "Simple longest idle" });
 
             // Create queue
             var queueId = "queue-id-1";
-            var jobQueue = await routerClient.CreateQueueAsync(
-                id: queueId,
-                distributionPolicyId: distributionPolicyId);
+            var jobQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions(
+                queueId: queueId,
+                distributionPolicyId: distributionPolicyId));
 
             // Setting up 2 identical workers
             var worker1Id = "worker-id-1";
             var worker2Id = "worker-id-2";
 
             var worker1 = await routerClient.CreateWorkerAsync(
-                id: worker1Id,
-                totalCapacity: 10,
-                options: new CreateWorkerOptions()
+                options: new CreateWorkerOptions(workerId: worker1Id, totalCapacity: 10)
                 {
                     ChannelConfigurations =
                         new Dictionary<string, ChannelConfiguration>()
@@ -65,9 +61,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 });
 
             var worker2 = await routerClient.CreateWorkerAsync(
-                id: worker2Id,
-                totalCapacity: 10,
-                options: new CreateWorkerOptions()
+                options: new CreateWorkerOptions(workerId: worker2Id, totalCapacity: 10)
                 {
                     ChannelConfigurations =
                         new Dictionary<string, ChannelConfiguration>() { ["general"] = new ChannelConfiguration(10), },
@@ -75,19 +69,17 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 });
 
             // Register worker1
-            worker1 = await routerClient.UpdateWorkerAsync(worker1Id,
-                new UpdateWorkerOptions() { AvailableForOffers = true });
+            worker1 = await routerClient.UpdateWorkerAsync(new UpdateWorkerOptions(worker1Id) { AvailableForOffers = true });
 
             // wait for 5 seconds to simulate worker 1 has been idle longer
             await Task.Delay(TimeSpan.FromSeconds(5));
 
             // Register worker2
-            worker2 = await routerClient.UpdateWorkerAsync(worker2Id,
-                new UpdateWorkerOptions() { AvailableForOffers = true });
+            worker2 = await routerClient.UpdateWorkerAsync(new UpdateWorkerOptions(worker2Id) { AvailableForOffers = true });
 
             // Create a job
             var jobId = "job-id-1";
-            var job = await routerClient.CreateJobAsync(id: jobId, channelId: "general", queueId: queueId);
+            var job = await routerClient.CreateJobAsync(new CreateJobOptions(jobId: jobId, channelId: "general", queueId: queueId));
 
 #if !SNIPPET
             bool condition = false;
@@ -129,29 +121,26 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             // Worker2 will get the offer for job2
 #if !SNIPPET
             var routerClient = new RouterClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
+            var routerAdministrationClient = new RouterAdministrationClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
 #endif
             // Create distribution policy
             var distributionPolicyId = "distribution-policy-id-6";
-            var distributionPolicy = await routerClient.CreateDistributionPolicyAsync(
-                id: distributionPolicyId,
-                offerTtlSeconds: 5 * 60,
-                mode: new RoundRobinMode(),
-                options: new CreateDistributionPolicyOptions() { Name = "Simple round robin" });
+            var distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(
+                options: new CreateDistributionPolicyOptions(
+                    distributionPolicyId: distributionPolicyId,
+                    offerTtl: TimeSpan.FromMinutes(5),
+                    mode: new RoundRobinMode()) { Name = "Simple round robin" });
 
             // Create queue
             var queueId = "queue-id-1";
-            var jobQueue = await routerClient.CreateQueueAsync(
-                id: queueId,
-                distributionPolicyId: distributionPolicyId);
+            var jobQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions(queueId: queueId, distributionPolicyId: distributionPolicyId));
 
             // Setting up 2 identical workers
             var worker1Id = "worker-id-1";
             var worker2Id = "worker-id-2";
 
             var worker1 = await routerClient.CreateWorkerAsync(
-                id: worker1Id,
-                totalCapacity: 10,
-                options: new CreateWorkerOptions()
+                options: new CreateWorkerOptions(workerId: worker1Id, totalCapacity: 10)
                 {
                     ChannelConfigurations =
                         new Dictionary<string, ChannelConfiguration>()
@@ -163,9 +152,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 });
 
             var worker2 = await routerClient.CreateWorkerAsync(
-                id: worker2Id,
-                totalCapacity: 10,
-                options: new CreateWorkerOptions()
+                options: new CreateWorkerOptions(workerId: worker2Id, totalCapacity: 10)
                 {
                     ChannelConfigurations =
                         new Dictionary<string, ChannelConfiguration>() { ["general"] = new ChannelConfiguration(5), },
@@ -177,8 +164,8 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             var job1Id = "job-id-1";
             var job2Id = "job-id-2";
 
-            var job1 = await routerClient.CreateJobAsync(id: job1Id, channelId: "general", queueId: queueId);
-            var job2 = await routerClient.CreateJobAsync(id: job2Id, channelId: "general", queueId: queueId);
+            var job1 = await routerClient.CreateJobAsync(new CreateJobOptions(jobId: job1Id, channelId: "general", queueId: queueId));
+            var job2 = await routerClient.CreateJobAsync(new CreateJobOptions(jobId: job2Id, channelId: "general", queueId: queueId));
 
 #if !SNIPPET
             bool condition = false;
@@ -231,20 +218,21 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             // Worker3 will not get the offer for the job (partial label overlap + partial worker selector match)
 #if !SNIPPET
             var routerClient = new RouterClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
+            var routerAdministrationClient = new RouterAdministrationClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
 #endif
             // Create distribution policy
             var distributionPolicyId = "distribution-policy-id-7";
-            var distributionPolicy = await routerClient.CreateDistributionPolicyAsync(
-                id: distributionPolicyId,
-                offerTtlSeconds: 5 * 60,
-                mode: new BestWorkerMode(),
-                options: new CreateDistributionPolicyOptions() { Name = "Default best worker mode" });
+            var distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(
+                options: new CreateDistributionPolicyOptions(
+                    distributionPolicyId: distributionPolicyId,
+                    offerTtl: TimeSpan.FromMinutes(5),
+                    mode: new BestWorkerMode()) { Name = "Default best worker mode" });
 
             // Create queue
             var queueId = "queue-id-1";
-            var jobQueue = await routerClient.CreateQueueAsync(
-                id: queueId,
-                distributionPolicyId: distributionPolicyId);
+            var jobQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions(
+                queueId: queueId,
+                distributionPolicyId: distributionPolicyId));
 
             // Setting up 3 workers with different labels
             var worker1Id = "worker-id-1";
@@ -252,9 +240,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             var worker3Id = "worker-id-3";
 
             var worker1 = await routerClient.CreateWorkerAsync(
-                id: worker1Id,
-                totalCapacity: 10,
-                options: new CreateWorkerOptions()
+                options: new CreateWorkerOptions(workerId: worker1Id, totalCapacity: 10)
                 {
                     ChannelConfigurations =
                         new Dictionary<string, ChannelConfiguration>()
@@ -262,7 +248,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                             ["general"] = new ChannelConfiguration(10),
                         },
                     QueueIds = new Dictionary<string, QueueAssignment>() { [queueId] = new QueueAssignment(), },
-                    Labels = new LabelCollection()
+                    Labels = new Dictionary<string, LabelValue>()
                     {
                         ["Location"] = new LabelValue("United States"),
                         ["Language"] = new LabelValue("en-us"),
@@ -274,14 +260,12 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 });
 
             var worker2 = await routerClient.CreateWorkerAsync(
-                id: worker2Id,
-                totalCapacity: 10,
-                options: new CreateWorkerOptions()
+                options: new CreateWorkerOptions(workerId: worker2Id, totalCapacity: 10)
                 {
                     ChannelConfigurations =
                         new Dictionary<string, ChannelConfiguration>() { ["general"] = new ChannelConfiguration(10), },
                     QueueIds = new Dictionary<string, QueueAssignment>() { [queueId] = new QueueAssignment(), },
-                    Labels = new LabelCollection()
+                    Labels = new Dictionary<string, LabelValue>()
                     {
                         ["Location"] = new LabelValue("United States"),
                         ["Language"] = new LabelValue("en-us"),
@@ -293,14 +277,12 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 });
 
             var worker3 = await routerClient.CreateWorkerAsync(
-                id: worker3Id,
-                totalCapacity: 10,
-                options: new CreateWorkerOptions()
+                options: new CreateWorkerOptions(workerId: worker3Id, totalCapacity: 10)
                 {
                     ChannelConfigurations =
                         new Dictionary<string, ChannelConfiguration>() { ["general"] = new ChannelConfiguration(10), },
                     QueueIds = new Dictionary<string, QueueAssignment>() { [queueId] = new QueueAssignment(), },
-                    Labels = new LabelCollection()
+                    Labels = new Dictionary<string, LabelValue>()
                     {
                         ["Location"] = new LabelValue("United States"),
                         ["Language"] = new LabelValue("en-us"),
@@ -313,12 +295,9 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             var jobId = "job-id-1";
             var job = await routerClient.CreateJobAsync(
-                id: jobId,
-                channelId: "general",
-                queueId: queueId,
-                options: new CreateJobOptions()
+                options: new CreateJobOptions(jobId: jobId, channelId: "general", queueId: queueId)
                 {
-                    Labels = new LabelCollection()
+                    Labels = new Dictionary<string, LabelValue>()
                     {
                         ["Location"] = new LabelValue("United States"),
                         ["Language"] = new LabelValue("en-us"),
@@ -374,29 +353,28 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
 #if !SNIPPET
             var routerClient = new RouterClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
+            var routerAdministrationClient = new RouterAdministrationClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
 #endif
             // Create distribution policy
             var distributionPolicyId = "distribution-policy-id-8";
-            var distributionPolicy = await routerClient.CreateDistributionPolicyAsync(
-                id: distributionPolicyId,
-                offerTtlSeconds: 5 * 60,
-                mode: new LongestIdleMode(minConcurrentOffers: 1, maxConcurrentOffers: 2),
-                options: new CreateDistributionPolicyOptions() { Name = "Simple longest idle" });
+            var distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(
+                options: new CreateDistributionPolicyOptions(
+                    distributionPolicyId: distributionPolicyId,
+                    offerTtl: TimeSpan.FromMinutes(5),
+                    mode: new LongestIdleMode(minConcurrentOffers: 1, maxConcurrentOffers: 2)) { Name = "Simple longest idle" });
 
             // Create queue
             var queueId = "queue-id-1";
-            var jobQueue = await routerClient.CreateQueueAsync(
-                id: queueId,
-                distributionPolicyId: distributionPolicyId);
+            var jobQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions(
+                queueId: queueId,
+                distributionPolicyId: distributionPolicyId));
 
             // Setting up 2 identical workers
             var worker1Id = "worker-id-1";
             var worker2Id = "worker-id-2";
 
             var worker1 = await routerClient.CreateWorkerAsync(
-                id: worker1Id,
-                totalCapacity: 10,
-                options: new CreateWorkerOptions()
+                options: new CreateWorkerOptions(workerId: worker1Id, totalCapacity: 10)
                 {
                     ChannelConfigurations =
                         new Dictionary<string, ChannelConfiguration>()
@@ -408,9 +386,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 });
 
             var worker2 = await routerClient.CreateWorkerAsync(
-                id: worker2Id,
-                totalCapacity: 10,
-                options: new CreateWorkerOptions()
+                options: new CreateWorkerOptions(workerId: worker2Id, totalCapacity: 10)
                 {
                     ChannelConfigurations =
                         new Dictionary<string, ChannelConfiguration>() { ["general"] = new ChannelConfiguration(10), },
@@ -420,7 +396,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             // Create a job
             var jobId = "job-id-1";
-            var job = await routerClient.CreateJobAsync(id: jobId, channelId: "general", queueId: queueId);
+            var job = await routerClient.CreateJobAsync(new CreateJobOptions(jobId: jobId, channelId: "general", queueId: queueId));
 
 #if !SNIPPET
             bool condition = false;

@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter
+namespace Azure.Communication.JobRouter.Models
 {
     /// <summary> A queue that can contain jobs to be routed. </summary>
     public partial class JobQueue

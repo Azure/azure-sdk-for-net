@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -24,10 +25,10 @@ namespace Azure.Communication.JobRouter
                 writer.WritePropertyName("value");
                 writer.WriteObjectValue(_value);
             }
-            if (Optional.IsDefined(TtlSeconds))
+            if (Optional.IsDefined(_ttlSeconds))
             {
                 writer.WritePropertyName("ttlSeconds");
-                writer.WriteNumberValue(TtlSeconds.Value);
+                writer.WriteNumberValue(_ttlSeconds.Value);
             }
             if (Optional.IsDefined(Expedite))
             {
@@ -44,6 +45,8 @@ namespace Azure.Communication.JobRouter
             Optional<object> value = default;
             Optional<double> ttlSeconds = default;
             Optional<bool> expedite = default;
+            Optional<WorkerSelectorState> state = default;
+            Optional<DateTimeOffset> expireTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("key"))
@@ -86,8 +89,28 @@ namespace Azure.Communication.JobRouter
                     expedite = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("state"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    state = property.Value.GetString().ToWorkerSelectorState();
+                    continue;
+                }
+                if (property.NameEquals("expireTime"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    expireTime = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
             }
-            return new WorkerSelector(key, labelOperator, value.Value, Optional.ToNullable(ttlSeconds), Optional.ToNullable(expedite));
+            return new WorkerSelector(key, labelOperator, value.Value, Optional.ToNullable(ttlSeconds), Optional.ToNullable(expedite), Optional.ToNullable(state), Optional.ToNullable(expireTime));
         }
     }
 }

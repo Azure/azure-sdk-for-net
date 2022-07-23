@@ -6,9 +6,10 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Communication.JobRouter;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter
+namespace Azure.Communication.JobRouter.Models
 {
     public partial class DistributionPolicy : IUtf8JsonSerializable
     {
@@ -20,10 +21,10 @@ namespace Azure.Communication.JobRouter
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(OfferTtlSeconds))
+            if (Optional.IsDefined(_offerTtlSeconds))
             {
                 writer.WritePropertyName("offerTtlSeconds");
-                writer.WriteNumberValue(OfferTtlSeconds.Value);
+                writer.WriteNumberValue(_offerTtlSeconds.Value);
             }
             if (Optional.IsDefined(Mode))
             {

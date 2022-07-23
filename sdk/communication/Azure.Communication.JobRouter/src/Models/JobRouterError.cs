@@ -6,9 +6,12 @@ using System.Collections.Generic;
 using System.Text;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter
+namespace Azure.Communication.JobRouter.Models
 {
-    [CodeGenModel("CommunicationError")]
+    /// <summary>
+    /// Error model.
+    /// </summary>
+    [CodeGenModel("JobRouterError")]
     public partial class JobRouterError
     {
     }

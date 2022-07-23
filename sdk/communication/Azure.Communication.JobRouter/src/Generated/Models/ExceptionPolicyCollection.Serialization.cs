@@ -7,24 +7,25 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Communication.JobRouter;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter
+namespace Azure.Communication.JobRouter.Models
 {
-    public partial class ExceptionPolicyCollection
+    internal partial class ExceptionPolicyCollection
     {
         internal static ExceptionPolicyCollection DeserializeExceptionPolicyCollection(JsonElement element)
         {
-            IReadOnlyList<PagedExceptionPolicy> value = default;
+            IReadOnlyList<ExceptionPolicyItem> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<PagedExceptionPolicy> array = new List<PagedExceptionPolicy>();
+                    List<ExceptionPolicyItem> array = new List<ExceptionPolicyItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PagedExceptionPolicy.DeserializePagedExceptionPolicy(item));
+                        array.Add(ExceptionPolicyItem.DeserializeExceptionPolicyItem(item));
                     }
                     value = array;
                     continue;

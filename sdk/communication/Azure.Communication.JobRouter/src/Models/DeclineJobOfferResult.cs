@@ -5,15 +5,17 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Azure.Communication.JobRouter
+namespace Azure.Communication.JobRouter.Models
 {
     /// <summary>
     /// Response received after declining job offer.
     /// </summary>
-    public class DeclineJobOfferResult: EmptyPlaceholderObject
+    public class DeclineJobOfferResult
     {
-        /// <inheritdoc />
-        public DeclineJobOfferResult(object value) : base(value)
+        /// <summary>
+        /// Public constructor.
+        /// </summary>
+        internal DeclineJobOfferResult()
         {
         }
     }

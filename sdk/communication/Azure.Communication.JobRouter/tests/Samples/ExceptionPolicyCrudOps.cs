@@ -19,7 +19,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
         {
 #if !SNIPPET
             // create a client
-            var routerClient = new RouterClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
+            var routerClient = new RouterAdministrationClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
 #endif
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_CreateExceptionPolicy
@@ -38,7 +38,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             // define exception actions that needs to be executed when trigger condition is satisfied
             var escalateJobOnQueueOverFlow = new ReclassifyExceptionAction(
                 classificationPolicyId: "escalation-on-q-over-flow",
-                labelsToUpsert: new LabelCollection()
+                labelsToUpsert: new Dictionary<string, LabelValue>()
                 {
                     ["EscalateJob"] = new LabelValue(true),
                     ["EscalationReasonCode"] = new LabelValue("QueueOverFlow")
@@ -51,7 +51,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             var escalateJobOnWaitTimeExceeded = new ReclassifyExceptionAction(
                 classificationPolicyId: "escalation-on-wait-time-exceeded",
-                labelsToUpsert: new LabelCollection()
+                labelsToUpsert: new Dictionary<string, LabelValue>()
                 {
                     ["EscalateJob"] = new LabelValue(true),
                     ["EscalationReasonCode"] = new LabelValue("WaitTimeExceeded")
@@ -75,9 +75,9 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             };
 
             var exceptionPolicy = routerClient.CreateExceptionPolicy(
-                id: exceptionPolicyId,
-                exceptionRules: exceptionRule,
-                new CreateExceptionPolicyOptions() // this is optional
+                new CreateExceptionPolicyOptions(
+                        exceptionPolicyId: exceptionPolicyId,
+                        exceptionRules: exceptionRule)
                 {
                     Name = "My exception policy"
                 }
@@ -110,15 +110,14 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             // define exception action
             var escalateJobOnWaitTimeExceeded2 = new ReclassifyExceptionAction(
                 classificationPolicyId: "escalation-on-wait-time-exceeded",
-                labelsToUpsert: new LabelCollection()
+                labelsToUpsert: new Dictionary<string, LabelValue>()
                 {
                     ["EscalateJob"] = new LabelValue(true),
                     ["EscalationReasonCode"] = new LabelValue("WaitTimeExceeded2Min")
                 });
 
             var updateExceptionPolicy = routerClient.UpdateExceptionPolicy(
-                exceptionPolicyId,
-                new UpdateExceptionPolicyOptions()
+                new UpdateExceptionPolicyOptions(exceptionPolicyId)
                 {
                     // you can update one or more properties of exception policy - here we are adding one additional exception rule
                     Name = "My updated exception policy",
@@ -157,7 +156,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             {
                 foreach (var policy in asPage.Values)
                 {
-                    Console.WriteLine($"Listing exception policy with id: {policy.Id}");
+                    Console.WriteLine($"Listing exception policy with id: {policy.ExceptionPolicy.Id}");
                 }
             }
 

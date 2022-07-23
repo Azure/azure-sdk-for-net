@@ -12,28 +12,11 @@ If any of the new objects needs to be overwritten, add the required changes to t
 ## Configuration
 
 ```yaml
-tag: package-jobrouter-2021-10-20-preview2
+tag: package-jobrouter-2022-07-18-preview
 model-namespace: false
 require:
-    -  https://raw.githubusercontent.com/Azure/azure-rest-api-specs/5cd329c4ab95ed45749f78026cae892b73015a82/specification/communication/data-plane/JobRouter/readme.md
+    -  https://raw.githubusercontent.com/Azure/azure-rest-api-specs/c350a26aa5bd64ccc7a768f2cb5464a1cbe825e5/specification/communication/data-plane/JobRouter/readme.md
 
 generation1-convenience-client: true
 reflect-api-versions: true
-```
-
-### Rename AcceptJobOfferResponse to AcceptJobOfferResult
-```yaml
-directive:
-  - from: swagger-document
-    where: '$.definitions.AcceptJobOfferResponse'
-    transform: >
-      $["x-ms-client-name"] = "AcceptJobOfferResult";
-```
-
-### Remove distributionPolicyId as required from JobQueue
-```yaml
-directive:
-  - from: swagger-document
-    where: '$.definitions.JobQueue'
-    transform: delete $.required
 ```

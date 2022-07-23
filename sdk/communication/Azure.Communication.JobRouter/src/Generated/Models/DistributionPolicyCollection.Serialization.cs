@@ -11,20 +11,20 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class DistributionPolicyCollection
+    internal partial class DistributionPolicyCollection
     {
         internal static DistributionPolicyCollection DeserializeDistributionPolicyCollection(JsonElement element)
         {
-            IReadOnlyList<PagedDistributionPolicy> value = default;
+            IReadOnlyList<DistributionPolicyItem> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<PagedDistributionPolicy> array = new List<PagedDistributionPolicy>();
+                    List<DistributionPolicyItem> array = new List<DistributionPolicyItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PagedDistributionPolicy.DeserializePagedDistributionPolicy(item));
+                        array.Add(DistributionPolicyItem.DeserializeDistributionPolicyItem(item));
                     }
                     value = array;
                     continue;

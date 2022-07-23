@@ -20,53 +20,52 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
         public async Task Scenario()
         {
             RouterClient client = CreateRouterClientWithConnectionString();
+            RouterAdministrationClient administrationClient = CreateRouterAdministrationClientWithConnectionString();
 
             var dispositionCode = "dispositionCode";
             var channelResponse = GenerateUniqueId($"Channel-{IdPrefix}-{nameof(CancellationScenario)}");
 
             var distributionPolicyId = GenerateUniqueId($"{IdPrefix}-dist-policy");
-            var distributionPolicyResponse = await client.CreateDistributionPolicyAsync(
-                distributionPolicyId,
-                10 * 60,
-                new LongestIdleMode(1, 1),
-                new CreateDistributionPolicyOptions()
+            var distributionPolicyResponse = await administrationClient.CreateDistributionPolicyAsync(
+                new CreateDistributionPolicyOptions(distributionPolicyId,
+                    TimeSpan.FromMinutes(10),
+                    new LongestIdleMode(1, 1))
                 {
                     Name = "test",
                 });
-            AddForCleanup(new Task(async () => await client.DeleteDistributionPolicyAsync(distributionPolicyId)));
+            AddForCleanup(new Task(async () => await administrationClient.DeleteDistributionPolicyAsync(distributionPolicyId)));
 
-            var queueResponse = await client.CreateQueueAsync(
-                $"{IdPrefix}-queue",
-                distributionPolicyResponse.Value.Id,
-                new CreateQueueOptions()
+            var queueResponse = await administrationClient.CreateQueueAsync(
+                new CreateQueueOptions($"{IdPrefix}-queue",
+                    distributionPolicyResponse.Value.Id)
                 {
                     Name = "test",
                 });
 
             var jobId = $"JobId-{IdPrefix}-{nameof(CancellationScenario)}";
             var createJob = await client.CreateJobAsync(
-                id: jobId,
-                channelId: channelResponse,
-                queueId: queueResponse.Value.Id,
-                new CreateJobOptions()
+                new CreateJobOptions(
+                    jobId: jobId,
+                    channelId: channelResponse,
+                    queueId: queueResponse.Value.Id)
                 {
                     Priority = 1,
                 });
-            AddForCleanup(new Task(async () => await client.CancelJobAsync(jobId)));
+            AddForCleanup(new Task(async () => await client.CancelJobAsync(new CancelJobOptions(jobId))));
             AddForCleanup(new Task(async () => await client.DeleteJobAsync(jobId)));
 
             var job = await Poll(async () => await client.GetJobAsync(createJob.Value.Id),
-                x => x.Value.JobStatus == JobStatus.Queued,
+                x => x.Value.JobStatus == RouterJobStatus.Queued,
                 TimeSpan.FromSeconds(10));
-            Assert.AreEqual(JobStatus.Queued, job.Value.JobStatus);
+            Assert.AreEqual(RouterJobStatus.Queued, job.Value.JobStatus);
 
-            await client.CancelJobAsync(job.Value.Id, new CancelJobOptions()
+            await client.CancelJobAsync(new CancelJobOptions(job.Value.Id)
             {
                 DispositionCode = dispositionCode,
             });
 
             var finalJobState = await client.GetJobAsync(createJob.Value.Id);
-            Assert.AreEqual(JobStatus.Cancelled, finalJobState.Value.JobStatus);
+            Assert.AreEqual(RouterJobStatus.Cancelled, finalJobState.Value.JobStatus);
             Assert.AreEqual(dispositionCode, finalJobState.Value.DispositionCode);
         }
     }

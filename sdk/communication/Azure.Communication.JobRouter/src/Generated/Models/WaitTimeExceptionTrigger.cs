@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Trigger for an exception action on exceeding wait time. </summary>
@@ -15,10 +13,10 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Initializes a new instance of WaitTimeExceptionTrigger. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of ExceptionTrigger. </param>
-        /// <param name="threshold"> Threshold for wait time for this trigger. Requires input conforming to ISO8601 duration format. </param>
-        internal WaitTimeExceptionTrigger(string kind, TimeSpan threshold) : base(kind)
+        /// <param name="thresholdSeconds"> Threshold for wait time for this trigger. </param>
+        internal WaitTimeExceptionTrigger(string kind, double thresholdSeconds) : base(kind)
         {
-            Threshold = threshold;
+            _thresholdSeconds = thresholdSeconds;
             Kind = kind ?? "wait-time";
         }
     }

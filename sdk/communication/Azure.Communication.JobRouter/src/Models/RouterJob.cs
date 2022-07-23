@@ -8,50 +8,69 @@ using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter
+namespace Azure.Communication.JobRouter.Models
 {
     [CodeGenModel("RouterJob")]
+    [CodeGenSuppress("RouterJob")]
     public partial class RouterJob
     {
+        /// <summary> Initializes a new instance of RouterJob. </summary>
+        internal RouterJob()
+        {
+            _requestedWorkerSelectors = new ChangeTrackingList<WorkerSelector>();
+            AttachedWorkerSelectors = new ChangeTrackingList<WorkerSelector>();
+            _labels = new ChangeTrackingDictionary<string, object>();
+            Assignments = new ChangeTrackingDictionary<string, JobAssignment>();
+            _tags = new ChangeTrackingDictionary<string, object>();
+            _notes = new ChangeTrackingDictionary<string, string>();
+        }
+
         [CodeGenMember("Labels")]
         internal IDictionary<string, object> _labels
         {
             get
             {
-                return Labels != null
-                    ? Labels?.ToDictionary(x => x.Key,
-                        x => x.Value.Value)
+                return Labels != null && Labels.Count != 0
+                    ? Labels?.ToDictionary(x => x.Key, x => x.Value.Value)
                     : new ChangeTrackingDictionary<string, object>();
             }
             set
             {
-                Labels = LabelCollection.BuildFromRawValues(value);
+                Labels = value != null && value.Count != 0
+                    ? value.ToDictionary(x => x.Key, x => new LabelValue(x.Value))
+                    : new Dictionary<string, LabelValue>();
             }
         }
 
         /// <summary>
         /// A set of key/value pairs that are identifying attributes used by the rules engines to make decisions.
         /// </summary>
-        public LabelCollection Labels { get; set; }
+#pragma warning disable CA2227 // Collection properties should be read only
+        public IDictionary<string, LabelValue> Labels { get; set; }
+#pragma warning restore CA2227 // Collection properties should be read only
 
         [CodeGenMember("Tags")]
         internal IDictionary<string, object> _tags
         {
             get
             {
-                return Tags != null
+                return Tags != null && Tags.Count != 0
                     ? Tags?.ToDictionary(x => x.Key,
                         x => x.Value.Value)
                     : new ChangeTrackingDictionary<string, object>();
             }
             set
             {
-                Tags = LabelCollection.BuildFromRawValues(value);
+                Tags = value != null && value.Count != 0
+                    ? value.ToDictionary(x => x.Key, x => new LabelValue(x.Value))
+                    : new Dictionary<string, LabelValue>();
             }
         }
 
         /// <summary> A set of non-identifying attributes attached to this job. </summary>
-        public LabelCollection Tags { get; set; }
+#pragma warning disable CA2227 // Collection properties should be read only
+        public IDictionary<string, LabelValue> Tags { get; set; }
+#pragma warning restore CA2227 // Collection properties should be read only
 
         [CodeGenMember("Notes")]
         internal IDictionary<string, string> _notes

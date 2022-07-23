@@ -5,15 +5,13 @@
 
 #nullable disable
 
-namespace Azure.Communication.JobRouter
+using Azure.Communication.JobRouter;
+
+namespace Azure.Communication.JobRouter.Models
 {
     /// <summary> Policy governing how jobs are distributed to workers. </summary>
     public partial class DistributionPolicy
     {
-        /// <summary> Initializes a new instance of DistributionPolicy. </summary>
-        public DistributionPolicy()
-        {
-        }
 
         /// <summary> Initializes a new instance of DistributionPolicy. </summary>
         /// <param name="id"> The unique identifier of the policy. </param>
@@ -24,7 +22,7 @@ namespace Azure.Communication.JobRouter
         {
             Id = id;
             Name = name;
-            OfferTtlSeconds = offerTtlSeconds;
+            _offerTtlSeconds = offerTtlSeconds;
             Mode = mode;
         }
 
@@ -32,8 +30,6 @@ namespace Azure.Communication.JobRouter
         public string Id { get; }
         /// <summary> The human readable name of the policy. </summary>
         public string Name { get; set; }
-        /// <summary> The expiry time of any offers created under this policy will be governed by the offer time to live. </summary>
-        public double? OfferTtlSeconds { get; set; }
         /// <summary> Abstract base class for defining a distribution mode. </summary>
         public DistributionMode Mode { get; set; }
     }

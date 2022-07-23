@@ -12,6 +12,7 @@ Create a `RouterClient`.
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateClient
 var routerClient = new RouterClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
+var routerAdministrationClient = new RouterAdministrationClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
 ```
 
 ## Create a Distribution Policy
@@ -21,10 +22,11 @@ Use `RouterClient` to create a [Distribution Policy](https://docs.microsoft.com/
 For this example, we are going to create a __Longest Idle__ policy with an offer TTL set to 1 day.
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateDistributionPolicyLongestIdleTTL1D
-var distributionPolicy = routerClient.CreateDistributionPolicy(
-    id: "distribution-policy-1",
-    offerTtlSeconds: 24 * 60 * 60,
-    mode: new LongestIdleMode()
+var distributionPolicy = routerAdministrationClient.CreateDistributionPolicy(
+    new CreateDistributionPolicyOptions(
+        distributionPolicyId: "distribution-policy-1",
+        offerTtl: TimeSpan.FromDays(1),
+        mode: new LongestIdleMode())
 );
 ```
 
@@ -33,9 +35,10 @@ var distributionPolicy = routerClient.CreateDistributionPolicy(
 Use `RouterClient` to create a [Queue](https://docs.microsoft.com/azure/communication-services/concepts/router/concepts#queue).
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateQueue
-var queue = routerClient.CreateQueue(
-    id: "queue-1",
-    distributionPolicyId: distributionPolicy.Value.Id
+var queue = routerAdministrationClient.CreateQueue(
+    new CreateQueueOptions(
+        queueId: "queue-1",
+        distributionPolicyId: distributionPolicy.Value.Id)
 );
 ```
 
@@ -45,10 +48,10 @@ Now, we can submit a [Job](https://docs.microsoft.com/azure/communication-servic
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateJobDirectQAssign
 var job = routerClient.CreateJob(
-    id: "jobId-2",
-    channelId: "my-channel",
-    queueId: queue.Value.Id,
-    new CreateJobOptions()
+    new CreateJobOptions(
+        jobId: "jobId-2",
+        channelId: "my-channel",
+        queueId: queue.Value.Id)
     {
         ChannelReference = "12345",
         Priority = 1,
@@ -65,12 +68,12 @@ Register a worker associated with the queue that was just created. We will assig
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_RegisterWorker
 var worker = routerClient.CreateWorker(
-    id: "worker-1",
-    totalCapacity: 1,
-    new CreateWorkerOptions()
+    new CreateWorkerOptions(
+        workerId: "worker-1",
+        totalCapacity: 1)
     {
         QueueIds = new Dictionary<string, QueueAssignment>() { [queue.Value.Id] = new QueueAssignment() },
-        Labels = new LabelCollection()
+        Labels = new Dictionary<string, LabelValue>()
         {
             ["Some-Skill"] = new LabelValue(11)
         },
@@ -159,7 +162,7 @@ Console.WriteLine($"Job has been assigned to worker: {worker.Value.Id} with assi
 
 // verify job assignment is populated when querying job
 var updatedJob = routerClient.GetJob(job.Value.Id);
-Console.WriteLine($"Job assignment has been successful: {updatedJob.Value.JobStatus == JobStatus.Assigned && updatedJob.Value.Assignments.ContainsKey(acceptJobOfferResult.Value.AssignmentId)}");
+Console.WriteLine($"Job assignment has been successful: {updatedJob.Value.JobStatus == RouterJobStatus.Assigned && updatedJob.Value.Assignments.ContainsKey(acceptJobOfferResult.Value.AssignmentId)}");
 ```
 
 ## Completing a job
@@ -168,9 +171,9 @@ Once the worker is done with the job, the worker has to mark the job as `complet
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CompleteJob
 var completeJob = routerClient.CompleteJob(
-    jobId: job.Value.Id,
-    assignmentId: acceptJobOfferResult.Value.AssignmentId,
-    options: new CompleteJobOptions() // this is optional
+    options: new CompleteJobOptions(
+            jobId: job.Value.Id,
+            assignmentId: acceptJobOfferResult.Value.AssignmentId)
     {
         Note = $"Job has been completed by {worker.Value.Id} at {DateTimeOffset.UtcNow}"
     });
@@ -184,9 +187,9 @@ After a job has been completed, the worker can perform wrap up actions to the jo
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CloseJob
 var closeJob = routerClient.CloseJob(
-    jobId: job.Value.Id,
-    assignmentId: acceptJobOfferResult.Value.AssignmentId,
-    options: new CloseJobOptions()  // this is optional
+    options: new CloseJobOptions(
+            jobId: job.Value.Id,
+            assignmentId: acceptJobOfferResult.Value.AssignmentId)
     {
         Note = $"Job has been closed by {worker.Value.Id} at {DateTimeOffset.UtcNow}"
     });
@@ -208,7 +211,7 @@ await Task.Delay(TimeSpan.FromSeconds(2));
 */
 
 updatedJob = routerClient.GetJob(job.Value.Id);
-Console.WriteLine($"Updated job status: {updatedJob.Value.JobStatus == JobStatus.Closed}");
+Console.WriteLine($"Updated job status: {updatedJob.Value.JobStatus == RouterJobStatus.Closed}");
 ```
 <!-- LINKS -->
 [subscribe_events]: https://docs.microsoft.com/azure/communication-services/how-tos/router-sdk/subscribe-events

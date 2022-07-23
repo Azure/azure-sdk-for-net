@@ -6,7 +6,7 @@ using Azure.Core;
 namespace Azure.Communication.JobRouter
 {
     [CodeGenModel("DistributionPolicyCollection")]
-    public partial class DistributionPolicyCollection
+    internal partial class DistributionPolicyCollection
     {
     }
 }

@@ -8,12 +8,12 @@ using System.Text;
 namespace Azure.Communication.JobRouter
 {
     /// <summary>
-    /// Values for <see cref="LabelCollection"/>.
+    /// Generic value wrapper.
     /// </summary>
     public record LabelValue
     {
         /// <summary>
-        /// Primitive value of <see cref="LabelCollection"/>.
+        /// Primitive value.
         /// </summary>
         public object Value { get; }
 

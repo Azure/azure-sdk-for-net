@@ -19,18 +19,18 @@ namespace Azure.Communication.JobRouter.Tests.Samples
         {
 #if !SNIPPET
             // create a client
-            var routerClient = new RouterClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
+            var routerAdministrationClient = new RouterAdministrationClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
 #endif
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_CreateDistributionPolicy
 
             var distributionPolicyId = "my-distribution-policy";
 
-            var distributionPolicy = routerClient.CreateDistributionPolicy(
-                id: distributionPolicyId,
-                offerTtlSeconds: 60,
-                mode: new LongestIdleMode(),
-                new CreateDistributionPolicyOptions() // this is optional
+            var distributionPolicy = routerAdministrationClient.CreateDistributionPolicy(
+                new CreateDistributionPolicyOptions(
+                    distributionPolicyId: distributionPolicyId,
+                    offerTtl: TimeSpan.FromMinutes(1),
+                    mode: new LongestIdleMode())
                 {
                     Name = "My distribution policy"
                 }
@@ -42,7 +42,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetDistributionPolicy
 
-            var queriedDistributionPolicy = routerClient.GetDistributionPolicy(distributionPolicyId);
+            var queriedDistributionPolicy = routerAdministrationClient.GetDistributionPolicy(distributionPolicyId);
 
             Console.WriteLine($"Successfully fetched distribution policy with id: {queriedDistributionPolicy.Value.Id}");
 
@@ -50,9 +50,8 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateDistributionPolicy
 
-            var updatedDistributionPolicy = routerClient.UpdateDistributionPolicy(
-                distributionPolicyId,
-                new UpdateDistributionPolicyOptions()
+            var updatedDistributionPolicy = routerAdministrationClient.UpdateDistributionPolicy(
+                new UpdateDistributionPolicyOptions(distributionPolicyId)
                 {
                     // you can update one or more properties of distribution policy
                     Mode = new RoundRobinMode(),
@@ -64,12 +63,12 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetDistributionPolicies
 
-            var distributionPolicies = routerClient.GetDistributionPolicies();
+            var distributionPolicies = routerAdministrationClient.GetDistributionPolicies();
             foreach (var asPage in distributionPolicies.AsPages(pageSizeHint: 10))
             {
                 foreach (var policy in asPage.Values)
                 {
-                    Console.WriteLine($"Listing distribution policy with id: {policy.Id}");
+                    Console.WriteLine($"Listing distribution policy with id: {policy.DistributionPolicy.Id}");
                 }
             }
 
@@ -77,7 +76,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_DeleteDistributionPolicy
 
-            _ = routerClient.DeleteDistributionPolicy(distributionPolicyId);
+            _ = routerAdministrationClient.DeleteDistributionPolicy(distributionPolicyId);
 
             #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_DeleteDistributionPolicy
         }

@@ -4,7 +4,7 @@
 using System;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter
+namespace Azure.Communication.JobRouter.Models
 {
     [CodeGenModel("JobOffer")]
     public partial class JobOffer

@@ -5,22 +5,38 @@
 
 using System;
 using System.Globalization;
+using Azure.Core;
 
 #nullable disable
 
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Trigger for an exception action on exceeding wait time. </summary>
+    [CodeGenModel("WaitTimeExceptionTrigger")]
+    [CodeGenSuppress("WaitTimeExceptionTrigger", typeof(double))]
     public partial class WaitTimeExceptionTrigger : JobExceptionTrigger
     {
         /// <summary> Initializes a new instance of WaitTimeExceptionTrigger. </summary>
         /// <param name="threshold"> Threshold for wait time for this trigger. </param>
         public WaitTimeExceptionTrigger(TimeSpan threshold)
-            :this (null, threshold)
+            :this (null, threshold.Seconds)
         {
         }
 
         /// <summary> Threshold for wait time for this trigger. </summary>
-        public TimeSpan Threshold { get; }
+        public TimeSpan Threshold { get; set; }
+
+        /// <summary> Threshold for wait time for this trigger. </summary>
+        [CodeGenMember("ThresholdSeconds")]
+        internal double _thresholdSeconds {
+            get
+            {
+                return Threshold.Seconds;
+            }
+            set
+            {
+                Threshold = TimeSpan.FromSeconds(value);
+            }
+        }
     }
 }

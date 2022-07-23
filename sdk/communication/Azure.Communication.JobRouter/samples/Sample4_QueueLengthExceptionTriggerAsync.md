@@ -12,6 +12,7 @@ Create a `RouterClient` and send a request.
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateClient
 var routerClient = new RouterClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
+var routerAdministrationClient = new RouterAdministrationClient(Environment.GetEnvironmentVariable("AZURE_COMMUNICATION_SERVICE_CONNECTION_STRING"));
 ```
 
 ## Using WaitTimeExceptionTrigger to trigger job reclassification
@@ -34,17 +35,17 @@ var routerClient = new RouterClient(Environment.GetEnvironmentVariable("AZURE_CO
 // create a distribution policy (this will be referenced by both primary queue and backup queue)
 var distributionPolicyId = "distribution-policy-id";
 
-var distributionPolicy = await routerClient.CreateDistributionPolicyAsync(
-    id: distributionPolicyId,
-    offerTtlSeconds: 5 * 60,
-    mode: new LongestIdleMode());
+var distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(new CreateDistributionPolicyOptions(
+    distributionPolicyId: distributionPolicyId,
+    offerTtl: TimeSpan.FromMinutes(5),
+    mode: new LongestIdleMode()));
 
 // create backup queue
 var backupJobQueueId = "job-queue-2";
 
-var backupJobQueue = await routerClient.CreateQueueAsync(
-    id: backupJobQueueId,
-    distributionPolicyId: distributionPolicyId);
+var backupJobQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions(
+    queueId: backupJobQueueId,
+    distributionPolicyId: distributionPolicyId));
 
 // create exception policy with QueueLengthExceptionTrigger (set threshold to 10) with ManuallyReclassifyAction
 var exceptionPolicyId = "exception-policy-id";
@@ -61,8 +62,8 @@ var action = new ManualReclassifyExceptionAction(
         new WorkerSelector("ExceptionTriggered", LabelOperator.Equal, new LabelValue(true))
     });
 
-var exceptionPolicy = await routerClient.CreateExceptionPolicyAsync(
-    id: exceptionPolicyId,
+var exceptionPolicy = await routerAdministrationClient.CreateExceptionPolicyAsync(new CreateExceptionPolicyOptions(
+    exceptionPolicyId: exceptionPolicyId,
     exceptionRules: new Dictionary<string, ExceptionRule>()
     {
         ["QueueLengthExceptionTrigger"] = new ExceptionRule(
@@ -71,16 +72,14 @@ var exceptionPolicy = await routerClient.CreateExceptionPolicyAsync(
             {
                 ["ManualReclassifyExceptionAction"] = action,
             })
-    });
+    }));
 
 // create primary queue
 
 var activeJobQueueId = "active-job-queue";
 
-var activeJobQueue = await routerClient.CreateQueueAsync(
-    id: activeJobQueueId,
-    distributionPolicyId: distributionPolicyId,
-    options: new CreateQueueOptions() { ExceptionPolicyId = exceptionPolicyId });
+var activeJobQueue = await routerAdministrationClient.CreateQueueAsync(
+    options: new CreateQueueOptions(queueId: activeJobQueueId, distributionPolicyId: distributionPolicyId) { ExceptionPolicyId = exceptionPolicyId });
 
 // create 10 jobs to fill in primary queue
 
@@ -88,14 +87,14 @@ var listOfJobs = new List<RouterJob>();
 for (int i = 0; i < 10; i++)
 {
     var jobId = $"jobId-{i}";
-    var job = await routerClient.CreateJobAsync(id: jobId, channelId: "general", queueId: activeJobQueueId);
+    var job = await routerClient.CreateJobAsync(new CreateJobOptions(jobId: jobId, channelId: "general", queueId: activeJobQueueId));
     listOfJobs.Add(job);
 }
 
 
 // create 11th job
 var job11Id = "jobId-11";
-var job11 = await routerClient.CreateJobAsync(id: job11Id, channelId: "general", queueId: activeJobQueueId);
+var job11 = await routerClient.CreateJobAsync(new CreateJobOptions(jobId: job11Id, channelId: "general", queueId: activeJobQueueId));
 
 
 // Job 11 would have triggered the exception policy action, and Job 11 would have been en-queued in backup job queue

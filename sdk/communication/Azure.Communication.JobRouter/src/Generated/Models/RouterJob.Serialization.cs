@@ -8,9 +8,10 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Communication.JobRouter;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter
+namespace Azure.Communication.JobRouter.Models
 {
     public partial class RouterJob : IUtf8JsonSerializable
     {
@@ -97,7 +98,7 @@ namespace Azure.Communication.JobRouter
         {
             Optional<string> id = default;
             Optional<string> channelReference = default;
-            Optional<JobStatus> jobStatus = default;
+            Optional<RouterJobStatus> jobStatus = default;
             Optional<DateTimeOffset> enqueueTimeUtc = default;
             Optional<string> channelId = default;
             Optional<string> classificationPolicyId = default;
@@ -129,7 +130,7 @@ namespace Azure.Communication.JobRouter
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    jobStatus = property.Value.GetString().ToJobStatus();
+                    jobStatus = property.Value.GetString().ToRouterJobStatus();
                     continue;
                 }
                 if (property.NameEquals("enqueueTimeUtc"))

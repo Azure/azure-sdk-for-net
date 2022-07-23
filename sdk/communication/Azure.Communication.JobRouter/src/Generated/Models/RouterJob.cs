@@ -7,23 +7,14 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Communication.JobRouter;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter
+namespace Azure.Communication.JobRouter.Models
 {
     /// <summary> A unit of work to be routed. </summary>
     public partial class RouterJob
     {
-        /// <summary> Initializes a new instance of RouterJob. </summary>
-        public RouterJob()
-        {
-            _requestedWorkerSelectors = new ChangeTrackingList<WorkerSelector>();
-            AttachedWorkerSelectors = new ChangeTrackingList<WorkerSelector>();
-            _labels = new ChangeTrackingDictionary<string, object>();
-            Assignments = new ChangeTrackingDictionary<string, JobAssignment>();
-            _tags = new ChangeTrackingDictionary<string, object>();
-            _notes = new ChangeTrackingDictionary<string, string>();
-        }
 
         /// <summary> Initializes a new instance of RouterJob. </summary>
         /// <param name="id"> The id of the job. </param>
@@ -44,7 +35,7 @@ namespace Azure.Communication.JobRouter
         /// </param>
         /// <param name="tags"> A set of non-identifying attributes attached to this job. </param>
         /// <param name="notes"> Notes attached to a job, sorted by timestamp. </param>
-        internal RouterJob(string id, string channelReference, JobStatus? jobStatus, DateTimeOffset? enqueueTimeUtc, string channelId, string classificationPolicyId, string queueId, int? priority, string dispositionCode, IList<WorkerSelector> requestedWorkerSelectors, IReadOnlyList<WorkerSelector> attachedWorkerSelectors, IDictionary<string, object> labels, IReadOnlyDictionary<string, JobAssignment> assignments, IDictionary<string, object> tags, IDictionary<string, string> notes)
+        internal RouterJob(string id, string channelReference, RouterJobStatus? jobStatus, DateTimeOffset? enqueueTimeUtc, string channelId, string classificationPolicyId, string queueId, int? priority, string dispositionCode, IList<WorkerSelector> requestedWorkerSelectors, IReadOnlyList<WorkerSelector> attachedWorkerSelectors, IDictionary<string, object> labels, IReadOnlyDictionary<string, JobAssignment> assignments, IDictionary<string, object> tags, IDictionary<string, string> notes)
         {
             Id = id;
             ChannelReference = channelReference;
@@ -68,7 +59,7 @@ namespace Azure.Communication.JobRouter
         /// <summary> Reference to an external parent context, eg. call ID. </summary>
         public string ChannelReference { get; set; }
         /// <summary> The state of the Job. </summary>
-        public JobStatus? JobStatus { get; }
+        public RouterJobStatus? JobStatus { get; }
         /// <summary> The time a job was queued. </summary>
         public DateTimeOffset? EnqueueTimeUtc { get; }
         /// <summary> The channel identifier. eg. voice, chat, etc. </summary>

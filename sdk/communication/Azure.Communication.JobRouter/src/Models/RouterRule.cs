@@ -7,8 +7,13 @@ using Azure.Core;
 namespace Azure.Communication.JobRouter
 {
     [CodeGenModel("RouterRule")]
+    [CodeGenSuppress("RouterRule")]
     [JsonConverter(typeof(PolymorphicWriteOnlyJsonConverter<RouterRule>))]
     public abstract partial class RouterRule
     {
+        /// <summary> Initializes a new instance of RouterRule. </summary>
+        internal RouterRule()
+        {
+        }
     }
 }

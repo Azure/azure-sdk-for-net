@@ -23,15 +23,14 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         [Test]
         public async Task CreateQueueTest()
         {
-            RouterClient routerClient = CreateRouterClientWithConnectionString();
+            RouterAdministrationClient routerClient = CreateRouterAdministrationClientWithConnectionString();
             var createDistributionPolicyResponse = await CreateDistributionPolicy(nameof(CreateQueueTest));
             var queueId = GenerateUniqueId(IdPrefix, nameof(CreateQueueTest));
             var queueName = "DefaultQueueWithLabels" + queueId;
-            var queueLabels = new LabelCollection() { ["Label_1"] = new LabelValue("Value_1") };
+            var queueLabels = new Dictionary<string, LabelValue>() { ["Label_1"] = new LabelValue("Value_1") };
             var createQueueResponse = await routerClient.CreateQueueAsync(
-                queueId,
-                createDistributionPolicyResponse.Value.Id,
-                new CreateQueueOptions()
+                new CreateQueueOptions(queueId,
+                    createDistributionPolicyResponse.Value.Id)
                 {
                     Name = queueName,
                     Labels = queueLabels
@@ -44,15 +43,14 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         [Ignore(reason: "Known bug: fix required for update queue")]
         public async Task UpdateQueueTest()
         {
-            RouterClient routerClient = CreateRouterClientWithConnectionString();
+            RouterAdministrationClient routerClient = CreateRouterAdministrationClientWithConnectionString();
             var createDistributionPolicyResponse = await CreateDistributionPolicy(nameof(CreateQueueTest));
             var queueId = GenerateUniqueId(IdPrefix, nameof(CreateQueueTest));
             var queueName = "DefaultQueueWithLabels" + queueId;
-            var queueLabels = new LabelCollection() { ["Label_1"] = new LabelValue("Value_1") };
+            var queueLabels = new Dictionary<string, LabelValue>() { ["Label_1"] = new LabelValue("Value_1") };
             var createQueueResponse = await routerClient.CreateQueueAsync(
-                queueId,
-                createDistributionPolicyResponse.Value.Id,
-                new CreateQueueOptions()
+                new CreateQueueOptions(queueId,
+                    createDistributionPolicyResponse.Value.Id)
                 {
                     Name = queueName,
                     Labels = queueLabels
@@ -60,11 +58,11 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             AssertQueueResponseIsEqual(createQueueResponse, queueId, createDistributionPolicyResponse.Value.Id, queueName, queueLabels);
 
             var updatedLabels =
-                new LabelCollection(createQueueResponse.Value.Labels.ToDictionary(x => x.Key, x => x.Value));
+                new Dictionary<string, LabelValue>(createQueueResponse.Value.Labels.ToDictionary(x => x.Key, x => x.Value));
             updatedLabels["Label2"] = new LabelValue("Value2");
 
             var updatedQueueResponse =
-                await routerClient.UpdateQueueAsync(queueId, new UpdateQueueOptions() { Labels = updatedLabels, });
+                await routerClient.UpdateQueueAsync(new UpdateQueueOptions(queueId) { Labels = updatedLabels, });
 
             AssertQueueResponseIsEqual(updatedQueueResponse, queueId, createDistributionPolicyResponse.Value.Id, queueName, updatedLabels);
 
