@@ -1,4 +1,4 @@
-# Microsoft Purview Share client library for .NET
+# Azure Share client library for .NET
 
 Microsoft Purview Share is a fully managed cloud service.
 
