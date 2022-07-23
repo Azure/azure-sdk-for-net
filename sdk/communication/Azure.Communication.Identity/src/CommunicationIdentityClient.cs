@@ -203,8 +203,8 @@ namespace Azure.Communication.Identity
             }
         }
 
-        /// <summary>Gets a token for a <see cref="CommunicationUserIdentifier"/>.</summary>
-        /// <param name="getTokenOptions">Options used to get a token for a <see cref="CommunicationUserIdentifier"/>.</param>
+        /// <summary>Gets a Communication Identity access token for a <see cref="CommunicationUserIdentifier"/>.</summary>
+        /// <param name="getTokenOptions">Options to pass mandatory and configurable parameters to get a Communication Identity access token for a <see cref="CommunicationUserIdentifier"/>.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         /// <exception cref="RequestFailedException">The server returned an error.</exception>
         public virtual Response<AccessToken> GetToken(GetTokenOptions getTokenOptions, CancellationToken cancellationToken = default)
@@ -233,9 +233,9 @@ namespace Azure.Communication.Identity
             }
         }
 
-        /// <summary>Gets a token for a <see cref="CommunicationUserIdentifier"/>.</summary>
-        /// <param name="communicationUser">The <see cref="CommunicationUserIdentifier"/> for whom to get a token.</param>
-        /// <param name="scopes">The scopes that the token should have.</param>
+        /// <summary>Gets a Communication Identity access token for a <see cref="CommunicationUserIdentifier"/>.</summary>
+        /// <param name="communicationUser">The <see cref="CommunicationUserIdentifier"/> for whom to get a Communication Identity access token.</param>
+        /// <param name="scopes">List of <see cref="CommunicationTokenScope"/> scopes for the token.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         /// <exception cref="RequestFailedException">The server returned an error.</exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -245,8 +245,8 @@ namespace Azure.Communication.Identity
             return GetToken(getTokenOptions, cancellationToken);
         }
 
-        /// <summary>Asynchronously gets a token for a <see cref="CommunicationUserIdentifier"/>.</summary>
-        /// <param name="getTokenOptions">Options used to get a token for a <see cref="CommunicationUserIdentifier"/>.</param>
+        /// <summary>Asynchronously gets a Communication Identity access token for a <see cref="CommunicationUserIdentifier"/>.</summary>
+        /// <param name="getTokenOptions">Options to pass mandatory and configurable parameters to get a Communication Identity access token for a <see cref="CommunicationUserIdentifier"/>.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         public virtual async Task<Response<AccessToken>> GetTokenAsync(GetTokenOptions getTokenOptions, CancellationToken cancellationToken = default)
         {
@@ -275,9 +275,9 @@ namespace Azure.Communication.Identity
             }
         }
 
-        /// <summary>Asynchronously gets a token for a <see cref="CommunicationUserIdentifier"/>.</summary>
-        /// <param name="communicationUser">The <see cref="CommunicationUserIdentifier"/> for whom to get a token.</param>
-        /// <param name="scopes">The scopes that the token should have.</param>
+        /// <summary>Asynchronously gets a Communication Identity access token for a <see cref="CommunicationUserIdentifier"/>.</summary>
+        /// <param name="communicationUser">The <see cref="CommunicationUserIdentifier"/> for whom to get a Communication Identity access token.</param>
+        /// <param name="scopes">List of <see cref="CommunicationTokenScope"/> scopes for the token.</param>
         /// <param name="cancellationToken">The cancellation token to use.</param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<AccessToken>> GetTokenAsync(CommunicationUserIdentifier communicationUser, IEnumerable<CommunicationTokenScope> scopes, CancellationToken cancellationToken = default)

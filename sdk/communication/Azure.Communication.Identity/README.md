@@ -92,12 +92,12 @@ Console.WriteLine($"Token: {token}");
 Console.WriteLine($"Expires On: {expiresOn}");
 ```
 
-It's also possible to create token with custom expiration. Bounds are 1 - 24 hours. Default expiration is 24 hours.
+It's also possible to create a Communication Identity access token by customizing the expiration time. The token can be configured to expire in as little as one hour or as long as 24 hours. The default expiration time is 24 hours.
 
-The `GetTokenAsync` function accepts the following parameters wrapped into the `GetTokenOptions` option bag:
-- `CommunicationUser` The CommunicationUserIdentifier for whom to get a token.
-- `Scopes` The scopes that the token should have.
-- `ExpiresInMinutes` Optional custom validity period of the token within [60,1440] minutes range. If not provided, the default value of 1440 minutes (24 hours) will be used.
+The `GetTokenAsync` function accepts the following parameters wrapped into `GetTokenOptions`:
+- `CommunicationUser` The CommunicationUserIdentifier for whom to get a Communication Identity access token.
+- `Scopes` to pass a list of `CommunicationTokenScope` scopes for the Communication Identity access token.
+- `ExpiresInMinutes` Optional custom validity period of the Communication Identity access token within <60,1440> minutes range. If not provided, the default value of 1440 minutes (24 hours) will be used.
 
 ```C# Snippet:CreateCommunicationTokenAsyncWithCustomExpiration
 GetTokenOptions tokenOptions = new GetTokenOptions(user, scopes: new[] { CommunicationTokenScope.Chat })
