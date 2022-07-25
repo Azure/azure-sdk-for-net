@@ -33,7 +33,7 @@ namespace Azure.Communication
         /// <param name="left">The first identifier to compare.</param>
         /// <param name="right">The second identifier to compare.</param>
         /// <returns>True if the types and <see cref="RawId"/> match.</returns>
-        public static bool operator ==(CommunicationIdentifier left, CommunicationIdentifier right) => Equals(left, right) && left.GetType() == right.GetType();
+        public static bool operator ==(CommunicationIdentifier left, CommunicationIdentifier right) => left.GetType() == right.GetType() && Equals(left, right);
 
         /// <summary>
         /// Overrides the non-equality operator.
@@ -41,7 +41,7 @@ namespace Azure.Communication
         /// <param name="left">The first identifier to compare.</param>
         /// <param name="right">The second identifier to compare.</param>
         /// <returns>True if the types or <see cref="RawId"/> values are different.</returns>
-        public static bool operator !=(CommunicationIdentifier left, CommunicationIdentifier right) => !Equals(left, right) || left.GetType() != right.GetType();
+        public static bool operator !=(CommunicationIdentifier left, CommunicationIdentifier right) => left.GetType() != right.GetType() || !Equals(left, right);
 
         /// <summary> Converts a string to a <see cref="CommunicationIdentifier"/>. </summary>
         public static explicit operator CommunicationIdentifier(string value) => FromRawId(value);
