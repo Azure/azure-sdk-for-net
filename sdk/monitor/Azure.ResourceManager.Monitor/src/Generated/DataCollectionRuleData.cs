@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="destinations"> The specification of destinations. </param>
         /// <param name="dataFlows"> The specification of data flows. </param>
         /// <param name="provisioningState"> The resource provisioning state. </param>
-        internal DataCollectionRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, string description, string immutableId, DataCollectionRuleDataSources dataSources, DataCollectionRuleDestinations destinations, IList<DataFlow> dataFlows, KnownDataCollectionRuleProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        internal DataCollectionRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, string description, string immutableId, DataCollectionRuleDataSources dataSources, DataCollectionRuleDestinations destinations, IList<DataFlow> dataFlows, DataCollectionRuleProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             Description = description;
@@ -67,6 +67,6 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> The specification of data flows. </summary>
         public IList<DataFlow> DataFlows { get; }
         /// <summary> The resource provisioning state. </summary>
-        public KnownDataCollectionRuleProvisioningState? ProvisioningState { get; }
+        public DataCollectionRuleProvisioningState? ProvisioningState { get; }
     }
 }

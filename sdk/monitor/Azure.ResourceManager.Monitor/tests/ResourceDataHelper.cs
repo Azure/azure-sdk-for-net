@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Monitor.Tests
             {
                 EmailReceivers =
                 {
-                    new EmailReceiver("name", "a@b.c")
+                    new MonitorEmailReceiver("name", "a@b.c")
                 },
                 IsEnabled = true,
                 GroupShortName = "name"
@@ -127,10 +127,10 @@ namespace Azure.ResourceManager.Monitor.Tests
             //    3.0,
             //    TimeSpan.FromMinutes(15),
             //    TimeAggregationOperator.Average);
-            var ruleCondition = new ThresholdRuleCondition(ConditionOperator.GreaterThan, 3.0)
+            var ruleCondition = new ThresholdRuleCondition(MonitorConditionOperator.GreaterThan, 3.0)
             {
                 WindowSize = TimeSpan.FromMinutes(15),
-                TimeAggregation = TimeAggregationOperator.Average,
+                TimeAggregation = MonitorTimeAggregationOperator.Average,
                 DataSource = ruleDataSource
             };
             var data = new AlertRuleData(location, "testAlertRule", true, ruleCondition)
@@ -150,14 +150,14 @@ namespace Azure.ResourceManager.Monitor.Tests
 
         public static AutoscaleSettingData GetBasicAutoscaleSettingData(AzureLocation location)
         {
-            var fixDate = new TimeWindow("UTC", DateTime.Parse("2014-04-15T21:06:11.7882792Z"), DateTime.Parse("2014-04-15T21:06:11.7882792Z"));
+            var fixDate = new MonitorTimeWindow("UTC", DateTime.Parse("2014-04-15T21:06:11.7882792Z"), DateTime.Parse("2014-04-15T21:06:11.7882792Z"));
             var Schedule = new RecurrentSchedule("UTC-11", new List<string> { "Monday" }, new List<int> { 0 }, new List<int> { 10 });
             var recurrence = new MonitorRecurrence(RecurrenceFrequency.Week, Schedule);
-            ScaleCapacity scaleCapacity = new ScaleCapacity("1", "1", "1");
-            var metricTtigger = new MetricTrigger("AbandonMessage", "microsoft.servicebus/namespaces", new ResourceIdentifier("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testservicebusRG-9432/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt7892"), "East US 2", TimeSpan.FromMinutes(1), MetricStatisticType.Average, TimeSpan.FromMinutes(10), TimeAggregationType.Average, ComparisonOperationType.GreaterThan, 70, new ChangeTrackingList<ScaleRuleMetricDimension>(), false);
+            var scaleCapacity = new MonitorScaleCapacity("1", "1", "1");
+            var metricTtigger = new MetricTrigger("AbandonMessage", "microsoft.servicebus/namespaces", new ResourceIdentifier("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testservicebusRG-9432/providers/Microsoft.ServiceBus/namespaces/testnamespacemgmt7892"), "East US 2", TimeSpan.FromMinutes(1), MetricStatisticType.Average, TimeSpan.FromMinutes(10), MonitorTimeAggregationType.Average, ComparisonOperationType.GreaterThan, 70, new ChangeTrackingList<ScaleRuleMetricDimension>(), false);
             IList<ScaleRule> rules = new List<ScaleRule>()
             {
-                new ScaleRule(metricTtigger, new ScaleAction(ScaleDirection.Increase, ScaleType.ServiceAllowedNextValue, "1", TimeSpan.FromMinutes(5)))
+                new ScaleRule(metricTtigger, new MonitorScaleAction(MonitorScaleDirection.Increase, MonitorScaleType.ServiceAllowedNextValue, "1", TimeSpan.FromMinutes(5)))
             };
             IEnumerable<AutoscaleProfile> profiles = new List<AutoscaleProfile>()
             {
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Monitor.Tests
                 ActionGroupId = actionGroup.Id,
                 WebHookProperties = { new KeyValuePair<string, string>("key1","value1") }
             };
-            var metricCriteria = new MetricCriteria("High_CPU_80", "Percentage CPU", AggregationTypeEnum.Average, MonitorOperator.GreaterThan, 80.50){};
+            var metricCriteria = new MetricCriteria("High_CPU_80", "Percentage CPU", MonitorAggregationType.Average, MonitorOperator.GreaterThan, 80.50){};
             return new MetricAlertData(
                 location,
                 3,

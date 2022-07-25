@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Monitor
             Optional<DataCollectionRuleDataSources> dataSources = default;
             Optional<DataCollectionRuleDestinations> destinations = default;
             Optional<IList<DataFlow>> dataFlows = default;
-            Optional<KnownDataCollectionRuleProvisioningState> provisioningState = default;
+            Optional<DataCollectionRuleProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Monitor
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new KnownDataCollectionRuleProvisioningState(property0.Value.GetString());
+                            provisioningState = new DataCollectionRuleProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }

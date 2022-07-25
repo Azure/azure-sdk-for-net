@@ -31,6 +31,8 @@ format-by-name-rules:
   'WorkspaceResourceId': 'arm-id'
   'MetricResourceId': 'arm-id'
   'MetricResourceLocation': 'azure-location'
+  'DataCollectionRuleId': 'arm-id'
+  'DataCollectionEndpointId': 'arm-id'
 
 rename-rules:
   CPU: Cpu
@@ -56,6 +58,9 @@ rename-rules:
   Etag: ETag|etag
   Odatatype: OdataType
 
+irregular-plural-words:
+  status: status
+
 prepend-rp-prefix:
 - Action
 - Recurrence
@@ -72,7 +77,10 @@ prepend-rp-prefix:
 - OperationType
 
 override-operation-name:
-  ActionGroups_GetTestNotifications: GetActionGroupTestNotifications
+  ActionGroups_GetTestNotifications: GetNotificationStatus
+  ActionGroups_PostTestNotifications: CreateNotifications
+  ActionGroups_CreateNotificationsAtResourceGroupLevel: CreateNotifications
+  ActionGroups_CreateNotificationsAtActionGroupResourceLevel: CreateNotifications
 
 rename-mapping:
   MetricTrigger.metricResourceUri: metricResourceId
@@ -125,6 +133,49 @@ rename-mapping:
   TimeWindow.start: StartOn
   TimeWindow.end: EndOn
   AlertRuleAnyOfOrLeafCondition: ActivityLogAlertAnyOfOrLeafCondition
+  RuleAction: AlertRuleAction
+  RuleCondition: AlertRuleCondition
+  KnownPublicNetworkAccessOptions: MonitorPublicNetworkAccess
+  KnownDataCollectionEndpointProvisioningState: DataCollectionEndpointProvisioningState
+  KnownDataCollectionRuleAssociationProvisioningState: DataCollectionRuleAssociationProvisioningState
+  KnownDataCollectionRuleProvisioningState: DataCollectionRuleProvisioningState
+  ProvisioningState: MonitorProvisioningState
+  KnownDataFlowStreams: DataFlowStreams
+  KnownExtensionDataSourceStreams: ExtensionDataSourceStreams
+  KnownPerfCounterDataSourceStreams: PerfCounterDataSourceStreams
+  KnownSyslogDataSourceFacilityNames: SyslogDataSourceFacilityNames
+  KnownSyslogDataSourceLogLevels: SyslogDataSourceLogLevels
+  KnownSyslogDataSourceStreams: SyslogDataSourceStreams
+  KnownWindowsEventLogDataSourceStreams: WindowsEventLogDataSourceStreams
+  LocalizableString: MonitorLocalizableString
+  MetricTrigger.dividePerInstance: IsDividedPerInstance
+  AggregationTypeEnum: MonitorAggregationType
+  NotificationRequestBody: NotificationContent
+  Context: NotificationContext
+  TestNotificationDetailsResponse: NotificationStatus
+  TimeWindow: MonitorTimeWindow
+  ArmRoleReceiver: MonitorArmRoleReceiver
+  AutomationRunbookReceiver: MonitorAutomationRunbookReceiver
+  AzureAppPushReceiver: MonitorAzureAppPushReceiver
+  AzureFunctionReceiver: MonitorAzureFunctionReceiver
+  EmailReceiver: MonitorEmailReceiver
+  EventHubReceiver: MonitorEventHubReceiver
+  ItsmReceiver: MonitorItsmReceiver
+  LogicAppReceiver: MonitorLogicAppReceiver
+  SmsReceiver: MonitorSmsReceiver
+  VoiceReceiver: MonitorVoiceReceiver
+  WebhookReceiver: MonitorWebhookReceiver
+  WorkspaceInfo: DataContainerWorkspace
+  CategoryType: MonitorCategoryType
+  ConditionOperator: MonitorConditionOperator
+  EventLevel: MonitorEventLevel
+  ScaleAction: MonitorScaleAction
+  ScaleDirection: MonitorScaleDirection
+  ScaleType: MonitorScaleType
+  ScaleCapacity: MonitorScaleCapacity
+  TimeAggregationOperator: MonitorTimeAggregationOperator
+  TimeAggregationType: MonitorTimeAggregationType
+  ReceiverStatus: MonitorReceiverStatus
 
 directive:
   # nullable issue resolution
@@ -195,6 +246,9 @@ directive:
     transform: $["x-ms-format"] = "arm-id"
   - from: swagger-document
     where: $.definitions.WorkspaceInfo.properties.id
+    transform: $["x-ms-format"] = "arm-id"
+  - from: swagger-document
+    where: $.definitions.PrivateLinkResourceProperties.properties.groupId
     transform: $["x-ms-format"] = "arm-id"
   # in order to let the ResponseError replace the ErrorResponseCommon in monitor, we need to add a target property to it
   - from: swagger-document

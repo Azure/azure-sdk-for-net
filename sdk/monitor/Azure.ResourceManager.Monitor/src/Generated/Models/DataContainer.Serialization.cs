@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static DataContainer DeserializeDataContainer(JsonElement element)
         {
-            WorkspaceInfo workspace = default;
+            DataContainerWorkspace workspace = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("workspace"))
                 {
-                    workspace = WorkspaceInfo.DeserializeWorkspaceInfo(property.Value);
+                    workspace = DataContainerWorkspace.DeserializeDataContainerWorkspace(property.Value);
                     continue;
                 }
             }

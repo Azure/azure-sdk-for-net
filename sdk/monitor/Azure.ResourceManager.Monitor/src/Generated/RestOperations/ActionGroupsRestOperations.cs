@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        internal HttpMessage CreatePostTestNotificationsRequest(string subscriptionId, NotificationRequestBody notificationRequest)
+        internal HttpMessage CreatePostTestNotificationsRequest(string subscriptionId, NotificationContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -377,25 +377,25 @@ namespace Azure.ResourceManager.Monitor
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(notificationRequest);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Send test notifications to a set of provided receivers. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="notificationRequest"> The notification request body which includes the contact details. </param>
+        /// <param name="content"> The notification request body which includes the contact details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="notificationRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> PostTestNotificationsAsync(string subscriptionId, NotificationRequestBody notificationRequest, CancellationToken cancellationToken = default)
+        public async Task<Response> PostTestNotificationsAsync(string subscriptionId, NotificationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(notificationRequest, nameof(notificationRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreatePostTestNotificationsRequest(subscriptionId, notificationRequest);
+            using var message = CreatePostTestNotificationsRequest(subscriptionId, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -409,16 +409,16 @@ namespace Azure.ResourceManager.Monitor
 
         /// <summary> Send test notifications to a set of provided receivers. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="notificationRequest"> The notification request body which includes the contact details. </param>
+        /// <param name="content"> The notification request body which includes the contact details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="notificationRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response PostTestNotifications(string subscriptionId, NotificationRequestBody notificationRequest, CancellationToken cancellationToken = default)
+        public Response PostTestNotifications(string subscriptionId, NotificationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(notificationRequest, nameof(notificationRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreatePostTestNotificationsRequest(subscriptionId, notificationRequest);
+            using var message = CreatePostTestNotificationsRequest(subscriptionId, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        internal HttpMessage CreateCreateNotificationsAtResourceGroupLevelRequest(string subscriptionId, string resourceGroupName, NotificationRequestBody notificationRequest)
+        internal HttpMessage CreateCreateNotificationsAtResourceGroupLevelRequest(string subscriptionId, string resourceGroupName, NotificationContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -446,9 +446,9 @@ namespace Azure.ResourceManager.Monitor
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(notificationRequest);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -456,17 +456,17 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> Send test notifications to a set of provided receivers. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="notificationRequest"> The notification request body which includes the contact details. </param>
+        /// <param name="content"> The notification request body which includes the contact details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="notificationRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateNotificationsAtResourceGroupLevelAsync(string subscriptionId, string resourceGroupName, NotificationRequestBody notificationRequest, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateNotificationsAtResourceGroupLevelAsync(string subscriptionId, string resourceGroupName, NotificationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNull(notificationRequest, nameof(notificationRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCreateNotificationsAtResourceGroupLevelRequest(subscriptionId, resourceGroupName, notificationRequest);
+            using var message = CreateCreateNotificationsAtResourceGroupLevelRequest(subscriptionId, resourceGroupName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -481,17 +481,17 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> Send test notifications to a set of provided receivers. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="notificationRequest"> The notification request body which includes the contact details. </param>
+        /// <param name="content"> The notification request body which includes the contact details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="notificationRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateNotificationsAtResourceGroupLevel(string subscriptionId, string resourceGroupName, NotificationRequestBody notificationRequest, CancellationToken cancellationToken = default)
+        public Response CreateNotificationsAtResourceGroupLevel(string subscriptionId, string resourceGroupName, NotificationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNull(notificationRequest, nameof(notificationRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCreateNotificationsAtResourceGroupLevelRequest(subscriptionId, resourceGroupName, notificationRequest);
+            using var message = CreateCreateNotificationsAtResourceGroupLevelRequest(subscriptionId, resourceGroupName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        internal HttpMessage CreateCreateNotificationsAtActionGroupResourceLevelRequest(string subscriptionId, string resourceGroupName, string actionGroupName, NotificationRequestBody notificationRequest)
+        internal HttpMessage CreateCreateNotificationsAtActionGroupResourceLevelRequest(string subscriptionId, string resourceGroupName, string actionGroupName, NotificationContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -521,9 +521,9 @@ namespace Azure.ResourceManager.Monitor
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(notificationRequest);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -532,18 +532,18 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="actionGroupName"> The name of the action group. </param>
-        /// <param name="notificationRequest"> The notification request body which includes the contact details. </param>
+        /// <param name="content"> The notification request body which includes the contact details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="actionGroupName"/> or <paramref name="notificationRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="actionGroupName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="actionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateNotificationsAtActionGroupResourceLevelAsync(string subscriptionId, string resourceGroupName, string actionGroupName, NotificationRequestBody notificationRequest, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateNotificationsAtActionGroupResourceLevelAsync(string subscriptionId, string resourceGroupName, string actionGroupName, NotificationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(actionGroupName, nameof(actionGroupName));
-            Argument.AssertNotNull(notificationRequest, nameof(notificationRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCreateNotificationsAtActionGroupResourceLevelRequest(subscriptionId, resourceGroupName, actionGroupName, notificationRequest);
+            using var message = CreateCreateNotificationsAtActionGroupResourceLevelRequest(subscriptionId, resourceGroupName, actionGroupName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -559,18 +559,18 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="actionGroupName"> The name of the action group. </param>
-        /// <param name="notificationRequest"> The notification request body which includes the contact details. </param>
+        /// <param name="content"> The notification request body which includes the contact details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="actionGroupName"/> or <paramref name="notificationRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="actionGroupName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="actionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateNotificationsAtActionGroupResourceLevel(string subscriptionId, string resourceGroupName, string actionGroupName, NotificationRequestBody notificationRequest, CancellationToken cancellationToken = default)
+        public Response CreateNotificationsAtActionGroupResourceLevel(string subscriptionId, string resourceGroupName, string actionGroupName, NotificationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(actionGroupName, nameof(actionGroupName));
-            Argument.AssertNotNull(notificationRequest, nameof(notificationRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCreateNotificationsAtActionGroupResourceLevelRequest(subscriptionId, resourceGroupName, actionGroupName, notificationRequest);
+            using var message = CreateCreateNotificationsAtActionGroupResourceLevelRequest(subscriptionId, resourceGroupName, actionGroupName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -606,7 +606,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="notificationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="notificationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TestNotificationDetailsResponse>> GetTestNotificationsAsync(string subscriptionId, string notificationId, CancellationToken cancellationToken = default)
+        public async Task<Response<NotificationStatus>> GetTestNotificationsAsync(string subscriptionId, string notificationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(notificationId, nameof(notificationId));
@@ -617,9 +617,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        TestNotificationDetailsResponse value = default;
+                        NotificationStatus value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TestNotificationDetailsResponse.DeserializeTestNotificationDetailsResponse(document.RootElement);
+                        value = NotificationStatus.DeserializeNotificationStatus(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -633,7 +633,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="notificationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="notificationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TestNotificationDetailsResponse> GetTestNotifications(string subscriptionId, string notificationId, CancellationToken cancellationToken = default)
+        public Response<NotificationStatus> GetTestNotifications(string subscriptionId, string notificationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(notificationId, nameof(notificationId));
@@ -644,9 +644,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        TestNotificationDetailsResponse value = default;
+                        NotificationStatus value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TestNotificationDetailsResponse.DeserializeTestNotificationDetailsResponse(document.RootElement);
+                        value = NotificationStatus.DeserializeNotificationStatus(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -681,7 +681,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="notificationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="notificationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TestNotificationDetailsResponse>> GetTestNotificationsAtResourceGroupLevelAsync(string subscriptionId, string resourceGroupName, string notificationId, CancellationToken cancellationToken = default)
+        public async Task<Response<NotificationStatus>> GetTestNotificationsAtResourceGroupLevelAsync(string subscriptionId, string resourceGroupName, string notificationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -693,9 +693,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        TestNotificationDetailsResponse value = default;
+                        NotificationStatus value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TestNotificationDetailsResponse.DeserializeTestNotificationDetailsResponse(document.RootElement);
+                        value = NotificationStatus.DeserializeNotificationStatus(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -710,7 +710,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="notificationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="notificationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TestNotificationDetailsResponse> GetTestNotificationsAtResourceGroupLevel(string subscriptionId, string resourceGroupName, string notificationId, CancellationToken cancellationToken = default)
+        public Response<NotificationStatus> GetTestNotificationsAtResourceGroupLevel(string subscriptionId, string resourceGroupName, string notificationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -722,9 +722,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        TestNotificationDetailsResponse value = default;
+                        NotificationStatus value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TestNotificationDetailsResponse.DeserializeTestNotificationDetailsResponse(document.RootElement);
+                        value = NotificationStatus.DeserializeNotificationStatus(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -762,7 +762,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="actionGroupName"/> or <paramref name="notificationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="actionGroupName"/> or <paramref name="notificationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TestNotificationDetailsResponse>> GetTestNotificationsAtActionGroupResourceLevelAsync(string subscriptionId, string resourceGroupName, string actionGroupName, string notificationId, CancellationToken cancellationToken = default)
+        public async Task<Response<NotificationStatus>> GetTestNotificationsAtActionGroupResourceLevelAsync(string subscriptionId, string resourceGroupName, string actionGroupName, string notificationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -775,9 +775,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        TestNotificationDetailsResponse value = default;
+                        NotificationStatus value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TestNotificationDetailsResponse.DeserializeTestNotificationDetailsResponse(document.RootElement);
+                        value = NotificationStatus.DeserializeNotificationStatus(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -793,7 +793,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="actionGroupName"/> or <paramref name="notificationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="actionGroupName"/> or <paramref name="notificationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TestNotificationDetailsResponse> GetTestNotificationsAtActionGroupResourceLevel(string subscriptionId, string resourceGroupName, string actionGroupName, string notificationId, CancellationToken cancellationToken = default)
+        public Response<NotificationStatus> GetTestNotificationsAtActionGroupResourceLevel(string subscriptionId, string resourceGroupName, string actionGroupName, string notificationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -806,9 +806,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        TestNotificationDetailsResponse value = default;
+                        NotificationStatus value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TestNotificationDetailsResponse.DeserializeTestNotificationDetailsResponse(document.RootElement);
+                        value = NotificationStatus.DeserializeNotificationStatus(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

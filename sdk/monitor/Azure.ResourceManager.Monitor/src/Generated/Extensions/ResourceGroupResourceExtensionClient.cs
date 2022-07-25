@@ -116,16 +116,16 @@ namespace Azure.ResourceManager.Monitor
         /// Operation Id: ActionGroups_CreateNotificationsAtResourceGroupLevel
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="notificationRequest"> The notification request body which includes the contact details. </param>
+        /// <param name="content"> The notification request body which includes the contact details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<TestNotificationDetailsResponse>> CreateNotificationsAtResourceGroupLevelActionGroupAsync(WaitUntil waitUntil, NotificationRequestBody notificationRequest, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NotificationStatus>> CreateNotificationsAsync(WaitUntil waitUntil, NotificationContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = ActionGroupClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.CreateNotificationsAtResourceGroupLevelActionGroup");
+            using var scope = ActionGroupClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.CreateNotifications");
             scope.Start();
             try
             {
-                var response = await ActionGroupRestClient.CreateNotificationsAtResourceGroupLevelAsync(Id.SubscriptionId, Id.ResourceGroupName, notificationRequest, cancellationToken).ConfigureAwait(false);
-                var operation = new MonitorArmOperation<TestNotificationDetailsResponse>(new TestNotificationDetailsResponseOperationSource(), ActionGroupClientDiagnostics, Pipeline, ActionGroupRestClient.CreateCreateNotificationsAtResourceGroupLevelRequest(Id.SubscriptionId, Id.ResourceGroupName, notificationRequest).Request, response, OperationFinalStateVia.Location);
+                var response = await ActionGroupRestClient.CreateNotificationsAtResourceGroupLevelAsync(Id.SubscriptionId, Id.ResourceGroupName, content, cancellationToken).ConfigureAwait(false);
+                var operation = new MonitorArmOperation<NotificationStatus>(new NotificationStatusOperationSource(), ActionGroupClientDiagnostics, Pipeline, ActionGroupRestClient.CreateCreateNotificationsAtResourceGroupLevelRequest(Id.SubscriptionId, Id.ResourceGroupName, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -143,16 +143,16 @@ namespace Azure.ResourceManager.Monitor
         /// Operation Id: ActionGroups_CreateNotificationsAtResourceGroupLevel
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="notificationRequest"> The notification request body which includes the contact details. </param>
+        /// <param name="content"> The notification request body which includes the contact details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<TestNotificationDetailsResponse> CreateNotificationsAtResourceGroupLevelActionGroup(WaitUntil waitUntil, NotificationRequestBody notificationRequest, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NotificationStatus> CreateNotifications(WaitUntil waitUntil, NotificationContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = ActionGroupClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.CreateNotificationsAtResourceGroupLevelActionGroup");
+            using var scope = ActionGroupClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.CreateNotifications");
             scope.Start();
             try
             {
-                var response = ActionGroupRestClient.CreateNotificationsAtResourceGroupLevel(Id.SubscriptionId, Id.ResourceGroupName, notificationRequest, cancellationToken);
-                var operation = new MonitorArmOperation<TestNotificationDetailsResponse>(new TestNotificationDetailsResponseOperationSource(), ActionGroupClientDiagnostics, Pipeline, ActionGroupRestClient.CreateCreateNotificationsAtResourceGroupLevelRequest(Id.SubscriptionId, Id.ResourceGroupName, notificationRequest).Request, response, OperationFinalStateVia.Location);
+                var response = ActionGroupRestClient.CreateNotificationsAtResourceGroupLevel(Id.SubscriptionId, Id.ResourceGroupName, content, cancellationToken);
+                var operation = new MonitorArmOperation<NotificationStatus>(new NotificationStatusOperationSource(), ActionGroupClientDiagnostics, Pipeline, ActionGroupRestClient.CreateCreateNotificationsAtResourceGroupLevelRequest(Id.SubscriptionId, Id.ResourceGroupName, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Monitor
         /// </summary>
         /// <param name="notificationId"> The notification id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<TestNotificationDetailsResponse>> GetTestNotificationsAtResourceGroupLevelActionGroupAsync(string notificationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NotificationStatus>> GetTestNotificationsAtResourceGroupLevelActionGroupAsync(string notificationId, CancellationToken cancellationToken = default)
         {
             using var scope = ActionGroupClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetTestNotificationsAtResourceGroupLevelActionGroup");
             scope.Start();
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Monitor
         /// </summary>
         /// <param name="notificationId"> The notification id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<TestNotificationDetailsResponse> GetTestNotificationsAtResourceGroupLevelActionGroup(string notificationId, CancellationToken cancellationToken = default)
+        public virtual Response<NotificationStatus> GetTestNotificationsAtResourceGroupLevelActionGroup(string notificationId, CancellationToken cancellationToken = default)
         {
             using var scope = ActionGroupClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetTestNotificationsAtResourceGroupLevelActionGroup");
             scope.Start();
@@ -217,9 +217,9 @@ namespace Azure.ResourceManager.Monitor
         /// </summary>
         /// <param name="asyncOperationId"> The operation Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<OperationStatus>> GetPrivateLinkScopeOperationStatuAsync(string asyncOperationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<OperationStatus>> GetPrivateLinkScopeOperationStatusAsync(string asyncOperationId, CancellationToken cancellationToken = default)
         {
-            using var scope = PrivateLinkScopeOperationStatusClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetPrivateLinkScopeOperationStatu");
+            using var scope = PrivateLinkScopeOperationStatusClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetPrivateLinkScopeOperationStatus");
             scope.Start();
             try
             {
@@ -240,9 +240,9 @@ namespace Azure.ResourceManager.Monitor
         /// </summary>
         /// <param name="asyncOperationId"> The operation Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<OperationStatus> GetPrivateLinkScopeOperationStatu(string asyncOperationId, CancellationToken cancellationToken = default)
+        public virtual Response<OperationStatus> GetPrivateLinkScopeOperationStatus(string asyncOperationId, CancellationToken cancellationToken = default)
         {
-            using var scope = PrivateLinkScopeOperationStatusClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetPrivateLinkScopeOperationStatu");
+            using var scope = PrivateLinkScopeOperationStatusClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetPrivateLinkScopeOperationStatus");
             scope.Start();
             try
             {

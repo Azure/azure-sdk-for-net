@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Monitor
             Optional<bool> autoMitigate = default;
             Optional<MonitorEnabled> enabled = default;
             Optional<DateTimeOffset> lastUpdatedTime = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<MonitorProvisioningState> provisioningState = default;
             MonitorSource source = default;
             Optional<MonitorSchedule> schedule = default;
             MonitorAction action = default;
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Monitor
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new MonitorProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("source"))

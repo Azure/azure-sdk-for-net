@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Monitor
         /// The available derived classes include <see cref="AlertingAction"/> and <see cref="LogToMetricAction"/>.
         /// </param>
         /// <param name="etag"> The etag field is *not* required. If it is provided in the response body, it must also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        internal LogSearchRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string createdWithApiVersion, bool? isLegacyLogAnalyticsRule, string description, string displayName, bool? autoMitigate, MonitorEnabled? enabled, DateTimeOffset? lastUpdatedOn, ProvisioningState? provisioningState, MonitorSource source, MonitorSchedule schedule, MonitorAction action, ETag? etag) : base(id, name, resourceType, systemData, tags, location)
+        internal LogSearchRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string createdWithApiVersion, bool? isLegacyLogAnalyticsRule, string description, string displayName, bool? autoMitigate, MonitorEnabled? enabled, DateTimeOffset? lastUpdatedOn, MonitorProvisioningState? provisioningState, MonitorSource source, MonitorSchedule schedule, MonitorAction action, ETag? etag) : base(id, name, resourceType, systemData, tags, location)
         {
             CreatedWithApiVersion = createdWithApiVersion;
             IsLegacyLogAnalyticsRule = isLegacyLogAnalyticsRule;
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> Last time the rule was updated in IS08601 format. </summary>
         public DateTimeOffset? LastUpdatedOn { get; }
         /// <summary> Provisioning state of the scheduled query rule. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public MonitorProvisioningState? ProvisioningState { get; }
         /// <summary> Data Source against which rule will Query Data. </summary>
         public MonitorSource Source { get; set; }
         /// <summary> Schedule (Frequency, Time Window) for rule. Required for action type - AlertingAction. </summary>

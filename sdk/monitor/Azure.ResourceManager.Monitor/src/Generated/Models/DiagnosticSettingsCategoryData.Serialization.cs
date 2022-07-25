@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Monitor
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<CategoryType> categoryType = default;
+            Optional<MonitorCategoryType> categoryType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Monitor
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            categoryType = property0.Value.GetString().ToCategoryType();
+                            categoryType = property0.Value.GetString().ToMonitorCategoryType();
                             continue;
                         }
                     }

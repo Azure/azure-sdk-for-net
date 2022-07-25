@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="logsIngestion"> The endpoint used by clients to ingest logs. </param>
         /// <param name="networkAcls"> Network access control rules for the endpoints. </param>
         /// <param name="provisioningState"> The resource provisioning state. This property is READ-ONLY. </param>
-        internal DataCollectionEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, string description, string immutableId, DataCollectionEndpointConfigurationAccess configurationAccess, DataCollectionEndpointLogsIngestion logsIngestion, DataCollectionEndpointNetworkAcls networkAcls, KnownDataCollectionEndpointProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        internal DataCollectionEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, string description, string immutableId, DataCollectionEndpointConfigurationAccess configurationAccess, DataCollectionEndpointLogsIngestion logsIngestion, DataCollectionEndpointNetworkAcls networkAcls, DataCollectionEndpointProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             Description = description;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> Network access control rules for the endpoints. </summary>
         internal DataCollectionEndpointNetworkAcls NetworkAcls { get; set; }
         /// <summary> The configuration to set whether network access from public internet to the endpoints are allowed. </summary>
-        public KnownPublicNetworkAccessOption? PublicNetworkAccess
+        public MonitorPublicNetworkAccess? PublicNetworkAccess
         {
             get => NetworkAcls is null ? default : NetworkAcls.PublicNetworkAccess;
             set
@@ -84,6 +84,6 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary> The resource provisioning state. This property is READ-ONLY. </summary>
-        public KnownDataCollectionEndpointProvisioningState? ProvisioningState { get; }
+        public DataCollectionEndpointProvisioningState? ProvisioningState { get; }
     }
 }

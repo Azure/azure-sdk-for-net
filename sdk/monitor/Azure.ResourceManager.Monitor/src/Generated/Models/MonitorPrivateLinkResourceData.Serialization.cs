@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Monitor
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> groupId = default;
+            Optional<ResourceIdentifier> groupId = default;
             Optional<IReadOnlyList<string>> requiredMembers = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -69,7 +69,12 @@ namespace Azure.ResourceManager.Monitor
                     {
                         if (property0.NameEquals("groupId"))
                         {
-                            groupId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            groupId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("requiredMembers"))

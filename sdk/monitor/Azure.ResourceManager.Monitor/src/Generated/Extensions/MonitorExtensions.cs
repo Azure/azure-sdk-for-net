@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.Monitor
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="LocalizableString" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<LocalizableString> GetEventCategoriesAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MonitorLocalizableString" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<MonitorLocalizableString> GetEventCategoriesAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(tenantResource).GetEventCategoriesAsync(cancellationToken);
         }
@@ -48,8 +48,8 @@ namespace Azure.ResourceManager.Monitor
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LocalizableString" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<LocalizableString> GetEventCategories(this TenantResource tenantResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MonitorLocalizableString" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<MonitorLocalizableString> GetEventCategories(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(tenantResource).GetEventCategories(cancellationToken);
         }
@@ -192,14 +192,14 @@ namespace Azure.ResourceManager.Monitor
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="notificationRequest"> The notification request body which includes the contact details. </param>
+        /// <param name="content"> The notification request body which includes the contact details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="notificationRequest"/> is null. </exception>
-        public static async Task<ArmOperation<TestNotificationDetailsResponse>> PostTestNotificationsActionGroupAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, NotificationRequestBody notificationRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<ArmOperation<NotificationStatus>> CreateNotificationsAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, NotificationContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(notificationRequest, nameof(notificationRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(subscriptionResource).PostTestNotificationsActionGroupAsync(waitUntil, notificationRequest, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).CreateNotificationsAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -209,14 +209,14 @@ namespace Azure.ResourceManager.Monitor
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="notificationRequest"> The notification request body which includes the contact details. </param>
+        /// <param name="content"> The notification request body which includes the contact details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="notificationRequest"/> is null. </exception>
-        public static ArmOperation<TestNotificationDetailsResponse> PostTestNotificationsActionGroup(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, NotificationRequestBody notificationRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static ArmOperation<NotificationStatus> CreateNotifications(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, NotificationContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(notificationRequest, nameof(notificationRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(subscriptionResource).PostTestNotificationsActionGroup(waitUntil, notificationRequest, cancellationToken);
+            return GetExtensionClient(subscriptionResource).CreateNotifications(waitUntil, content, cancellationToken);
         }
 
         /// <summary>
@@ -229,11 +229,11 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="notificationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="notificationId"/> is null. </exception>
-        public static async Task<Response<TestNotificationDetailsResponse>> GetActionGroupTestNotificationsAsync(this SubscriptionResource subscriptionResource, string notificationId, CancellationToken cancellationToken = default)
+        public static async Task<Response<NotificationStatus>> GetNotificationStatusAsync(this SubscriptionResource subscriptionResource, string notificationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(notificationId, nameof(notificationId));
 
-            return await GetExtensionClient(subscriptionResource).GetActionGroupTestNotificationsAsync(notificationId, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).GetNotificationStatusAsync(notificationId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -246,11 +246,11 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="notificationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="notificationId"/> is null. </exception>
-        public static Response<TestNotificationDetailsResponse> GetActionGroupTestNotifications(this SubscriptionResource subscriptionResource, string notificationId, CancellationToken cancellationToken = default)
+        public static Response<NotificationStatus> GetNotificationStatus(this SubscriptionResource subscriptionResource, string notificationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(notificationId, nameof(notificationId));
 
-            return GetExtensionClient(subscriptionResource).GetActionGroupTestNotifications(notificationId, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetNotificationStatus(notificationId, cancellationToken);
         }
 
         /// <summary>
@@ -849,14 +849,14 @@ namespace Azure.ResourceManager.Monitor
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="notificationRequest"> The notification request body which includes the contact details. </param>
+        /// <param name="content"> The notification request body which includes the contact details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="notificationRequest"/> is null. </exception>
-        public static async Task<ArmOperation<TestNotificationDetailsResponse>> CreateNotificationsAtResourceGroupLevelActionGroupAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, NotificationRequestBody notificationRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<ArmOperation<NotificationStatus>> CreateNotificationsAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, NotificationContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(notificationRequest, nameof(notificationRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(resourceGroupResource).CreateNotificationsAtResourceGroupLevelActionGroupAsync(waitUntil, notificationRequest, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(resourceGroupResource).CreateNotificationsAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -866,14 +866,14 @@ namespace Azure.ResourceManager.Monitor
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="notificationRequest"> The notification request body which includes the contact details. </param>
+        /// <param name="content"> The notification request body which includes the contact details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="notificationRequest"/> is null. </exception>
-        public static ArmOperation<TestNotificationDetailsResponse> CreateNotificationsAtResourceGroupLevelActionGroup(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, NotificationRequestBody notificationRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static ArmOperation<NotificationStatus> CreateNotifications(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, NotificationContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(notificationRequest, nameof(notificationRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(resourceGroupResource).CreateNotificationsAtResourceGroupLevelActionGroup(waitUntil, notificationRequest, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).CreateNotifications(waitUntil, content, cancellationToken);
         }
 
         /// <summary>
@@ -886,7 +886,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="notificationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="notificationId"/> is null. </exception>
-        public static async Task<Response<TestNotificationDetailsResponse>> GetTestNotificationsAtResourceGroupLevelActionGroupAsync(this ResourceGroupResource resourceGroupResource, string notificationId, CancellationToken cancellationToken = default)
+        public static async Task<Response<NotificationStatus>> GetTestNotificationsAtResourceGroupLevelActionGroupAsync(this ResourceGroupResource resourceGroupResource, string notificationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(notificationId, nameof(notificationId));
 
@@ -903,7 +903,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="notificationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="notificationId"/> is null. </exception>
-        public static Response<TestNotificationDetailsResponse> GetTestNotificationsAtResourceGroupLevelActionGroup(this ResourceGroupResource resourceGroupResource, string notificationId, CancellationToken cancellationToken = default)
+        public static Response<NotificationStatus> GetTestNotificationsAtResourceGroupLevelActionGroup(this ResourceGroupResource resourceGroupResource, string notificationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(notificationId, nameof(notificationId));
 
@@ -920,11 +920,11 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="asyncOperationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="asyncOperationId"/> is null. </exception>
-        public static async Task<Response<OperationStatus>> GetPrivateLinkScopeOperationStatuAsync(this ResourceGroupResource resourceGroupResource, string asyncOperationId, CancellationToken cancellationToken = default)
+        public static async Task<Response<OperationStatus>> GetPrivateLinkScopeOperationStatusAsync(this ResourceGroupResource resourceGroupResource, string asyncOperationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(asyncOperationId, nameof(asyncOperationId));
 
-            return await GetExtensionClient(resourceGroupResource).GetPrivateLinkScopeOperationStatuAsync(asyncOperationId, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(resourceGroupResource).GetPrivateLinkScopeOperationStatusAsync(asyncOperationId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -937,11 +937,11 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="asyncOperationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="asyncOperationId"/> is null. </exception>
-        public static Response<OperationStatus> GetPrivateLinkScopeOperationStatu(this ResourceGroupResource resourceGroupResource, string asyncOperationId, CancellationToken cancellationToken = default)
+        public static Response<OperationStatus> GetPrivateLinkScopeOperationStatus(this ResourceGroupResource resourceGroupResource, string asyncOperationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(asyncOperationId, nameof(asyncOperationId));
 
-            return GetExtensionClient(resourceGroupResource).GetPrivateLinkScopeOperationStatu(asyncOperationId, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetPrivateLinkScopeOperationStatus(asyncOperationId, cancellationToken);
         }
 
         private static ArmResourceExtensionClient GetExtensionClient(ArmResource armResource)
