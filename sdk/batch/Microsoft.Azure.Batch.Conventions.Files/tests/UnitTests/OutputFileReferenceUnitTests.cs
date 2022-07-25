@@ -12,14 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-﻿using Microsoft.WindowsAzure.Storage.Blob;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
-using Microsoft.WindowsAzure.Storage;
 using System.IO;
 using System.Threading;
 using System.Runtime.CompilerServices;
@@ -104,7 +102,13 @@ namespace Microsoft.Azure.Batch.Conventions.Files.UnitTests
             var reference = new OutputFileReference(fakeBlob);
 
             byte[] target = new byte[0];
-            await reference.DownloadToByteArrayAsync(target, 0);
+
+            /*
+             * If the indicated blob in OutputFileReference is not found, an exception is typically thrown
+             * However due to the Substitute usage, the stream is returned as null
+             * So check if calling DownloadToByteArrayAsync raises null reference exception
+             */
+            var ex = await Assert.ThrowsAsync<NullReferenceException>(() => reference.DownloadToByteArrayAsync(target, 0));
 
             await fakeBlob.Received().OpenReadAsync();
         }
