@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Logic.Models
     /// The sku name.
     /// Serialized Name: SkuName
     /// </summary>
-    public readonly partial struct LogicSkuName : IEquatable<LogicSkuName>
+    public readonly partial struct LogicAppSkuName : IEquatable<LogicAppSkuName>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="LogicSkuName"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicAppSkuName"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public LogicSkuName(string value)
+        public LogicAppSkuName(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -36,44 +36,44 @@ namespace Azure.ResourceManager.Logic.Models
         /// NotSpecified
         /// Serialized Name: SkuName.NotSpecified
         /// </summary>
-        public static LogicSkuName NotSpecified { get; } = new LogicSkuName(NotSpecifiedValue);
+        public static LogicAppSkuName NotSpecified { get; } = new LogicAppSkuName(NotSpecifiedValue);
         /// <summary>
         /// Free
         /// Serialized Name: SkuName.Free
         /// </summary>
-        public static LogicSkuName Free { get; } = new LogicSkuName(FreeValue);
+        public static LogicAppSkuName Free { get; } = new LogicAppSkuName(FreeValue);
         /// <summary>
         /// Shared
         /// Serialized Name: SkuName.Shared
         /// </summary>
-        public static LogicSkuName Shared { get; } = new LogicSkuName(SharedValue);
+        public static LogicAppSkuName Shared { get; } = new LogicAppSkuName(SharedValue);
         /// <summary>
         /// Basic
         /// Serialized Name: SkuName.Basic
         /// </summary>
-        public static LogicSkuName Basic { get; } = new LogicSkuName(BasicValue);
+        public static LogicAppSkuName Basic { get; } = new LogicAppSkuName(BasicValue);
         /// <summary>
         /// Standard
         /// Serialized Name: SkuName.Standard
         /// </summary>
-        public static LogicSkuName Standard { get; } = new LogicSkuName(StandardValue);
+        public static LogicAppSkuName Standard { get; } = new LogicAppSkuName(StandardValue);
         /// <summary>
         /// Premium
         /// Serialized Name: SkuName.Premium
         /// </summary>
-        public static LogicSkuName Premium { get; } = new LogicSkuName(PremiumValue);
-        /// <summary> Determines if two <see cref="LogicSkuName"/> values are the same. </summary>
-        public static bool operator ==(LogicSkuName left, LogicSkuName right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="LogicSkuName"/> values are not the same. </summary>
-        public static bool operator !=(LogicSkuName left, LogicSkuName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="LogicSkuName"/>. </summary>
-        public static implicit operator LogicSkuName(string value) => new LogicSkuName(value);
+        public static LogicAppSkuName Premium { get; } = new LogicAppSkuName(PremiumValue);
+        /// <summary> Determines if two <see cref="LogicAppSkuName"/> values are the same. </summary>
+        public static bool operator ==(LogicAppSkuName left, LogicAppSkuName right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="LogicAppSkuName"/> values are not the same. </summary>
+        public static bool operator !=(LogicAppSkuName left, LogicAppSkuName right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="LogicAppSkuName"/>. </summary>
+        public static implicit operator LogicAppSkuName(string value) => new LogicAppSkuName(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is LogicSkuName other && Equals(other);
+        public override bool Equals(object obj) => obj is LogicAppSkuName other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(LogicSkuName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(LogicAppSkuName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

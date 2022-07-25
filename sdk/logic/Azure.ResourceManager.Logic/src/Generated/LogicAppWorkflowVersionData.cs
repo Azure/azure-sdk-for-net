@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Logic
         /// The parameters.
         /// Serialized Name: WorkflowVersion.properties.parameters
         /// </param>
-        internal LogicAppWorkflowVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, LogicAppWorkflowProvisioningState? provisioningState, DateTimeOffset? createdOn, DateTimeOffset? changedOn, LogicAppWorkflowState? state, string version, string accessEndpoint, FlowEndpointsConfiguration endpointsConfiguration, FlowAccessControlConfiguration accessControl, LogicSku sku, ResourceReference integrationAccount, BinaryData definition, IDictionary<string, LogicAppWorkflowParameterInfo> parameters) : base(id, name, resourceType, systemData, tags, location)
+        internal LogicAppWorkflowVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, LogicAppWorkflowProvisioningState? provisioningState, DateTimeOffset? createdOn, DateTimeOffset? changedOn, LogicAppWorkflowState? state, string version, string accessEndpoint, FlowEndpointsConfiguration endpointsConfiguration, FlowAccessControlConfiguration accessControl, LogicAppSku sku, ResourceReference integrationAccount, BinaryData definition, IDictionary<string, LogicAppWorkflowParameterInfo> parameters) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             CreatedOn = createdOn;
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Logic
         /// The sku.
         /// Serialized Name: WorkflowVersion.properties.sku
         /// </summary>
-        public LogicSku Sku { get; }
+        public LogicAppSku Sku { get; }
         /// <summary>
         /// The integration account.
         /// Serialized Name: WorkflowVersion.properties.integrationAccount

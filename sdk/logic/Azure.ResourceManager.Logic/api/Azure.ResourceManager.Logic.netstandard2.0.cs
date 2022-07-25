@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.Logic
         public Azure.ResourceManager.Logic.Models.ResourceReference IntegrationServiceEnvironment { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Logic.Models.LogicAppWorkflowParameterInfo> Parameters { get { throw null; } }
         public Azure.ResourceManager.Logic.Models.LogicAppWorkflowProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.LogicSku Sku { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.LogicAppSku Sku { get { throw null; } }
         public Azure.ResourceManager.Logic.Models.LogicAppWorkflowState? State { get { throw null; } set { } }
         public string Version { get { throw null; } }
     }
@@ -991,7 +991,7 @@ namespace Azure.ResourceManager.Logic
         public Azure.ResourceManager.Logic.Models.ResourceReference IntegrationAccount { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Logic.Models.LogicAppWorkflowParameterInfo> Parameters { get { throw null; } }
         public Azure.ResourceManager.Logic.Models.LogicAppWorkflowProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.LogicSku Sku { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.LogicAppSku Sku { get { throw null; } }
         public Azure.ResourceManager.Logic.Models.LogicAppWorkflowState? State { get { throw null; } set { } }
         public string Version { get { throw null; } }
     }
@@ -2070,6 +2070,34 @@ namespace Azure.ResourceManager.Logic.Models
         public Azure.ResourceManager.Logic.Models.KeyVaultReference KeyVault { get { throw null; } }
         public string SkipToken { get { throw null; } set { } }
     }
+    public partial class LogicAppSku
+    {
+        internal LogicAppSku() { }
+        public Azure.ResourceManager.Logic.Models.LogicAppSkuName Name { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.ResourceReference Plan { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct LogicAppSkuName : System.IEquatable<Azure.ResourceManager.Logic.Models.LogicAppSkuName>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public LogicAppSkuName(string value) { throw null; }
+        public static Azure.ResourceManager.Logic.Models.LogicAppSkuName Basic { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicAppSkuName Free { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicAppSkuName NotSpecified { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicAppSkuName Premium { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicAppSkuName Shared { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicAppSkuName Standard { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Logic.Models.LogicAppSkuName other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Logic.Models.LogicAppSkuName left, Azure.ResourceManager.Logic.Models.LogicAppSkuName right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Logic.Models.LogicAppSkuName (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Logic.Models.LogicAppSkuName left, Azure.ResourceManager.Logic.Models.LogicAppSkuName right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class LogicAppWorkflowOutputParameterInfo : Azure.ResourceManager.Logic.Models.LogicAppWorkflowParameterInfo
     {
         public LogicAppWorkflowOutputParameterInfo() { }
@@ -2287,34 +2315,6 @@ namespace Azure.ResourceManager.Logic.Models
         internal LogicAppWsdlService() { }
         public System.Collections.Generic.IReadOnlyList<string> EndpointQualifiedNames { get { throw null; } }
         public string QualifiedName { get { throw null; } }
-    }
-    public partial class LogicSku
-    {
-        internal LogicSku() { }
-        public Azure.ResourceManager.Logic.Models.LogicSkuName Name { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.ResourceReference Plan { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct LogicSkuName : System.IEquatable<Azure.ResourceManager.Logic.Models.LogicSkuName>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public LogicSkuName(string value) { throw null; }
-        public static Azure.ResourceManager.Logic.Models.LogicSkuName Basic { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.LogicSkuName Free { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.LogicSkuName NotSpecified { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.LogicSkuName Premium { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.LogicSkuName Shared { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.LogicSkuName Standard { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Logic.Models.LogicSkuName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Logic.Models.LogicSkuName left, Azure.ResourceManager.Logic.Models.LogicSkuName right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Logic.Models.LogicSkuName (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Logic.Models.LogicSkuName left, Azure.ResourceManager.Logic.Models.LogicSkuName right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class ManagedServiceIdentity
     {

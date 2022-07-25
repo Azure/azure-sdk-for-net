@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class LogicSku
+    public partial class LogicAppSku
     {
-        internal static LogicSku DeserializeLogicSku(JsonElement element)
+        internal static LogicAppSku DeserializeLogicAppSku(JsonElement element)
         {
-            LogicSkuName name = default;
+            LogicAppSkuName name = default;
             Optional<ResourceReference> plan = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    name = new LogicSkuName(property.Value.GetString());
+                    name = new LogicAppSkuName(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("plan"))
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new LogicSku(name, plan.Value);
+            return new LogicAppSku(name, plan.Value);
         }
     }
 }

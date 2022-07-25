@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Logic
         /// The parameters.
         /// Serialized Name: Workflow.properties.parameters
         /// </param>
-        internal LogicAppWorkflowData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Models.ManagedServiceIdentity identity, LogicAppWorkflowProvisioningState? provisioningState, DateTimeOffset? createdOn, DateTimeOffset? changedOn, LogicAppWorkflowState? state, string version, string accessEndpoint, FlowEndpointsConfiguration endpointsConfiguration, FlowAccessControlConfiguration accessControl, LogicSku sku, ResourceReference integrationAccount, ResourceReference integrationServiceEnvironment, BinaryData definition, IDictionary<string, LogicAppWorkflowParameterInfo> parameters) : base(id, name, resourceType, systemData, tags, location)
+        internal LogicAppWorkflowData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Models.ManagedServiceIdentity identity, LogicAppWorkflowProvisioningState? provisioningState, DateTimeOffset? createdOn, DateTimeOffset? changedOn, LogicAppWorkflowState? state, string version, string accessEndpoint, FlowEndpointsConfiguration endpointsConfiguration, FlowAccessControlConfiguration accessControl, LogicAppSku sku, ResourceReference integrationAccount, ResourceReference integrationServiceEnvironment, BinaryData definition, IDictionary<string, LogicAppWorkflowParameterInfo> parameters) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             ProvisioningState = provisioningState;
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Logic
         /// The sku.
         /// Serialized Name: Workflow.properties.sku
         /// </summary>
-        public LogicSku Sku { get; }
+        public LogicAppSku Sku { get; }
         /// <summary>
         /// The integration account.
         /// Serialized Name: Workflow.properties.integrationAccount

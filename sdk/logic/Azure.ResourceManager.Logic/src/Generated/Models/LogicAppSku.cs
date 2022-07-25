@@ -11,19 +11,19 @@ namespace Azure.ResourceManager.Logic.Models
     /// The sku type.
     /// Serialized Name: Sku
     /// </summary>
-    public partial class LogicSku
+    public partial class LogicAppSku
     {
-        /// <summary> Initializes a new instance of LogicSku. </summary>
+        /// <summary> Initializes a new instance of LogicAppSku. </summary>
         /// <param name="name">
         /// The name.
         /// Serialized Name: Sku.name
         /// </param>
-        internal LogicSku(LogicSkuName name)
+        internal LogicAppSku(LogicAppSkuName name)
         {
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of LogicSku. </summary>
+        /// <summary> Initializes a new instance of LogicAppSku. </summary>
         /// <param name="name">
         /// The name.
         /// Serialized Name: Sku.name
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// The reference to plan.
         /// Serialized Name: Sku.plan
         /// </param>
-        internal LogicSku(LogicSkuName name, ResourceReference plan)
+        internal LogicAppSku(LogicAppSkuName name, ResourceReference plan)
         {
             Name = name;
             Plan = plan;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// The name.
         /// Serialized Name: Sku.name
         /// </summary>
-        public LogicSkuName Name { get; }
+        public LogicAppSkuName Name { get; }
         /// <summary>
         /// The reference to plan.
         /// Serialized Name: Sku.plan

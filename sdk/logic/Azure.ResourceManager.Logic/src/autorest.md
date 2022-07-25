@@ -61,6 +61,8 @@ rename-mapping:
   WorkflowRunActionListResult: LogicAppWorkflowRunActionListResult
   WsdlService: LogicAppWsdlService
   WsdlImportMethod: LogicAppWsdlImportMethod
+  Sku: LogicAppSku
+  SkuName: LogicAppSkuName
   
 format-by-name-rules:
   'tenantId': 'uuid'
