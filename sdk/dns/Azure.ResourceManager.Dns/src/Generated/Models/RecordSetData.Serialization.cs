@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Dns.Models;
 using Azure.ResourceManager.Models;
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.Dns
             if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag");
-                writer.WriteStringValue(ETag);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
@@ -143,7 +144,7 @@ namespace Azure.ResourceManager.Dns
 
         internal static RecordSetData DeserializeRecordSetData(JsonElement element)
         {
-            Optional<string> etag = default;
+            Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -167,7 +168,12 @@ namespace Azure.ResourceManager.Dns
             {
                 if (property.NameEquals("etag"))
                 {
-                    etag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -393,7 +399,7 @@ namespace Azure.ResourceManager.Dns
                     continue;
                 }
             }
-            return new RecordSetData(id, name, type, systemData.Value, etag.Value, Optional.ToDictionary(metadata), Optional.ToNullable(ttl), fqdn.Value, provisioningState.Value, targetResource, Optional.ToList(aRecords), Optional.ToList(aaaaRecords), Optional.ToList(mxRecords), Optional.ToList(nsRecords), Optional.ToList(ptrRecords), Optional.ToList(srvRecords), Optional.ToList(txtRecords), cnameRecord.Value, soaRecord.Value, Optional.ToList(caaRecords));
+            return new RecordSetData(id, name, type, systemData.Value, Optional.ToNullable(etag), Optional.ToDictionary(metadata), Optional.ToNullable(ttl), fqdn.Value, provisioningState.Value, targetResource, Optional.ToList(aRecords), Optional.ToList(aaaaRecords), Optional.ToList(mxRecords), Optional.ToList(nsRecords), Optional.ToList(ptrRecords), Optional.ToList(srvRecords), Optional.ToList(txtRecords), cnameRecord.Value, soaRecord.Value, Optional.ToList(caaRecords));
         }
     }
 }

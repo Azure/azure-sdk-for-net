@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Dns.Models;
 using Azure.ResourceManager.Models;
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="zoneType"> The type of this DNS zone (Public or Private). </param>
         /// <param name="registrationVirtualNetworks"> A list of references to virtual networks that register hostnames in this DNS zone. This is a only when ZoneType is Private. </param>
         /// <param name="resolutionVirtualNetworks"> A list of references to virtual networks that resolve records in this DNS zone. This is a only when ZoneType is Private. </param>
-        internal DnsZoneData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string etag, long? maxNumberOfRecordSets, long? maxNumberOfRecordsPerRecordSet, long? numberOfRecordSets, IReadOnlyList<string> nameServers, ZoneType? zoneType, IList<WritableSubResource> registrationVirtualNetworks, IList<WritableSubResource> resolutionVirtualNetworks) : base(id, name, resourceType, systemData, tags, location)
+        internal DnsZoneData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, long? maxNumberOfRecordSets, long? maxNumberOfRecordsPerRecordSet, long? numberOfRecordSets, IReadOnlyList<string> nameServers, ZoneType? zoneType, IList<WritableSubResource> registrationVirtualNetworks, IList<WritableSubResource> resolutionVirtualNetworks) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             MaxNumberOfRecordSets = maxNumberOfRecordSets;
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.Dns
         }
 
         /// <summary> The etag of the zone. </summary>
-        public string ETag { get; set; }
+        public ETag? ETag { get; set; }
         /// <summary> The maximum number of record sets that can be created in this DNS zone.  This is a read-only property and any attempt to set this value will be ignored. </summary>
         public long? MaxNumberOfRecordSets { get; }
         /// <summary> The maximum number of records per record set that can be created in this DNS zone.  This is a read-only property and any attempt to set this value will be ignored. </summary>

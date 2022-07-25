@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Dns.Models;
 using Azure.ResourceManager.Models;
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.Dns
             if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag");
-                writer.WriteStringValue(ETag);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -70,7 +71,7 @@ namespace Azure.ResourceManager.Dns
 
         internal static DnsZoneData DeserializeDnsZoneData(JsonElement element)
         {
-            Optional<string> etag = default;
+            Optional<ETag> etag = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -88,7 +89,12 @@ namespace Azure.ResourceManager.Dns
             {
                 if (property.NameEquals("etag"))
                 {
-                    etag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -234,7 +240,7 @@ namespace Azure.ResourceManager.Dns
                     continue;
                 }
             }
-            return new DnsZoneData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, etag.Value, Optional.ToNullable(maxNumberOfRecordSets), Optional.ToNullable(maxNumberOfRecordsPerRecordSet), Optional.ToNullable(numberOfRecordSets), Optional.ToList(nameServers), Optional.ToNullable(zoneType), Optional.ToList(registrationVirtualNetworks), Optional.ToList(resolutionVirtualNetworks));
+            return new DnsZoneData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), Optional.ToNullable(maxNumberOfRecordSets), Optional.ToNullable(maxNumberOfRecordsPerRecordSet), Optional.ToNullable(numberOfRecordSets), Optional.ToList(nameServers), Optional.ToNullable(zoneType), Optional.ToList(registrationVirtualNetworks), Optional.ToList(resolutionVirtualNetworks));
         }
     }
 }

@@ -14,6 +14,14 @@ modelerfour:
   flatten-payloads: false
   lenient-model-deduplication: true
 
+format-by-name-rules:
+  'tenantId': 'uuid'
+  'ETag': 'etag'
+  'location': 'azure-location'
+  '*Uri': 'Uri'
+  '*Uris': 'Uri'
+  'PurviewResourceId': 'arm-id'
+
 rename-rules:
   CPU: Cpu
   CPUs: Cpus
@@ -24,7 +32,6 @@ rename-rules:
   IDs: Ids
   VM: Vm
   VMs: Vms
-  Vmos: VmOS
   VMScaleSet: VmScaleSet
   DNS: Dns
   VPN: Vpn
@@ -35,9 +42,8 @@ rename-rules:
   Ipsec: IPsec|ipsec
   SSO: Sso
   URI: Uri
+  MWS: Mws
   Etag: ETag|etag
-  ACL: Acl
-  ACLs: Acls
 
 override-operation-name:
   RecordSets_ListByDnsZone: GetRecordSets
