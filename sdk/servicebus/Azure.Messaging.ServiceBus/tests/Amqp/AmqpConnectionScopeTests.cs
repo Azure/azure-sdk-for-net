@@ -131,6 +131,28 @@ namespace Azure.Messaging.ServiceBus.Tests
         }
 
         /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpConnectionScope" />
+        ///   construct.
+        /// </summary>
+        ///
+        [Test]
+        public void ConstructorAssociatesLinkIdentifier()
+        {
+            var credential = new Mock<ServiceBusTokenCredential>(Mock.Of<TokenCredential>());
+            var endpoint = new Uri("sb://mine.hubs.com");
+            var mockScope = new MockConnectionScope(endpoint, endpoint, credential.Object, ServiceBusTransportType.AmqpTcp, null);
+            var currentTime = new DateTime(2015, 10, 27, 00, 00, 00);
+            var jitterBuffer = TimeSpan.FromSeconds(GetAuthorizationBaseJitterSeconds()).Add(TimeSpan.FromSeconds(5));
+            var minimumRefresh = GetMinimumAuthorizationRefresh();
+            var expireTime = currentTime.Add(minimumRefresh.Subtract(TimeSpan.FromMilliseconds(500)));
+            var calculatedRefresh = mockScope.InvokeCalculateLinkAuthorizationRefreshInterval(expireTime, currentTime);
+            var identifer = "MyAmqpConnectionScope";
+
+            Assert.That(calculatedRefresh, Is.GreaterThanOrEqualTo(minimumRefresh), "The minimum refresh duration should be violated.");
+            Assert.That(calculatedRefresh, Is.EqualTo(minimumRefresh).Within(jitterBuffer), "The minimum refresh duration should have been used.");
+        }
+
+        /// <summary>
         ///   Gets the token refresh buffer for the scope, using the
         ///   private property accessor.
         /// </summary>
@@ -218,7 +240,8 @@ namespace Azure.Messaging.ServiceBus.Tests
                 Uri customConnectionEndpoint,
                 ServiceBusTokenCredential credential,
                 ServiceBusTransportType transport,
-                IWebProxy proxy) : base(serviceEndpoint, customConnectionEndpoint, credential, transport, proxy, false, default, default)
+                IWebProxy proxy,
+                string identifier = default) : base(serviceEndpoint, customConnectionEndpoint, credential, transport, proxy, false, default, default, identifier)
             {
                 MockConnection = new Mock<AmqpConnection>(new MockTransport(), CreateMockAmqpSettings(), new AmqpConnectionSettings());
             }
