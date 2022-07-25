@@ -9,7 +9,11 @@ namespace Azure.Storage
         {
             if (validationAlgorithm == ValidationAlgorithm.Auto)
             {
+#if BlobSDK || DataLakeSDK
                 return ValidationAlgorithm.StorageCrc64;
+#elif FileSDK // file shares don't support crc64
+                return ValidationAlgorithm.MD5;
+#endif
             }
             return validationAlgorithm;
         }
