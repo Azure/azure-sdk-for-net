@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Monitor.Tests
     {
         private const string dummySSHKey = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC+wWK73dCr+jgQOAxNsHAnNNNMEMWOHYEccp6wJm2gotpr9katuF/ZAdou5AaW1C61slRkHRkpRRX9FA9CYBiitZgvCCz+3nWNN7l/Up54Zps/pHWGZLHNJZRYyAB6j5yVLMVHIHriY49d/GZTZVNB8GoJv9Gakwc/fuEZYYl4YDFiGMBP///TzlI4jhiJzjKnEvqPFki5p2ZRJqcbCiF4pJrxUQR/RXqVFQdbRLZgYfJ8xGB878RENq3yQ39d8dVOkq4edbkzwcUmwwwkYVPIoDGsYLaRHnG+To7FvMeyO7xDVQkMKzopTQV8AuKpyvpqu0a9pWOMaiCyDytO7GGN you@me.com";
 
-        // Temporary solution since the one in Azure.ResourceManager.AppService is internal
+        // Temporary solution since the one in Azure.ResourceManager.Monitor is internal
         public static IDictionary<string, string> ReplaceWith(this IDictionary<string, string> dest, IDictionary<string, string> src)
         {
             dest.Clear();
@@ -67,22 +67,24 @@ namespace Azure.ResourceManager.Monitor.Tests
 
         public static ActivityLogAlertData GetBasicActivityLogAlertData(AzureLocation location, string subID)
         {
-            IEnumerable<ActivityLogAlertLeafCondition> allOf;
-            allOf = new List<ActivityLogAlertLeafCondition>()
-            {
-                new ActivityLogAlertLeafCondition( "category", "Administrative"),
-                new ActivityLogAlertLeafCondition( "level", "Error")
-            };
             var data = new ActivityLogAlertData(location)
             {
                 Scopes =
                 {
                     subID
                 },
-                Condition = new ActivityLogAlertAllOfCondition(allOf),
-                Actions =
+                ConditionAllOf = new List<ActivityLogAlertAnyOfOrLeafCondition>()
                 {
-                    ActionGroups = {}
+                    new()
+                    {
+                        Field = "category",
+                        EqualsValue = "Administrative"
+                    },
+                    new()
+                    {
+                        Field = "level",
+                        EqualsValue = "Error"
+                    }
                 }
             };
             return data;
