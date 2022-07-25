@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Dns
             Metadata = new ChangeTrackingDictionary<string, string>();
             ARecords = new ChangeTrackingList<ARecord>();
             AaaaRecords = new ChangeTrackingList<AaaaRecord>();
-            MxRecords = new ChangeTrackingList<MxRecord>();
-            NsRecords = new ChangeTrackingList<NsRecord>();
+            MxRecords = new ChangeTrackingList<MXRecord>();
+            NsRecords = new ChangeTrackingList<NSRecord>();
             PtrRecords = new ChangeTrackingList<PtrRecord>();
             SrvRecords = new ChangeTrackingList<SrvRecord>();
             TxtRecords = new ChangeTrackingList<TxtRecord>();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="cnameRecord"> The CNAME record in the  record set. </param>
         /// <param name="soaRecord"> The SOA record in the record set. </param>
         /// <param name="caaRecords"> The list of CAA records in the record set. </param>
-        internal RecordSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, string provisioningState, WritableSubResource targetResource, IList<ARecord> aRecords, IList<AaaaRecord> aaaaRecords, IList<MxRecord> mxRecords, IList<NsRecord> nsRecords, IList<PtrRecord> ptrRecords, IList<SrvRecord> srvRecords, IList<TxtRecord> txtRecords, CnameRecord cnameRecord, SoaRecord soaRecord, IList<CaaRecord> caaRecords) : base(id, name, resourceType, systemData)
+        internal RecordSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, string provisioningState, WritableSubResource targetResource, IList<ARecord> aRecords, IList<AaaaRecord> aaaaRecords, IList<MXRecord> mxRecords, IList<NSRecord> nsRecords, IList<PtrRecord> ptrRecords, IList<SrvRecord> srvRecords, IList<TxtRecord> txtRecords, CnameRecord cnameRecord, SoaRecord soaRecord, IList<CaaRecord> caaRecords) : base(id, name, resourceType, systemData)
         {
             ETag = etag;
             Metadata = metadata;
@@ -101,9 +101,9 @@ namespace Azure.ResourceManager.Dns
         /// <summary> The list of AAAA records in the record set. </summary>
         public IList<AaaaRecord> AaaaRecords { get; }
         /// <summary> The list of MX records in the record set. </summary>
-        public IList<MxRecord> MxRecords { get; }
+        public IList<MXRecord> MxRecords { get; }
         /// <summary> The list of NS records in the record set. </summary>
-        public IList<NsRecord> NsRecords { get; }
+        public IList<NSRecord> NsRecords { get; }
         /// <summary> The list of PTR records in the record set. </summary>
         public IList<PtrRecord> PtrRecords { get; }
         /// <summary> The list of SRV records in the record set. </summary>

@@ -156,8 +156,8 @@ namespace Azure.ResourceManager.Dns
             Optional<WritableSubResource> targetResource = default;
             Optional<IList<ARecord>> aRecords = default;
             Optional<IList<AaaaRecord>> aaaaRecords = default;
-            Optional<IList<MxRecord>> mxRecords = default;
-            Optional<IList<NsRecord>> nsRecords = default;
+            Optional<IList<MXRecord>> mxRecords = default;
+            Optional<IList<NSRecord>> nsRecords = default;
             Optional<IList<PtrRecord>> ptrRecords = default;
             Optional<IList<SrvRecord>> srvRecords = default;
             Optional<IList<TxtRecord>> txtRecords = default;
@@ -292,10 +292,10 @@ namespace Azure.ResourceManager.Dns
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<MxRecord> array = new List<MxRecord>();
+                            List<MXRecord> array = new List<MXRecord>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MxRecord.DeserializeMxRecord(item));
+                                array.Add(MXRecord.DeserializeMXRecord(item));
                             }
                             mxRecords = array;
                             continue;
@@ -307,10 +307,10 @@ namespace Azure.ResourceManager.Dns
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<NsRecord> array = new List<NsRecord>();
+                            List<NSRecord> array = new List<NSRecord>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NsRecord.DeserializeNsRecord(item));
+                                array.Add(NSRecord.DeserializeNSRecord(item));
                             }
                             nsRecords = array;
                             continue;

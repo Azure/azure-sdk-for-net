@@ -14,7 +14,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Dns
 {
-    public partial class MxRecordSetData : IUtf8JsonSerializable
+    public partial class NSRecordSetData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -47,11 +47,11 @@ namespace Azure.ResourceManager.Dns
                 writer.WritePropertyName("targetResource");
                 JsonSerializer.Serialize(writer, TargetResource);
             }
-            if (Optional.IsCollectionDefined(MxRecords))
+            if (Optional.IsCollectionDefined(NSRecords))
             {
-                writer.WritePropertyName("MXRecords");
+                writer.WritePropertyName("NSRecords");
                 writer.WriteStartArray();
-                foreach (var item in MxRecords)
+                foreach (var item in NSRecords)
                 {
                     writer.WriteObjectValue(item);
                 }
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Dns
             writer.WriteEndObject();
         }
 
-        internal static MxRecordSetData DeserializeMxRecordSetData(JsonElement element)
+        internal static NSRecordSetData DeserializeNSRecordSetData(JsonElement element)
         {
             Optional<string> etag = default;
             ResourceIdentifier id = default;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Dns
             Optional<string> fqdn = default;
             Optional<string> provisioningState = default;
             Optional<WritableSubResource> targetResource = default;
-            Optional<IList<MxRecord>> mxRecords = default;
+            Optional<IList<NSRecord>> nsRecords = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
@@ -155,26 +155,26 @@ namespace Azure.ResourceManager.Dns
                             targetResource = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
-                        if (property0.NameEquals("MXRecords"))
+                        if (property0.NameEquals("NSRecords"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<MxRecord> array = new List<MxRecord>();
+                            List<NSRecord> array = new List<NSRecord>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MxRecord.DeserializeMxRecord(item));
+                                array.Add(NSRecord.DeserializeNSRecord(item));
                             }
-                            mxRecords = array;
+                            nsRecords = array;
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new MxRecordSetData(id, name, type, systemData, etag.Value, Optional.ToDictionary(metadata), Optional.ToNullable(ttl), fqdn.Value, provisioningState.Value, targetResource, Optional.ToList(mxRecords));
+            return new NSRecordSetData(id, name, type, systemData, etag.Value, Optional.ToDictionary(metadata), Optional.ToNullable(ttl), fqdn.Value, provisioningState.Value, targetResource, Optional.ToList(nsRecords));
         }
     }
 }

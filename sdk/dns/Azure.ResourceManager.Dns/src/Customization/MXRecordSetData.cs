@@ -13,17 +13,17 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Dns
 {
-    /// <summary> A class representing the NsRecordSet data model. </summary>
-    public partial class NsRecordSetData : ResourceData
+    /// <summary> A class representing the MXRecordSet data model. </summary>
+    public partial class MXRecordSetData : ResourceData
     {
-        /// <summary> Initializes a new instance of NsRecordSetData. </summary>
-        public NsRecordSetData()
+        /// <summary> Initializes a new instance of MXRecordSetData. </summary>
+        public MXRecordSetData()
         {
             Metadata = new ChangeTrackingDictionary<string, string>();
-            NsRecords = new ChangeTrackingList<NsRecord>();
+            MXRecords = new ChangeTrackingList<MxRecord>();
         }
 
-        /// <summary> Initializes a new instance of NsRecordSetData. </summary>
+        /// <summary> Initializes a new instance of MXRecordSetData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Dns
         /// <param name="fqdn"> Fully qualified domain name of the record set. </param>
         /// <param name="provisioningState"> provisioning State of the record set. </param>
         /// <param name="targetResource"> A reference to an azure resource from where the dns resource value is taken. </param>
-        /// <param name="nsRecords"> The list of NS records in the record set. </param>
-        internal NsRecordSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string etag, IDictionary<string, string> metadata, long? ttl, string fqdn, string provisioningState, WritableSubResource targetResource,IList<NsRecord> nsRecords) : base(id, name, resourceType, systemData)
+        /// <param name="mxRecords"> The list of MX records in the record set. </param>
+        internal MXRecordSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string etag, IDictionary<string, string> metadata, long? ttl, string fqdn, string provisioningState, WritableSubResource targetResource, IList<MxRecord> mxRecords) : base(id, name, resourceType, systemData)
         {
             Etag = etag;
             Metadata = metadata;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Dns
             Fqdn = fqdn;
             ProvisioningState = provisioningState;
             TargetResource = targetResource;
-            NsRecords = nsRecords;
+            MXRecords = mxRecords;
         }
 
         /// <summary> The etag of the record set. </summary>
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Dns
             }
         }
 
-        /// <summary> The list of NS records in the record set. </summary>
-        public IList<NsRecord> NsRecords { get; }
+        /// <summary> The list of MX records in the record set. </summary>
+        public IList<MxRecord> MXRecords { get; }
     }
 }
