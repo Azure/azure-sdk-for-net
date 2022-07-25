@@ -23,6 +23,12 @@ namespace Azure.ResourceManager
         public ArmEnvironment? Environment { get; set; }
 
         /// <summary>
+        /// Gets or sets whether to use the <see cref="TagResource"/> API when modifying tags or use the resources PATCH/PUT APIs.
+        /// By default the <see cref="ArmClient"/> will automatically discover if the <see cref="TagResource"/> is enabled in the <see cref="ArmEnvironment"/> and use it if so.
+        /// </summary>
+        public bool? UseTagResourceApi { get; set; }
+
+        /// <summary>
         /// Sets the api version to use for a given resource type.
         /// To find which API Versions are available in your environment you can use the <see cref="ResourceProviderResource.Get"/> method
         /// for the provider namespace you are interested in.

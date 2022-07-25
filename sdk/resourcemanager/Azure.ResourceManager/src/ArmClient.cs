@@ -24,6 +24,7 @@ namespace Azure.ResourceManager
         private TenantResource _tenant;
         private SubscriptionResource _defaultSubscription;
         private readonly ClientDiagnostics _subscriptionClientDiagnostics;
+        private bool? _useTagResourceApi;
 
         internal virtual Dictionary<ResourceType, string> ApiVersionOverrides { get; } = new Dictionary<ResourceType, string>();
 
@@ -86,6 +87,40 @@ namespace Azure.ResourceManager
             _tenant = new TenantResource(this);
             _defaultSubscription = string.IsNullOrWhiteSpace(defaultSubscriptionId) ? null :
                 new SubscriptionResource(this, SubscriptionResource.CreateResourceIdentifier(defaultSubscriptionId));
+
+            _useTagResourceApi = options.UseTagResourceApi;
+        }
+
+        /// <summary>
+        /// Checks to see if the TagResource API is deployed in the current environment.
+        /// </summary>
+        /// <returns></returns>
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual bool IsTagResourcePresent(CancellationToken cancellationToken = default)
+#pragma warning restore AZC0015 // Unexpected client method return type.
+        {
+            if (_useTagResourceApi == null)
+            {
+                var tagRp = GetDefaultSubscription(cancellationToken).GetResourceProvider(TagResource.ResourceType.Namespace, cancellationToken: cancellationToken);
+                _useTagResourceApi = tagRp.Value.Data.ResourceTypes.Any(rp => rp.ResourceType == TagResource.ResourceType.Type);
+            }
+            return _useTagResourceApi.Value;
+        }
+
+        /// <summary>
+        /// Checks to see if the TagResource API is deployed in the current environment.
+        /// </summary>
+        /// <returns></returns>
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual async Task<bool> IsTagResourcePresentAsync(CancellationToken cancellationToken = default)
+#pragma warning restore AZC0015 // Unexpected client method return type.
+        {
+            if (_useTagResourceApi == null)
+            {
+                var tagRp = await GetDefaultSubscription(cancellationToken).GetResourceProviderAsync(TagResource.ResourceType.Namespace, cancellationToken: cancellationToken).ConfigureAwait(false);
+                _useTagResourceApi = tagRp.Value.Data.ResourceTypes.Any(rp => rp.ResourceType == TagResource.ResourceType.Type);
+            }
+            return _useTagResourceApi.Value;
         }
 
         private void CopyApiVersionOverrides(ArmClientOptions options)
