@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Monitor.Models
             string state = default;
             Optional<string> completedTime = default;
             Optional<string> createdTime = default;
-            Optional<IReadOnlyList<ActionDetail>> actionDetails = default;
+            Optional<IReadOnlyList<NotificationActionDetail>> actionDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("context"))
@@ -54,10 +54,10 @@ namespace Azure.ResourceManager.Monitor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ActionDetail> array = new List<ActionDetail>();
+                    List<NotificationActionDetail> array = new List<NotificationActionDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ActionDetail.DeserializeActionDetail(item));
+                        array.Add(NotificationActionDetail.DeserializeNotificationActionDetail(item));
                     }
                     actionDetails = array;
                     continue;

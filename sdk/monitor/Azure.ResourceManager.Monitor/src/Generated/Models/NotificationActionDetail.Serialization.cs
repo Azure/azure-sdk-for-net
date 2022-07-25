@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class ActionDetail
+    public partial class NotificationActionDetail
     {
-        internal static ActionDetail DeserializeActionDetail(JsonElement element)
+        internal static NotificationActionDetail DeserializeNotificationActionDetail(JsonElement element)
         {
             Optional<string> mechanismType = default;
             Optional<string> name = default;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new ActionDetail(mechanismType.Value, name.Value, status.Value, subState.Value, sendTime.Value, detail.Value);
+            return new NotificationActionDetail(mechanismType.Value, name.Value, status.Value, subState.Value, sendTime.Value, detail.Value);
         }
     }
 }

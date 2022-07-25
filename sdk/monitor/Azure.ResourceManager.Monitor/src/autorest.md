@@ -153,6 +153,7 @@ rename-mapping:
   NotificationRequestBody: NotificationContent
   Context: NotificationContext
   TestNotificationDetailsResponse: NotificationStatus
+  ActionDetail: NotificationActionDetail
   TimeWindow: MonitorTimeWindow
   ArmRoleReceiver: MonitorArmRoleReceiver
   AutomationRunbookReceiver: MonitorAutomationRunbookReceiver
@@ -176,6 +177,9 @@ rename-mapping:
   TimeAggregationOperator: MonitorTimeAggregationOperator
   TimeAggregationType: MonitorTimeAggregationType
   ReceiverStatus: MonitorReceiverStatus
+  EnableRequest: ActionGroupEnableContent
+  OperationStatus: MonitorPrivateLinkScopeOperationStatus
+  QueryType: MonitorSourceQueryType
 
 directive:
   # nullable issue resolution

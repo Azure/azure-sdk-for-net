@@ -8,21 +8,21 @@
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> The action detail. </summary>
-    public partial class ActionDetail
+    public partial class NotificationActionDetail
     {
-        /// <summary> Initializes a new instance of ActionDetail. </summary>
-        internal ActionDetail()
+        /// <summary> Initializes a new instance of NotificationActionDetail. </summary>
+        internal NotificationActionDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of ActionDetail. </summary>
+        /// <summary> Initializes a new instance of NotificationActionDetail. </summary>
         /// <param name="mechanismType"> The mechanism type. </param>
         /// <param name="name"> The name of the action. </param>
         /// <param name="status"> The status of the action. </param>
         /// <param name="subState"> The substatus of the action. </param>
         /// <param name="sendTime"> The send time. </param>
         /// <param name="detail"> The detail of the friendly error message. </param>
-        internal ActionDetail(string mechanismType, string name, string status, string subState, string sendTime, string detail)
+        internal NotificationActionDetail(string mechanismType, string name, string status, string subState, string sendTime, string detail)
         {
             MechanismType = mechanismType;
             Name = name;

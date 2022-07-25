@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class OperationStatus
+    public partial class MonitorPrivateLinkScopeOperationStatus
     {
-        internal static OperationStatus DeserializeOperationStatus(JsonElement element)
+        internal static MonitorPrivateLinkScopeOperationStatus DeserializeMonitorPrivateLinkScopeOperationStatus(JsonElement element)
         {
             Optional<string> id = default;
             Optional<string> name = default;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new OperationStatus(id.Value, name.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), status.Value, error.Value);
+            return new MonitorPrivateLinkScopeOperationStatus(id.Value, name.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), status.Value, error.Value);
         }
     }
 }

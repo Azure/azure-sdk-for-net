@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="content"> The receiver to re-enable. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response> EnableReceiverAsync(EnableContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> EnableReceiverAsync(ActionGroupEnableContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="content"> The receiver to re-enable. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response EnableReceiver(EnableContent content, CancellationToken cancellationToken = default)
+        public virtual Response EnableReceiver(ActionGroupEnableContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 

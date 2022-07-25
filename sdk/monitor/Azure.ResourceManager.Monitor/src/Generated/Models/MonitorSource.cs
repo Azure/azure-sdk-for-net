@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="authorizedResources"> List of  Resource referred into query. </param>
         /// <param name="dataSourceId"> The resource uri over which log search query is to be run. </param>
         /// <param name="queryType"> Set value to &apos;ResultCount&apos; . </param>
-        internal MonitorSource(string query, IList<string> authorizedResources, ResourceIdentifier dataSourceId, QueryType? queryType)
+        internal MonitorSource(string query, IList<string> authorizedResources, ResourceIdentifier dataSourceId, MonitorSourceQueryType? queryType)
         {
             Query = query;
             AuthorizedResources = authorizedResources;
@@ -48,6 +48,6 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> The resource uri over which log search query is to be run. </summary>
         public ResourceIdentifier DataSourceId { get; set; }
         /// <summary> Set value to &apos;ResultCount&apos; . </summary>
-        public QueryType? QueryType { get; set; }
+        public MonitorSourceQueryType? QueryType { get; set; }
     }
 }

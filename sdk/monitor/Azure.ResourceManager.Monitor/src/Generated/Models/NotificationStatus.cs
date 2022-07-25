@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             State = state;
-            ActionDetails = new ChangeTrackingList<ActionDetail>();
+            ActionDetails = new ChangeTrackingList<NotificationActionDetail>();
         }
 
         /// <summary> Initializes a new instance of NotificationStatus. </summary>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="completedTime"> The completed time. </param>
         /// <param name="createdTime"> The created time. </param>
         /// <param name="actionDetails"> The list of action detail. </param>
-        internal NotificationStatus(NotificationContext context, string state, string completedTime, string createdTime, IReadOnlyList<ActionDetail> actionDetails)
+        internal NotificationStatus(NotificationContext context, string state, string completedTime, string createdTime, IReadOnlyList<NotificationActionDetail> actionDetails)
         {
             Context = context;
             State = state;
@@ -52,6 +52,6 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> The created time. </summary>
         public string CreatedTime { get; }
         /// <summary> The list of action detail. </summary>
-        public IReadOnlyList<ActionDetail> ActionDetails { get; }
+        public IReadOnlyList<NotificationActionDetail> ActionDetails { get; }
     }
 }
