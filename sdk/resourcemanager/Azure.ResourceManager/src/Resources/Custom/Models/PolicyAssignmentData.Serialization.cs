@@ -22,7 +22,12 @@ namespace Azure.ResourceManager.Resources
                 writer.WritePropertyName("location");
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsDefined(ManagedIdentity))
+            if (Optional.IsDefined(_identity))
+            {
+                writer.WritePropertyName("identity");
+                JsonSerializer.Serialize(writer, _identity);
+            }
+            else if (Optional.IsDefined(ManagedIdentity))
             {
                 writer.WritePropertyName("identity");
                 JsonSerializer.Serialize(writer, ManagedIdentity);

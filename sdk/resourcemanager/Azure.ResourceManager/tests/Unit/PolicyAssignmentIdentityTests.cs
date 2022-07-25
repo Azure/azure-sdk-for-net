@@ -1,3 +1,4 @@
+using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
@@ -9,56 +10,20 @@ namespace Azure.ResourceManager.Tests
     public class PolicyAssignmentIdentityTests
     {
         [TestCase]
-        public void TestSetManagedIdentityWhenNull()
+        public void TestSerializeWithNullIdentity()
         {
             PolicyAssignmentData data = new PolicyAssignmentData
             {
                 DisplayName = $"Test My PolicyAssignment",
                 PolicyDefinitionId = "/providers/Microsoft.Authorization/policyDefinitions/06a78e20-9358-41c9-923c-fb736d382a4d",
             };
-            Assert.IsNull(data.ManagedIdentity);
-            Assert.IsNull(data.Identity);
 
-            data.ManagedIdentity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned);
-            Assert.AreEqual(ManagedServiceIdentityType.SystemAssigned, data.ManagedIdentity.ManagedServiceIdentityType);
-            Assert.AreEqual(SystemAssignedServiceIdentityType.SystemAssigned, data.Identity.SystemAssignedServiceIdentityType);
+            string expected = "{\"properties\":{\"displayName\":\"Test My PolicyAssignment\",\"policyDefinitionId\":\"/providers/Microsoft.Authorization/policyDefinitions/06a78e20-9358-41c9-923c-fb736d382a4d\"}}";
+            JsonAsserts.AssertSerialization(expected, data);
         }
 
         [TestCase]
-        public void TestSetIdentityWhenNull()
-        {
-            PolicyAssignmentData data = new PolicyAssignmentData
-            {
-                DisplayName = $"Test My PolicyAssignment",
-                PolicyDefinitionId = "/providers/Microsoft.Authorization/policyDefinitions/06a78e20-9358-41c9-923c-fb736d382a4d",
-            };
-            Assert.IsNull(data.ManagedIdentity);
-            Assert.IsNull(data.Identity);
-
-            data.Identity = new SystemAssignedServiceIdentity(SystemAssignedServiceIdentityType.None);
-            Assert.AreEqual(SystemAssignedServiceIdentityType.None, data.Identity.SystemAssignedServiceIdentityType);
-            Assert.AreEqual(ManagedServiceIdentityType.None, data.ManagedIdentity.ManagedServiceIdentityType);
-        }
-
-        [TestCase]
-        public void TestSetManagedIdentityWhenManagedIdentitySet()
-        {
-            PolicyAssignmentData data = new PolicyAssignmentData
-            {
-                DisplayName = $"Test My PolicyAssignment",
-                PolicyDefinitionId = "/providers/Microsoft.Authorization/policyDefinitions/06a78e20-9358-41c9-923c-fb736d382a4d",
-                ManagedIdentity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
-            };
-            Assert.AreEqual(SystemAssignedServiceIdentityType.SystemAssigned, data.Identity.SystemAssignedServiceIdentityType);
-            Assert.AreEqual(ManagedServiceIdentityType.SystemAssigned, data.ManagedIdentity.ManagedServiceIdentityType);
-
-            data.ManagedIdentity = new ManagedServiceIdentity(ManagedServiceIdentityType.None);
-            Assert.AreEqual(SystemAssignedServiceIdentityType.None, data.Identity.SystemAssignedServiceIdentityType);
-            Assert.AreEqual(ManagedServiceIdentityType.None, data.ManagedIdentity.ManagedServiceIdentityType);
-        }
-
-        [TestCase]
-        public void TestSetIdentityWhenIdentitySet()
+        public void TestSerializeWithIdentity()
         {
             PolicyAssignmentData data = new PolicyAssignmentData
             {
@@ -66,81 +31,63 @@ namespace Azure.ResourceManager.Tests
                 PolicyDefinitionId = "/providers/Microsoft.Authorization/policyDefinitions/06a78e20-9358-41c9-923c-fb736d382a4d",
                 Identity = new SystemAssignedServiceIdentity(SystemAssignedServiceIdentityType.SystemAssigned)
             };
-            Assert.AreEqual(SystemAssignedServiceIdentityType.SystemAssigned, data.Identity.SystemAssignedServiceIdentityType);
-            Assert.AreEqual(ManagedServiceIdentityType.SystemAssigned, data.ManagedIdentity.ManagedServiceIdentityType);
+
+            string expectedSystemAssigned = "{\"identity\":{\"type\":\"SystemAssigned\"},\"properties\":{\"displayName\":\"Test My PolicyAssignment\",\"policyDefinitionId\":\"/providers/Microsoft.Authorization/policyDefinitions/06a78e20-9358-41c9-923c-fb736d382a4d\"}}";
+            JsonAsserts.AssertSerialization(expectedSystemAssigned, data);
 
             data.Identity = new SystemAssignedServiceIdentity(SystemAssignedServiceIdentityType.None);
-            Assert.AreEqual(SystemAssignedServiceIdentityType.None, data.Identity.SystemAssignedServiceIdentityType);
-            Assert.AreEqual(ManagedServiceIdentityType.None, data.ManagedIdentity.ManagedServiceIdentityType);
+            string expectedNone = "{\"identity\":{\"type\":\"None\"},\"properties\":{\"displayName\":\"Test My PolicyAssignment\",\"policyDefinitionId\":\"/providers/Microsoft.Authorization/policyDefinitions/06a78e20-9358-41c9-923c-fb736d382a4d\"}}";
+            JsonAsserts.AssertSerialization(expectedNone, data);
+
+            data.Identity.SystemAssignedServiceIdentityType = SystemAssignedServiceIdentityType.SystemAssigned;
+            JsonAsserts.AssertSerialization(expectedSystemAssigned, data);
         }
 
         [TestCase]
-        public void TestSetManagedIdentityWhenIdentitySet()
+        public void TestSerializeWithManagedIdentity()
         {
             PolicyAssignmentData data = new PolicyAssignmentData
             {
                 DisplayName = $"Test My PolicyAssignment",
                 PolicyDefinitionId = "/providers/Microsoft.Authorization/policyDefinitions/06a78e20-9358-41c9-923c-fb736d382a4d",
-                Identity = new SystemAssignedServiceIdentity(SystemAssignedServiceIdentityType.SystemAssigned)
+                ManagedIdentity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
             };
-            Assert.AreEqual(SystemAssignedServiceIdentityType.SystemAssigned, data.Identity.SystemAssignedServiceIdentityType);
-            Assert.AreEqual(ManagedServiceIdentityType.SystemAssigned, data.ManagedIdentity.ManagedServiceIdentityType);
+
+            string expectedSystemAssigned = "{\"identity\":{\"type\":\"SystemAssigned\"},\"properties\":{\"displayName\":\"Test My PolicyAssignment\",\"policyDefinitionId\":\"/providers/Microsoft.Authorization/policyDefinitions/06a78e20-9358-41c9-923c-fb736d382a4d\"}}";
+            JsonAsserts.AssertSerialization(expectedSystemAssigned, data);
 
             data.ManagedIdentity = new ManagedServiceIdentity(ManagedServiceIdentityType.None);
-            Assert.AreEqual(SystemAssignedServiceIdentityType.None, data.Identity.SystemAssignedServiceIdentityType);
-            Assert.AreEqual(ManagedServiceIdentityType.None, data.ManagedIdentity.ManagedServiceIdentityType);
+            string expectedNone = "{\"identity\":{\"type\":\"None\"},\"properties\":{\"displayName\":\"Test My PolicyAssignment\",\"policyDefinitionId\":\"/providers/Microsoft.Authorization/policyDefinitions/06a78e20-9358-41c9-923c-fb736d382a4d\"}}";
+            JsonAsserts.AssertSerialization(expectedNone, data);
+
+            data.ManagedIdentity.ManagedServiceIdentityType = ManagedServiceIdentityType.SystemAssigned;
+            JsonAsserts.AssertSerialization(expectedSystemAssigned, data);
         }
 
         [TestCase]
-        public void TestSetIdentityWhenManagedIdentitySet()
+        public void TestDeserializeThenSerializeWithIdentity()
         {
-            PolicyAssignmentData data = new PolicyAssignmentData
-            {
-                DisplayName = $"Test My PolicyAssignment",
-                PolicyDefinitionId = "/providers/Microsoft.Authorization/policyDefinitions/06a78e20-9358-41c9-923c-fb736d382a4d",
-                ManagedIdentity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
-            };
+            string json = "{\"identity\":{\"type\":\"SystemAssigned\"},\"properties\":{\"displayName\":\"Test My PolicyAssignment\",\"policyDefinitionId\":\"/providers/Microsoft.Authorization/policyDefinitions/06a78e20-9358-41c9-923c-fb736d382a4d\"}}";
+            JsonElement element = JsonDocument.Parse(json).RootElement;
+            PolicyAssignmentData data = PolicyAssignmentData.DeserializePolicyAssignmentData(element);
             Assert.AreEqual(SystemAssignedServiceIdentityType.SystemAssigned, data.Identity.SystemAssignedServiceIdentityType);
-            Assert.AreEqual(ManagedServiceIdentityType.SystemAssigned, data.ManagedIdentity.ManagedServiceIdentityType);
 
-            data.Identity = new SystemAssignedServiceIdentity(SystemAssignedServiceIdentityType.None);
-            Assert.AreEqual(SystemAssignedServiceIdentityType.None, data.Identity.SystemAssignedServiceIdentityType);
-            Assert.AreEqual(ManagedServiceIdentityType.None, data.ManagedIdentity.ManagedServiceIdentityType);
+            data.Identity.SystemAssignedServiceIdentityType = SystemAssignedServiceIdentityType.None;
+            string expectedNone = "{\"identity\":{\"type\":\"None\"},\"properties\":{\"displayName\":\"Test My PolicyAssignment\",\"policyDefinitionId\":\"/providers/Microsoft.Authorization/policyDefinitions/06a78e20-9358-41c9-923c-fb736d382a4d\"}}";
+            JsonAsserts.AssertSerialization(expectedNone, data);
         }
 
         [TestCase]
-        public void TestSetManagedIdentityByType()
+        public void TestDeserializeThenSerializeWithManagedIdentity()
         {
-            PolicyAssignmentData data = new PolicyAssignmentData
-            {
-                DisplayName = $"Test My PolicyAssignment",
-                PolicyDefinitionId = "/providers/Microsoft.Authorization/policyDefinitions/06a78e20-9358-41c9-923c-fb736d382a4d",
-                ManagedIdentity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
-            };
-            Assert.AreEqual(SystemAssignedServiceIdentityType.SystemAssigned, data.Identity.SystemAssignedServiceIdentityType);
+            string json = "{\"identity\":{\"type\":\"SystemAssigned\"},\"properties\":{\"displayName\":\"Test My PolicyAssignment\",\"policyDefinitionId\":\"/providers/Microsoft.Authorization/policyDefinitions/06a78e20-9358-41c9-923c-fb736d382a4d\"}}";
+            JsonElement element = JsonDocument.Parse(json).RootElement;
+            PolicyAssignmentData data = PolicyAssignmentData.DeserializePolicyAssignmentData(element);
             Assert.AreEqual(ManagedServiceIdentityType.SystemAssigned, data.ManagedIdentity.ManagedServiceIdentityType);
 
             data.ManagedIdentity.ManagedServiceIdentityType = ManagedServiceIdentityType.None;
-            Assert.AreEqual(SystemAssignedServiceIdentityType.None, data.Identity.SystemAssignedServiceIdentityType);
-            Assert.AreEqual(ManagedServiceIdentityType.None, data.ManagedIdentity.ManagedServiceIdentityType);
-        }
-
-        [TestCase]
-        public void TestSetIdentityByType()
-        {
-            PolicyAssignmentData data = new PolicyAssignmentData
-            {
-                DisplayName = $"Test My PolicyAssignment",
-                PolicyDefinitionId = "/providers/Microsoft.Authorization/policyDefinitions/06a78e20-9358-41c9-923c-fb736d382a4d",
-                ManagedIdentity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
-            };
-            Assert.AreEqual(SystemAssignedServiceIdentityType.SystemAssigned, data.Identity.SystemAssignedServiceIdentityType);
-            Assert.AreEqual(ManagedServiceIdentityType.SystemAssigned, data.ManagedIdentity.ManagedServiceIdentityType);
-
-            data.Identity.SystemAssignedServiceIdentityType = SystemAssignedServiceIdentityType.None;
-            // won't pass
-            // Assert.AreEqual(SystemAssignedServiceIdentityType.None, data.Identity.SystemAssignedServiceIdentityType);
-            // Assert.AreEqual(ManagedServiceIdentityType.None, data.ManagedIdentity.ManagedServiceIdentityType);
+            string expectedNone = "{\"identity\":{\"type\":\"None\"},\"properties\":{\"displayName\":\"Test My PolicyAssignment\",\"policyDefinitionId\":\"/providers/Microsoft.Authorization/policyDefinitions/06a78e20-9358-41c9-923c-fb736d382a4d\"}}";
+            JsonAsserts.AssertSerialization(expectedNone, data);
         }
     }
 }
