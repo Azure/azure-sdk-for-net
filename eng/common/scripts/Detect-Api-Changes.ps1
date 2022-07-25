@@ -88,7 +88,6 @@ function Log-Input-Params()
     Write-Host "Language: $($Language)"
     Write-Host "Commit SHA: $($CommitSha)"
     Write-Host "Repo Name: $($RepoFullName)"
-    Write-Host "Package Name: $($PackageName)"
 }
 
 Log-Input-Params
