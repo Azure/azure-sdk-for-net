@@ -18,7 +18,6 @@ Param (
   [string] $TargetBranch = ("origin/${env:SYSTEM_PULLREQUEST_TARGETBRANCH}" -replace "refs/heads/")
 )
 
-Set-StrictMode -version 3
 . (Join-Path $PSScriptRoot common.ps1)
 
 # Submit API review request and return status whether current revision is approved or pending or failed to create review
