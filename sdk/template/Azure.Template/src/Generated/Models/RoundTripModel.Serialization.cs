@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -16,91 +15,31 @@ namespace Azure.Template.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("requiredStringStringMap");
-            writer.WriteStartObject();
-            foreach (var item in RequiredStringMap)
-            {
-                writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value);
-            }
-            writer.WriteEndObject();
-            writer.WritePropertyName("requiredStringIntMap");
-            writer.WriteStartObject();
-            foreach (var item in RequiredStringIntMap)
-            {
-                writer.WritePropertyName(item.Key);
-                writer.WriteNumberValue(item.Value);
-            }
-            writer.WriteEndObject();
-            writer.WritePropertyName("requiredIntStringMap");
-            writer.WriteStartObject();
-            foreach (var item in RequiredIntStringMap)
-            {
-                writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value);
-            }
-            writer.WriteEndObject();
-            writer.WritePropertyName("requiredIntIntMap");
-            writer.WriteStartObject();
-            foreach (var item in RequiredIntMap)
-            {
-                writer.WritePropertyName(item.Key);
-                writer.WriteNumberValue(item.Value);
-            }
-            writer.WriteEndObject();
+            writer.WritePropertyName("Day");
+            writer.WriteStringValue(Day.ToSerialString());
+            writer.WritePropertyName("Language");
+            writer.WriteStringValue(Language.ToString());
             writer.WriteEndObject();
         }
 
         internal static RoundTripModel DeserializeRoundTripModel(JsonElement element)
         {
-            IDictionary<string, string> requiredStringStringMap = default;
-            IDictionary<string, int> requiredStringIntMap = default;
-            IDictionary<string, string> requiredIntStringMap = default;
-            IDictionary<string, int> requiredIntIntMap = default;
+            DayOfTheWeek day = default;
+            TranslationLanguage language = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("requiredStringStringMap"))
+                if (property.NameEquals("Day"))
                 {
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
-                    }
-                    requiredStringStringMap = dictionary;
+                    day = property.Value.GetString().ToDayOfTheWeek();
                     continue;
                 }
-                if (property.NameEquals("requiredStringIntMap"))
+                if (property.NameEquals("Language"))
                 {
-                    Dictionary<string, int> dictionary = new Dictionary<string, int>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetInt32());
-                    }
-                    requiredStringIntMap = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("requiredIntStringMap"))
-                {
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
-                    }
-                    requiredIntStringMap = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("requiredIntIntMap"))
-                {
-                    Dictionary<string, int> dictionary = new Dictionary<string, int>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetInt32());
-                    }
-                    requiredIntIntMap = dictionary;
+                    language = new TranslationLanguage(property.Value.GetString());
                     continue;
                 }
             }
-            return new RoundTripModel(requiredStringStringMap, requiredStringIntMap, requiredIntStringMap, requiredIntIntMap);
+            return new RoundTripModel(day, language);
         }
     }
 }

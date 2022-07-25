@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,54 +14,22 @@ namespace Azure.Template.Models
     {
         internal static OutputModel DeserializeOutputModel(JsonElement element)
         {
-            IReadOnlyDictionary<string, string> requiredStringStringMap = default;
-            IReadOnlyDictionary<string, int> requiredStringIntMap = default;
-            IReadOnlyDictionary<string, string> requiredIntStringMap = default;
-            IReadOnlyDictionary<string, int> requiredIntIntMap = default;
+            DayOfTheWeek day = default;
+            TranslationLanguage language = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("requiredStringStringMap"))
+                if (property.NameEquals("Day"))
                 {
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
-                    }
-                    requiredStringStringMap = dictionary;
+                    day = property.Value.GetString().ToDayOfTheWeek();
                     continue;
                 }
-                if (property.NameEquals("requiredStringIntMap"))
+                if (property.NameEquals("Language"))
                 {
-                    Dictionary<string, int> dictionary = new Dictionary<string, int>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetInt32());
-                    }
-                    requiredStringIntMap = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("requiredIntStringMap"))
-                {
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
-                    }
-                    requiredIntStringMap = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("requiredIntIntMap"))
-                {
-                    Dictionary<string, int> dictionary = new Dictionary<string, int>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetInt32());
-                    }
-                    requiredIntIntMap = dictionary;
+                    language = new TranslationLanguage(property.Value.GetString());
                     continue;
                 }
             }
-            return new OutputModel(requiredStringStringMap, requiredStringIntMap, requiredIntStringMap, requiredIntIntMap);
+            return new OutputModel(day, language);
         }
     }
 }

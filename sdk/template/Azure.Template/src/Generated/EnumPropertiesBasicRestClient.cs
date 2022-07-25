@@ -16,7 +16,7 @@ using Azure.Template.Models;
 
 namespace Azure.Template
 {
-    internal partial class MapPropertiesBasicRestClient
+    internal partial class EnumPropertiesBasicRestClient
     {
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
@@ -24,19 +24,19 @@ namespace Azure.Template
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        /// <summary> Initializes a new instance of MapPropertiesBasicRestClient. </summary>
+        /// <summary> Initializes a new instance of EnumPropertiesBasicRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/> or <paramref name="pipeline"/> is null. </exception>
-        public MapPropertiesBasicRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null)
+        public EnumPropertiesBasicRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null)
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("http://localhost:3000");
         }
 
-        internal HttpMessage CreateSendMapModelRequest(InputModel input)
+        internal HttpMessage CreateSendEnumPropertyModelRequest(InputModel input)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -56,14 +56,14 @@ namespace Azure.Template
         /// <param name="input"> The InputModel to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public async Task<Response> SendMapModelAsync(InputModel input, CancellationToken cancellationToken = default)
+        public async Task<Response> SendEnumPropertyModelAsync(InputModel input, CancellationToken cancellationToken = default)
         {
             if (input == null)
             {
                 throw new ArgumentNullException(nameof(input));
             }
 
-            using var message = CreateSendMapModelRequest(input);
+            using var message = CreateSendEnumPropertyModelRequest(input);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -77,14 +77,14 @@ namespace Azure.Template
         /// <param name="input"> The InputModel to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public Response SendMapModel(InputModel input, CancellationToken cancellationToken = default)
+        public Response SendEnumPropertyModel(InputModel input, CancellationToken cancellationToken = default)
         {
             if (input == null)
             {
                 throw new ArgumentNullException(nameof(input));
             }
 
-            using var message = CreateSendMapModelRequest(input);
+            using var message = CreateSendEnumPropertyModelRequest(input);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -95,7 +95,7 @@ namespace Azure.Template
             }
         }
 
-        internal HttpMessage CreateGetMapModelRequest()
+        internal HttpMessage CreateGetEnumPropertModelRequest()
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -109,9 +109,9 @@ namespace Azure.Template
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<OutputModel>> GetMapModelAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<OutputModel>> GetEnumPropertModelAsync(CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetMapModelRequest();
+            using var message = CreateGetEnumPropertModelRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -128,9 +128,9 @@ namespace Azure.Template
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<OutputModel> GetMapModel(CancellationToken cancellationToken = default)
+        public Response<OutputModel> GetEnumPropertModel(CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetMapModelRequest();
+            using var message = CreateGetEnumPropertModelRequest();
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -146,7 +146,7 @@ namespace Azure.Template
             }
         }
 
-        internal HttpMessage CreateSetMapModelRequest(RoundTripModel input)
+        internal HttpMessage CreateSetEnumPropertModelRequest(RoundTripModel input)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -166,14 +166,14 @@ namespace Azure.Template
         /// <param name="input"> The RoundTripModel to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public async Task<Response<RoundTripModel>> SetMapModelAsync(RoundTripModel input, CancellationToken cancellationToken = default)
+        public async Task<Response<RoundTripModel>> SetEnumPropertModelAsync(RoundTripModel input, CancellationToken cancellationToken = default)
         {
             if (input == null)
             {
                 throw new ArgumentNullException(nameof(input));
             }
 
-            using var message = CreateSetMapModelRequest(input);
+            using var message = CreateSetEnumPropertModelRequest(input);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -192,14 +192,14 @@ namespace Azure.Template
         /// <param name="input"> The RoundTripModel to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public Response<RoundTripModel> SetMapModel(RoundTripModel input, CancellationToken cancellationToken = default)
+        public Response<RoundTripModel> SetEnumPropertModel(RoundTripModel input, CancellationToken cancellationToken = default)
         {
             if (input == null)
             {
                 throw new ArgumentNullException(nameof(input));
             }
 
-            using var message = CreateSetMapModelRequest(input);
+            using var message = CreateSetEnumPropertModelRequest(input);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

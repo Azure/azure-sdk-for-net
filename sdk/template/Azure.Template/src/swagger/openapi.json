@@ -1,9 +1,9 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "MapPropertiesBasicClient",
+    "title": "EnumPropertiesBasicClient",
     "version": "1.0.0",
-    "description": "Illustrates input, output, and round-trip models with required map type properties.",
+    "description": "Illustrates input, output, and round-trip models with required enum type properties.",
     "x-cadl-generated": [
       {
         "emitter": "@azure-tools/cadl-autorest"
@@ -24,7 +24,7 @@
   "paths": {
     "/models": {
       "post": {
-        "operationId": "MapPropertiesBasic_SendMapModel",
+        "operationId": "EnumPropertiesBasic_SendEnumPropertyModel",
         "parameters": [
           {
             "name": "input",
@@ -48,7 +48,7 @@
         }
       },
       "get": {
-        "operationId": "MapPropertiesBasic_GetMapModel",
+        "operationId": "EnumPropertiesBasic_GetEnumPropertModel",
         "parameters": [],
         "responses": {
           "200": {
@@ -66,7 +66,7 @@
         }
       },
       "put": {
-        "operationId": "MapPropertiesBasic_SetMapModel",
+        "operationId": "EnumPropertiesBasic_SetEnumPropertModel",
         "parameters": [
           {
             "name": "input",
@@ -156,131 +156,142 @@
         "code"
       ]
     },
+    "DayOfTheWeek": {
+      "type": "string",
+      "description": "Represents the days of the week using a standard, non-string enum.",
+      "enum": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday"
+      ],
+      "x-ms-enum": {
+        "name": "DayOfTheWeek",
+        "modelAsString": false,
+        "values": [
+          {
+            "name": "Monday",
+            "value": "Monday"
+          },
+          {
+            "name": "Tuesday",
+            "value": "Tuesday"
+          },
+          {
+            "name": "Wednesday",
+            "value": "Wednesday",
+            "description": "Wednesday is documented to test this case."
+          },
+          {
+            "name": "Thursday",
+            "value": "Thursday"
+          },
+          {
+            "name": "Friday",
+            "value": "Friday"
+          },
+          {
+            "name": "Saturday",
+            "value": "Saturday"
+          },
+          {
+            "name": "Sunday",
+            "value": "Sunday"
+          }
+        ]
+      }
+    },
     "InputModel": {
       "type": "object",
       "properties": {
-        "requiredStringStringMap": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "string"
-          },
-          "description": "Required map from string to string."
+        "Day": {
+          "$ref": "#/definitions/DayOfTheWeek",
+          "description": "Required standard enum value."
         },
-        "requiredStringIntMap": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "description": "Required map from string to int."
-        },
-        "requiredIntStringMap": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "string"
-          },
-          "description": "Required map from int to string."
-        },
-        "requiredIntIntMap": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "description": "Required map from int to int."
+        "Language": {
+          "$ref": "#/definitions/TranslationLanguage",
+          "description": "Required string enum value."
         }
       },
-      "description": "Input model with map properties",
+      "description": "Input model with enum properties.",
       "required": [
-        "requiredStringStringMap",
-        "requiredStringIntMap",
-        "requiredIntStringMap",
-        "requiredIntIntMap"
+        "Day",
+        "Language"
       ]
     },
     "OutputModel": {
       "type": "object",
       "properties": {
-        "requiredStringStringMap": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "string"
-          },
-          "description": "Required map from string to string."
+        "Day": {
+          "$ref": "#/definitions/DayOfTheWeek",
+          "description": "Required standard enum value."
         },
-        "requiredStringIntMap": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "description": "Required map from string to int."
-        },
-        "requiredIntStringMap": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "string"
-          },
-          "description": "Required map from int to string."
-        },
-        "requiredIntIntMap": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "description": "Required map from int to int."
+        "Language": {
+          "$ref": "#/definitions/TranslationLanguage",
+          "description": "Required string enum value."
         }
       },
-      "description": "Output model with map properties",
+      "description": "Output model with enum properties",
       "required": [
-        "requiredStringStringMap",
-        "requiredStringIntMap",
-        "requiredIntStringMap",
-        "requiredIntIntMap"
+        "Day",
+        "Language"
       ]
     },
     "RoundTripModel": {
       "type": "object",
       "properties": {
-        "requiredStringStringMap": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "string"
-          },
-          "description": "Required map from string to string."
+        "Day": {
+          "$ref": "#/definitions/DayOfTheWeek",
+          "description": "Required standard enum value."
         },
-        "requiredStringIntMap": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "description": "Required map from string to int."
-        },
-        "requiredIntStringMap": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "string"
-          },
-          "description": "Required map from int to string."
-        },
-        "requiredIntIntMap": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "description": "Required map from int to int."
+        "Language": {
+          "$ref": "#/definitions/TranslationLanguage",
+          "description": "Required string enum value."
         }
       },
-      "description": "Round-trip model with map properties",
+      "description": "Round-trip model with enum properties",
       "required": [
-        "requiredStringStringMap",
-        "requiredStringIntMap",
-        "requiredIntStringMap",
-        "requiredIntIntMap"
+        "Day",
+        "Language"
       ]
+    },
+    "TranslationLanguage": {
+      "type": "string",
+      "description": "The language to translate the input text into.",
+      "enum": [
+        "English",
+        "Spanish",
+        "Mandarin",
+        "Undocumented"
+      ],
+      "x-ms-enum": {
+        "name": "TranslationLanguage",
+        "modelAsString": true,
+        "values": [
+          {
+            "name": "English",
+            "value": "English",
+            "description": "Translate to English"
+          },
+          {
+            "name": "Spanish",
+            "value": "Spanish",
+            "description": "Translate to Spanish"
+          },
+          {
+            "name": "Mandarin",
+            "value": "Mandarin",
+            "description": "Translate to Mandarin"
+          },
+          {
+            "name": "Undocumented",
+            "value": "Undocumented"
+          }
+        ]
+      }
     }
   },
   "parameters": {}

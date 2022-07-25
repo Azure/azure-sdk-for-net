@@ -15,38 +15,10 @@ namespace Azure.Template.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("requiredStringStringMap");
-            writer.WriteStartObject();
-            foreach (var item in RequiredStringStringMap)
-            {
-                writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value);
-            }
-            writer.WriteEndObject();
-            writer.WritePropertyName("requiredStringIntMap");
-            writer.WriteStartObject();
-            foreach (var item in RequiredStringIntMap)
-            {
-                writer.WritePropertyName(item.Key);
-                writer.WriteNumberValue(item.Value);
-            }
-            writer.WriteEndObject();
-            writer.WritePropertyName("requiredIntStringMap");
-            writer.WriteStartObject();
-            foreach (var item in RequiredIntStringMap)
-            {
-                writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value);
-            }
-            writer.WriteEndObject();
-            writer.WritePropertyName("requiredIntIntMap");
-            writer.WriteStartObject();
-            foreach (var item in RequiredIntIntMap)
-            {
-                writer.WritePropertyName(item.Key);
-                writer.WriteNumberValue(item.Value);
-            }
-            writer.WriteEndObject();
+            writer.WritePropertyName("Day");
+            writer.WriteStringValue(Day.ToSerialString());
+            writer.WritePropertyName("Language");
+            writer.WriteStringValue(Language.ToString());
             writer.WriteEndObject();
         }
     }

@@ -5,41 +5,23 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using Azure.Core;
-
 namespace Azure.Template.Models
 {
-    /// <summary> Input model with map properties. </summary>
+    /// <summary> Input model with enum properties. </summary>
     public partial class InputModel
     {
         /// <summary> Initializes a new instance of InputModel. </summary>
-        /// <param name="requiredStringStringMap"> Required map from string to string. </param>
-        /// <param name="requiredStringIntMap"> Required map from string to int. </param>
-        /// <param name="requiredIntStringMap"> Required map from int to string. </param>
-        /// <param name="requiredIntIntMap"> Required map from int to int. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="requiredStringStringMap"/>, <paramref name="requiredStringIntMap"/>, <paramref name="requiredIntStringMap"/> or <paramref name="requiredIntIntMap"/> is null. </exception>
-        public InputModel(IDictionary<string, string> requiredStringStringMap, IDictionary<string, int> requiredStringIntMap, IDictionary<string, string> requiredIntStringMap, IDictionary<string, int> requiredIntIntMap)
+        /// <param name="day"> Required standard enum value. </param>
+        /// <param name="language"> Required string enum value. </param>
+        public InputModel(DayOfTheWeek day, TranslationLanguage language)
         {
-            Argument.AssertNotNull(requiredStringStringMap, nameof(requiredStringStringMap));
-            Argument.AssertNotNull(requiredStringIntMap, nameof(requiredStringIntMap));
-            Argument.AssertNotNull(requiredIntStringMap, nameof(requiredIntStringMap));
-            Argument.AssertNotNull(requiredIntIntMap, nameof(requiredIntIntMap));
-
-            RequiredStringStringMap = requiredStringStringMap;
-            RequiredStringIntMap = requiredStringIntMap;
-            RequiredIntStringMap = requiredIntStringMap;
-            RequiredIntIntMap = requiredIntIntMap;
+            Day = day;
+            Language = language;
         }
 
-        /// <summary> Required map from string to string. </summary>
-        public IDictionary<string, string> RequiredStringStringMap { get; }
-        /// <summary> Required map from string to int. </summary>
-        public IDictionary<string, int> RequiredStringIntMap { get; }
-        /// <summary> Required map from int to string. </summary>
-        public IDictionary<string, string> RequiredIntStringMap { get; }
-        /// <summary> Required map from int to int. </summary>
-        public IDictionary<string, int> RequiredIntIntMap { get; }
+        /// <summary> Required standard enum value. </summary>
+        public DayOfTheWeek Day { get; }
+        /// <summary> Required string enum value. </summary>
+        public TranslationLanguage Language { get; }
     }
 }
