@@ -190,7 +190,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seannse.blob.core.windows.net/test-filesystem-02986d06-5811-183b-3900-71f089edd5de/test-directory-4c334a14-c167-0312-04a2-11cb18fc3b07/test-directory-ae6a8f21-ecfa-ba52-bcbe-2985e23198e9/test-directory-eeeb8ca3-f5ad-7892-8756-eb631ddfd6dc/test-directory-5b09f999-01ac-e6af-525b-085f0a30a6bd?sv=2021-10-04&st=2021-02-19T17%3A58%3A14Z&se=2021-02-19T19%3A58%3A14Z&sr=d&sp=racwdlmeop&sdd=4&sig=Sanitized",
+      "RequestUri": "https://seannse.blob.core.windows.net/test-filesystem-02986d06-5811-183b-3900-71f089edd5de/test-directory-4c334a14-c167-0312-04a2-11cb18fc3b07/test-directory-ae6a8f21-ecfa-ba52-bcbe-2985e23198e9/test-directory-eeeb8ca3-f5ad-7892-8756-eb631ddfd6dc/test-directory-5b09f999-01ac-e6af-525b-085f0a30a6bd?sv=2021-12-02&st=2021-02-19T17%3A58%3A14Z&se=2021-02-19T19%3A58%3A14Z&sr=d&sp=racwdlmeop&sdd=4&sig=Sanitized",
       "RequestMethod": "HEAD",
       "RequestHeaders": {
         "Accept": "application/xml",

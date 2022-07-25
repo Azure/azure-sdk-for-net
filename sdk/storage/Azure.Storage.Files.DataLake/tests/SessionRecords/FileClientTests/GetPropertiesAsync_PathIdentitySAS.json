@@ -133,7 +133,7 @@
       "ResponseBody": "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><UserDelegationKey><SignedOid>c4f48289-bb84-4086-b250-6f94a8f64cee</SignedOid><SignedTid>72f988bf-86f1-41af-91ab-2d7cd011db47</SignedTid><SignedStart>2021-02-19T19:09:40Z</SignedStart><SignedExpiry>2021-02-19T20:09:41Z</SignedExpiry><SignedService>b</SignedService><SignedVersion>2020-06-12</SignedVersion><Value>lyuWdvl4YFg6eYo/TBrGv6wugFjV5AlzgV2nbQkzbFA=</Value></UserDelegationKey>"
     },
     {
-      "RequestUri": "https://seannse.blob.core.windows.net/test-filesystem-c006656e-4713-d585-912d-cf36836d3fdf/test-directory-dda9b75c-83e6-3d23-de09-c57bc63433e0/test-file-6fb22e1b-e046-6e1f-a540-287ff31d4ab4?skoid=c4f48289-bb84-4086-b250-6f94a8f64cee&sktid=72f988bf-86f1-41af-91ab-2d7cd011db47&skt=2021-02-19T19%3A09%3A40Z&ske=2021-02-19T20%3A09%3A41Z&sks=b&skv=2020-06-12&sv=2021-10-04&st=2021-02-19T18%3A09%3A41Z&se=2021-02-19T20%3A09%3A41Z&sr=b&sp=racwd&sig=Sanitized",
+      "RequestUri": "https://seannse.blob.core.windows.net/test-filesystem-c006656e-4713-d585-912d-cf36836d3fdf/test-directory-dda9b75c-83e6-3d23-de09-c57bc63433e0/test-file-6fb22e1b-e046-6e1f-a540-287ff31d4ab4?skoid=c4f48289-bb84-4086-b250-6f94a8f64cee&sktid=72f988bf-86f1-41af-91ab-2d7cd011db47&skt=2021-02-19T19%3A09%3A40Z&ske=2021-02-19T20%3A09%3A41Z&sks=b&skv=2020-06-12&sv=2021-12-02&st=2021-02-19T18%3A09%3A41Z&se=2021-02-19T20%3A09%3A41Z&sr=b&sp=racwd&sig=Sanitized",
       "RequestMethod": "HEAD",
       "RequestHeaders": {
         "Accept": "application/xml",
