@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// The connector deployment parameters metadata.
         /// Serialized Name: ApiResourceMetadata.deploymentParameters
         /// </param>
-        internal ApiResourceMetadata(string source, string brandColor, string hideKey, IReadOnlyDictionary<string, string> tags, ApiType? apiType, WsdlService wsdlService, WsdlImportMethod? wsdlImportMethod, string connectionType, LogicAppWorkflowProvisioningState? provisioningState, ApiDeploymentParameterMetadataSet deploymentParameters)
+        internal ApiResourceMetadata(string source, string brandColor, string hideKey, IReadOnlyDictionary<string, string> tags, ApiType? apiType, LogicAppWsdlService wsdlService, LogicAppWsdlImportMethod? wsdlImportMethod, string connectionType, LogicAppWorkflowProvisioningState? provisioningState, ApiDeploymentParameterMetadataSet deploymentParameters)
         {
             Source = source;
             BrandColor = brandColor;
@@ -106,12 +106,12 @@ namespace Azure.ResourceManager.Logic.Models
         /// The WSDL service.
         /// Serialized Name: ApiResourceMetadata.wsdlService
         /// </summary>
-        public WsdlService WsdlService { get; }
+        public LogicAppWsdlService WsdlService { get; }
         /// <summary>
         /// The WSDL import method.
         /// Serialized Name: ApiResourceMetadata.wsdlImportMethod
         /// </summary>
-        public WsdlImportMethod? WsdlImportMethod { get; }
+        public LogicAppWsdlImportMethod? WsdlImportMethod { get; }
         /// <summary>
         /// The connection type.
         /// Serialized Name: ApiResourceMetadata.connectionType

@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class WsdlService
+    public partial class LogicAppWsdlService
     {
-        internal static WsdlService DeserializeWsdlService(JsonElement element)
+        internal static LogicAppWsdlService DeserializeLogicAppWsdlService(JsonElement element)
         {
             Optional<string> qualifiedName = default;
             Optional<IReadOnlyList<string>> endpointQualifiedNames = default;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new WsdlService(qualifiedName.Value, Optional.ToList(endpointQualifiedNames));
+            return new LogicAppWsdlService(qualifiedName.Value, Optional.ToList(endpointQualifiedNames));
         }
     }
 }

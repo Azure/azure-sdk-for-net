@@ -14,15 +14,15 @@ namespace Azure.ResourceManager.Logic.Models
     /// The WSDL service.
     /// Serialized Name: WsdlService
     /// </summary>
-    public partial class WsdlService
+    public partial class LogicAppWsdlService
     {
-        /// <summary> Initializes a new instance of WsdlService. </summary>
-        internal WsdlService()
+        /// <summary> Initializes a new instance of LogicAppWsdlService. </summary>
+        internal LogicAppWsdlService()
         {
             EndpointQualifiedNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of WsdlService. </summary>
+        /// <summary> Initializes a new instance of LogicAppWsdlService. </summary>
         /// <param name="qualifiedName">
         /// The qualified name.
         /// Serialized Name: WsdlService.qualifiedName
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// The list of endpoints&apos; qualified names.
         /// Serialized Name: WsdlService.EndpointQualifiedNames
         /// </param>
-        internal WsdlService(string qualifiedName, IReadOnlyList<string> endpointQualifiedNames)
+        internal LogicAppWsdlService(string qualifiedName, IReadOnlyList<string> endpointQualifiedNames)
         {
             QualifiedName = qualifiedName;
             EndpointQualifiedNames = endpointQualifiedNames;

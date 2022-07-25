@@ -59,6 +59,8 @@ rename-mapping:
   WorkflowTriggerCallbackUrl: LogicAppWorkflowTriggerCallbackUri
   WorkflowReference: LogicAppWorkflowReference
   WorkflowRunActionListResult: LogicAppWorkflowRunActionListResult
+  WsdlService: LogicAppWsdlService
+  WsdlImportMethod: LogicAppWsdlImportMethod
   
 format-by-name-rules:
   'tenantId': 'uuid'

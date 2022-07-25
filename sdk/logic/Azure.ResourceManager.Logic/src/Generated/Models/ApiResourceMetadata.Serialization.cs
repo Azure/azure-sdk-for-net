@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<string> hideKey = default;
             Optional<IReadOnlyDictionary<string, string>> tags = default;
             Optional<ApiType> apiType = default;
-            Optional<WsdlService> wsdlService = default;
-            Optional<WsdlImportMethod> wsdlImportMethod = default;
+            Optional<LogicAppWsdlService> wsdlService = default;
+            Optional<LogicAppWsdlImportMethod> wsdlImportMethod = default;
             Optional<string> connectionType = default;
             Optional<LogicAppWorkflowProvisioningState> provisioningState = default;
             Optional<ApiDeploymentParameterMetadataSet> deploymentParameters = default;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Logic.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    wsdlService = WsdlService.DeserializeWsdlService(property.Value);
+                    wsdlService = LogicAppWsdlService.DeserializeLogicAppWsdlService(property.Value);
                     continue;
                 }
                 if (property.NameEquals("wsdlImportMethod"))
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Logic.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    wsdlImportMethod = new WsdlImportMethod(property.Value.GetString());
+                    wsdlImportMethod = new LogicAppWsdlImportMethod(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("connectionType"))
