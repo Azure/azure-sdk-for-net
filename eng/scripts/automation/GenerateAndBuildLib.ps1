@@ -487,7 +487,7 @@ function Invoke-GenerateAndBuildSDK () {
             Remove-Item $newPackageOutput
         } else {
             # handle scenaro: multiple SDK packages one md file.
-            npx autorest --version=3.8.4 --csharp $readmeFile --csharp-sdks-folder=$sdkRootPath --skip-csproj --clear-output-folder=true
+            # npx autorest --version=3.8.4 --csharp $readmeFile --csharp-sdks-folder=$sdkRootPath --skip-csproj --clear-output-folder=true
             # handle the sdk package already exists. The service may be onboarded before.
             $serviceSDKDirectory = (Join-Path $sdkRootPath "sdk" $service)
             $folders = Get-ChildItem $serviceSDKDirectory -Directory -exclude *.*Management*,Azure.ResourceManager*
