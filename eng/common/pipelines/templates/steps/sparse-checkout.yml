@@ -113,7 +113,7 @@ steps:
 
           try {
             # Enable global override if there are sparse checkout issues
-            if ('$(DisableSparseCheckout)' -ne 'true') {
+            if ('$(SkipSparseCheckout)' -ne 'true') {
               try {
                 SparseCheckout $paths $repo
               } catch {
