@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
@@ -58,7 +58,27 @@ namespace Azure.Core.TestFramework
                 type.GetGenericTypeDefinition() == typeof(Task<>) &&
                 typeof(Operation).IsAssignableFrom(arguments[0]))
             {
+                bool modifiedAskToWait = false;
+                WaitUntil current = (WaitUntil)invocation.Arguments[0];
+                if (current == WaitUntil.Completed)
+                {
+                    modifiedAskToWait = true;
+                    invocation.Arguments[0] = WaitUntil.Started;
+                }
+
                 DiagnosticScopeValidatingInterceptor.WrapAsyncResult(invocation, this, InstrumentOperationInterceptorMethodInfo);
+
+                if (modifiedAskToWait)
+                {
+                    if (TaskExtensions.IsTaskFaulted(invocation.ReturnValue))
+                        return;
+
+                    object lro = TaskExtensions.GetResultFromTask(invocation.ReturnValue);
+                    var valueTask = lro.GetType().BaseType.IsGenericType
+                        ? OperationInterceptor.InvokeWaitForCompletion(lro, lro.GetType(), (CancellationToken)invocation.Arguments.Last())
+                        : OperationInterceptor.InvokeWaitForCompletionResponse(lro as Operation, (CancellationToken)invocation.Arguments.Last());
+                    _ = TaskExtensions.GetResultFromTask(valueTask);
+                }
                 return;
             }
 
