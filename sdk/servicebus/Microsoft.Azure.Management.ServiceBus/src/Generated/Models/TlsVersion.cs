@@ -12,12 +12,12 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
 {
 
     /// <summary>
-    /// Defines values for RoleDisasterRecovery.
+    /// Defines values for TlsVersion.
     /// </summary>
-    public static class RoleDisasterRecovery
+    public static class TlsVersion
     {
-        public const string Primary = "Primary";
-        public const string PrimaryNotReplicating = "PrimaryNotReplicating";
-        public const string Secondary = "Secondary";
+        public const string OneFullStopZero = "1.0";
+        public const string OneFullStopOne = "1.1";
+        public const string OneFullStopTwo = "1.2";
     }
 }

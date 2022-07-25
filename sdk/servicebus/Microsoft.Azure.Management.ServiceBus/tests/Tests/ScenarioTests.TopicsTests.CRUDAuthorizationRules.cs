@@ -81,7 +81,7 @@ namespace ServiceBus.Tests.ScenarioTests
                 string createPrimaryKey = HttpMockServer.GetVariable("CreatePrimaryKey", ServiceBusManagementHelper.GenerateRandomKey());
                 var createAutorizationRuleParameter = new SBAuthorizationRule()
                 {
-                    Rights = new List<AccessRights?>() { AccessRights.Listen, AccessRights.Send }
+                    Rights = new List<string>() { AccessRights.Listen, AccessRights.Send }
                 };
 
                 var jsonStr = ServiceBusManagementHelper.ConvertObjectToJSon(createAutorizationRuleParameter);
@@ -112,7 +112,7 @@ namespace ServiceBus.Tests.ScenarioTests
                 // Update topics authorizationRule
           
                 SBAuthorizationRule updateTopicsAuthorizationRuleParameter = new SBAuthorizationRule();
-                updateTopicsAuthorizationRuleParameter.Rights = new List<AccessRights?>() { AccessRights.Listen };
+                updateTopicsAuthorizationRuleParameter.Rights = new List<string>() { AccessRights.Listen };
 
                 var updateTopicAuthorizationRuleResponse = ServiceBusManagementClient.Topics.CreateOrUpdateAuthorizationRule(resourceGroup,
                     namespaceName,topicName, authorizationRuleName, updateTopicsAuthorizationRuleParameter);
