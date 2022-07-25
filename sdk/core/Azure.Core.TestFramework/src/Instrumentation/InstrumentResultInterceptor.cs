@@ -17,10 +17,13 @@ namespace Azure.Core.TestFramework
             ?? throw new InvalidOperationException("Unable to find InstrumentOperationInterceptor method");
 
         private readonly ClientTestBase _testBase;
+        private readonly RecordedTestMode _testMode;
 
         public InstrumentResultInterceptor(ClientTestBase testBase)
         {
             _testBase = testBase;
+            // non-recorded tests are treated like Playback mode
+            _testMode = testBase is RecordedTestBase recordedTestBase ? recordedTestBase.Mode : RecordedTestMode.Playback;
         }
 
         public void Intercept(IInvocation invocation)
@@ -59,8 +62,8 @@ namespace Azure.Core.TestFramework
                 typeof(Operation).IsAssignableFrom(arguments[0]))
             {
                 bool modifiedAskToWait = false;
-                WaitUntil current = (WaitUntil)invocation.Arguments[0];
-                if (current == WaitUntil.Completed)
+                WaitUntil? current = invocation.Arguments[0] as WaitUntil?;
+                if (current == WaitUntil.Completed && _testMode == RecordedTestMode.Playback)
                 {
                     modifiedAskToWait = true;
                     invocation.Arguments[0] = WaitUntil.Started;
