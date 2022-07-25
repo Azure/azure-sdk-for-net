@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.MySql
         /// <param name="replicaCapacity"> The maximum number of replicas that a master server can have. </param>
         /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for this server. Value is optional but if passed in, must be &apos;Enabled&apos; or &apos;Disabled&apos;. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections on a server. </param>
-        internal MySqlServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentity identity, MySqlSku sku, string administratorLogin, MySqlServerVersion? version, MySqlSslEnforcementEnum? sslEnforcement, MySqlMinimalTlsVersionEnum? minimalTlsVersion, string byokEnforcement, MySqlInfrastructureEncryption? infrastructureEncryption, MySqlServerState? userVisibleState, string fullyQualifiedDomainName, DateTimeOffset? earliestRestoreOn, MySqlStorageProfile storageProfile, string replicationRole, string masterServerId, int? replicaCapacity, MySqlPublicNetworkAccessEnum? publicNetworkAccess, IReadOnlyList<MySqlServerPrivateEndpointConnection> privateEndpointConnections) : base(id, name, resourceType, systemData, tags, location)
+        internal MySqlServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentity identity, MySqlSku sku, string administratorLogin, MySqlServerVersion? version, MySqlSslEnforcementEnum? sslEnforcement, MySqlMinimalTlsVersionEnum? minimalTlsVersion, string byokEnforcement, MySqlInfrastructureEncryption? infrastructureEncryption, MySqlServerState? userVisibleState, string fullyQualifiedDomainName, DateTimeOffset? earliestRestoreOn, MySqlStorageProfile storageProfile, string replicationRole, ResourceIdentifier masterServerId, int? replicaCapacity, MySqlPublicNetworkAccessEnum? publicNetworkAccess, IReadOnlyList<MySqlServerPrivateEndpointConnection> privateEndpointConnections) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             Sku = sku;
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MySql
         /// <summary> The replication role of the server. </summary>
         public string ReplicationRole { get; set; }
         /// <summary> The master server id of a replica server. </summary>
-        public string MasterServerId { get; set; }
+        public ResourceIdentifier MasterServerId { get; set; }
         /// <summary> The maximum number of replicas that a master server can have. </summary>
         public int? ReplicaCapacity { get; set; }
         /// <summary> Whether or not public network access is allowed for this server. Value is optional but if passed in, must be &apos;Enabled&apos; or &apos;Disabled&apos;. </summary>

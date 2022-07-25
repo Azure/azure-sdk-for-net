@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.MySql
             Optional<DateTimeOffset> earliestRestoreDate = default;
             Optional<MySqlStorageProfile> storageProfile = default;
             Optional<string> replicationRole = default;
-            Optional<string> masterServerId = default;
+            Optional<ResourceIdentifier> masterServerId = default;
             Optional<int> replicaCapacity = default;
             Optional<MySqlPublicNetworkAccessEnum> publicNetworkAccess = default;
             Optional<IReadOnlyList<MySqlServerPrivateEndpointConnection>> privateEndpointConnections = default;
@@ -306,7 +306,12 @@ namespace Azure.ResourceManager.MySql
                         }
                         if (property0.NameEquals("masterServerId"))
                         {
-                            masterServerId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            masterServerId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("replicaCapacity"))

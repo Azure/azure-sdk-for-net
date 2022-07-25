@@ -30,17 +30,17 @@ namespace Azure.ResourceManager.MySql
         /// <param name="sessionId"> Recommendation action session identifier. </param>
         /// <param name="actionId"> Recommendation action identifier. </param>
         /// <param name="createdOn"> Recommendation action creation time. </param>
-        /// <param name="expirationOn"> Recommendation action expiration time. </param>
+        /// <param name="expireOn"> Recommendation action expiration time. </param>
         /// <param name="reason"> Recommendation action reason. </param>
         /// <param name="recommendationType"> Recommendation action type. </param>
         /// <param name="details"> Recommendation action details. </param>
-        internal MySqlRecommendationActionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string advisorName, string sessionId, int? actionId, DateTimeOffset? createdOn, DateTimeOffset? expirationOn, string reason, string recommendationType, IDictionary<string, string> details) : base(id, name, resourceType, systemData)
+        internal MySqlRecommendationActionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string advisorName, Guid? sessionId, int? actionId, DateTimeOffset? createdOn, DateTimeOffset? expireOn, string reason, string recommendationType, IDictionary<string, string> details) : base(id, name, resourceType, systemData)
         {
             AdvisorName = advisorName;
             SessionId = sessionId;
             ActionId = actionId;
             CreatedOn = createdOn;
-            ExpirationOn = expirationOn;
+            ExpireOn = expireOn;
             Reason = reason;
             RecommendationType = recommendationType;
             Details = details;
@@ -49,13 +49,13 @@ namespace Azure.ResourceManager.MySql
         /// <summary> Advisor name. </summary>
         public string AdvisorName { get; set; }
         /// <summary> Recommendation action session identifier. </summary>
-        public string SessionId { get; set; }
+        public Guid? SessionId { get; set; }
         /// <summary> Recommendation action identifier. </summary>
         public int? ActionId { get; set; }
         /// <summary> Recommendation action creation time. </summary>
         public DateTimeOffset? CreatedOn { get; set; }
         /// <summary> Recommendation action expiration time. </summary>
-        public DateTimeOffset? ExpirationOn { get; set; }
+        public DateTimeOffset? ExpireOn { get; set; }
         /// <summary> Recommendation action reason. </summary>
         public string Reason { get; set; }
         /// <summary> Recommendation action type. </summary>

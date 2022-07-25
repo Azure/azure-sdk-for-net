@@ -10,8 +10,8 @@ skip-csproj: true
 library-name: MySql
 
 batch:
-#   - tag: package-2020-01-01
-  - tag: package-flexibleserver-2021-05-01
+  - tag: package-2020-01-01
+#   - tag: package-flexibleserver-2021-05-01
 ```
 
 ``` yaml $(tag) == 'package-2020-01-01'
@@ -28,6 +28,12 @@ format-by-name-rules:
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
+  'sessionId': 'uuid'
+  'PrincipalId': 'uuid'
+  'masterServerId': 'arm-id'
+  '*SubnetId': 'arm-id'
+  '*ResourceId': 'arm-id'
+  '*UserAssignedIdentityId': 'arm-id'
 
 rename-rules:
   CPU: Cpu
@@ -122,6 +128,9 @@ rename-mapping:
   WaitStatisticsResultList: MySqlWaitStatisticsListResult
   PrivateLinkServiceConnectionStateActionsRequire: MySqlPrivateLinkServiceConnectionStateRequiredActions
   RecoverableServerResource: MySqlRecoverableServerResourceData
+  RecommendationAction.properties.expirationTime: ExpireOn
+  ServerKey.properties.creationDate: CreatedOn
+  ServerSecurityAlertPolicy.properties.emailAccountAdmins: SendToEmailAccountAdmins
 
 override-operation-name:
   ServerParameters_ListUpdateConfigurations: UpdateConfigurations

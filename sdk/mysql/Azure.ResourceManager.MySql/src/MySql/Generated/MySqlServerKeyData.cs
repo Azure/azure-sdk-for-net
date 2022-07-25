@@ -28,13 +28,13 @@ namespace Azure.ResourceManager.MySql
         /// <param name="kind"> Kind of encryption protector used to protect the key. </param>
         /// <param name="serverKeyType"> The key type like &apos;AzureKeyVault&apos;. </param>
         /// <param name="uri"> The URI of the key. </param>
-        /// <param name="creationOn"> The key creation date. </param>
-        internal MySqlServerKeyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, MySqlServerKeyType? serverKeyType, Uri uri, DateTimeOffset? creationOn) : base(id, name, resourceType, systemData)
+        /// <param name="createdOn"> The key creation date. </param>
+        internal MySqlServerKeyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, MySqlServerKeyType? serverKeyType, Uri uri, DateTimeOffset? createdOn) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             ServerKeyType = serverKeyType;
             Uri = uri;
-            CreationOn = creationOn;
+            CreatedOn = createdOn;
         }
 
         /// <summary> Kind of encryption protector used to protect the key. </summary>
@@ -44,6 +44,6 @@ namespace Azure.ResourceManager.MySql
         /// <summary> The URI of the key. </summary>
         public Uri Uri { get; set; }
         /// <summary> The key creation date. </summary>
-        public DateTimeOffset? CreationOn { get; }
+        public DateTimeOffset? CreatedOn { get; }
     }
 }

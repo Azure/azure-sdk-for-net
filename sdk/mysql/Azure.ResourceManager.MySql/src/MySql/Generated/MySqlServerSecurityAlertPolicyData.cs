@@ -30,16 +30,16 @@ namespace Azure.ResourceManager.MySql
         /// <param name="state"> Specifies the state of the policy, whether it is enabled or disabled. </param>
         /// <param name="disabledAlerts"> Specifies an array of alerts that are disabled. Allowed values are: Sql_Injection, Sql_Injection_Vulnerability, Access_Anomaly. </param>
         /// <param name="emailAddresses"> Specifies an array of e-mail addresses to which the alert is sent. </param>
-        /// <param name="emailAccountAdmins"> Specifies that the alert is sent to the account administrators. </param>
+        /// <param name="sendToEmailAccountAdmins"> Specifies that the alert is sent to the account administrators. </param>
         /// <param name="storageEndpoint"> Specifies the blob storage endpoint (e.g. https://MyAccount.blob.core.windows.net). This blob storage will hold all Threat Detection audit logs. </param>
         /// <param name="storageAccountAccessKey"> Specifies the identifier key of the Threat Detection audit storage account. </param>
         /// <param name="retentionDays"> Specifies the number of days to keep in the Threat Detection audit logs. </param>
-        internal MySqlServerSecurityAlertPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MySqlServerSecurityAlertPolicyState? state, IList<string> disabledAlerts, IList<string> emailAddresses, bool? emailAccountAdmins, string storageEndpoint, string storageAccountAccessKey, int? retentionDays) : base(id, name, resourceType, systemData)
+        internal MySqlServerSecurityAlertPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MySqlServerSecurityAlertPolicyState? state, IList<string> disabledAlerts, IList<string> emailAddresses, bool? sendToEmailAccountAdmins, string storageEndpoint, string storageAccountAccessKey, int? retentionDays) : base(id, name, resourceType, systemData)
         {
             State = state;
             DisabledAlerts = disabledAlerts;
             EmailAddresses = emailAddresses;
-            EmailAccountAdmins = emailAccountAdmins;
+            SendToEmailAccountAdmins = sendToEmailAccountAdmins;
             StorageEndpoint = storageEndpoint;
             StorageAccountAccessKey = storageAccountAccessKey;
             RetentionDays = retentionDays;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MySql
         /// <summary> Specifies an array of e-mail addresses to which the alert is sent. </summary>
         public IList<string> EmailAddresses { get; }
         /// <summary> Specifies that the alert is sent to the account administrators. </summary>
-        public bool? EmailAccountAdmins { get; set; }
+        public bool? SendToEmailAccountAdmins { get; set; }
         /// <summary> Specifies the blob storage endpoint (e.g. https://MyAccount.blob.core.windows.net). This blob storage will hold all Threat Detection audit logs. </summary>
         public string StorageEndpoint { get; set; }
         /// <summary> Specifies the identifier key of the Threat Detection audit storage account. </summary>

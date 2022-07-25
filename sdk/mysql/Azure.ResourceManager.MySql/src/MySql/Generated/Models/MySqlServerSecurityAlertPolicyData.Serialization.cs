@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.MySql
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(EmailAccountAdmins))
+            if (Optional.IsDefined(SendToEmailAccountAdmins))
             {
                 writer.WritePropertyName("emailAccountAdmins");
-                writer.WriteBooleanValue(EmailAccountAdmins.Value);
+                writer.WriteBooleanValue(SendToEmailAccountAdmins.Value);
             }
             if (Optional.IsDefined(StorageEndpoint))
             {

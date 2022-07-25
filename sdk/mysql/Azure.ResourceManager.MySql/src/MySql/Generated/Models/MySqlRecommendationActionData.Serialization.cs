@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MySql
             if (Optional.IsDefined(SessionId))
             {
                 writer.WritePropertyName("sessionId");
-                writer.WriteStringValue(SessionId);
+                writer.WriteStringValue(SessionId.Value);
             }
             if (Optional.IsDefined(ActionId))
             {
@@ -40,10 +40,10 @@ namespace Azure.ResourceManager.MySql
                 writer.WritePropertyName("createdTime");
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(ExpirationOn))
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationTime");
-                writer.WriteStringValue(ExpirationOn.Value, "O");
+                writer.WriteStringValue(ExpireOn.Value, "O");
             }
             if (Optional.IsDefined(Reason))
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.MySql
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> advisorName = default;
-            Optional<string> sessionId = default;
+            Optional<Guid> sessionId = default;
             Optional<int> actionId = default;
             Optional<DateTimeOffset> createdTime = default;
             Optional<DateTimeOffset> expirationTime = default;
@@ -127,7 +127,12 @@ namespace Azure.ResourceManager.MySql
                         }
                         if (property0.NameEquals("sessionId"))
                         {
-                            sessionId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            sessionId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("actionId"))
@@ -189,7 +194,7 @@ namespace Azure.ResourceManager.MySql
                     continue;
                 }
             }
-            return new MySqlRecommendationActionData(id, name, type, systemData.Value, advisorName.Value, sessionId.Value, Optional.ToNullable(actionId), Optional.ToNullable(createdTime), Optional.ToNullable(expirationTime), reason.Value, recommendationType.Value, Optional.ToDictionary(details));
+            return new MySqlRecommendationActionData(id, name, type, systemData.Value, advisorName.Value, Optional.ToNullable(sessionId), Optional.ToNullable(actionId), Optional.ToNullable(createdTime), Optional.ToNullable(expirationTime), reason.Value, recommendationType.Value, Optional.ToDictionary(details));
         }
     }
 }
