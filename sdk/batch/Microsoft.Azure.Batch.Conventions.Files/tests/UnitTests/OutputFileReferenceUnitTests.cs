@@ -62,6 +62,17 @@ namespace Microsoft.Azure.Batch.Conventions.Files.UnitTests
         }
 
         [Fact]
+        public void FilePathReflectsStoragePath_SpecialCharacters()
+        {
+            var fakeBlob = Substitute.For<BlobBaseClient>();
+            fakeBlob.Uri.Returns(new Uri("https://x.blob.core.windows.net/job-someid/$JobOutput/Testing$/SpecialCharacters%/stdout.txt"));
+
+            var reference = new OutputFileReference(fakeBlob);
+
+            Assert.Equal("Testing$/SpecialCharacters%/stdout.txt", reference.FilePath);
+        }
+
+        [Fact]
         public void UriReflectsBlobUri()
         {
             var fakeBlob = Substitute.For<BlobBaseClient>();

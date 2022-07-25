@@ -131,6 +131,19 @@ namespace Microsoft.Azure.Batch.Conventions.Files.UnitTests
         }
 
         [Fact]
+        public void CannotGetOutputStorageUrlWithoutBlobClientAuthenticated()
+        {
+            using (var batchClient = BatchClient.Open(new FakeBatchServiceClient()))
+            {
+                CloudJob job = batchClient.JobOperations.CreateJob();
+                job.Id = "fakejob";
+                BlobServiceClient blobClient = new BlobServiceClient(new Uri("http://fakestorageaccount.blob.core.windows.net"));
+                var ex = Assert.Throws<Exception>(() => job.GetOutputStorageContainerUrl(blobClient, TimeSpan.FromMinutes(5)));
+                Assert.Equal("Blob service client must be authorized with shared key credentials to create a service SAS URL", ex.Message);
+            }
+        }
+
+        [Fact]
         public void GetTaskOutputStoragePathReturnsExpectedValue()
         {
             using (var batchClient = BatchClient.Open(new FakeBatchServiceClient()))
