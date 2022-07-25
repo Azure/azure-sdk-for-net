@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<IReadOnlyList<ActionDetail>> actionDetails = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("Context"))
+                if (property.NameEquals("context"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -32,22 +32,22 @@ namespace Azure.ResourceManager.Monitor.Models
                     context = Context.DeserializeContext(property.Value);
                     continue;
                 }
-                if (property.NameEquals("State"))
+                if (property.NameEquals("state"))
                 {
                     state = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("CompletedTime"))
+                if (property.NameEquals("completedTime"))
                 {
                     completedTime = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("CreatedTime"))
+                if (property.NameEquals("createdTime"))
                 {
                     createdTime = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ActionDetails"))
+                if (property.NameEquals("actionDetails"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

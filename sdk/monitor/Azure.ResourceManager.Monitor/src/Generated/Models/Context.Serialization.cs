@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<string> contextType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("NotificationSource"))
+                if (property.NameEquals("notificationSource"))
                 {
                     notificationSource = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ContextType"))
+                if (property.NameEquals("contextType"))
                 {
                     contextType = property.Value.GetString();
                     continue;

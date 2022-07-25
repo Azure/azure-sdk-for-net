@@ -242,6 +242,120 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary>
+        /// Send test notifications to a set of provided receivers
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}/createNotifications
+        /// Operation Id: ActionGroups_CreateNotificationsAtActionGroupResourceLevel
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="notificationRequest"> The notification request body which includes the contact details. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="notificationRequest"/> is null. </exception>
+        public virtual async Task<ArmOperation<TestNotificationDetailsResponse>> CreateNotificationsAtActionGroupResourceLevelAsync(WaitUntil waitUntil, NotificationRequestBody notificationRequest, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(notificationRequest, nameof(notificationRequest));
+
+            using var scope = _actionGroupClientDiagnostics.CreateScope("ActionGroupResource.CreateNotificationsAtActionGroupResourceLevel");
+            scope.Start();
+            try
+            {
+                var response = await _actionGroupRestClient.CreateNotificationsAtActionGroupResourceLevelAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, notificationRequest, cancellationToken).ConfigureAwait(false);
+                var operation = new MonitorArmOperation<TestNotificationDetailsResponse>(new TestNotificationDetailsResponseOperationSource(), _actionGroupClientDiagnostics, Pipeline, _actionGroupRestClient.CreateCreateNotificationsAtActionGroupResourceLevelRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, notificationRequest).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Send test notifications to a set of provided receivers
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}/createNotifications
+        /// Operation Id: ActionGroups_CreateNotificationsAtActionGroupResourceLevel
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="notificationRequest"> The notification request body which includes the contact details. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="notificationRequest"/> is null. </exception>
+        public virtual ArmOperation<TestNotificationDetailsResponse> CreateNotificationsAtActionGroupResourceLevel(WaitUntil waitUntil, NotificationRequestBody notificationRequest, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(notificationRequest, nameof(notificationRequest));
+
+            using var scope = _actionGroupClientDiagnostics.CreateScope("ActionGroupResource.CreateNotificationsAtActionGroupResourceLevel");
+            scope.Start();
+            try
+            {
+                var response = _actionGroupRestClient.CreateNotificationsAtActionGroupResourceLevel(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, notificationRequest, cancellationToken);
+                var operation = new MonitorArmOperation<TestNotificationDetailsResponse>(new TestNotificationDetailsResponseOperationSource(), _actionGroupClientDiagnostics, Pipeline, _actionGroupRestClient.CreateCreateNotificationsAtActionGroupResourceLevelRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, notificationRequest).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get the test notifications by the notification id
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}/notificationStatus/{notificationId}
+        /// Operation Id: ActionGroups_GetTestNotificationsAtActionGroupResourceLevel
+        /// </summary>
+        /// <param name="notificationId"> The notification id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="notificationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="notificationId"/> is null. </exception>
+        public virtual async Task<Response<TestNotificationDetailsResponse>> GetTestNotificationsAtActionGroupResourceLevelAsync(string notificationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(notificationId, nameof(notificationId));
+
+            using var scope = _actionGroupClientDiagnostics.CreateScope("ActionGroupResource.GetTestNotificationsAtActionGroupResourceLevel");
+            scope.Start();
+            try
+            {
+                var response = await _actionGroupRestClient.GetTestNotificationsAtActionGroupResourceLevelAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, notificationId, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get the test notifications by the notification id
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}/notificationStatus/{notificationId}
+        /// Operation Id: ActionGroups_GetTestNotificationsAtActionGroupResourceLevel
+        /// </summary>
+        /// <param name="notificationId"> The notification id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="notificationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="notificationId"/> is null. </exception>
+        public virtual Response<TestNotificationDetailsResponse> GetTestNotificationsAtActionGroupResourceLevel(string notificationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(notificationId, nameof(notificationId));
+
+            using var scope = _actionGroupClientDiagnostics.CreateScope("ActionGroupResource.GetTestNotificationsAtActionGroupResourceLevel");
+            scope.Start();
+            try
+            {
+                var response = _actionGroupRestClient.GetTestNotificationsAtActionGroupResourceLevel(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, notificationId, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Enable a receiver in an action group. This changes the receiver&apos;s status from Disabled to Enabled. This operation is only supported for Email or SMS receivers.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}/subscribe
         /// Operation Id: ActionGroups_EnableReceiver

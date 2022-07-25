@@ -233,14 +233,14 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="notificationRequest"> The notification request body which includes the contact details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<TestNotificationResponse>> PostTestNotificationsActionGroupAsync(WaitUntil waitUntil, NotificationRequestBody notificationRequest, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<TestNotificationDetailsResponse>> PostTestNotificationsActionGroupAsync(WaitUntil waitUntil, NotificationRequestBody notificationRequest, CancellationToken cancellationToken = default)
         {
             using var scope = ActionGroupClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.PostTestNotificationsActionGroup");
             scope.Start();
             try
             {
                 var response = await ActionGroupRestClient.PostTestNotificationsAsync(Id.SubscriptionId, notificationRequest, cancellationToken).ConfigureAwait(false);
-                var operation = new MonitorArmOperation<TestNotificationResponse>(new TestNotificationResponseOperationSource(), ActionGroupClientDiagnostics, Pipeline, ActionGroupRestClient.CreatePostTestNotificationsRequest(Id.SubscriptionId, notificationRequest).Request, response, OperationFinalStateVia.Location);
+                var operation = new MonitorArmOperation<TestNotificationDetailsResponse>(new TestNotificationDetailsResponseOperationSource(), ActionGroupClientDiagnostics, Pipeline, ActionGroupRestClient.CreatePostTestNotificationsRequest(Id.SubscriptionId, notificationRequest).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -260,14 +260,14 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="notificationRequest"> The notification request body which includes the contact details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<TestNotificationResponse> PostTestNotificationsActionGroup(WaitUntil waitUntil, NotificationRequestBody notificationRequest, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<TestNotificationDetailsResponse> PostTestNotificationsActionGroup(WaitUntil waitUntil, NotificationRequestBody notificationRequest, CancellationToken cancellationToken = default)
         {
             using var scope = ActionGroupClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.PostTestNotificationsActionGroup");
             scope.Start();
             try
             {
                 var response = ActionGroupRestClient.PostTestNotifications(Id.SubscriptionId, notificationRequest, cancellationToken);
-                var operation = new MonitorArmOperation<TestNotificationResponse>(new TestNotificationResponseOperationSource(), ActionGroupClientDiagnostics, Pipeline, ActionGroupRestClient.CreatePostTestNotificationsRequest(Id.SubscriptionId, notificationRequest).Request, response, OperationFinalStateVia.Location);
+                var operation = new MonitorArmOperation<TestNotificationDetailsResponse>(new TestNotificationDetailsResponseOperationSource(), ActionGroupClientDiagnostics, Pipeline, ActionGroupRestClient.CreatePostTestNotificationsRequest(Id.SubscriptionId, notificationRequest).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

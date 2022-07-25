@@ -221,7 +221,7 @@ input-file:
 - https://github.com/Azure/azure-rest-api-specs/blob/a211ef525cdd9e186f31b5c11647aae31dccc469/specification/monitor/resource-manager/Microsoft.Insights/stable/2016-03-01/logProfiles_API.json
 - https://github.com/Azure/azure-rest-api-specs/blob/a211ef525cdd9e186f31b5c11647aae31dccc469/specification/monitor/resource-manager/Microsoft.Insights/preview/2017-05-01-preview/diagnosticsSettings_API.json
 - https://github.com/Azure/azure-rest-api-specs/blob/a211ef525cdd9e186f31b5c11647aae31dccc469/specification/monitor/resource-manager/Microsoft.Insights/preview/2017-05-01-preview/diagnosticsSettingsCategories_API.json
-- https://github.com/Azure/azure-rest-api-specs/blob/a211ef525cdd9e186f31b5c11647aae31dccc469/specification/monitor/resource-manager/Microsoft.Insights/stable/2021-09-01/actionGroups_API.json
+- https://github.com/Azure/azure-rest-api-specs/blob/a211ef525cdd9e186f31b5c11647aae31dccc469/specification/monitor/resource-manager/Microsoft.Insights/stable/2022-06-01/actionGroups_API.json
 - https://github.com/Azure/azure-rest-api-specs/blob/a211ef525cdd9e186f31b5c11647aae31dccc469/specification/monitor/resource-manager/Microsoft.Insights/stable/2015-04-01/activityLogs_API.json
 - https://github.com/Azure/azure-rest-api-specs/blob/a211ef525cdd9e186f31b5c11647aae31dccc469/specification/monitor/resource-manager/Microsoft.Insights/stable/2015-04-01/eventCategories_API.json
 - https://github.com/Azure/azure-rest-api-specs/blob/a211ef525cdd9e186f31b5c11647aae31dccc469/specification/monitor/resource-manager/Microsoft.Insights/stable/2015-04-01/tenantActivityLogs_API.json
