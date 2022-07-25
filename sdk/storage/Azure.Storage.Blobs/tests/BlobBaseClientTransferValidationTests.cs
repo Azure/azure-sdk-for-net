@@ -82,6 +82,14 @@ namespace Azure.Storage.Blobs.Tests
                 TransferValidationOptions = hashingOptions
             });
 
+        [Test]
+        public override void TestAutoResolve()
+        {
+            Assert.AreEqual(
+                ValidationAlgorithm.StorageCrc64,
+                TransferValidationOptionsExtensions.ResolveAuto(ValidationAlgorithm.Auto));
+        }
+
         #region Added Tests
         [TestCaseSource("GetValidationAlgorithms")]
         public async Task ExpectedDownloadStreamingStreamTypeReturned(ValidationAlgorithm algorithm)
