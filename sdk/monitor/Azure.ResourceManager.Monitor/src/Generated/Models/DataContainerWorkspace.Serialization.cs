@@ -10,23 +10,8 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class DataContainerWorkspace : IUtf8JsonSerializable
+    public partial class DataContainerWorkspace
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
-            writer.WritePropertyName("location");
-            writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
-            writer.WriteStartObject();
-            writer.WritePropertyName("customerId");
-            writer.WriteStringValue(CustomerId);
-            writer.WriteEndObject();
-            writer.WriteEndObject();
-        }
-
         internal static DataContainerWorkspace DeserializeDataContainerWorkspace(JsonElement element)
         {
             ResourceIdentifier id = default;

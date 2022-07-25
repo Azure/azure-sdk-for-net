@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="location"> Location of the Log Analytics workspace. </param>
         /// <param name="customerId"> Log Analytics workspace identifier. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="customerId"/> is null. </exception>
-        public DataContainerWorkspace(ResourceIdentifier id, AzureLocation location, string customerId)
+        internal DataContainerWorkspace(ResourceIdentifier id, AzureLocation location, string customerId)
         {
             if (id == null)
             {
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Azure Resource Manager identifier of the Log Analytics Workspace. </summary>
-        public ResourceIdentifier Id { get; set; }
+        public ResourceIdentifier Id { get; }
         /// <summary> Location of the Log Analytics workspace. </summary>
-        public AzureLocation Location { get; set; }
+        public AzureLocation Location { get; }
         /// <summary> Log Analytics workspace identifier. </summary>
-        public string CustomerId { get; set; }
+        public string CustomerId { get; }
     }
 }

@@ -355,6 +355,7 @@ namespace Azure.ResourceManager.Monitor
         public string EventHubName { get { throw null; } set { } }
         public string LogAnalyticsDestinationType { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.LogSettings> Logs { get { throw null; } }
+        public Azure.Core.ResourceIdentifier MarketplacePartnerId { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.MetricSettings> Metrics { get { throw null; } }
         public Azure.Core.ResourceIdentifier ServiceBusRuleId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier StorageAccountId { get { throw null; } set { } }
@@ -390,6 +391,7 @@ namespace Azure.ResourceManager.Monitor
     public partial class DiagnosticSettingsCategoryData : Azure.ResourceManager.Models.ResourceData
     {
         public DiagnosticSettingsCategoryData() { }
+        public System.Collections.Generic.IList<string> CategoryGroups { get { throw null; } }
         public Azure.ResourceManager.Monitor.Models.MonitorCategoryType? CategoryType { get { throw null; } set { } }
     }
     public partial class DiagnosticSettingsCategoryResource : Azure.ResourceManager.ArmResource
@@ -665,9 +667,9 @@ namespace Azure.ResourceManager.Monitor
     public partial class MonitorPrivateEndpointConnectionData : Azure.ResourceManager.Models.ResourceData
     {
         public MonitorPrivateEndpointConnectionData() { }
-        public Azure.ResourceManager.Monitor.Models.MonitorPrivateLinkServiceConnectionStateProperty ConnectionState { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } set { } }
-        public string ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Monitor.Models.MonitorPrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } }
+        public Azure.ResourceManager.Monitor.Models.MonitorPrivateEndpointConnectionProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class MonitorPrivateEndpointConnectionResource : Azure.ResourceManager.ArmResource
     {
@@ -711,6 +713,7 @@ namespace Azure.ResourceManager.Monitor
         public MonitorPrivateLinkResourceData() { }
         public Azure.Core.ResourceIdentifier GroupId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
+        public System.Collections.Generic.IList<string> RequiredZoneNames { get { throw null; } }
     }
     public partial class PrivateLinkScopeCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Monitor.PrivateLinkScopeResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.PrivateLinkScopeResource>, System.Collections.IEnumerable
     {
@@ -729,7 +732,8 @@ namespace Azure.ResourceManager.Monitor
     }
     public partial class PrivateLinkScopeData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public PrivateLinkScopeData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public PrivateLinkScopeData(Azure.Core.AzureLocation location, Azure.ResourceManager.Monitor.Models.AccessModeSettings accessModeSettings) : base (default(Azure.Core.AzureLocation)) { }
+        public Azure.ResourceManager.Monitor.Models.AccessModeSettings AccessModeSettings { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Monitor.MonitorPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
     }
@@ -799,11 +803,11 @@ namespace Azure.ResourceManager.Monitor
     }
     public partial class VmInsightsOnboardingStatusData : Azure.ResourceManager.Models.ResourceData
     {
-        public VmInsightsOnboardingStatusData() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.DataContainer> Data { get { throw null; } }
-        public Azure.ResourceManager.Monitor.Models.DataStatus? DataStatus { get { throw null; } set { } }
-        public Azure.ResourceManager.Monitor.Models.OnboardingStatus? OnboardingStatus { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
+        internal VmInsightsOnboardingStatusData() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Monitor.Models.DataContainer> Data { get { throw null; } }
+        public Azure.ResourceManager.Monitor.Models.DataStatus? DataStatus { get { throw null; } }
+        public Azure.ResourceManager.Monitor.Models.OnboardingStatus? OnboardingStatus { get { throw null; } }
+        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
     }
     public partial class VmInsightsOnboardingStatusResource : Azure.ResourceManager.ArmResource
     {
@@ -818,6 +822,38 @@ namespace Azure.ResourceManager.Monitor
 }
 namespace Azure.ResourceManager.Monitor.Models
 {
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AccessMode : System.IEquatable<Azure.ResourceManager.Monitor.Models.AccessMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AccessMode(string value) { throw null; }
+        public static Azure.ResourceManager.Monitor.Models.AccessMode Open { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Models.AccessMode PrivateOnly { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Monitor.Models.AccessMode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Monitor.Models.AccessMode left, Azure.ResourceManager.Monitor.Models.AccessMode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Monitor.Models.AccessMode (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Monitor.Models.AccessMode left, Azure.ResourceManager.Monitor.Models.AccessMode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class AccessModeSettings
+    {
+        public AccessModeSettings(Azure.ResourceManager.Monitor.Models.AccessMode queryAccessMode, Azure.ResourceManager.Monitor.Models.AccessMode ingestionAccessMode) { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.AccessModeSettingsExclusion> Exclusions { get { throw null; } }
+        public Azure.ResourceManager.Monitor.Models.AccessMode IngestionAccessMode { get { throw null; } set { } }
+        public Azure.ResourceManager.Monitor.Models.AccessMode QueryAccessMode { get { throw null; } set { } }
+    }
+    public partial class AccessModeSettingsExclusion
+    {
+        public AccessModeSettingsExclusion() { }
+        public Azure.ResourceManager.Monitor.Models.AccessMode? IngestionAccessMode { get { throw null; } set { } }
+        public string PrivateEndpointConnectionName { get { throw null; } set { } }
+        public Azure.ResourceManager.Monitor.Models.AccessMode? QueryAccessMode { get { throw null; } set { } }
+    }
     public partial class ActionGroupEnableContent
     {
         public ActionGroupEnableContent(string receiverName) { }
@@ -1042,15 +1078,15 @@ namespace Azure.ResourceManager.Monitor.Models
     }
     public partial class DataContainer
     {
-        public DataContainer(Azure.ResourceManager.Monitor.Models.DataContainerWorkspace workspace) { }
-        public Azure.ResourceManager.Monitor.Models.DataContainerWorkspace Workspace { get { throw null; } set { } }
+        internal DataContainer() { }
+        public Azure.ResourceManager.Monitor.Models.DataContainerWorkspace Workspace { get { throw null; } }
     }
     public partial class DataContainerWorkspace
     {
-        public DataContainerWorkspace(Azure.Core.ResourceIdentifier id, Azure.Core.AzureLocation location, string customerId) { }
-        public string CustomerId { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
-        public Azure.Core.AzureLocation Location { get { throw null; } set { } }
+        internal DataContainerWorkspace() { }
+        public string CustomerId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
+        public Azure.Core.AzureLocation Location { get { throw null; } }
     }
     public partial class DataFlow
     {
@@ -1277,6 +1313,7 @@ namespace Azure.ResourceManager.Monitor.Models
     {
         public LogSettings(bool isEnabled) { }
         public string Category { get { throw null; } set { } }
+        public string CategoryGroup { get { throw null; } set { } }
         public bool IsEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.Monitor.Models.RetentionPolicy RetentionPolicy { get { throw null; } set { } }
     }
@@ -1469,10 +1506,23 @@ namespace Azure.ResourceManager.Monitor.Models
         public string Name { get { throw null; } set { } }
         public bool? UseCommonAlertSchema { get { throw null; } set { } }
     }
-    public enum MonitorCategoryType
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MonitorCategoryType : System.IEquatable<Azure.ResourceManager.Monitor.Models.MonitorCategoryType>
     {
-        Metrics = 0,
-        Logs = 1,
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MonitorCategoryType(string value) { throw null; }
+        public static Azure.ResourceManager.Monitor.Models.MonitorCategoryType Logs { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Models.MonitorCategoryType Metrics { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Monitor.Models.MonitorCategoryType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Monitor.Models.MonitorCategoryType left, Azure.ResourceManager.Monitor.Models.MonitorCategoryType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Monitor.Models.MonitorCategoryType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Monitor.Models.MonitorCategoryType left, Azure.ResourceManager.Monitor.Models.MonitorCategoryType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public enum MonitorConditionOperator
     {
@@ -1609,6 +1659,45 @@ namespace Azure.ResourceManager.Monitor.Models
         public static bool operator !=(Azure.ResourceManager.Monitor.Models.MonitorOperator left, Azure.ResourceManager.Monitor.Models.MonitorOperator right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MonitorPrivateEndpointConnectionProvisioningState : System.IEquatable<Azure.ResourceManager.Monitor.Models.MonitorPrivateEndpointConnectionProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MonitorPrivateEndpointConnectionProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.Monitor.Models.MonitorPrivateEndpointConnectionProvisioningState Creating { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Models.MonitorPrivateEndpointConnectionProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Models.MonitorPrivateEndpointConnectionProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Models.MonitorPrivateEndpointConnectionProvisioningState Succeeded { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Monitor.Models.MonitorPrivateEndpointConnectionProvisioningState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Monitor.Models.MonitorPrivateEndpointConnectionProvisioningState left, Azure.ResourceManager.Monitor.Models.MonitorPrivateEndpointConnectionProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Monitor.Models.MonitorPrivateEndpointConnectionProvisioningState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Monitor.Models.MonitorPrivateEndpointConnectionProvisioningState left, Azure.ResourceManager.Monitor.Models.MonitorPrivateEndpointConnectionProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MonitorPrivateEndpointServiceConnectionStatus : System.IEquatable<Azure.ResourceManager.Monitor.Models.MonitorPrivateEndpointServiceConnectionStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MonitorPrivateEndpointServiceConnectionStatus(string value) { throw null; }
+        public static Azure.ResourceManager.Monitor.Models.MonitorPrivateEndpointServiceConnectionStatus Approved { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Models.MonitorPrivateEndpointServiceConnectionStatus Pending { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Models.MonitorPrivateEndpointServiceConnectionStatus Rejected { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Monitor.Models.MonitorPrivateEndpointServiceConnectionStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Monitor.Models.MonitorPrivateEndpointServiceConnectionStatus left, Azure.ResourceManager.Monitor.Models.MonitorPrivateEndpointServiceConnectionStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Monitor.Models.MonitorPrivateEndpointServiceConnectionStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Monitor.Models.MonitorPrivateEndpointServiceConnectionStatus left, Azure.ResourceManager.Monitor.Models.MonitorPrivateEndpointServiceConnectionStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class MonitorPrivateLinkScopeOperationStatus
     {
         internal MonitorPrivateLinkScopeOperationStatus() { }
@@ -1619,12 +1708,12 @@ namespace Azure.ResourceManager.Monitor.Models
         public System.DateTimeOffset? StartOn { get { throw null; } }
         public string Status { get { throw null; } }
     }
-    public partial class MonitorPrivateLinkServiceConnectionStateProperty
+    public partial class MonitorPrivateLinkServiceConnectionState
     {
-        public MonitorPrivateLinkServiceConnectionStateProperty(string status, string description) { }
-        public string ActionsRequired { get { throw null; } }
+        public MonitorPrivateLinkServiceConnectionState() { }
+        public string ActionsRequired { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
-        public string Status { get { throw null; } set { } }
+        public Azure.ResourceManager.Monitor.Models.MonitorPrivateEndpointServiceConnectionStatus? Status { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MonitorProvisioningState : System.IEquatable<Azure.ResourceManager.Monitor.Models.MonitorProvisioningState>
