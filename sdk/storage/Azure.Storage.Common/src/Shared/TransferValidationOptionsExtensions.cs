@@ -13,6 +13,9 @@ namespace Azure.Storage
                 return ValidationAlgorithm.StorageCrc64;
 #elif FileSDK // file shares don't support crc64
                 return ValidationAlgorithm.MD5;
+#else
+                throw new System.NotSupportedException(
+                    $"{typeof(TransferValidationOptionsExtensions).FullName}.{nameof(ResolveAuto)} is not supported.");
 #endif
             }
             return validationAlgorithm;
