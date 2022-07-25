@@ -375,15 +375,22 @@ function Get-ResourceProviderFromReadme($readmeFile) {
     $pathArray = $readmeFile.Split("/");
 
     if ( $pathArray.Count -lt 3) {
-        Write-Error "Error: invalid readme file path. A valid readme file path should contain specName and serviceType and be of the form <specName>/<serviceType>/readme.md, e.g. specification/deviceupdate/data-plane/readme.md"
-        exit 1
+        Throw "Error: invalid readme file path. A valid readme file path should contain specName and serviceType and be of the form <specName>/<serviceType>/readme.md, e.g. specification/deviceupdate/data-plane/readme.md"
     }
 
-    $specName = $pathArray[-3]
-    $serviceType = $pathArray[-2]
-    Write-Host "specName: $specName, serviceType: $serviceType"
+    $index = [array]::indexof($pathArray, "data-plane")
+    if ($index -eq -1) {
+        $index = [array]::indexof($pathArray, "resource-manager")
+    }
+    if ($index -ne -1) {
+        $specName = $pathArray[$index-1]
+        $serviceType = $pathArray[$index]
+        Write-Host "specName: $specName, serviceType: $serviceType"
 
-    return $specName, $serviceType
+        return $specName, $serviceType
+    }
+
+    Throw "Fail to retrive the service name and type."
 }
 
 <#
