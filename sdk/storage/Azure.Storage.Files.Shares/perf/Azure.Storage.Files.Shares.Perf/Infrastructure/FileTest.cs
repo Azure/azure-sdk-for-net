@@ -21,7 +21,7 @@ namespace Azure.Storage.Files.Shares.Perf
         /// <param name="singletonFile">Whether to use a global blob vs individual blobs.</param>
         public FileTest(TOptions options, bool createFile, bool singletonFile) : base(options)
         {
-            FileName = "Azure.Storage.Blobs.Perf.BlobTest" + (singletonFile ? "" : $"-{Guid.NewGuid()}");
+            FileName = "Azure.Storage.Files.Shares.Perf.FileTest" + (singletonFile ? "" : $"-{Guid.NewGuid()}");
             FileClient = ShareClient.GetRootDirectoryClient().GetFileClient(FileName);
 
             _createFile = createFile;
@@ -50,6 +50,7 @@ namespace Azure.Storage.Files.Shares.Perf
         {
             using Stream stream = RandomStream.Create(Options.Size);
             // No need to delete file in cleanup, since ContainerTest.GlobalCleanup() deletes the whole container
+            FileClient.Create(Options.Size);
             await FileClient.UploadAsync(stream);
         }
     }
