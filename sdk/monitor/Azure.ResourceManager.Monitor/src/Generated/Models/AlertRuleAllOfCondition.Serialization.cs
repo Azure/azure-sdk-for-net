@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    internal partial class ActivityLogAlertAllOfCondition : IUtf8JsonSerializable
+    internal partial class AlertRuleAllOfCondition : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -26,23 +26,23 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteEndObject();
         }
 
-        internal static ActivityLogAlertAllOfCondition DeserializeActivityLogAlertAllOfCondition(JsonElement element)
+        internal static AlertRuleAllOfCondition DeserializeAlertRuleAllOfCondition(JsonElement element)
         {
-            IList<ActivityLogAlertLeafCondition> allOf = default;
+            IList<ActivityLogAlertAnyOfOrLeafCondition> allOf = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allOf"))
                 {
-                    List<ActivityLogAlertLeafCondition> array = new List<ActivityLogAlertLeafCondition>();
+                    List<ActivityLogAlertAnyOfOrLeafCondition> array = new List<ActivityLogAlertAnyOfOrLeafCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ActivityLogAlertLeafCondition.DeserializeActivityLogAlertLeafCondition(item));
+                        array.Add(ActivityLogAlertAnyOfOrLeafCondition.DeserializeActivityLogAlertAnyOfOrLeafCondition(item));
                     }
                     allOf = array;
                     continue;
                 }
             }
-            return new ActivityLogAlertAllOfCondition(allOf);
+            return new AlertRuleAllOfCondition(allOf);
         }
     }
 }

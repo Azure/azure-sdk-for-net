@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Monitor
     {
         public ActivityLogAlertData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.ActivityLogAlertActionGroup> ActionsActionGroups { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.ActivityLogAlertLeafCondition> ConditionAllOf { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.ActivityLogAlertAnyOfOrLeafCondition> ConditionAllOf { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public bool? IsEnabled { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Scopes { get { throw null; } }
@@ -834,11 +834,10 @@ namespace Azure.ResourceManager.Monitor.Models
         public Azure.Core.ResourceIdentifier ActionGroupId { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> WebhookProperties { get { throw null; } }
     }
-    public partial class ActivityLogAlertLeafCondition
+    public partial class ActivityLogAlertAnyOfOrLeafCondition : Azure.ResourceManager.Monitor.Models.AlertRuleLeafCondition
     {
-        public ActivityLogAlertLeafCondition(string field, string equalsValue) { }
-        public string EqualsValue { get { throw null; } set { } }
-        public string Field { get { throw null; } set { } }
+        public ActivityLogAlertAnyOfOrLeafCondition() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.AlertRuleLeafCondition> AnyOf { get { throw null; } }
     }
     public partial class ActivityLogAlertPatch
     {
@@ -874,6 +873,13 @@ namespace Azure.ResourceManager.Monitor.Models
         public Azure.ResourceManager.Monitor.Models.AlertSeverity Severity { get { throw null; } set { } }
         public int? ThrottlingInMin { get { throw null; } set { } }
         public Azure.ResourceManager.Monitor.Models.TriggerCondition Trigger { get { throw null; } set { } }
+    }
+    public partial class AlertRuleLeafCondition
+    {
+        public AlertRuleLeafCondition() { }
+        public System.Collections.Generic.IList<string> ContainsAny { get { throw null; } }
+        public string EqualsValue { get { throw null; } set { } }
+        public string Field { get { throw null; } set { } }
     }
     public partial class AlertRulePatch
     {

@@ -11,25 +11,25 @@ using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> A list of activity log alerts. </summary>
-    internal partial class ActivityLogAlertList
+    /// <summary> A list of Activity Log Alert rules. </summary>
+    internal partial class AlertRuleList
     {
-        /// <summary> Initializes a new instance of ActivityLogAlertList. </summary>
-        internal ActivityLogAlertList()
+        /// <summary> Initializes a new instance of AlertRuleList. </summary>
+        internal AlertRuleList()
         {
             Value = new ChangeTrackingList<ActivityLogAlertData>();
         }
 
-        /// <summary> Initializes a new instance of ActivityLogAlertList. </summary>
-        /// <param name="value"> The list of activity log alerts. </param>
+        /// <summary> Initializes a new instance of AlertRuleList. </summary>
+        /// <param name="value"> The list of Activity Log Alert rules. </param>
         /// <param name="nextLink"> Provides the link to retrieve the next set of elements. </param>
-        internal ActivityLogAlertList(IReadOnlyList<ActivityLogAlertData> value, string nextLink)
+        internal AlertRuleList(IReadOnlyList<ActivityLogAlertData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> The list of activity log alerts. </summary>
+        /// <summary> The list of Activity Log Alert rules. </summary>
         public IReadOnlyList<ActivityLogAlertData> Value { get; }
         /// <summary> Provides the link to retrieve the next set of elements. </summary>
         public string NextLink { get; }

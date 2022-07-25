@@ -662,8 +662,8 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary>
-        /// Get a list of all activity log alerts in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/microsoft.insights/activityLogAlerts
+        /// Get a list of all Activity Log Alert rules in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/activityLogAlerts
         /// Operation Id: ActivityLogAlerts_ListBySubscriptionId
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -677,7 +677,7 @@ namespace Azure.ResourceManager.Monitor
                 try
                 {
                     var response = await ActivityLogAlertRestClient.ListBySubscriptionIdAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ActivityLogAlertResource(Client, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ActivityLogAlertResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -685,12 +685,27 @@ namespace Azure.ResourceManager.Monitor
                     throw;
                 }
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            async Task<Page<ActivityLogAlertResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = ActivityLogAlertClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetActivityLogAlerts");
+                scope.Start();
+                try
+                {
+                    var response = await ActivityLogAlertRestClient.ListBySubscriptionIdNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ActivityLogAlertResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary>
-        /// Get a list of all activity log alerts in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/microsoft.insights/activityLogAlerts
+        /// Get a list of all Activity Log Alert rules in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/activityLogAlerts
         /// Operation Id: ActivityLogAlerts_ListBySubscriptionId
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -704,7 +719,7 @@ namespace Azure.ResourceManager.Monitor
                 try
                 {
                     var response = ActivityLogAlertRestClient.ListBySubscriptionId(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ActivityLogAlertResource(Client, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ActivityLogAlertResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -712,7 +727,22 @@ namespace Azure.ResourceManager.Monitor
                     throw;
                 }
             }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            Page<ActivityLogAlertResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = ActivityLogAlertClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetActivityLogAlerts");
+                scope.Start();
+                try
+                {
+                    var response = ActivityLogAlertRestClient.ListBySubscriptionIdNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ActivityLogAlertResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary>

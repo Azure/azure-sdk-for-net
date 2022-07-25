@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="location"> The location. </param>
         /// <param name="profiles"> the collection of automatic scaling profiles that specify different scaling parameters for different time periods. A maximum of 20 profiles can be specified. </param>
         /// <param name="notifications"> the collection of notifications. </param>
-        /// <param name="isEnabled"> the enabled flag. Specifies whether automatic scaling is enabled for the resource. The default value is &apos;true&apos;. </param>
+        /// <param name="isEnabled"> the enabled flag. Specifies whether automatic scaling is enabled for the resource. The default value is &apos;false&apos;. </param>
         /// <param name="autoscaleSettingName"> the name of the autoscale setting. </param>
         /// <param name="targetResourceId"> the resource identifier of the resource that the autoscale setting should be added to. </param>
         /// <param name="targetResourceLocation"> the location of the resource that the autoscale setting should be added to. </param>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Monitor
         public IList<AutoscaleProfile> Profiles { get; }
         /// <summary> the collection of notifications. </summary>
         public IList<AutoscaleNotification> Notifications { get; set; }
-        /// <summary> the enabled flag. Specifies whether automatic scaling is enabled for the resource. The default value is &apos;true&apos;. </summary>
+        /// <summary> the enabled flag. Specifies whether automatic scaling is enabled for the resource. The default value is &apos;false&apos;. </summary>
         public bool? IsEnabled { get; set; }
         /// <summary> the name of the autoscale setting. </summary>
         public string AutoscaleSettingName { get; set; }

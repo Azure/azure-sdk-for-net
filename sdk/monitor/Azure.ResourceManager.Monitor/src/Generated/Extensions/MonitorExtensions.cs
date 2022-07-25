@@ -396,8 +396,8 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary>
-        /// Get a list of all activity log alerts in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/microsoft.insights/activityLogAlerts
+        /// Get a list of all Activity Log Alert rules in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/activityLogAlerts
         /// Operation Id: ActivityLogAlerts_ListBySubscriptionId
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -409,8 +409,8 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary>
-        /// Get a list of all activity log alerts in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/microsoft.insights/activityLogAlerts
+        /// Get a list of all Activity Log Alert rules in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/activityLogAlerts
         /// Operation Id: ActivityLogAlerts_ListBySubscriptionId
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -731,12 +731,12 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary>
-        /// Get an activity log alert.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
+        /// Get an Activity Log Alert rule.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/activityLogAlerts/{activityLogAlertName}
         /// Operation Id: ActivityLogAlerts_Get
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="activityLogAlertName"> The name of the activity log alert. </param>
+        /// <param name="activityLogAlertName"> The name of the Activity Log Alert rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="activityLogAlertName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="activityLogAlertName"/> is null. </exception>
@@ -747,12 +747,12 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary>
-        /// Get an activity log alert.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
+        /// Get an Activity Log Alert rule.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/activityLogAlerts/{activityLogAlertName}
         /// Operation Id: ActivityLogAlerts_Get
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="activityLogAlertName"> The name of the activity log alert. </param>
+        /// <param name="activityLogAlertName"> The name of the Activity Log Alert rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="activityLogAlertName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="activityLogAlertName"/> is null. </exception>
