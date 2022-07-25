@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Communication.CallingServer
 {
-    /// <summary> The call connection state. </summary>
+    /// <summary> The state of the call connection. </summary>
     public readonly partial struct CallConnectionState : IEquatable<CallConnectionState>
     {
         private readonly string _value;
@@ -22,18 +22,24 @@ namespace Azure.Communication.CallingServer
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string IncomingValue = "incoming";
+        private const string UnknownValue = "unknown";
         private const string ConnectingValue = "connecting";
         private const string ConnectedValue = "connected";
+        private const string TransferringValue = "transferring";
+        private const string TransferAcceptedValue = "transferAccepted";
         private const string DisconnectingValue = "disconnecting";
         private const string DisconnectedValue = "disconnected";
 
-        /// <summary> incoming. </summary>
-        public static CallConnectionState Incoming { get; } = new CallConnectionState(IncomingValue);
+        /// <summary> unknown. </summary>
+        public static CallConnectionState Unknown { get; } = new CallConnectionState(UnknownValue);
         /// <summary> connecting. </summary>
         public static CallConnectionState Connecting { get; } = new CallConnectionState(ConnectingValue);
         /// <summary> connected. </summary>
         public static CallConnectionState Connected { get; } = new CallConnectionState(ConnectedValue);
+        /// <summary> transferring. </summary>
+        public static CallConnectionState Transferring { get; } = new CallConnectionState(TransferringValue);
+        /// <summary> transferAccepted. </summary>
+        public static CallConnectionState TransferAccepted { get; } = new CallConnectionState(TransferAcceptedValue);
         /// <summary> disconnecting. </summary>
         public static CallConnectionState Disconnecting { get; } = new CallConnectionState(DisconnectingValue);
         /// <summary> disconnected. </summary>

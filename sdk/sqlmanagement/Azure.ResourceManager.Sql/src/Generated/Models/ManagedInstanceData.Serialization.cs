@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("dnsZonePartner");
                 writer.WriteStringValue(DnsZonePartner);
             }
-            if (Optional.IsDefined(PublicDataEndpointEnabled))
+            if (Optional.IsDefined(IsPublicDataEndpointEnabled))
             {
                 writer.WritePropertyName("publicDataEndpointEnabled");
-                writer.WriteBooleanValue(PublicDataEndpointEnabled.Value);
+                writer.WriteBooleanValue(IsPublicDataEndpointEnabled.Value);
             }
             if (Optional.IsDefined(SourceManagedInstanceId))
             {
@@ -135,10 +135,10 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("requestedBackupStorageRedundancy");
                 writer.WriteStringValue(RequestedBackupStorageRedundancy.Value.ToString());
             }
-            if (Optional.IsDefined(ZoneRedundant))
+            if (Optional.IsDefined(IsZoneRedundant))
             {
                 writer.WritePropertyName("zoneRedundant");
-                writer.WriteBooleanValue(ZoneRedundant.Value);
+                writer.WriteBooleanValue(IsZoneRedundant.Value);
             }
             if (Optional.IsDefined(PrimaryUserAssignedIdentityId))
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Sql
             if (Optional.IsDefined(KeyId))
             {
                 writer.WritePropertyName("keyId");
-                writer.WriteStringValue(KeyId);
+                writer.WriteStringValue(KeyId.AbsoluteUri);
             }
             if (Optional.IsDefined(Administrators))
             {
@@ -196,13 +196,13 @@ namespace Azure.ResourceManager.Sql
             Optional<ResourceIdentifier> maintenanceConfigurationId = default;
             Optional<IReadOnlyList<ManagedInstancePecProperty>> privateEndpointConnections = default;
             Optional<string> minimalTlsVersion = default;
-            Optional<BackupStorageRedundancy> currentBackupStorageRedundancy = default;
-            Optional<BackupStorageRedundancy> requestedBackupStorageRedundancy = default;
+            Optional<SqlBackupStorageRedundancy> currentBackupStorageRedundancy = default;
+            Optional<SqlBackupStorageRedundancy> requestedBackupStorageRedundancy = default;
             Optional<bool> zoneRedundant = default;
             Optional<ResourceIdentifier> primaryUserAssignedIdentityId = default;
-            Optional<string> keyId = default;
+            Optional<Uri> keyId = default;
             Optional<ManagedInstanceExternalAdministrator> administrators = default;
-            Optional<ServicePrincipal> servicePrincipal = default;
+            Optional<SqlServicePrincipal> servicePrincipal = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"))
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.Sql
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            currentBackupStorageRedundancy = new BackupStorageRedundancy(property0.Value.GetString());
+                            currentBackupStorageRedundancy = new SqlBackupStorageRedundancy(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("requestedBackupStorageRedundancy"))
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.Sql
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            requestedBackupStorageRedundancy = new BackupStorageRedundancy(property0.Value.GetString());
+                            requestedBackupStorageRedundancy = new SqlBackupStorageRedundancy(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("zoneRedundant"))
@@ -502,7 +502,12 @@ namespace Azure.ResourceManager.Sql
                         }
                         if (property0.NameEquals("keyId"))
                         {
-                            keyId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                keyId = null;
+                                continue;
+                            }
+                            keyId = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("administrators"))
@@ -522,7 +527,7 @@ namespace Azure.ResourceManager.Sql
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            servicePrincipal = ServicePrincipal.DeserializeServicePrincipal(property0.Value);
+                            servicePrincipal = SqlServicePrincipal.DeserializeSqlServicePrincipal(property0.Value);
                             continue;
                         }
                     }

@@ -16,21 +16,21 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of BlobInventoryPolicyFilter. </summary>
         public BlobInventoryPolicyFilter()
         {
-            PrefixMatch = new ChangeTrackingList<string>();
+            IncludePrefix = new ChangeTrackingList<string>();
             ExcludePrefix = new ChangeTrackingList<string>();
             BlobTypes = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of BlobInventoryPolicyFilter. </summary>
-        /// <param name="prefixMatch"> An array of strings with maximum 10 blob prefixes to be included in the inventory. </param>
+        /// <param name="includePrefix"> An array of strings with maximum 10 blob prefixes to be included in the inventory. </param>
         /// <param name="excludePrefix"> An array of strings with maximum 10 blob prefixes to be excluded from the inventory. </param>
         /// <param name="blobTypes"> An array of predefined enum values. Valid values include blockBlob, appendBlob, pageBlob. Hns accounts does not support pageBlobs. This field is required when definition.objectType property is set to &apos;Blob&apos;. </param>
         /// <param name="includeBlobVersions"> Includes blob versions in blob inventory when value is set to true. The definition.schemaFields values &apos;VersionId and IsCurrentVersion&apos; are required if this property is set to true, else they must be excluded. </param>
         /// <param name="includeSnapshots"> Includes blob snapshots in blob inventory when value is set to true. The definition.schemaFields value &apos;Snapshot&apos; is required if this property is set to true, else it must be excluded. </param>
         /// <param name="includeDeleted"> For &apos;Container&apos; definition.objectType the definition.schemaFields must include &apos;Deleted, Version, DeletedTime and RemainingRetentionDays&apos;. For &apos;Blob&apos; definition.objectType and HNS enabled storage accounts the definition.schemaFields must include &apos;DeletionId, Deleted, DeletedTime and RemainingRetentionDays&apos; and for Hns disabled accounts the definition.schemaFields must include &apos;Deleted and RemainingRetentionDays&apos;, else it must be excluded. </param>
-        internal BlobInventoryPolicyFilter(IList<string> prefixMatch, IList<string> excludePrefix, IList<string> blobTypes, bool? includeBlobVersions, bool? includeSnapshots, bool? includeDeleted)
+        internal BlobInventoryPolicyFilter(IList<string> includePrefix, IList<string> excludePrefix, IList<string> blobTypes, bool? includeBlobVersions, bool? includeSnapshots, bool? includeDeleted)
         {
-            PrefixMatch = prefixMatch;
+            IncludePrefix = includePrefix;
             ExcludePrefix = excludePrefix;
             BlobTypes = blobTypes;
             IncludeBlobVersions = includeBlobVersions;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> An array of strings with maximum 10 blob prefixes to be included in the inventory. </summary>
-        public IList<string> PrefixMatch { get; }
+        public IList<string> IncludePrefix { get; }
         /// <summary> An array of strings with maximum 10 blob prefixes to be excluded from the inventory. </summary>
         public IList<string> ExcludePrefix { get; }
         /// <summary> An array of predefined enum values. Valid values include blockBlob, appendBlob, pageBlob. Hns accounts does not support pageBlobs. This field is required when definition.objectType property is set to &apos;Blob&apos;. </summary>

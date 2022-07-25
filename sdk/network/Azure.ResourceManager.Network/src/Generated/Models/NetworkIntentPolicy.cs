@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        internal NetworkIntentPolicy(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? eTag) : base(id, name, resourceType, location, tags)
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal NetworkIntentPolicy(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag) : base(id, name, resourceType, location, tags)
         {
-            ETag = eTag;
+            ETag = etag;
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>

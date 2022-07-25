@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.Security.ConfidentialLedger
 {
     /// <summary>
-    /// Tracks the status of a call to <see cref="ConfidentialLedgerClient.PostLedgerEntry(Azure.Core.RequestContent,string,bool,Azure.RequestContext)"/> and <see cref="ConfidentialLedgerClient.PostLedgerEntryAsync(Azure.Core.RequestContent,string,bool,Azure.RequestContext)"/>
+    /// Tracks the status of a call to <see cref="ConfidentialLedgerClient.PostLedgerEntry"/> and <see cref="ConfidentialLedgerClient.PostLedgerEntryAsync"/>
     /// until completion.
     /// </summary>
-    public class PostLedgerEntryOperation : Operation, IOperation
+    internal class PostLedgerEntryOperation : Operation, IOperation
     {
         private readonly ConfidentialLedgerClient _client;
         private OperationInternal _operationInternal;
@@ -27,7 +27,7 @@ namespace Azure.Security.ConfidentialLedger
         /// </summary>
         /// <param name="client"> Tje <see cref="ConfidentialLedgerClient"/>. </param>
         /// <param name="transactionId"> The transaction id from a previous call to
-        /// <see cref="ConfidentialLedgerClient.PostLedgerEntry(Azure.Core.RequestContent,string,bool,Azure.RequestContext)"/>.</param>
+        /// <see cref="ConfidentialLedgerClient.PostLedgerEntry"/>.</param>
         public PostLedgerEntryOperation(ConfidentialLedgerClient client, string transactionId)
         {
             _client = client;

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.EventHubs.Models;
 using Azure.ResourceManager.Models;
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="schemaCompatibility"></param>
         /// <param name="schemaType"></param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal EventHubsSchemaGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? updatedAtUtc, DateTimeOffset? createdAtUtc, Guid? eTag, IDictionary<string, string> groupProperties, SchemaCompatibility? schemaCompatibility, SchemaType? schemaType, AzureLocation? location) : base(id, name, resourceType, systemData)
+        internal EventHubsSchemaGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? updatedAtUtc, DateTimeOffset? createdAtUtc, ETag? eTag, IDictionary<string, string> groupProperties, EventHubsSchemaCompatibility? schemaCompatibility, EventHubsSchemaType? schemaType, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             UpdatedAtUtc = updatedAtUtc;
             CreatedAtUtc = createdAtUtc;
@@ -50,13 +51,13 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Exact time the Schema Group was created. </summary>
         public DateTimeOffset? CreatedAtUtc { get; }
         /// <summary> The ETag value. </summary>
-        public Guid? ETag { get; }
+        public ETag? ETag { get; }
         /// <summary> dictionary object for SchemaGroup group properties. </summary>
         public IDictionary<string, string> GroupProperties { get; }
         /// <summary> Gets or sets the schema compatibility. </summary>
-        public SchemaCompatibility? SchemaCompatibility { get; set; }
+        public EventHubsSchemaCompatibility? SchemaCompatibility { get; set; }
         /// <summary> Gets or sets the schema type. </summary>
-        public SchemaType? SchemaType { get; set; }
+        public EventHubsSchemaType? SchemaType { get; set; }
         /// <summary> The geo-location where the resource lives. </summary>
         public AzureLocation? Location { get; }
     }

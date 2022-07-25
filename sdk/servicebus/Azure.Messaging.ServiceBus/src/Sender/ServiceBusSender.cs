@@ -20,6 +20,15 @@ namespace Azure.Messaging.ServiceBus
     ///   A client responsible for sending <see cref="ServiceBusMessage" /> to a specific Service Bus entity
     ///   (Queue or Topic). It can be used for both session and non-session entities. It is constructed by calling <see cref="ServiceBusClient.CreateSender(string)"/>.
     /// </summary>
+    /// <remarks>
+    ///   The <see cref="ServiceBusSender" /> is safe to cache and use for the lifetime of an
+    ///   application or until the <see cref="ServiceBusClient" /> that it was created by is disposed.
+    ///   Caching the sender is recommended when the application is publishing messages
+    ///   regularly or semi-regularly.  The sender is responsible for ensuring efficient network, CPU,
+    ///   and memory use.  Calling <see cref="DisposeAsync" /> on the associated <see cref="ServiceBusClient" />
+    ///   as the application is shutting down will ensure that network resources and other unmanaged objects used
+    ///   by the sender are properly cleaned up.
+    ///</remarks>
     ///
     public class ServiceBusSender : IAsyncDisposable
     {
@@ -155,6 +164,10 @@ namespace Azure.Messaging.ServiceBus
         ///   For more information on service limits, see
         ///   <see href="https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-quotas#messaging-quotas"/>.
         /// </exception>
+        /// <exception cref="System.Runtime.Serialization.SerializationException">
+        ///   Occurs when the <paramref name="message"/> has a member in its <see cref="ServiceBusMessage.ApplicationProperties"/> collection that is an
+        ///   unsupported type for serialization.  See the <see cref="ServiceBusMessage.ApplicationProperties"/> remarks for details.
+        /// </exception>
         public virtual async Task SendMessageAsync(
             ServiceBusMessage message,
             CancellationToken cancellationToken = default)
@@ -181,6 +194,10 @@ namespace Azure.Messaging.ServiceBus
         ///   The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.MessageSizeExceeded"/> in this case.
         ///   For more information on service limits, see
         ///   <see href="https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-quotas#messaging-quotas"/>.
+        /// </exception>
+        /// <exception cref="System.Runtime.Serialization.SerializationException">
+        ///   Occurs when one of the <paramref name="messages"/> has a member in its <see cref="ServiceBusMessage.ApplicationProperties"/> collection that is an
+        ///   unsupported type for serialization.  See the <see cref="ServiceBusMessage.ApplicationProperties"/> remarks for details.
         /// </exception>
         public virtual async Task SendMessagesAsync(
             IEnumerable<ServiceBusMessage> messages,
@@ -364,6 +381,11 @@ namespace Azure.Messaging.ServiceBus
         /// <see cref="SendMessagesAsync(ServiceBusMessageBatch, CancellationToken)"/>.</remarks>
         ///
         /// <returns>The sequence number of the message that was scheduled.</returns>
+        ///
+        /// <exception cref="System.Runtime.Serialization.SerializationException">
+        ///   Occurs when the <paramref name="message"/> has a member in its <see cref="ServiceBusMessage.ApplicationProperties"/> collection that is an
+        ///   unsupported type for serialization.  See the <see cref="ServiceBusMessage.ApplicationProperties"/> remarks for details.
+        /// </exception>
         public virtual async Task<long> ScheduleMessageAsync(
             ServiceBusMessage message,
             DateTimeOffset scheduledEnqueueTime,
@@ -395,6 +417,11 @@ namespace Azure.Messaging.ServiceBus
         /// <see cref="SendMessagesAsync(ServiceBusMessageBatch, CancellationToken)"/>.</remarks>
         ///
         /// <returns>The sequence number of the message that was scheduled.</returns>
+        ///
+        /// <exception cref="System.Runtime.Serialization.SerializationException">
+        ///   Occurs when one of the <paramref name="messages"/> has a member in its <see cref="ServiceBusMessage.ApplicationProperties"/> collection that is an
+        ///   unsupported type for serialization.  See the <see cref="ServiceBusMessage.ApplicationProperties"/> remarks for details.
+        /// </exception>
         public virtual async Task<IReadOnlyList<long>> ScheduleMessagesAsync(
             IEnumerable<ServiceBusMessage> messages,
             DateTimeOffset scheduledEnqueueTime,

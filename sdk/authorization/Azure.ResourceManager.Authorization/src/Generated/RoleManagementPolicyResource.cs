@@ -94,8 +94,8 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<RoleManagementPolicyResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _roleManagementPolicyClientDiagnostics.CreateScope("RoleManagementPolicyResource.Get");
-            scope.Start();
+            using var scope0 = _roleManagementPolicyClientDiagnostics.CreateScope("RoleManagementPolicyResource.Get");
+            scope0.Start();
             try
             {
                 var response = await _roleManagementPolicyRestClient.GetAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Authorization
             }
             catch (Exception e)
             {
-                scope.Failed(e);
+                scope0.Failed(e);
                 throw;
             }
         }
@@ -118,8 +118,8 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<RoleManagementPolicyResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _roleManagementPolicyClientDiagnostics.CreateScope("RoleManagementPolicyResource.Get");
-            scope.Start();
+            using var scope0 = _roleManagementPolicyClientDiagnostics.CreateScope("RoleManagementPolicyResource.Get");
+            scope0.Start();
             try
             {
                 var response = _roleManagementPolicyRestClient.Get(Id.Parent, Id.Name, cancellationToken);
@@ -129,59 +129,7 @@ namespace Azure.ResourceManager.Authorization
             }
             catch (Exception e)
             {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Delete a role management policy
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleManagementPolicies/{roleManagementPolicyName}
-        /// Operation Id: RoleManagementPolicies_Delete
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _roleManagementPolicyClientDiagnostics.CreateScope("RoleManagementPolicyResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = await _roleManagementPolicyRestClient.DeleteAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AuthorizationArmOperation(response);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Delete a role management policy
-        /// Request Path: /{scope}/providers/Microsoft.Authorization/roleManagementPolicies/{roleManagementPolicyName}
-        /// Operation Id: RoleManagementPolicies_Delete
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _roleManagementPolicyClientDiagnostics.CreateScope("RoleManagementPolicyResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = _roleManagementPolicyRestClient.Delete(Id.Parent, Id.Name, cancellationToken);
-                var operation = new AuthorizationArmOperation(response);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
+                scope0.Failed(e);
                 throw;
             }
         }
@@ -198,8 +146,8 @@ namespace Azure.ResourceManager.Authorization
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _roleManagementPolicyClientDiagnostics.CreateScope("RoleManagementPolicyResource.Update");
-            scope.Start();
+            using var scope0 = _roleManagementPolicyClientDiagnostics.CreateScope("RoleManagementPolicyResource.Update");
+            scope0.Start();
             try
             {
                 var response = await _roleManagementPolicyRestClient.UpdateAsync(Id.Parent, Id.Name, data, cancellationToken).ConfigureAwait(false);
@@ -207,7 +155,7 @@ namespace Azure.ResourceManager.Authorization
             }
             catch (Exception e)
             {
-                scope.Failed(e);
+                scope0.Failed(e);
                 throw;
             }
         }
@@ -224,8 +172,8 @@ namespace Azure.ResourceManager.Authorization
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _roleManagementPolicyClientDiagnostics.CreateScope("RoleManagementPolicyResource.Update");
-            scope.Start();
+            using var scope0 = _roleManagementPolicyClientDiagnostics.CreateScope("RoleManagementPolicyResource.Update");
+            scope0.Start();
             try
             {
                 var response = _roleManagementPolicyRestClient.Update(Id.Parent, Id.Name, data, cancellationToken);
@@ -233,7 +181,7 @@ namespace Azure.ResourceManager.Authorization
             }
             catch (Exception e)
             {
-                scope.Failed(e);
+                scope0.Failed(e);
                 throw;
             }
         }

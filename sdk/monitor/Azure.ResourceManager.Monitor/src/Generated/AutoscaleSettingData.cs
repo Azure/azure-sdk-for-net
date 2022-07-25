@@ -41,16 +41,16 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="location"> The location. </param>
         /// <param name="profiles"> the collection of automatic scaling profiles that specify different scaling parameters for different time periods. A maximum of 20 profiles can be specified. </param>
         /// <param name="notifications"> the collection of notifications. </param>
-        /// <param name="enabled"> the enabled flag. Specifies whether automatic scaling is enabled for the resource. The default value is &apos;true&apos;. </param>
-        /// <param name="namePropertiesName"> the name of the autoscale setting. </param>
+        /// <param name="isEnabled"> the enabled flag. Specifies whether automatic scaling is enabled for the resource. The default value is &apos;true&apos;. </param>
+        /// <param name="autoscaleSettingName"> the name of the autoscale setting. </param>
         /// <param name="targetResourceId"> the resource identifier of the resource that the autoscale setting should be added to. </param>
         /// <param name="targetResourceLocation"> the location of the resource that the autoscale setting should be added to. </param>
-        internal AutoscaleSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IList<AutoscaleProfile> profiles, IList<AutoscaleNotification> notifications, bool? enabled, string namePropertiesName, string targetResourceId, string targetResourceLocation) : base(id, name, resourceType, systemData, tags, location)
+        internal AutoscaleSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IList<AutoscaleProfile> profiles, IList<AutoscaleNotification> notifications, bool? isEnabled, string autoscaleSettingName, ResourceIdentifier targetResourceId, AzureLocation? targetResourceLocation) : base(id, name, resourceType, systemData, tags, location)
         {
             Profiles = profiles;
             Notifications = notifications;
-            Enabled = enabled;
-            NamePropertiesName = namePropertiesName;
+            IsEnabled = isEnabled;
+            AutoscaleSettingName = autoscaleSettingName;
             TargetResourceId = targetResourceId;
             TargetResourceLocation = targetResourceLocation;
         }
@@ -60,12 +60,12 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> the collection of notifications. </summary>
         public IList<AutoscaleNotification> Notifications { get; set; }
         /// <summary> the enabled flag. Specifies whether automatic scaling is enabled for the resource. The default value is &apos;true&apos;. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
         /// <summary> the name of the autoscale setting. </summary>
-        public string NamePropertiesName { get; set; }
+        public string AutoscaleSettingName { get; set; }
         /// <summary> the resource identifier of the resource that the autoscale setting should be added to. </summary>
-        public string TargetResourceId { get; set; }
+        public ResourceIdentifier TargetResourceId { get; set; }
         /// <summary> the location of the resource that the autoscale setting should be added to. </summary>
-        public string TargetResourceLocation { get; set; }
+        public AzureLocation? TargetResourceLocation { get; set; }
     }
 }

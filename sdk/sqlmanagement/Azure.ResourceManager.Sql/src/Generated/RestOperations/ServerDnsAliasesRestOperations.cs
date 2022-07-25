@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="dnsAliasName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="dnsAliasName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ServerDnsAliasData>> GetAsync(string subscriptionId, string resourceGroupName, string serverName, string dnsAliasName, CancellationToken cancellationToken = default)
+        public async Task<Response<SqlServerDnsAliasData>> GetAsync(string subscriptionId, string resourceGroupName, string serverName, string dnsAliasName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -80,13 +80,13 @@ namespace Azure.ResourceManager.Sql
             {
                 case 200:
                     {
-                        ServerDnsAliasData value = default;
+                        SqlServerDnsAliasData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ServerDnsAliasData.DeserializeServerDnsAliasData(document.RootElement);
+                        value = SqlServerDnsAliasData.DeserializeSqlServerDnsAliasData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ServerDnsAliasData)null, message.Response);
+                    return Response.FromValue((SqlServerDnsAliasData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="dnsAliasName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="dnsAliasName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ServerDnsAliasData> Get(string subscriptionId, string resourceGroupName, string serverName, string dnsAliasName, CancellationToken cancellationToken = default)
+        public Response<SqlServerDnsAliasData> Get(string subscriptionId, string resourceGroupName, string serverName, string dnsAliasName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -113,13 +113,13 @@ namespace Azure.ResourceManager.Sql
             {
                 case 200:
                     {
-                        ServerDnsAliasData value = default;
+                        SqlServerDnsAliasData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ServerDnsAliasData.DeserializeServerDnsAliasData(document.RootElement);
+                        value = SqlServerDnsAliasData.DeserializeSqlServerDnsAliasData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ServerDnsAliasData)null, message.Response);
+                    return Response.FromValue((SqlServerDnsAliasData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

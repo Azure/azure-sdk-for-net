@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            ThroughputSettingsResource resource = default;
+            ThroughputSettingsResourceInfo resource = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"))
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         if (property0.NameEquals("resource"))
                         {
-                            resource = ThroughputSettingsResource.DeserializeThroughputSettingsResource(property0.Value);
+                            resource = ThroughputSettingsResourceInfo.DeserializeThroughputSettingsResourceInfo(property0.Value);
                             continue;
                         }
                     }

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Authorization.Models
             if (Optional.IsDefined(MaximumDuration))
             {
                 writer.WritePropertyName("maximumDuration");
-                writer.WriteStringValue(MaximumDuration.Value, "c");
+                writer.WriteStringValue(MaximumDuration.Value, "P");
             }
             if (Optional.IsDefined(Id))
             {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Authorization.Models
         {
             Optional<bool> isExpirationRequired = default;
             Optional<TimeSpan> maximumDuration = default;
-            Optional<string> id = default;
+            Optional<ResourceIdentifier> id = default;
             RoleManagementPolicyRuleType ruleType = default;
             Optional<RoleManagementPolicyRuleTarget> target = default;
             foreach (var property in element.EnumerateObject())
@@ -67,12 +67,17 @@ namespace Azure.ResourceManager.Authorization.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    maximumDuration = property.Value.GetTimeSpan("c");
+                    maximumDuration = property.Value.GetTimeSpan("P");
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("ruleType"))

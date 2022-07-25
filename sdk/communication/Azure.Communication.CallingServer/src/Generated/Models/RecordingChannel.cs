@@ -5,14 +5,47 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.Communication.CallingServer
 {
-    /// <summary> The channel type of a call recording. </summary>
-    public enum RecordingChannel
+    /// <summary> The channel type of call recording. </summary>
+    public readonly partial struct RecordingChannel : IEquatable<RecordingChannel>
     {
+        private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="RecordingChannel"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public RecordingChannel(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        private const string MixedValue = "mixed";
+        private const string UnmixedValue = "unmixed";
+
         /// <summary> mixed. </summary>
-        Mixed,
+        public static RecordingChannel Mixed { get; } = new RecordingChannel(MixedValue);
         /// <summary> unmixed. </summary>
-        Unmixed
+        public static RecordingChannel Unmixed { get; } = new RecordingChannel(UnmixedValue);
+        /// <summary> Determines if two <see cref="RecordingChannel"/> values are the same. </summary>
+        public static bool operator ==(RecordingChannel left, RecordingChannel right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="RecordingChannel"/> values are not the same. </summary>
+        public static bool operator !=(RecordingChannel left, RecordingChannel right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="RecordingChannel"/>. </summary>
+        public static implicit operator RecordingChannel(string value) => new RecordingChannel(value);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is RecordingChannel other && Equals(other);
+        /// <inheritdoc />
+        public bool Equals(RecordingChannel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        /// <inheritdoc />
+        public override string ToString() => _value;
     }
 }

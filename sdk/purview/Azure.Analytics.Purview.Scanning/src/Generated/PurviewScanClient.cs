@@ -78,6 +78,22 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetFilterAsync and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+        /// 
+        /// Response response = await client.GetFilterAsync();
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("excludeUriPrefixes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("includeUriPrefixes")[0].ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -115,6 +131,22 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetFilter and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+        /// 
+        /// Response response = client.GetFilter();
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("excludeUriPrefixes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("includeUriPrefixes")[0].ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -153,6 +185,46 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call CreateOrUpdateFilterAsync and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = await client.CreateOrUpdateFilterAsync(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call CreateOrUpdateFilterAsync with all request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+        /// 
+        /// var data = new {
+        ///     properties = new {
+        ///         excludeUriPrefixes = new[] {
+        ///             "<FilterPropertiesExcludeUriPrefixesItem>"
+        ///         },
+        ///         includeUriPrefixes = new[] {
+        ///             "<FilterPropertiesIncludeUriPrefixesItem>"
+        ///         },
+        ///     },
+        /// };
+        /// 
+        /// Response response = await client.CreateOrUpdateFilterAsync(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("excludeUriPrefixes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("includeUriPrefixes")[0].ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
         /// 
@@ -204,6 +276,46 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call CreateOrUpdateFilter and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = client.CreateOrUpdateFilter(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call CreateOrUpdateFilter with all request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+        /// 
+        /// var data = new {
+        ///     properties = new {
+        ///         excludeUriPrefixes = new[] {
+        ///             "<FilterPropertiesExcludeUriPrefixesItem>"
+        ///         },
+        ///         includeUriPrefixes = new[] {
+        ///             "<FilterPropertiesIncludeUriPrefixesItem>"
+        ///         },
+        ///     },
+        /// };
+        /// 
+        /// Response response = client.CreateOrUpdateFilter(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("excludeUriPrefixes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("includeUriPrefixes")[0].ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
         /// 
@@ -256,6 +368,576 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call CreateOrUpdateAsync with required request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+        /// 
+        /// var data = new {
+        ///     kind = "AzureSubscriptionCredential",
+        /// };
+        /// 
+        /// Response response = await client.CreateOrUpdateAsync(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call CreateOrUpdateAsync with all request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+        /// 
+        /// var data = new {
+        ///     kind = "AzureSubscriptionCredential",
+        ///     properties = new {
+        ///         resourceTypes = new {
+        ///             None = new {
+        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
+        ///                 scanRulesetType = "<Custom>",
+        ///                 resourceNameFilter = new {
+        ///                     excludePrefixes = new[] {
+        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                     },
+        ///                     includePrefixes = new[] {
+        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                     },
+        ///                     resources = new[] {
+        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                     },
+        ///                 },
+        ///                 credential = new {
+        ///                     referenceName = "<CredentialReferenceName>",
+        ///                     credentialType = "<AccountKey>",
+        ///                 },
+        ///             },
+        ///             AzureSubscription = new {
+        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
+        ///                 scanRulesetType = "<Custom>",
+        ///                 resourceNameFilter = new {
+        ///                     excludePrefixes = new[] {
+        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                     },
+        ///                     includePrefixes = new[] {
+        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                     },
+        ///                     resources = new[] {
+        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                     },
+        ///                 },
+        ///                 credential = new {
+        ///                     referenceName = "<CredentialReferenceName>",
+        ///                     credentialType = "<AccountKey>",
+        ///                 },
+        ///             },
+        ///             AzureResourceGroup = new {
+        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
+        ///                 scanRulesetType = "<Custom>",
+        ///                 resourceNameFilter = new {
+        ///                     excludePrefixes = new[] {
+        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                     },
+        ///                     includePrefixes = new[] {
+        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                     },
+        ///                     resources = new[] {
+        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                     },
+        ///                 },
+        ///                 credential = new {
+        ///                     referenceName = "<CredentialReferenceName>",
+        ///                     credentialType = "<AccountKey>",
+        ///                 },
+        ///             },
+        ///             AzureSynapseWorkspace = new {
+        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
+        ///                 scanRulesetType = "<Custom>",
+        ///                 resourceNameFilter = new {
+        ///                     excludePrefixes = new[] {
+        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                     },
+        ///                     includePrefixes = new[] {
+        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                     },
+        ///                     resources = new[] {
+        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                     },
+        ///                 },
+        ///                 credential = new {
+        ///                     referenceName = "<CredentialReferenceName>",
+        ///                     credentialType = "<AccountKey>",
+        ///                 },
+        ///             },
+        ///             AzureSynapse = new {
+        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
+        ///                 scanRulesetType = "<Custom>",
+        ///                 resourceNameFilter = new {
+        ///                     excludePrefixes = new[] {
+        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                     },
+        ///                     includePrefixes = new[] {
+        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                     },
+        ///                     resources = new[] {
+        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                     },
+        ///                 },
+        ///                 credential = new {
+        ///                     referenceName = "<CredentialReferenceName>",
+        ///                     credentialType = "<AccountKey>",
+        ///                 },
+        ///             },
+        ///             AdlsGen1 = new {
+        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
+        ///                 scanRulesetType = "<Custom>",
+        ///                 resourceNameFilter = new {
+        ///                     excludePrefixes = new[] {
+        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                     },
+        ///                     includePrefixes = new[] {
+        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                     },
+        ///                     resources = new[] {
+        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                     },
+        ///                 },
+        ///                 credential = new {
+        ///                     referenceName = "<CredentialReferenceName>",
+        ///                     credentialType = "<AccountKey>",
+        ///                 },
+        ///             },
+        ///             AdlsGen2 = new {
+        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
+        ///                 scanRulesetType = "<Custom>",
+        ///                 resourceNameFilter = new {
+        ///                     excludePrefixes = new[] {
+        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                     },
+        ///                     includePrefixes = new[] {
+        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                     },
+        ///                     resources = new[] {
+        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                     },
+        ///                 },
+        ///                 credential = new {
+        ///                     referenceName = "<CredentialReferenceName>",
+        ///                     credentialType = "<AccountKey>",
+        ///                 },
+        ///             },
+        ///             AmazonAccount = new {
+        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
+        ///                 scanRulesetType = "<Custom>",
+        ///                 resourceNameFilter = new {
+        ///                     excludePrefixes = new[] {
+        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                     },
+        ///                     includePrefixes = new[] {
+        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                     },
+        ///                     resources = new[] {
+        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                     },
+        ///                 },
+        ///                 credential = new {
+        ///                     referenceName = "<CredentialReferenceName>",
+        ///                     credentialType = "<AccountKey>",
+        ///                 },
+        ///             },
+        ///             AmazonS3 = new {
+        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
+        ///                 scanRulesetType = "<Custom>",
+        ///                 resourceNameFilter = new {
+        ///                     excludePrefixes = new[] {
+        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                     },
+        ///                     includePrefixes = new[] {
+        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                     },
+        ///                     resources = new[] {
+        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                     },
+        ///                 },
+        ///                 credential = new {
+        ///                     referenceName = "<CredentialReferenceName>",
+        ///                     credentialType = "<AccountKey>",
+        ///                 },
+        ///             },
+        ///             AmazonSql = new {
+        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
+        ///                 scanRulesetType = "<Custom>",
+        ///                 resourceNameFilter = new {
+        ///                     excludePrefixes = new[] {
+        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                     },
+        ///                     includePrefixes = new[] {
+        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                     },
+        ///                     resources = new[] {
+        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                     },
+        ///                 },
+        ///                 credential = new {
+        ///                     referenceName = "<CredentialReferenceName>",
+        ///                     credentialType = "<AccountKey>",
+        ///                 },
+        ///             },
+        ///             AzureCosmosDb = new {
+        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
+        ///                 scanRulesetType = "<Custom>",
+        ///                 resourceNameFilter = new {
+        ///                     excludePrefixes = new[] {
+        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                     },
+        ///                     includePrefixes = new[] {
+        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                     },
+        ///                     resources = new[] {
+        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                     },
+        ///                 },
+        ///                 credential = new {
+        ///                     referenceName = "<CredentialReferenceName>",
+        ///                     credentialType = "<AccountKey>",
+        ///                 },
+        ///             },
+        ///             AzureDataExplorer = new {
+        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
+        ///                 scanRulesetType = "<Custom>",
+        ///                 resourceNameFilter = new {
+        ///                     excludePrefixes = new[] {
+        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                     },
+        ///                     includePrefixes = new[] {
+        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                     },
+        ///                     resources = new[] {
+        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                     },
+        ///                 },
+        ///                 credential = new {
+        ///                     referenceName = "<CredentialReferenceName>",
+        ///                     credentialType = "<AccountKey>",
+        ///                 },
+        ///             },
+        ///             AzureFileService = new {
+        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
+        ///                 scanRulesetType = "<Custom>",
+        ///                 resourceNameFilter = new {
+        ///                     excludePrefixes = new[] {
+        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                     },
+        ///                     includePrefixes = new[] {
+        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                     },
+        ///                     resources = new[] {
+        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                     },
+        ///                 },
+        ///                 credential = new {
+        ///                     referenceName = "<CredentialReferenceName>",
+        ///                     credentialType = "<AccountKey>",
+        ///                 },
+        ///             },
+        ///             AzureSqlDatabase = new {
+        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
+        ///                 scanRulesetType = "<Custom>",
+        ///                 resourceNameFilter = new {
+        ///                     excludePrefixes = new[] {
+        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                     },
+        ///                     includePrefixes = new[] {
+        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                     },
+        ///                     resources = new[] {
+        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                     },
+        ///                 },
+        ///                 credential = new {
+        ///                     referenceName = "<CredentialReferenceName>",
+        ///                     credentialType = "<AccountKey>",
+        ///                 },
+        ///             },
+        ///             AmazonPostgreSql = new {
+        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
+        ///                 scanRulesetType = "<Custom>",
+        ///                 resourceNameFilter = new {
+        ///                     excludePrefixes = new[] {
+        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                     },
+        ///                     includePrefixes = new[] {
+        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                     },
+        ///                     resources = new[] {
+        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                     },
+        ///                 },
+        ///                 credential = new {
+        ///                     referenceName = "<CredentialReferenceName>",
+        ///                     credentialType = "<AccountKey>",
+        ///                 },
+        ///             },
+        ///             AzurePostgreSql = new {
+        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
+        ///                 scanRulesetType = "<Custom>",
+        ///                 resourceNameFilter = new {
+        ///                     excludePrefixes = new[] {
+        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                     },
+        ///                     includePrefixes = new[] {
+        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                     },
+        ///                     resources = new[] {
+        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                     },
+        ///                 },
+        ///                 credential = new {
+        ///                     referenceName = "<CredentialReferenceName>",
+        ///                     credentialType = "<AccountKey>",
+        ///                 },
+        ///             },
+        ///             SqlServerDatabase = new {
+        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
+        ///                 scanRulesetType = "<Custom>",
+        ///                 resourceNameFilter = new {
+        ///                     excludePrefixes = new[] {
+        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                     },
+        ///                     includePrefixes = new[] {
+        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                     },
+        ///                     resources = new[] {
+        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                     },
+        ///                 },
+        ///                 credential = new {
+        ///                     referenceName = "<CredentialReferenceName>",
+        ///                     credentialType = "<AccountKey>",
+        ///                 },
+        ///             },
+        ///             AzureSqlDatabaseManagedInstance = new {
+        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
+        ///                 scanRulesetType = "<Custom>",
+        ///                 resourceNameFilter = new {
+        ///                     excludePrefixes = new[] {
+        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                     },
+        ///                     includePrefixes = new[] {
+        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                     },
+        ///                     resources = new[] {
+        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                     },
+        ///                 },
+        ///                 credential = new {
+        ///                     referenceName = "<CredentialReferenceName>",
+        ///                     credentialType = "<AccountKey>",
+        ///                 },
+        ///             },
+        ///             AzureSqlDataWarehouse = new {
+        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
+        ///                 scanRulesetType = "<Custom>",
+        ///                 resourceNameFilter = new {
+        ///                     excludePrefixes = new[] {
+        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                     },
+        ///                     includePrefixes = new[] {
+        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                     },
+        ///                     resources = new[] {
+        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                     },
+        ///                 },
+        ///                 credential = new {
+        ///                     referenceName = "<CredentialReferenceName>",
+        ///                     credentialType = "<AccountKey>",
+        ///                 },
+        ///             },
+        ///             AzureMySql = new {
+        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
+        ///                 scanRulesetType = "<Custom>",
+        ///                 resourceNameFilter = new {
+        ///                     excludePrefixes = new[] {
+        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                     },
+        ///                     includePrefixes = new[] {
+        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                     },
+        ///                     resources = new[] {
+        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                     },
+        ///                 },
+        ///                 credential = new {
+        ///                     referenceName = "<CredentialReferenceName>",
+        ///                     credentialType = "<AccountKey>",
+        ///                 },
+        ///             },
+        ///             AzureStorage = new {
+        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
+        ///                 scanRulesetType = "<Custom>",
+        ///                 resourceNameFilter = new {
+        ///                     excludePrefixes = new[] {
+        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                     },
+        ///                     includePrefixes = new[] {
+        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                     },
+        ///                     resources = new[] {
+        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                     },
+        ///                 },
+        ///                 credential = new {
+        ///                     referenceName = "<CredentialReferenceName>",
+        ///                     credentialType = "<AccountKey>",
+        ///                 },
+        ///             },
+        ///             Teradata = new {
+        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
+        ///                 scanRulesetType = "<Custom>",
+        ///                 resourceNameFilter = new {
+        ///                     excludePrefixes = new[] {
+        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                     },
+        ///                     includePrefixes = new[] {
+        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                     },
+        ///                     resources = new[] {
+        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                     },
+        ///                 },
+        ///                 credential = new {
+        ///                     referenceName = "<CredentialReferenceName>",
+        ///                     credentialType = "<AccountKey>",
+        ///                 },
+        ///             },
+        ///             Oracle = new {
+        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
+        ///                 scanRulesetType = "<Custom>",
+        ///                 resourceNameFilter = new {
+        ///                     excludePrefixes = new[] {
+        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                     },
+        ///                     includePrefixes = new[] {
+        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                     },
+        ///                     resources = new[] {
+        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                     },
+        ///                 },
+        ///                 credential = new {
+        ///                     referenceName = "<CredentialReferenceName>",
+        ///                     credentialType = "<AccountKey>",
+        ///                 },
+        ///             },
+        ///             SapS4Hana = new {
+        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
+        ///                 scanRulesetType = "<Custom>",
+        ///                 resourceNameFilter = new {
+        ///                     excludePrefixes = new[] {
+        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                     },
+        ///                     includePrefixes = new[] {
+        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                     },
+        ///                     resources = new[] {
+        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                     },
+        ///                 },
+        ///                 credential = new {
+        ///                     referenceName = "<CredentialReferenceName>",
+        ///                     credentialType = "<AccountKey>",
+        ///                 },
+        ///             },
+        ///             SapEcc = new {
+        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
+        ///                 scanRulesetType = "<Custom>",
+        ///                 resourceNameFilter = new {
+        ///                     excludePrefixes = new[] {
+        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                     },
+        ///                     includePrefixes = new[] {
+        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                     },
+        ///                     resources = new[] {
+        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                     },
+        ///                 },
+        ///                 credential = new {
+        ///                     referenceName = "<CredentialReferenceName>",
+        ///                     credentialType = "<AccountKey>",
+        ///                 },
+        ///             },
+        ///             PowerBI = new {
+        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
+        ///                 scanRulesetType = "<Custom>",
+        ///                 resourceNameFilter = new {
+        ///                     excludePrefixes = new[] {
+        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                     },
+        ///                     includePrefixes = new[] {
+        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                     },
+        ///                     resources = new[] {
+        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                     },
+        ///                 },
+        ///                 credential = new {
+        ///                     referenceName = "<CredentialReferenceName>",
+        ///                     credentialType = "<AccountKey>",
+        ///                 },
+        ///             },
+        ///         },
+        ///         credential = new {
+        ///             referenceName = "<CredentialReferenceName>",
+        ///             credentialType = "<AccountKey>",
+        ///         },
+        ///         scanRulesetName = "<ScanPropertiesScanRulesetName>",
+        ///         scanRulesetType = "<Custom>",
+        ///         collection = new {
+        ///             referenceName = "<CollectionReferenceName>",
+        ///         },
+        ///         workers = 1234,
+        ///         connectedVia = new {
+        ///             referenceName = "<ConnectedViaReferenceName>",
+        ///         },
+        ///     },
+        /// };
+        /// 
+        /// Response response = await client.CreateOrUpdateAsync(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("kind").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("parentId").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("resourceId").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("assetsDiscovered").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("assetsClassified").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("queuedTime").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("pipelineStartTime").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("scanRulesetVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("scanRulesetType").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("scanLevelType").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("errorMessage").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("runType").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("dataSourceType").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
         /// 
@@ -6990,6 +7672,576 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call CreateOrUpdate with required request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+        /// 
+        /// var data = new {
+        ///     kind = "AzureSubscriptionCredential",
+        /// };
+        /// 
+        /// Response response = client.CreateOrUpdate(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call CreateOrUpdate with all request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+        /// 
+        /// var data = new {
+        ///     kind = "AzureSubscriptionCredential",
+        ///     properties = new {
+        ///         resourceTypes = new {
+        ///             None = new {
+        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
+        ///                 scanRulesetType = "<Custom>",
+        ///                 resourceNameFilter = new {
+        ///                     excludePrefixes = new[] {
+        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                     },
+        ///                     includePrefixes = new[] {
+        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                     },
+        ///                     resources = new[] {
+        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                     },
+        ///                 },
+        ///                 credential = new {
+        ///                     referenceName = "<CredentialReferenceName>",
+        ///                     credentialType = "<AccountKey>",
+        ///                 },
+        ///             },
+        ///             AzureSubscription = new {
+        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
+        ///                 scanRulesetType = "<Custom>",
+        ///                 resourceNameFilter = new {
+        ///                     excludePrefixes = new[] {
+        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                     },
+        ///                     includePrefixes = new[] {
+        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                     },
+        ///                     resources = new[] {
+        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                     },
+        ///                 },
+        ///                 credential = new {
+        ///                     referenceName = "<CredentialReferenceName>",
+        ///                     credentialType = "<AccountKey>",
+        ///                 },
+        ///             },
+        ///             AzureResourceGroup = new {
+        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
+        ///                 scanRulesetType = "<Custom>",
+        ///                 resourceNameFilter = new {
+        ///                     excludePrefixes = new[] {
+        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                     },
+        ///                     includePrefixes = new[] {
+        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                     },
+        ///                     resources = new[] {
+        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                     },
+        ///                 },
+        ///                 credential = new {
+        ///                     referenceName = "<CredentialReferenceName>",
+        ///                     credentialType = "<AccountKey>",
+        ///                 },
+        ///             },
+        ///             AzureSynapseWorkspace = new {
+        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
+        ///                 scanRulesetType = "<Custom>",
+        ///                 resourceNameFilter = new {
+        ///                     excludePrefixes = new[] {
+        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                     },
+        ///                     includePrefixes = new[] {
+        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                     },
+        ///                     resources = new[] {
+        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                     },
+        ///                 },
+        ///                 credential = new {
+        ///                     referenceName = "<CredentialReferenceName>",
+        ///                     credentialType = "<AccountKey>",
+        ///                 },
+        ///             },
+        ///             AzureSynapse = new {
+        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
+        ///                 scanRulesetType = "<Custom>",
+        ///                 resourceNameFilter = new {
+        ///                     excludePrefixes = new[] {
+        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                     },
+        ///                     includePrefixes = new[] {
+        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                     },
+        ///                     resources = new[] {
+        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                     },
+        ///                 },
+        ///                 credential = new {
+        ///                     referenceName = "<CredentialReferenceName>",
+        ///                     credentialType = "<AccountKey>",
+        ///                 },
+        ///             },
+        ///             AdlsGen1 = new {
+        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
+        ///                 scanRulesetType = "<Custom>",
+        ///                 resourceNameFilter = new {
+        ///                     excludePrefixes = new[] {
+        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                     },
+        ///                     includePrefixes = new[] {
+        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                     },
+        ///                     resources = new[] {
+        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                     },
+        ///                 },
+        ///                 credential = new {
+        ///                     referenceName = "<CredentialReferenceName>",
+        ///                     credentialType = "<AccountKey>",
+        ///                 },
+        ///             },
+        ///             AdlsGen2 = new {
+        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
+        ///                 scanRulesetType = "<Custom>",
+        ///                 resourceNameFilter = new {
+        ///                     excludePrefixes = new[] {
+        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                     },
+        ///                     includePrefixes = new[] {
+        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                     },
+        ///                     resources = new[] {
+        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                     },
+        ///                 },
+        ///                 credential = new {
+        ///                     referenceName = "<CredentialReferenceName>",
+        ///                     credentialType = "<AccountKey>",
+        ///                 },
+        ///             },
+        ///             AmazonAccount = new {
+        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
+        ///                 scanRulesetType = "<Custom>",
+        ///                 resourceNameFilter = new {
+        ///                     excludePrefixes = new[] {
+        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                     },
+        ///                     includePrefixes = new[] {
+        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                     },
+        ///                     resources = new[] {
+        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                     },
+        ///                 },
+        ///                 credential = new {
+        ///                     referenceName = "<CredentialReferenceName>",
+        ///                     credentialType = "<AccountKey>",
+        ///                 },
+        ///             },
+        ///             AmazonS3 = new {
+        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
+        ///                 scanRulesetType = "<Custom>",
+        ///                 resourceNameFilter = new {
+        ///                     excludePrefixes = new[] {
+        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                     },
+        ///                     includePrefixes = new[] {
+        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                     },
+        ///                     resources = new[] {
+        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                     },
+        ///                 },
+        ///                 credential = new {
+        ///                     referenceName = "<CredentialReferenceName>",
+        ///                     credentialType = "<AccountKey>",
+        ///                 },
+        ///             },
+        ///             AmazonSql = new {
+        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
+        ///                 scanRulesetType = "<Custom>",
+        ///                 resourceNameFilter = new {
+        ///                     excludePrefixes = new[] {
+        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                     },
+        ///                     includePrefixes = new[] {
+        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                     },
+        ///                     resources = new[] {
+        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                     },
+        ///                 },
+        ///                 credential = new {
+        ///                     referenceName = "<CredentialReferenceName>",
+        ///                     credentialType = "<AccountKey>",
+        ///                 },
+        ///             },
+        ///             AzureCosmosDb = new {
+        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
+        ///                 scanRulesetType = "<Custom>",
+        ///                 resourceNameFilter = new {
+        ///                     excludePrefixes = new[] {
+        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                     },
+        ///                     includePrefixes = new[] {
+        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                     },
+        ///                     resources = new[] {
+        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                     },
+        ///                 },
+        ///                 credential = new {
+        ///                     referenceName = "<CredentialReferenceName>",
+        ///                     credentialType = "<AccountKey>",
+        ///                 },
+        ///             },
+        ///             AzureDataExplorer = new {
+        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
+        ///                 scanRulesetType = "<Custom>",
+        ///                 resourceNameFilter = new {
+        ///                     excludePrefixes = new[] {
+        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                     },
+        ///                     includePrefixes = new[] {
+        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                     },
+        ///                     resources = new[] {
+        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                     },
+        ///                 },
+        ///                 credential = new {
+        ///                     referenceName = "<CredentialReferenceName>",
+        ///                     credentialType = "<AccountKey>",
+        ///                 },
+        ///             },
+        ///             AzureFileService = new {
+        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
+        ///                 scanRulesetType = "<Custom>",
+        ///                 resourceNameFilter = new {
+        ///                     excludePrefixes = new[] {
+        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                     },
+        ///                     includePrefixes = new[] {
+        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                     },
+        ///                     resources = new[] {
+        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                     },
+        ///                 },
+        ///                 credential = new {
+        ///                     referenceName = "<CredentialReferenceName>",
+        ///                     credentialType = "<AccountKey>",
+        ///                 },
+        ///             },
+        ///             AzureSqlDatabase = new {
+        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
+        ///                 scanRulesetType = "<Custom>",
+        ///                 resourceNameFilter = new {
+        ///                     excludePrefixes = new[] {
+        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                     },
+        ///                     includePrefixes = new[] {
+        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                     },
+        ///                     resources = new[] {
+        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                     },
+        ///                 },
+        ///                 credential = new {
+        ///                     referenceName = "<CredentialReferenceName>",
+        ///                     credentialType = "<AccountKey>",
+        ///                 },
+        ///             },
+        ///             AmazonPostgreSql = new {
+        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
+        ///                 scanRulesetType = "<Custom>",
+        ///                 resourceNameFilter = new {
+        ///                     excludePrefixes = new[] {
+        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                     },
+        ///                     includePrefixes = new[] {
+        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                     },
+        ///                     resources = new[] {
+        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                     },
+        ///                 },
+        ///                 credential = new {
+        ///                     referenceName = "<CredentialReferenceName>",
+        ///                     credentialType = "<AccountKey>",
+        ///                 },
+        ///             },
+        ///             AzurePostgreSql = new {
+        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
+        ///                 scanRulesetType = "<Custom>",
+        ///                 resourceNameFilter = new {
+        ///                     excludePrefixes = new[] {
+        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                     },
+        ///                     includePrefixes = new[] {
+        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                     },
+        ///                     resources = new[] {
+        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                     },
+        ///                 },
+        ///                 credential = new {
+        ///                     referenceName = "<CredentialReferenceName>",
+        ///                     credentialType = "<AccountKey>",
+        ///                 },
+        ///             },
+        ///             SqlServerDatabase = new {
+        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
+        ///                 scanRulesetType = "<Custom>",
+        ///                 resourceNameFilter = new {
+        ///                     excludePrefixes = new[] {
+        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                     },
+        ///                     includePrefixes = new[] {
+        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                     },
+        ///                     resources = new[] {
+        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                     },
+        ///                 },
+        ///                 credential = new {
+        ///                     referenceName = "<CredentialReferenceName>",
+        ///                     credentialType = "<AccountKey>",
+        ///                 },
+        ///             },
+        ///             AzureSqlDatabaseManagedInstance = new {
+        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
+        ///                 scanRulesetType = "<Custom>",
+        ///                 resourceNameFilter = new {
+        ///                     excludePrefixes = new[] {
+        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                     },
+        ///                     includePrefixes = new[] {
+        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                     },
+        ///                     resources = new[] {
+        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                     },
+        ///                 },
+        ///                 credential = new {
+        ///                     referenceName = "<CredentialReferenceName>",
+        ///                     credentialType = "<AccountKey>",
+        ///                 },
+        ///             },
+        ///             AzureSqlDataWarehouse = new {
+        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
+        ///                 scanRulesetType = "<Custom>",
+        ///                 resourceNameFilter = new {
+        ///                     excludePrefixes = new[] {
+        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                     },
+        ///                     includePrefixes = new[] {
+        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                     },
+        ///                     resources = new[] {
+        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                     },
+        ///                 },
+        ///                 credential = new {
+        ///                     referenceName = "<CredentialReferenceName>",
+        ///                     credentialType = "<AccountKey>",
+        ///                 },
+        ///             },
+        ///             AzureMySql = new {
+        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
+        ///                 scanRulesetType = "<Custom>",
+        ///                 resourceNameFilter = new {
+        ///                     excludePrefixes = new[] {
+        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                     },
+        ///                     includePrefixes = new[] {
+        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                     },
+        ///                     resources = new[] {
+        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                     },
+        ///                 },
+        ///                 credential = new {
+        ///                     referenceName = "<CredentialReferenceName>",
+        ///                     credentialType = "<AccountKey>",
+        ///                 },
+        ///             },
+        ///             AzureStorage = new {
+        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
+        ///                 scanRulesetType = "<Custom>",
+        ///                 resourceNameFilter = new {
+        ///                     excludePrefixes = new[] {
+        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                     },
+        ///                     includePrefixes = new[] {
+        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                     },
+        ///                     resources = new[] {
+        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                     },
+        ///                 },
+        ///                 credential = new {
+        ///                     referenceName = "<CredentialReferenceName>",
+        ///                     credentialType = "<AccountKey>",
+        ///                 },
+        ///             },
+        ///             Teradata = new {
+        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
+        ///                 scanRulesetType = "<Custom>",
+        ///                 resourceNameFilter = new {
+        ///                     excludePrefixes = new[] {
+        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                     },
+        ///                     includePrefixes = new[] {
+        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                     },
+        ///                     resources = new[] {
+        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                     },
+        ///                 },
+        ///                 credential = new {
+        ///                     referenceName = "<CredentialReferenceName>",
+        ///                     credentialType = "<AccountKey>",
+        ///                 },
+        ///             },
+        ///             Oracle = new {
+        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
+        ///                 scanRulesetType = "<Custom>",
+        ///                 resourceNameFilter = new {
+        ///                     excludePrefixes = new[] {
+        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                     },
+        ///                     includePrefixes = new[] {
+        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                     },
+        ///                     resources = new[] {
+        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                     },
+        ///                 },
+        ///                 credential = new {
+        ///                     referenceName = "<CredentialReferenceName>",
+        ///                     credentialType = "<AccountKey>",
+        ///                 },
+        ///             },
+        ///             SapS4Hana = new {
+        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
+        ///                 scanRulesetType = "<Custom>",
+        ///                 resourceNameFilter = new {
+        ///                     excludePrefixes = new[] {
+        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                     },
+        ///                     includePrefixes = new[] {
+        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                     },
+        ///                     resources = new[] {
+        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                     },
+        ///                 },
+        ///                 credential = new {
+        ///                     referenceName = "<CredentialReferenceName>",
+        ///                     credentialType = "<AccountKey>",
+        ///                 },
+        ///             },
+        ///             SapEcc = new {
+        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
+        ///                 scanRulesetType = "<Custom>",
+        ///                 resourceNameFilter = new {
+        ///                     excludePrefixes = new[] {
+        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                     },
+        ///                     includePrefixes = new[] {
+        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                     },
+        ///                     resources = new[] {
+        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                     },
+        ///                 },
+        ///                 credential = new {
+        ///                     referenceName = "<CredentialReferenceName>",
+        ///                     credentialType = "<AccountKey>",
+        ///                 },
+        ///             },
+        ///             PowerBI = new {
+        ///                 scanRulesetName = "<ResourceTypeFilterScanRulesetName>",
+        ///                 scanRulesetType = "<Custom>",
+        ///                 resourceNameFilter = new {
+        ///                     excludePrefixes = new[] {
+        ///                         "<ResourceNameFilterExcludePrefixesItem>"
+        ///                     },
+        ///                     includePrefixes = new[] {
+        ///                         "<ResourceNameFilterIncludePrefixesItem>"
+        ///                     },
+        ///                     resources = new[] {
+        ///                         "<ResourceNameFilterResourcesItem>"
+        ///                     },
+        ///                 },
+        ///                 credential = new {
+        ///                     referenceName = "<CredentialReferenceName>",
+        ///                     credentialType = "<AccountKey>",
+        ///                 },
+        ///             },
+        ///         },
+        ///         credential = new {
+        ///             referenceName = "<CredentialReferenceName>",
+        ///             credentialType = "<AccountKey>",
+        ///         },
+        ///         scanRulesetName = "<ScanPropertiesScanRulesetName>",
+        ///         scanRulesetType = "<Custom>",
+        ///         collection = new {
+        ///             referenceName = "<CollectionReferenceName>",
+        ///         },
+        ///         workers = 1234,
+        ///         connectedVia = new {
+        ///             referenceName = "<ConnectedViaReferenceName>",
+        ///         },
+        ///     },
+        /// };
+        /// 
+        /// Response response = client.CreateOrUpdate(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("kind").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("parentId").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("resourceId").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("assetsDiscovered").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("assetsClassified").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("queuedTime").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("pipelineStartTime").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("scanRulesetVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("scanRulesetType").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("scanLevelType").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("errorMessage").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("runType").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("dataSourceType").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
         /// 
@@ -13722,6 +14974,46 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetPropertiesAsync and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+        /// 
+        /// Response response = await client.GetPropertiesAsync();
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("kind").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("parentId").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("resourceId").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("assetsDiscovered").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("assetsClassified").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("queuedTime").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("pipelineStartTime").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("scanRulesetVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("scanRulesetType").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("scanLevelType").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("errorMessage").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("runType").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("dataSourceType").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -17099,6 +18391,46 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetProperties and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+        /// 
+        /// Response response = client.GetProperties();
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("kind").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("parentId").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("resourceId").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("assetsDiscovered").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("assetsClassified").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("queuedTime").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("pipelineStartTime").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("scanRulesetVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("scanRulesetType").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("scanLevelType").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("errorMessage").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("runType").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("dataSourceType").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -20476,6 +21808,46 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call DeleteAsync and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+        /// 
+        /// Response response = await client.DeleteAsync();
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("kind").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("parentId").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("resourceId").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("assetsDiscovered").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("assetsClassified").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("queuedTime").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("pipelineStartTime").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("scanRulesetVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("scanRulesetType").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("scanLevelType").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("errorMessage").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("runType").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("dataSourceType").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -23853,6 +25225,46 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call Delete and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+        /// 
+        /// Response response = client.Delete();
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("kind").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("parentId").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("resourceId").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("assetsDiscovered").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("assetsClassified").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("queuedTime").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("pipelineStartTime").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("scanRulesetVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("scanRulesetType").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("scanLevelType").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("errorMessage").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("runType").ToString());
+        /// Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("dataSourceType").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -27234,6 +28646,39 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call RunScanAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+        /// 
+        /// Response response = await client.RunScanAsync("<runId>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call RunScanAsync with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+        /// 
+        /// Response response = await client.RunScanAsync("<runId>", "<scanLevel>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("scanResultId").ToString());
+        /// Console.WriteLine(result.GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -27288,6 +28733,39 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call RunScan with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+        /// 
+        /// Response response = client.RunScan("<runId>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call RunScan with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+        /// 
+        /// Response response = client.RunScan("<runId>", "<scanLevel>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("scanResultId").ToString());
+        /// Console.WriteLine(result.GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -27341,6 +28819,28 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call CancelScanAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+        /// 
+        /// Response response = await client.CancelScanAsync("<runId>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("scanResultId").ToString());
+        /// Console.WriteLine(result.GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -27394,6 +28894,28 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call CancelScan with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+        /// 
+        /// Response response = client.CancelScan("<runId>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("scanResultId").ToString());
+        /// Console.WriteLine(result.GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -27444,6 +28966,39 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetTriggerAsync and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+        /// 
+        /// Response response = await client.GetTriggerAsync();
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("frequency").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("interval").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("additionalProperties").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("minutes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("hours")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("weekDays")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthDays")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("additionalProperties").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("day").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("occurrence").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrenceInterval").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("createdAt").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("lastModifiedAt").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("lastScheduled").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("scanLevel").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("incrementalScanStartTime").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -27506,6 +29061,39 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetTrigger and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+        /// 
+        /// Response response = client.GetTrigger();
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("frequency").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("interval").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("additionalProperties").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("minutes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("hours")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("weekDays")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthDays")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("additionalProperties").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("day").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("occurrence").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrenceInterval").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("createdAt").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("lastModifiedAt").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("lastScheduled").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("scanLevel").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("incrementalScanStartTime").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -27570,6 +29158,93 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call CreateOrUpdateTriggerAsync and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = await client.CreateOrUpdateTriggerAsync(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call CreateOrUpdateTriggerAsync with all request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+        /// 
+        /// var data = new {
+        ///     properties = new {
+        ///         recurrence = new {
+        ///             frequency = "<Week>",
+        ///             interval = 1234,
+        ///             startTime = "<2022-05-10T14:57:31.2311892-04:00>",
+        ///             endTime = "<2022-05-10T14:57:31.2311892-04:00>",
+        ///             schedule = new {
+        ///                 additionalProperties = new {
+        ///                     key = new {},
+        ///                 },
+        ///                 minutes = new[] {
+        ///                     1234
+        ///                 },
+        ///                 hours = new[] {
+        ///                     1234
+        ///                 },
+        ///                 weekDays = new[] {
+        ///                     "<Sunday>"
+        ///                 },
+        ///                 monthDays = new[] {
+        ///                     1234
+        ///                 },
+        ///                 monthlyOccurrences = new[] {
+        ///                     new {
+        ///                         additionalProperties = new {
+        ///                             key = new {},
+        ///                         },
+        ///                         day = "<Sunday>",
+        ///                         occurrence = 1234,
+        ///                     }
+        ///                 },
+        ///             },
+        ///             timeZone = "<TriggerRecurrenceTimeZone>",
+        ///         },
+        ///         recurrenceInterval = "<TriggerPropertiesRecurrenceInterval>",
+        ///         scanLevel = "<Full>",
+        ///         incrementalScanStartTime = "<2022-05-10T14:57:31.2311892-04:00>",
+        ///     },
+        /// };
+        /// 
+        /// Response response = await client.CreateOrUpdateTriggerAsync(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("frequency").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("interval").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("additionalProperties").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("minutes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("hours")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("weekDays")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthDays")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("additionalProperties").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("day").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("occurrence").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrenceInterval").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("createdAt").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("lastModifiedAt").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("lastScheduled").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("scanLevel").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("incrementalScanStartTime").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
         /// 
@@ -27674,6 +29349,93 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call CreateOrUpdateTrigger and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = client.CreateOrUpdateTrigger(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call CreateOrUpdateTrigger with all request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+        /// 
+        /// var data = new {
+        ///     properties = new {
+        ///         recurrence = new {
+        ///             frequency = "<Week>",
+        ///             interval = 1234,
+        ///             startTime = "<2022-05-10T14:57:31.2311892-04:00>",
+        ///             endTime = "<2022-05-10T14:57:31.2311892-04:00>",
+        ///             schedule = new {
+        ///                 additionalProperties = new {
+        ///                     key = new {},
+        ///                 },
+        ///                 minutes = new[] {
+        ///                     1234
+        ///                 },
+        ///                 hours = new[] {
+        ///                     1234
+        ///                 },
+        ///                 weekDays = new[] {
+        ///                     "<Sunday>"
+        ///                 },
+        ///                 monthDays = new[] {
+        ///                     1234
+        ///                 },
+        ///                 monthlyOccurrences = new[] {
+        ///                     new {
+        ///                         additionalProperties = new {
+        ///                             key = new {},
+        ///                         },
+        ///                         day = "<Sunday>",
+        ///                         occurrence = 1234,
+        ///                     }
+        ///                 },
+        ///             },
+        ///             timeZone = "<TriggerRecurrenceTimeZone>",
+        ///         },
+        ///         recurrenceInterval = "<TriggerPropertiesRecurrenceInterval>",
+        ///         scanLevel = "<Full>",
+        ///         incrementalScanStartTime = "<2022-05-10T14:57:31.2311892-04:00>",
+        ///     },
+        /// };
+        /// 
+        /// Response response = client.CreateOrUpdateTrigger(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("frequency").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("interval").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("additionalProperties").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("minutes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("hours")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("weekDays")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthDays")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("additionalProperties").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("day").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("occurrence").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrenceInterval").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("createdAt").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("lastModifiedAt").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("lastScheduled").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("scanLevel").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("incrementalScanStartTime").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
         /// 
@@ -27776,6 +29538,39 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call DeleteTriggerAsync and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+        /// 
+        /// Response response = await client.DeleteTriggerAsync();
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("frequency").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("interval").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("additionalProperties").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("minutes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("hours")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("weekDays")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthDays")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("additionalProperties").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("day").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("occurrence").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrenceInterval").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("createdAt").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("lastModifiedAt").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("lastScheduled").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("scanLevel").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("incrementalScanStartTime").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -27838,6 +29633,39 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call DeleteTrigger and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+        /// 
+        /// Response response = client.DeleteTrigger();
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("frequency").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("interval").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("additionalProperties").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("minutes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("hours")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("weekDays")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthDays")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("additionalProperties").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("day").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("occurrence").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("recurrenceInterval").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("createdAt").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("lastModifiedAt").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("lastScheduled").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("scanLevel").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("incrementalScanStartTime").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -27900,6 +29728,44 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetRunsAsync and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+        /// 
+        /// await foreach (var data in client.GetRunsAsync())
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("parentId").ToString());
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("resourceId").ToString());
+        ///     Console.WriteLine(result.GetProperty("status").ToString());
+        ///     Console.WriteLine(result.GetProperty("assetsDiscovered").ToString());
+        ///     Console.WriteLine(result.GetProperty("assetsClassified").ToString());
+        ///     Console.WriteLine(result.GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("message").ToString());
+        ///     Console.WriteLine(result.GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("code").ToString());
+        ///     Console.WriteLine(result.GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<test>").ToString());
+        ///     Console.WriteLine(result.GetProperty("startTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("queuedTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("pipelineStartTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("endTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("scanRulesetVersion").ToString());
+        ///     Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
+        ///     Console.WriteLine(result.GetProperty("scanLevelType").ToString());
+        ///     Console.WriteLine(result.GetProperty("errorMessage").ToString());
+        ///     Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+        ///     Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+        ///     Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+        ///     Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+        ///     Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+        ///     Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
+        ///     Console.WriteLine(result.GetProperty("runType").ToString());
+        ///     Console.WriteLine(result.GetProperty("dataSourceType").ToString());
+        /// }
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for one item in the pageable response.
         /// 
@@ -27975,6 +29841,44 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetRuns and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+        /// 
+        /// foreach (var data in client.GetRuns())
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("parentId").ToString());
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("resourceId").ToString());
+        ///     Console.WriteLine(result.GetProperty("status").ToString());
+        ///     Console.WriteLine(result.GetProperty("assetsDiscovered").ToString());
+        ///     Console.WriteLine(result.GetProperty("assetsClassified").ToString());
+        ///     Console.WriteLine(result.GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("message").ToString());
+        ///     Console.WriteLine(result.GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("code").ToString());
+        ///     Console.WriteLine(result.GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<test>").ToString());
+        ///     Console.WriteLine(result.GetProperty("startTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("queuedTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("pipelineStartTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("endTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("scanRulesetVersion").ToString());
+        ///     Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
+        ///     Console.WriteLine(result.GetProperty("scanLevelType").ToString());
+        ///     Console.WriteLine(result.GetProperty("errorMessage").ToString());
+        ///     Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+        ///     Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+        ///     Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+        ///     Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+        ///     Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+        ///     Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
+        ///     Console.WriteLine(result.GetProperty("runType").ToString());
+        ///     Console.WriteLine(result.GetProperty("dataSourceType").ToString());
+        /// }
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for one item in the pageable response.
         /// 
