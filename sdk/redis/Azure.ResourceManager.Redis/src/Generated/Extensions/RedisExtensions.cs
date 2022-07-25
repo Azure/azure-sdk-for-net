@@ -228,20 +228,20 @@ namespace Azure.ResourceManager.Redis
         }
         #endregion
 
-        #region RedisLinkedServerWithPropertiesResource
+        #region RedisLinkedServerWithPropertyResource
         /// <summary>
-        /// Gets an object representing a <see cref="RedisLinkedServerWithPropertiesResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RedisLinkedServerWithPropertiesResource.CreateResourceIdentifier" /> to create a <see cref="RedisLinkedServerWithPropertiesResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="RedisLinkedServerWithPropertyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RedisLinkedServerWithPropertyResource.CreateResourceIdentifier" /> to create a <see cref="RedisLinkedServerWithPropertyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RedisLinkedServerWithPropertiesResource" /> object. </returns>
-        public static RedisLinkedServerWithPropertiesResource GetRedisLinkedServerWithPropertiesResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="RedisLinkedServerWithPropertyResource" /> object. </returns>
+        public static RedisLinkedServerWithPropertyResource GetRedisLinkedServerWithPropertyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                RedisLinkedServerWithPropertiesResource.ValidateResourceId(id);
-                return new RedisLinkedServerWithPropertiesResource(client, id);
+                RedisLinkedServerWithPropertyResource.ValidateResourceId(id);
+                return new RedisLinkedServerWithPropertyResource(client, id);
             }
             );
         }

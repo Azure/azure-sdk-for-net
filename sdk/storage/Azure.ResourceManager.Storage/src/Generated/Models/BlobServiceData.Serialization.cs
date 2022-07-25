@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Storage
             Optional<bool> isVersioningEnabled = default;
             Optional<bool> automaticSnapshotPolicyEnabled = default;
             Optional<BlobServiceChangeFeed> changeFeed = default;
-            Optional<RestorePolicyProperties> restorePolicy = default;
+            Optional<RestorePolicy> restorePolicy = default;
             Optional<DeleteRetentionPolicy> containerDeleteRetentionPolicy = default;
             Optional<LastAccessTimeTrackingPolicy> lastAccessTimeTrackingPolicy = default;
             foreach (var property in element.EnumerateObject())
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Storage
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            restorePolicy = RestorePolicyProperties.DeserializeRestorePolicyProperties(property0.Value);
+                            restorePolicy = RestorePolicy.DeserializeRestorePolicy(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("containerDeleteRetentionPolicy"))

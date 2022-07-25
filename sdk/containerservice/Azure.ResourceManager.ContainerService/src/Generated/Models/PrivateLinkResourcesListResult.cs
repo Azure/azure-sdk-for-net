@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of PrivateLinkResourcesListResult. </summary>
         internal PrivateLinkResourcesListResult()
         {
-            Value = new ChangeTrackingList<ContainerServicePrivateLinkResource>();
+            Value = new ChangeTrackingList<ContainerServicePrivateLinkResourceData>();
         }
 
         /// <summary> Initializes a new instance of PrivateLinkResourcesListResult. </summary>
         /// <param name="value"> The collection value. </param>
-        internal PrivateLinkResourcesListResult(IReadOnlyList<ContainerServicePrivateLinkResource> value)
+        internal PrivateLinkResourcesListResult(IReadOnlyList<ContainerServicePrivateLinkResourceData> value)
         {
             Value = value;
         }
 
         /// <summary> The collection value. </summary>
-        public IReadOnlyList<ContainerServicePrivateLinkResource> Value { get; }
+        public IReadOnlyList<ContainerServicePrivateLinkResourceData> Value { get; }
     }
 }

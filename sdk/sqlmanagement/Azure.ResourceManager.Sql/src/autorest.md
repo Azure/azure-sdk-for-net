@@ -47,7 +47,10 @@ format-by-name-rules:
   'clientIP': 'ip-address'
 
 keep-plural-enums:
-  - DiffBackupIntervalInHours
+- DiffBackupIntervalInHours
+
+keep-plural-resource-data:
+- MaintenanceWindows
 
 rename-rules:
   CPU: Cpu

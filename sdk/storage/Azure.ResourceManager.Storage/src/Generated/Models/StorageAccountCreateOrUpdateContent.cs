@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Required for storage accounts where kind = BlobStorage. The access tier is used for billing. The &apos;Premium&apos; access tier is the default value for premium block blobs storage account type and it cannot be changed for the premium block blobs storage account type. </summary>
         public StorageAccountAccessTier? AccessTier { get; set; }
         /// <summary> Provides the identity based authentication settings for Azure Files. </summary>
-        public AzureFilesIdentityBasedAuthentication AzureFilesIdentityBasedAuthentication { get; set; }
+        public FilesIdentityBasedAuthentication AzureFilesIdentityBasedAuthentication { get; set; }
         /// <summary> Allows https traffic only to storage service if sets to true. The default value is true since API version 2019-04-01. </summary>
         public bool? EnableHttpsTrafficOnly { get; set; }
         /// <summary> Enables Secure File Transfer Protocol, if set to true. </summary>
