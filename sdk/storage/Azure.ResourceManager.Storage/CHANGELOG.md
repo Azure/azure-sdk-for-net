@@ -2,11 +2,17 @@
 
 ## 1.0.0-beta.12 (Unreleased)
 
+### Features Added
+
 ### Breaking Changes
 
 - Various naming changes according to review comments.
 
-## 1.0.0-beta.11 (2022-07-18)
+### Bugs Fixed
+
+### Other Changes
+
+## 1.0.0-beta.11 (2022-07-21)
 
 This is the RC release of the Azure Storage management library.
 

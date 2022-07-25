@@ -10297,7 +10297,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="view"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="view"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NetworkFeaturesData>> ListNetworkFeaturesAsync(string subscriptionId, string resourceGroupName, string name, string view, CancellationToken cancellationToken = default)
+        public async Task<Response<NetworkFeatureData>> ListNetworkFeaturesAsync(string subscriptionId, string resourceGroupName, string name, string view, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -10310,9 +10310,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        NetworkFeaturesData value = default;
+                        NetworkFeatureData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = NetworkFeaturesData.DeserializeNetworkFeaturesData(document.RootElement);
+                        value = NetworkFeatureData.DeserializeNetworkFeatureData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -10328,7 +10328,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="view"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="view"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NetworkFeaturesData> ListNetworkFeatures(string subscriptionId, string resourceGroupName, string name, string view, CancellationToken cancellationToken = default)
+        public Response<NetworkFeatureData> ListNetworkFeatures(string subscriptionId, string resourceGroupName, string name, string view, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -10341,9 +10341,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        NetworkFeaturesData value = default;
+                        NetworkFeatureData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = NetworkFeaturesData.DeserializeNetworkFeaturesData(document.RootElement);
+                        value = NetworkFeatureData.DeserializeNetworkFeatureData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -24505,7 +24505,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="view"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="view"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NetworkFeaturesData>> ListNetworkFeaturesSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string view, CancellationToken cancellationToken = default)
+        public async Task<Response<NetworkFeatureData>> ListNetworkFeaturesSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string view, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -24519,13 +24519,13 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        NetworkFeaturesData value = default;
+                        NetworkFeatureData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = NetworkFeaturesData.DeserializeNetworkFeaturesData(document.RootElement);
+                        value = NetworkFeatureData.DeserializeNetworkFeatureData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((NetworkFeaturesData)null, message.Response);
+                    return Response.FromValue((NetworkFeatureData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -24540,7 +24540,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="view"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="view"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NetworkFeaturesData> ListNetworkFeaturesSlot(string subscriptionId, string resourceGroupName, string name, string slot, string view, CancellationToken cancellationToken = default)
+        public Response<NetworkFeatureData> ListNetworkFeaturesSlot(string subscriptionId, string resourceGroupName, string name, string slot, string view, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -24554,13 +24554,13 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        NetworkFeaturesData value = default;
+                        NetworkFeatureData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = NetworkFeaturesData.DeserializeNetworkFeaturesData(document.RootElement);
+                        value = NetworkFeatureData.DeserializeNetworkFeatureData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((NetworkFeaturesData)null, message.Response);
+                    return Response.FromValue((NetworkFeatureData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

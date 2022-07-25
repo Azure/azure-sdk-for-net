@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </summary>
         /// <param name="resourceType"> The resource type for which the OS options needs to be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<OSOptionProfileResource>> GetAsync(string resourceType = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<OSOptionProfileResource>> GetAsync(ResourceType? resourceType = null, CancellationToken cancellationToken = default)
         {
             using var scope = _osOptionProfileManagedClustersClientDiagnostics.CreateScope("OSOptionProfileResource.Get");
             scope.Start();
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </summary>
         /// <param name="resourceType"> The resource type for which the OS options needs to be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<OSOptionProfileResource> Get(string resourceType = null, CancellationToken cancellationToken = default)
+        public virtual Response<OSOptionProfileResource> Get(ResourceType? resourceType = null, CancellationToken cancellationToken = default)
         {
             using var scope = _osOptionProfileManagedClustersClientDiagnostics.CreateScope("OSOptionProfileResource.Get");
             scope.Start();

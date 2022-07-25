@@ -70,7 +70,7 @@ namespace Azure.Analytics.Purview.Account
         /// This sample shows how to call GetAccountPropertiesAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential);
         /// 
         /// Response response = await client.GetAccountPropertiesAsync();
@@ -215,7 +215,7 @@ namespace Azure.Analytics.Purview.Account
         /// This sample shows how to call GetAccountProperties and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential);
         /// 
         /// Response response = client.GetAccountProperties();
@@ -362,7 +362,7 @@ namespace Azure.Analytics.Purview.Account
         /// This sample shows how to call UpdateAccountPropertiesAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential);
         /// 
         /// var data = new {};
@@ -375,7 +375,7 @@ namespace Azure.Analytics.Purview.Account
         /// This sample shows how to call UpdateAccountPropertiesAsync with all request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential);
         /// 
         /// var data = new {
@@ -536,7 +536,7 @@ namespace Azure.Analytics.Purview.Account
         /// This sample shows how to call UpdateAccountProperties and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential);
         /// 
         /// var data = new {};
@@ -549,7 +549,7 @@ namespace Azure.Analytics.Purview.Account
         /// This sample shows how to call UpdateAccountProperties with all request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential);
         /// 
         /// var data = new {
@@ -708,7 +708,7 @@ namespace Azure.Analytics.Purview.Account
         /// This sample shows how to call GetAccessKeysAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential);
         /// 
         /// Response response = await client.GetAccessKeysAsync();
@@ -755,7 +755,7 @@ namespace Azure.Analytics.Purview.Account
         /// This sample shows how to call GetAccessKeys and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential);
         /// 
         /// Response response = client.GetAccessKeys();
@@ -804,7 +804,7 @@ namespace Azure.Analytics.Purview.Account
         /// This sample shows how to call RegenerateAccessKeyAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential);
         /// 
         /// var data = new {};
@@ -817,7 +817,7 @@ namespace Azure.Analytics.Purview.Account
         /// This sample shows how to call RegenerateAccessKeyAsync with all request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential);
         /// 
         /// var data = new {
@@ -880,7 +880,7 @@ namespace Azure.Analytics.Purview.Account
         /// This sample shows how to call RegenerateAccessKey and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential);
         /// 
         /// var data = new {};
@@ -893,7 +893,7 @@ namespace Azure.Analytics.Purview.Account
         /// This sample shows how to call RegenerateAccessKey with all request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential);
         /// 
         /// var data = new {
@@ -955,7 +955,7 @@ namespace Azure.Analytics.Purview.Account
         /// This sample shows how to call GetCollectionsAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetCollectionsAsync())
@@ -967,7 +967,7 @@ namespace Azure.Analytics.Purview.Account
         /// This sample shows how to call GetCollectionsAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetCollectionsAsync("<skipToken>"))
@@ -1046,7 +1046,7 @@ namespace Azure.Analytics.Purview.Account
         /// This sample shows how to call GetCollections and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetCollections())
@@ -1058,7 +1058,7 @@ namespace Azure.Analytics.Purview.Account
         /// This sample shows how to call GetCollections with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetCollections("<skipToken>"))
@@ -1137,7 +1137,7 @@ namespace Azure.Analytics.Purview.Account
         /// This sample shows how to call GetResourceSetRulesAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetResourceSetRulesAsync())
@@ -1149,7 +1149,7 @@ namespace Azure.Analytics.Purview.Account
         /// This sample shows how to call GetResourceSetRulesAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetResourceSetRulesAsync("<skipToken>"))
@@ -1375,7 +1375,7 @@ namespace Azure.Analytics.Purview.Account
         /// This sample shows how to call GetResourceSetRules and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetResourceSetRules())
@@ -1387,7 +1387,7 @@ namespace Azure.Analytics.Purview.Account
         /// This sample shows how to call GetResourceSetRules with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewAccountClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetResourceSetRules("<skipToken>"))

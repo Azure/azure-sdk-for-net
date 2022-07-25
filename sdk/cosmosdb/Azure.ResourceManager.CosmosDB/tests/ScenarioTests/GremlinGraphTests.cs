@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.True(ifExists);
 
             // NOT WORKING API
-            //ThroughputSettingsData throughtput = await table.GetGremlinGraphThroughputAsync();
+            //ThroughputSettingData throughtput = await table.GetGremlinGraphThroughputAsync();
             GremlinGraphResource graph2 = await GremlinGraphContainer.GetAsync(_graphName);
             Assert.AreEqual(_graphName, graph2.Data.Resource.GraphName);
             VerifyGremlinGraphCreation(graph2, parameters);
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             GremlinGraphThroughputSettingResource throughput = await graph.GetGremlinGraphThroughputSetting().GetAsync();
             AssertManualThroughput(throughput.Data);
 
-            ThroughputSettingsData throughputData = (await throughput.MigrateGremlinGraphToAutoscaleAsync(WaitUntil.Completed)).Value.Data;
+            ThroughputSettingData throughputData = (await throughput.MigrateGremlinGraphToAutoscaleAsync(WaitUntil.Completed)).Value.Data;
             AssertAutoscale(throughputData);
         }
 
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             GremlinGraphThroughputSettingResource throughput = await graph.GetGremlinGraphThroughputSetting().GetAsync();
             AssertAutoscale(throughput.Data);
 
-            ThroughputSettingsData throughputData = (await throughput.MigrateGremlinGraphToManualThroughputAsync(WaitUntil.Completed)).Value.Data;
+            ThroughputSettingData throughputData = (await throughput.MigrateGremlinGraphToManualThroughputAsync(WaitUntil.Completed)).Value.Data;
             AssertManualThroughput(throughputData);
         }
 

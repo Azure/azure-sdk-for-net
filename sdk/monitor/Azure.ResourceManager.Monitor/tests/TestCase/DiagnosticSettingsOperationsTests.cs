@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Monitor.Tests
         {
         }
 
-        private async Task<DiagnosticSettingsResource> CreateDiagnosticSettingsAsync(string setting)
+        private async Task<DiagnosticSettingResource> CreateDiagnosticSettingsAsync(string setting)
         {
-            var collection = (await CreateResourceGroupAsync()).GetAllDiagnosticSettings();
+            var collection = (await CreateResourceGroupAsync()).GetDiagnosticSettings();
             var input = ResourceDataHelper.GetBasicDiagnosticSettingsData();
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, setting, input);
             return lro.Value;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Monitor.Tests
         {
             var settingName = Recording.GenerateAssetName("testDiagnosticSettings-");
             var setting = await CreateDiagnosticSettingsAsync(settingName);
-            DiagnosticSettingsResource setting2 = await setting.GetAsync();
+            DiagnosticSettingResource setting2 = await setting.GetAsync();
 
             ResourceDataHelper.AssertDiagnosticSetting(setting.Data, setting2.Data);
         }

@@ -27,10 +27,10 @@ rename-mapping:
   Capabilities: IotHubCapability
   CertificateProperties.created: CreatedOn
   CertificateProperties.updated: UpdatedOn
-  CertificateProperties.expiry: ExpiresOn
+  CertificateProperties.expiry: ExpireOn
   CertificatePropertiesWithNonce.created: CreatedOn
   CertificatePropertiesWithNonce.updated: UpdatedOn
-  CertificatePropertiesWithNonce.expiry: ExpiryOn
+  CertificatePropertiesWithNonce.expiry: ExpireOn
   CertificateVerificationDescription: IotHubCertificateVerificationContent
   GroupIdInformation: IotHubPrivateEndpointGroupInformation
   GroupIdInformationProperties: IotHubPrivateEndpointGroupInformationProperties
@@ -38,6 +38,7 @@ rename-mapping:
   AccessRights: IotHubSharedAccessRight
   FeedbackProperties: CloudToDeviceFeedbackQueueProperties
   Name: IotHubTypeName
+  EventHubProperties.path: EventHubCompatibleName
   EventHubProperties: EventHubCompatibleEndpointProperties
   RouteProperties: RoutingRuleProperties
   JobResponse.startTimeUtc: StartOn
@@ -48,6 +49,12 @@ rename-mapping:
   EndpointHealthDataListResult: IotHubEndpointHealthInfoListResult
   UserSubscriptionQuota.id: IotHubTypeId
   IotHubNameUnavailabilityReason: IotHubNameUnavailableReason
+  IotHubProperties.allowedFqdnList: allowedFqdns
+  GroupIdInformationProperties.requiredZoneNames: RequiredDnsZoneNames
+  RoutingEventHubProperties.endpointUri: Endpoint
+  RoutingServiceBusQueueEndpointProperties.endpointUri: Endpoint
+  RoutingServiceBusTopicEndpointProperties.endpointUri: Endpoint
+  RoutingStorageContainerProperties.endpointUri: Endpoint
 
 prepend-rp-prefix:
   - AuthenticationType
@@ -95,6 +102,7 @@ format-by-name-rules:
   '*Uris': 'Uri'
   'thumbprint': 'any'
   'certificate': 'any'
+  'UserAssignedIdentity': 'arm-id'
 
 rename-rules:
   CPU: Cpu

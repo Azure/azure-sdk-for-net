@@ -77,7 +77,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call GetPropertiesAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
         /// 
         /// Response response = await client.GetPropertiesAsync();
@@ -161,7 +161,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call GetProperties and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
         /// 
         /// Response response = client.GetProperties();
@@ -246,7 +246,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call CreateOrUpdateAsync with required request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
         /// 
         /// var data = new {
@@ -261,7 +261,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call CreateOrUpdateAsync with all request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
         /// 
         /// var data = new {
@@ -400,7 +400,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call CreateOrUpdate with required request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
         /// 
         /// var data = new {
@@ -415,7 +415,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call CreateOrUpdate with all request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
         /// 
         /// var data = new {
@@ -553,7 +553,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call DeleteAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
         /// 
         /// Response response = await client.DeleteAsync();
@@ -637,7 +637,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call Delete and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
         /// 
         /// Response response = client.Delete();
@@ -724,7 +724,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call TagVersionAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
         /// 
         /// Response response = await client.TagVersionAsync(1234, "<action>");
@@ -799,7 +799,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call TagVersion with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
         /// 
         /// Response response = client.TagVersion(1234, "<action>");
@@ -871,7 +871,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call GetVersionsAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
         /// 
         /// await foreach (var data in client.GetVersionsAsync())
@@ -927,7 +927,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// This sample shows how to call GetVersions and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("<https://my-account-name.azure.com>");
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
         /// 
         /// foreach (var data in client.GetVersions())
