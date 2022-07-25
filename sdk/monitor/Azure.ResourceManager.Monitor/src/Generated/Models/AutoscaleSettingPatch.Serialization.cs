@@ -60,6 +60,11 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WritePropertyName("enabled");
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
+            if (Optional.IsDefined(PredictiveAutoscalePolicy))
+            {
+                writer.WritePropertyName("predictiveAutoscalePolicy");
+                writer.WriteObjectValue(PredictiveAutoscalePolicy);
+            }
             if (Optional.IsDefined(AutoscaleSettingName))
             {
                 writer.WritePropertyName("name");

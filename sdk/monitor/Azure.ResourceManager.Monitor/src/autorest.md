@@ -9,7 +9,7 @@ library-name: Monitor
 namespace: Azure.ResourceManager.Monitor
 require: https://github.com/Azure/azure-rest-api-specs/blob/a211ef525cdd9e186f31b5c11647aae31dccc469/specification/monitor/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
-tag: package-2021-09
+tag: package-monitor-track2
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
@@ -159,6 +159,9 @@ directive:
   - from: scheduledQueryRule_API.json
     where: $.definitions.Resource
     transform: $["x-ms-client-name"] = "ScheduledQueryRuleResource"
+  - from: autoscale_API.json
+    where: $.definitions.Resource
+    transform: $["x-ms-client-name"] = "AutoScaleResource"
   # some format changes
   - from: swagger-document
     where: $.definitions.DiagnosticSettings.properties.workspaceId
