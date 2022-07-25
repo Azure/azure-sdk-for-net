@@ -159,8 +159,6 @@ namespace Azure.ResourceManager.Monitor
 
         internal static ActionGroupData DeserializeActionGroupData(JsonElement element)
         {
-            Optional<string> kind = default;
-            Optional<string> identity = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -182,16 +180,6 @@ namespace Azure.ResourceManager.Monitor
             Optional<IList<EventHubReceiver>> eventHubReceivers = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
-                {
-                    kind = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("identity"))
-                {
-                    identity = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("tags"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -430,7 +418,7 @@ namespace Azure.ResourceManager.Monitor
                     continue;
                 }
             }
-            return new ActionGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, groupShortName.Value, Optional.ToNullable(enabled), Optional.ToList(emailReceivers), Optional.ToList(smsReceivers), Optional.ToList(webhookReceivers), Optional.ToList(itsmReceivers), Optional.ToList(azureAppPushReceivers), Optional.ToList(automationRunbookReceivers), Optional.ToList(voiceReceivers), Optional.ToList(logicAppReceivers), Optional.ToList(azureFunctionReceivers), Optional.ToList(armRoleReceivers), Optional.ToList(eventHubReceivers), kind.Value, identity.Value);
+            return new ActionGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, groupShortName.Value, Optional.ToNullable(enabled), Optional.ToList(emailReceivers), Optional.ToList(smsReceivers), Optional.ToList(webhookReceivers), Optional.ToList(itsmReceivers), Optional.ToList(azureAppPushReceivers), Optional.ToList(automationRunbookReceivers), Optional.ToList(voiceReceivers), Optional.ToList(logicAppReceivers), Optional.ToList(azureFunctionReceivers), Optional.ToList(armRoleReceivers), Optional.ToList(eventHubReceivers));
         }
     }
 }

@@ -204,6 +204,24 @@ directive:
         "readOnly": true,
         "type": "string"
       }
+  # remove unnecessary property for resources in action groups. Both of these are not used, and identity has an incorrect type.
+  - from: actionGroups_API.json
+    where: $.definitions.AzureResource.properties
+    transform: >
+      $["identity"] = undefined;
+      $["kind"] = undefined;
+  - from: scheduledQueryRule_API.json
+    where: $.definitions.Resource.properties
+    transform: >
+      $["kind"] = undefined;
+  - from: dataCollectionEndpoints_API.json
+    where: $.definitions.DataCollectionEndpointResource.properties
+    transform: >
+      $["kind"] = undefined;
+  - from: dataCollectionRules_API.json
+    where: $.definitions.DataCollectionRuleResource.properties
+    transform: >
+      $["kind"] = undefined;
 ```
 
 ## Tag: package-monitor-track2

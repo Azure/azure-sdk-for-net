@@ -29,7 +29,6 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="kind"> The kind of the resource. </param>
         /// <param name="etag"> Resource entity tag (ETag). </param>
         /// <param name="description"> Description of the data collection endpoint. </param>
         /// <param name="immutableId"> The immutable ID of this data collection endpoint resource. This property is READ-ONLY. </param>
@@ -37,9 +36,8 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="logsIngestion"> The endpoint used by clients to ingest logs. </param>
         /// <param name="networkAcls"> Network access control rules for the endpoints. </param>
         /// <param name="provisioningState"> The resource provisioning state. This property is READ-ONLY. </param>
-        internal DataCollectionEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, KnownDataCollectionEndpointResourceKind? kind, ETag? etag, string description, string immutableId, DataCollectionEndpointConfigurationAccess configurationAccess, DataCollectionEndpointLogsIngestion logsIngestion, DataCollectionEndpointNetworkAcls networkAcls, KnownDataCollectionEndpointProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        internal DataCollectionEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, string description, string immutableId, DataCollectionEndpointConfigurationAccess configurationAccess, DataCollectionEndpointLogsIngestion logsIngestion, DataCollectionEndpointNetworkAcls networkAcls, KnownDataCollectionEndpointProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
-            Kind = kind;
             ETag = etag;
             Description = description;
             ImmutableId = immutableId;
@@ -49,8 +47,6 @@ namespace Azure.ResourceManager.Monitor
             ProvisioningState = provisioningState;
         }
 
-        /// <summary> The kind of the resource. </summary>
-        public KnownDataCollectionEndpointResourceKind? Kind { get; set; }
         /// <summary> Resource entity tag (ETag). </summary>
         public ETag? ETag { get; }
         /// <summary> Description of the data collection endpoint. </summary>

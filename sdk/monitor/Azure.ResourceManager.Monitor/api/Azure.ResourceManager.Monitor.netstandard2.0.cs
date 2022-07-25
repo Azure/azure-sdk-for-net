@@ -25,10 +25,8 @@ namespace Azure.ResourceManager.Monitor
         public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.EmailReceiver> EmailReceivers { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.EventHubReceiver> EventHubReceivers { get { throw null; } }
         public string GroupShortName { get { throw null; } set { } }
-        public string Identity { get { throw null; } }
         public bool? IsEnabled { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.ItsmReceiver> ItsmReceivers { get { throw null; } }
-        public string Kind { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.LogicAppReceiver> LogicAppReceivers { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.SmsReceiver> SmsReceivers { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.VoiceReceiver> VoiceReceivers { get { throw null; } }
@@ -225,7 +223,6 @@ namespace Azure.ResourceManager.Monitor
         public string Description { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } }
         public string ImmutableId { get { throw null; } set { } }
-        public Azure.ResourceManager.Monitor.Models.KnownDataCollectionEndpointResourceKind? Kind { get { throw null; } set { } }
         public string LogsIngestionEndpoint { get { throw null; } }
         public Azure.ResourceManager.Monitor.Models.KnownDataCollectionEndpointProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Monitor.Models.KnownPublicNetworkAccessOption? PublicNetworkAccess { get { throw null; } set { } }
@@ -312,7 +309,6 @@ namespace Azure.ResourceManager.Monitor
         public Azure.ResourceManager.Monitor.Models.DataCollectionRuleDestinations Destinations { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } }
         public string ImmutableId { get { throw null; } }
-        public Azure.ResourceManager.Monitor.Models.KnownDataCollectionRuleResourceKind? Kind { get { throw null; } set { } }
         public Azure.ResourceManager.Monitor.Models.KnownDataCollectionRuleProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class DataCollectionRuleResource : Azure.ResourceManager.ArmResource
@@ -476,7 +472,6 @@ namespace Azure.ResourceManager.Monitor
         public Azure.ResourceManager.Monitor.Models.MonitorEnabled? Enabled { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } }
         public bool? IsLegacyLogAnalyticsRule { get { throw null; } }
-        public string Kind { get { throw null; } }
         public System.DateTimeOffset? LastUpdatedOn { get { throw null; } }
         public Azure.ResourceManager.Monitor.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Monitor.Models.MonitorSchedule Schedule { get { throw null; } set { } }
@@ -1259,24 +1254,6 @@ namespace Azure.ResourceManager.Monitor.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct KnownDataCollectionEndpointResourceKind : System.IEquatable<Azure.ResourceManager.Monitor.Models.KnownDataCollectionEndpointResourceKind>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public KnownDataCollectionEndpointResourceKind(string value) { throw null; }
-        public static Azure.ResourceManager.Monitor.Models.KnownDataCollectionEndpointResourceKind Linux { get { throw null; } }
-        public static Azure.ResourceManager.Monitor.Models.KnownDataCollectionEndpointResourceKind Windows { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Monitor.Models.KnownDataCollectionEndpointResourceKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Monitor.Models.KnownDataCollectionEndpointResourceKind left, Azure.ResourceManager.Monitor.Models.KnownDataCollectionEndpointResourceKind right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Monitor.Models.KnownDataCollectionEndpointResourceKind (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Monitor.Models.KnownDataCollectionEndpointResourceKind left, Azure.ResourceManager.Monitor.Models.KnownDataCollectionEndpointResourceKind right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct KnownDataCollectionRuleAssociationProvisioningState : System.IEquatable<Azure.ResourceManager.Monitor.Models.KnownDataCollectionRuleAssociationProvisioningState>
     {
         private readonly object _dummy;
@@ -1316,24 +1293,6 @@ namespace Azure.ResourceManager.Monitor.Models
         public static bool operator ==(Azure.ResourceManager.Monitor.Models.KnownDataCollectionRuleProvisioningState left, Azure.ResourceManager.Monitor.Models.KnownDataCollectionRuleProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Monitor.Models.KnownDataCollectionRuleProvisioningState (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Monitor.Models.KnownDataCollectionRuleProvisioningState left, Azure.ResourceManager.Monitor.Models.KnownDataCollectionRuleProvisioningState right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct KnownDataCollectionRuleResourceKind : System.IEquatable<Azure.ResourceManager.Monitor.Models.KnownDataCollectionRuleResourceKind>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public KnownDataCollectionRuleResourceKind(string value) { throw null; }
-        public static Azure.ResourceManager.Monitor.Models.KnownDataCollectionRuleResourceKind Linux { get { throw null; } }
-        public static Azure.ResourceManager.Monitor.Models.KnownDataCollectionRuleResourceKind Windows { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Monitor.Models.KnownDataCollectionRuleResourceKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Monitor.Models.KnownDataCollectionRuleResourceKind left, Azure.ResourceManager.Monitor.Models.KnownDataCollectionRuleResourceKind right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Monitor.Models.KnownDataCollectionRuleResourceKind (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Monitor.Models.KnownDataCollectionRuleResourceKind left, Azure.ResourceManager.Monitor.Models.KnownDataCollectionRuleResourceKind right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
