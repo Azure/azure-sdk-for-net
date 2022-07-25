@@ -208,6 +208,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
                 processor = client.CreateSessionProcessor(entityPath, options);
             }
             processor.ProcessErrorAsync += Options.ExceptionReceivedHandler;
+            processor.SessionInitializingAsync += Options.SessionInitializingHandler;
+            processor.SessionClosingAsync += Options.SessionClosingHandler;
             return processor;
         }
     }

@@ -408,6 +408,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public string OutputResponseName { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.StreamAnalytics.Models.AzureMachineLearningServiceOutputColumn> Outputs { get { throw null; } }
     }
+    public partial class AzureMachineLearningServiceFunctionRetrieveDefaultDefinitionParameters : Azure.ResourceManager.StreamAnalytics.Models.FunctionRetrieveDefaultDefinitionContent
+    {
+        public AzureMachineLearningServiceFunctionRetrieveDefaultDefinitionParameters() { }
+        public string ExecuteEndpoint { get { throw null; } set { } }
+        public Azure.ResourceManager.StreamAnalytics.Models.UdfType? UdfType { get { throw null; } set { } }
+    }
     public partial class AzureMachineLearningServiceInputColumn
     {
         public AzureMachineLearningServiceInputColumn() { }
@@ -430,6 +436,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public string Endpoint { get { throw null; } set { } }
         public Azure.ResourceManager.StreamAnalytics.Models.AzureMachineLearningStudioInputs Inputs { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.StreamAnalytics.Models.AzureMachineLearningStudioOutputColumn> Outputs { get { throw null; } }
+    }
+    public partial class AzureMachineLearningStudioFunctionRetrieveDefaultDefinitionParameters : Azure.ResourceManager.StreamAnalytics.Models.FunctionRetrieveDefaultDefinitionContent
+    {
+        public AzureMachineLearningStudioFunctionRetrieveDefaultDefinitionParameters() { }
+        public string ExecuteEndpoint { get { throw null; } set { } }
+        public Azure.ResourceManager.StreamAnalytics.Models.UdfType? UdfType { get { throw null; } set { } }
     }
     public partial class AzureMachineLearningStudioInputColumn
     {
@@ -683,6 +695,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public string Method { get { throw null; } set { } }
         public Azure.ResourceManager.StreamAnalytics.Models.UpdateMode? UpdateMode { get { throw null; } set { } }
     }
+    public partial class CSharpFunctionRetrieveDefaultDefinitionParameters : Azure.ResourceManager.StreamAnalytics.Models.FunctionRetrieveDefaultDefinitionContent
+    {
+        public CSharpFunctionRetrieveDefaultDefinitionParameters() { }
+        public string Script { get { throw null; } set { } }
+        public Azure.ResourceManager.StreamAnalytics.Models.UdfType? UdfType { get { throw null; } set { } }
+    }
     public partial class CsvSerialization : Azure.ResourceManager.StreamAnalytics.Models.Serialization
     {
         public CsvSerialization() { }
@@ -891,6 +909,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     {
         public JavaScriptFunctionBinding() { }
         public string Script { get { throw null; } set { } }
+    }
+    public partial class JavaScriptFunctionRetrieveDefaultDefinitionParameters : Azure.ResourceManager.StreamAnalytics.Models.FunctionRetrieveDefaultDefinitionContent
+    {
+        public JavaScriptFunctionRetrieveDefaultDefinitionParameters() { }
+        public string Script { get { throw null; } set { } }
+        public Azure.ResourceManager.StreamAnalytics.Models.UdfType? UdfType { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct JobState : System.IEquatable<Azure.ResourceManager.StreamAnalytics.Models.JobState>
@@ -1416,6 +1440,23 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public TestQueryDiagnostics(System.Uri writeUri) { }
         public string Path { get { throw null; } set { } }
         public System.Uri WriteUri { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct UdfType : System.IEquatable<Azure.ResourceManager.StreamAnalytics.Models.UdfType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public UdfType(string value) { throw null; }
+        public static Azure.ResourceManager.StreamAnalytics.Models.UdfType Scalar { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.StreamAnalytics.Models.UdfType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.StreamAnalytics.Models.UdfType left, Azure.ResourceManager.StreamAnalytics.Models.UdfType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.StreamAnalytics.Models.UdfType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.StreamAnalytics.Models.UdfType left, Azure.ResourceManager.StreamAnalytics.Models.UdfType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct UpdateMode : System.IEquatable<Azure.ResourceManager.StreamAnalytics.Models.UpdateMode>

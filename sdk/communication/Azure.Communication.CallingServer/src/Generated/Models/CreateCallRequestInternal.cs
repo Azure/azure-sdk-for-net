@@ -17,7 +17,7 @@ namespace Azure.Communication.CallingServer
     {
         /// <summary> Initializes a new instance of CreateCallRequestInternal. </summary>
         /// <param name="targets"> The targets of the call. </param>
-        /// <param name="source"></param>
+        /// <param name="source"> The source of the call. </param>
         /// <param name="callbackUri"> The callback URI. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targets"/>, <paramref name="source"/> or <paramref name="callbackUri"/> is null. </exception>
         public CreateCallRequestInternal(IEnumerable<CommunicationIdentifierModel> targets, CallSourceDto source, string callbackUri)
@@ -42,7 +42,7 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> The targets of the call. </summary>
         public IList<CommunicationIdentifierModel> Targets { get; }
-        /// <summary> Gets the source. </summary>
+        /// <summary> The source of the call. </summary>
         public CallSourceDto Source { get; }
         /// <summary> The subject. </summary>
         public string Subject { get; set; }

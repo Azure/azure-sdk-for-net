@@ -18,7 +18,7 @@ You need an [Azure subscription][azure_sub] and a [Communication Service Resourc
 To create a new Communication Service, you can use the [Azure Portal][communication_resource_create_portal], the [Azure PowerShell][communication_resource_create_power_shell], or the [.NET management client library][communication_resource_create_net].
 
 ### Key concepts
-`CallingServerClient` provides the functionality to make call connection, join call connection, answer incoming call or initialize a server call.
+`CallingServerClient` provides the functionality to answer incoming call or initialize an outbound call.
 
 ### Using statements
 ```C#
@@ -44,20 +44,20 @@ var client = new CallingServerClient(endpoint, tokenCredential);
 
 ## Examples
 ### Make a call to a phone number recipient
-To make an outbound call, call the `CreateCallConnection` or `CreateCallConnectionAsync` function from the `CallingServerClient`.
+To make an outbound call, call the `CreateCall` or `CreateCallAsync` function from the `CallingServerClient`.
 ```C#
-var createCallOption = new CreateCallOptions(
-       AlternateCallerId: new PhoneNumberIdentifier("<caller-id-phonenumber>") // E.164 formatted recipient phone number
+CallSource callSource = new CallSource(
+       new CommunicationUserIdentifier("<source-identifier>"), // Your Azure Communication Resource Guid Id used to make a Call
        );
+callSource.CallerId = new PhoneNumberIdentifier("<caller-id-phonenumber>") // E.164 formatted recipient phone number
 ```
 ```C#
-var callConnection = await callingServerClient.CreateCallAsync(
-    source: new CommunicationUserIdentifier("<source-identifier>"), // Your Azure Communication Resource Guid Id used to make a Call
+CreateCallResult createCallResult = await callingServerClient.CreateCallAsync(
+    source: callSource,
     targets: new List<CommunicationIdentifier>() { new PhoneNumberIdentifier("<targets-phone-number>") }, // E.164 formatted recipient phone number
-    callbackUri: new Uri(TestEnvironment.AppCallbackUrl),
-    options: createCallOption // The options for creating a call.
+    callbackUri: new Uri(TestEnvironment.AppCallbackUrl)
     );
-Console.WriteLine($"Call connection id: {callConnection.Value.CallConnectionId}");
+Console.WriteLine($"Call connection id: {createCallResult.CallProperties.CallConnectionId}");
 ```
 
 ## Troubleshooting

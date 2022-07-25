@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Sql
             Optional<SystemData> systemData = default;
             Optional<string> subregion = default;
             Optional<string> serverKeyName = default;
-            Optional<ServerKeyType> serverKeyType = default;
+            Optional<SqlServerKeyType> serverKeyType = default;
             Optional<Uri> uri = default;
             Optional<string> thumbprint = default;
             Optional<bool> autoRotationEnabled = default;
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Sql
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            serverKeyType = new ServerKeyType(property0.Value.GetString());
+                            serverKeyType = new SqlServerKeyType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("uri"))

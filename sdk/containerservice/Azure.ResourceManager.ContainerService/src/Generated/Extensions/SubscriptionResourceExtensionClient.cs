@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.ContainerService
     {
         private ClientDiagnostics _managedClusterClientDiagnostics;
         private ManagedClustersRestOperations _managedClusterRestClient;
-        private ClientDiagnostics _snapshotClientDiagnostics;
-        private SnapshotsRestOperations _snapshotRestClient;
+        private ClientDiagnostics _agentPoolSnapshotSnapshotsClientDiagnostics;
+        private SnapshotsRestOperations _agentPoolSnapshotSnapshotsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -38,20 +38,13 @@ namespace Azure.ResourceManager.ContainerService
 
         private ClientDiagnostics ManagedClusterClientDiagnostics => _managedClusterClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerService", ManagedClusterResource.ResourceType.Namespace, Diagnostics);
         private ManagedClustersRestOperations ManagedClusterRestClient => _managedClusterRestClient ??= new ManagedClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ManagedClusterResource.ResourceType));
-        private ClientDiagnostics SnapshotClientDiagnostics => _snapshotClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerService", SnapshotResource.ResourceType.Namespace, Diagnostics);
-        private SnapshotsRestOperations SnapshotRestClient => _snapshotRestClient ??= new SnapshotsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SnapshotResource.ResourceType));
+        private ClientDiagnostics AgentPoolSnapshotSnapshotsClientDiagnostics => _agentPoolSnapshotSnapshotsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerService", AgentPoolSnapshotResource.ResourceType.Namespace, Diagnostics);
+        private SnapshotsRestOperations AgentPoolSnapshotSnapshotsRestClient => _agentPoolSnapshotSnapshotsRestClient ??= new SnapshotsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(AgentPoolSnapshotResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
-        }
-
-        /// <summary> Gets a collection of OSOptionProfileResources in the SubscriptionResource. </summary>
-        /// <returns> An object representing collection of OSOptionProfileResources and their operations over a OSOptionProfileResource. </returns>
-        public virtual OSOptionProfileCollection GetOSOptionProfiles()
-        {
-            return GetCachedClient(Client => new OSOptionProfileCollection(Client, Id));
         }
 
         /// <summary>
@@ -144,17 +137,17 @@ namespace Azure.ResourceManager.ContainerService
         /// Operation Id: Snapshots_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SnapshotResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SnapshotResource> GetSnapshotsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AgentPoolSnapshotResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AgentPoolSnapshotResource> GetAgentPoolSnapshotsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SnapshotResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<AgentPoolSnapshotResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = SnapshotClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSnapshots");
+                using var scope = AgentPoolSnapshotSnapshotsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAgentPoolSnapshots");
                 scope.Start();
                 try
                 {
-                    var response = await SnapshotRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SnapshotResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await AgentPoolSnapshotSnapshotsRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new AgentPoolSnapshotResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -162,14 +155,14 @@ namespace Azure.ResourceManager.ContainerService
                     throw;
                 }
             }
-            async Task<Page<SnapshotResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<AgentPoolSnapshotResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = SnapshotClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSnapshots");
+                using var scope = AgentPoolSnapshotSnapshotsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAgentPoolSnapshots");
                 scope.Start();
                 try
                 {
-                    var response = await SnapshotRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SnapshotResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await AgentPoolSnapshotSnapshotsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new AgentPoolSnapshotResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -186,17 +179,17 @@ namespace Azure.ResourceManager.ContainerService
         /// Operation Id: Snapshots_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SnapshotResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SnapshotResource> GetSnapshots(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AgentPoolSnapshotResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AgentPoolSnapshotResource> GetAgentPoolSnapshots(CancellationToken cancellationToken = default)
         {
-            Page<SnapshotResource> FirstPageFunc(int? pageSizeHint)
+            Page<AgentPoolSnapshotResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = SnapshotClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSnapshots");
+                using var scope = AgentPoolSnapshotSnapshotsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAgentPoolSnapshots");
                 scope.Start();
                 try
                 {
-                    var response = SnapshotRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SnapshotResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = AgentPoolSnapshotSnapshotsRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new AgentPoolSnapshotResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -204,14 +197,14 @@ namespace Azure.ResourceManager.ContainerService
                     throw;
                 }
             }
-            Page<SnapshotResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<AgentPoolSnapshotResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = SnapshotClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSnapshots");
+                using var scope = AgentPoolSnapshotSnapshotsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAgentPoolSnapshots");
                 scope.Start();
                 try
                 {
-                    var response = SnapshotRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SnapshotResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = AgentPoolSnapshotSnapshotsRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new AgentPoolSnapshotResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

@@ -19,8 +19,6 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
     {
         private static readonly string s_endpoint = "https://contoso-textanalytics.cognitiveservices.azure.com/";
         private static readonly string s_apiKey = "FakeapiKey";
-        private static readonly string FakeProjectName = "FakeProjectName";
-        private static readonly string FakeDeploymentName = "FakeDeploymentName";
 
         public AnalyzeOperationMockTests(bool isAsync) : base(isAsync)
         {
@@ -28,7 +26,7 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
 
         private TextAnalyticsClient CreateTestClient(HttpPipelineTransport transport)
         {
-            var options = new TextAnalyticsClientOptions(TextAnalyticsClientOptions.ServiceVersion.V3_2_Preview_2)
+            var options = new TextAnalyticsClientOptions(TextAnalyticsClientOptions.ServiceVersion.V3_1)
             {
                 Transport = transport
             };
@@ -237,42 +235,6 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
         }
 
         #endregion entities
-
-        #region Custom Entities
-
-        [Test]
-        public async Task AnalyzeOperationRecognizeCustomEntitiesWithDisableServiceLogs()
-        {
-            var mockResponse = new MockResponse(202);
-            mockResponse.AddHeader(new HttpHeader("Operation-Location", "something/jobs/2a96a91f-7edf-4931-a880-3fdee1d56f15"));
-
-            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
-            var client = CreateTestClient(mockTransport);
-
-            var documents = new List<string>
-            {
-                "Elon Musk is the CEO of SpaceX and Tesla."
-            };
-
-            var actions = new RecognizeCustomEntitiesAction(FakeProjectName, FakeDeploymentName)
-            {
-                DisableServiceLogs = true
-            };
-
-            TextAnalyticsActions batchActions = new TextAnalyticsActions()
-            {
-                RecognizeCustomEntitiesActions = new List<RecognizeCustomEntitiesAction>() { actions },
-            };
-
-            await client.StartAnalyzeActionsAsync(documents, batchActions);
-
-            var contentString = GetString(mockTransport.Requests.Single().Content);
-            string logging = contentString.Substring(contentString.IndexOf("loggingOptOut"), 19);
-
-            var expectedContent = "loggingOptOut\":true";
-            Assert.AreEqual(expectedContent, logging);
-        }
-        #endregion
 
         #region linked entities
 
@@ -595,115 +557,6 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
 
         #endregion Analyze sentiment
 
-        #region Extract summary
-
-        [Test]
-        public async Task AnalyzeOperationExtractSummaryWithDisableServiceLogs()
-        {
-            var mockResponse = new MockResponse(202);
-            mockResponse.AddHeader(new HttpHeader("Operation-Location", "something/jobs/2a96a91f-7edf-4931-a880-3fdee1d56f15"));
-
-            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
-            var client = CreateTestClient(mockTransport);
-
-            var documents = new List<string>
-            {
-                "Elon Musk is the CEO of SpaceX and Tesla."
-            };
-
-            var actions = new ExtractSummaryAction()
-            {
-                DisableServiceLogs = true
-            };
-
-            TextAnalyticsActions batchActions = new TextAnalyticsActions()
-            {
-                ExtractSummaryActions = new List<ExtractSummaryAction>() { actions },
-            };
-
-            await client.StartAnalyzeActionsAsync(documents, batchActions);
-
-            var contentString = GetString(mockTransport.Requests.Single().Content);
-            string logging = contentString.Substring(contentString.IndexOf("loggingOptOut"), 19);
-
-            var expectedContent = "loggingOptOut\":true";
-            Assert.AreEqual(expectedContent, logging);
-        }
-
-        #endregion Extract summary
-
-        #region Multi Category Classify
-
-        [Test]
-        public async Task AnalyzeOperationMultiCategoryClassifyWithDisableServiceLogs()
-        {
-            var mockResponse = new MockResponse(202);
-            mockResponse.AddHeader(new HttpHeader("Operation-Location", "something/jobs/2a96a91f-7edf-4931-a880-3fdee1d56f15"));
-
-            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
-            var client = CreateTestClient(mockTransport);
-
-            var documents = new List<string>
-            {
-                "Elon Musk is the CEO of SpaceX and Tesla."
-            };
-
-            var actions = new MultiCategoryClassifyAction(FakeProjectName, FakeDeploymentName)
-            {
-                DisableServiceLogs = true
-            };
-
-            TextAnalyticsActions batchActions = new TextAnalyticsActions()
-            {
-                MultiCategoryClassifyActions = new List<MultiCategoryClassifyAction>() { actions },
-            };
-
-            await client.StartAnalyzeActionsAsync(documents, batchActions);
-
-            var contentString = GetString(mockTransport.Requests.Single().Content);
-            string logging = contentString.Substring(contentString.IndexOf("loggingOptOut"), 19);
-
-            var expectedContent = "loggingOptOut\":true";
-            Assert.AreEqual(expectedContent, logging);
-        }
-        #endregion
-
-        #region Single Category Classify
-
-        [Test]
-        public async Task AnalyzeOperationSingleCategoryClassifyWithDisableServiceLogs()
-        {
-            var mockResponse = new MockResponse(202);
-            mockResponse.AddHeader(new HttpHeader("Operation-Location", "something/jobs/2a96a91f-7edf-4931-a880-3fdee1d56f15"));
-
-            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
-            var client = CreateTestClient(mockTransport);
-
-            var documents = new List<string>
-            {
-                "Elon Musk is the CEO of SpaceX and Tesla."
-            };
-
-            var actions = new SingleCategoryClassifyAction(FakeProjectName, FakeDeploymentName)
-            {
-                DisableServiceLogs = true
-            };
-
-            TextAnalyticsActions batchActions = new TextAnalyticsActions()
-            {
-                SingleCategoryClassifyActions = new List<SingleCategoryClassifyAction>() { actions },
-            };
-
-            await client.StartAnalyzeActionsAsync(documents, batchActions);
-
-            var contentString = GetString(mockTransport.Requests.Single().Content);
-            string logging = contentString.Substring(contentString.IndexOf("loggingOptOut"), 19);
-
-            var expectedContent = "loggingOptOut\":true";
-            Assert.AreEqual(expectedContent, logging);
-        }
-        #endregion
-
         [Test]
         public async Task AnalyzeOperationWithActionsError()
         {
@@ -740,26 +593,6 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
                         ""code"": ""InvalidRequest"",
                         ""message"": ""Some error"",
                         ""target"": ""#/tasks/sentimentAnalysisTasks/0""
-                      },
-                      {
-                        ""code"": ""InvalidRequest"",
-                        ""message"": ""Some error"",
-                        ""target"": ""#/tasks/extractiveSummarizationTasks/0""
-                      },
-                      {
-                        ""code"": ""InvalidRequest"",
-                        ""message"": ""Some error"",
-                        ""target"": ""#/tasks/customEntityRecognitionTasks/0""
-                      },
-                      {
-                        ""code"": ""InvalidRequest"",
-                        ""message"": ""Some error"",
-                        ""target"": ""#/tasks/customSingleClassificationTasks/0""
-                      },
-                      {
-                        ""code"": ""InvalidRequest"",
-                        ""message"": ""Some error"",
-                        ""target"": ""#/tasks/customMultiClassificationTasks/0""
                       }
                     ],
                     ""tasks"": {
@@ -805,34 +638,6 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
                           ""taskName"": ""something"",
                           ""state"": ""failed""
                         }
-                      ],
-                      ""extractiveSummarizationTasks"": [
-                        {
-                          ""lastUpdateDateTime"": ""2021-03-03T22:39:37.1716697Z"",
-                          ""taskName"": ""something"",
-                          ""state"": ""failed""
-                        }
-                      ],
-                     ""customEntityRecognitionTasks"": [
-                        {
-                          ""lastUpdateDateTime"": ""2021-03-03T22:39:37.1716697Z"",
-                          ""taskName"": ""something"",
-                          ""state"": ""failed""
-                        }
-                      ],
-                     ""customSingleClassificationTasks"": [
-                        {
-                          ""lastUpdateDateTime"": ""2021-03-03T22:39:37.1716697Z"",
-                          ""taskName"": ""something"",
-                          ""state"": ""failed""
-                        }
-                      ],
-                      ""customMultiClassificationTasks"": [
-                        {
-                          ""lastUpdateDateTime"": ""2021-03-03T22:39:37.1716697Z"",
-                          ""taskName"": ""something"",
-                          ""state"": ""failed""
-                        }
                       ]
                     }
                 }"));
@@ -859,10 +664,9 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
             RecognizePiiEntitiesActionResult piiActionsResults = resultCollection.RecognizePiiEntitiesResults.FirstOrDefault();
             RecognizeLinkedEntitiesActionResult entityLinkingActionsResults = resultCollection.RecognizeLinkedEntitiesResults.FirstOrDefault();
             AnalyzeSentimentActionResult analyzeSentimentActionsResults = resultCollection.AnalyzeSentimentResults.FirstOrDefault();
-            ExtractSummaryActionResult extractSummaryActionsResults = resultCollection.ExtractSummaryResults.FirstOrDefault();
             RecognizeCustomEntitiesActionResult recognizeCustomEntitiesActionResults = resultCollection.RecognizeCustomEntitiesResults.FirstOrDefault();
-            SingleCategoryClassifyActionResult singleCategoryClassifyActionResult = resultCollection.SingleCategoryClassifyResults.FirstOrDefault();
-            MultiCategoryClassifyActionResult multiCategoryClassifyActionResult = resultCollection.MultiCategoryClassifyResults.FirstOrDefault();
+            SingleLabelClassifyActionResult singleLabelClassifyActionResult = resultCollection.SingleLabelClassifyResults.FirstOrDefault();
+            MultiLabelClassifyActionResult multiLabelClassifyActionResult = resultCollection.MultiLabelClassifyResults.FirstOrDefault();
 
             Assert.IsTrue(entitiesActionsResults.HasError);
             Assert.Throws<InvalidOperationException>(() => entitiesActionsResults.DocumentsResults.GetType());
@@ -878,18 +682,6 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
 
             Assert.IsTrue(analyzeSentimentActionsResults.HasError);
             Assert.Throws<InvalidOperationException>(() => analyzeSentimentActionsResults.DocumentsResults.GetType());
-
-            Assert.IsTrue(extractSummaryActionsResults.HasError);
-            Assert.Throws<InvalidOperationException>(() => extractSummaryActionsResults.DocumentsResults.GetType());
-
-            Assert.IsTrue(recognizeCustomEntitiesActionResults.HasError);
-            Assert.Throws<InvalidOperationException>(() => recognizeCustomEntitiesActionResults.DocumentsResults.GetType());
-
-            Assert.IsTrue(singleCategoryClassifyActionResult.HasError);
-            Assert.Throws<InvalidOperationException>(() => singleCategoryClassifyActionResult.DocumentsResults.GetType());
-
-            Assert.IsTrue(multiCategoryClassifyActionResult.HasError);
-            Assert.Throws<InvalidOperationException>(() => multiCategoryClassifyActionResult.DocumentsResults.GetType());
         }
 
         [Test]

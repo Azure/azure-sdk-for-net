@@ -32,9 +32,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 #else
             Uri trainingFileUri = new Uri(TestEnvironment.BlobContainerSasUrl);
 #endif
-            BuildModelOperation operation = await sourceClient.StartBuildModelAsync(trainingFileUri, DocumentBuildMode.Template);
-            Response<DocumentModel> operationResponse = await operation.WaitForCompletionAsync();
-            DocumentModel model = operationResponse.Value;
+            BuildModelOperation operation = await sourceClient.BuildModelAsync(WaitUntil.Completed, trainingFileUri, DocumentBuildMode.Template);
+            DocumentModelDetails model = operation.Value;
 
             #region Snippet:FormRecognizerSampleCreateCopyTargetClient
 #if SNIPPET
@@ -58,9 +57,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 #else
             string modelId = model.ModelId;
 #endif
-            CopyModelOperation newModelOperation = await sourceClient.StartCopyModelToAsync(modelId, targetAuth);
-            await newModelOperation.WaitForCompletionAsync();
-            DocumentModel newModel = newModelOperation.Value;
+            CopyModelOperation newModelOperation = await sourceClient.CopyModelToAsync(WaitUntil.Completed, modelId, targetAuth);
+            DocumentModelDetails newModel = newModelOperation.Value;
 
             Console.WriteLine($"Original model ID => {modelId}");
             Console.WriteLine($"Copied model ID => {newModel.ModelId}");

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="isZoneRedundant"> Whether or not zone redundancy is supported for the maintenance configuration. </param>
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
-        internal MaintenanceConfigurationCapability(string name, bool? isZoneRedundant, CapabilityStatus? status, string reason)
+        internal MaintenanceConfigurationCapability(string name, bool? isZoneRedundant, SqlCapabilityStatus? status, string reason)
         {
             Name = name;
             IsZoneRedundant = isZoneRedundant;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Whether or not zone redundancy is supported for the maintenance configuration. </summary>
         public bool? IsZoneRedundant { get; }
         /// <summary> The status of the capability. </summary>
-        public CapabilityStatus? Status { get; }
+        public SqlCapabilityStatus? Status { get; }
         /// <summary> The reason for the capability not being available. </summary>
         public string Reason { get; }
     }

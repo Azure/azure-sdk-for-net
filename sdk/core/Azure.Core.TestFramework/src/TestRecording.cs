@@ -83,7 +83,7 @@ namespace Azure.Core.TestFramework
                     {
                         ExcludedHeaders = string.Join(",", excludedHeaders),
                         IgnoredHeaders = _recordedTestBase.IgnoredHeaders.Count > 0 ? string.Join(",", _recordedTestBase.IgnoredHeaders) : null,
-                        IgnoredQueryParameters = _recordedTestBase.IgnoredQueryParameters.Count > 0 ? string.Join(",", _recordedTestBase.IgnoredQueryParameters): null,
+                        IgnoredQueryParameters = _recordedTestBase.IgnoredQueryParameters.Count > 0 ? string.Join(",", _recordedTestBase.IgnoredQueryParameters) : null,
                         CompareBodies = _recordedTestBase.CompareBodies
                     });
 
@@ -172,9 +172,9 @@ namespace Azure.Core.TestFramework
                             _random = new TestRandom(Mode, liveSeed);
                             break;
                         case RecordedTestMode.Record:
-                                _random = new TestRandom(Mode);
-                                int seed = _random.Next();
-                                Variables[RandomSeedVariableKey] = seed.ToString();
+                            _random = new TestRandom(Mode);
+                            int seed = _random.Next();
+                            Variables[RandomSeedVariableKey] = seed.ToString();
                             _random = new TestRandom(Mode, seed);
                             break;
                         case RecordedTestMode.Playback:
@@ -256,6 +256,7 @@ namespace Azure.Core.TestFramework
             {
                 if (currentTransport is ProxyTransport)
                 {
+                    //TODO: https://github.com/Azure/azure-sdk-for-net/issues/30029
                     return currentTransport;
                 }
                 return new ProxyTransport(_proxy, currentTransport, this, () => _disableRecording.Value);
