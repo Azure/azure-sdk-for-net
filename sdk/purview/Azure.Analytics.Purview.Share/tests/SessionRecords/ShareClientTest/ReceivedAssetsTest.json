@@ -1,0 +1,49 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://ads-dev-eastus-pv.purview.azure.com/share/receivedShares/sentShare1/receivedAssets?api-version=2021-09-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Connection": "keep-alive",
+        "traceparent": "00-b953791adde93540afda95f3245d94d3-9657c659f970704e-00",
+        "User-Agent": "azsdk-net-Analytics.Share/1.0.3-alpha.20220714.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "1bf31963882b5d466156950266a33620",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "319",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 14 Jul 2022 20:37:11 GMT",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-correlation-request-id": "debe1aba-2107-4f68-bd17-e02a216ccea6"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "properties": {
+              "receiverAssetName": "testAsset1",
+              "receiverPaths": [
+                "testfolder1"
+              ],
+              "location": "southafricanorth"
+            },
+            "kind": "AdlsGen2Account",
+            "id": "/receivedShares/sentShare1/receivedAssets/18c8af16-db4c-4a1d-9101-94b3e7ff3f25",
+            "name": "18c8af16-db4c-4a1d-9101-94b3e7ff3f25",
+            "type": "receivedShares/receivedAssets"
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": null,
+    "PURVIEW_SHARE_URL": "https://ads-dev-eastus-pv.purview.azure.com/share",
+    "RandomSeed": "2050036244"
+  }
+}
