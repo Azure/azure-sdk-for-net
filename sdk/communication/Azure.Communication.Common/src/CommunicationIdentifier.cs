@@ -44,7 +44,7 @@ namespace Azure.Communication
         public static bool operator !=(CommunicationIdentifier left, CommunicationIdentifier right) => !Equals(left, right) || left.GetType() != right.GetType();
 
         /// <summary> Converts a string to a <see cref="CommunicationIdentifier"/>. </summary>
-        public static implicit operator CommunicationIdentifier(string value) => FromRawId(value);
+        public static explicit operator CommunicationIdentifier(string value) => FromRawId(value);
 
         /// <summary>
         /// Creates a <see cref="CommunicationIdentifier"/> from a given rawId.
