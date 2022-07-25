@@ -1,0 +1,189 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-7ab8b895e286a845a5592ee968c48abc-de49399eaf15894b-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.0 (.NET Core 3.1.27; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "39ca3fdb8a0c9b0a1d21295dd272f37b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "456",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 25 Jul 2022 19:40:49 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "e2b48dfd-0a96-4d04-b67d-44f869cb6b62",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "e2b48dfd-0a96-4d04-b67d-44f869cb6b62",
+        "x-ms-routing-request-id": "WESTUS2:20220725T194050Z:e2b48dfd-0a96-4d04-b67d-44f869cb6b62"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071",
+        "authorizationSource": "Bypassed",
+        "managedByTenants": [
+          {
+            "tenantId": "2f4a9838-26b7-47ee-be60-ccc1fdec5953"
+          }
+        ],
+        "subscriptionId": "f66367e1-cf7d-407b-ba39-53230cc79071",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": "MGMT GCRP Package Test 001",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourcegroups/GuestConfigurationSDKTestRecord?api-version=2021-04-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-cbd2623c44e6aa4b9fcea91dc4f59cb8-7475bdd86984504f-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.0 (.NET Core 3.1.27; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "6ec3e9735200fd603fb1a8837e99f619",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "276",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 25 Jul 2022 19:40:49 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "37723bf4-33fe-4fd9-b35d-748541993d22",
+        "x-ms-ratelimit-remaining-subscription-reads": "11998",
+        "x-ms-request-id": "37723bf4-33fe-4fd9-b35d-748541993d22",
+        "x-ms-routing-request-id": "WESTUS2:20220725T194050Z:37723bf4-33fe-4fd9-b35d-748541993d22"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GuestConfigurationSDKTestRecord",
+        "name": "GuestConfigurationSDKTestRecord",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "centraluseuap",
+        "tags": {},
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GuestConfigurationSDKTestRecord/providers/Microsoft.Compute/virtualMachines/SDKTestRecordVM002/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AuditSecureProtocol?api-version=2022-01-25",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "438",
+        "Content-Type": "application/json",
+        "traceparent": "00-0359829493930d4080ffaa447d561834-c5c85ea18412e24e-00",
+        "User-Agent": "azsdk-net-ResourceManager.GuestConfiguration/1.0.0-alpha.20220725.1 (.NET Core 3.1.27; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "1fc95768be861765a059ace118c62663",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {
+          "guestConfiguration": {
+            "kind": "DSC",
+            "name": "AuditSecureProtocol",
+            "version": "1.0.0.3",
+            "assignmentType": "ApplyAndAutoCorrect",
+            "configurationParameter": [
+              {
+                "name": "[InstalledApplication]bwhitelistedapp;Name",
+                "value": "NotePad,sql"
+              }
+            ],
+            "configurationProtectedParameter": [
+              {
+                "name": "[InstalledApplication]bwhitelistedapp;Name",
+                "value": "NotePad,sql"
+              }
+            ]
+          },
+          "context": "Azure policy A"
+        },
+        "name": "AuditSecureProtocol",
+        "location": "centraluseuap"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1008",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 25 Jul 2022 19:40:50 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "02958c48-b1e8-4d82-b9c6-5a6357911391",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "02958c48-b1e8-4d82-b9c6-5a6357911391",
+        "x-ms-routing-request-id": "WESTUS2:20220725T194051Z:02958c48-b1e8-4d82-b9c6-5a6357911391",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "location": "centraluseuap",
+        "id": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GuestConfigurationSDKTestRecord/providers/Microsoft.Compute/virtualMachines/SDKTestRecordVM002/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AuditSecureProtocol",
+        "name": "AuditSecureProtocol",
+        "properties": {
+          "complianceStatus": "Pending",
+          "assignmentHash": null,
+          "parameterHash": null,
+          "latestReportId": null,
+          "lastComplianceStatusChecked": null,
+          "context": "Azure policy A",
+          "guestConfiguration": {
+            "kind": "DSC",
+            "name": "AuditSecureProtocol",
+            "version": "1.0.0.3",
+            "contentUri": null,
+            "contentHash": null,
+            "contentType": "Builtin",
+            "assignmentType": "ApplyAndAutoCorrect",
+            "assignmentSource": null,
+            "configurationParameter": [
+              {
+                "name": "[InstalledApplication]bwhitelistedapp;Name",
+                "value": "NotePad,sql"
+              }
+            ],
+            "configurationProtectedParameter": [
+              {
+                "name": "[InstalledApplication]bwhitelistedapp;Name",
+                "value": "NotePad,sql"
+              }
+            ],
+            "configurationSetting": null
+          },
+          "provisioningState": "Succeeded",
+          "resourceType": null,
+          "vmssVMList": null
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "959578146",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "f66367e1-cf7d-407b-ba39-53230cc79071"
+  }
+}

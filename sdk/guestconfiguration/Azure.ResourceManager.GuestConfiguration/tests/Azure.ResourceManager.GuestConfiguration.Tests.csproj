@@ -2,4 +2,9 @@
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.GuestConfiguration.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="SessionRecords\">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Folder>
+  </ItemGroup>
 </Project>
