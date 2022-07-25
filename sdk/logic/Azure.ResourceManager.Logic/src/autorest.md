@@ -19,6 +19,47 @@ modelerfour:
 list-exception:
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/workflows/{workflowName}/runs/{runName}/operations/{operationId}
 
+request-path-to-resource-name:
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/workflows/{workflowName}/runs/{runName}/operations/{operationId}: LogicAppWorkflowRunOperation
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/workflows/{workflowName}/runs/{runName}: LogicAppWorkflowRun
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/workflows/{workflowName}/runs/{runName}/actions/{actionName}/repetitions/{repetitionName}: LogicAppWorkflowRunActionRepetition
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/workflows/{workflowName}/runs/{runName}/actions/{actionName}/repetitions/{repetitionName}/requestHistories/{requestHistoryName}: LogicAppWorkflowRunActionRepetitionRequestHistory
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/workflows/{workflowName}/runs/{runName}/actions/{actionName}/requestHistories/{requestHistoryName}: LogicAppWorkflowRunActionRequestHistory
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/workflows/{workflowName}/runs/{runName}/actions/{actionName}/scopeRepetitions/{repetitionName}: LogicAppWorkflowRunActionScopeRepetition
+
+mgmt-debug: 
+  show-serialized-names: true
+
+rename-mapping:
+  AssemblyDefinition: IntegrationAccountAssemblyDefinition
+  BatchConfiguration: IntegrationAccountBatchConfiguration
+  Workflow: LogicAppWorkflow
+  WorkflowListResult: LogicAppWorkflowListResult
+  WorkflowRunAction: LogicAppWorkflowRunAction
+  WorkflowVersion: LogicAppWorkflowVersion
+  WorkflowTrigger: LogicAppWorkflowTrigger
+  WorkflowTriggerHistory: LogicAppWorkflowTriggerHistory
+  WorkflowState: LogicAppWorkflowState
+  WorkflowStatus: LogicAppWorkflowStatus
+  WorkflowParameter: LogicAppWorkflowParameterInfo
+  WorkflowOutputParameter: LogicAppWorkflowOutputParameterInfo
+  WorkflowRun: LogicAppWorkflowRun
+  WorkflowRunListResult: LogicAppWorkflowRunListResult
+  WorkflowProvisioningState: LogicAppWorkflowProvisioningState
+  WorkflowTriggerProvisioningState: LogicAppWorkflowTriggerProvisioningState
+  WorkflowRunTrigger: LogicAppWorkflowRunTrigger
+  WorkflowVersionListResult: LogicAppWorkflowVersionListResult
+  WorkflowTriggerReference: LogicAppWorkflowTriggerReference
+  WorkflowTriggerRecurrence: LogicAppWorkflowTriggerRecurrence
+  WorkflowTriggerListResult: LogicAppWorkflowTriggerListResult
+  WorkflowTriggerListCallbackUrlQueries: LogicAppWorkflowTriggerCallbackQueryParameterInfo
+  WorkflowRunActionRepetitionDefinition: LogicAppWorkflowRunActionRepetitionDefinition
+  WorkflowRunActionRepetitionDefinitionCollection: LogicAppWorkflowRunActionRepetitionList
+  WorkflowTriggerHistoryListResult: LogicAppWorkflowTriggerHistoryListResult
+  WorkflowTriggerCallbackUrl: LogicAppWorkflowTriggerCallbackUri
+  WorkflowReference: LogicAppWorkflowReference
+  WorkflowRunActionListResult: LogicAppWorkflowRunActionListResult
+  
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'

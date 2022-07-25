@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The signing or hashing algorithm. </summary>
+    /// <summary>
+    /// The signing or hashing algorithm.
+    /// Serialized Name: HashingAlgorithm
+    /// </summary>
     public readonly partial struct HashingAlgorithm : IEquatable<HashingAlgorithm>
     {
         private readonly string _value;
@@ -30,19 +33,40 @@ namespace Azure.ResourceManager.Logic.Models
         private const string SHA2384Value = "SHA2384";
         private const string SHA2512Value = "SHA2512";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary>
+        /// NotSpecified
+        /// Serialized Name: HashingAlgorithm.NotSpecified
+        /// </summary>
         public static HashingAlgorithm NotSpecified { get; } = new HashingAlgorithm(NotSpecifiedValue);
-        /// <summary> None. </summary>
+        /// <summary>
+        /// None
+        /// Serialized Name: HashingAlgorithm.None
+        /// </summary>
         public static HashingAlgorithm None { get; } = new HashingAlgorithm(NoneValue);
-        /// <summary> MD5. </summary>
+        /// <summary>
+        /// MD5
+        /// Serialized Name: HashingAlgorithm.MD5
+        /// </summary>
         public static HashingAlgorithm MD5 { get; } = new HashingAlgorithm(MD5Value);
-        /// <summary> SHA1. </summary>
+        /// <summary>
+        /// SHA1
+        /// Serialized Name: HashingAlgorithm.SHA1
+        /// </summary>
         public static HashingAlgorithm SHA1 { get; } = new HashingAlgorithm(SHA1Value);
-        /// <summary> SHA2256. </summary>
+        /// <summary>
+        /// SHA2256
+        /// Serialized Name: HashingAlgorithm.SHA2256
+        /// </summary>
         public static HashingAlgorithm SHA2256 { get; } = new HashingAlgorithm(SHA2256Value);
-        /// <summary> SHA2384. </summary>
+        /// <summary>
+        /// SHA2384
+        /// Serialized Name: HashingAlgorithm.SHA2384
+        /// </summary>
         public static HashingAlgorithm SHA2384 { get; } = new HashingAlgorithm(SHA2384Value);
-        /// <summary> SHA2512. </summary>
+        /// <summary>
+        /// SHA2512
+        /// Serialized Name: HashingAlgorithm.SHA2512
+        /// </summary>
         public static HashingAlgorithm SHA2512 { get; } = new HashingAlgorithm(SHA2512Value);
         /// <summary> Determines if two <see cref="HashingAlgorithm"/> values are the same. </summary>
         public static bool operator ==(HashingAlgorithm left, HashingAlgorithm right) => left.Equals(right);

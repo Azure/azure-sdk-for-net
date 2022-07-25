@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The integration service environment subnet network health. </summary>
+    /// <summary>
+    /// The integration service environment subnet network health.
+    /// Serialized Name: IntegrationServiceEnvironmentNetworkDependencyHealth
+    /// </summary>
     public partial class IntegrationServiceEnvironmentNetworkDependencyHealth
     {
         /// <summary> Initializes a new instance of IntegrationServiceEnvironmentNetworkDependencyHealth. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of IntegrationServiceEnvironmentNetworkDependencyHealth. </summary>
-        /// <param name="error"> The error if any occurred during the operation. </param>
-        /// <param name="state"> The network dependency health state. </param>
+        /// <param name="error">
+        /// The error if any occurred during the operation.
+        /// Serialized Name: IntegrationServiceEnvironmentNetworkDependencyHealth.error
+        /// </param>
+        /// <param name="state">
+        /// The network dependency health state.
+        /// Serialized Name: IntegrationServiceEnvironmentNetworkDependencyHealth.state
+        /// </param>
         internal IntegrationServiceEnvironmentNetworkDependencyHealth(ExtendedErrorInfo error, IntegrationServiceEnvironmentNetworkDependencyHealthState? state)
         {
             Error = error;
             State = state;
         }
 
-        /// <summary> The error if any occurred during the operation. </summary>
+        /// <summary>
+        /// The error if any occurred during the operation.
+        /// Serialized Name: IntegrationServiceEnvironmentNetworkDependencyHealth.error
+        /// </summary>
         public ExtendedErrorInfo Error { get; }
-        /// <summary> The network dependency health state. </summary>
+        /// <summary>
+        /// The network dependency health state.
+        /// Serialized Name: IntegrationServiceEnvironmentNetworkDependencyHealth.state
+        /// </summary>
         public IntegrationServiceEnvironmentNetworkDependencyHealthState? State { get; }
     }
 }

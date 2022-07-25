@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The Api resource definition. </summary>
+    /// <summary>
+    /// The Api resource definition.
+    /// Serialized Name: ApiResourceDefinitions
+    /// </summary>
     public partial class ApiResourceDefinitions
     {
         /// <summary> Initializes a new instance of ApiResourceDefinitions. </summary>
@@ -18,17 +21,29 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of ApiResourceDefinitions. </summary>
-        /// <param name="originalSwaggerUri"> The original swagger url. </param>
-        /// <param name="modifiedSwaggerUri"> The modified swagger url. </param>
+        /// <param name="originalSwaggerUri">
+        /// The original swagger url.
+        /// Serialized Name: ApiResourceDefinitions.originalSwaggerUrl
+        /// </param>
+        /// <param name="modifiedSwaggerUri">
+        /// The modified swagger url.
+        /// Serialized Name: ApiResourceDefinitions.modifiedSwaggerUrl
+        /// </param>
         internal ApiResourceDefinitions(Uri originalSwaggerUri, Uri modifiedSwaggerUri)
         {
             OriginalSwaggerUri = originalSwaggerUri;
             ModifiedSwaggerUri = modifiedSwaggerUri;
         }
 
-        /// <summary> The original swagger url. </summary>
+        /// <summary>
+        /// The original swagger url.
+        /// Serialized Name: ApiResourceDefinitions.originalSwaggerUrl
+        /// </summary>
         public Uri OriginalSwaggerUri { get; }
-        /// <summary> The modified swagger url. </summary>
+        /// <summary>
+        /// The modified swagger url.
+        /// Serialized Name: ApiResourceDefinitions.modifiedSwaggerUrl
+        /// </summary>
         public Uri ModifiedSwaggerUri { get; }
     }
 }

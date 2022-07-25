@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The status annotation. </summary>
+    /// <summary>
+    /// The status annotation.
+    /// Serialized Name: StatusAnnotation
+    /// </summary>
     public readonly partial struct StatusAnnotation : IEquatable<StatusAnnotation>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.Logic.Models
         private const string PreviewValue = "Preview";
         private const string ProductionValue = "Production";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary>
+        /// NotSpecified
+        /// Serialized Name: StatusAnnotation.NotSpecified
+        /// </summary>
         public static StatusAnnotation NotSpecified { get; } = new StatusAnnotation(NotSpecifiedValue);
-        /// <summary> Preview. </summary>
+        /// <summary>
+        /// Preview
+        /// Serialized Name: StatusAnnotation.Preview
+        /// </summary>
         public static StatusAnnotation Preview { get; } = new StatusAnnotation(PreviewValue);
-        /// <summary> Production. </summary>
+        /// <summary>
+        /// Production
+        /// Serialized Name: StatusAnnotation.Production
+        /// </summary>
         public static StatusAnnotation Production { get; } = new StatusAnnotation(ProductionValue);
         /// <summary> Determines if two <see cref="StatusAnnotation"/> values are the same. </summary>
         public static bool operator ==(StatusAnnotation left, StatusAnnotation right) => left.Equals(right);

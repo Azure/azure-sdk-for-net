@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The content hash. </summary>
+    /// <summary>
+    /// The content hash.
+    /// Serialized Name: ContentHash
+    /// </summary>
     public partial class ContentHash
     {
         /// <summary> Initializes a new instance of ContentHash. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of ContentHash. </summary>
-        /// <param name="algorithm"> The algorithm of the content hash. </param>
-        /// <param name="value"> The value of the content hash. </param>
+        /// <param name="algorithm">
+        /// The algorithm of the content hash.
+        /// Serialized Name: ContentHash.algorithm
+        /// </param>
+        /// <param name="value">
+        /// The value of the content hash.
+        /// Serialized Name: ContentHash.value
+        /// </param>
         internal ContentHash(string algorithm, string value)
         {
             Algorithm = algorithm;
             Value = value;
         }
 
-        /// <summary> The algorithm of the content hash. </summary>
+        /// <summary>
+        /// The algorithm of the content hash.
+        /// Serialized Name: ContentHash.algorithm
+        /// </summary>
         public string Algorithm { get; }
-        /// <summary> The value of the content hash. </summary>
+        /// <summary>
+        /// The value of the content hash.
+        /// Serialized Name: ContentHash.value
+        /// </summary>
         public string Value { get; }
     }
 }

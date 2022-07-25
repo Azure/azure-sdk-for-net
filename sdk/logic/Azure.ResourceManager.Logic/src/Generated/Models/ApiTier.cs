@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The Api tier. </summary>
+    /// <summary>
+    /// The Api tier.
+    /// Serialized Name: ApiTier
+    /// </summary>
     public readonly partial struct ApiTier : IEquatable<ApiTier>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.Logic.Models
         private const string StandardValue = "Standard";
         private const string PremiumValue = "Premium";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary>
+        /// NotSpecified
+        /// Serialized Name: ApiTier.NotSpecified
+        /// </summary>
         public static ApiTier NotSpecified { get; } = new ApiTier(NotSpecifiedValue);
-        /// <summary> Enterprise. </summary>
+        /// <summary>
+        /// Enterprise
+        /// Serialized Name: ApiTier.Enterprise
+        /// </summary>
         public static ApiTier Enterprise { get; } = new ApiTier(EnterpriseValue);
-        /// <summary> Standard. </summary>
+        /// <summary>
+        /// Standard
+        /// Serialized Name: ApiTier.Standard
+        /// </summary>
         public static ApiTier Standard { get; } = new ApiTier(StandardValue);
-        /// <summary> Premium. </summary>
+        /// <summary>
+        /// Premium
+        /// Serialized Name: ApiTier.Premium
+        /// </summary>
         public static ApiTier Premium { get; } = new ApiTier(PremiumValue);
         /// <summary> Determines if two <see cref="ApiTier"/> values are the same. </summary>
         public static bool operator ==(ApiTier left, ApiTier right) => left.Equals(right);

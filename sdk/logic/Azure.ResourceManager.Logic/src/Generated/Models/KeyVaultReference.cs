@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The key vault reference. </summary>
+    /// <summary>
+    /// The key vault reference.
+    /// Serialized Name: KeyVaultReference
+    /// </summary>
     public partial class KeyVaultReference : ResourceReference
     {
         /// <summary> Initializes a new instance of KeyVaultReference. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of KeyVaultReference. </summary>
-        /// <param name="id"> The resource id. </param>
-        /// <param name="name"> Gets the resource name. </param>
-        /// <param name="resourceType"> Gets the resource type. </param>
+        /// <param name="id">
+        /// The resource id.
+        /// Serialized Name: ResourceReference.id
+        /// </param>
+        /// <param name="name">
+        /// Gets the resource name.
+        /// Serialized Name: ResourceReference.name
+        /// </param>
+        /// <param name="resourceType">
+        /// Gets the resource type.
+        /// Serialized Name: ResourceReference.type
+        /// </param>
         internal KeyVaultReference(string id, string name, string resourceType) : base(id, name, resourceType)
         {
         }

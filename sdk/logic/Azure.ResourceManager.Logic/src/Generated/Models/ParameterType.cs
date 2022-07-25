@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The parameter type. </summary>
+    /// <summary>
+    /// The parameter type.
+    /// Serialized Name: ParameterType
+    /// </summary>
     public readonly partial struct ParameterType : IEquatable<ParameterType>
     {
         private readonly string _value;
@@ -32,23 +35,50 @@ namespace Azure.ResourceManager.Logic.Models
         private const string ObjectValue = "Object";
         private const string SecureObjectValue = "SecureObject";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary>
+        /// NotSpecified
+        /// Serialized Name: ParameterType.NotSpecified
+        /// </summary>
         public static ParameterType NotSpecified { get; } = new ParameterType(NotSpecifiedValue);
-        /// <summary> String. </summary>
+        /// <summary>
+        /// String
+        /// Serialized Name: ParameterType.String
+        /// </summary>
         public static ParameterType String { get; } = new ParameterType(StringValue);
-        /// <summary> SecureString. </summary>
+        /// <summary>
+        /// SecureString
+        /// Serialized Name: ParameterType.SecureString
+        /// </summary>
         public static ParameterType SecureString { get; } = new ParameterType(SecureStringValue);
-        /// <summary> Int. </summary>
+        /// <summary>
+        /// Int
+        /// Serialized Name: ParameterType.Int
+        /// </summary>
         public static ParameterType Int { get; } = new ParameterType(IntValue);
-        /// <summary> Float. </summary>
+        /// <summary>
+        /// Float
+        /// Serialized Name: ParameterType.Float
+        /// </summary>
         public static ParameterType Float { get; } = new ParameterType(FloatValue);
-        /// <summary> Bool. </summary>
+        /// <summary>
+        /// Bool
+        /// Serialized Name: ParameterType.Bool
+        /// </summary>
         public static ParameterType Bool { get; } = new ParameterType(BoolValue);
-        /// <summary> Array. </summary>
+        /// <summary>
+        /// Array
+        /// Serialized Name: ParameterType.Array
+        /// </summary>
         public static ParameterType Array { get; } = new ParameterType(ArrayValue);
-        /// <summary> Object. </summary>
+        /// <summary>
+        /// Object
+        /// Serialized Name: ParameterType.Object
+        /// </summary>
         public static ParameterType Object { get; } = new ParameterType(ObjectValue);
-        /// <summary> SecureObject. </summary>
+        /// <summary>
+        /// SecureObject
+        /// Serialized Name: ParameterType.SecureObject
+        /// </summary>
         public static ParameterType SecureObject { get; } = new ParameterType(SecureObjectValue);
         /// <summary> Determines if two <see cref="ParameterType"/> values are the same. </summary>
         public static bool operator ==(ParameterType left, ParameterType right) => left.Equals(right);

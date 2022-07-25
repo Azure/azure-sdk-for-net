@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Logic
             Optional<Uri> apiDefinitionUrl = default;
             Optional<ApiResourceDefinitions> apiDefinitions = default;
             Optional<ResourceReference> integrationServiceEnvironment = default;
-            Optional<WorkflowProvisioningState> provisioningState = default;
+            Optional<LogicAppWorkflowProvisioningState> provisioningState = default;
             Optional<ApiTier> category = default;
             Optional<IntegrationServiceEnvironmentManagedApiDeploymentParameters> deploymentParameters = default;
             foreach (var property in element.EnumerateObject())
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Logic
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new WorkflowProvisioningState(property0.Value.GetString());
+                            provisioningState = new LogicAppWorkflowProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("category"))

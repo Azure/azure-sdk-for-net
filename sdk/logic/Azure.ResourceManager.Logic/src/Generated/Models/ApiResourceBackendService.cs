@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The API backend service. </summary>
+    /// <summary>
+    /// The API backend service.
+    /// Serialized Name: ApiResourceBackendService
+    /// </summary>
     internal partial class ApiResourceBackendService
     {
         /// <summary> Initializes a new instance of ApiResourceBackendService. </summary>
@@ -18,13 +21,19 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of ApiResourceBackendService. </summary>
-        /// <param name="serviceUri"> The service URL. </param>
+        /// <param name="serviceUri">
+        /// The service URL.
+        /// Serialized Name: ApiResourceBackendService.serviceUrl
+        /// </param>
         internal ApiResourceBackendService(Uri serviceUri)
         {
             ServiceUri = serviceUri;
         }
 
-        /// <summary> The service URL. </summary>
+        /// <summary>
+        /// The service URL.
+        /// Serialized Name: ApiResourceBackendService.serviceUrl
+        /// </summary>
         public Uri ServiceUri { get; }
     }
 }

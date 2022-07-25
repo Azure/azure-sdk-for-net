@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The Api Operation Annotation. </summary>
+    /// <summary>
+    /// The Api Operation Annotation.
+    /// Serialized Name: ApiOperationAnnotation
+    /// </summary>
     public partial class ApiOperationAnnotation
     {
         /// <summary> Initializes a new instance of ApiOperationAnnotation. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of ApiOperationAnnotation. </summary>
-        /// <param name="status"> The status annotation. </param>
-        /// <param name="family"> The family. </param>
-        /// <param name="revision"> The revision. </param>
+        /// <param name="status">
+        /// The status annotation.
+        /// Serialized Name: ApiOperationAnnotation.status
+        /// </param>
+        /// <param name="family">
+        /// The family.
+        /// Serialized Name: ApiOperationAnnotation.family
+        /// </param>
+        /// <param name="revision">
+        /// The revision.
+        /// Serialized Name: ApiOperationAnnotation.revision
+        /// </param>
         internal ApiOperationAnnotation(StatusAnnotation? status, string family, int? revision)
         {
             Status = status;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.Logic.Models
             Revision = revision;
         }
 
-        /// <summary> The status annotation. </summary>
+        /// <summary>
+        /// The status annotation.
+        /// Serialized Name: ApiOperationAnnotation.status
+        /// </summary>
         public StatusAnnotation? Status { get; set; }
-        /// <summary> The family. </summary>
+        /// <summary>
+        /// The family.
+        /// Serialized Name: ApiOperationAnnotation.family
+        /// </summary>
         public string Family { get; set; }
-        /// <summary> The revision. </summary>
+        /// <summary>
+        /// The revision.
+        /// Serialized Name: ApiOperationAnnotation.revision
+        /// </summary>
         public int? Revision { get; set; }
     }
 }

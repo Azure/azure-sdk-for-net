@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The JSON schema. </summary>
+    /// <summary>
+    /// The JSON schema.
+    /// Serialized Name: JsonSchema
+    /// </summary>
     public partial class JsonSchema
     {
         /// <summary> Initializes a new instance of JsonSchema. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of JsonSchema. </summary>
-        /// <param name="title"> The JSON title. </param>
-        /// <param name="content"> The JSON content. </param>
+        /// <param name="title">
+        /// The JSON title.
+        /// Serialized Name: JsonSchema.title
+        /// </param>
+        /// <param name="content">
+        /// The JSON content.
+        /// Serialized Name: JsonSchema.content
+        /// </param>
         internal JsonSchema(string title, string content)
         {
             Title = title;
             Content = content;
         }
 
-        /// <summary> The JSON title. </summary>
+        /// <summary>
+        /// The JSON title.
+        /// Serialized Name: JsonSchema.title
+        /// </summary>
         public string Title { get; }
-        /// <summary> The JSON content. </summary>
+        /// <summary>
+        /// The JSON content.
+        /// Serialized Name: JsonSchema.content
+        /// </summary>
         public string Content { get; }
     }
 }

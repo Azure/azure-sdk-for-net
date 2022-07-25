@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="integrationAccountName"/>, <paramref name="agreementName"/> or <paramref name="listContentCallbackUrl"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="integrationAccountName"/> or <paramref name="agreementName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WorkflowTriggerCallbackUri>> ListContentCallbackUrlAsync(string subscriptionId, string resourceGroupName, string integrationAccountName, string agreementName, GetCallbackUrlParameters listContentCallbackUrl, CancellationToken cancellationToken = default)
+        public async Task<Response<LogicAppWorkflowTriggerCallbackUri>> ListContentCallbackUrlAsync(string subscriptionId, string resourceGroupName, string integrationAccountName, string agreementName, GetCallbackUrlParameters listContentCallbackUrl, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -436,9 +436,9 @@ namespace Azure.ResourceManager.Logic
             {
                 case 200:
                     {
-                        WorkflowTriggerCallbackUri value = default;
+                        LogicAppWorkflowTriggerCallbackUri value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WorkflowTriggerCallbackUri.DeserializeWorkflowTriggerCallbackUri(document.RootElement);
+                        value = LogicAppWorkflowTriggerCallbackUri.DeserializeLogicAppWorkflowTriggerCallbackUri(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="integrationAccountName"/>, <paramref name="agreementName"/> or <paramref name="listContentCallbackUrl"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="integrationAccountName"/> or <paramref name="agreementName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WorkflowTriggerCallbackUri> ListContentCallbackUrl(string subscriptionId, string resourceGroupName, string integrationAccountName, string agreementName, GetCallbackUrlParameters listContentCallbackUrl, CancellationToken cancellationToken = default)
+        public Response<LogicAppWorkflowTriggerCallbackUri> ListContentCallbackUrl(string subscriptionId, string resourceGroupName, string integrationAccountName, string agreementName, GetCallbackUrlParameters listContentCallbackUrl, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -469,9 +469,9 @@ namespace Azure.ResourceManager.Logic
             {
                 case 200:
                     {
-                        WorkflowTriggerCallbackUri value = default;
+                        LogicAppWorkflowTriggerCallbackUri value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WorkflowTriggerCallbackUri.DeserializeWorkflowTriggerCallbackUri(document.RootElement);
+                        value = LogicAppWorkflowTriggerCallbackUri.DeserializeLogicAppWorkflowTriggerCallbackUri(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

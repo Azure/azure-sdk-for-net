@@ -7,20 +7,41 @@
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The event level. </summary>
+    /// <summary>
+    /// The event level.
+    /// Serialized Name: EventLevel
+    /// </summary>
     public enum EventLevel
     {
-        /// <summary> LogAlways. </summary>
+        /// <summary>
+        /// LogAlways
+        /// Serialized Name: EventLevel.LogAlways
+        /// </summary>
         LogAlways,
-        /// <summary> Critical. </summary>
+        /// <summary>
+        /// Critical
+        /// Serialized Name: EventLevel.Critical
+        /// </summary>
         Critical,
-        /// <summary> Error. </summary>
+        /// <summary>
+        /// Error
+        /// Serialized Name: EventLevel.Error
+        /// </summary>
         Error,
-        /// <summary> Warning. </summary>
+        /// <summary>
+        /// Warning
+        /// Serialized Name: EventLevel.Warning
+        /// </summary>
         Warning,
-        /// <summary> Informational. </summary>
+        /// <summary>
+        /// Informational
+        /// Serialized Name: EventLevel.Informational
+        /// </summary>
         Informational,
-        /// <summary> Verbose. </summary>
+        /// <summary>
+        /// Verbose
+        /// Serialized Name: EventLevel.Verbose
+        /// </summary>
         Verbose
     }
 }

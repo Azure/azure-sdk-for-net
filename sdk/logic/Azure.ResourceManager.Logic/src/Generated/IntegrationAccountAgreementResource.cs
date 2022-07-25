@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="listContentCallbackUrl"> The GetCallbackUrlParameters to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="listContentCallbackUrl"/> is null. </exception>
-        public virtual async Task<Response<WorkflowTriggerCallbackUri>> GetContentCallbackUrlAsync(GetCallbackUrlParameters listContentCallbackUrl, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LogicAppWorkflowTriggerCallbackUri>> GetContentCallbackUrlAsync(GetCallbackUrlParameters listContentCallbackUrl, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(listContentCallbackUrl, nameof(listContentCallbackUrl));
 
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="listContentCallbackUrl"> The GetCallbackUrlParameters to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="listContentCallbackUrl"/> is null. </exception>
-        public virtual Response<WorkflowTriggerCallbackUri> GetContentCallbackUrl(GetCallbackUrlParameters listContentCallbackUrl, CancellationToken cancellationToken = default)
+        public virtual Response<LogicAppWorkflowTriggerCallbackUri> GetContentCallbackUrl(GetCallbackUrlParameters listContentCallbackUrl, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(listContentCallbackUrl, nameof(listContentCallbackUrl));
 

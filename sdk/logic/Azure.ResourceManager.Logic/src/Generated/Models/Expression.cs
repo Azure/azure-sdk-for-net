@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The expression. </summary>
+    /// <summary>
+    /// The expression.
+    /// Serialized Name: Expression
+    /// </summary>
     public partial class Expression
     {
         /// <summary> Initializes a new instance of Expression. </summary>
@@ -21,10 +24,22 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of Expression. </summary>
-        /// <param name="text"> The text. </param>
-        /// <param name="value"> Anything. </param>
-        /// <param name="subexpressions"> The sub expressions. </param>
-        /// <param name="error"> The azure resource error info. </param>
+        /// <param name="text">
+        /// The text.
+        /// Serialized Name: Expression.text
+        /// </param>
+        /// <param name="value">
+        /// Anything
+        /// Serialized Name: Expression.value
+        /// </param>
+        /// <param name="subexpressions">
+        /// The sub expressions.
+        /// Serialized Name: Expression.subexpressions
+        /// </param>
+        /// <param name="error">
+        /// The azure resource error info.
+        /// Serialized Name: Expression.error
+        /// </param>
         internal Expression(string text, BinaryData value, IReadOnlyList<Expression> subexpressions, AzureResourceErrorInfo error)
         {
             Text = text;
@@ -33,13 +48,25 @@ namespace Azure.ResourceManager.Logic.Models
             Error = error;
         }
 
-        /// <summary> The text. </summary>
+        /// <summary>
+        /// The text.
+        /// Serialized Name: Expression.text
+        /// </summary>
         public string Text { get; }
-        /// <summary> Anything. </summary>
+        /// <summary>
+        /// Anything
+        /// Serialized Name: Expression.value
+        /// </summary>
         public BinaryData Value { get; }
-        /// <summary> The sub expressions. </summary>
+        /// <summary>
+        /// The sub expressions.
+        /// Serialized Name: Expression.subexpressions
+        /// </summary>
         public IReadOnlyList<Expression> Subexpressions { get; }
-        /// <summary> The azure resource error info. </summary>
+        /// <summary>
+        /// The azure resource error info.
+        /// Serialized Name: Expression.error
+        /// </summary>
         public AzureResourceErrorInfo Error { get; }
     }
 }

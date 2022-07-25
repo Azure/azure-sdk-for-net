@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The swagger schema type. </summary>
+    /// <summary>
+    /// The swagger schema type.
+    /// Serialized Name: SwaggerSchemaType
+    /// </summary>
     public readonly partial struct SwaggerSchemaType : IEquatable<SwaggerSchemaType>
     {
         private readonly string _value;
@@ -31,21 +34,45 @@ namespace Azure.ResourceManager.Logic.Models
         private const string ObjectValue = "Object";
         private const string NullValue = "Null";
 
-        /// <summary> String. </summary>
+        /// <summary>
+        /// String
+        /// Serialized Name: SwaggerSchemaType.String
+        /// </summary>
         public static SwaggerSchemaType String { get; } = new SwaggerSchemaType(StringValue);
-        /// <summary> Number. </summary>
+        /// <summary>
+        /// Number
+        /// Serialized Name: SwaggerSchemaType.Number
+        /// </summary>
         public static SwaggerSchemaType Number { get; } = new SwaggerSchemaType(NumberValue);
-        /// <summary> Integer. </summary>
+        /// <summary>
+        /// Integer
+        /// Serialized Name: SwaggerSchemaType.Integer
+        /// </summary>
         public static SwaggerSchemaType Integer { get; } = new SwaggerSchemaType(IntegerValue);
-        /// <summary> Boolean. </summary>
+        /// <summary>
+        /// Boolean
+        /// Serialized Name: SwaggerSchemaType.Boolean
+        /// </summary>
         public static SwaggerSchemaType Boolean { get; } = new SwaggerSchemaType(BooleanValue);
-        /// <summary> Array. </summary>
+        /// <summary>
+        /// Array
+        /// Serialized Name: SwaggerSchemaType.Array
+        /// </summary>
         public static SwaggerSchemaType Array { get; } = new SwaggerSchemaType(ArrayValue);
-        /// <summary> File. </summary>
+        /// <summary>
+        /// File
+        /// Serialized Name: SwaggerSchemaType.File
+        /// </summary>
         public static SwaggerSchemaType File { get; } = new SwaggerSchemaType(FileValue);
-        /// <summary> Object. </summary>
+        /// <summary>
+        /// Object
+        /// Serialized Name: SwaggerSchemaType.Object
+        /// </summary>
         public static SwaggerSchemaType Object { get; } = new SwaggerSchemaType(ObjectValue);
-        /// <summary> Null. </summary>
+        /// <summary>
+        /// Null
+        /// Serialized Name: SwaggerSchemaType.Null
+        /// </summary>
         public static SwaggerSchemaType Null { get; } = new SwaggerSchemaType(NullValue);
         /// <summary> Determines if two <see cref="SwaggerSchemaType"/> values are the same. </summary>
         public static bool operator ==(SwaggerSchemaType left, SwaggerSchemaType right) => left.Equals(right);

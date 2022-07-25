@@ -7,20 +7,53 @@
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The X12 agreement validation settings. </summary>
+    /// <summary>
+    /// The X12 agreement validation settings.
+    /// Serialized Name: X12ValidationSettings
+    /// </summary>
     public partial class X12ValidationSettings
     {
         /// <summary> Initializes a new instance of X12ValidationSettings. </summary>
-        /// <param name="validateCharacterSet"> The value indicating whether to validate character set in the message. </param>
-        /// <param name="checkDuplicateInterchangeControlNumber"> The value indicating whether to check for duplicate interchange control number. </param>
-        /// <param name="interchangeControlNumberValidityDays"> The validity period of interchange control number. </param>
-        /// <param name="checkDuplicateGroupControlNumber"> The value indicating whether to check for duplicate group control number. </param>
-        /// <param name="checkDuplicateTransactionSetControlNumber"> The value indicating whether to check for duplicate transaction set control number. </param>
-        /// <param name="validateEDITypes"> The value indicating whether to Whether to validate EDI types. </param>
-        /// <param name="validateXSDTypes"> The value indicating whether to Whether to validate XSD types. </param>
-        /// <param name="allowLeadingAndTrailingSpacesAndZeroes"> The value indicating whether to allow leading and trailing spaces and zeroes. </param>
-        /// <param name="trimLeadingAndTrailingSpacesAndZeroes"> The value indicating whether to trim leading and trailing spaces and zeroes. </param>
-        /// <param name="trailingSeparatorPolicy"> The trailing separator policy. </param>
+        /// <param name="validateCharacterSet">
+        /// The value indicating whether to validate character set in the message.
+        /// Serialized Name: X12ValidationSettings.validateCharacterSet
+        /// </param>
+        /// <param name="checkDuplicateInterchangeControlNumber">
+        /// The value indicating whether to check for duplicate interchange control number.
+        /// Serialized Name: X12ValidationSettings.checkDuplicateInterchangeControlNumber
+        /// </param>
+        /// <param name="interchangeControlNumberValidityDays">
+        /// The validity period of interchange control number.
+        /// Serialized Name: X12ValidationSettings.interchangeControlNumberValidityDays
+        /// </param>
+        /// <param name="checkDuplicateGroupControlNumber">
+        /// The value indicating whether to check for duplicate group control number.
+        /// Serialized Name: X12ValidationSettings.checkDuplicateGroupControlNumber
+        /// </param>
+        /// <param name="checkDuplicateTransactionSetControlNumber">
+        /// The value indicating whether to check for duplicate transaction set control number.
+        /// Serialized Name: X12ValidationSettings.checkDuplicateTransactionSetControlNumber
+        /// </param>
+        /// <param name="validateEDITypes">
+        /// The value indicating whether to Whether to validate EDI types.
+        /// Serialized Name: X12ValidationSettings.validateEDITypes
+        /// </param>
+        /// <param name="validateXSDTypes">
+        /// The value indicating whether to Whether to validate XSD types.
+        /// Serialized Name: X12ValidationSettings.validateXSDTypes
+        /// </param>
+        /// <param name="allowLeadingAndTrailingSpacesAndZeroes">
+        /// The value indicating whether to allow leading and trailing spaces and zeroes.
+        /// Serialized Name: X12ValidationSettings.allowLeadingAndTrailingSpacesAndZeroes
+        /// </param>
+        /// <param name="trimLeadingAndTrailingSpacesAndZeroes">
+        /// The value indicating whether to trim leading and trailing spaces and zeroes.
+        /// Serialized Name: X12ValidationSettings.trimLeadingAndTrailingSpacesAndZeroes
+        /// </param>
+        /// <param name="trailingSeparatorPolicy">
+        /// The trailing separator policy.
+        /// Serialized Name: X12ValidationSettings.trailingSeparatorPolicy
+        /// </param>
         public X12ValidationSettings(bool validateCharacterSet, bool checkDuplicateInterchangeControlNumber, int interchangeControlNumberValidityDays, bool checkDuplicateGroupControlNumber, bool checkDuplicateTransactionSetControlNumber, bool validateEDITypes, bool validateXSDTypes, bool allowLeadingAndTrailingSpacesAndZeroes, bool trimLeadingAndTrailingSpacesAndZeroes, TrailingSeparatorPolicy trailingSeparatorPolicy)
         {
             ValidateCharacterSet = validateCharacterSet;
@@ -35,25 +68,55 @@ namespace Azure.ResourceManager.Logic.Models
             TrailingSeparatorPolicy = trailingSeparatorPolicy;
         }
 
-        /// <summary> The value indicating whether to validate character set in the message. </summary>
+        /// <summary>
+        /// The value indicating whether to validate character set in the message.
+        /// Serialized Name: X12ValidationSettings.validateCharacterSet
+        /// </summary>
         public bool ValidateCharacterSet { get; set; }
-        /// <summary> The value indicating whether to check for duplicate interchange control number. </summary>
+        /// <summary>
+        /// The value indicating whether to check for duplicate interchange control number.
+        /// Serialized Name: X12ValidationSettings.checkDuplicateInterchangeControlNumber
+        /// </summary>
         public bool CheckDuplicateInterchangeControlNumber { get; set; }
-        /// <summary> The validity period of interchange control number. </summary>
+        /// <summary>
+        /// The validity period of interchange control number.
+        /// Serialized Name: X12ValidationSettings.interchangeControlNumberValidityDays
+        /// </summary>
         public int InterchangeControlNumberValidityDays { get; set; }
-        /// <summary> The value indicating whether to check for duplicate group control number. </summary>
+        /// <summary>
+        /// The value indicating whether to check for duplicate group control number.
+        /// Serialized Name: X12ValidationSettings.checkDuplicateGroupControlNumber
+        /// </summary>
         public bool CheckDuplicateGroupControlNumber { get; set; }
-        /// <summary> The value indicating whether to check for duplicate transaction set control number. </summary>
+        /// <summary>
+        /// The value indicating whether to check for duplicate transaction set control number.
+        /// Serialized Name: X12ValidationSettings.checkDuplicateTransactionSetControlNumber
+        /// </summary>
         public bool CheckDuplicateTransactionSetControlNumber { get; set; }
-        /// <summary> The value indicating whether to Whether to validate EDI types. </summary>
+        /// <summary>
+        /// The value indicating whether to Whether to validate EDI types.
+        /// Serialized Name: X12ValidationSettings.validateEDITypes
+        /// </summary>
         public bool ValidateEDITypes { get; set; }
-        /// <summary> The value indicating whether to Whether to validate XSD types. </summary>
+        /// <summary>
+        /// The value indicating whether to Whether to validate XSD types.
+        /// Serialized Name: X12ValidationSettings.validateXSDTypes
+        /// </summary>
         public bool ValidateXSDTypes { get; set; }
-        /// <summary> The value indicating whether to allow leading and trailing spaces and zeroes. </summary>
+        /// <summary>
+        /// The value indicating whether to allow leading and trailing spaces and zeroes.
+        /// Serialized Name: X12ValidationSettings.allowLeadingAndTrailingSpacesAndZeroes
+        /// </summary>
         public bool AllowLeadingAndTrailingSpacesAndZeroes { get; set; }
-        /// <summary> The value indicating whether to trim leading and trailing spaces and zeroes. </summary>
+        /// <summary>
+        /// The value indicating whether to trim leading and trailing spaces and zeroes.
+        /// Serialized Name: X12ValidationSettings.trimLeadingAndTrailingSpacesAndZeroes
+        /// </summary>
         public bool TrimLeadingAndTrailingSpacesAndZeroes { get; set; }
-        /// <summary> The trailing separator policy. </summary>
+        /// <summary>
+        /// The trailing separator policy.
+        /// Serialized Name: X12ValidationSettings.trailingSeparatorPolicy
+        /// </summary>
         public TrailingSeparatorPolicy TrailingSeparatorPolicy { get; set; }
     }
 }

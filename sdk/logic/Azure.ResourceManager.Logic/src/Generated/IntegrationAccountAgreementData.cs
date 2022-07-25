@@ -18,12 +18,30 @@ namespace Azure.ResourceManager.Logic
     {
         /// <summary> Initializes a new instance of IntegrationAccountAgreementData. </summary>
         /// <param name="location"> The location. </param>
-        /// <param name="agreementType"> The agreement type. </param>
-        /// <param name="hostPartner"> The integration account partner that is set as host partner for this agreement. </param>
-        /// <param name="guestPartner"> The integration account partner that is set as guest partner for this agreement. </param>
-        /// <param name="hostIdentity"> The business identity of the host partner. </param>
-        /// <param name="guestIdentity"> The business identity of the guest partner. </param>
-        /// <param name="content"> The agreement content. </param>
+        /// <param name="agreementType">
+        /// The agreement type.
+        /// Serialized Name: IntegrationAccountAgreement.properties.agreementType
+        /// </param>
+        /// <param name="hostPartner">
+        /// The integration account partner that is set as host partner for this agreement.
+        /// Serialized Name: IntegrationAccountAgreement.properties.hostPartner
+        /// </param>
+        /// <param name="guestPartner">
+        /// The integration account partner that is set as guest partner for this agreement.
+        /// Serialized Name: IntegrationAccountAgreement.properties.guestPartner
+        /// </param>
+        /// <param name="hostIdentity">
+        /// The business identity of the host partner.
+        /// Serialized Name: IntegrationAccountAgreement.properties.hostIdentity
+        /// </param>
+        /// <param name="guestIdentity">
+        /// The business identity of the guest partner.
+        /// Serialized Name: IntegrationAccountAgreement.properties.guestIdentity
+        /// </param>
+        /// <param name="content">
+        /// The agreement content.
+        /// Serialized Name: IntegrationAccountAgreement.properties.content
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hostPartner"/>, <paramref name="guestPartner"/>, <paramref name="hostIdentity"/>, <paramref name="guestIdentity"/> or <paramref name="content"/> is null. </exception>
         public IntegrationAccountAgreementData(AzureLocation location, AgreementType agreementType, string hostPartner, string guestPartner, BusinessIdentity hostIdentity, BusinessIdentity guestIdentity, AgreementContent content) : base(location)
         {
@@ -63,15 +81,42 @@ namespace Azure.ResourceManager.Logic
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="createdOn"> The created time. </param>
-        /// <param name="changedOn"> The changed time. </param>
-        /// <param name="metadata"> The metadata. </param>
-        /// <param name="agreementType"> The agreement type. </param>
-        /// <param name="hostPartner"> The integration account partner that is set as host partner for this agreement. </param>
-        /// <param name="guestPartner"> The integration account partner that is set as guest partner for this agreement. </param>
-        /// <param name="hostIdentity"> The business identity of the host partner. </param>
-        /// <param name="guestIdentity"> The business identity of the guest partner. </param>
-        /// <param name="content"> The agreement content. </param>
+        /// <param name="createdOn">
+        /// The created time.
+        /// Serialized Name: IntegrationAccountAgreement.properties.createdTime
+        /// </param>
+        /// <param name="changedOn">
+        /// The changed time.
+        /// Serialized Name: IntegrationAccountAgreement.properties.changedTime
+        /// </param>
+        /// <param name="metadata">
+        /// The metadata.
+        /// Serialized Name: IntegrationAccountAgreement.properties.metadata
+        /// </param>
+        /// <param name="agreementType">
+        /// The agreement type.
+        /// Serialized Name: IntegrationAccountAgreement.properties.agreementType
+        /// </param>
+        /// <param name="hostPartner">
+        /// The integration account partner that is set as host partner for this agreement.
+        /// Serialized Name: IntegrationAccountAgreement.properties.hostPartner
+        /// </param>
+        /// <param name="guestPartner">
+        /// The integration account partner that is set as guest partner for this agreement.
+        /// Serialized Name: IntegrationAccountAgreement.properties.guestPartner
+        /// </param>
+        /// <param name="hostIdentity">
+        /// The business identity of the host partner.
+        /// Serialized Name: IntegrationAccountAgreement.properties.hostIdentity
+        /// </param>
+        /// <param name="guestIdentity">
+        /// The business identity of the guest partner.
+        /// Serialized Name: IntegrationAccountAgreement.properties.guestIdentity
+        /// </param>
+        /// <param name="content">
+        /// The agreement content.
+        /// Serialized Name: IntegrationAccountAgreement.properties.content
+        /// </param>
         internal IntegrationAccountAgreementData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DateTimeOffset? createdOn, DateTimeOffset? changedOn, BinaryData metadata, AgreementType agreementType, string hostPartner, string guestPartner, BusinessIdentity hostIdentity, BusinessIdentity guestIdentity, AgreementContent content) : base(id, name, resourceType, systemData, tags, location)
         {
             CreatedOn = createdOn;
@@ -85,23 +130,50 @@ namespace Azure.ResourceManager.Logic
             Content = content;
         }
 
-        /// <summary> The created time. </summary>
+        /// <summary>
+        /// The created time.
+        /// Serialized Name: IntegrationAccountAgreement.properties.createdTime
+        /// </summary>
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary> The changed time. </summary>
+        /// <summary>
+        /// The changed time.
+        /// Serialized Name: IntegrationAccountAgreement.properties.changedTime
+        /// </summary>
         public DateTimeOffset? ChangedOn { get; }
-        /// <summary> The metadata. </summary>
+        /// <summary>
+        /// The metadata.
+        /// Serialized Name: IntegrationAccountAgreement.properties.metadata
+        /// </summary>
         public BinaryData Metadata { get; set; }
-        /// <summary> The agreement type. </summary>
+        /// <summary>
+        /// The agreement type.
+        /// Serialized Name: IntegrationAccountAgreement.properties.agreementType
+        /// </summary>
         public AgreementType AgreementType { get; set; }
-        /// <summary> The integration account partner that is set as host partner for this agreement. </summary>
+        /// <summary>
+        /// The integration account partner that is set as host partner for this agreement.
+        /// Serialized Name: IntegrationAccountAgreement.properties.hostPartner
+        /// </summary>
         public string HostPartner { get; set; }
-        /// <summary> The integration account partner that is set as guest partner for this agreement. </summary>
+        /// <summary>
+        /// The integration account partner that is set as guest partner for this agreement.
+        /// Serialized Name: IntegrationAccountAgreement.properties.guestPartner
+        /// </summary>
         public string GuestPartner { get; set; }
-        /// <summary> The business identity of the host partner. </summary>
+        /// <summary>
+        /// The business identity of the host partner.
+        /// Serialized Name: IntegrationAccountAgreement.properties.hostIdentity
+        /// </summary>
         public BusinessIdentity HostIdentity { get; set; }
-        /// <summary> The business identity of the guest partner. </summary>
+        /// <summary>
+        /// The business identity of the guest partner.
+        /// Serialized Name: IntegrationAccountAgreement.properties.guestIdentity
+        /// </summary>
         public BusinessIdentity GuestIdentity { get; set; }
-        /// <summary> The agreement content. </summary>
+        /// <summary>
+        /// The agreement content.
+        /// Serialized Name: IntegrationAccountAgreement.properties.content
+        /// </summary>
         public AgreementContent Content { get; set; }
     }
 }

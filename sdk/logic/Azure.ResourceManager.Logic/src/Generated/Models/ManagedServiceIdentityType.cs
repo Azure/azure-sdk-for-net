@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> Type of managed service identity. The type &apos;SystemAssigned&apos; includes an implicitly created identity. The type &apos;None&apos; will remove any identities from the resource. </summary>
+    /// <summary>
+    /// Type of managed service identity. The type &apos;SystemAssigned&apos; includes an implicitly created identity. The type &apos;None&apos; will remove any identities from the resource.
+    /// Serialized Name: ManagedServiceIdentityType
+    /// </summary>
     public readonly partial struct ManagedServiceIdentityType : IEquatable<ManagedServiceIdentityType>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.Logic.Models
         private const string UserAssignedValue = "UserAssigned";
         private const string NoneValue = "None";
 
-        /// <summary> SystemAssigned. </summary>
+        /// <summary>
+        /// SystemAssigned
+        /// Serialized Name: ManagedServiceIdentityType.SystemAssigned
+        /// </summary>
         public static ManagedServiceIdentityType SystemAssigned { get; } = new ManagedServiceIdentityType(SystemAssignedValue);
-        /// <summary> UserAssigned. </summary>
+        /// <summary>
+        /// UserAssigned
+        /// Serialized Name: ManagedServiceIdentityType.UserAssigned
+        /// </summary>
         public static ManagedServiceIdentityType UserAssigned { get; } = new ManagedServiceIdentityType(UserAssignedValue);
-        /// <summary> None. </summary>
+        /// <summary>
+        /// None
+        /// Serialized Name: ManagedServiceIdentityType.None
+        /// </summary>
         public static ManagedServiceIdentityType None { get; } = new ManagedServiceIdentityType(NoneValue);
         /// <summary> Determines if two <see cref="ManagedServiceIdentityType"/> values are the same. </summary>
         public static bool operator ==(ManagedServiceIdentityType left, ManagedServiceIdentityType right) => left.Equals(right);

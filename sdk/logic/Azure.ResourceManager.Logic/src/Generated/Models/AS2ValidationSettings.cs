@@ -7,19 +7,49 @@
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The AS2 agreement validation settings. </summary>
+    /// <summary>
+    /// The AS2 agreement validation settings.
+    /// Serialized Name: AS2ValidationSettings
+    /// </summary>
     public partial class AS2ValidationSettings
     {
         /// <summary> Initializes a new instance of AS2ValidationSettings. </summary>
-        /// <param name="overrideMessageProperties"> The value indicating whether to override incoming message properties with those in agreement. </param>
-        /// <param name="encryptMessage"> The value indicating whether the message has to be encrypted. </param>
-        /// <param name="signMessage"> The value indicating whether the message has to be signed. </param>
-        /// <param name="compressMessage"> The value indicating whether the message has to be compressed. </param>
-        /// <param name="checkDuplicateMessage"> The value indicating whether to check for duplicate message. </param>
-        /// <param name="interchangeDuplicatesValidityDays"> The number of days to look back for duplicate interchange. </param>
-        /// <param name="checkCertificateRevocationListOnSend"> The value indicating whether to check for certificate revocation list on send. </param>
-        /// <param name="checkCertificateRevocationListOnReceive"> The value indicating whether to check for certificate revocation list on receive. </param>
-        /// <param name="encryptionAlgorithm"> The encryption algorithm. </param>
+        /// <param name="overrideMessageProperties">
+        /// The value indicating whether to override incoming message properties with those in agreement.
+        /// Serialized Name: AS2ValidationSettings.overrideMessageProperties
+        /// </param>
+        /// <param name="encryptMessage">
+        /// The value indicating whether the message has to be encrypted.
+        /// Serialized Name: AS2ValidationSettings.encryptMessage
+        /// </param>
+        /// <param name="signMessage">
+        /// The value indicating whether the message has to be signed.
+        /// Serialized Name: AS2ValidationSettings.signMessage
+        /// </param>
+        /// <param name="compressMessage">
+        /// The value indicating whether the message has to be compressed.
+        /// Serialized Name: AS2ValidationSettings.compressMessage
+        /// </param>
+        /// <param name="checkDuplicateMessage">
+        /// The value indicating whether to check for duplicate message.
+        /// Serialized Name: AS2ValidationSettings.checkDuplicateMessage
+        /// </param>
+        /// <param name="interchangeDuplicatesValidityDays">
+        /// The number of days to look back for duplicate interchange.
+        /// Serialized Name: AS2ValidationSettings.interchangeDuplicatesValidityDays
+        /// </param>
+        /// <param name="checkCertificateRevocationListOnSend">
+        /// The value indicating whether to check for certificate revocation list on send.
+        /// Serialized Name: AS2ValidationSettings.checkCertificateRevocationListOnSend
+        /// </param>
+        /// <param name="checkCertificateRevocationListOnReceive">
+        /// The value indicating whether to check for certificate revocation list on receive.
+        /// Serialized Name: AS2ValidationSettings.checkCertificateRevocationListOnReceive
+        /// </param>
+        /// <param name="encryptionAlgorithm">
+        /// The encryption algorithm.
+        /// Serialized Name: AS2ValidationSettings.encryptionAlgorithm
+        /// </param>
         public AS2ValidationSettings(bool overrideMessageProperties, bool encryptMessage, bool signMessage, bool compressMessage, bool checkDuplicateMessage, int interchangeDuplicatesValidityDays, bool checkCertificateRevocationListOnSend, bool checkCertificateRevocationListOnReceive, EncryptionAlgorithm encryptionAlgorithm)
         {
             OverrideMessageProperties = overrideMessageProperties;
@@ -34,16 +64,46 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of AS2ValidationSettings. </summary>
-        /// <param name="overrideMessageProperties"> The value indicating whether to override incoming message properties with those in agreement. </param>
-        /// <param name="encryptMessage"> The value indicating whether the message has to be encrypted. </param>
-        /// <param name="signMessage"> The value indicating whether the message has to be signed. </param>
-        /// <param name="compressMessage"> The value indicating whether the message has to be compressed. </param>
-        /// <param name="checkDuplicateMessage"> The value indicating whether to check for duplicate message. </param>
-        /// <param name="interchangeDuplicatesValidityDays"> The number of days to look back for duplicate interchange. </param>
-        /// <param name="checkCertificateRevocationListOnSend"> The value indicating whether to check for certificate revocation list on send. </param>
-        /// <param name="checkCertificateRevocationListOnReceive"> The value indicating whether to check for certificate revocation list on receive. </param>
-        /// <param name="encryptionAlgorithm"> The encryption algorithm. </param>
-        /// <param name="signingAlgorithm"> The signing algorithm. </param>
+        /// <param name="overrideMessageProperties">
+        /// The value indicating whether to override incoming message properties with those in agreement.
+        /// Serialized Name: AS2ValidationSettings.overrideMessageProperties
+        /// </param>
+        /// <param name="encryptMessage">
+        /// The value indicating whether the message has to be encrypted.
+        /// Serialized Name: AS2ValidationSettings.encryptMessage
+        /// </param>
+        /// <param name="signMessage">
+        /// The value indicating whether the message has to be signed.
+        /// Serialized Name: AS2ValidationSettings.signMessage
+        /// </param>
+        /// <param name="compressMessage">
+        /// The value indicating whether the message has to be compressed.
+        /// Serialized Name: AS2ValidationSettings.compressMessage
+        /// </param>
+        /// <param name="checkDuplicateMessage">
+        /// The value indicating whether to check for duplicate message.
+        /// Serialized Name: AS2ValidationSettings.checkDuplicateMessage
+        /// </param>
+        /// <param name="interchangeDuplicatesValidityDays">
+        /// The number of days to look back for duplicate interchange.
+        /// Serialized Name: AS2ValidationSettings.interchangeDuplicatesValidityDays
+        /// </param>
+        /// <param name="checkCertificateRevocationListOnSend">
+        /// The value indicating whether to check for certificate revocation list on send.
+        /// Serialized Name: AS2ValidationSettings.checkCertificateRevocationListOnSend
+        /// </param>
+        /// <param name="checkCertificateRevocationListOnReceive">
+        /// The value indicating whether to check for certificate revocation list on receive.
+        /// Serialized Name: AS2ValidationSettings.checkCertificateRevocationListOnReceive
+        /// </param>
+        /// <param name="encryptionAlgorithm">
+        /// The encryption algorithm.
+        /// Serialized Name: AS2ValidationSettings.encryptionAlgorithm
+        /// </param>
+        /// <param name="signingAlgorithm">
+        /// The signing algorithm.
+        /// Serialized Name: AS2ValidationSettings.signingAlgorithm
+        /// </param>
         internal AS2ValidationSettings(bool overrideMessageProperties, bool encryptMessage, bool signMessage, bool compressMessage, bool checkDuplicateMessage, int interchangeDuplicatesValidityDays, bool checkCertificateRevocationListOnSend, bool checkCertificateRevocationListOnReceive, EncryptionAlgorithm encryptionAlgorithm, SigningAlgorithm? signingAlgorithm)
         {
             OverrideMessageProperties = overrideMessageProperties;
@@ -58,25 +118,55 @@ namespace Azure.ResourceManager.Logic.Models
             SigningAlgorithm = signingAlgorithm;
         }
 
-        /// <summary> The value indicating whether to override incoming message properties with those in agreement. </summary>
+        /// <summary>
+        /// The value indicating whether to override incoming message properties with those in agreement.
+        /// Serialized Name: AS2ValidationSettings.overrideMessageProperties
+        /// </summary>
         public bool OverrideMessageProperties { get; set; }
-        /// <summary> The value indicating whether the message has to be encrypted. </summary>
+        /// <summary>
+        /// The value indicating whether the message has to be encrypted.
+        /// Serialized Name: AS2ValidationSettings.encryptMessage
+        /// </summary>
         public bool EncryptMessage { get; set; }
-        /// <summary> The value indicating whether the message has to be signed. </summary>
+        /// <summary>
+        /// The value indicating whether the message has to be signed.
+        /// Serialized Name: AS2ValidationSettings.signMessage
+        /// </summary>
         public bool SignMessage { get; set; }
-        /// <summary> The value indicating whether the message has to be compressed. </summary>
+        /// <summary>
+        /// The value indicating whether the message has to be compressed.
+        /// Serialized Name: AS2ValidationSettings.compressMessage
+        /// </summary>
         public bool CompressMessage { get; set; }
-        /// <summary> The value indicating whether to check for duplicate message. </summary>
+        /// <summary>
+        /// The value indicating whether to check for duplicate message.
+        /// Serialized Name: AS2ValidationSettings.checkDuplicateMessage
+        /// </summary>
         public bool CheckDuplicateMessage { get; set; }
-        /// <summary> The number of days to look back for duplicate interchange. </summary>
+        /// <summary>
+        /// The number of days to look back for duplicate interchange.
+        /// Serialized Name: AS2ValidationSettings.interchangeDuplicatesValidityDays
+        /// </summary>
         public int InterchangeDuplicatesValidityDays { get; set; }
-        /// <summary> The value indicating whether to check for certificate revocation list on send. </summary>
+        /// <summary>
+        /// The value indicating whether to check for certificate revocation list on send.
+        /// Serialized Name: AS2ValidationSettings.checkCertificateRevocationListOnSend
+        /// </summary>
         public bool CheckCertificateRevocationListOnSend { get; set; }
-        /// <summary> The value indicating whether to check for certificate revocation list on receive. </summary>
+        /// <summary>
+        /// The value indicating whether to check for certificate revocation list on receive.
+        /// Serialized Name: AS2ValidationSettings.checkCertificateRevocationListOnReceive
+        /// </summary>
         public bool CheckCertificateRevocationListOnReceive { get; set; }
-        /// <summary> The encryption algorithm. </summary>
+        /// <summary>
+        /// The encryption algorithm.
+        /// Serialized Name: AS2ValidationSettings.encryptionAlgorithm
+        /// </summary>
         public EncryptionAlgorithm EncryptionAlgorithm { get; set; }
-        /// <summary> The signing algorithm. </summary>
+        /// <summary>
+        /// The signing algorithm.
+        /// Serialized Name: AS2ValidationSettings.signingAlgorithm
+        /// </summary>
         public SigningAlgorithm? SigningAlgorithm { get; set; }
     }
 }

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The error response code. </summary>
+    /// <summary>
+    /// The error response code.
+    /// Serialized Name: ErrorResponseCode
+    /// </summary>
     public readonly partial struct ErrorResponseCode : IEquatable<ErrorResponseCode>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.Logic.Models
         private const string InternalServerErrorValue = "InternalServerError";
         private const string InvalidOperationIdValue = "InvalidOperationId";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary>
+        /// NotSpecified
+        /// Serialized Name: ErrorResponseCode.NotSpecified
+        /// </summary>
         public static ErrorResponseCode NotSpecified { get; } = new ErrorResponseCode(NotSpecifiedValue);
-        /// <summary> IntegrationServiceEnvironmentNotFound. </summary>
+        /// <summary>
+        /// IntegrationServiceEnvironmentNotFound
+        /// Serialized Name: ErrorResponseCode.IntegrationServiceEnvironmentNotFound
+        /// </summary>
         public static ErrorResponseCode IntegrationServiceEnvironmentNotFound { get; } = new ErrorResponseCode(IntegrationServiceEnvironmentNotFoundValue);
-        /// <summary> InternalServerError. </summary>
+        /// <summary>
+        /// InternalServerError
+        /// Serialized Name: ErrorResponseCode.InternalServerError
+        /// </summary>
         public static ErrorResponseCode InternalServerError { get; } = new ErrorResponseCode(InternalServerErrorValue);
-        /// <summary> InvalidOperationId. </summary>
+        /// <summary>
+        /// InvalidOperationId
+        /// Serialized Name: ErrorResponseCode.InvalidOperationId
+        /// </summary>
         public static ErrorResponseCode InvalidOperationId { get; } = new ErrorResponseCode(InvalidOperationIdValue);
         /// <summary> Determines if two <see cref="ErrorResponseCode"/> values are the same. </summary>
         public static bool operator ==(ErrorResponseCode left, ErrorResponseCode right) => left.Equals(right);

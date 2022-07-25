@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The ip address range. </summary>
+    /// <summary>
+    /// The ip address range.
+    /// Serialized Name: IpAddressRange
+    /// </summary>
     public partial class IPAddressRange
     {
         /// <summary> Initializes a new instance of IPAddressRange. </summary>
@@ -16,13 +19,19 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of IPAddressRange. </summary>
-        /// <param name="addressRange"> The IP address range. </param>
+        /// <param name="addressRange">
+        /// The IP address range.
+        /// Serialized Name: IpAddressRange.addressRange
+        /// </param>
         internal IPAddressRange(string addressRange)
         {
             AddressRange = addressRange;
         }
 
-        /// <summary> The IP address range. </summary>
+        /// <summary>
+        /// The IP address range.
+        /// Serialized Name: IpAddressRange.addressRange
+        /// </summary>
         public string AddressRange { get; set; }
     }
 }

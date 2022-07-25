@@ -9,13 +9,25 @@ using System;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The integration account AS2 one-way agreement. </summary>
+    /// <summary>
+    /// The integration account AS2 one-way agreement.
+    /// Serialized Name: AS2OneWayAgreement
+    /// </summary>
     public partial class AS2OneWayAgreement
     {
         /// <summary> Initializes a new instance of AS2OneWayAgreement. </summary>
-        /// <param name="senderBusinessIdentity"> The sender business identity. </param>
-        /// <param name="receiverBusinessIdentity"> The receiver business identity. </param>
-        /// <param name="protocolSettings"> The AS2 protocol settings. </param>
+        /// <param name="senderBusinessIdentity">
+        /// The sender business identity
+        /// Serialized Name: AS2OneWayAgreement.senderBusinessIdentity
+        /// </param>
+        /// <param name="receiverBusinessIdentity">
+        /// The receiver business identity
+        /// Serialized Name: AS2OneWayAgreement.receiverBusinessIdentity
+        /// </param>
+        /// <param name="protocolSettings">
+        /// The AS2 protocol settings.
+        /// Serialized Name: AS2OneWayAgreement.protocolSettings
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="senderBusinessIdentity"/>, <paramref name="receiverBusinessIdentity"/> or <paramref name="protocolSettings"/> is null. </exception>
         public AS2OneWayAgreement(BusinessIdentity senderBusinessIdentity, BusinessIdentity receiverBusinessIdentity, AS2ProtocolSettings protocolSettings)
         {
@@ -37,11 +49,20 @@ namespace Azure.ResourceManager.Logic.Models
             ProtocolSettings = protocolSettings;
         }
 
-        /// <summary> The sender business identity. </summary>
+        /// <summary>
+        /// The sender business identity
+        /// Serialized Name: AS2OneWayAgreement.senderBusinessIdentity
+        /// </summary>
         public BusinessIdentity SenderBusinessIdentity { get; set; }
-        /// <summary> The receiver business identity. </summary>
+        /// <summary>
+        /// The receiver business identity
+        /// Serialized Name: AS2OneWayAgreement.receiverBusinessIdentity
+        /// </summary>
         public BusinessIdentity ReceiverBusinessIdentity { get; set; }
-        /// <summary> The AS2 protocol settings. </summary>
+        /// <summary>
+        /// The AS2 protocol settings.
+        /// Serialized Name: AS2OneWayAgreement.protocolSettings
+        /// </summary>
         public AS2ProtocolSettings ProtocolSettings { get; set; }
     }
 }

@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> A response. </summary>
+    /// <summary>
+    /// A response.
+    /// Serialized Name: Response
+    /// </summary>
     public partial class Response
     {
         /// <summary> Initializes a new instance of Response. </summary>
@@ -18,9 +21,18 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of Response. </summary>
-        /// <param name="headers"> A list of all the headers attached to the response. </param>
-        /// <param name="statusCode"> The status code of the response. </param>
-        /// <param name="bodyLink"> Details on the location of the body content. </param>
+        /// <param name="headers">
+        /// A list of all the headers attached to the response.
+        /// Serialized Name: Response.headers
+        /// </param>
+        /// <param name="statusCode">
+        /// The status code of the response.
+        /// Serialized Name: Response.statusCode
+        /// </param>
+        /// <param name="bodyLink">
+        /// Details on the location of the body content.
+        /// Serialized Name: Response.bodyLink
+        /// </param>
         internal Response(BinaryData headers, int? statusCode, ContentLink bodyLink)
         {
             Headers = headers;
@@ -28,11 +40,20 @@ namespace Azure.ResourceManager.Logic.Models
             BodyLink = bodyLink;
         }
 
-        /// <summary> A list of all the headers attached to the response. </summary>
+        /// <summary>
+        /// A list of all the headers attached to the response.
+        /// Serialized Name: Response.headers
+        /// </summary>
         public BinaryData Headers { get; set; }
-        /// <summary> The status code of the response. </summary>
+        /// <summary>
+        /// The status code of the response.
+        /// Serialized Name: Response.statusCode
+        /// </summary>
         public int? StatusCode { get; set; }
-        /// <summary> Details on the location of the body content. </summary>
+        /// <summary>
+        /// Details on the location of the body content.
+        /// Serialized Name: Response.bodyLink
+        /// </summary>
         public ContentLink BodyLink { get; set; }
     }
 }

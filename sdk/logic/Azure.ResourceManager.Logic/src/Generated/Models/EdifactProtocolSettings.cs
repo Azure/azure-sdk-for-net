@@ -12,17 +12,41 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The Edifact agreement protocol settings. </summary>
+    /// <summary>
+    /// The Edifact agreement protocol settings.
+    /// Serialized Name: EdifactProtocolSettings
+    /// </summary>
     public partial class EdifactProtocolSettings
     {
         /// <summary> Initializes a new instance of EdifactProtocolSettings. </summary>
-        /// <param name="validationSettings"> The EDIFACT validation settings. </param>
-        /// <param name="framingSettings"> The EDIFACT framing settings. </param>
-        /// <param name="envelopeSettings"> The EDIFACT envelope settings. </param>
-        /// <param name="acknowledgementSettings"> The EDIFACT acknowledgement settings. </param>
-        /// <param name="messageFilter"> The EDIFACT message filter. </param>
-        /// <param name="processingSettings"> The EDIFACT processing Settings. </param>
-        /// <param name="schemaReferences"> The EDIFACT schema references. </param>
+        /// <param name="validationSettings">
+        /// The EDIFACT validation settings.
+        /// Serialized Name: EdifactProtocolSettings.validationSettings
+        /// </param>
+        /// <param name="framingSettings">
+        /// The EDIFACT framing settings.
+        /// Serialized Name: EdifactProtocolSettings.framingSettings
+        /// </param>
+        /// <param name="envelopeSettings">
+        /// The EDIFACT envelope settings.
+        /// Serialized Name: EdifactProtocolSettings.envelopeSettings
+        /// </param>
+        /// <param name="acknowledgementSettings">
+        /// The EDIFACT acknowledgement settings.
+        /// Serialized Name: EdifactProtocolSettings.acknowledgementSettings
+        /// </param>
+        /// <param name="messageFilter">
+        /// The EDIFACT message filter.
+        /// Serialized Name: EdifactProtocolSettings.messageFilter
+        /// </param>
+        /// <param name="processingSettings">
+        /// The EDIFACT processing Settings.
+        /// Serialized Name: EdifactProtocolSettings.processingSettings
+        /// </param>
+        /// <param name="schemaReferences">
+        /// The EDIFACT schema references.
+        /// Serialized Name: EdifactProtocolSettings.schemaReferences
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="validationSettings"/>, <paramref name="framingSettings"/>, <paramref name="envelopeSettings"/>, <paramref name="acknowledgementSettings"/>, <paramref name="messageFilter"/>, <paramref name="processingSettings"/> or <paramref name="schemaReferences"/> is null. </exception>
         public EdifactProtocolSettings(EdifactValidationSettings validationSettings, EdifactFramingSettings framingSettings, EdifactEnvelopeSettings envelopeSettings, EdifactAcknowledgementSettings acknowledgementSettings, EdifactMessageFilter messageFilter, EdifactProcessingSettings processingSettings, IEnumerable<EdifactSchemaReference> schemaReferences)
         {
@@ -69,17 +93,50 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of EdifactProtocolSettings. </summary>
-        /// <param name="validationSettings"> The EDIFACT validation settings. </param>
-        /// <param name="framingSettings"> The EDIFACT framing settings. </param>
-        /// <param name="envelopeSettings"> The EDIFACT envelope settings. </param>
-        /// <param name="acknowledgementSettings"> The EDIFACT acknowledgement settings. </param>
-        /// <param name="messageFilter"> The EDIFACT message filter. </param>
-        /// <param name="processingSettings"> The EDIFACT processing Settings. </param>
-        /// <param name="envelopeOverrides"> The EDIFACT envelope override settings. </param>
-        /// <param name="messageFilterList"> The EDIFACT message filter list. </param>
-        /// <param name="schemaReferences"> The EDIFACT schema references. </param>
-        /// <param name="validationOverrides"> The EDIFACT validation override settings. </param>
-        /// <param name="edifactDelimiterOverrides"> The EDIFACT delimiter override settings. </param>
+        /// <param name="validationSettings">
+        /// The EDIFACT validation settings.
+        /// Serialized Name: EdifactProtocolSettings.validationSettings
+        /// </param>
+        /// <param name="framingSettings">
+        /// The EDIFACT framing settings.
+        /// Serialized Name: EdifactProtocolSettings.framingSettings
+        /// </param>
+        /// <param name="envelopeSettings">
+        /// The EDIFACT envelope settings.
+        /// Serialized Name: EdifactProtocolSettings.envelopeSettings
+        /// </param>
+        /// <param name="acknowledgementSettings">
+        /// The EDIFACT acknowledgement settings.
+        /// Serialized Name: EdifactProtocolSettings.acknowledgementSettings
+        /// </param>
+        /// <param name="messageFilter">
+        /// The EDIFACT message filter.
+        /// Serialized Name: EdifactProtocolSettings.messageFilter
+        /// </param>
+        /// <param name="processingSettings">
+        /// The EDIFACT processing Settings.
+        /// Serialized Name: EdifactProtocolSettings.processingSettings
+        /// </param>
+        /// <param name="envelopeOverrides">
+        /// The EDIFACT envelope override settings.
+        /// Serialized Name: EdifactProtocolSettings.envelopeOverrides
+        /// </param>
+        /// <param name="messageFilterList">
+        /// The EDIFACT message filter list.
+        /// Serialized Name: EdifactProtocolSettings.messageFilterList
+        /// </param>
+        /// <param name="schemaReferences">
+        /// The EDIFACT schema references.
+        /// Serialized Name: EdifactProtocolSettings.schemaReferences
+        /// </param>
+        /// <param name="validationOverrides">
+        /// The EDIFACT validation override settings.
+        /// Serialized Name: EdifactProtocolSettings.validationOverrides
+        /// </param>
+        /// <param name="edifactDelimiterOverrides">
+        /// The EDIFACT delimiter override settings.
+        /// Serialized Name: EdifactProtocolSettings.edifactDelimiterOverrides
+        /// </param>
         internal EdifactProtocolSettings(EdifactValidationSettings validationSettings, EdifactFramingSettings framingSettings, EdifactEnvelopeSettings envelopeSettings, EdifactAcknowledgementSettings acknowledgementSettings, EdifactMessageFilter messageFilter, EdifactProcessingSettings processingSettings, IList<EdifactEnvelopeOverride> envelopeOverrides, IList<EdifactMessageIdentifier> messageFilterList, IList<EdifactSchemaReference> schemaReferences, IList<EdifactValidationOverride> validationOverrides, IList<EdifactDelimiterOverride> edifactDelimiterOverrides)
         {
             ValidationSettings = validationSettings;
@@ -95,17 +152,35 @@ namespace Azure.ResourceManager.Logic.Models
             EdifactDelimiterOverrides = edifactDelimiterOverrides;
         }
 
-        /// <summary> The EDIFACT validation settings. </summary>
+        /// <summary>
+        /// The EDIFACT validation settings.
+        /// Serialized Name: EdifactProtocolSettings.validationSettings
+        /// </summary>
         public EdifactValidationSettings ValidationSettings { get; set; }
-        /// <summary> The EDIFACT framing settings. </summary>
+        /// <summary>
+        /// The EDIFACT framing settings.
+        /// Serialized Name: EdifactProtocolSettings.framingSettings
+        /// </summary>
         public EdifactFramingSettings FramingSettings { get; set; }
-        /// <summary> The EDIFACT envelope settings. </summary>
+        /// <summary>
+        /// The EDIFACT envelope settings.
+        /// Serialized Name: EdifactProtocolSettings.envelopeSettings
+        /// </summary>
         public EdifactEnvelopeSettings EnvelopeSettings { get; set; }
-        /// <summary> The EDIFACT acknowledgement settings. </summary>
+        /// <summary>
+        /// The EDIFACT acknowledgement settings.
+        /// Serialized Name: EdifactProtocolSettings.acknowledgementSettings
+        /// </summary>
         public EdifactAcknowledgementSettings AcknowledgementSettings { get; set; }
-        /// <summary> The EDIFACT message filter. </summary>
+        /// <summary>
+        /// The EDIFACT message filter.
+        /// Serialized Name: EdifactProtocolSettings.messageFilter
+        /// </summary>
         internal EdifactMessageFilter MessageFilter { get; set; }
-        /// <summary> The message filter type. </summary>
+        /// <summary>
+        /// The message filter type.
+        /// Serialized Name: EdifactMessageFilter.messageFilterType
+        /// </summary>
         public MessageFilterType? MessageFilterType
         {
             get => MessageFilter is null ? default(MessageFilterType?) : MessageFilter.MessageFilterType;
@@ -115,17 +190,35 @@ namespace Azure.ResourceManager.Logic.Models
             }
         }
 
-        /// <summary> The EDIFACT processing Settings. </summary>
+        /// <summary>
+        /// The EDIFACT processing Settings.
+        /// Serialized Name: EdifactProtocolSettings.processingSettings
+        /// </summary>
         public EdifactProcessingSettings ProcessingSettings { get; set; }
-        /// <summary> The EDIFACT envelope override settings. </summary>
+        /// <summary>
+        /// The EDIFACT envelope override settings.
+        /// Serialized Name: EdifactProtocolSettings.envelopeOverrides
+        /// </summary>
         public IList<EdifactEnvelopeOverride> EnvelopeOverrides { get; }
-        /// <summary> The EDIFACT message filter list. </summary>
+        /// <summary>
+        /// The EDIFACT message filter list.
+        /// Serialized Name: EdifactProtocolSettings.messageFilterList
+        /// </summary>
         public IList<EdifactMessageIdentifier> MessageFilterList { get; }
-        /// <summary> The EDIFACT schema references. </summary>
+        /// <summary>
+        /// The EDIFACT schema references.
+        /// Serialized Name: EdifactProtocolSettings.schemaReferences
+        /// </summary>
         public IList<EdifactSchemaReference> SchemaReferences { get; }
-        /// <summary> The EDIFACT validation override settings. </summary>
+        /// <summary>
+        /// The EDIFACT validation override settings.
+        /// Serialized Name: EdifactProtocolSettings.validationOverrides
+        /// </summary>
         public IList<EdifactValidationOverride> ValidationOverrides { get; }
-        /// <summary> The EDIFACT delimiter override settings. </summary>
+        /// <summary>
+        /// The EDIFACT delimiter override settings.
+        /// Serialized Name: EdifactProtocolSettings.edifactDelimiterOverrides
+        /// </summary>
         public IList<EdifactDelimiterOverride> EdifactDelimiterOverrides { get; }
     }
 }

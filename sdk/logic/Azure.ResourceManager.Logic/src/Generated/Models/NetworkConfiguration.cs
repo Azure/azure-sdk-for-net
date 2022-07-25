@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The network configuration. </summary>
+    /// <summary>
+    /// The network configuration.
+    /// Serialized Name: NetworkConfiguration
+    /// </summary>
     public partial class NetworkConfiguration
     {
         /// <summary> Initializes a new instance of NetworkConfiguration. </summary>
@@ -20,9 +23,18 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of NetworkConfiguration. </summary>
-        /// <param name="virtualNetworkAddressSpace"> Gets the virtual network address space. </param>
-        /// <param name="accessEndpoint"> The access endpoint. </param>
-        /// <param name="subnets"> The subnets. </param>
+        /// <param name="virtualNetworkAddressSpace">
+        /// Gets the virtual network address space.
+        /// Serialized Name: NetworkConfiguration.virtualNetworkAddressSpace
+        /// </param>
+        /// <param name="accessEndpoint">
+        /// The access endpoint.
+        /// Serialized Name: NetworkConfiguration.accessEndpoint
+        /// </param>
+        /// <param name="subnets">
+        /// The subnets.
+        /// Serialized Name: NetworkConfiguration.subnets
+        /// </param>
         internal NetworkConfiguration(string virtualNetworkAddressSpace, IntegrationServiceEnvironmentAccessEndpoint accessEndpoint, IList<ResourceReference> subnets)
         {
             VirtualNetworkAddressSpace = virtualNetworkAddressSpace;
@@ -30,11 +42,20 @@ namespace Azure.ResourceManager.Logic.Models
             Subnets = subnets;
         }
 
-        /// <summary> Gets the virtual network address space. </summary>
+        /// <summary>
+        /// Gets the virtual network address space.
+        /// Serialized Name: NetworkConfiguration.virtualNetworkAddressSpace
+        /// </summary>
         public string VirtualNetworkAddressSpace { get; set; }
-        /// <summary> The access endpoint. </summary>
+        /// <summary>
+        /// The access endpoint.
+        /// Serialized Name: NetworkConfiguration.accessEndpoint
+        /// </summary>
         internal IntegrationServiceEnvironmentAccessEndpoint AccessEndpoint { get; set; }
-        /// <summary> The access endpoint type. </summary>
+        /// <summary>
+        /// The access endpoint type.
+        /// Serialized Name: IntegrationServiceEnvironmentAccessEndpoint.type
+        /// </summary>
         public IntegrationServiceEnvironmentAccessEndpointType? EndpointType
         {
             get => AccessEndpoint is null ? default : AccessEndpoint.EndpointType;
@@ -46,7 +67,10 @@ namespace Azure.ResourceManager.Logic.Models
             }
         }
 
-        /// <summary> The subnets. </summary>
+        /// <summary>
+        /// The subnets.
+        /// Serialized Name: NetworkConfiguration.subnets
+        /// </summary>
         public IList<ResourceReference> Subnets { get; }
     }
 }

@@ -7,15 +7,33 @@
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The Edifact agreement protocol settings. </summary>
+    /// <summary>
+    /// The Edifact agreement protocol settings.
+    /// Serialized Name: EdifactProcessingSettings
+    /// </summary>
     public partial class EdifactProcessingSettings
     {
         /// <summary> Initializes a new instance of EdifactProcessingSettings. </summary>
-        /// <param name="maskSecurityInfo"> The value indicating whether to mask security information. </param>
-        /// <param name="preserveInterchange"> The value indicating whether to preserve interchange. </param>
-        /// <param name="suspendInterchangeOnError"> The value indicating whether to suspend interchange on error. </param>
-        /// <param name="createEmptyXmlTagsForTrailingSeparators"> The value indicating whether to create empty xml tags for trailing separators. </param>
-        /// <param name="useDotAsDecimalSeparator"> The value indicating whether to use dot as decimal separator. </param>
+        /// <param name="maskSecurityInfo">
+        /// The value indicating whether to mask security information.
+        /// Serialized Name: EdifactProcessingSettings.maskSecurityInfo
+        /// </param>
+        /// <param name="preserveInterchange">
+        /// The value indicating whether to preserve interchange.
+        /// Serialized Name: EdifactProcessingSettings.preserveInterchange
+        /// </param>
+        /// <param name="suspendInterchangeOnError">
+        /// The value indicating whether to suspend interchange on error.
+        /// Serialized Name: EdifactProcessingSettings.suspendInterchangeOnError
+        /// </param>
+        /// <param name="createEmptyXmlTagsForTrailingSeparators">
+        /// The value indicating whether to create empty xml tags for trailing separators.
+        /// Serialized Name: EdifactProcessingSettings.createEmptyXmlTagsForTrailingSeparators
+        /// </param>
+        /// <param name="useDotAsDecimalSeparator">
+        /// The value indicating whether to use dot as decimal separator.
+        /// Serialized Name: EdifactProcessingSettings.useDotAsDecimalSeparator
+        /// </param>
         public EdifactProcessingSettings(bool maskSecurityInfo, bool preserveInterchange, bool suspendInterchangeOnError, bool createEmptyXmlTagsForTrailingSeparators, bool useDotAsDecimalSeparator)
         {
             MaskSecurityInfo = maskSecurityInfo;
@@ -25,15 +43,30 @@ namespace Azure.ResourceManager.Logic.Models
             UseDotAsDecimalSeparator = useDotAsDecimalSeparator;
         }
 
-        /// <summary> The value indicating whether to mask security information. </summary>
+        /// <summary>
+        /// The value indicating whether to mask security information.
+        /// Serialized Name: EdifactProcessingSettings.maskSecurityInfo
+        /// </summary>
         public bool MaskSecurityInfo { get; set; }
-        /// <summary> The value indicating whether to preserve interchange. </summary>
+        /// <summary>
+        /// The value indicating whether to preserve interchange.
+        /// Serialized Name: EdifactProcessingSettings.preserveInterchange
+        /// </summary>
         public bool PreserveInterchange { get; set; }
-        /// <summary> The value indicating whether to suspend interchange on error. </summary>
+        /// <summary>
+        /// The value indicating whether to suspend interchange on error.
+        /// Serialized Name: EdifactProcessingSettings.suspendInterchangeOnError
+        /// </summary>
         public bool SuspendInterchangeOnError { get; set; }
-        /// <summary> The value indicating whether to create empty xml tags for trailing separators. </summary>
+        /// <summary>
+        /// The value indicating whether to create empty xml tags for trailing separators.
+        /// Serialized Name: EdifactProcessingSettings.createEmptyXmlTagsForTrailingSeparators
+        /// </summary>
         public bool CreateEmptyXmlTagsForTrailingSeparators { get; set; }
-        /// <summary> The value indicating whether to use dot as decimal separator. </summary>
+        /// <summary>
+        /// The value indicating whether to use dot as decimal separator.
+        /// Serialized Name: EdifactProcessingSettings.useDotAsDecimalSeparator
+        /// </summary>
         public bool UseDotAsDecimalSeparator { get; set; }
     }
 }

@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The sku. </summary>
+    /// <summary>
+    /// The sku.
+    /// Serialized Name: IntegrationServiceEnvironmentSkuDefinitionSku
+    /// </summary>
     public partial class IntegrationServiceEnvironmentSkuDefinitionSku
     {
         /// <summary> Initializes a new instance of IntegrationServiceEnvironmentSkuDefinitionSku. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of IntegrationServiceEnvironmentSkuDefinitionSku. </summary>
-        /// <param name="name"> The sku name. </param>
-        /// <param name="tier"> The sku tier. </param>
+        /// <param name="name">
+        /// The sku name.
+        /// Serialized Name: IntegrationServiceEnvironmentSkuDefinitionSku.name
+        /// </param>
+        /// <param name="tier">
+        /// The sku tier.
+        /// Serialized Name: IntegrationServiceEnvironmentSkuDefinitionSku.tier
+        /// </param>
         internal IntegrationServiceEnvironmentSkuDefinitionSku(IntegrationServiceEnvironmentSkuName? name, string tier)
         {
             Name = name;
             Tier = tier;
         }
 
-        /// <summary> The sku name. </summary>
+        /// <summary>
+        /// The sku name.
+        /// Serialized Name: IntegrationServiceEnvironmentSkuDefinitionSku.name
+        /// </summary>
         public IntegrationServiceEnvironmentSkuName? Name { get; }
-        /// <summary> The sku tier. </summary>
+        /// <summary>
+        /// The sku tier.
+        /// Serialized Name: IntegrationServiceEnvironmentSkuDefinitionSku.tier
+        /// </summary>
         public string Tier { get; }
     }
 }

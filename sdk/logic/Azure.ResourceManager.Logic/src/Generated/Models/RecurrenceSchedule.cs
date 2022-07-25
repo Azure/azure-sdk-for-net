@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The recurrence schedule. </summary>
+    /// <summary>
+    /// The recurrence schedule.
+    /// Serialized Name: RecurrenceSchedule
+    /// </summary>
     public partial class RecurrenceSchedule
     {
         /// <summary> Initializes a new instance of RecurrenceSchedule. </summary>
@@ -24,11 +27,26 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of RecurrenceSchedule. </summary>
-        /// <param name="minutes"> The minutes. </param>
-        /// <param name="hours"> The hours. </param>
-        /// <param name="weekDays"> The days of the week. </param>
-        /// <param name="monthDays"> The month days. </param>
-        /// <param name="monthlyOccurrences"> The monthly occurrences. </param>
+        /// <param name="minutes">
+        /// The minutes.
+        /// Serialized Name: RecurrenceSchedule.minutes
+        /// </param>
+        /// <param name="hours">
+        /// The hours.
+        /// Serialized Name: RecurrenceSchedule.hours
+        /// </param>
+        /// <param name="weekDays">
+        /// The days of the week.
+        /// Serialized Name: RecurrenceSchedule.weekDays
+        /// </param>
+        /// <param name="monthDays">
+        /// The month days.
+        /// Serialized Name: RecurrenceSchedule.monthDays
+        /// </param>
+        /// <param name="monthlyOccurrences">
+        /// The monthly occurrences.
+        /// Serialized Name: RecurrenceSchedule.monthlyOccurrences
+        /// </param>
         internal RecurrenceSchedule(IList<int> minutes, IList<int> hours, IList<DaysOfWeek> weekDays, IList<int> monthDays, IList<RecurrenceScheduleOccurrence> monthlyOccurrences)
         {
             Minutes = minutes;
@@ -38,15 +56,30 @@ namespace Azure.ResourceManager.Logic.Models
             MonthlyOccurrences = monthlyOccurrences;
         }
 
-        /// <summary> The minutes. </summary>
+        /// <summary>
+        /// The minutes.
+        /// Serialized Name: RecurrenceSchedule.minutes
+        /// </summary>
         public IList<int> Minutes { get; }
-        /// <summary> The hours. </summary>
+        /// <summary>
+        /// The hours.
+        /// Serialized Name: RecurrenceSchedule.hours
+        /// </summary>
         public IList<int> Hours { get; }
-        /// <summary> The days of the week. </summary>
+        /// <summary>
+        /// The days of the week.
+        /// Serialized Name: RecurrenceSchedule.weekDays
+        /// </summary>
         public IList<DaysOfWeek> WeekDays { get; }
-        /// <summary> The month days. </summary>
+        /// <summary>
+        /// The month days.
+        /// Serialized Name: RecurrenceSchedule.monthDays
+        /// </summary>
         public IList<int> MonthDays { get; }
-        /// <summary> The monthly occurrences. </summary>
+        /// <summary>
+        /// The monthly occurrences.
+        /// Serialized Name: RecurrenceSchedule.monthlyOccurrences
+        /// </summary>
         public IList<RecurrenceScheduleOccurrence> MonthlyOccurrences { get; }
     }
 }

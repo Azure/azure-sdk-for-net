@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The swagger external documentation. </summary>
+    /// <summary>
+    /// The swagger external documentation
+    /// Serialized Name: SwaggerExternalDocumentation
+    /// </summary>
     public partial class SwaggerExternalDocumentation
     {
         /// <summary> Initializes a new instance of SwaggerExternalDocumentation. </summary>
@@ -21,9 +24,18 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of SwaggerExternalDocumentation. </summary>
-        /// <param name="description"> The document description. </param>
-        /// <param name="uri"> The documentation Uri. </param>
-        /// <param name="extensions"> The vendor extensions. </param>
+        /// <param name="description">
+        /// The document description.
+        /// Serialized Name: SwaggerExternalDocumentation.description
+        /// </param>
+        /// <param name="uri">
+        /// The documentation Uri.
+        /// Serialized Name: SwaggerExternalDocumentation.uri
+        /// </param>
+        /// <param name="extensions">
+        /// The vendor extensions.
+        /// Serialized Name: SwaggerExternalDocumentation.extensions
+        /// </param>
         internal SwaggerExternalDocumentation(string description, Uri uri, IDictionary<string, BinaryData> extensions)
         {
             Description = description;
@@ -31,11 +43,20 @@ namespace Azure.ResourceManager.Logic.Models
             Extensions = extensions;
         }
 
-        /// <summary> The document description. </summary>
+        /// <summary>
+        /// The document description.
+        /// Serialized Name: SwaggerExternalDocumentation.description
+        /// </summary>
         public string Description { get; set; }
-        /// <summary> The documentation Uri. </summary>
+        /// <summary>
+        /// The documentation Uri.
+        /// Serialized Name: SwaggerExternalDocumentation.uri
+        /// </summary>
         public Uri Uri { get; set; }
-        /// <summary> The vendor extensions. </summary>
+        /// <summary>
+        /// The vendor extensions.
+        /// Serialized Name: SwaggerExternalDocumentation.extensions
+        /// </summary>
         public IDictionary<string, BinaryData> Extensions { get; }
     }
 }

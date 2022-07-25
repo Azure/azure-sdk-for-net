@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The key attributes. </summary>
+    /// <summary>
+    /// The key attributes.
+    /// Serialized Name: KeyVaultKeyAttributes
+    /// </summary>
     public partial class KeyVaultKeyAttributes
     {
         /// <summary> Initializes a new instance of KeyVaultKeyAttributes. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of KeyVaultKeyAttributes. </summary>
-        /// <param name="enabled"> Whether the key is enabled or not. </param>
-        /// <param name="created"> When the key was created. </param>
-        /// <param name="updated"> When the key was updated. </param>
+        /// <param name="enabled">
+        /// Whether the key is enabled or not.
+        /// Serialized Name: KeyVaultKeyAttributes.enabled
+        /// </param>
+        /// <param name="created">
+        /// When the key was created.
+        /// Serialized Name: KeyVaultKeyAttributes.created
+        /// </param>
+        /// <param name="updated">
+        /// When the key was updated.
+        /// Serialized Name: KeyVaultKeyAttributes.updated
+        /// </param>
         internal KeyVaultKeyAttributes(bool? enabled, long? created, long? updated)
         {
             Enabled = enabled;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.Logic.Models
             Updated = updated;
         }
 
-        /// <summary> Whether the key is enabled or not. </summary>
+        /// <summary>
+        /// Whether the key is enabled or not.
+        /// Serialized Name: KeyVaultKeyAttributes.enabled
+        /// </summary>
         public bool? Enabled { get; }
-        /// <summary> When the key was created. </summary>
+        /// <summary>
+        /// When the key was created.
+        /// Serialized Name: KeyVaultKeyAttributes.created
+        /// </summary>
         public long? Created { get; }
-        /// <summary> When the key was updated. </summary>
+        /// <summary>
+        /// When the key was updated.
+        /// Serialized Name: KeyVaultKeyAttributes.updated
+        /// </summary>
         public long? Updated { get; }
     }
 }

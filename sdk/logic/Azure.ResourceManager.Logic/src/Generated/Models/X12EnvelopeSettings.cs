@@ -9,31 +9,97 @@ using System;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The X12 agreement envelope settings. </summary>
+    /// <summary>
+    /// The X12 agreement envelope settings.
+    /// Serialized Name: X12EnvelopeSettings
+    /// </summary>
     public partial class X12EnvelopeSettings
     {
         /// <summary> Initializes a new instance of X12EnvelopeSettings. </summary>
-        /// <param name="controlStandardsId"> The controls standards id. </param>
-        /// <param name="useControlStandardsIdAsRepetitionCharacter"> The value indicating whether to use control standards id as repetition character. </param>
-        /// <param name="senderApplicationId"> The sender application id. </param>
-        /// <param name="receiverApplicationId"> The receiver application id. </param>
-        /// <param name="controlVersionNumber"> The control version number. </param>
-        /// <param name="interchangeControlNumberLowerBound"> The interchange  control number lower bound. </param>
-        /// <param name="interchangeControlNumberUpperBound"> The interchange  control number upper bound. </param>
-        /// <param name="rolloverInterchangeControlNumber"> The value indicating whether to rollover interchange control number. </param>
-        /// <param name="enableDefaultGroupHeaders"> The value indicating whether to enable default group headers. </param>
-        /// <param name="groupControlNumberLowerBound"> The group control number lower bound. </param>
-        /// <param name="groupControlNumberUpperBound"> The group control number upper bound. </param>
-        /// <param name="rolloverGroupControlNumber"> The value indicating whether to rollover group control number. </param>
-        /// <param name="groupHeaderAgencyCode"> The group header agency code. </param>
-        /// <param name="groupHeaderVersion"> The group header version. </param>
-        /// <param name="transactionSetControlNumberLowerBound"> The transaction set control number lower bound. </param>
-        /// <param name="transactionSetControlNumberUpperBound"> The transaction set control number upper bound. </param>
-        /// <param name="rolloverTransactionSetControlNumber"> The value indicating whether to rollover transaction set control number. </param>
-        /// <param name="overwriteExistingTransactionSetControlNumber"> The value indicating whether to overwrite existing transaction set control number. </param>
-        /// <param name="groupHeaderDateFormat"> The group header date format. </param>
-        /// <param name="groupHeaderTimeFormat"> The group header time format. </param>
-        /// <param name="usageIndicator"> The usage indicator. </param>
+        /// <param name="controlStandardsId">
+        /// The controls standards id.
+        /// Serialized Name: X12EnvelopeSettings.controlStandardsId
+        /// </param>
+        /// <param name="useControlStandardsIdAsRepetitionCharacter">
+        /// The value indicating whether to use control standards id as repetition character.
+        /// Serialized Name: X12EnvelopeSettings.useControlStandardsIdAsRepetitionCharacter
+        /// </param>
+        /// <param name="senderApplicationId">
+        /// The sender application id.
+        /// Serialized Name: X12EnvelopeSettings.senderApplicationId
+        /// </param>
+        /// <param name="receiverApplicationId">
+        /// The receiver application id.
+        /// Serialized Name: X12EnvelopeSettings.receiverApplicationId
+        /// </param>
+        /// <param name="controlVersionNumber">
+        /// The control version number.
+        /// Serialized Name: X12EnvelopeSettings.controlVersionNumber
+        /// </param>
+        /// <param name="interchangeControlNumberLowerBound">
+        /// The interchange  control number lower bound.
+        /// Serialized Name: X12EnvelopeSettings.interchangeControlNumberLowerBound
+        /// </param>
+        /// <param name="interchangeControlNumberUpperBound">
+        /// The interchange  control number upper bound.
+        /// Serialized Name: X12EnvelopeSettings.interchangeControlNumberUpperBound
+        /// </param>
+        /// <param name="rolloverInterchangeControlNumber">
+        /// The value indicating whether to rollover interchange control number.
+        /// Serialized Name: X12EnvelopeSettings.rolloverInterchangeControlNumber
+        /// </param>
+        /// <param name="enableDefaultGroupHeaders">
+        /// The value indicating whether to enable default group headers.
+        /// Serialized Name: X12EnvelopeSettings.enableDefaultGroupHeaders
+        /// </param>
+        /// <param name="groupControlNumberLowerBound">
+        /// The group control number lower bound.
+        /// Serialized Name: X12EnvelopeSettings.groupControlNumberLowerBound
+        /// </param>
+        /// <param name="groupControlNumberUpperBound">
+        /// The group control number upper bound.
+        /// Serialized Name: X12EnvelopeSettings.groupControlNumberUpperBound
+        /// </param>
+        /// <param name="rolloverGroupControlNumber">
+        /// The value indicating whether to rollover group control number.
+        /// Serialized Name: X12EnvelopeSettings.rolloverGroupControlNumber
+        /// </param>
+        /// <param name="groupHeaderAgencyCode">
+        /// The group header agency code.
+        /// Serialized Name: X12EnvelopeSettings.groupHeaderAgencyCode
+        /// </param>
+        /// <param name="groupHeaderVersion">
+        /// The group header version.
+        /// Serialized Name: X12EnvelopeSettings.groupHeaderVersion
+        /// </param>
+        /// <param name="transactionSetControlNumberLowerBound">
+        /// The transaction set control number lower bound.
+        /// Serialized Name: X12EnvelopeSettings.transactionSetControlNumberLowerBound
+        /// </param>
+        /// <param name="transactionSetControlNumberUpperBound">
+        /// The transaction set control number upper bound.
+        /// Serialized Name: X12EnvelopeSettings.transactionSetControlNumberUpperBound
+        /// </param>
+        /// <param name="rolloverTransactionSetControlNumber">
+        /// The value indicating whether to rollover transaction set control number.
+        /// Serialized Name: X12EnvelopeSettings.rolloverTransactionSetControlNumber
+        /// </param>
+        /// <param name="overwriteExistingTransactionSetControlNumber">
+        /// The value indicating whether to overwrite existing transaction set control number.
+        /// Serialized Name: X12EnvelopeSettings.overwriteExistingTransactionSetControlNumber
+        /// </param>
+        /// <param name="groupHeaderDateFormat">
+        /// The group header date format.
+        /// Serialized Name: X12EnvelopeSettings.groupHeaderDateFormat
+        /// </param>
+        /// <param name="groupHeaderTimeFormat">
+        /// The group header time format.
+        /// Serialized Name: X12EnvelopeSettings.groupHeaderTimeFormat
+        /// </param>
+        /// <param name="usageIndicator">
+        /// The usage indicator.
+        /// Serialized Name: X12EnvelopeSettings.usageIndicator
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="senderApplicationId"/>, <paramref name="receiverApplicationId"/>, <paramref name="controlVersionNumber"/>, <paramref name="groupHeaderAgencyCode"/> or <paramref name="groupHeaderVersion"/> is null. </exception>
         public X12EnvelopeSettings(int controlStandardsId, bool useControlStandardsIdAsRepetitionCharacter, string senderApplicationId, string receiverApplicationId, string controlVersionNumber, int interchangeControlNumberLowerBound, int interchangeControlNumberUpperBound, bool rolloverInterchangeControlNumber, bool enableDefaultGroupHeaders, int groupControlNumberLowerBound, int groupControlNumberUpperBound, bool rolloverGroupControlNumber, string groupHeaderAgencyCode, string groupHeaderVersion, int transactionSetControlNumberLowerBound, int transactionSetControlNumberUpperBound, bool rolloverTransactionSetControlNumber, bool overwriteExistingTransactionSetControlNumber, X12DateFormat groupHeaderDateFormat, X12TimeFormat groupHeaderTimeFormat, UsageIndicator usageIndicator)
         {
@@ -82,30 +148,102 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of X12EnvelopeSettings. </summary>
-        /// <param name="controlStandardsId"> The controls standards id. </param>
-        /// <param name="useControlStandardsIdAsRepetitionCharacter"> The value indicating whether to use control standards id as repetition character. </param>
-        /// <param name="senderApplicationId"> The sender application id. </param>
-        /// <param name="receiverApplicationId"> The receiver application id. </param>
-        /// <param name="controlVersionNumber"> The control version number. </param>
-        /// <param name="interchangeControlNumberLowerBound"> The interchange  control number lower bound. </param>
-        /// <param name="interchangeControlNumberUpperBound"> The interchange  control number upper bound. </param>
-        /// <param name="rolloverInterchangeControlNumber"> The value indicating whether to rollover interchange control number. </param>
-        /// <param name="enableDefaultGroupHeaders"> The value indicating whether to enable default group headers. </param>
-        /// <param name="functionalGroupId"> The functional group id. </param>
-        /// <param name="groupControlNumberLowerBound"> The group control number lower bound. </param>
-        /// <param name="groupControlNumberUpperBound"> The group control number upper bound. </param>
-        /// <param name="rolloverGroupControlNumber"> The value indicating whether to rollover group control number. </param>
-        /// <param name="groupHeaderAgencyCode"> The group header agency code. </param>
-        /// <param name="groupHeaderVersion"> The group header version. </param>
-        /// <param name="transactionSetControlNumberLowerBound"> The transaction set control number lower bound. </param>
-        /// <param name="transactionSetControlNumberUpperBound"> The transaction set control number upper bound. </param>
-        /// <param name="rolloverTransactionSetControlNumber"> The value indicating whether to rollover transaction set control number. </param>
-        /// <param name="transactionSetControlNumberPrefix"> The transaction set control number prefix. </param>
-        /// <param name="transactionSetControlNumberSuffix"> The transaction set control number suffix. </param>
-        /// <param name="overwriteExistingTransactionSetControlNumber"> The value indicating whether to overwrite existing transaction set control number. </param>
-        /// <param name="groupHeaderDateFormat"> The group header date format. </param>
-        /// <param name="groupHeaderTimeFormat"> The group header time format. </param>
-        /// <param name="usageIndicator"> The usage indicator. </param>
+        /// <param name="controlStandardsId">
+        /// The controls standards id.
+        /// Serialized Name: X12EnvelopeSettings.controlStandardsId
+        /// </param>
+        /// <param name="useControlStandardsIdAsRepetitionCharacter">
+        /// The value indicating whether to use control standards id as repetition character.
+        /// Serialized Name: X12EnvelopeSettings.useControlStandardsIdAsRepetitionCharacter
+        /// </param>
+        /// <param name="senderApplicationId">
+        /// The sender application id.
+        /// Serialized Name: X12EnvelopeSettings.senderApplicationId
+        /// </param>
+        /// <param name="receiverApplicationId">
+        /// The receiver application id.
+        /// Serialized Name: X12EnvelopeSettings.receiverApplicationId
+        /// </param>
+        /// <param name="controlVersionNumber">
+        /// The control version number.
+        /// Serialized Name: X12EnvelopeSettings.controlVersionNumber
+        /// </param>
+        /// <param name="interchangeControlNumberLowerBound">
+        /// The interchange  control number lower bound.
+        /// Serialized Name: X12EnvelopeSettings.interchangeControlNumberLowerBound
+        /// </param>
+        /// <param name="interchangeControlNumberUpperBound">
+        /// The interchange  control number upper bound.
+        /// Serialized Name: X12EnvelopeSettings.interchangeControlNumberUpperBound
+        /// </param>
+        /// <param name="rolloverInterchangeControlNumber">
+        /// The value indicating whether to rollover interchange control number.
+        /// Serialized Name: X12EnvelopeSettings.rolloverInterchangeControlNumber
+        /// </param>
+        /// <param name="enableDefaultGroupHeaders">
+        /// The value indicating whether to enable default group headers.
+        /// Serialized Name: X12EnvelopeSettings.enableDefaultGroupHeaders
+        /// </param>
+        /// <param name="functionalGroupId">
+        /// The functional group id.
+        /// Serialized Name: X12EnvelopeSettings.functionalGroupId
+        /// </param>
+        /// <param name="groupControlNumberLowerBound">
+        /// The group control number lower bound.
+        /// Serialized Name: X12EnvelopeSettings.groupControlNumberLowerBound
+        /// </param>
+        /// <param name="groupControlNumberUpperBound">
+        /// The group control number upper bound.
+        /// Serialized Name: X12EnvelopeSettings.groupControlNumberUpperBound
+        /// </param>
+        /// <param name="rolloverGroupControlNumber">
+        /// The value indicating whether to rollover group control number.
+        /// Serialized Name: X12EnvelopeSettings.rolloverGroupControlNumber
+        /// </param>
+        /// <param name="groupHeaderAgencyCode">
+        /// The group header agency code.
+        /// Serialized Name: X12EnvelopeSettings.groupHeaderAgencyCode
+        /// </param>
+        /// <param name="groupHeaderVersion">
+        /// The group header version.
+        /// Serialized Name: X12EnvelopeSettings.groupHeaderVersion
+        /// </param>
+        /// <param name="transactionSetControlNumberLowerBound">
+        /// The transaction set control number lower bound.
+        /// Serialized Name: X12EnvelopeSettings.transactionSetControlNumberLowerBound
+        /// </param>
+        /// <param name="transactionSetControlNumberUpperBound">
+        /// The transaction set control number upper bound.
+        /// Serialized Name: X12EnvelopeSettings.transactionSetControlNumberUpperBound
+        /// </param>
+        /// <param name="rolloverTransactionSetControlNumber">
+        /// The value indicating whether to rollover transaction set control number.
+        /// Serialized Name: X12EnvelopeSettings.rolloverTransactionSetControlNumber
+        /// </param>
+        /// <param name="transactionSetControlNumberPrefix">
+        /// The transaction set control number prefix.
+        /// Serialized Name: X12EnvelopeSettings.transactionSetControlNumberPrefix
+        /// </param>
+        /// <param name="transactionSetControlNumberSuffix">
+        /// The transaction set control number suffix.
+        /// Serialized Name: X12EnvelopeSettings.transactionSetControlNumberSuffix
+        /// </param>
+        /// <param name="overwriteExistingTransactionSetControlNumber">
+        /// The value indicating whether to overwrite existing transaction set control number.
+        /// Serialized Name: X12EnvelopeSettings.overwriteExistingTransactionSetControlNumber
+        /// </param>
+        /// <param name="groupHeaderDateFormat">
+        /// The group header date format.
+        /// Serialized Name: X12EnvelopeSettings.groupHeaderDateFormat
+        /// </param>
+        /// <param name="groupHeaderTimeFormat">
+        /// The group header time format.
+        /// Serialized Name: X12EnvelopeSettings.groupHeaderTimeFormat
+        /// </param>
+        /// <param name="usageIndicator">
+        /// The usage indicator.
+        /// Serialized Name: X12EnvelopeSettings.usageIndicator
+        /// </param>
         internal X12EnvelopeSettings(int controlStandardsId, bool useControlStandardsIdAsRepetitionCharacter, string senderApplicationId, string receiverApplicationId, string controlVersionNumber, int interchangeControlNumberLowerBound, int interchangeControlNumberUpperBound, bool rolloverInterchangeControlNumber, bool enableDefaultGroupHeaders, string functionalGroupId, int groupControlNumberLowerBound, int groupControlNumberUpperBound, bool rolloverGroupControlNumber, string groupHeaderAgencyCode, string groupHeaderVersion, int transactionSetControlNumberLowerBound, int transactionSetControlNumberUpperBound, bool rolloverTransactionSetControlNumber, string transactionSetControlNumberPrefix, string transactionSetControlNumberSuffix, bool overwriteExistingTransactionSetControlNumber, X12DateFormat groupHeaderDateFormat, X12TimeFormat groupHeaderTimeFormat, UsageIndicator usageIndicator)
         {
             ControlStandardsId = controlStandardsId;
@@ -134,53 +272,125 @@ namespace Azure.ResourceManager.Logic.Models
             UsageIndicator = usageIndicator;
         }
 
-        /// <summary> The controls standards id. </summary>
+        /// <summary>
+        /// The controls standards id.
+        /// Serialized Name: X12EnvelopeSettings.controlStandardsId
+        /// </summary>
         public int ControlStandardsId { get; set; }
-        /// <summary> The value indicating whether to use control standards id as repetition character. </summary>
+        /// <summary>
+        /// The value indicating whether to use control standards id as repetition character.
+        /// Serialized Name: X12EnvelopeSettings.useControlStandardsIdAsRepetitionCharacter
+        /// </summary>
         public bool UseControlStandardsIdAsRepetitionCharacter { get; set; }
-        /// <summary> The sender application id. </summary>
+        /// <summary>
+        /// The sender application id.
+        /// Serialized Name: X12EnvelopeSettings.senderApplicationId
+        /// </summary>
         public string SenderApplicationId { get; set; }
-        /// <summary> The receiver application id. </summary>
+        /// <summary>
+        /// The receiver application id.
+        /// Serialized Name: X12EnvelopeSettings.receiverApplicationId
+        /// </summary>
         public string ReceiverApplicationId { get; set; }
-        /// <summary> The control version number. </summary>
+        /// <summary>
+        /// The control version number.
+        /// Serialized Name: X12EnvelopeSettings.controlVersionNumber
+        /// </summary>
         public string ControlVersionNumber { get; set; }
-        /// <summary> The interchange  control number lower bound. </summary>
+        /// <summary>
+        /// The interchange  control number lower bound.
+        /// Serialized Name: X12EnvelopeSettings.interchangeControlNumberLowerBound
+        /// </summary>
         public int InterchangeControlNumberLowerBound { get; set; }
-        /// <summary> The interchange  control number upper bound. </summary>
+        /// <summary>
+        /// The interchange  control number upper bound.
+        /// Serialized Name: X12EnvelopeSettings.interchangeControlNumberUpperBound
+        /// </summary>
         public int InterchangeControlNumberUpperBound { get; set; }
-        /// <summary> The value indicating whether to rollover interchange control number. </summary>
+        /// <summary>
+        /// The value indicating whether to rollover interchange control number.
+        /// Serialized Name: X12EnvelopeSettings.rolloverInterchangeControlNumber
+        /// </summary>
         public bool RolloverInterchangeControlNumber { get; set; }
-        /// <summary> The value indicating whether to enable default group headers. </summary>
+        /// <summary>
+        /// The value indicating whether to enable default group headers.
+        /// Serialized Name: X12EnvelopeSettings.enableDefaultGroupHeaders
+        /// </summary>
         public bool EnableDefaultGroupHeaders { get; set; }
-        /// <summary> The functional group id. </summary>
+        /// <summary>
+        /// The functional group id.
+        /// Serialized Name: X12EnvelopeSettings.functionalGroupId
+        /// </summary>
         public string FunctionalGroupId { get; set; }
-        /// <summary> The group control number lower bound. </summary>
+        /// <summary>
+        /// The group control number lower bound.
+        /// Serialized Name: X12EnvelopeSettings.groupControlNumberLowerBound
+        /// </summary>
         public int GroupControlNumberLowerBound { get; set; }
-        /// <summary> The group control number upper bound. </summary>
+        /// <summary>
+        /// The group control number upper bound.
+        /// Serialized Name: X12EnvelopeSettings.groupControlNumberUpperBound
+        /// </summary>
         public int GroupControlNumberUpperBound { get; set; }
-        /// <summary> The value indicating whether to rollover group control number. </summary>
+        /// <summary>
+        /// The value indicating whether to rollover group control number.
+        /// Serialized Name: X12EnvelopeSettings.rolloverGroupControlNumber
+        /// </summary>
         public bool RolloverGroupControlNumber { get; set; }
-        /// <summary> The group header agency code. </summary>
+        /// <summary>
+        /// The group header agency code.
+        /// Serialized Name: X12EnvelopeSettings.groupHeaderAgencyCode
+        /// </summary>
         public string GroupHeaderAgencyCode { get; set; }
-        /// <summary> The group header version. </summary>
+        /// <summary>
+        /// The group header version.
+        /// Serialized Name: X12EnvelopeSettings.groupHeaderVersion
+        /// </summary>
         public string GroupHeaderVersion { get; set; }
-        /// <summary> The transaction set control number lower bound. </summary>
+        /// <summary>
+        /// The transaction set control number lower bound.
+        /// Serialized Name: X12EnvelopeSettings.transactionSetControlNumberLowerBound
+        /// </summary>
         public int TransactionSetControlNumberLowerBound { get; set; }
-        /// <summary> The transaction set control number upper bound. </summary>
+        /// <summary>
+        /// The transaction set control number upper bound.
+        /// Serialized Name: X12EnvelopeSettings.transactionSetControlNumberUpperBound
+        /// </summary>
         public int TransactionSetControlNumberUpperBound { get; set; }
-        /// <summary> The value indicating whether to rollover transaction set control number. </summary>
+        /// <summary>
+        /// The value indicating whether to rollover transaction set control number.
+        /// Serialized Name: X12EnvelopeSettings.rolloverTransactionSetControlNumber
+        /// </summary>
         public bool RolloverTransactionSetControlNumber { get; set; }
-        /// <summary> The transaction set control number prefix. </summary>
+        /// <summary>
+        /// The transaction set control number prefix.
+        /// Serialized Name: X12EnvelopeSettings.transactionSetControlNumberPrefix
+        /// </summary>
         public string TransactionSetControlNumberPrefix { get; set; }
-        /// <summary> The transaction set control number suffix. </summary>
+        /// <summary>
+        /// The transaction set control number suffix.
+        /// Serialized Name: X12EnvelopeSettings.transactionSetControlNumberSuffix
+        /// </summary>
         public string TransactionSetControlNumberSuffix { get; set; }
-        /// <summary> The value indicating whether to overwrite existing transaction set control number. </summary>
+        /// <summary>
+        /// The value indicating whether to overwrite existing transaction set control number.
+        /// Serialized Name: X12EnvelopeSettings.overwriteExistingTransactionSetControlNumber
+        /// </summary>
         public bool OverwriteExistingTransactionSetControlNumber { get; set; }
-        /// <summary> The group header date format. </summary>
+        /// <summary>
+        /// The group header date format.
+        /// Serialized Name: X12EnvelopeSettings.groupHeaderDateFormat
+        /// </summary>
         public X12DateFormat GroupHeaderDateFormat { get; set; }
-        /// <summary> The group header time format. </summary>
+        /// <summary>
+        /// The group header time format.
+        /// Serialized Name: X12EnvelopeSettings.groupHeaderTimeFormat
+        /// </summary>
         public X12TimeFormat GroupHeaderTimeFormat { get; set; }
-        /// <summary> The usage indicator. </summary>
+        /// <summary>
+        /// The usage indicator.
+        /// Serialized Name: X12EnvelopeSettings.usageIndicator
+        /// </summary>
         public UsageIndicator UsageIndicator { get; set; }
     }
 }

@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> Collection of key vault keys. </summary>
+    /// <summary>
+    /// Collection of key vault keys.
+    /// Serialized Name: KeyVaultKeyCollection
+    /// </summary>
     internal partial class KeyVaultKeyCollection
     {
         /// <summary> Initializes a new instance of KeyVaultKeyCollection. </summary>
@@ -20,17 +23,29 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of KeyVaultKeyCollection. </summary>
-        /// <param name="value"> The key vault keys. </param>
-        /// <param name="skipToken"> The skip token. </param>
+        /// <param name="value">
+        /// The key vault keys.
+        /// Serialized Name: KeyVaultKeyCollection.value
+        /// </param>
+        /// <param name="skipToken">
+        /// The skip token.
+        /// Serialized Name: KeyVaultKeyCollection.skipToken
+        /// </param>
         internal KeyVaultKeyCollection(IReadOnlyList<KeyVaultKey> value, string skipToken)
         {
             Value = value;
             SkipToken = skipToken;
         }
 
-        /// <summary> The key vault keys. </summary>
+        /// <summary>
+        /// The key vault keys.
+        /// Serialized Name: KeyVaultKeyCollection.value
+        /// </summary>
         public IReadOnlyList<KeyVaultKey> Value { get; }
-        /// <summary> The skip token. </summary>
+        /// <summary>
+        /// The skip token.
+        /// Serialized Name: KeyVaultKeyCollection.skipToken
+        /// </summary>
         public string SkipToken { get; }
     }
 }

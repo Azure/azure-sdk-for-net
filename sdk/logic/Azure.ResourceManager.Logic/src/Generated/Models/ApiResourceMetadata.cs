@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The api resource metadata. </summary>
+    /// <summary>
+    /// The api resource metadata.
+    /// Serialized Name: ApiResourceMetadata
+    /// </summary>
     public partial class ApiResourceMetadata
     {
         /// <summary> Initializes a new instance of ApiResourceMetadata. </summary>
@@ -20,17 +23,47 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of ApiResourceMetadata. </summary>
-        /// <param name="source"> The source. </param>
-        /// <param name="brandColor"> The brand color. </param>
-        /// <param name="hideKey"> The hide key. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="apiType"> The api type. </param>
-        /// <param name="wsdlService"> The WSDL service. </param>
-        /// <param name="wsdlImportMethod"> The WSDL import method. </param>
-        /// <param name="connectionType"> The connection type. </param>
-        /// <param name="provisioningState"> The provisioning state. </param>
-        /// <param name="deploymentParameters"> The connector deployment parameters metadata. </param>
-        internal ApiResourceMetadata(string source, string brandColor, string hideKey, IReadOnlyDictionary<string, string> tags, ApiType? apiType, WsdlService wsdlService, WsdlImportMethod? wsdlImportMethod, string connectionType, WorkflowProvisioningState? provisioningState, ApiDeploymentParameterMetadataSet deploymentParameters)
+        /// <param name="source">
+        /// The source.
+        /// Serialized Name: ApiResourceMetadata.source
+        /// </param>
+        /// <param name="brandColor">
+        /// The brand color.
+        /// Serialized Name: ApiResourceMetadata.brandColor
+        /// </param>
+        /// <param name="hideKey">
+        /// The hide key.
+        /// Serialized Name: ApiResourceMetadata.hideKey
+        /// </param>
+        /// <param name="tags">
+        /// The tags.
+        /// Serialized Name: ApiResourceMetadata.tags
+        /// </param>
+        /// <param name="apiType">
+        /// The api type.
+        /// Serialized Name: ApiResourceMetadata.ApiType
+        /// </param>
+        /// <param name="wsdlService">
+        /// The WSDL service.
+        /// Serialized Name: ApiResourceMetadata.wsdlService
+        /// </param>
+        /// <param name="wsdlImportMethod">
+        /// The WSDL import method.
+        /// Serialized Name: ApiResourceMetadata.wsdlImportMethod
+        /// </param>
+        /// <param name="connectionType">
+        /// The connection type.
+        /// Serialized Name: ApiResourceMetadata.connectionType
+        /// </param>
+        /// <param name="provisioningState">
+        /// The provisioning state.
+        /// Serialized Name: ApiResourceMetadata.provisioningState
+        /// </param>
+        /// <param name="deploymentParameters">
+        /// The connector deployment parameters metadata.
+        /// Serialized Name: ApiResourceMetadata.deploymentParameters
+        /// </param>
+        internal ApiResourceMetadata(string source, string brandColor, string hideKey, IReadOnlyDictionary<string, string> tags, ApiType? apiType, WsdlService wsdlService, WsdlImportMethod? wsdlImportMethod, string connectionType, LogicAppWorkflowProvisioningState? provisioningState, ApiDeploymentParameterMetadataSet deploymentParameters)
         {
             Source = source;
             BrandColor = brandColor;
@@ -44,25 +77,55 @@ namespace Azure.ResourceManager.Logic.Models
             DeploymentParameters = deploymentParameters;
         }
 
-        /// <summary> The source. </summary>
+        /// <summary>
+        /// The source.
+        /// Serialized Name: ApiResourceMetadata.source
+        /// </summary>
         public string Source { get; }
-        /// <summary> The brand color. </summary>
+        /// <summary>
+        /// The brand color.
+        /// Serialized Name: ApiResourceMetadata.brandColor
+        /// </summary>
         public string BrandColor { get; }
-        /// <summary> The hide key. </summary>
+        /// <summary>
+        /// The hide key.
+        /// Serialized Name: ApiResourceMetadata.hideKey
+        /// </summary>
         public string HideKey { get; }
-        /// <summary> The tags. </summary>
+        /// <summary>
+        /// The tags.
+        /// Serialized Name: ApiResourceMetadata.tags
+        /// </summary>
         public IReadOnlyDictionary<string, string> Tags { get; }
-        /// <summary> The api type. </summary>
+        /// <summary>
+        /// The api type.
+        /// Serialized Name: ApiResourceMetadata.ApiType
+        /// </summary>
         public ApiType? ApiType { get; }
-        /// <summary> The WSDL service. </summary>
+        /// <summary>
+        /// The WSDL service.
+        /// Serialized Name: ApiResourceMetadata.wsdlService
+        /// </summary>
         public WsdlService WsdlService { get; }
-        /// <summary> The WSDL import method. </summary>
+        /// <summary>
+        /// The WSDL import method.
+        /// Serialized Name: ApiResourceMetadata.wsdlImportMethod
+        /// </summary>
         public WsdlImportMethod? WsdlImportMethod { get; }
-        /// <summary> The connection type. </summary>
+        /// <summary>
+        /// The connection type.
+        /// Serialized Name: ApiResourceMetadata.connectionType
+        /// </summary>
         public string ConnectionType { get; }
-        /// <summary> The provisioning state. </summary>
-        public WorkflowProvisioningState? ProvisioningState { get; }
-        /// <summary> The connector deployment parameters metadata. </summary>
+        /// <summary>
+        /// The provisioning state.
+        /// Serialized Name: ApiResourceMetadata.provisioningState
+        /// </summary>
+        public LogicAppWorkflowProvisioningState? ProvisioningState { get; }
+        /// <summary>
+        /// The connector deployment parameters metadata.
+        /// Serialized Name: ApiResourceMetadata.deploymentParameters
+        /// </summary>
         public ApiDeploymentParameterMetadataSet DeploymentParameters { get; }
     }
 }

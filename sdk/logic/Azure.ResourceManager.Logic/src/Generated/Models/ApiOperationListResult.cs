@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The list of managed API operations. </summary>
+    /// <summary>
+    /// The list of managed API operations.
+    /// Serialized Name: ApiOperationListResult
+    /// </summary>
     internal partial class ApiOperationListResult
     {
         /// <summary> Initializes a new instance of ApiOperationListResult. </summary>
@@ -20,17 +23,29 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of ApiOperationListResult. </summary>
-        /// <param name="value"> The api operation definitions for an API. </param>
-        /// <param name="nextLink"> The URL to get the next set of results. </param>
+        /// <param name="value">
+        /// The api operation definitions for an API.
+        /// Serialized Name: ApiOperationListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The URL to get the next set of results.
+        /// Serialized Name: ApiOperationListResult.nextLink
+        /// </param>
         internal ApiOperationListResult(IReadOnlyList<ApiOperation> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> The api operation definitions for an API. </summary>
+        /// <summary>
+        /// The api operation definitions for an API.
+        /// Serialized Name: ApiOperationListResult.value
+        /// </summary>
         public IReadOnlyList<ApiOperation> Value { get; }
-        /// <summary> The URL to get the next set of results. </summary>
+        /// <summary>
+        /// The URL to get the next set of results.
+        /// Serialized Name: ApiOperationListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

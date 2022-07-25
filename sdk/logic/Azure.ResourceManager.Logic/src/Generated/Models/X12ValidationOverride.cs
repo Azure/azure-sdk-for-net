@@ -9,17 +9,41 @@ using System;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The X12 validation override settings. </summary>
+    /// <summary>
+    /// The X12 validation override settings.
+    /// Serialized Name: X12ValidationOverride
+    /// </summary>
     public partial class X12ValidationOverride
     {
         /// <summary> Initializes a new instance of X12ValidationOverride. </summary>
-        /// <param name="messageId"> The message id on which the validation settings has to be applied. </param>
-        /// <param name="validateEDITypes"> The value indicating whether to validate EDI types. </param>
-        /// <param name="validateXSDTypes"> The value indicating whether to validate XSD types. </param>
-        /// <param name="allowLeadingAndTrailingSpacesAndZeroes"> The value indicating whether to allow leading and trailing spaces and zeroes. </param>
-        /// <param name="validateCharacterSet"> The value indicating whether to validate character Set. </param>
-        /// <param name="trimLeadingAndTrailingSpacesAndZeroes"> The value indicating whether to trim leading and trailing spaces and zeroes. </param>
-        /// <param name="trailingSeparatorPolicy"> The trailing separator policy. </param>
+        /// <param name="messageId">
+        /// The message id on which the validation settings has to be applied.
+        /// Serialized Name: X12ValidationOverride.messageId
+        /// </param>
+        /// <param name="validateEDITypes">
+        /// The value indicating whether to validate EDI types.
+        /// Serialized Name: X12ValidationOverride.validateEDITypes
+        /// </param>
+        /// <param name="validateXSDTypes">
+        /// The value indicating whether to validate XSD types.
+        /// Serialized Name: X12ValidationOverride.validateXSDTypes
+        /// </param>
+        /// <param name="allowLeadingAndTrailingSpacesAndZeroes">
+        /// The value indicating whether to allow leading and trailing spaces and zeroes.
+        /// Serialized Name: X12ValidationOverride.allowLeadingAndTrailingSpacesAndZeroes
+        /// </param>
+        /// <param name="validateCharacterSet">
+        /// The value indicating whether to validate character Set.
+        /// Serialized Name: X12ValidationOverride.validateCharacterSet
+        /// </param>
+        /// <param name="trimLeadingAndTrailingSpacesAndZeroes">
+        /// The value indicating whether to trim leading and trailing spaces and zeroes.
+        /// Serialized Name: X12ValidationOverride.trimLeadingAndTrailingSpacesAndZeroes
+        /// </param>
+        /// <param name="trailingSeparatorPolicy">
+        /// The trailing separator policy.
+        /// Serialized Name: X12ValidationOverride.trailingSeparatorPolicy
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="messageId"/> is null. </exception>
         public X12ValidationOverride(string messageId, bool validateEDITypes, bool validateXSDTypes, bool allowLeadingAndTrailingSpacesAndZeroes, bool validateCharacterSet, bool trimLeadingAndTrailingSpacesAndZeroes, TrailingSeparatorPolicy trailingSeparatorPolicy)
         {
@@ -37,19 +61,40 @@ namespace Azure.ResourceManager.Logic.Models
             TrailingSeparatorPolicy = trailingSeparatorPolicy;
         }
 
-        /// <summary> The message id on which the validation settings has to be applied. </summary>
+        /// <summary>
+        /// The message id on which the validation settings has to be applied.
+        /// Serialized Name: X12ValidationOverride.messageId
+        /// </summary>
         public string MessageId { get; set; }
-        /// <summary> The value indicating whether to validate EDI types. </summary>
+        /// <summary>
+        /// The value indicating whether to validate EDI types.
+        /// Serialized Name: X12ValidationOverride.validateEDITypes
+        /// </summary>
         public bool ValidateEDITypes { get; set; }
-        /// <summary> The value indicating whether to validate XSD types. </summary>
+        /// <summary>
+        /// The value indicating whether to validate XSD types.
+        /// Serialized Name: X12ValidationOverride.validateXSDTypes
+        /// </summary>
         public bool ValidateXSDTypes { get; set; }
-        /// <summary> The value indicating whether to allow leading and trailing spaces and zeroes. </summary>
+        /// <summary>
+        /// The value indicating whether to allow leading and trailing spaces and zeroes.
+        /// Serialized Name: X12ValidationOverride.allowLeadingAndTrailingSpacesAndZeroes
+        /// </summary>
         public bool AllowLeadingAndTrailingSpacesAndZeroes { get; set; }
-        /// <summary> The value indicating whether to validate character Set. </summary>
+        /// <summary>
+        /// The value indicating whether to validate character Set.
+        /// Serialized Name: X12ValidationOverride.validateCharacterSet
+        /// </summary>
         public bool ValidateCharacterSet { get; set; }
-        /// <summary> The value indicating whether to trim leading and trailing spaces and zeroes. </summary>
+        /// <summary>
+        /// The value indicating whether to trim leading and trailing spaces and zeroes.
+        /// Serialized Name: X12ValidationOverride.trimLeadingAndTrailingSpacesAndZeroes
+        /// </summary>
         public bool TrimLeadingAndTrailingSpacesAndZeroes { get; set; }
-        /// <summary> The trailing separator policy. </summary>
+        /// <summary>
+        /// The trailing separator policy.
+        /// Serialized Name: X12ValidationOverride.trailingSeparatorPolicy
+        /// </summary>
         public TrailingSeparatorPolicy TrailingSeparatorPolicy { get; set; }
     }
 }

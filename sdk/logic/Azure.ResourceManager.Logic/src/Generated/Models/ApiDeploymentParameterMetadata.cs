@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The API deployment parameter metadata. </summary>
+    /// <summary>
+    /// The API deployment parameter metadata.
+    /// Serialized Name: ApiDeploymentParameterMetadata
+    /// </summary>
     public partial class ApiDeploymentParameterMetadata
     {
         /// <summary> Initializes a new instance of ApiDeploymentParameterMetadata. </summary>
@@ -16,11 +19,26 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of ApiDeploymentParameterMetadata. </summary>
-        /// <param name="apiDeploymentParameterMetadataType"> The type. </param>
-        /// <param name="isRequired"> Indicates whether its required. </param>
-        /// <param name="displayName"> The display name. </param>
-        /// <param name="description"> The description. </param>
-        /// <param name="visibility"> The visibility. </param>
+        /// <param name="apiDeploymentParameterMetadataType">
+        /// The type.
+        /// Serialized Name: ApiDeploymentParameterMetadata.type
+        /// </param>
+        /// <param name="isRequired">
+        /// Indicates whether its required.
+        /// Serialized Name: ApiDeploymentParameterMetadata.isRequired
+        /// </param>
+        /// <param name="displayName">
+        /// The display name.
+        /// Serialized Name: ApiDeploymentParameterMetadata.displayName
+        /// </param>
+        /// <param name="description">
+        /// The description.
+        /// Serialized Name: ApiDeploymentParameterMetadata.description
+        /// </param>
+        /// <param name="visibility">
+        /// The visibility.
+        /// Serialized Name: ApiDeploymentParameterMetadata.visibility
+        /// </param>
         internal ApiDeploymentParameterMetadata(string apiDeploymentParameterMetadataType, bool? isRequired, string displayName, string description, ApiDeploymentParameterVisibility? visibility)
         {
             ApiDeploymentParameterMetadataType = apiDeploymentParameterMetadataType;
@@ -30,15 +48,30 @@ namespace Azure.ResourceManager.Logic.Models
             Visibility = visibility;
         }
 
-        /// <summary> The type. </summary>
+        /// <summary>
+        /// The type.
+        /// Serialized Name: ApiDeploymentParameterMetadata.type
+        /// </summary>
         public string ApiDeploymentParameterMetadataType { get; }
-        /// <summary> Indicates whether its required. </summary>
+        /// <summary>
+        /// Indicates whether its required.
+        /// Serialized Name: ApiDeploymentParameterMetadata.isRequired
+        /// </summary>
         public bool? IsRequired { get; }
-        /// <summary> The display name. </summary>
+        /// <summary>
+        /// The display name.
+        /// Serialized Name: ApiDeploymentParameterMetadata.displayName
+        /// </summary>
         public string DisplayName { get; }
-        /// <summary> The description. </summary>
+        /// <summary>
+        /// The description.
+        /// Serialized Name: ApiDeploymentParameterMetadata.description
+        /// </summary>
         public string Description { get; }
-        /// <summary> The visibility. </summary>
+        /// <summary>
+        /// The visibility.
+        /// Serialized Name: ApiDeploymentParameterMetadata.visibility
+        /// </summary>
         public ApiDeploymentParameterVisibility? Visibility { get; }
     }
 }

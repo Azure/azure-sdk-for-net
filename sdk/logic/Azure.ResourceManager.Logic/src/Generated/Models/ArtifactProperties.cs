@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The artifact properties definition. </summary>
+    /// <summary>
+    /// The artifact properties definition.
+    /// Serialized Name: ArtifactProperties
+    /// </summary>
     public partial class ArtifactProperties
     {
         /// <summary> Initializes a new instance of ArtifactProperties. </summary>
@@ -18,9 +21,18 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of ArtifactProperties. </summary>
-        /// <param name="createdOn"> The artifact creation time. </param>
-        /// <param name="changedOn"> The artifact changed time. </param>
-        /// <param name="metadata"> Anything. </param>
+        /// <param name="createdOn">
+        /// The artifact creation time.
+        /// Serialized Name: ArtifactProperties.createdTime
+        /// </param>
+        /// <param name="changedOn">
+        /// The artifact changed time.
+        /// Serialized Name: ArtifactProperties.changedTime
+        /// </param>
+        /// <param name="metadata">
+        /// Anything
+        /// Serialized Name: ArtifactProperties.metadata
+        /// </param>
         internal ArtifactProperties(DateTimeOffset? createdOn, DateTimeOffset? changedOn, BinaryData metadata)
         {
             CreatedOn = createdOn;
@@ -28,11 +40,20 @@ namespace Azure.ResourceManager.Logic.Models
             Metadata = metadata;
         }
 
-        /// <summary> The artifact creation time. </summary>
+        /// <summary>
+        /// The artifact creation time.
+        /// Serialized Name: ArtifactProperties.createdTime
+        /// </summary>
         public DateTimeOffset? CreatedOn { get; set; }
-        /// <summary> The artifact changed time. </summary>
+        /// <summary>
+        /// The artifact changed time.
+        /// Serialized Name: ArtifactProperties.changedTime
+        /// </summary>
         public DateTimeOffset? ChangedOn { get; set; }
-        /// <summary> Anything. </summary>
+        /// <summary>
+        /// Anything
+        /// Serialized Name: ArtifactProperties.metadata
+        /// </summary>
         public BinaryData Metadata { get; set; }
     }
 }

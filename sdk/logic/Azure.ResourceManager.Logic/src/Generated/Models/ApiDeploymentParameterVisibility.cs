@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The Api deployment parameter visibility. </summary>
+    /// <summary>
+    /// The Api deployment parameter visibility.
+    /// Serialized Name: ApiDeploymentParameterVisibility
+    /// </summary>
     public readonly partial struct ApiDeploymentParameterVisibility : IEquatable<ApiDeploymentParameterVisibility>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.Logic.Models
         private const string DefaultValue = "Default";
         private const string InternalValue = "Internal";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary>
+        /// NotSpecified
+        /// Serialized Name: ApiDeploymentParameterVisibility.NotSpecified
+        /// </summary>
         public static ApiDeploymentParameterVisibility NotSpecified { get; } = new ApiDeploymentParameterVisibility(NotSpecifiedValue);
-        /// <summary> Default. </summary>
+        /// <summary>
+        /// Default
+        /// Serialized Name: ApiDeploymentParameterVisibility.Default
+        /// </summary>
         public static ApiDeploymentParameterVisibility Default { get; } = new ApiDeploymentParameterVisibility(DefaultValue);
-        /// <summary> Internal. </summary>
+        /// <summary>
+        /// Internal
+        /// Serialized Name: ApiDeploymentParameterVisibility.Internal
+        /// </summary>
         public static ApiDeploymentParameterVisibility Internal { get; } = new ApiDeploymentParameterVisibility(InternalValue);
         /// <summary> Determines if two <see cref="ApiDeploymentParameterVisibility"/> values are the same. </summary>
         public static bool operator ==(ApiDeploymentParameterVisibility left, ApiDeploymentParameterVisibility right) => left.Equals(right);

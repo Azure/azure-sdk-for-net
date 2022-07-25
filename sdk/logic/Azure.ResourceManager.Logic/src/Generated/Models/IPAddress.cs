@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The ip address. </summary>
+    /// <summary>
+    /// The ip address.
+    /// Serialized Name: IpAddress
+    /// </summary>
     public partial class IPAddress
     {
         /// <summary> Initializes a new instance of IPAddress. </summary>
@@ -16,13 +19,19 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of IPAddress. </summary>
-        /// <param name="address"> The address. </param>
+        /// <param name="address">
+        /// The address.
+        /// Serialized Name: IpAddress.address
+        /// </param>
         internal IPAddress(string address)
         {
             Address = address;
         }
 
-        /// <summary> The address. </summary>
+        /// <summary>
+        /// The address.
+        /// Serialized Name: IpAddress.address
+        /// </summary>
         public string Address { get; set; }
     }
 }

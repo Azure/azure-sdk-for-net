@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The sku name. </summary>
+    /// <summary>
+    /// The sku name.
+    /// Serialized Name: SkuName
+    /// </summary>
     public readonly partial struct LogicSkuName : IEquatable<LogicSkuName>
     {
         private readonly string _value;
@@ -29,17 +32,35 @@ namespace Azure.ResourceManager.Logic.Models
         private const string StandardValue = "Standard";
         private const string PremiumValue = "Premium";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary>
+        /// NotSpecified
+        /// Serialized Name: SkuName.NotSpecified
+        /// </summary>
         public static LogicSkuName NotSpecified { get; } = new LogicSkuName(NotSpecifiedValue);
-        /// <summary> Free. </summary>
+        /// <summary>
+        /// Free
+        /// Serialized Name: SkuName.Free
+        /// </summary>
         public static LogicSkuName Free { get; } = new LogicSkuName(FreeValue);
-        /// <summary> Shared. </summary>
+        /// <summary>
+        /// Shared
+        /// Serialized Name: SkuName.Shared
+        /// </summary>
         public static LogicSkuName Shared { get; } = new LogicSkuName(SharedValue);
-        /// <summary> Basic. </summary>
+        /// <summary>
+        /// Basic
+        /// Serialized Name: SkuName.Basic
+        /// </summary>
         public static LogicSkuName Basic { get; } = new LogicSkuName(BasicValue);
-        /// <summary> Standard. </summary>
+        /// <summary>
+        /// Standard
+        /// Serialized Name: SkuName.Standard
+        /// </summary>
         public static LogicSkuName Standard { get; } = new LogicSkuName(StandardValue);
-        /// <summary> Premium. </summary>
+        /// <summary>
+        /// Premium
+        /// Serialized Name: SkuName.Premium
+        /// </summary>
         public static LogicSkuName Premium { get; } = new LogicSkuName(PremiumValue);
         /// <summary> Determines if two <see cref="LogicSkuName"/> values are the same. </summary>
         public static bool operator ==(LogicSkuName left, LogicSkuName right) => left.Equals(right);

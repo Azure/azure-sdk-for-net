@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The access key regenerate action content. </summary>
+    /// <summary>
+    /// The access key regenerate action content.
+    /// Serialized Name: RegenerateActionParameter
+    /// </summary>
     public partial class RegenerateActionParameter
     {
         /// <summary> Initializes a new instance of RegenerateActionParameter. </summary>
@@ -15,7 +18,10 @@ namespace Azure.ResourceManager.Logic.Models
         {
         }
 
-        /// <summary> The key type. </summary>
+        /// <summary>
+        /// The key type.
+        /// Serialized Name: RegenerateActionParameter.keyType
+        /// </summary>
         public KeyType? KeyType { get; set; }
     }
 }

@@ -7,17 +7,26 @@
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The X12 message filter for odata query. </summary>
+    /// <summary>
+    /// The X12 message filter for odata query.
+    /// Serialized Name: X12MessageFilter
+    /// </summary>
     public partial class X12MessageFilter
     {
         /// <summary> Initializes a new instance of X12MessageFilter. </summary>
-        /// <param name="messageFilterType"> The message filter type. </param>
+        /// <param name="messageFilterType">
+        /// The message filter type.
+        /// Serialized Name: X12MessageFilter.messageFilterType
+        /// </param>
         public X12MessageFilter(MessageFilterType messageFilterType)
         {
             MessageFilterType = messageFilterType;
         }
 
-        /// <summary> The message filter type. </summary>
+        /// <summary>
+        /// The message filter type.
+        /// Serialized Name: X12MessageFilter.messageFilterType
+        /// </summary>
         public MessageFilterType MessageFilterType { get; set; }
     }
 }

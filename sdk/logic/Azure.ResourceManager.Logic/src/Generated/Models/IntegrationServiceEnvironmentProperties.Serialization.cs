@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static IntegrationServiceEnvironmentProperties DeserializeIntegrationServiceEnvironmentProperties(JsonElement element)
         {
-            Optional<WorkflowProvisioningState> provisioningState = default;
-            Optional<WorkflowState> state = default;
+            Optional<LogicAppWorkflowProvisioningState> provisioningState = default;
+            Optional<LogicAppWorkflowState> state = default;
             Optional<string> integrationServiceEnvironmentId = default;
             Optional<FlowEndpointsConfiguration> endpointsConfiguration = default;
             Optional<NetworkConfiguration> networkConfiguration = default;
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Logic.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    provisioningState = new WorkflowProvisioningState(property.Value.GetString());
+                    provisioningState = new LogicAppWorkflowProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("state"))
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Logic.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    state = new WorkflowState(property.Value.GetString());
+                    state = new LogicAppWorkflowState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("integrationServiceEnvironmentId"))

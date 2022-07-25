@@ -9,7 +9,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The workflow run action correlation properties. </summary>
+    /// <summary>
+    /// The workflow run action correlation properties.
+    /// Serialized Name: RunActionCorrelation
+    /// </summary>
     public partial class RunActionCorrelation : RunCorrelation
     {
         /// <summary> Initializes a new instance of RunActionCorrelation. </summary>
@@ -18,15 +21,27 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of RunActionCorrelation. </summary>
-        /// <param name="clientTrackingId"> The client tracking identifier. </param>
-        /// <param name="clientKeywords"> The client keywords. </param>
-        /// <param name="actionTrackingId"> The action tracking identifier. </param>
+        /// <param name="clientTrackingId">
+        /// The client tracking identifier.
+        /// Serialized Name: RunCorrelation.clientTrackingId
+        /// </param>
+        /// <param name="clientKeywords">
+        /// The client keywords.
+        /// Serialized Name: RunCorrelation.clientKeywords
+        /// </param>
+        /// <param name="actionTrackingId">
+        /// The action tracking identifier.
+        /// Serialized Name: RunActionCorrelation.actionTrackingId
+        /// </param>
         internal RunActionCorrelation(string clientTrackingId, IList<string> clientKeywords, string actionTrackingId) : base(clientTrackingId, clientKeywords)
         {
             ActionTrackingId = actionTrackingId;
         }
 
-        /// <summary> The action tracking identifier. </summary>
+        /// <summary>
+        /// The action tracking identifier.
+        /// Serialized Name: RunActionCorrelation.actionTrackingId
+        /// </summary>
         public string ActionTrackingId { get; set; }
     }
 }

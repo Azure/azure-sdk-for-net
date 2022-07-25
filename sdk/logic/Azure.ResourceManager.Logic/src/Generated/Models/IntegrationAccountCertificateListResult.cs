@@ -11,7 +11,10 @@ using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The list of integration account certificates. </summary>
+    /// <summary>
+    /// The list of integration account certificates.
+    /// Serialized Name: IntegrationAccountCertificateListResult
+    /// </summary>
     internal partial class IntegrationAccountCertificateListResult
     {
         /// <summary> Initializes a new instance of IntegrationAccountCertificateListResult. </summary>
@@ -21,17 +24,29 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of IntegrationAccountCertificateListResult. </summary>
-        /// <param name="value"> The list of integration account certificates. </param>
-        /// <param name="nextLink"> The URL to get the next set of results. </param>
+        /// <param name="value">
+        /// The list of integration account certificates.
+        /// Serialized Name: IntegrationAccountCertificateListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The URL to get the next set of results.
+        /// Serialized Name: IntegrationAccountCertificateListResult.nextLink
+        /// </param>
         internal IntegrationAccountCertificateListResult(IReadOnlyList<IntegrationAccountCertificateData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> The list of integration account certificates. </summary>
+        /// <summary>
+        /// The list of integration account certificates.
+        /// Serialized Name: IntegrationAccountCertificateListResult.value
+        /// </summary>
         public IReadOnlyList<IntegrationAccountCertificateData> Value { get; }
-        /// <summary> The URL to get the next set of results. </summary>
+        /// <summary>
+        /// The URL to get the next set of results.
+        /// Serialized Name: IntegrationAccountCertificateListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

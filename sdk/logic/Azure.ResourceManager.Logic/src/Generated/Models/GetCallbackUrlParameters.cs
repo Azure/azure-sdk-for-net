@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The callback url parameters. </summary>
+    /// <summary>
+    /// The callback url parameters.
+    /// Serialized Name: GetCallbackUrlParameters
+    /// </summary>
     public partial class GetCallbackUrlParameters
     {
         /// <summary> Initializes a new instance of GetCallbackUrlParameters. </summary>
@@ -17,9 +20,15 @@ namespace Azure.ResourceManager.Logic.Models
         {
         }
 
-        /// <summary> The expiry time. </summary>
+        /// <summary>
+        /// The expiry time.
+        /// Serialized Name: GetCallbackUrlParameters.notAfter
+        /// </summary>
         public DateTimeOffset? NotAfter { get; set; }
-        /// <summary> The key type. </summary>
+        /// <summary>
+        /// The key type.
+        /// Serialized Name: GetCallbackUrlParameters.keyType
+        /// </summary>
         public KeyType? KeyType { get; set; }
     }
 }

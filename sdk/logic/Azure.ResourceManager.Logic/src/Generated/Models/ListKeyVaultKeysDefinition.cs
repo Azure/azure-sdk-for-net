@@ -9,11 +9,17 @@ using System;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The list key vault keys definition. </summary>
+    /// <summary>
+    /// The list key vault keys definition.
+    /// Serialized Name: ListKeyVaultKeysDefinition
+    /// </summary>
     public partial class ListKeyVaultKeysDefinition
     {
         /// <summary> Initializes a new instance of ListKeyVaultKeysDefinition. </summary>
-        /// <param name="keyVault"> The key vault reference. </param>
+        /// <param name="keyVault">
+        /// The key vault reference.
+        /// Serialized Name: ListKeyVaultKeysDefinition.keyVault
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVault"/> is null. </exception>
         public ListKeyVaultKeysDefinition(KeyVaultReference keyVault)
         {
@@ -25,9 +31,15 @@ namespace Azure.ResourceManager.Logic.Models
             KeyVault = keyVault;
         }
 
-        /// <summary> The key vault reference. </summary>
+        /// <summary>
+        /// The key vault reference.
+        /// Serialized Name: ListKeyVaultKeysDefinition.keyVault
+        /// </summary>
         public KeyVaultReference KeyVault { get; }
-        /// <summary> The skip token. </summary>
+        /// <summary>
+        /// The skip token.
+        /// Serialized Name: ListKeyVaultKeysDefinition.skipToken
+        /// </summary>
         public string SkipToken { get; set; }
     }
 }

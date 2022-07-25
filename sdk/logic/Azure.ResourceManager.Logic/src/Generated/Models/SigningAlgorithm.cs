@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The signing or hashing algorithm. </summary>
+    /// <summary>
+    /// The signing or hashing algorithm.
+    /// Serialized Name: SigningAlgorithm
+    /// </summary>
     public readonly partial struct SigningAlgorithm : IEquatable<SigningAlgorithm>
     {
         private readonly string _value;
@@ -29,17 +32,35 @@ namespace Azure.ResourceManager.Logic.Models
         private const string SHA2384Value = "SHA2384";
         private const string SHA2512Value = "SHA2512";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary>
+        /// NotSpecified
+        /// Serialized Name: SigningAlgorithm.NotSpecified
+        /// </summary>
         public static SigningAlgorithm NotSpecified { get; } = new SigningAlgorithm(NotSpecifiedValue);
-        /// <summary> Default. </summary>
+        /// <summary>
+        /// Default
+        /// Serialized Name: SigningAlgorithm.Default
+        /// </summary>
         public static SigningAlgorithm Default { get; } = new SigningAlgorithm(DefaultValue);
-        /// <summary> SHA1. </summary>
+        /// <summary>
+        /// SHA1
+        /// Serialized Name: SigningAlgorithm.SHA1
+        /// </summary>
         public static SigningAlgorithm SHA1 { get; } = new SigningAlgorithm(SHA1Value);
-        /// <summary> SHA2256. </summary>
+        /// <summary>
+        /// SHA2256
+        /// Serialized Name: SigningAlgorithm.SHA2256
+        /// </summary>
         public static SigningAlgorithm SHA2256 { get; } = new SigningAlgorithm(SHA2256Value);
-        /// <summary> SHA2384. </summary>
+        /// <summary>
+        /// SHA2384
+        /// Serialized Name: SigningAlgorithm.SHA2384
+        /// </summary>
         public static SigningAlgorithm SHA2384 { get; } = new SigningAlgorithm(SHA2384Value);
-        /// <summary> SHA2512. </summary>
+        /// <summary>
+        /// SHA2512
+        /// Serialized Name: SigningAlgorithm.SHA2512
+        /// </summary>
         public static SigningAlgorithm SHA2512 { get; } = new SigningAlgorithm(SHA2512Value);
         /// <summary> Determines if two <see cref="SigningAlgorithm"/> values are the same. </summary>
         public static bool operator ==(SigningAlgorithm left, SigningAlgorithm right) => left.Equals(right);

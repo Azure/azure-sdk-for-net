@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The partner type. </summary>
+    /// <summary>
+    /// The partner type.
+    /// Serialized Name: PartnerType
+    /// </summary>
     public readonly partial struct PartnerType : IEquatable<PartnerType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.Logic.Models
         private const string NotSpecifiedValue = "NotSpecified";
         private const string B2BValue = "B2B";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary>
+        /// NotSpecified
+        /// Serialized Name: PartnerType.NotSpecified
+        /// </summary>
         public static PartnerType NotSpecified { get; } = new PartnerType(NotSpecifiedValue);
-        /// <summary> B2B. </summary>
+        /// <summary>
+        /// B2B
+        /// Serialized Name: PartnerType.B2B
+        /// </summary>
         public static PartnerType B2B { get; } = new PartnerType(B2BValue);
         /// <summary> Determines if two <see cref="PartnerType"/> values are the same. </summary>
         public static bool operator ==(PartnerType left, PartnerType right) => left.Equals(right);

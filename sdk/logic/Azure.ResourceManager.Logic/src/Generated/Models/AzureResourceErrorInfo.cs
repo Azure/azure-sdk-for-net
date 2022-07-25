@@ -11,12 +11,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The azure resource error info. </summary>
+    /// <summary>
+    /// The azure resource error info.
+    /// Serialized Name: AzureResourceErrorInfo
+    /// </summary>
     public partial class AzureResourceErrorInfo : ErrorInfo
     {
         /// <summary> Initializes a new instance of AzureResourceErrorInfo. </summary>
-        /// <param name="code"> The error code. </param>
-        /// <param name="message"> The error message. </param>
+        /// <param name="code">
+        /// The error code.
+        /// Serialized Name: ErrorInfo.code
+        /// </param>
+        /// <param name="message">
+        /// The error message.
+        /// Serialized Name: AzureResourceErrorInfo.message
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="code"/> or <paramref name="message"/> is null. </exception>
         internal AzureResourceErrorInfo(string code, string message) : base(code)
         {
@@ -34,9 +43,18 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of AzureResourceErrorInfo. </summary>
-        /// <param name="code"> The error code. </param>
-        /// <param name="message"> The error message. </param>
-        /// <param name="details"> The error details. </param>
+        /// <param name="code">
+        /// The error code.
+        /// Serialized Name: ErrorInfo.code
+        /// </param>
+        /// <param name="message">
+        /// The error message.
+        /// Serialized Name: AzureResourceErrorInfo.message
+        /// </param>
+        /// <param name="details">
+        /// The error details.
+        /// Serialized Name: AzureResourceErrorInfo.details
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="code"/> is null. </exception>
         internal AzureResourceErrorInfo(string code, string message, IReadOnlyList<AzureResourceErrorInfo> details) : base(code)
         {
@@ -49,9 +67,15 @@ namespace Azure.ResourceManager.Logic.Models
             Details = details;
         }
 
-        /// <summary> The error message. </summary>
+        /// <summary>
+        /// The error message.
+        /// Serialized Name: AzureResourceErrorInfo.message
+        /// </summary>
         public string Message { get; }
-        /// <summary> The error details. </summary>
+        /// <summary>
+        /// The error details.
+        /// Serialized Name: AzureResourceErrorInfo.details
+        /// </summary>
         public IReadOnlyList<AzureResourceErrorInfo> Details { get; }
     }
 }

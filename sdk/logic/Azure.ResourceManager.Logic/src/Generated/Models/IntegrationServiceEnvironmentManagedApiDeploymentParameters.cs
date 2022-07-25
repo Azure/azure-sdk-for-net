@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The integration service environment managed api deployment parameters. </summary>
+    /// <summary>
+    /// The integration service environment managed api deployment parameters.
+    /// Serialized Name: IntegrationServiceEnvironmentManagedApiDeploymentParameters
+    /// </summary>
     internal partial class IntegrationServiceEnvironmentManagedApiDeploymentParameters
     {
         /// <summary> Initializes a new instance of IntegrationServiceEnvironmentManagedApiDeploymentParameters. </summary>
@@ -16,13 +19,19 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of IntegrationServiceEnvironmentManagedApiDeploymentParameters. </summary>
-        /// <param name="contentLinkDefinition"> The integration service environment managed api content link for deployment. </param>
+        /// <param name="contentLinkDefinition">
+        /// The integration service environment managed api content link for deployment.
+        /// Serialized Name: IntegrationServiceEnvironmentManagedApiDeploymentParameters.contentLinkDefinition
+        /// </param>
         internal IntegrationServiceEnvironmentManagedApiDeploymentParameters(ContentLink contentLinkDefinition)
         {
             ContentLinkDefinition = contentLinkDefinition;
         }
 
-        /// <summary> The integration service environment managed api content link for deployment. </summary>
+        /// <summary>
+        /// The integration service environment managed api content link for deployment.
+        /// Serialized Name: IntegrationServiceEnvironmentManagedApiDeploymentParameters.contentLinkDefinition
+        /// </summary>
         public ContentLink ContentLinkDefinition { get; set; }
     }
 }

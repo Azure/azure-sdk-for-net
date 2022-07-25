@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Logic.Models
         {
             Optional<int> messageCount = default;
             Optional<int> batchSize = default;
-            Optional<WorkflowTriggerRecurrence> recurrence = default;
+            Optional<LogicAppWorkflowTriggerRecurrence> recurrence = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("messageCount"))
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Logic.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    recurrence = WorkflowTriggerRecurrence.DeserializeWorkflowTriggerRecurrence(property.Value);
+                    recurrence = LogicAppWorkflowTriggerRecurrence.DeserializeLogicAppWorkflowTriggerRecurrence(property.Value);
                     continue;
                 }
             }

@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The swagger custom dynamic list. </summary>
+    /// <summary>
+    /// The swagger custom dynamic list.
+    /// Serialized Name: SwaggerCustomDynamicList
+    /// </summary>
     public partial class SwaggerCustomDynamicList
     {
         /// <summary> Initializes a new instance of SwaggerCustomDynamicList. </summary>
@@ -20,12 +23,30 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of SwaggerCustomDynamicList. </summary>
-        /// <param name="operationId"> The operation id to fetch dynamic schema. </param>
-        /// <param name="builtInOperation"> The built in operation. </param>
-        /// <param name="itemsPath"> The path to a response property (relative to the response object, not the response body) which contains an array of dynamic value items. </param>
-        /// <param name="itemValuePath"> The path to a property which defines the value which should be used. </param>
-        /// <param name="itemTitlePath"> The path to an item property which defines the display name of the item. </param>
-        /// <param name="parameters"> The parameters. </param>
+        /// <param name="operationId">
+        /// The operation id to fetch dynamic schema.
+        /// Serialized Name: SwaggerCustomDynamicList.operationId
+        /// </param>
+        /// <param name="builtInOperation">
+        /// The built in operation.
+        /// Serialized Name: SwaggerCustomDynamicList.builtInOperation
+        /// </param>
+        /// <param name="itemsPath">
+        /// The path to a response property (relative to the response object, not the response body) which contains an array of dynamic value items.
+        /// Serialized Name: SwaggerCustomDynamicList.itemsPath
+        /// </param>
+        /// <param name="itemValuePath">
+        /// The path to a property which defines the value which should be used.
+        /// Serialized Name: SwaggerCustomDynamicList.itemValuePath
+        /// </param>
+        /// <param name="itemTitlePath">
+        /// The path to an item property which defines the display name of the item.
+        /// Serialized Name: SwaggerCustomDynamicList.itemTitlePath
+        /// </param>
+        /// <param name="parameters">
+        /// The parameters.
+        /// Serialized Name: SwaggerCustomDynamicList.parameters
+        /// </param>
         internal SwaggerCustomDynamicList(string operationId, string builtInOperation, string itemsPath, string itemValuePath, string itemTitlePath, IDictionary<string, SwaggerCustomDynamicProperties> parameters)
         {
             OperationId = operationId;
@@ -36,17 +57,35 @@ namespace Azure.ResourceManager.Logic.Models
             Parameters = parameters;
         }
 
-        /// <summary> The operation id to fetch dynamic schema. </summary>
+        /// <summary>
+        /// The operation id to fetch dynamic schema.
+        /// Serialized Name: SwaggerCustomDynamicList.operationId
+        /// </summary>
         public string OperationId { get; set; }
-        /// <summary> The built in operation. </summary>
+        /// <summary>
+        /// The built in operation.
+        /// Serialized Name: SwaggerCustomDynamicList.builtInOperation
+        /// </summary>
         public string BuiltInOperation { get; set; }
-        /// <summary> The path to a response property (relative to the response object, not the response body) which contains an array of dynamic value items. </summary>
+        /// <summary>
+        /// The path to a response property (relative to the response object, not the response body) which contains an array of dynamic value items.
+        /// Serialized Name: SwaggerCustomDynamicList.itemsPath
+        /// </summary>
         public string ItemsPath { get; set; }
-        /// <summary> The path to a property which defines the value which should be used. </summary>
+        /// <summary>
+        /// The path to a property which defines the value which should be used.
+        /// Serialized Name: SwaggerCustomDynamicList.itemValuePath
+        /// </summary>
         public string ItemValuePath { get; set; }
-        /// <summary> The path to an item property which defines the display name of the item. </summary>
+        /// <summary>
+        /// The path to an item property which defines the display name of the item.
+        /// Serialized Name: SwaggerCustomDynamicList.itemTitlePath
+        /// </summary>
         public string ItemTitlePath { get; set; }
-        /// <summary> The parameters. </summary>
+        /// <summary>
+        /// The parameters.
+        /// Serialized Name: SwaggerCustomDynamicList.parameters
+        /// </summary>
         public IDictionary<string, SwaggerCustomDynamicProperties> Parameters { get; }
     }
 }

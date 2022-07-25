@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The api operation. </summary>
+    /// <summary>
+    /// The api operation.
+    /// Serialized Name: ApiOperation
+    /// </summary>
     public partial class ApiOperation : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ApiOperation. </summary>
@@ -27,13 +30,19 @@ namespace Azure.ResourceManager.Logic.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="properties"> The api operations properties. </param>
+        /// <param name="properties">
+        /// The api operations properties
+        /// Serialized Name: ApiOperation.properties
+        /// </param>
         internal ApiOperation(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ApiOperationPropertiesDefinition properties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
         }
 
-        /// <summary> The api operations properties. </summary>
+        /// <summary>
+        /// The api operations properties
+        /// Serialized Name: ApiOperation.properties
+        /// </summary>
         public ApiOperationPropertiesDefinition Properties { get; set; }
     }
 }

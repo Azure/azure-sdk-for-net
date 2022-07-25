@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The integration account sku name. </summary>
+    /// <summary>
+    /// The integration account sku name.
+    /// Serialized Name: IntegrationAccountSkuName
+    /// </summary>
     public readonly partial struct IntegrationAccountSkuName : IEquatable<IntegrationAccountSkuName>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.Logic.Models
         private const string BasicValue = "Basic";
         private const string StandardValue = "Standard";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary>
+        /// NotSpecified
+        /// Serialized Name: IntegrationAccountSkuName.NotSpecified
+        /// </summary>
         public static IntegrationAccountSkuName NotSpecified { get; } = new IntegrationAccountSkuName(NotSpecifiedValue);
-        /// <summary> Free. </summary>
+        /// <summary>
+        /// Free
+        /// Serialized Name: IntegrationAccountSkuName.Free
+        /// </summary>
         public static IntegrationAccountSkuName Free { get; } = new IntegrationAccountSkuName(FreeValue);
-        /// <summary> Basic. </summary>
+        /// <summary>
+        /// Basic
+        /// Serialized Name: IntegrationAccountSkuName.Basic
+        /// </summary>
         public static IntegrationAccountSkuName Basic { get; } = new IntegrationAccountSkuName(BasicValue);
-        /// <summary> Standard. </summary>
+        /// <summary>
+        /// Standard
+        /// Serialized Name: IntegrationAccountSkuName.Standard
+        /// </summary>
         public static IntegrationAccountSkuName Standard { get; } = new IntegrationAccountSkuName(StandardValue);
         /// <summary> Determines if two <see cref="IntegrationAccountSkuName"/> values are the same. </summary>
         public static bool operator ==(IntegrationAccountSkuName left, IntegrationAccountSkuName right) => left.Equals(right);

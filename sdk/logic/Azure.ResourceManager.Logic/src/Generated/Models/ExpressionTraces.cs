@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The expression traces. </summary>
+    /// <summary>
+    /// The expression traces.
+    /// Serialized Name: ExpressionTraces
+    /// </summary>
     internal partial class ExpressionTraces
     {
         /// <summary> Initializes a new instance of ExpressionTraces. </summary>
@@ -20,13 +23,13 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of ExpressionTraces. </summary>
-        /// <param name="inputs"></param>
+        /// <param name="inputs"> Serialized Name: ExpressionTraces.inputs. </param>
         internal ExpressionTraces(IReadOnlyList<ExpressionRoot> inputs)
         {
             Inputs = inputs;
         }
 
-        /// <summary> Gets the inputs. </summary>
+        /// <summary> Serialized Name: ExpressionTraces.inputs. </summary>
         public IReadOnlyList<ExpressionRoot> Inputs { get; }
     }
 }

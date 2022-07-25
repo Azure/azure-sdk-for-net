@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The request history. </summary>
+    /// <summary>
+    /// The request history.
+    /// Serialized Name: RequestHistoryProperties
+    /// </summary>
     public partial class RequestHistoryProperties
     {
         /// <summary> Initializes a new instance of RequestHistoryProperties. </summary>
@@ -18,10 +21,22 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of RequestHistoryProperties. </summary>
-        /// <param name="startOn"> The time the request started. </param>
-        /// <param name="endOn"> The time the request ended. </param>
-        /// <param name="request"> The request. </param>
-        /// <param name="response"> The response. </param>
+        /// <param name="startOn">
+        /// The time the request started.
+        /// Serialized Name: RequestHistoryProperties.startTime
+        /// </param>
+        /// <param name="endOn">
+        /// The time the request ended.
+        /// Serialized Name: RequestHistoryProperties.endTime
+        /// </param>
+        /// <param name="request">
+        /// The request.
+        /// Serialized Name: RequestHistoryProperties.request
+        /// </param>
+        /// <param name="response">
+        /// The response.
+        /// Serialized Name: RequestHistoryProperties.response
+        /// </param>
         internal RequestHistoryProperties(DateTimeOffset? startOn, DateTimeOffset? endOn, Request request, Response response)
         {
             StartOn = startOn;
@@ -30,13 +45,25 @@ namespace Azure.ResourceManager.Logic.Models
             Response = response;
         }
 
-        /// <summary> The time the request started. </summary>
+        /// <summary>
+        /// The time the request started.
+        /// Serialized Name: RequestHistoryProperties.startTime
+        /// </summary>
         public DateTimeOffset? StartOn { get; set; }
-        /// <summary> The time the request ended. </summary>
+        /// <summary>
+        /// The time the request ended.
+        /// Serialized Name: RequestHistoryProperties.endTime
+        /// </summary>
         public DateTimeOffset? EndOn { get; set; }
-        /// <summary> The request. </summary>
+        /// <summary>
+        /// The request.
+        /// Serialized Name: RequestHistoryProperties.request
+        /// </summary>
         public Request Request { get; set; }
-        /// <summary> The response. </summary>
+        /// <summary>
+        /// The response.
+        /// Serialized Name: RequestHistoryProperties.response
+        /// </summary>
         public Response Response { get; set; }
     }
 }

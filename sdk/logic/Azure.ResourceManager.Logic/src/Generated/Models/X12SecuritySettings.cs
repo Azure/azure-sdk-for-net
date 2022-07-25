@@ -9,12 +9,21 @@ using System;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The X12 agreement security settings. </summary>
+    /// <summary>
+    /// The X12 agreement security settings.
+    /// Serialized Name: X12SecuritySettings
+    /// </summary>
     public partial class X12SecuritySettings
     {
         /// <summary> Initializes a new instance of X12SecuritySettings. </summary>
-        /// <param name="authorizationQualifier"> The authorization qualifier. </param>
-        /// <param name="securityQualifier"> The security qualifier. </param>
+        /// <param name="authorizationQualifier">
+        /// The authorization qualifier.
+        /// Serialized Name: X12SecuritySettings.authorizationQualifier
+        /// </param>
+        /// <param name="securityQualifier">
+        /// The security qualifier.
+        /// Serialized Name: X12SecuritySettings.securityQualifier
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationQualifier"/> or <paramref name="securityQualifier"/> is null. </exception>
         public X12SecuritySettings(string authorizationQualifier, string securityQualifier)
         {
@@ -32,10 +41,22 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of X12SecuritySettings. </summary>
-        /// <param name="authorizationQualifier"> The authorization qualifier. </param>
-        /// <param name="authorizationValue"> The authorization value. </param>
-        /// <param name="securityQualifier"> The security qualifier. </param>
-        /// <param name="passwordValue"> The password value. </param>
+        /// <param name="authorizationQualifier">
+        /// The authorization qualifier.
+        /// Serialized Name: X12SecuritySettings.authorizationQualifier
+        /// </param>
+        /// <param name="authorizationValue">
+        /// The authorization value.
+        /// Serialized Name: X12SecuritySettings.authorizationValue
+        /// </param>
+        /// <param name="securityQualifier">
+        /// The security qualifier.
+        /// Serialized Name: X12SecuritySettings.securityQualifier
+        /// </param>
+        /// <param name="passwordValue">
+        /// The password value.
+        /// Serialized Name: X12SecuritySettings.passwordValue
+        /// </param>
         internal X12SecuritySettings(string authorizationQualifier, string authorizationValue, string securityQualifier, string passwordValue)
         {
             AuthorizationQualifier = authorizationQualifier;
@@ -44,13 +65,25 @@ namespace Azure.ResourceManager.Logic.Models
             PasswordValue = passwordValue;
         }
 
-        /// <summary> The authorization qualifier. </summary>
+        /// <summary>
+        /// The authorization qualifier.
+        /// Serialized Name: X12SecuritySettings.authorizationQualifier
+        /// </summary>
         public string AuthorizationQualifier { get; set; }
-        /// <summary> The authorization value. </summary>
+        /// <summary>
+        /// The authorization value.
+        /// Serialized Name: X12SecuritySettings.authorizationValue
+        /// </summary>
         public string AuthorizationValue { get; set; }
-        /// <summary> The security qualifier. </summary>
+        /// <summary>
+        /// The security qualifier.
+        /// Serialized Name: X12SecuritySettings.securityQualifier
+        /// </summary>
         public string SecurityQualifier { get; set; }
-        /// <summary> The password value. </summary>
+        /// <summary>
+        /// The password value.
+        /// Serialized Name: X12SecuritySettings.passwordValue
+        /// </summary>
         public string PasswordValue { get; set; }
     }
 }

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The usage indicator. </summary>
+    /// <summary>
+    /// The usage indicator.
+    /// Serialized Name: UsageIndicator
+    /// </summary>
     public readonly partial struct UsageIndicator : IEquatable<UsageIndicator>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.Logic.Models
         private const string InformationValue = "Information";
         private const string ProductionValue = "Production";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary>
+        /// NotSpecified
+        /// Serialized Name: UsageIndicator.NotSpecified
+        /// </summary>
         public static UsageIndicator NotSpecified { get; } = new UsageIndicator(NotSpecifiedValue);
-        /// <summary> Test. </summary>
+        /// <summary>
+        /// Test
+        /// Serialized Name: UsageIndicator.Test
+        /// </summary>
         public static UsageIndicator Test { get; } = new UsageIndicator(TestValue);
-        /// <summary> Information. </summary>
+        /// <summary>
+        /// Information
+        /// Serialized Name: UsageIndicator.Information
+        /// </summary>
         public static UsageIndicator Information { get; } = new UsageIndicator(InformationValue);
-        /// <summary> Production. </summary>
+        /// <summary>
+        /// Production
+        /// Serialized Name: UsageIndicator.Production
+        /// </summary>
         public static UsageIndicator Production { get; } = new UsageIndicator(ProductionValue);
         /// <summary> Determines if two <see cref="UsageIndicator"/> values are the same. </summary>
         public static bool operator ==(UsageIndicator left, UsageIndicator right) => left.Equals(right);

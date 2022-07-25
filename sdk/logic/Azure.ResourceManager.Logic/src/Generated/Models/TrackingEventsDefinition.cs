@@ -11,12 +11,21 @@ using System.Linq;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The tracking events definition. </summary>
+    /// <summary>
+    /// The tracking events definition.
+    /// Serialized Name: TrackingEventsDefinition
+    /// </summary>
     public partial class TrackingEventsDefinition
     {
         /// <summary> Initializes a new instance of TrackingEventsDefinition. </summary>
-        /// <param name="sourceType"> The source type. </param>
-        /// <param name="events"> The events. </param>
+        /// <param name="sourceType">
+        /// The source type.
+        /// Serialized Name: TrackingEventsDefinition.sourceType
+        /// </param>
+        /// <param name="events">
+        /// The events.
+        /// Serialized Name: TrackingEventsDefinition.events
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceType"/> or <paramref name="events"/> is null. </exception>
         public TrackingEventsDefinition(string sourceType, IEnumerable<TrackingEvent> events)
         {
@@ -33,11 +42,20 @@ namespace Azure.ResourceManager.Logic.Models
             Events = events.ToList();
         }
 
-        /// <summary> The source type. </summary>
+        /// <summary>
+        /// The source type.
+        /// Serialized Name: TrackingEventsDefinition.sourceType
+        /// </summary>
         public string SourceType { get; }
-        /// <summary> The track events options. </summary>
+        /// <summary>
+        /// The track events options.
+        /// Serialized Name: TrackingEventsDefinition.trackEventsOptions
+        /// </summary>
         public TrackEventsOperationOption? TrackEventsOptions { get; set; }
-        /// <summary> The events. </summary>
+        /// <summary>
+        /// The events.
+        /// Serialized Name: TrackingEventsDefinition.events
+        /// </summary>
         public IList<TrackingEvent> Events { get; }
     }
 }

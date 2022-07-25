@@ -9,12 +9,21 @@ using System;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The integration account partner&apos;s business identity. </summary>
+    /// <summary>
+    /// The integration account partner&apos;s business identity.
+    /// Serialized Name: BusinessIdentity
+    /// </summary>
     public partial class BusinessIdentity
     {
         /// <summary> Initializes a new instance of BusinessIdentity. </summary>
-        /// <param name="qualifier"> The business identity qualifier e.g. as2identity, ZZ, ZZZ, 31, 32. </param>
-        /// <param name="value"> The user defined business identity value. </param>
+        /// <param name="qualifier">
+        /// The business identity qualifier e.g. as2identity, ZZ, ZZZ, 31, 32
+        /// Serialized Name: BusinessIdentity.qualifier
+        /// </param>
+        /// <param name="value">
+        /// The user defined business identity value.
+        /// Serialized Name: BusinessIdentity.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="qualifier"/> or <paramref name="value"/> is null. </exception>
         public BusinessIdentity(string qualifier, string value)
         {
@@ -31,9 +40,15 @@ namespace Azure.ResourceManager.Logic.Models
             Value = value;
         }
 
-        /// <summary> The business identity qualifier e.g. as2identity, ZZ, ZZZ, 31, 32. </summary>
+        /// <summary>
+        /// The business identity qualifier e.g. as2identity, ZZ, ZZZ, 31, 32
+        /// Serialized Name: BusinessIdentity.qualifier
+        /// </summary>
         public string Qualifier { get; set; }
-        /// <summary> The user defined business identity value. </summary>
+        /// <summary>
+        /// The user defined business identity value.
+        /// Serialized Name: BusinessIdentity.value
+        /// </summary>
         public string Value { get; set; }
     }
 }

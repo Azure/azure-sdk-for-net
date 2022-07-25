@@ -18,8 +18,14 @@ namespace Azure.ResourceManager.Logic
     {
         /// <summary> Initializes a new instance of IntegrationAccountPartnerData. </summary>
         /// <param name="location"> The location. </param>
-        /// <param name="partnerType"> The partner type. </param>
-        /// <param name="content"> The partner content. </param>
+        /// <param name="partnerType">
+        /// The partner type.
+        /// Serialized Name: IntegrationAccountPartner.properties.partnerType
+        /// </param>
+        /// <param name="content">
+        /// The partner content.
+        /// Serialized Name: IntegrationAccountPartner.properties.content
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public IntegrationAccountPartnerData(AzureLocation location, PartnerType partnerType, PartnerContent content) : base(location)
         {
@@ -39,11 +45,26 @@ namespace Azure.ResourceManager.Logic
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="partnerType"> The partner type. </param>
-        /// <param name="createdOn"> The created time. </param>
-        /// <param name="changedOn"> The changed time. </param>
-        /// <param name="metadata"> The metadata. </param>
-        /// <param name="content"> The partner content. </param>
+        /// <param name="partnerType">
+        /// The partner type.
+        /// Serialized Name: IntegrationAccountPartner.properties.partnerType
+        /// </param>
+        /// <param name="createdOn">
+        /// The created time.
+        /// Serialized Name: IntegrationAccountPartner.properties.createdTime
+        /// </param>
+        /// <param name="changedOn">
+        /// The changed time.
+        /// Serialized Name: IntegrationAccountPartner.properties.changedTime
+        /// </param>
+        /// <param name="metadata">
+        /// The metadata.
+        /// Serialized Name: IntegrationAccountPartner.properties.metadata
+        /// </param>
+        /// <param name="content">
+        /// The partner content.
+        /// Serialized Name: IntegrationAccountPartner.properties.content
+        /// </param>
         internal IntegrationAccountPartnerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PartnerType partnerType, DateTimeOffset? createdOn, DateTimeOffset? changedOn, BinaryData metadata, PartnerContent content) : base(id, name, resourceType, systemData, tags, location)
         {
             PartnerType = partnerType;
@@ -53,17 +74,35 @@ namespace Azure.ResourceManager.Logic
             Content = content;
         }
 
-        /// <summary> The partner type. </summary>
+        /// <summary>
+        /// The partner type.
+        /// Serialized Name: IntegrationAccountPartner.properties.partnerType
+        /// </summary>
         public PartnerType PartnerType { get; set; }
-        /// <summary> The created time. </summary>
+        /// <summary>
+        /// The created time.
+        /// Serialized Name: IntegrationAccountPartner.properties.createdTime
+        /// </summary>
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary> The changed time. </summary>
+        /// <summary>
+        /// The changed time.
+        /// Serialized Name: IntegrationAccountPartner.properties.changedTime
+        /// </summary>
         public DateTimeOffset? ChangedOn { get; }
-        /// <summary> The metadata. </summary>
+        /// <summary>
+        /// The metadata.
+        /// Serialized Name: IntegrationAccountPartner.properties.metadata
+        /// </summary>
         public BinaryData Metadata { get; set; }
-        /// <summary> The partner content. </summary>
+        /// <summary>
+        /// The partner content.
+        /// Serialized Name: IntegrationAccountPartner.properties.content
+        /// </summary>
         internal PartnerContent Content { get; set; }
-        /// <summary> The list of partner business identities. </summary>
+        /// <summary>
+        /// The list of partner business identities.
+        /// Serialized Name: B2BPartnerContent.businessIdentities
+        /// </summary>
         public IList<BusinessIdentity> B2BBusinessIdentities
         {
             get

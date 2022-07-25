@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The message filter type. </summary>
+    /// <summary>
+    /// The message filter type.
+    /// Serialized Name: MessageFilterType
+    /// </summary>
     public readonly partial struct MessageFilterType : IEquatable<MessageFilterType>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.Logic.Models
         private const string IncludeValue = "Include";
         private const string ExcludeValue = "Exclude";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary>
+        /// NotSpecified
+        /// Serialized Name: MessageFilterType.NotSpecified
+        /// </summary>
         public static MessageFilterType NotSpecified { get; } = new MessageFilterType(NotSpecifiedValue);
-        /// <summary> Include. </summary>
+        /// <summary>
+        /// Include
+        /// Serialized Name: MessageFilterType.Include
+        /// </summary>
         public static MessageFilterType Include { get; } = new MessageFilterType(IncludeValue);
-        /// <summary> Exclude. </summary>
+        /// <summary>
+        /// Exclude
+        /// Serialized Name: MessageFilterType.Exclude
+        /// </summary>
         public static MessageFilterType Exclude { get; } = new MessageFilterType(ExcludeValue);
         /// <summary> Determines if two <see cref="MessageFilterType"/> values are the same. </summary>
         public static bool operator ==(MessageFilterType left, MessageFilterType right) => left.Equals(right);

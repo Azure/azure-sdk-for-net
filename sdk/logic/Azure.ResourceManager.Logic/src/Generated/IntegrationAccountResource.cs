@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Logic
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of AssemblyDefinitionResources in the IntegrationAccount. </summary>
-        /// <returns> An object representing collection of AssemblyDefinitionResources and their operations over a AssemblyDefinitionResource. </returns>
-        public virtual AssemblyDefinitionCollection GetAssemblyDefinitions()
+        /// <summary> Gets a collection of IntegrationAccountAssemblyDefinitionResources in the IntegrationAccount. </summary>
+        /// <returns> An object representing collection of IntegrationAccountAssemblyDefinitionResources and their operations over a IntegrationAccountAssemblyDefinitionResource. </returns>
+        public virtual IntegrationAccountAssemblyDefinitionCollection GetIntegrationAccountAssemblyDefinitions()
         {
-            return GetCachedClient(Client => new AssemblyDefinitionCollection(Client, Id));
+            return GetCachedClient(Client => new IntegrationAccountAssemblyDefinitionCollection(Client, Id));
         }
 
         /// <summary>
@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentException"> <paramref name="assemblyArtifactName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="assemblyArtifactName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<AssemblyDefinitionResource>> GetAssemblyDefinitionAsync(string assemblyArtifactName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IntegrationAccountAssemblyDefinitionResource>> GetIntegrationAccountAssemblyDefinitionAsync(string assemblyArtifactName, CancellationToken cancellationToken = default)
         {
-            return await GetAssemblyDefinitions().GetAsync(assemblyArtifactName, cancellationToken).ConfigureAwait(false);
+            return await GetIntegrationAccountAssemblyDefinitions().GetAsync(assemblyArtifactName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -121,31 +121,16 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentException"> <paramref name="assemblyArtifactName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="assemblyArtifactName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<AssemblyDefinitionResource> GetAssemblyDefinition(string assemblyArtifactName, CancellationToken cancellationToken = default)
+        public virtual Response<IntegrationAccountAssemblyDefinitionResource> GetIntegrationAccountAssemblyDefinition(string assemblyArtifactName, CancellationToken cancellationToken = default)
         {
-            return GetAssemblyDefinitions().Get(assemblyArtifactName, cancellationToken);
+            return GetIntegrationAccountAssemblyDefinitions().Get(assemblyArtifactName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of BatchConfigurationResources in the IntegrationAccount. </summary>
-        /// <returns> An object representing collection of BatchConfigurationResources and their operations over a BatchConfigurationResource. </returns>
-        public virtual BatchConfigurationCollection GetBatchConfigurations()
+        /// <summary> Gets a collection of IntegrationAccountBatchConfigurationResources in the IntegrationAccount. </summary>
+        /// <returns> An object representing collection of IntegrationAccountBatchConfigurationResources and their operations over a IntegrationAccountBatchConfigurationResource. </returns>
+        public virtual IntegrationAccountBatchConfigurationCollection GetIntegrationAccountBatchConfigurations()
         {
-            return GetCachedClient(Client => new BatchConfigurationCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Get a batch configuration for an integration account.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/integrationAccounts/{integrationAccountName}/batchConfigurations/{batchConfigurationName}
-        /// Operation Id: IntegrationAccountBatchConfigurations_Get
-        /// </summary>
-        /// <param name="batchConfigurationName"> The batch configuration name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="batchConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="batchConfigurationName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<BatchConfigurationResource>> GetBatchConfigurationAsync(string batchConfigurationName, CancellationToken cancellationToken = default)
-        {
-            return await GetBatchConfigurations().GetAsync(batchConfigurationName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(Client => new IntegrationAccountBatchConfigurationCollection(Client, Id));
         }
 
         /// <summary>
@@ -158,9 +143,24 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentException"> <paramref name="batchConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="batchConfigurationName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<BatchConfigurationResource> GetBatchConfiguration(string batchConfigurationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IntegrationAccountBatchConfigurationResource>> GetIntegrationAccountBatchConfigurationAsync(string batchConfigurationName, CancellationToken cancellationToken = default)
         {
-            return GetBatchConfigurations().Get(batchConfigurationName, cancellationToken);
+            return await GetIntegrationAccountBatchConfigurations().GetAsync(batchConfigurationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a batch configuration for an integration account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/integrationAccounts/{integrationAccountName}/batchConfigurations/{batchConfigurationName}
+        /// Operation Id: IntegrationAccountBatchConfigurations_Get
+        /// </summary>
+        /// <param name="batchConfigurationName"> The batch configuration name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="batchConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="batchConfigurationName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<IntegrationAccountBatchConfigurationResource> GetIntegrationAccountBatchConfiguration(string batchConfigurationName, CancellationToken cancellationToken = default)
+        {
+            return GetIntegrationAccountBatchConfigurations().Get(batchConfigurationName, cancellationToken);
         }
 
         /// <summary> Gets a collection of IntegrationAccountSchemaResources in the IntegrationAccount. </summary>

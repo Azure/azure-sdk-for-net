@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The Swagger XML. </summary>
+    /// <summary>
+    /// The Swagger XML.
+    /// Serialized Name: SwaggerXml
+    /// </summary>
     public partial class SwaggerXml
     {
         /// <summary> Initializes a new instance of SwaggerXml. </summary>
@@ -21,12 +24,30 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of SwaggerXml. </summary>
-        /// <param name="name"> The xml element or attribute name. </param>
-        /// <param name="namespace"> The xml namespace. </param>
-        /// <param name="prefix"> The name prefix. </param>
-        /// <param name="attribute"> Indicates whether the property should be an attribute instead of an element. </param>
-        /// <param name="wrapped"> Indicates whether the array elements are wrapped in a container element. </param>
-        /// <param name="extensions"> The vendor extensions. </param>
+        /// <param name="name">
+        /// The xml element or attribute name.
+        /// Serialized Name: SwaggerXml.name
+        /// </param>
+        /// <param name="namespace">
+        /// The xml namespace.
+        /// Serialized Name: SwaggerXml.namespace
+        /// </param>
+        /// <param name="prefix">
+        /// The name prefix.
+        /// Serialized Name: SwaggerXml.prefix
+        /// </param>
+        /// <param name="attribute">
+        /// Indicates whether the property should be an attribute instead of an element.
+        /// Serialized Name: SwaggerXml.attribute
+        /// </param>
+        /// <param name="wrapped">
+        /// Indicates whether the array elements are wrapped in a container element.
+        /// Serialized Name: SwaggerXml.wrapped
+        /// </param>
+        /// <param name="extensions">
+        /// The vendor extensions.
+        /// Serialized Name: SwaggerXml.extensions
+        /// </param>
         internal SwaggerXml(string name, string @namespace, string prefix, bool? attribute, bool? wrapped, IDictionary<string, BinaryData> extensions)
         {
             Name = name;
@@ -37,17 +58,35 @@ namespace Azure.ResourceManager.Logic.Models
             Extensions = extensions;
         }
 
-        /// <summary> The xml element or attribute name. </summary>
+        /// <summary>
+        /// The xml element or attribute name.
+        /// Serialized Name: SwaggerXml.name
+        /// </summary>
         public string Name { get; set; }
-        /// <summary> The xml namespace. </summary>
+        /// <summary>
+        /// The xml namespace.
+        /// Serialized Name: SwaggerXml.namespace
+        /// </summary>
         public string Namespace { get; set; }
-        /// <summary> The name prefix. </summary>
+        /// <summary>
+        /// The name prefix.
+        /// Serialized Name: SwaggerXml.prefix
+        /// </summary>
         public string Prefix { get; set; }
-        /// <summary> Indicates whether the property should be an attribute instead of an element. </summary>
+        /// <summary>
+        /// Indicates whether the property should be an attribute instead of an element.
+        /// Serialized Name: SwaggerXml.attribute
+        /// </summary>
         public bool? Attribute { get; set; }
-        /// <summary> Indicates whether the array elements are wrapped in a container element. </summary>
+        /// <summary>
+        /// Indicates whether the array elements are wrapped in a container element.
+        /// Serialized Name: SwaggerXml.wrapped
+        /// </summary>
         public bool? Wrapped { get; set; }
-        /// <summary> The vendor extensions. </summary>
+        /// <summary>
+        /// The vendor extensions.
+        /// Serialized Name: SwaggerXml.extensions
+        /// </summary>
         public IDictionary<string, BinaryData> Extensions { get; }
     }
 }

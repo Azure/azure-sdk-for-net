@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The key vault key. </summary>
+    /// <summary>
+    /// The key vault key.
+    /// Serialized Name: KeyVaultKey
+    /// </summary>
     public partial class KeyVaultKey
     {
         /// <summary> Initializes a new instance of KeyVaultKey. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of KeyVaultKey. </summary>
-        /// <param name="kid"> The key id. </param>
-        /// <param name="attributes"> The key attributes. </param>
+        /// <param name="kid">
+        /// The key id.
+        /// Serialized Name: KeyVaultKey.kid
+        /// </param>
+        /// <param name="attributes">
+        /// The key attributes.
+        /// Serialized Name: KeyVaultKey.attributes
+        /// </param>
         internal KeyVaultKey(string kid, KeyVaultKeyAttributes attributes)
         {
             Kid = kid;
             Attributes = attributes;
         }
 
-        /// <summary> The key id. </summary>
+        /// <summary>
+        /// The key id.
+        /// Serialized Name: KeyVaultKey.kid
+        /// </summary>
         public string Kid { get; }
-        /// <summary> The key attributes. </summary>
+        /// <summary>
+        /// The key attributes.
+        /// Serialized Name: KeyVaultKey.attributes
+        /// </summary>
         public KeyVaultKeyAttributes Attributes { get; }
     }
 }

@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The API resource policies. </summary>
+    /// <summary>
+    /// The API resource policies.
+    /// Serialized Name: ApiResourcePolicies
+    /// </summary>
     public partial class ApiResourcePolicies
     {
         /// <summary> Initializes a new instance of ApiResourcePolicies. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of ApiResourcePolicies. </summary>
-        /// <param name="content"> The API level only policies XML as embedded content. </param>
-        /// <param name="contentLink"> The content link to the policies. </param>
+        /// <param name="content">
+        /// The API level only policies XML as embedded content.
+        /// Serialized Name: ApiResourcePolicies.content
+        /// </param>
+        /// <param name="contentLink">
+        /// The content link to the policies.
+        /// Serialized Name: ApiResourcePolicies.contentLink
+        /// </param>
         internal ApiResourcePolicies(string content, string contentLink)
         {
             Content = content;
             ContentLink = contentLink;
         }
 
-        /// <summary> The API level only policies XML as embedded content. </summary>
+        /// <summary>
+        /// The API level only policies XML as embedded content.
+        /// Serialized Name: ApiResourcePolicies.content
+        /// </summary>
         public string Content { get; }
-        /// <summary> The content link to the policies. </summary>
+        /// <summary>
+        /// The content link to the policies.
+        /// Serialized Name: ApiResourcePolicies.contentLink
+        /// </summary>
         public string ContentLink { get; }
     }
 }

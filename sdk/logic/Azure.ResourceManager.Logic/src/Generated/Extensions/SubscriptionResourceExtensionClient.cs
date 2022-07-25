@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Logic
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _workflowClientDiagnostics;
-        private WorkflowsRestOperations _workflowRestClient;
+        private ClientDiagnostics _logicAppWorkflowWorkflowsClientDiagnostics;
+        private WorkflowsRestOperations _logicAppWorkflowWorkflowsRestClient;
         private ClientDiagnostics _integrationAccountClientDiagnostics;
         private IntegrationAccountsRestOperations _integrationAccountRestClient;
         private ClientDiagnostics _integrationServiceEnvironmentClientDiagnostics;
@@ -38,8 +38,8 @@ namespace Azure.ResourceManager.Logic
         {
         }
 
-        private ClientDiagnostics WorkflowClientDiagnostics => _workflowClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Logic", WorkflowResource.ResourceType.Namespace, Diagnostics);
-        private WorkflowsRestOperations WorkflowRestClient => _workflowRestClient ??= new WorkflowsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(WorkflowResource.ResourceType));
+        private ClientDiagnostics LogicAppWorkflowWorkflowsClientDiagnostics => _logicAppWorkflowWorkflowsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Logic", LogicAppWorkflowResource.ResourceType.Namespace, Diagnostics);
+        private WorkflowsRestOperations LogicAppWorkflowWorkflowsRestClient => _logicAppWorkflowWorkflowsRestClient ??= new WorkflowsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(LogicAppWorkflowResource.ResourceType));
         private ClientDiagnostics IntegrationAccountClientDiagnostics => _integrationAccountClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Logic", IntegrationAccountResource.ResourceType.Namespace, Diagnostics);
         private IntegrationAccountsRestOperations IntegrationAccountRestClient => _integrationAccountRestClient ??= new IntegrationAccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(IntegrationAccountResource.ResourceType));
         private ClientDiagnostics IntegrationServiceEnvironmentClientDiagnostics => _integrationServiceEnvironmentClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Logic", IntegrationServiceEnvironmentResource.ResourceType.Namespace, Diagnostics);
@@ -59,17 +59,17 @@ namespace Azure.ResourceManager.Logic
         /// <param name="top"> The number of items to be included in the result. </param>
         /// <param name="filter"> The filter to apply on the operation. Options for filters include: State, Trigger, and ReferencedResourceId. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WorkflowResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WorkflowResource> GetWorkflowsAsync(int? top = null, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="LogicAppWorkflowResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<LogicAppWorkflowResource> GetLogicAppWorkflowsAsync(int? top = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<WorkflowResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<LogicAppWorkflowResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = WorkflowClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetWorkflows");
+                using var scope = LogicAppWorkflowWorkflowsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLogicAppWorkflows");
                 scope.Start();
                 try
                 {
-                    var response = await WorkflowRestClient.ListBySubscriptionAsync(Id.SubscriptionId, top, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WorkflowResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await LogicAppWorkflowWorkflowsRestClient.ListBySubscriptionAsync(Id.SubscriptionId, top, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new LogicAppWorkflowResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -77,14 +77,14 @@ namespace Azure.ResourceManager.Logic
                     throw;
                 }
             }
-            async Task<Page<WorkflowResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<LogicAppWorkflowResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = WorkflowClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetWorkflows");
+                using var scope = LogicAppWorkflowWorkflowsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLogicAppWorkflows");
                 scope.Start();
                 try
                 {
-                    var response = await WorkflowRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, top, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WorkflowResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await LogicAppWorkflowWorkflowsRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, top, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new LogicAppWorkflowResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -103,17 +103,17 @@ namespace Azure.ResourceManager.Logic
         /// <param name="top"> The number of items to be included in the result. </param>
         /// <param name="filter"> The filter to apply on the operation. Options for filters include: State, Trigger, and ReferencedResourceId. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WorkflowResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WorkflowResource> GetWorkflows(int? top = null, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="LogicAppWorkflowResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<LogicAppWorkflowResource> GetLogicAppWorkflows(int? top = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<WorkflowResource> FirstPageFunc(int? pageSizeHint)
+            Page<LogicAppWorkflowResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = WorkflowClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetWorkflows");
+                using var scope = LogicAppWorkflowWorkflowsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLogicAppWorkflows");
                 scope.Start();
                 try
                 {
-                    var response = WorkflowRestClient.ListBySubscription(Id.SubscriptionId, top, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WorkflowResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = LogicAppWorkflowWorkflowsRestClient.ListBySubscription(Id.SubscriptionId, top, filter, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new LogicAppWorkflowResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -121,14 +121,14 @@ namespace Azure.ResourceManager.Logic
                     throw;
                 }
             }
-            Page<WorkflowResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<LogicAppWorkflowResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = WorkflowClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetWorkflows");
+                using var scope = LogicAppWorkflowWorkflowsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLogicAppWorkflows");
                 scope.Start();
                 try
                 {
-                    var response = WorkflowRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, top, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WorkflowResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = LogicAppWorkflowWorkflowsRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, top, filter, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new LogicAppWorkflowResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

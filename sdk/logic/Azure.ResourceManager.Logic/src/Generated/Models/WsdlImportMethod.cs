@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The WSDL import method. </summary>
+    /// <summary>
+    /// The WSDL import method.
+    /// Serialized Name: WsdlImportMethod
+    /// </summary>
     public readonly partial struct WsdlImportMethod : IEquatable<WsdlImportMethod>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.Logic.Models
         private const string SoapToRestValue = "SoapToRest";
         private const string SoapPassThroughValue = "SoapPassThrough";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary>
+        /// NotSpecified
+        /// Serialized Name: WsdlImportMethod.NotSpecified
+        /// </summary>
         public static WsdlImportMethod NotSpecified { get; } = new WsdlImportMethod(NotSpecifiedValue);
-        /// <summary> SoapToRest. </summary>
+        /// <summary>
+        /// SoapToRest
+        /// Serialized Name: WsdlImportMethod.SoapToRest
+        /// </summary>
         public static WsdlImportMethod SoapToRest { get; } = new WsdlImportMethod(SoapToRestValue);
-        /// <summary> SoapPassThrough. </summary>
+        /// <summary>
+        /// SoapPassThrough
+        /// Serialized Name: WsdlImportMethod.SoapPassThrough
+        /// </summary>
         public static WsdlImportMethod SoapPassThrough { get; } = new WsdlImportMethod(SoapPassThroughValue);
         /// <summary> Determines if two <see cref="WsdlImportMethod"/> values are the same. </summary>
         public static bool operator ==(WsdlImportMethod left, WsdlImportMethod right) => left.Equals(right);

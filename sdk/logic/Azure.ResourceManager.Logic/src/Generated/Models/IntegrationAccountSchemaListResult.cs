@@ -11,7 +11,10 @@ using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The list of integration account schemas. </summary>
+    /// <summary>
+    /// The list of integration account schemas.
+    /// Serialized Name: IntegrationAccountSchemaListResult
+    /// </summary>
     internal partial class IntegrationAccountSchemaListResult
     {
         /// <summary> Initializes a new instance of IntegrationAccountSchemaListResult. </summary>
@@ -21,17 +24,29 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of IntegrationAccountSchemaListResult. </summary>
-        /// <param name="value"> The list of integration account schemas. </param>
-        /// <param name="nextLink"> The URL to get the next set of results. </param>
+        /// <param name="value">
+        /// The list of integration account schemas.
+        /// Serialized Name: IntegrationAccountSchemaListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The URL to get the next set of results.
+        /// Serialized Name: IntegrationAccountSchemaListResult.nextLink
+        /// </param>
         internal IntegrationAccountSchemaListResult(IReadOnlyList<IntegrationAccountSchemaData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> The list of integration account schemas. </summary>
+        /// <summary>
+        /// The list of integration account schemas.
+        /// Serialized Name: IntegrationAccountSchemaListResult.value
+        /// </summary>
         public IReadOnlyList<IntegrationAccountSchemaData> Value { get; }
-        /// <summary> The URL to get the next set of results. </summary>
+        /// <summary>
+        /// The URL to get the next set of results.
+        /// Serialized Name: IntegrationAccountSchemaListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

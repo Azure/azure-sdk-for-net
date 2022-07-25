@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The resource reference. </summary>
+    /// <summary>
+    /// The resource reference.
+    /// Serialized Name: ResourceReference
+    /// </summary>
     public partial class ResourceReference
     {
         /// <summary> Initializes a new instance of ResourceReference. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of ResourceReference. </summary>
-        /// <param name="id"> The resource id. </param>
-        /// <param name="name"> Gets the resource name. </param>
-        /// <param name="resourceType"> Gets the resource type. </param>
+        /// <param name="id">
+        /// The resource id.
+        /// Serialized Name: ResourceReference.id
+        /// </param>
+        /// <param name="name">
+        /// Gets the resource name.
+        /// Serialized Name: ResourceReference.name
+        /// </param>
+        /// <param name="resourceType">
+        /// Gets the resource type.
+        /// Serialized Name: ResourceReference.type
+        /// </param>
         internal ResourceReference(string id, string name, string resourceType)
         {
             Id = id;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.Logic.Models
             ResourceType = resourceType;
         }
 
-        /// <summary> The resource id. </summary>
+        /// <summary>
+        /// The resource id.
+        /// Serialized Name: ResourceReference.id
+        /// </summary>
         public string Id { get; set; }
-        /// <summary> Gets the resource name. </summary>
+        /// <summary>
+        /// Gets the resource name.
+        /// Serialized Name: ResourceReference.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> Gets the resource type. </summary>
+        /// <summary>
+        /// Gets the resource type.
+        /// Serialized Name: ResourceReference.type
+        /// </summary>
         public string ResourceType { get; }
     }
 }

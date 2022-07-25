@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> Error response indicates Logic service is not able to process the incoming request. The error property contains the error details. </summary>
+    /// <summary>
+    /// Error response indicates Logic service is not able to process the incoming request. The error property contains the error details.
+    /// Serialized Name: ErrorResponse
+    /// </summary>
     internal partial class ErrorResponse
     {
         /// <summary> Initializes a new instance of ErrorResponse. </summary>
@@ -16,13 +19,19 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of ErrorResponse. </summary>
-        /// <param name="error"> The error properties. </param>
+        /// <param name="error">
+        /// The error properties.
+        /// Serialized Name: ErrorResponse.error
+        /// </param>
         internal ErrorResponse(ErrorProperties error)
         {
             Error = error;
         }
 
-        /// <summary> The error properties. </summary>
+        /// <summary>
+        /// The error properties.
+        /// Serialized Name: ErrorResponse.error
+        /// </summary>
         public ErrorProperties Error { get; set; }
     }
 }

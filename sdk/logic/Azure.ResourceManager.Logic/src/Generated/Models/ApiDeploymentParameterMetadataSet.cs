@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The API deployment parameters metadata. </summary>
+    /// <summary>
+    /// The API deployment parameters metadata.
+    /// Serialized Name: ApiDeploymentParameterMetadataSet
+    /// </summary>
     public partial class ApiDeploymentParameterMetadataSet
     {
         /// <summary> Initializes a new instance of ApiDeploymentParameterMetadataSet. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of ApiDeploymentParameterMetadataSet. </summary>
-        /// <param name="packageContentLink"> The package content link parameter. </param>
-        /// <param name="redisCacheConnectionString"> The package content link parameter. </param>
+        /// <param name="packageContentLink">
+        /// The package content link parameter.
+        /// Serialized Name: ApiDeploymentParameterMetadataSet.packageContentLink
+        /// </param>
+        /// <param name="redisCacheConnectionString">
+        /// The package content link parameter.
+        /// Serialized Name: ApiDeploymentParameterMetadataSet.redisCacheConnectionString
+        /// </param>
         internal ApiDeploymentParameterMetadataSet(ApiDeploymentParameterMetadata packageContentLink, ApiDeploymentParameterMetadata redisCacheConnectionString)
         {
             PackageContentLink = packageContentLink;
             RedisCacheConnectionString = redisCacheConnectionString;
         }
 
-        /// <summary> The package content link parameter. </summary>
+        /// <summary>
+        /// The package content link parameter.
+        /// Serialized Name: ApiDeploymentParameterMetadataSet.packageContentLink
+        /// </summary>
         public ApiDeploymentParameterMetadata PackageContentLink { get; }
-        /// <summary> The package content link parameter. </summary>
+        /// <summary>
+        /// The package content link parameter.
+        /// Serialized Name: ApiDeploymentParameterMetadataSet.redisCacheConnectionString
+        /// </summary>
         public ApiDeploymentParameterMetadata RedisCacheConnectionString { get; }
     }
 }

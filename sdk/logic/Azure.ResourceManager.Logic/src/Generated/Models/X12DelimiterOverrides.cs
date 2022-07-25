@@ -7,16 +7,37 @@
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The X12 delimiter override settings. </summary>
+    /// <summary>
+    /// The X12 delimiter override settings.
+    /// Serialized Name: X12DelimiterOverrides
+    /// </summary>
     public partial class X12DelimiterOverrides
     {
         /// <summary> Initializes a new instance of X12DelimiterOverrides. </summary>
-        /// <param name="dataElementSeparator"> The data element separator. </param>
-        /// <param name="componentSeparator"> The component separator. </param>
-        /// <param name="segmentTerminator"> The segment terminator. </param>
-        /// <param name="segmentTerminatorSuffix"> The segment terminator suffix. </param>
-        /// <param name="replaceCharacter"> The replacement character. </param>
-        /// <param name="replaceSeparatorsInPayload"> The value indicating whether to replace separators in payload. </param>
+        /// <param name="dataElementSeparator">
+        /// The data element separator.
+        /// Serialized Name: X12DelimiterOverrides.dataElementSeparator
+        /// </param>
+        /// <param name="componentSeparator">
+        /// The component separator.
+        /// Serialized Name: X12DelimiterOverrides.componentSeparator
+        /// </param>
+        /// <param name="segmentTerminator">
+        /// The segment terminator.
+        /// Serialized Name: X12DelimiterOverrides.segmentTerminator
+        /// </param>
+        /// <param name="segmentTerminatorSuffix">
+        /// The segment terminator suffix.
+        /// Serialized Name: X12DelimiterOverrides.segmentTerminatorSuffix
+        /// </param>
+        /// <param name="replaceCharacter">
+        /// The replacement character.
+        /// Serialized Name: X12DelimiterOverrides.replaceCharacter
+        /// </param>
+        /// <param name="replaceSeparatorsInPayload">
+        /// The value indicating whether to replace separators in payload.
+        /// Serialized Name: X12DelimiterOverrides.replaceSeparatorsInPayload
+        /// </param>
         public X12DelimiterOverrides(int dataElementSeparator, int componentSeparator, int segmentTerminator, SegmentTerminatorSuffix segmentTerminatorSuffix, int replaceCharacter, bool replaceSeparatorsInPayload)
         {
             DataElementSeparator = dataElementSeparator;
@@ -28,15 +49,42 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of X12DelimiterOverrides. </summary>
-        /// <param name="protocolVersion"> The protocol version. </param>
-        /// <param name="messageId"> The message id. </param>
-        /// <param name="dataElementSeparator"> The data element separator. </param>
-        /// <param name="componentSeparator"> The component separator. </param>
-        /// <param name="segmentTerminator"> The segment terminator. </param>
-        /// <param name="segmentTerminatorSuffix"> The segment terminator suffix. </param>
-        /// <param name="replaceCharacter"> The replacement character. </param>
-        /// <param name="replaceSeparatorsInPayload"> The value indicating whether to replace separators in payload. </param>
-        /// <param name="targetNamespace"> The target namespace on which this delimiter settings has to be applied. </param>
+        /// <param name="protocolVersion">
+        /// The protocol version.
+        /// Serialized Name: X12DelimiterOverrides.protocolVersion
+        /// </param>
+        /// <param name="messageId">
+        /// The message id.
+        /// Serialized Name: X12DelimiterOverrides.messageId
+        /// </param>
+        /// <param name="dataElementSeparator">
+        /// The data element separator.
+        /// Serialized Name: X12DelimiterOverrides.dataElementSeparator
+        /// </param>
+        /// <param name="componentSeparator">
+        /// The component separator.
+        /// Serialized Name: X12DelimiterOverrides.componentSeparator
+        /// </param>
+        /// <param name="segmentTerminator">
+        /// The segment terminator.
+        /// Serialized Name: X12DelimiterOverrides.segmentTerminator
+        /// </param>
+        /// <param name="segmentTerminatorSuffix">
+        /// The segment terminator suffix.
+        /// Serialized Name: X12DelimiterOverrides.segmentTerminatorSuffix
+        /// </param>
+        /// <param name="replaceCharacter">
+        /// The replacement character.
+        /// Serialized Name: X12DelimiterOverrides.replaceCharacter
+        /// </param>
+        /// <param name="replaceSeparatorsInPayload">
+        /// The value indicating whether to replace separators in payload.
+        /// Serialized Name: X12DelimiterOverrides.replaceSeparatorsInPayload
+        /// </param>
+        /// <param name="targetNamespace">
+        /// The target namespace on which this delimiter settings has to be applied.
+        /// Serialized Name: X12DelimiterOverrides.targetNamespace
+        /// </param>
         internal X12DelimiterOverrides(string protocolVersion, string messageId, int dataElementSeparator, int componentSeparator, int segmentTerminator, SegmentTerminatorSuffix segmentTerminatorSuffix, int replaceCharacter, bool replaceSeparatorsInPayload, string targetNamespace)
         {
             ProtocolVersion = protocolVersion;
@@ -50,23 +98,50 @@ namespace Azure.ResourceManager.Logic.Models
             TargetNamespace = targetNamespace;
         }
 
-        /// <summary> The protocol version. </summary>
+        /// <summary>
+        /// The protocol version.
+        /// Serialized Name: X12DelimiterOverrides.protocolVersion
+        /// </summary>
         public string ProtocolVersion { get; set; }
-        /// <summary> The message id. </summary>
+        /// <summary>
+        /// The message id.
+        /// Serialized Name: X12DelimiterOverrides.messageId
+        /// </summary>
         public string MessageId { get; set; }
-        /// <summary> The data element separator. </summary>
+        /// <summary>
+        /// The data element separator.
+        /// Serialized Name: X12DelimiterOverrides.dataElementSeparator
+        /// </summary>
         public int DataElementSeparator { get; set; }
-        /// <summary> The component separator. </summary>
+        /// <summary>
+        /// The component separator.
+        /// Serialized Name: X12DelimiterOverrides.componentSeparator
+        /// </summary>
         public int ComponentSeparator { get; set; }
-        /// <summary> The segment terminator. </summary>
+        /// <summary>
+        /// The segment terminator.
+        /// Serialized Name: X12DelimiterOverrides.segmentTerminator
+        /// </summary>
         public int SegmentTerminator { get; set; }
-        /// <summary> The segment terminator suffix. </summary>
+        /// <summary>
+        /// The segment terminator suffix.
+        /// Serialized Name: X12DelimiterOverrides.segmentTerminatorSuffix
+        /// </summary>
         public SegmentTerminatorSuffix SegmentTerminatorSuffix { get; set; }
-        /// <summary> The replacement character. </summary>
+        /// <summary>
+        /// The replacement character.
+        /// Serialized Name: X12DelimiterOverrides.replaceCharacter
+        /// </summary>
         public int ReplaceCharacter { get; set; }
-        /// <summary> The value indicating whether to replace separators in payload. </summary>
+        /// <summary>
+        /// The value indicating whether to replace separators in payload.
+        /// Serialized Name: X12DelimiterOverrides.replaceSeparatorsInPayload
+        /// </summary>
         public bool ReplaceSeparatorsInPayload { get; set; }
-        /// <summary> The target namespace on which this delimiter settings has to be applied. </summary>
+        /// <summary>
+        /// The target namespace on which this delimiter settings has to be applied.
+        /// Serialized Name: X12DelimiterOverrides.targetNamespace
+        /// </summary>
         public string TargetNamespace { get; set; }
     }
 }

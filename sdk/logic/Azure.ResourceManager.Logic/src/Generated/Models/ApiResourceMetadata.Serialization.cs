@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<WsdlService> wsdlService = default;
             Optional<WsdlImportMethod> wsdlImportMethod = default;
             Optional<string> connectionType = default;
-            Optional<WorkflowProvisioningState> provisioningState = default;
+            Optional<LogicAppWorkflowProvisioningState> provisioningState = default;
             Optional<ApiDeploymentParameterMetadataSet> deploymentParameters = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Logic.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    provisioningState = new WorkflowProvisioningState(property.Value.GetString());
+                    provisioningState = new LogicAppWorkflowProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("deploymentParameters"))

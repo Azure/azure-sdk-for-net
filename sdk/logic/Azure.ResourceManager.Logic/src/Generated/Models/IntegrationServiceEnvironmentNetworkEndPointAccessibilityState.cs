@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The integration service environment network endpoint accessibility state. </summary>
+    /// <summary>
+    /// The integration service environment network endpoint accessibility state.
+    /// Serialized Name: IntegrationServiceEnvironmentNetworkEndPointAccessibilityState
+    /// </summary>
     public readonly partial struct IntegrationServiceEnvironmentNetworkEndPointAccessibilityState : IEquatable<IntegrationServiceEnvironmentNetworkEndPointAccessibilityState>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.Logic.Models
         private const string AvailableValue = "Available";
         private const string NotAvailableValue = "NotAvailable";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary>
+        /// NotSpecified
+        /// Serialized Name: IntegrationServiceEnvironmentNetworkEndPointAccessibilityState.NotSpecified
+        /// </summary>
         public static IntegrationServiceEnvironmentNetworkEndPointAccessibilityState NotSpecified { get; } = new IntegrationServiceEnvironmentNetworkEndPointAccessibilityState(NotSpecifiedValue);
-        /// <summary> Unknown. </summary>
+        /// <summary>
+        /// Unknown
+        /// Serialized Name: IntegrationServiceEnvironmentNetworkEndPointAccessibilityState.Unknown
+        /// </summary>
         public static IntegrationServiceEnvironmentNetworkEndPointAccessibilityState Unknown { get; } = new IntegrationServiceEnvironmentNetworkEndPointAccessibilityState(UnknownValue);
-        /// <summary> Available. </summary>
+        /// <summary>
+        /// Available
+        /// Serialized Name: IntegrationServiceEnvironmentNetworkEndPointAccessibilityState.Available
+        /// </summary>
         public static IntegrationServiceEnvironmentNetworkEndPointAccessibilityState Available { get; } = new IntegrationServiceEnvironmentNetworkEndPointAccessibilityState(AvailableValue);
-        /// <summary> NotAvailable. </summary>
+        /// <summary>
+        /// NotAvailable
+        /// Serialized Name: IntegrationServiceEnvironmentNetworkEndPointAccessibilityState.NotAvailable
+        /// </summary>
         public static IntegrationServiceEnvironmentNetworkEndPointAccessibilityState NotAvailable { get; } = new IntegrationServiceEnvironmentNetworkEndPointAccessibilityState(NotAvailableValue);
         /// <summary> Determines if two <see cref="IntegrationServiceEnvironmentNetworkEndPointAccessibilityState"/> values are the same. </summary>
         public static bool operator ==(IntegrationServiceEnvironmentNetworkEndPointAccessibilityState left, IntegrationServiceEnvironmentNetworkEndPointAccessibilityState right) => left.Equals(right);

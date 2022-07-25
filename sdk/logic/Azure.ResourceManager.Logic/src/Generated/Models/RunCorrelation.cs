@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The correlation properties. </summary>
+    /// <summary>
+    /// The correlation properties.
+    /// Serialized Name: RunCorrelation
+    /// </summary>
     public partial class RunCorrelation
     {
         /// <summary> Initializes a new instance of RunCorrelation. </summary>
@@ -20,17 +23,29 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of RunCorrelation. </summary>
-        /// <param name="clientTrackingId"> The client tracking identifier. </param>
-        /// <param name="clientKeywords"> The client keywords. </param>
+        /// <param name="clientTrackingId">
+        /// The client tracking identifier.
+        /// Serialized Name: RunCorrelation.clientTrackingId
+        /// </param>
+        /// <param name="clientKeywords">
+        /// The client keywords.
+        /// Serialized Name: RunCorrelation.clientKeywords
+        /// </param>
         internal RunCorrelation(string clientTrackingId, IList<string> clientKeywords)
         {
             ClientTrackingId = clientTrackingId;
             ClientKeywords = clientKeywords;
         }
 
-        /// <summary> The client tracking identifier. </summary>
+        /// <summary>
+        /// The client tracking identifier.
+        /// Serialized Name: RunCorrelation.clientTrackingId
+        /// </summary>
         public string ClientTrackingId { get; set; }
-        /// <summary> The client keywords. </summary>
+        /// <summary>
+        /// The client keywords.
+        /// Serialized Name: RunCorrelation.clientKeywords
+        /// </summary>
         public IList<string> ClientKeywords { get; }
     }
 }

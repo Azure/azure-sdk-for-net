@@ -10,11 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The integration service environment subnet network health. </summary>
+    /// <summary>
+    /// The integration service environment subnet network health.
+    /// Serialized Name: IntegrationServiceEnvironmentSubnetNetworkHealth
+    /// </summary>
     public partial class IntegrationServiceEnvironmentSubnetNetworkHealth
     {
         /// <summary> Initializes a new instance of IntegrationServiceEnvironmentSubnetNetworkHealth. </summary>
-        /// <param name="networkDependencyHealthState"> The integration service environment network health state. </param>
+        /// <param name="networkDependencyHealthState">
+        /// The integration service environment network health state.
+        /// Serialized Name: IntegrationServiceEnvironmentSubnetNetworkHealth.networkDependencyHealthState
+        /// </param>
         internal IntegrationServiceEnvironmentSubnetNetworkHealth(IntegrationServiceEnvironmentNetworkEndPointAccessibilityState networkDependencyHealthState)
         {
             OutboundNetworkDependencies = new ChangeTrackingList<IntegrationServiceEnvironmentNetworkDependency>();
@@ -22,9 +28,18 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of IntegrationServiceEnvironmentSubnetNetworkHealth. </summary>
-        /// <param name="outboundNetworkDependencies"> The outbound network dependencies. </param>
-        /// <param name="outboundNetworkHealth"> The integration service environment network health. </param>
-        /// <param name="networkDependencyHealthState"> The integration service environment network health state. </param>
+        /// <param name="outboundNetworkDependencies">
+        /// The outbound network dependencies.
+        /// Serialized Name: IntegrationServiceEnvironmentSubnetNetworkHealth.outboundNetworkDependencies
+        /// </param>
+        /// <param name="outboundNetworkHealth">
+        /// The integration service environment network health.
+        /// Serialized Name: IntegrationServiceEnvironmentSubnetNetworkHealth.outboundNetworkHealth
+        /// </param>
+        /// <param name="networkDependencyHealthState">
+        /// The integration service environment network health state.
+        /// Serialized Name: IntegrationServiceEnvironmentSubnetNetworkHealth.networkDependencyHealthState
+        /// </param>
         internal IntegrationServiceEnvironmentSubnetNetworkHealth(IReadOnlyList<IntegrationServiceEnvironmentNetworkDependency> outboundNetworkDependencies, IntegrationServiceEnvironmentNetworkDependencyHealth outboundNetworkHealth, IntegrationServiceEnvironmentNetworkEndPointAccessibilityState networkDependencyHealthState)
         {
             OutboundNetworkDependencies = outboundNetworkDependencies;
@@ -32,11 +47,20 @@ namespace Azure.ResourceManager.Logic.Models
             NetworkDependencyHealthState = networkDependencyHealthState;
         }
 
-        /// <summary> The outbound network dependencies. </summary>
+        /// <summary>
+        /// The outbound network dependencies.
+        /// Serialized Name: IntegrationServiceEnvironmentSubnetNetworkHealth.outboundNetworkDependencies
+        /// </summary>
         public IReadOnlyList<IntegrationServiceEnvironmentNetworkDependency> OutboundNetworkDependencies { get; }
-        /// <summary> The integration service environment network health. </summary>
+        /// <summary>
+        /// The integration service environment network health.
+        /// Serialized Name: IntegrationServiceEnvironmentSubnetNetworkHealth.outboundNetworkHealth
+        /// </summary>
         public IntegrationServiceEnvironmentNetworkDependencyHealth OutboundNetworkHealth { get; }
-        /// <summary> The integration service environment network health state. </summary>
+        /// <summary>
+        /// The integration service environment network health state.
+        /// Serialized Name: IntegrationServiceEnvironmentSubnetNetworkHealth.networkDependencyHealthState
+        /// </summary>
         public IntegrationServiceEnvironmentNetworkEndPointAccessibilityState NetworkDependencyHealthState { get; }
     }
 }

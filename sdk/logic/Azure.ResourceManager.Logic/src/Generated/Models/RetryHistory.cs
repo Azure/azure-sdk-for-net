@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The retry history. </summary>
+    /// <summary>
+    /// The retry history.
+    /// Serialized Name: RetryHistory
+    /// </summary>
     public partial class RetryHistory
     {
         /// <summary> Initializes a new instance of RetryHistory. </summary>
@@ -18,12 +21,30 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of RetryHistory. </summary>
-        /// <param name="startOn"> Gets the start time. </param>
-        /// <param name="endOn"> Gets the end time. </param>
-        /// <param name="code"> Gets the status code. </param>
-        /// <param name="clientRequestId"> Gets the client request Id. </param>
-        /// <param name="serviceRequestId"> Gets the service request Id. </param>
-        /// <param name="errorResponse"> Gets the error response. </param>
+        /// <param name="startOn">
+        /// Gets the start time.
+        /// Serialized Name: RetryHistory.startTime
+        /// </param>
+        /// <param name="endOn">
+        /// Gets the end time.
+        /// Serialized Name: RetryHistory.endTime
+        /// </param>
+        /// <param name="code">
+        /// Gets the status code.
+        /// Serialized Name: RetryHistory.code
+        /// </param>
+        /// <param name="clientRequestId">
+        /// Gets the client request Id.
+        /// Serialized Name: RetryHistory.clientRequestId
+        /// </param>
+        /// <param name="serviceRequestId">
+        /// Gets the service request Id.
+        /// Serialized Name: RetryHistory.serviceRequestId
+        /// </param>
+        /// <param name="errorResponse">
+        /// Gets the error response.
+        /// Serialized Name: RetryHistory.error
+        /// </param>
         internal RetryHistory(DateTimeOffset? startOn, DateTimeOffset? endOn, string code, string clientRequestId, string serviceRequestId, ErrorResponse errorResponse)
         {
             StartOn = startOn;
@@ -34,19 +55,40 @@ namespace Azure.ResourceManager.Logic.Models
             ErrorResponse = errorResponse;
         }
 
-        /// <summary> Gets the start time. </summary>
+        /// <summary>
+        /// Gets the start time.
+        /// Serialized Name: RetryHistory.startTime
+        /// </summary>
         public DateTimeOffset? StartOn { get; set; }
-        /// <summary> Gets the end time. </summary>
+        /// <summary>
+        /// Gets the end time.
+        /// Serialized Name: RetryHistory.endTime
+        /// </summary>
         public DateTimeOffset? EndOn { get; set; }
-        /// <summary> Gets the status code. </summary>
+        /// <summary>
+        /// Gets the status code.
+        /// Serialized Name: RetryHistory.code
+        /// </summary>
         public string Code { get; set; }
-        /// <summary> Gets the client request Id. </summary>
+        /// <summary>
+        /// Gets the client request Id.
+        /// Serialized Name: RetryHistory.clientRequestId
+        /// </summary>
         public string ClientRequestId { get; set; }
-        /// <summary> Gets the service request Id. </summary>
+        /// <summary>
+        /// Gets the service request Id.
+        /// Serialized Name: RetryHistory.serviceRequestId
+        /// </summary>
         public string ServiceRequestId { get; set; }
-        /// <summary> Gets the error response. </summary>
+        /// <summary>
+        /// Gets the error response.
+        /// Serialized Name: RetryHistory.error
+        /// </summary>
         internal ErrorResponse ErrorResponse { get; set; }
-        /// <summary> The error properties. </summary>
+        /// <summary>
+        /// The error properties.
+        /// Serialized Name: ErrorResponse.error
+        /// </summary>
         public ErrorProperties Error
         {
             get => ErrorResponse is null ? default : ErrorResponse.Error;

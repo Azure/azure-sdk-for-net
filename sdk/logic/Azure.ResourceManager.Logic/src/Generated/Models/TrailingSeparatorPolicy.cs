@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The trailing separator policy. </summary>
+    /// <summary>
+    /// The trailing separator policy.
+    /// Serialized Name: TrailingSeparatorPolicy
+    /// </summary>
     public readonly partial struct TrailingSeparatorPolicy : IEquatable<TrailingSeparatorPolicy>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.Logic.Models
         private const string OptionalValue = "Optional";
         private const string MandatoryValue = "Mandatory";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary>
+        /// NotSpecified
+        /// Serialized Name: TrailingSeparatorPolicy.NotSpecified
+        /// </summary>
         public static TrailingSeparatorPolicy NotSpecified { get; } = new TrailingSeparatorPolicy(NotSpecifiedValue);
-        /// <summary> NotAllowed. </summary>
+        /// <summary>
+        /// NotAllowed
+        /// Serialized Name: TrailingSeparatorPolicy.NotAllowed
+        /// </summary>
         public static TrailingSeparatorPolicy NotAllowed { get; } = new TrailingSeparatorPolicy(NotAllowedValue);
-        /// <summary> Optional. </summary>
+        /// <summary>
+        /// Optional
+        /// Serialized Name: TrailingSeparatorPolicy.Optional
+        /// </summary>
         public static TrailingSeparatorPolicy Optional { get; } = new TrailingSeparatorPolicy(OptionalValue);
-        /// <summary> Mandatory. </summary>
+        /// <summary>
+        /// Mandatory
+        /// Serialized Name: TrailingSeparatorPolicy.Mandatory
+        /// </summary>
         public static TrailingSeparatorPolicy Mandatory { get; } = new TrailingSeparatorPolicy(MandatoryValue);
         /// <summary> Determines if two <see cref="TrailingSeparatorPolicy"/> values are the same. </summary>
         public static bool operator ==(TrailingSeparatorPolicy left, TrailingSeparatorPolicy right) => left.Equals(right);

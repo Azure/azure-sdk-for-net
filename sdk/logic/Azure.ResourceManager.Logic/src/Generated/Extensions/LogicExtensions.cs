@@ -36,10 +36,10 @@ namespace Azure.ResourceManager.Logic
         /// <param name="top"> The number of items to be included in the result. </param>
         /// <param name="filter"> The filter to apply on the operation. Options for filters include: State, Trigger, and ReferencedResourceId. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WorkflowResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<WorkflowResource> GetWorkflowsAsync(this SubscriptionResource subscriptionResource, int? top = null, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="LogicAppWorkflowResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<LogicAppWorkflowResource> GetLogicAppWorkflowsAsync(this SubscriptionResource subscriptionResource, int? top = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetWorkflowsAsync(top, filter, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetLogicAppWorkflowsAsync(top, filter, cancellationToken);
         }
 
         /// <summary>
@@ -51,10 +51,10 @@ namespace Azure.ResourceManager.Logic
         /// <param name="top"> The number of items to be included in the result. </param>
         /// <param name="filter"> The filter to apply on the operation. Options for filters include: State, Trigger, and ReferencedResourceId. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WorkflowResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<WorkflowResource> GetWorkflows(this SubscriptionResource subscriptionResource, int? top = null, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="LogicAppWorkflowResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<LogicAppWorkflowResource> GetLogicAppWorkflows(this SubscriptionResource subscriptionResource, int? top = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetWorkflows(top, filter, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetLogicAppWorkflows(top, filter, cancellationToken);
         }
 
         /// <summary>
@@ -122,12 +122,12 @@ namespace Azure.ResourceManager.Logic
             );
         }
 
-        /// <summary> Gets a collection of WorkflowResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of LogicAppWorkflowResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of WorkflowResources and their operations over a WorkflowResource. </returns>
-        public static WorkflowCollection GetWorkflows(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of LogicAppWorkflowResources and their operations over a LogicAppWorkflowResource. </returns>
+        public static LogicAppWorkflowCollection GetLogicAppWorkflows(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetWorkflows();
+            return GetExtensionClient(resourceGroupResource).GetLogicAppWorkflows();
         }
 
         /// <summary>
@@ -141,9 +141,9 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<WorkflowResource>> GetWorkflowAsync(this ResourceGroupResource resourceGroupResource, string workflowName, CancellationToken cancellationToken = default)
+        public static async Task<Response<LogicAppWorkflowResource>> GetLogicAppWorkflowAsync(this ResourceGroupResource resourceGroupResource, string workflowName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetWorkflows().GetAsync(workflowName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetLogicAppWorkflows().GetAsync(workflowName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -157,9 +157,9 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<WorkflowResource> GetWorkflow(this ResourceGroupResource resourceGroupResource, string workflowName, CancellationToken cancellationToken = default)
+        public static Response<LogicAppWorkflowResource> GetLogicAppWorkflow(this ResourceGroupResource resourceGroupResource, string workflowName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetWorkflows().Get(workflowName, cancellationToken);
+            return resourceGroupResource.GetLogicAppWorkflows().Get(workflowName, cancellationToken);
         }
 
         /// <summary> Gets a collection of IntegrationAccountResources in the ResourceGroupResource. </summary>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> or <paramref name="data"/> is null. </exception>
-        public static async Task<Response> ValidateByLocationWorkflowAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, string workflowName, WorkflowData data, CancellationToken cancellationToken = default)
+        public static async Task<Response> ValidateByLocationWorkflowAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, string workflowName, LogicAppWorkflowData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
             Argument.AssertNotNull(data, nameof(data));
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> or <paramref name="data"/> is null. </exception>
-        public static Response ValidateByLocationWorkflow(this ResourceGroupResource resourceGroupResource, AzureLocation location, string workflowName, WorkflowData data, CancellationToken cancellationToken = default)
+        public static Response ValidateByLocationWorkflow(this ResourceGroupResource resourceGroupResource, AzureLocation location, string workflowName, LogicAppWorkflowData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
             Argument.AssertNotNull(data, nameof(data));
@@ -282,210 +282,210 @@ namespace Azure.ResourceManager.Logic
             return GetExtensionClient(resourceGroupResource).ValidateByLocationWorkflow(location, workflowName, data, cancellationToken);
         }
 
-        #region WorkflowResource
+        #region LogicAppWorkflowResource
         /// <summary>
-        /// Gets an object representing a <see cref="WorkflowResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WorkflowResource.CreateResourceIdentifier" /> to create a <see cref="WorkflowResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="LogicAppWorkflowResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LogicAppWorkflowResource.CreateResourceIdentifier" /> to create a <see cref="LogicAppWorkflowResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkflowResource" /> object. </returns>
-        public static WorkflowResource GetWorkflowResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="LogicAppWorkflowResource" /> object. </returns>
+        public static LogicAppWorkflowResource GetLogicAppWorkflowResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                WorkflowResource.ValidateResourceId(id);
-                return new WorkflowResource(client, id);
+                LogicAppWorkflowResource.ValidateResourceId(id);
+                return new LogicAppWorkflowResource(client, id);
             }
             );
         }
         #endregion
 
-        #region WorkflowVersionResource
+        #region LogicAppWorkflowVersionResource
         /// <summary>
-        /// Gets an object representing a <see cref="WorkflowVersionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WorkflowVersionResource.CreateResourceIdentifier" /> to create a <see cref="WorkflowVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="LogicAppWorkflowVersionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LogicAppWorkflowVersionResource.CreateResourceIdentifier" /> to create a <see cref="LogicAppWorkflowVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkflowVersionResource" /> object. </returns>
-        public static WorkflowVersionResource GetWorkflowVersionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="LogicAppWorkflowVersionResource" /> object. </returns>
+        public static LogicAppWorkflowVersionResource GetLogicAppWorkflowVersionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                WorkflowVersionResource.ValidateResourceId(id);
-                return new WorkflowVersionResource(client, id);
+                LogicAppWorkflowVersionResource.ValidateResourceId(id);
+                return new LogicAppWorkflowVersionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region WorkflowTriggerResource
+        #region LogicAppWorkflowTriggerResource
         /// <summary>
-        /// Gets an object representing a <see cref="WorkflowTriggerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WorkflowTriggerResource.CreateResourceIdentifier" /> to create a <see cref="WorkflowTriggerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="LogicAppWorkflowTriggerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LogicAppWorkflowTriggerResource.CreateResourceIdentifier" /> to create a <see cref="LogicAppWorkflowTriggerResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkflowTriggerResource" /> object. </returns>
-        public static WorkflowTriggerResource GetWorkflowTriggerResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="LogicAppWorkflowTriggerResource" /> object. </returns>
+        public static LogicAppWorkflowTriggerResource GetLogicAppWorkflowTriggerResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                WorkflowTriggerResource.ValidateResourceId(id);
-                return new WorkflowTriggerResource(client, id);
+                LogicAppWorkflowTriggerResource.ValidateResourceId(id);
+                return new LogicAppWorkflowTriggerResource(client, id);
             }
             );
         }
         #endregion
 
-        #region WorkflowTriggerHistoryResource
+        #region LogicAppWorkflowTriggerHistoryResource
         /// <summary>
-        /// Gets an object representing a <see cref="WorkflowTriggerHistoryResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WorkflowTriggerHistoryResource.CreateResourceIdentifier" /> to create a <see cref="WorkflowTriggerHistoryResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="LogicAppWorkflowTriggerHistoryResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LogicAppWorkflowTriggerHistoryResource.CreateResourceIdentifier" /> to create a <see cref="LogicAppWorkflowTriggerHistoryResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkflowTriggerHistoryResource" /> object. </returns>
-        public static WorkflowTriggerHistoryResource GetWorkflowTriggerHistoryResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="LogicAppWorkflowTriggerHistoryResource" /> object. </returns>
+        public static LogicAppWorkflowTriggerHistoryResource GetLogicAppWorkflowTriggerHistoryResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                WorkflowTriggerHistoryResource.ValidateResourceId(id);
-                return new WorkflowTriggerHistoryResource(client, id);
+                LogicAppWorkflowTriggerHistoryResource.ValidateResourceId(id);
+                return new LogicAppWorkflowTriggerHistoryResource(client, id);
             }
             );
         }
         #endregion
 
-        #region WorkflowRunResource
+        #region LogicAppWorkflowRunResource
         /// <summary>
-        /// Gets an object representing a <see cref="WorkflowRunResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WorkflowRunResource.CreateResourceIdentifier" /> to create a <see cref="WorkflowRunResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="LogicAppWorkflowRunResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LogicAppWorkflowRunResource.CreateResourceIdentifier" /> to create a <see cref="LogicAppWorkflowRunResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkflowRunResource" /> object. </returns>
-        public static WorkflowRunResource GetWorkflowRunResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="LogicAppWorkflowRunResource" /> object. </returns>
+        public static LogicAppWorkflowRunResource GetLogicAppWorkflowRunResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                WorkflowRunResource.ValidateResourceId(id);
-                return new WorkflowRunResource(client, id);
+                LogicAppWorkflowRunResource.ValidateResourceId(id);
+                return new LogicAppWorkflowRunResource(client, id);
             }
             );
         }
         #endregion
 
-        #region WorkflowRunOperationResource
+        #region LogicAppWorkflowRunOperationResource
         /// <summary>
-        /// Gets an object representing a <see cref="WorkflowRunOperationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WorkflowRunOperationResource.CreateResourceIdentifier" /> to create a <see cref="WorkflowRunOperationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="LogicAppWorkflowRunOperationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LogicAppWorkflowRunOperationResource.CreateResourceIdentifier" /> to create a <see cref="LogicAppWorkflowRunOperationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkflowRunOperationResource" /> object. </returns>
-        public static WorkflowRunOperationResource GetWorkflowRunOperationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="LogicAppWorkflowRunOperationResource" /> object. </returns>
+        public static LogicAppWorkflowRunOperationResource GetLogicAppWorkflowRunOperationResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                WorkflowRunOperationResource.ValidateResourceId(id);
-                return new WorkflowRunOperationResource(client, id);
+                LogicAppWorkflowRunOperationResource.ValidateResourceId(id);
+                return new LogicAppWorkflowRunOperationResource(client, id);
             }
             );
         }
         #endregion
 
-        #region WorkflowRunActionResource
+        #region LogicAppWorkflowRunActionResource
         /// <summary>
-        /// Gets an object representing a <see cref="WorkflowRunActionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WorkflowRunActionResource.CreateResourceIdentifier" /> to create a <see cref="WorkflowRunActionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="LogicAppWorkflowRunActionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LogicAppWorkflowRunActionResource.CreateResourceIdentifier" /> to create a <see cref="LogicAppWorkflowRunActionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkflowRunActionResource" /> object. </returns>
-        public static WorkflowRunActionResource GetWorkflowRunActionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="LogicAppWorkflowRunActionResource" /> object. </returns>
+        public static LogicAppWorkflowRunActionResource GetLogicAppWorkflowRunActionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                WorkflowRunActionResource.ValidateResourceId(id);
-                return new WorkflowRunActionResource(client, id);
+                LogicAppWorkflowRunActionResource.ValidateResourceId(id);
+                return new LogicAppWorkflowRunActionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region WorkflowRunActionRepetitionResource
+        #region LogicAppWorkflowRunActionRepetitionResource
         /// <summary>
-        /// Gets an object representing a <see cref="WorkflowRunActionRepetitionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WorkflowRunActionRepetitionResource.CreateResourceIdentifier" /> to create a <see cref="WorkflowRunActionRepetitionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="LogicAppWorkflowRunActionRepetitionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LogicAppWorkflowRunActionRepetitionResource.CreateResourceIdentifier" /> to create a <see cref="LogicAppWorkflowRunActionRepetitionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkflowRunActionRepetitionResource" /> object. </returns>
-        public static WorkflowRunActionRepetitionResource GetWorkflowRunActionRepetitionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="LogicAppWorkflowRunActionRepetitionResource" /> object. </returns>
+        public static LogicAppWorkflowRunActionRepetitionResource GetLogicAppWorkflowRunActionRepetitionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                WorkflowRunActionRepetitionResource.ValidateResourceId(id);
-                return new WorkflowRunActionRepetitionResource(client, id);
+                LogicAppWorkflowRunActionRepetitionResource.ValidateResourceId(id);
+                return new LogicAppWorkflowRunActionRepetitionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region WorkflowRunActionScopeRepetitionResource
+        #region LogicAppWorkflowRunActionScopeRepetitionResource
         /// <summary>
-        /// Gets an object representing a <see cref="WorkflowRunActionScopeRepetitionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WorkflowRunActionScopeRepetitionResource.CreateResourceIdentifier" /> to create a <see cref="WorkflowRunActionScopeRepetitionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="LogicAppWorkflowRunActionScopeRepetitionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LogicAppWorkflowRunActionScopeRepetitionResource.CreateResourceIdentifier" /> to create a <see cref="LogicAppWorkflowRunActionScopeRepetitionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkflowRunActionScopeRepetitionResource" /> object. </returns>
-        public static WorkflowRunActionScopeRepetitionResource GetWorkflowRunActionScopeRepetitionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="LogicAppWorkflowRunActionScopeRepetitionResource" /> object. </returns>
+        public static LogicAppWorkflowRunActionScopeRepetitionResource GetLogicAppWorkflowRunActionScopeRepetitionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                WorkflowRunActionScopeRepetitionResource.ValidateResourceId(id);
-                return new WorkflowRunActionScopeRepetitionResource(client, id);
+                LogicAppWorkflowRunActionScopeRepetitionResource.ValidateResourceId(id);
+                return new LogicAppWorkflowRunActionScopeRepetitionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region WorkflowRunActionRepetitionRequestHistoryResource
+        #region LogicAppWorkflowRunActionRepetitionRequestHistoryResource
         /// <summary>
-        /// Gets an object representing a <see cref="WorkflowRunActionRepetitionRequestHistoryResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WorkflowRunActionRepetitionRequestHistoryResource.CreateResourceIdentifier" /> to create a <see cref="WorkflowRunActionRepetitionRequestHistoryResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="LogicAppWorkflowRunActionRepetitionRequestHistoryResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LogicAppWorkflowRunActionRepetitionRequestHistoryResource.CreateResourceIdentifier" /> to create a <see cref="LogicAppWorkflowRunActionRepetitionRequestHistoryResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkflowRunActionRepetitionRequestHistoryResource" /> object. </returns>
-        public static WorkflowRunActionRepetitionRequestHistoryResource GetWorkflowRunActionRepetitionRequestHistoryResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="LogicAppWorkflowRunActionRepetitionRequestHistoryResource" /> object. </returns>
+        public static LogicAppWorkflowRunActionRepetitionRequestHistoryResource GetLogicAppWorkflowRunActionRepetitionRequestHistoryResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                WorkflowRunActionRepetitionRequestHistoryResource.ValidateResourceId(id);
-                return new WorkflowRunActionRepetitionRequestHistoryResource(client, id);
+                LogicAppWorkflowRunActionRepetitionRequestHistoryResource.ValidateResourceId(id);
+                return new LogicAppWorkflowRunActionRepetitionRequestHistoryResource(client, id);
             }
             );
         }
         #endregion
 
-        #region WorkflowRunActionRequestHistoryResource
+        #region LogicAppWorkflowRunActionRequestHistoryResource
         /// <summary>
-        /// Gets an object representing a <see cref="WorkflowRunActionRequestHistoryResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WorkflowRunActionRequestHistoryResource.CreateResourceIdentifier" /> to create a <see cref="WorkflowRunActionRequestHistoryResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="LogicAppWorkflowRunActionRequestHistoryResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LogicAppWorkflowRunActionRequestHistoryResource.CreateResourceIdentifier" /> to create a <see cref="LogicAppWorkflowRunActionRequestHistoryResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkflowRunActionRequestHistoryResource" /> object. </returns>
-        public static WorkflowRunActionRequestHistoryResource GetWorkflowRunActionRequestHistoryResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="LogicAppWorkflowRunActionRequestHistoryResource" /> object. </returns>
+        public static LogicAppWorkflowRunActionRequestHistoryResource GetLogicAppWorkflowRunActionRequestHistoryResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                WorkflowRunActionRequestHistoryResource.ValidateResourceId(id);
-                return new WorkflowRunActionRequestHistoryResource(client, id);
+                LogicAppWorkflowRunActionRequestHistoryResource.ValidateResourceId(id);
+                return new LogicAppWorkflowRunActionRequestHistoryResource(client, id);
             }
             );
         }
@@ -510,39 +510,39 @@ namespace Azure.ResourceManager.Logic
         }
         #endregion
 
-        #region AssemblyDefinitionResource
+        #region IntegrationAccountAssemblyDefinitionResource
         /// <summary>
-        /// Gets an object representing an <see cref="AssemblyDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AssemblyDefinitionResource.CreateResourceIdentifier" /> to create an <see cref="AssemblyDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="IntegrationAccountAssemblyDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IntegrationAccountAssemblyDefinitionResource.CreateResourceIdentifier" /> to create an <see cref="IntegrationAccountAssemblyDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AssemblyDefinitionResource" /> object. </returns>
-        public static AssemblyDefinitionResource GetAssemblyDefinitionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="IntegrationAccountAssemblyDefinitionResource" /> object. </returns>
+        public static IntegrationAccountAssemblyDefinitionResource GetIntegrationAccountAssemblyDefinitionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                AssemblyDefinitionResource.ValidateResourceId(id);
-                return new AssemblyDefinitionResource(client, id);
+                IntegrationAccountAssemblyDefinitionResource.ValidateResourceId(id);
+                return new IntegrationAccountAssemblyDefinitionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region BatchConfigurationResource
+        #region IntegrationAccountBatchConfigurationResource
         /// <summary>
-        /// Gets an object representing a <see cref="BatchConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BatchConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="BatchConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="IntegrationAccountBatchConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IntegrationAccountBatchConfigurationResource.CreateResourceIdentifier" /> to create an <see cref="IntegrationAccountBatchConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BatchConfigurationResource" /> object. </returns>
-        public static BatchConfigurationResource GetBatchConfigurationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="IntegrationAccountBatchConfigurationResource" /> object. </returns>
+        public static IntegrationAccountBatchConfigurationResource GetIntegrationAccountBatchConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                BatchConfigurationResource.ValidateResourceId(id);
-                return new BatchConfigurationResource(client, id);
+                IntegrationAccountBatchConfigurationResource.ValidateResourceId(id);
+                return new IntegrationAccountBatchConfigurationResource(client, id);
             }
             );
         }

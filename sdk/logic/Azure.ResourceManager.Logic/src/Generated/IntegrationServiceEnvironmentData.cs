@@ -28,9 +28,18 @@ namespace Azure.ResourceManager.Logic
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="properties"> The integration service environment properties. </param>
-        /// <param name="sku"> The sku. </param>
-        /// <param name="identity"> Managed service identity properties. </param>
+        /// <param name="properties">
+        /// The integration service environment properties.
+        /// Serialized Name: IntegrationServiceEnvironment.properties
+        /// </param>
+        /// <param name="sku">
+        /// The sku.
+        /// Serialized Name: IntegrationServiceEnvironment.sku
+        /// </param>
+        /// <param name="identity">
+        /// Managed service identity properties.
+        /// Serialized Name: IntegrationServiceEnvironment.identity
+        /// </param>
         internal IntegrationServiceEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IntegrationServiceEnvironmentProperties properties, IntegrationServiceEnvironmentSku sku, Models.ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
@@ -38,11 +47,20 @@ namespace Azure.ResourceManager.Logic
             Identity = identity;
         }
 
-        /// <summary> The integration service environment properties. </summary>
+        /// <summary>
+        /// The integration service environment properties.
+        /// Serialized Name: IntegrationServiceEnvironment.properties
+        /// </summary>
         public IntegrationServiceEnvironmentProperties Properties { get; set; }
-        /// <summary> The sku. </summary>
+        /// <summary>
+        /// The sku.
+        /// Serialized Name: IntegrationServiceEnvironment.sku
+        /// </summary>
         public IntegrationServiceEnvironmentSku Sku { get; set; }
-        /// <summary> Managed service identity properties. </summary>
+        /// <summary>
+        /// Managed service identity properties.
+        /// Serialized Name: IntegrationServiceEnvironment.identity
+        /// </summary>
         public Models.ManagedServiceIdentity Identity { get; set; }
     }
 }

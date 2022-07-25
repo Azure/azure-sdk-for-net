@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The x12 date format. </summary>
+    /// <summary>
+    /// The x12 date format.
+    /// Serialized Name: X12DateFormat
+    /// </summary>
     public readonly partial struct X12DateFormat : IEquatable<X12DateFormat>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.Logic.Models
         private const string CcyymmddValue = "CCYYMMDD";
         private const string YymmddValue = "YYMMDD";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary>
+        /// NotSpecified
+        /// Serialized Name: X12DateFormat.NotSpecified
+        /// </summary>
         public static X12DateFormat NotSpecified { get; } = new X12DateFormat(NotSpecifiedValue);
-        /// <summary> CCYYMMDD. </summary>
+        /// <summary>
+        /// CCYYMMDD
+        /// Serialized Name: X12DateFormat.CCYYMMDD
+        /// </summary>
         public static X12DateFormat Ccyymmdd { get; } = new X12DateFormat(CcyymmddValue);
-        /// <summary> YYMMDD. </summary>
+        /// <summary>
+        /// YYMMDD
+        /// Serialized Name: X12DateFormat.YYMMDD
+        /// </summary>
         public static X12DateFormat Yymmdd { get; } = new X12DateFormat(YymmddValue);
         /// <summary> Determines if two <see cref="X12DateFormat"/> values are the same. </summary>
         public static bool operator ==(X12DateFormat left, X12DateFormat right) => left.Equals(right);

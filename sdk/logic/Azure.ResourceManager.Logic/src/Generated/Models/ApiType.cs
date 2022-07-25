@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The ApiType. </summary>
+    /// <summary>
+    /// The ApiType.
+    /// Serialized Name: ApiType
+    /// </summary>
     public readonly partial struct ApiType : IEquatable<ApiType>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.Logic.Models
         private const string RestValue = "Rest";
         private const string SoapValue = "Soap";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary>
+        /// NotSpecified
+        /// Serialized Name: ApiType.NotSpecified
+        /// </summary>
         public static ApiType NotSpecified { get; } = new ApiType(NotSpecifiedValue);
-        /// <summary> Rest. </summary>
+        /// <summary>
+        /// Rest
+        /// Serialized Name: ApiType.Rest
+        /// </summary>
         public static ApiType Rest { get; } = new ApiType(RestValue);
-        /// <summary> Soap. </summary>
+        /// <summary>
+        /// Soap
+        /// Serialized Name: ApiType.Soap
+        /// </summary>
         public static ApiType Soap { get; } = new ApiType(SoapValue);
         /// <summary> Determines if two <see cref="ApiType"/> values are the same. </summary>
         public static bool operator ==(ApiType left, ApiType right) => left.Equals(right);

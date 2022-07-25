@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> A request. </summary>
+    /// <summary>
+    /// A request.
+    /// Serialized Name: Request
+    /// </summary>
     public partial class Request
     {
         /// <summary> Initializes a new instance of Request. </summary>
@@ -18,9 +21,18 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of Request. </summary>
-        /// <param name="headers"> A list of all the headers attached to the request. </param>
-        /// <param name="uri"> The destination for the request. </param>
-        /// <param name="method"> The HTTP method used for the request. </param>
+        /// <param name="headers">
+        /// A list of all the headers attached to the request.
+        /// Serialized Name: Request.headers
+        /// </param>
+        /// <param name="uri">
+        /// The destination for the request.
+        /// Serialized Name: Request.uri
+        /// </param>
+        /// <param name="method">
+        /// The HTTP method used for the request.
+        /// Serialized Name: Request.method
+        /// </param>
         internal Request(BinaryData headers, Uri uri, string method)
         {
             Headers = headers;
@@ -28,11 +40,20 @@ namespace Azure.ResourceManager.Logic.Models
             Method = method;
         }
 
-        /// <summary> A list of all the headers attached to the request. </summary>
+        /// <summary>
+        /// A list of all the headers attached to the request.
+        /// Serialized Name: Request.headers
+        /// </summary>
         public BinaryData Headers { get; set; }
-        /// <summary> The destination for the request. </summary>
+        /// <summary>
+        /// The destination for the request.
+        /// Serialized Name: Request.uri
+        /// </summary>
         public Uri Uri { get; set; }
-        /// <summary> The HTTP method used for the request. </summary>
+        /// <summary>
+        /// The HTTP method used for the request.
+        /// Serialized Name: Request.method
+        /// </summary>
         public string Method { get; set; }
     }
 }

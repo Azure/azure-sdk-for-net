@@ -9,12 +9,21 @@ using System;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The reference to the key vault key. </summary>
+    /// <summary>
+    /// The reference to the key vault key.
+    /// Serialized Name: KeyVaultKeyReference
+    /// </summary>
     public partial class KeyVaultKeyReference
     {
         /// <summary> Initializes a new instance of KeyVaultKeyReference. </summary>
-        /// <param name="keyVault"> The key vault reference. </param>
-        /// <param name="keyName"> The private key name in key vault. </param>
+        /// <param name="keyVault">
+        /// The key vault reference.
+        /// Serialized Name: KeyVaultKeyReference.keyVault
+        /// </param>
+        /// <param name="keyName">
+        /// The private key name in key vault.
+        /// Serialized Name: KeyVaultKeyReference.keyName
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVault"/> or <paramref name="keyName"/> is null. </exception>
         public KeyVaultKeyReference(KeyVaultKeyReferenceKeyVault keyVault, string keyName)
         {
@@ -32,9 +41,18 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of KeyVaultKeyReference. </summary>
-        /// <param name="keyVault"> The key vault reference. </param>
-        /// <param name="keyName"> The private key name in key vault. </param>
-        /// <param name="keyVersion"> The private key version in key vault. </param>
+        /// <param name="keyVault">
+        /// The key vault reference.
+        /// Serialized Name: KeyVaultKeyReference.keyVault
+        /// </param>
+        /// <param name="keyName">
+        /// The private key name in key vault.
+        /// Serialized Name: KeyVaultKeyReference.keyName
+        /// </param>
+        /// <param name="keyVersion">
+        /// The private key version in key vault.
+        /// Serialized Name: KeyVaultKeyReference.keyVersion
+        /// </param>
         internal KeyVaultKeyReference(KeyVaultKeyReferenceKeyVault keyVault, string keyName, string keyVersion)
         {
             KeyVault = keyVault;
@@ -42,11 +60,20 @@ namespace Azure.ResourceManager.Logic.Models
             KeyVersion = keyVersion;
         }
 
-        /// <summary> The key vault reference. </summary>
+        /// <summary>
+        /// The key vault reference.
+        /// Serialized Name: KeyVaultKeyReference.keyVault
+        /// </summary>
         public KeyVaultKeyReferenceKeyVault KeyVault { get; set; }
-        /// <summary> The private key name in key vault. </summary>
+        /// <summary>
+        /// The private key name in key vault.
+        /// Serialized Name: KeyVaultKeyReference.keyName
+        /// </summary>
         public string KeyName { get; set; }
-        /// <summary> The private key version in key vault. </summary>
+        /// <summary>
+        /// The private key version in key vault.
+        /// Serialized Name: KeyVaultKeyReference.keyVersion
+        /// </summary>
         public string KeyVersion { get; set; }
     }
 }

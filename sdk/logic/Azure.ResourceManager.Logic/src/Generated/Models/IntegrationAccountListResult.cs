@@ -11,7 +11,10 @@ using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The list of integration accounts. </summary>
+    /// <summary>
+    /// The list of integration accounts.
+    /// Serialized Name: IntegrationAccountListResult
+    /// </summary>
     internal partial class IntegrationAccountListResult
     {
         /// <summary> Initializes a new instance of IntegrationAccountListResult. </summary>
@@ -21,17 +24,29 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of IntegrationAccountListResult. </summary>
-        /// <param name="value"> The list of integration accounts. </param>
-        /// <param name="nextLink"> The URL to get the next set of results. </param>
+        /// <param name="value">
+        /// The list of integration accounts.
+        /// Serialized Name: IntegrationAccountListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The URL to get the next set of results.
+        /// Serialized Name: IntegrationAccountListResult.nextLink
+        /// </param>
         internal IntegrationAccountListResult(IReadOnlyList<IntegrationAccountData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> The list of integration accounts. </summary>
+        /// <summary>
+        /// The list of integration accounts.
+        /// Serialized Name: IntegrationAccountListResult.value
+        /// </summary>
         public IReadOnlyList<IntegrationAccountData> Value { get; }
-        /// <summary> The URL to get the next set of results. </summary>
+        /// <summary>
+        /// The URL to get the next set of results.
+        /// Serialized Name: IntegrationAccountListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

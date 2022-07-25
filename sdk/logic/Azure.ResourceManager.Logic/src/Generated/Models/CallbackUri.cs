@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The callback url. </summary>
+    /// <summary>
+    /// The callback url.
+    /// Serialized Name: CallbackUrl
+    /// </summary>
     public partial class CallbackUri
     {
         /// <summary> Initializes a new instance of CallbackUri. </summary>
@@ -16,13 +19,19 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of CallbackUri. </summary>
-        /// <param name="value"> The URL value. </param>
+        /// <param name="value">
+        /// The URL value.
+        /// Serialized Name: CallbackUrl.value
+        /// </param>
         internal CallbackUri(string value)
         {
             Value = value;
         }
 
-        /// <summary> The URL value. </summary>
+        /// <summary>
+        /// The URL value.
+        /// Serialized Name: CallbackUrl.value
+        /// </summary>
         public string Value { get; }
     }
 }

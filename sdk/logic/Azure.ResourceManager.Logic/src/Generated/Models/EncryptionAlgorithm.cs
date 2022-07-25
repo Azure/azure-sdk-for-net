@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The encryption algorithm. </summary>
+    /// <summary>
+    /// The encryption algorithm.
+    /// Serialized Name: EncryptionAlgorithm
+    /// </summary>
     public readonly partial struct EncryptionAlgorithm : IEquatable<EncryptionAlgorithm>
     {
         private readonly string _value;
@@ -30,19 +33,40 @@ namespace Azure.ResourceManager.Logic.Models
         private const string AES192Value = "AES192";
         private const string AES256Value = "AES256";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary>
+        /// NotSpecified
+        /// Serialized Name: EncryptionAlgorithm.NotSpecified
+        /// </summary>
         public static EncryptionAlgorithm NotSpecified { get; } = new EncryptionAlgorithm(NotSpecifiedValue);
-        /// <summary> None. </summary>
+        /// <summary>
+        /// None
+        /// Serialized Name: EncryptionAlgorithm.None
+        /// </summary>
         public static EncryptionAlgorithm None { get; } = new EncryptionAlgorithm(NoneValue);
-        /// <summary> DES3. </summary>
+        /// <summary>
+        /// DES3
+        /// Serialized Name: EncryptionAlgorithm.DES3
+        /// </summary>
         public static EncryptionAlgorithm DES3 { get; } = new EncryptionAlgorithm(DES3Value);
-        /// <summary> RC2. </summary>
+        /// <summary>
+        /// RC2
+        /// Serialized Name: EncryptionAlgorithm.RC2
+        /// </summary>
         public static EncryptionAlgorithm RC2 { get; } = new EncryptionAlgorithm(RC2Value);
-        /// <summary> AES128. </summary>
+        /// <summary>
+        /// AES128
+        /// Serialized Name: EncryptionAlgorithm.AES128
+        /// </summary>
         public static EncryptionAlgorithm AES128 { get; } = new EncryptionAlgorithm(AES128Value);
-        /// <summary> AES192. </summary>
+        /// <summary>
+        /// AES192
+        /// Serialized Name: EncryptionAlgorithm.AES192
+        /// </summary>
         public static EncryptionAlgorithm AES192 { get; } = new EncryptionAlgorithm(AES192Value);
-        /// <summary> AES256. </summary>
+        /// <summary>
+        /// AES256
+        /// Serialized Name: EncryptionAlgorithm.AES256
+        /// </summary>
         public static EncryptionAlgorithm AES256 { get; } = new EncryptionAlgorithm(AES256Value);
         /// <summary> Determines if two <see cref="EncryptionAlgorithm"/> values are the same. </summary>
         public static bool operator ==(EncryptionAlgorithm left, EncryptionAlgorithm right) => left.Equals(right);

@@ -12,18 +12,45 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The X12 agreement protocol settings. </summary>
+    /// <summary>
+    /// The X12 agreement protocol settings.
+    /// Serialized Name: X12ProtocolSettings
+    /// </summary>
     public partial class X12ProtocolSettings
     {
         /// <summary> Initializes a new instance of X12ProtocolSettings. </summary>
-        /// <param name="validationSettings"> The X12 validation settings. </param>
-        /// <param name="framingSettings"> The X12 framing settings. </param>
-        /// <param name="envelopeSettings"> The X12 envelope settings. </param>
-        /// <param name="acknowledgementSettings"> The X12 acknowledgment settings. </param>
-        /// <param name="messageFilter"> The X12 message filter. </param>
-        /// <param name="securitySettings"> The X12 security settings. </param>
-        /// <param name="processingSettings"> The X12 processing settings. </param>
-        /// <param name="schemaReferences"> The X12 schema references. </param>
+        /// <param name="validationSettings">
+        /// The X12 validation settings.
+        /// Serialized Name: X12ProtocolSettings.validationSettings
+        /// </param>
+        /// <param name="framingSettings">
+        /// The X12 framing settings.
+        /// Serialized Name: X12ProtocolSettings.framingSettings
+        /// </param>
+        /// <param name="envelopeSettings">
+        /// The X12 envelope settings.
+        /// Serialized Name: X12ProtocolSettings.envelopeSettings
+        /// </param>
+        /// <param name="acknowledgementSettings">
+        /// The X12 acknowledgment settings.
+        /// Serialized Name: X12ProtocolSettings.acknowledgementSettings
+        /// </param>
+        /// <param name="messageFilter">
+        /// The X12 message filter.
+        /// Serialized Name: X12ProtocolSettings.messageFilter
+        /// </param>
+        /// <param name="securitySettings">
+        /// The X12 security settings.
+        /// Serialized Name: X12ProtocolSettings.securitySettings
+        /// </param>
+        /// <param name="processingSettings">
+        /// The X12 processing settings.
+        /// Serialized Name: X12ProtocolSettings.processingSettings
+        /// </param>
+        /// <param name="schemaReferences">
+        /// The X12 schema references.
+        /// Serialized Name: X12ProtocolSettings.schemaReferences
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="validationSettings"/>, <paramref name="framingSettings"/>, <paramref name="envelopeSettings"/>, <paramref name="acknowledgementSettings"/>, <paramref name="messageFilter"/>, <paramref name="securitySettings"/>, <paramref name="processingSettings"/> or <paramref name="schemaReferences"/> is null. </exception>
         public X12ProtocolSettings(X12ValidationSettings validationSettings, X12FramingSettings framingSettings, X12EnvelopeSettings envelopeSettings, X12AcknowledgementSettings acknowledgementSettings, X12MessageFilter messageFilter, X12SecuritySettings securitySettings, X12ProcessingSettings processingSettings, IEnumerable<X12SchemaReference> schemaReferences)
         {
@@ -75,18 +102,54 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of X12ProtocolSettings. </summary>
-        /// <param name="validationSettings"> The X12 validation settings. </param>
-        /// <param name="framingSettings"> The X12 framing settings. </param>
-        /// <param name="envelopeSettings"> The X12 envelope settings. </param>
-        /// <param name="acknowledgementSettings"> The X12 acknowledgment settings. </param>
-        /// <param name="messageFilter"> The X12 message filter. </param>
-        /// <param name="securitySettings"> The X12 security settings. </param>
-        /// <param name="processingSettings"> The X12 processing settings. </param>
-        /// <param name="envelopeOverrides"> The X12 envelope override settings. </param>
-        /// <param name="validationOverrides"> The X12 validation override settings. </param>
-        /// <param name="messageFilterList"> The X12 message filter list. </param>
-        /// <param name="schemaReferences"> The X12 schema references. </param>
-        /// <param name="x12DelimiterOverrides"> The X12 delimiter override settings. </param>
+        /// <param name="validationSettings">
+        /// The X12 validation settings.
+        /// Serialized Name: X12ProtocolSettings.validationSettings
+        /// </param>
+        /// <param name="framingSettings">
+        /// The X12 framing settings.
+        /// Serialized Name: X12ProtocolSettings.framingSettings
+        /// </param>
+        /// <param name="envelopeSettings">
+        /// The X12 envelope settings.
+        /// Serialized Name: X12ProtocolSettings.envelopeSettings
+        /// </param>
+        /// <param name="acknowledgementSettings">
+        /// The X12 acknowledgment settings.
+        /// Serialized Name: X12ProtocolSettings.acknowledgementSettings
+        /// </param>
+        /// <param name="messageFilter">
+        /// The X12 message filter.
+        /// Serialized Name: X12ProtocolSettings.messageFilter
+        /// </param>
+        /// <param name="securitySettings">
+        /// The X12 security settings.
+        /// Serialized Name: X12ProtocolSettings.securitySettings
+        /// </param>
+        /// <param name="processingSettings">
+        /// The X12 processing settings.
+        /// Serialized Name: X12ProtocolSettings.processingSettings
+        /// </param>
+        /// <param name="envelopeOverrides">
+        /// The X12 envelope override settings.
+        /// Serialized Name: X12ProtocolSettings.envelopeOverrides
+        /// </param>
+        /// <param name="validationOverrides">
+        /// The X12 validation override settings.
+        /// Serialized Name: X12ProtocolSettings.validationOverrides
+        /// </param>
+        /// <param name="messageFilterList">
+        /// The X12 message filter list.
+        /// Serialized Name: X12ProtocolSettings.messageFilterList
+        /// </param>
+        /// <param name="schemaReferences">
+        /// The X12 schema references.
+        /// Serialized Name: X12ProtocolSettings.schemaReferences
+        /// </param>
+        /// <param name="x12DelimiterOverrides">
+        /// The X12 delimiter override settings.
+        /// Serialized Name: X12ProtocolSettings.x12DelimiterOverrides
+        /// </param>
         internal X12ProtocolSettings(X12ValidationSettings validationSettings, X12FramingSettings framingSettings, X12EnvelopeSettings envelopeSettings, X12AcknowledgementSettings acknowledgementSettings, X12MessageFilter messageFilter, X12SecuritySettings securitySettings, X12ProcessingSettings processingSettings, IList<X12EnvelopeOverride> envelopeOverrides, IList<X12ValidationOverride> validationOverrides, IList<X12MessageIdentifier> messageFilterList, IList<X12SchemaReference> schemaReferences, IList<X12DelimiterOverrides> x12DelimiterOverrides)
         {
             ValidationSettings = validationSettings;
@@ -103,17 +166,35 @@ namespace Azure.ResourceManager.Logic.Models
             X12DelimiterOverrides = x12DelimiterOverrides;
         }
 
-        /// <summary> The X12 validation settings. </summary>
+        /// <summary>
+        /// The X12 validation settings.
+        /// Serialized Name: X12ProtocolSettings.validationSettings
+        /// </summary>
         public X12ValidationSettings ValidationSettings { get; set; }
-        /// <summary> The X12 framing settings. </summary>
+        /// <summary>
+        /// The X12 framing settings.
+        /// Serialized Name: X12ProtocolSettings.framingSettings
+        /// </summary>
         public X12FramingSettings FramingSettings { get; set; }
-        /// <summary> The X12 envelope settings. </summary>
+        /// <summary>
+        /// The X12 envelope settings.
+        /// Serialized Name: X12ProtocolSettings.envelopeSettings
+        /// </summary>
         public X12EnvelopeSettings EnvelopeSettings { get; set; }
-        /// <summary> The X12 acknowledgment settings. </summary>
+        /// <summary>
+        /// The X12 acknowledgment settings.
+        /// Serialized Name: X12ProtocolSettings.acknowledgementSettings
+        /// </summary>
         public X12AcknowledgementSettings AcknowledgementSettings { get; set; }
-        /// <summary> The X12 message filter. </summary>
+        /// <summary>
+        /// The X12 message filter.
+        /// Serialized Name: X12ProtocolSettings.messageFilter
+        /// </summary>
         internal X12MessageFilter MessageFilter { get; set; }
-        /// <summary> The message filter type. </summary>
+        /// <summary>
+        /// The message filter type.
+        /// Serialized Name: X12MessageFilter.messageFilterType
+        /// </summary>
         public MessageFilterType? MessageFilterType
         {
             get => MessageFilter is null ? default(MessageFilterType?) : MessageFilter.MessageFilterType;
@@ -123,19 +204,40 @@ namespace Azure.ResourceManager.Logic.Models
             }
         }
 
-        /// <summary> The X12 security settings. </summary>
+        /// <summary>
+        /// The X12 security settings.
+        /// Serialized Name: X12ProtocolSettings.securitySettings
+        /// </summary>
         public X12SecuritySettings SecuritySettings { get; set; }
-        /// <summary> The X12 processing settings. </summary>
+        /// <summary>
+        /// The X12 processing settings.
+        /// Serialized Name: X12ProtocolSettings.processingSettings
+        /// </summary>
         public X12ProcessingSettings ProcessingSettings { get; set; }
-        /// <summary> The X12 envelope override settings. </summary>
+        /// <summary>
+        /// The X12 envelope override settings.
+        /// Serialized Name: X12ProtocolSettings.envelopeOverrides
+        /// </summary>
         public IList<X12EnvelopeOverride> EnvelopeOverrides { get; }
-        /// <summary> The X12 validation override settings. </summary>
+        /// <summary>
+        /// The X12 validation override settings.
+        /// Serialized Name: X12ProtocolSettings.validationOverrides
+        /// </summary>
         public IList<X12ValidationOverride> ValidationOverrides { get; }
-        /// <summary> The X12 message filter list. </summary>
+        /// <summary>
+        /// The X12 message filter list.
+        /// Serialized Name: X12ProtocolSettings.messageFilterList
+        /// </summary>
         public IList<X12MessageIdentifier> MessageFilterList { get; }
-        /// <summary> The X12 schema references. </summary>
+        /// <summary>
+        /// The X12 schema references.
+        /// Serialized Name: X12ProtocolSettings.schemaReferences
+        /// </summary>
         public IList<X12SchemaReference> SchemaReferences { get; }
-        /// <summary> The X12 delimiter override settings. </summary>
+        /// <summary>
+        /// The X12 delimiter override settings.
+        /// Serialized Name: X12ProtocolSettings.x12DelimiterOverrides
+        /// </summary>
         public IList<X12DelimiterOverrides> X12DelimiterOverrides { get; }
     }
 }

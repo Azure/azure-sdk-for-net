@@ -9,13 +9,25 @@ using System;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The X12 schema reference. </summary>
+    /// <summary>
+    /// The X12 schema reference.
+    /// Serialized Name: X12SchemaReference
+    /// </summary>
     public partial class X12SchemaReference
     {
         /// <summary> Initializes a new instance of X12SchemaReference. </summary>
-        /// <param name="messageId"> The message id. </param>
-        /// <param name="schemaVersion"> The schema version. </param>
-        /// <param name="schemaName"> The schema name. </param>
+        /// <param name="messageId">
+        /// The message id.
+        /// Serialized Name: X12SchemaReference.messageId
+        /// </param>
+        /// <param name="schemaVersion">
+        /// The schema version.
+        /// Serialized Name: X12SchemaReference.schemaVersion
+        /// </param>
+        /// <param name="schemaName">
+        /// The schema name.
+        /// Serialized Name: X12SchemaReference.schemaName
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="messageId"/>, <paramref name="schemaVersion"/> or <paramref name="schemaName"/> is null. </exception>
         public X12SchemaReference(string messageId, string schemaVersion, string schemaName)
         {
@@ -38,10 +50,22 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of X12SchemaReference. </summary>
-        /// <param name="messageId"> The message id. </param>
-        /// <param name="senderApplicationId"> The sender application id. </param>
-        /// <param name="schemaVersion"> The schema version. </param>
-        /// <param name="schemaName"> The schema name. </param>
+        /// <param name="messageId">
+        /// The message id.
+        /// Serialized Name: X12SchemaReference.messageId
+        /// </param>
+        /// <param name="senderApplicationId">
+        /// The sender application id.
+        /// Serialized Name: X12SchemaReference.senderApplicationId
+        /// </param>
+        /// <param name="schemaVersion">
+        /// The schema version.
+        /// Serialized Name: X12SchemaReference.schemaVersion
+        /// </param>
+        /// <param name="schemaName">
+        /// The schema name.
+        /// Serialized Name: X12SchemaReference.schemaName
+        /// </param>
         internal X12SchemaReference(string messageId, string senderApplicationId, string schemaVersion, string schemaName)
         {
             MessageId = messageId;
@@ -50,13 +74,25 @@ namespace Azure.ResourceManager.Logic.Models
             SchemaName = schemaName;
         }
 
-        /// <summary> The message id. </summary>
+        /// <summary>
+        /// The message id.
+        /// Serialized Name: X12SchemaReference.messageId
+        /// </summary>
         public string MessageId { get; set; }
-        /// <summary> The sender application id. </summary>
+        /// <summary>
+        /// The sender application id.
+        /// Serialized Name: X12SchemaReference.senderApplicationId
+        /// </summary>
         public string SenderApplicationId { get; set; }
-        /// <summary> The schema version. </summary>
+        /// <summary>
+        /// The schema version.
+        /// Serialized Name: X12SchemaReference.schemaVersion
+        /// </summary>
         public string SchemaVersion { get; set; }
-        /// <summary> The schema name. </summary>
+        /// <summary>
+        /// The schema name.
+        /// Serialized Name: X12SchemaReference.schemaName
+        /// </summary>
         public string SchemaName { get; set; }
     }
 }

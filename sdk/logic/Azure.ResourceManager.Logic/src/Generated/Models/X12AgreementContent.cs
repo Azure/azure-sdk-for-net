@@ -9,12 +9,21 @@ using System;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The X12 agreement content. </summary>
+    /// <summary>
+    /// The X12 agreement content.
+    /// Serialized Name: X12AgreementContent
+    /// </summary>
     public partial class X12AgreementContent
     {
         /// <summary> Initializes a new instance of X12AgreementContent. </summary>
-        /// <param name="receiveAgreement"> The X12 one-way receive agreement. </param>
-        /// <param name="sendAgreement"> The X12 one-way send agreement. </param>
+        /// <param name="receiveAgreement">
+        /// The X12 one-way receive agreement.
+        /// Serialized Name: X12AgreementContent.receiveAgreement
+        /// </param>
+        /// <param name="sendAgreement">
+        /// The X12 one-way send agreement.
+        /// Serialized Name: X12AgreementContent.sendAgreement
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="receiveAgreement"/> or <paramref name="sendAgreement"/> is null. </exception>
         public X12AgreementContent(X12OneWayAgreement receiveAgreement, X12OneWayAgreement sendAgreement)
         {
@@ -31,9 +40,15 @@ namespace Azure.ResourceManager.Logic.Models
             SendAgreement = sendAgreement;
         }
 
-        /// <summary> The X12 one-way receive agreement. </summary>
+        /// <summary>
+        /// The X12 one-way receive agreement.
+        /// Serialized Name: X12AgreementContent.receiveAgreement
+        /// </summary>
         public X12OneWayAgreement ReceiveAgreement { get; set; }
-        /// <summary> The X12 one-way send agreement. </summary>
+        /// <summary>
+        /// The X12 one-way send agreement.
+        /// Serialized Name: X12AgreementContent.sendAgreement
+        /// </summary>
         public X12OneWayAgreement SendAgreement { get; set; }
     }
 }

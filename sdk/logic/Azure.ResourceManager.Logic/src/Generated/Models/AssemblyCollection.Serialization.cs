@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Logic.Models
     {
         internal static AssemblyCollection DeserializeAssemblyCollection(JsonElement element)
         {
-            Optional<IReadOnlyList<AssemblyDefinitionData>> value = default;
+            Optional<IReadOnlyList<IntegrationAccountAssemblyDefinitionData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Logic.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AssemblyDefinitionData> array = new List<AssemblyDefinitionData>();
+                    List<IntegrationAccountAssemblyDefinitionData> array = new List<IntegrationAccountAssemblyDefinitionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AssemblyDefinitionData.DeserializeAssemblyDefinitionData(item));
+                        array.Add(IntegrationAccountAssemblyDefinitionData.DeserializeIntegrationAccountAssemblyDefinitionData(item));
                     }
                     value = array;
                     continue;

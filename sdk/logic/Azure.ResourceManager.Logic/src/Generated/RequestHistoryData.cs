@@ -28,13 +28,19 @@ namespace Azure.ResourceManager.Logic
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="properties"> The request history properties. </param>
+        /// <param name="properties">
+        /// The request history properties.
+        /// Serialized Name: RequestHistory.properties
+        /// </param>
         internal RequestHistoryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, RequestHistoryProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
         }
 
-        /// <summary> The request history properties. </summary>
+        /// <summary>
+        /// The request history properties.
+        /// Serialized Name: RequestHistory.properties
+        /// </summary>
         public RequestHistoryProperties Properties { get; set; }
     }
 }

@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The Api reference. </summary>
+    /// <summary>
+    /// The Api reference.
+    /// Serialized Name: ApiReference
+    /// </summary>
     public partial class ApiReference : ResourceReference
     {
         /// <summary> Initializes a new instance of ApiReference. </summary>
@@ -18,16 +21,46 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of ApiReference. </summary>
-        /// <param name="id"> The resource id. </param>
-        /// <param name="name"> Gets the resource name. </param>
-        /// <param name="resourceType"> Gets the resource type. </param>
-        /// <param name="displayName"> The display name of the api. </param>
-        /// <param name="description"> The description of the api. </param>
-        /// <param name="iconUri"> The icon uri of the api. </param>
-        /// <param name="swagger"> The swagger of the api. </param>
-        /// <param name="brandColor"> The brand color of the api. </param>
-        /// <param name="category"> The tier. </param>
-        /// <param name="integrationServiceEnvironment"> The integration service environment reference. </param>
+        /// <param name="id">
+        /// The resource id.
+        /// Serialized Name: ResourceReference.id
+        /// </param>
+        /// <param name="name">
+        /// Gets the resource name.
+        /// Serialized Name: ResourceReference.name
+        /// </param>
+        /// <param name="resourceType">
+        /// Gets the resource type.
+        /// Serialized Name: ResourceReference.type
+        /// </param>
+        /// <param name="displayName">
+        /// The display name of the api.
+        /// Serialized Name: ApiReference.displayName
+        /// </param>
+        /// <param name="description">
+        /// The description of the api.
+        /// Serialized Name: ApiReference.description
+        /// </param>
+        /// <param name="iconUri">
+        /// The icon uri of the api.
+        /// Serialized Name: ApiReference.iconUri
+        /// </param>
+        /// <param name="swagger">
+        /// The swagger of the api.
+        /// Serialized Name: ApiReference.swagger
+        /// </param>
+        /// <param name="brandColor">
+        /// The brand color of the api.
+        /// Serialized Name: ApiReference.brandColor
+        /// </param>
+        /// <param name="category">
+        /// The tier.
+        /// Serialized Name: ApiReference.category
+        /// </param>
+        /// <param name="integrationServiceEnvironment">
+        /// The integration service environment reference.
+        /// Serialized Name: ApiReference.integrationServiceEnvironment
+        /// </param>
         internal ApiReference(string id, string name, string resourceType, string displayName, string description, Uri iconUri, BinaryData swagger, string brandColor, ApiTier? category, ResourceReference integrationServiceEnvironment) : base(id, name, resourceType)
         {
             DisplayName = displayName;
@@ -39,19 +72,40 @@ namespace Azure.ResourceManager.Logic.Models
             IntegrationServiceEnvironment = integrationServiceEnvironment;
         }
 
-        /// <summary> The display name of the api. </summary>
+        /// <summary>
+        /// The display name of the api.
+        /// Serialized Name: ApiReference.displayName
+        /// </summary>
         public string DisplayName { get; set; }
-        /// <summary> The description of the api. </summary>
+        /// <summary>
+        /// The description of the api.
+        /// Serialized Name: ApiReference.description
+        /// </summary>
         public string Description { get; set; }
-        /// <summary> The icon uri of the api. </summary>
+        /// <summary>
+        /// The icon uri of the api.
+        /// Serialized Name: ApiReference.iconUri
+        /// </summary>
         public Uri IconUri { get; set; }
-        /// <summary> The swagger of the api. </summary>
+        /// <summary>
+        /// The swagger of the api.
+        /// Serialized Name: ApiReference.swagger
+        /// </summary>
         public BinaryData Swagger { get; set; }
-        /// <summary> The brand color of the api. </summary>
+        /// <summary>
+        /// The brand color of the api.
+        /// Serialized Name: ApiReference.brandColor
+        /// </summary>
         public string BrandColor { get; set; }
-        /// <summary> The tier. </summary>
+        /// <summary>
+        /// The tier.
+        /// Serialized Name: ApiReference.category
+        /// </summary>
         public ApiTier? Category { get; set; }
-        /// <summary> The integration service environment reference. </summary>
+        /// <summary>
+        /// The integration service environment reference.
+        /// Serialized Name: ApiReference.integrationServiceEnvironment
+        /// </summary>
         public ResourceReference IntegrationServiceEnvironment { get; set; }
     }
 }

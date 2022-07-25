@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The expression root. </summary>
+    /// <summary>
+    /// The expression root.
+    /// Serialized Name: ExpressionRoot
+    /// </summary>
     public partial class ExpressionRoot : Expression
     {
         /// <summary> Initializes a new instance of ExpressionRoot. </summary>
@@ -19,17 +22,35 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of ExpressionRoot. </summary>
-        /// <param name="text"> The text. </param>
-        /// <param name="value"> Anything. </param>
-        /// <param name="subexpressions"> The sub expressions. </param>
-        /// <param name="error"> The azure resource error info. </param>
-        /// <param name="path"> The path. </param>
+        /// <param name="text">
+        /// The text.
+        /// Serialized Name: Expression.text
+        /// </param>
+        /// <param name="value">
+        /// Anything
+        /// Serialized Name: Expression.value
+        /// </param>
+        /// <param name="subexpressions">
+        /// The sub expressions.
+        /// Serialized Name: Expression.subexpressions
+        /// </param>
+        /// <param name="error">
+        /// The azure resource error info.
+        /// Serialized Name: Expression.error
+        /// </param>
+        /// <param name="path">
+        /// The path.
+        /// Serialized Name: ExpressionRoot.path
+        /// </param>
         internal ExpressionRoot(string text, BinaryData value, IReadOnlyList<Expression> subexpressions, AzureResourceErrorInfo error, string path) : base(text, value, subexpressions, error)
         {
             Path = path;
         }
 
-        /// <summary> The path. </summary>
+        /// <summary>
+        /// The path.
+        /// Serialized Name: ExpressionRoot.path
+        /// </summary>
         public string Path { get; }
     }
 }

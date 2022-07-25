@@ -9,7 +9,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The integration account partner content. </summary>
+    /// <summary>
+    /// The integration account partner content.
+    /// Serialized Name: PartnerContent
+    /// </summary>
     public partial class PartnerContent
     {
         /// <summary> Initializes a new instance of PartnerContent. </summary>
@@ -18,15 +21,24 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of PartnerContent. </summary>
-        /// <param name="b2B"> The B2B partner content. </param>
+        /// <param name="b2B">
+        /// The B2B partner content.
+        /// Serialized Name: PartnerContent.b2b
+        /// </param>
         internal PartnerContent(B2BPartnerContent b2B)
         {
             B2B = b2B;
         }
 
-        /// <summary> The B2B partner content. </summary>
+        /// <summary>
+        /// The B2B partner content.
+        /// Serialized Name: PartnerContent.b2b
+        /// </summary>
         internal B2BPartnerContent B2B { get; set; }
-        /// <summary> The list of partner business identities. </summary>
+        /// <summary>
+        /// The list of partner business identities.
+        /// Serialized Name: B2BPartnerContent.businessIdentities
+        /// </summary>
         public IList<BusinessIdentity> B2BBusinessIdentities
         {
             get

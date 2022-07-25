@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The azure async operation resource. </summary>
+    /// <summary>
+    /// The azure async operation resource.
+    /// Serialized Name: IntegrationServiceEnvironmentNetworkDependency
+    /// </summary>
     public partial class IntegrationServiceEnvironmentNetworkDependency
     {
         /// <summary> Initializes a new instance of IntegrationServiceEnvironmentNetworkDependency. </summary>
@@ -20,9 +23,18 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of IntegrationServiceEnvironmentNetworkDependency. </summary>
-        /// <param name="category"> The network dependency category type. </param>
-        /// <param name="displayName"> The display name. </param>
-        /// <param name="endpoints"> The endpoints. </param>
+        /// <param name="category">
+        /// The network dependency category type.
+        /// Serialized Name: IntegrationServiceEnvironmentNetworkDependency.category
+        /// </param>
+        /// <param name="displayName">
+        /// The display name.
+        /// Serialized Name: IntegrationServiceEnvironmentNetworkDependency.displayName
+        /// </param>
+        /// <param name="endpoints">
+        /// The endpoints.
+        /// Serialized Name: IntegrationServiceEnvironmentNetworkDependency.endpoints
+        /// </param>
         internal IntegrationServiceEnvironmentNetworkDependency(IntegrationServiceEnvironmentNetworkDependencyCategoryType? category, string displayName, IReadOnlyList<IntegrationServiceEnvironmentNetworkEndpoint> endpoints)
         {
             Category = category;
@@ -30,11 +42,20 @@ namespace Azure.ResourceManager.Logic.Models
             Endpoints = endpoints;
         }
 
-        /// <summary> The network dependency category type. </summary>
+        /// <summary>
+        /// The network dependency category type.
+        /// Serialized Name: IntegrationServiceEnvironmentNetworkDependency.category
+        /// </summary>
         public IntegrationServiceEnvironmentNetworkDependencyCategoryType? Category { get; }
-        /// <summary> The display name. </summary>
+        /// <summary>
+        /// The display name.
+        /// Serialized Name: IntegrationServiceEnvironmentNetworkDependency.displayName
+        /// </summary>
         public string DisplayName { get; }
-        /// <summary> The endpoints. </summary>
+        /// <summary>
+        /// The endpoints.
+        /// Serialized Name: IntegrationServiceEnvironmentNetworkDependency.endpoints
+        /// </summary>
         public IReadOnlyList<IntegrationServiceEnvironmentNetworkEndpoint> Endpoints { get; }
     }
 }

@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The access control configuration policy. </summary>
+    /// <summary>
+    /// The access control configuration policy.
+    /// Serialized Name: FlowAccessControlConfigurationPolicy
+    /// </summary>
     public partial class FlowAccessControlConfigurationPolicy
     {
         /// <summary> Initializes a new instance of FlowAccessControlConfigurationPolicy. </summary>
@@ -20,19 +23,34 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of FlowAccessControlConfigurationPolicy. </summary>
-        /// <param name="allowedCallerIPAddresses"> The allowed caller IP address ranges. </param>
-        /// <param name="openAuthenticationPolicies"> The authentication policies for workflow. </param>
+        /// <param name="allowedCallerIPAddresses">
+        /// The allowed caller IP address ranges.
+        /// Serialized Name: FlowAccessControlConfigurationPolicy.allowedCallerIpAddresses
+        /// </param>
+        /// <param name="openAuthenticationPolicies">
+        /// The authentication policies for workflow.
+        /// Serialized Name: FlowAccessControlConfigurationPolicy.openAuthenticationPolicies
+        /// </param>
         internal FlowAccessControlConfigurationPolicy(IList<IPAddressRange> allowedCallerIPAddresses, OpenAuthenticationAccessPolicies openAuthenticationPolicies)
         {
             AllowedCallerIPAddresses = allowedCallerIPAddresses;
             OpenAuthenticationPolicies = openAuthenticationPolicies;
         }
 
-        /// <summary> The allowed caller IP address ranges. </summary>
+        /// <summary>
+        /// The allowed caller IP address ranges.
+        /// Serialized Name: FlowAccessControlConfigurationPolicy.allowedCallerIpAddresses
+        /// </summary>
         public IList<IPAddressRange> AllowedCallerIPAddresses { get; }
-        /// <summary> The authentication policies for workflow. </summary>
+        /// <summary>
+        /// The authentication policies for workflow.
+        /// Serialized Name: FlowAccessControlConfigurationPolicy.openAuthenticationPolicies
+        /// </summary>
         internal OpenAuthenticationAccessPolicies OpenAuthenticationPolicies { get; set; }
-        /// <summary> Open authentication policies. </summary>
+        /// <summary>
+        /// Open authentication policies.
+        /// Serialized Name: OpenAuthenticationAccessPolicies.policies
+        /// </summary>
         public IDictionary<string, OpenAuthenticationAccessPolicy> AccessPolicies
         {
             get

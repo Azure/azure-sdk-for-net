@@ -7,18 +7,36 @@
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The segment terminator suffix. </summary>
+    /// <summary>
+    /// The segment terminator suffix.
+    /// Serialized Name: SegmentTerminatorSuffix
+    /// </summary>
     public enum SegmentTerminatorSuffix
     {
-        /// <summary> None. </summary>
+        /// <summary>
+        /// None
+        /// Serialized Name: SegmentTerminatorSuffix.None
+        /// </summary>
         None,
-        /// <summary> NotSpecified. </summary>
+        /// <summary>
+        /// NotSpecified
+        /// Serialized Name: SegmentTerminatorSuffix.NotSpecified
+        /// </summary>
         NotSpecified,
-        /// <summary> CR. </summary>
+        /// <summary>
+        /// CR
+        /// Serialized Name: SegmentTerminatorSuffix.CR
+        /// </summary>
         CR,
-        /// <summary> LF. </summary>
+        /// <summary>
+        /// LF
+        /// Serialized Name: SegmentTerminatorSuffix.LF
+        /// </summary>
         LF,
-        /// <summary> CRLF. </summary>
+        /// <summary>
+        /// CRLF
+        /// Serialized Name: SegmentTerminatorSuffix.CRLF
+        /// </summary>
         Crlf
     }
 }

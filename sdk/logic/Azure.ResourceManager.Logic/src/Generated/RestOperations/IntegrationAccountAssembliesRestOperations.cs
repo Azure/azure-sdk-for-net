@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="integrationAccountName"/> or <paramref name="assemblyArtifactName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="integrationAccountName"/> or <paramref name="assemblyArtifactName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AssemblyDefinitionData>> GetAsync(string subscriptionId, string resourceGroupName, string integrationAccountName, string assemblyArtifactName, CancellationToken cancellationToken = default)
+        public async Task<Response<IntegrationAccountAssemblyDefinitionData>> GetAsync(string subscriptionId, string resourceGroupName, string integrationAccountName, string assemblyArtifactName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -159,13 +159,13 @@ namespace Azure.ResourceManager.Logic
             {
                 case 200:
                     {
-                        AssemblyDefinitionData value = default;
+                        IntegrationAccountAssemblyDefinitionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AssemblyDefinitionData.DeserializeAssemblyDefinitionData(document.RootElement);
+                        value = IntegrationAccountAssemblyDefinitionData.DeserializeIntegrationAccountAssemblyDefinitionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AssemblyDefinitionData)null, message.Response);
+                    return Response.FromValue((IntegrationAccountAssemblyDefinitionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="integrationAccountName"/> or <paramref name="assemblyArtifactName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="integrationAccountName"/> or <paramref name="assemblyArtifactName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AssemblyDefinitionData> Get(string subscriptionId, string resourceGroupName, string integrationAccountName, string assemblyArtifactName, CancellationToken cancellationToken = default)
+        public Response<IntegrationAccountAssemblyDefinitionData> Get(string subscriptionId, string resourceGroupName, string integrationAccountName, string assemblyArtifactName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -192,19 +192,19 @@ namespace Azure.ResourceManager.Logic
             {
                 case 200:
                     {
-                        AssemblyDefinitionData value = default;
+                        IntegrationAccountAssemblyDefinitionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AssemblyDefinitionData.DeserializeAssemblyDefinitionData(document.RootElement);
+                        value = IntegrationAccountAssemblyDefinitionData.DeserializeIntegrationAccountAssemblyDefinitionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AssemblyDefinitionData)null, message.Response);
+                    return Response.FromValue((IntegrationAccountAssemblyDefinitionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string integrationAccountName, string assemblyArtifactName, AssemblyDefinitionData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string integrationAccountName, string assemblyArtifactName, IntegrationAccountAssemblyDefinitionData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="integrationAccountName"/>, <paramref name="assemblyArtifactName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="integrationAccountName"/> or <paramref name="assemblyArtifactName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AssemblyDefinitionData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string integrationAccountName, string assemblyArtifactName, AssemblyDefinitionData data, CancellationToken cancellationToken = default)
+        public async Task<Response<IntegrationAccountAssemblyDefinitionData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string integrationAccountName, string assemblyArtifactName, IntegrationAccountAssemblyDefinitionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -254,9 +254,9 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                 case 201:
                     {
-                        AssemblyDefinitionData value = default;
+                        IntegrationAccountAssemblyDefinitionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AssemblyDefinitionData.DeserializeAssemblyDefinitionData(document.RootElement);
+                        value = IntegrationAccountAssemblyDefinitionData.DeserializeIntegrationAccountAssemblyDefinitionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="integrationAccountName"/>, <paramref name="assemblyArtifactName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="integrationAccountName"/> or <paramref name="assemblyArtifactName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AssemblyDefinitionData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string integrationAccountName, string assemblyArtifactName, AssemblyDefinitionData data, CancellationToken cancellationToken = default)
+        public Response<IntegrationAccountAssemblyDefinitionData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string integrationAccountName, string assemblyArtifactName, IntegrationAccountAssemblyDefinitionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -288,9 +288,9 @@ namespace Azure.ResourceManager.Logic
                 case 200:
                 case 201:
                     {
-                        AssemblyDefinitionData value = default;
+                        IntegrationAccountAssemblyDefinitionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AssemblyDefinitionData.DeserializeAssemblyDefinitionData(document.RootElement);
+                        value = IntegrationAccountAssemblyDefinitionData.DeserializeIntegrationAccountAssemblyDefinitionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="integrationAccountName"/> or <paramref name="assemblyArtifactName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="integrationAccountName"/> or <paramref name="assemblyArtifactName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WorkflowTriggerCallbackUri>> ListContentCallbackUrlAsync(string subscriptionId, string resourceGroupName, string integrationAccountName, string assemblyArtifactName, CancellationToken cancellationToken = default)
+        public async Task<Response<LogicAppWorkflowTriggerCallbackUri>> ListContentCallbackUrlAsync(string subscriptionId, string resourceGroupName, string integrationAccountName, string assemblyArtifactName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -418,9 +418,9 @@ namespace Azure.ResourceManager.Logic
             {
                 case 200:
                     {
-                        WorkflowTriggerCallbackUri value = default;
+                        LogicAppWorkflowTriggerCallbackUri value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WorkflowTriggerCallbackUri.DeserializeWorkflowTriggerCallbackUri(document.RootElement);
+                        value = LogicAppWorkflowTriggerCallbackUri.DeserializeLogicAppWorkflowTriggerCallbackUri(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="integrationAccountName"/> or <paramref name="assemblyArtifactName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="integrationAccountName"/> or <paramref name="assemblyArtifactName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WorkflowTriggerCallbackUri> ListContentCallbackUrl(string subscriptionId, string resourceGroupName, string integrationAccountName, string assemblyArtifactName, CancellationToken cancellationToken = default)
+        public Response<LogicAppWorkflowTriggerCallbackUri> ListContentCallbackUrl(string subscriptionId, string resourceGroupName, string integrationAccountName, string assemblyArtifactName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -449,9 +449,9 @@ namespace Azure.ResourceManager.Logic
             {
                 case 200:
                     {
-                        WorkflowTriggerCallbackUri value = default;
+                        LogicAppWorkflowTriggerCallbackUri value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WorkflowTriggerCallbackUri.DeserializeWorkflowTriggerCallbackUri(document.RootElement);
+                        value = LogicAppWorkflowTriggerCallbackUri.DeserializeLogicAppWorkflowTriggerCallbackUri(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

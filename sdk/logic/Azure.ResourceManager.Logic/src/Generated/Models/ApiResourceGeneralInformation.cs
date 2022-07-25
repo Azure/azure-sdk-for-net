@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The API general information. </summary>
+    /// <summary>
+    /// The API general information.
+    /// Serialized Name: ApiResourceGeneralInformation
+    /// </summary>
     public partial class ApiResourceGeneralInformation
     {
         /// <summary> Initializes a new instance of ApiResourceGeneralInformation. </summary>
@@ -18,12 +21,30 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of ApiResourceGeneralInformation. </summary>
-        /// <param name="iconUri"> The icon url. </param>
-        /// <param name="displayName"> The display name. </param>
-        /// <param name="description"> The description. </param>
-        /// <param name="termsOfUseUri"> The terms of use url. </param>
-        /// <param name="releaseTag"> The release tag. </param>
-        /// <param name="tier"> The tier. </param>
+        /// <param name="iconUri">
+        /// The icon url.
+        /// Serialized Name: ApiResourceGeneralInformation.iconUrl
+        /// </param>
+        /// <param name="displayName">
+        /// The display name.
+        /// Serialized Name: ApiResourceGeneralInformation.displayName
+        /// </param>
+        /// <param name="description">
+        /// The description.
+        /// Serialized Name: ApiResourceGeneralInformation.description
+        /// </param>
+        /// <param name="termsOfUseUri">
+        /// The terms of use url.
+        /// Serialized Name: ApiResourceGeneralInformation.termsOfUseUrl
+        /// </param>
+        /// <param name="releaseTag">
+        /// The release tag.
+        /// Serialized Name: ApiResourceGeneralInformation.releaseTag
+        /// </param>
+        /// <param name="tier">
+        /// The tier.
+        /// Serialized Name: ApiResourceGeneralInformation.tier
+        /// </param>
         internal ApiResourceGeneralInformation(Uri iconUri, string displayName, string description, Uri termsOfUseUri, string releaseTag, ApiTier? tier)
         {
             IconUri = iconUri;
@@ -34,17 +55,35 @@ namespace Azure.ResourceManager.Logic.Models
             Tier = tier;
         }
 
-        /// <summary> The icon url. </summary>
+        /// <summary>
+        /// The icon url.
+        /// Serialized Name: ApiResourceGeneralInformation.iconUrl
+        /// </summary>
         public Uri IconUri { get; }
-        /// <summary> The display name. </summary>
+        /// <summary>
+        /// The display name.
+        /// Serialized Name: ApiResourceGeneralInformation.displayName
+        /// </summary>
         public string DisplayName { get; }
-        /// <summary> The description. </summary>
+        /// <summary>
+        /// The description.
+        /// Serialized Name: ApiResourceGeneralInformation.description
+        /// </summary>
         public string Description { get; }
-        /// <summary> The terms of use url. </summary>
+        /// <summary>
+        /// The terms of use url.
+        /// Serialized Name: ApiResourceGeneralInformation.termsOfUseUrl
+        /// </summary>
         public Uri TermsOfUseUri { get; }
-        /// <summary> The release tag. </summary>
+        /// <summary>
+        /// The release tag.
+        /// Serialized Name: ApiResourceGeneralInformation.releaseTag
+        /// </summary>
         public string ReleaseTag { get; }
-        /// <summary> The tier. </summary>
+        /// <summary>
+        /// The tier.
+        /// Serialized Name: ApiResourceGeneralInformation.tier
+        /// </summary>
         public ApiTier? Tier { get; }
     }
 }

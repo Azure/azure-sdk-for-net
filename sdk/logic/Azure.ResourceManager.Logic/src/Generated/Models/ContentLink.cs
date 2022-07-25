@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The content link. </summary>
+    /// <summary>
+    /// The content link.
+    /// Serialized Name: ContentLink
+    /// </summary>
     public partial class ContentLink
     {
         /// <summary> Initializes a new instance of ContentLink. </summary>
@@ -18,11 +21,26 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of ContentLink. </summary>
-        /// <param name="uri"> The content link URI. </param>
-        /// <param name="contentVersion"> The content version. </param>
-        /// <param name="contentSize"> The content size. </param>
-        /// <param name="contentHash"> The content hash. </param>
-        /// <param name="metadata"> The metadata. </param>
+        /// <param name="uri">
+        /// The content link URI.
+        /// Serialized Name: ContentLink.uri
+        /// </param>
+        /// <param name="contentVersion">
+        /// The content version.
+        /// Serialized Name: ContentLink.contentVersion
+        /// </param>
+        /// <param name="contentSize">
+        /// The content size.
+        /// Serialized Name: ContentLink.contentSize
+        /// </param>
+        /// <param name="contentHash">
+        /// The content hash.
+        /// Serialized Name: ContentLink.contentHash
+        /// </param>
+        /// <param name="metadata">
+        /// The metadata.
+        /// Serialized Name: ContentLink.metadata
+        /// </param>
         internal ContentLink(Uri uri, string contentVersion, long? contentSize, ContentHash contentHash, BinaryData metadata)
         {
             Uri = uri;
@@ -32,15 +50,30 @@ namespace Azure.ResourceManager.Logic.Models
             Metadata = metadata;
         }
 
-        /// <summary> The content link URI. </summary>
+        /// <summary>
+        /// The content link URI.
+        /// Serialized Name: ContentLink.uri
+        /// </summary>
         public Uri Uri { get; set; }
-        /// <summary> The content version. </summary>
+        /// <summary>
+        /// The content version.
+        /// Serialized Name: ContentLink.contentVersion
+        /// </summary>
         public string ContentVersion { get; }
-        /// <summary> The content size. </summary>
+        /// <summary>
+        /// The content size.
+        /// Serialized Name: ContentLink.contentSize
+        /// </summary>
         public long? ContentSize { get; }
-        /// <summary> The content hash. </summary>
+        /// <summary>
+        /// The content hash.
+        /// Serialized Name: ContentLink.contentHash
+        /// </summary>
         public ContentHash ContentHash { get; }
-        /// <summary> The metadata. </summary>
+        /// <summary>
+        /// The metadata.
+        /// Serialized Name: ContentLink.metadata
+        /// </summary>
         public BinaryData Metadata { get; }
     }
 }

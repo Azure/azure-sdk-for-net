@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The X12 character set. </summary>
+    /// <summary>
+    /// The X12 character set.
+    /// Serialized Name: X12CharacterSet
+    /// </summary>
     public readonly partial struct X12CharacterSet : IEquatable<X12CharacterSet>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.Logic.Models
         private const string ExtendedValue = "Extended";
         private const string UTF8Value = "UTF8";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary>
+        /// NotSpecified
+        /// Serialized Name: X12CharacterSet.NotSpecified
+        /// </summary>
         public static X12CharacterSet NotSpecified { get; } = new X12CharacterSet(NotSpecifiedValue);
-        /// <summary> Basic. </summary>
+        /// <summary>
+        /// Basic
+        /// Serialized Name: X12CharacterSet.Basic
+        /// </summary>
         public static X12CharacterSet Basic { get; } = new X12CharacterSet(BasicValue);
-        /// <summary> Extended. </summary>
+        /// <summary>
+        /// Extended
+        /// Serialized Name: X12CharacterSet.Extended
+        /// </summary>
         public static X12CharacterSet Extended { get; } = new X12CharacterSet(ExtendedValue);
-        /// <summary> UTF8. </summary>
+        /// <summary>
+        /// UTF8
+        /// Serialized Name: X12CharacterSet.UTF8
+        /// </summary>
         public static X12CharacterSet UTF8 { get; } = new X12CharacterSet(UTF8Value);
         /// <summary> Determines if two <see cref="X12CharacterSet"/> values are the same. </summary>
         public static bool operator ==(X12CharacterSet left, X12CharacterSet right) => left.Equals(right);

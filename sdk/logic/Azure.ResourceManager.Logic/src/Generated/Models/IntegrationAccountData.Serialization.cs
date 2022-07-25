@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Logic
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<ResourceReference> integrationServiceEnvironment = default;
-            Optional<WorkflowState> state = default;
+            Optional<LogicAppWorkflowState> state = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Logic
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            state = new WorkflowState(property0.Value.GetString());
+                            state = new LogicAppWorkflowState(property0.Value.GetString());
                             continue;
                         }
                     }

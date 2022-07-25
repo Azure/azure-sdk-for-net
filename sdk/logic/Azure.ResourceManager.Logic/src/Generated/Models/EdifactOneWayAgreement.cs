@@ -9,13 +9,25 @@ using System;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The Edifact one way agreement. </summary>
+    /// <summary>
+    /// The Edifact one way agreement.
+    /// Serialized Name: EdifactOneWayAgreement
+    /// </summary>
     public partial class EdifactOneWayAgreement
     {
         /// <summary> Initializes a new instance of EdifactOneWayAgreement. </summary>
-        /// <param name="senderBusinessIdentity"> The sender business identity. </param>
-        /// <param name="receiverBusinessIdentity"> The receiver business identity. </param>
-        /// <param name="protocolSettings"> The EDIFACT protocol settings. </param>
+        /// <param name="senderBusinessIdentity">
+        /// The sender business identity
+        /// Serialized Name: EdifactOneWayAgreement.senderBusinessIdentity
+        /// </param>
+        /// <param name="receiverBusinessIdentity">
+        /// The receiver business identity
+        /// Serialized Name: EdifactOneWayAgreement.receiverBusinessIdentity
+        /// </param>
+        /// <param name="protocolSettings">
+        /// The EDIFACT protocol settings.
+        /// Serialized Name: EdifactOneWayAgreement.protocolSettings
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="senderBusinessIdentity"/>, <paramref name="receiverBusinessIdentity"/> or <paramref name="protocolSettings"/> is null. </exception>
         public EdifactOneWayAgreement(BusinessIdentity senderBusinessIdentity, BusinessIdentity receiverBusinessIdentity, EdifactProtocolSettings protocolSettings)
         {
@@ -37,11 +49,20 @@ namespace Azure.ResourceManager.Logic.Models
             ProtocolSettings = protocolSettings;
         }
 
-        /// <summary> The sender business identity. </summary>
+        /// <summary>
+        /// The sender business identity
+        /// Serialized Name: EdifactOneWayAgreement.senderBusinessIdentity
+        /// </summary>
         public BusinessIdentity SenderBusinessIdentity { get; set; }
-        /// <summary> The receiver business identity. </summary>
+        /// <summary>
+        /// The receiver business identity
+        /// Serialized Name: EdifactOneWayAgreement.receiverBusinessIdentity
+        /// </summary>
         public BusinessIdentity ReceiverBusinessIdentity { get; set; }
-        /// <summary> The EDIFACT protocol settings. </summary>
+        /// <summary>
+        /// The EDIFACT protocol settings.
+        /// Serialized Name: EdifactOneWayAgreement.protocolSettings
+        /// </summary>
         public EdifactProtocolSettings ProtocolSettings { get; set; }
     }
 }

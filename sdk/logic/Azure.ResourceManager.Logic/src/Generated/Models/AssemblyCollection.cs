@@ -11,23 +11,26 @@ using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> A collection of assembly definitions. </summary>
+    /// <summary>
+    /// A collection of assembly definitions.
+    /// Serialized Name: AssemblyCollection
+    /// </summary>
     internal partial class AssemblyCollection
     {
         /// <summary> Initializes a new instance of AssemblyCollection. </summary>
         internal AssemblyCollection()
         {
-            Value = new ChangeTrackingList<AssemblyDefinitionData>();
+            Value = new ChangeTrackingList<IntegrationAccountAssemblyDefinitionData>();
         }
 
         /// <summary> Initializes a new instance of AssemblyCollection. </summary>
-        /// <param name="value"></param>
-        internal AssemblyCollection(IReadOnlyList<AssemblyDefinitionData> value)
+        /// <param name="value"> Serialized Name: AssemblyCollection.value. </param>
+        internal AssemblyCollection(IReadOnlyList<IntegrationAccountAssemblyDefinitionData> value)
         {
             Value = value;
         }
 
-        /// <summary> Gets the value. </summary>
-        public IReadOnlyList<AssemblyDefinitionData> Value { get; }
+        /// <summary> Serialized Name: AssemblyCollection.value. </summary>
+        public IReadOnlyList<IntegrationAccountAssemblyDefinitionData> Value { get; }
     }
 }

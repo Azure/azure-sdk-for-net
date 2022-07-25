@@ -9,13 +9,25 @@ using System;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The X12 one-way agreement. </summary>
+    /// <summary>
+    /// The X12 one-way agreement.
+    /// Serialized Name: X12OneWayAgreement
+    /// </summary>
     public partial class X12OneWayAgreement
     {
         /// <summary> Initializes a new instance of X12OneWayAgreement. </summary>
-        /// <param name="senderBusinessIdentity"> The sender business identity. </param>
-        /// <param name="receiverBusinessIdentity"> The receiver business identity. </param>
-        /// <param name="protocolSettings"> The X12 protocol settings. </param>
+        /// <param name="senderBusinessIdentity">
+        /// The sender business identity
+        /// Serialized Name: X12OneWayAgreement.senderBusinessIdentity
+        /// </param>
+        /// <param name="receiverBusinessIdentity">
+        /// The receiver business identity
+        /// Serialized Name: X12OneWayAgreement.receiverBusinessIdentity
+        /// </param>
+        /// <param name="protocolSettings">
+        /// The X12 protocol settings.
+        /// Serialized Name: X12OneWayAgreement.protocolSettings
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="senderBusinessIdentity"/>, <paramref name="receiverBusinessIdentity"/> or <paramref name="protocolSettings"/> is null. </exception>
         public X12OneWayAgreement(BusinessIdentity senderBusinessIdentity, BusinessIdentity receiverBusinessIdentity, X12ProtocolSettings protocolSettings)
         {
@@ -37,11 +49,20 @@ namespace Azure.ResourceManager.Logic.Models
             ProtocolSettings = protocolSettings;
         }
 
-        /// <summary> The sender business identity. </summary>
+        /// <summary>
+        /// The sender business identity
+        /// Serialized Name: X12OneWayAgreement.senderBusinessIdentity
+        /// </summary>
         public BusinessIdentity SenderBusinessIdentity { get; set; }
-        /// <summary> The receiver business identity. </summary>
+        /// <summary>
+        /// The receiver business identity
+        /// Serialized Name: X12OneWayAgreement.receiverBusinessIdentity
+        /// </summary>
         public BusinessIdentity ReceiverBusinessIdentity { get; set; }
-        /// <summary> The X12 protocol settings. </summary>
+        /// <summary>
+        /// The X12 protocol settings.
+        /// Serialized Name: X12OneWayAgreement.protocolSettings
+        /// </summary>
         public X12ProtocolSettings ProtocolSettings { get; set; }
     }
 }

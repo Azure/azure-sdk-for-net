@@ -9,12 +9,21 @@ using System;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The Edifact agreement content. </summary>
+    /// <summary>
+    /// The Edifact agreement content.
+    /// Serialized Name: EdifactAgreementContent
+    /// </summary>
     public partial class EdifactAgreementContent
     {
         /// <summary> Initializes a new instance of EdifactAgreementContent. </summary>
-        /// <param name="receiveAgreement"> The EDIFACT one-way receive agreement. </param>
-        /// <param name="sendAgreement"> The EDIFACT one-way send agreement. </param>
+        /// <param name="receiveAgreement">
+        /// The EDIFACT one-way receive agreement.
+        /// Serialized Name: EdifactAgreementContent.receiveAgreement
+        /// </param>
+        /// <param name="sendAgreement">
+        /// The EDIFACT one-way send agreement.
+        /// Serialized Name: EdifactAgreementContent.sendAgreement
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="receiveAgreement"/> or <paramref name="sendAgreement"/> is null. </exception>
         public EdifactAgreementContent(EdifactOneWayAgreement receiveAgreement, EdifactOneWayAgreement sendAgreement)
         {
@@ -31,9 +40,15 @@ namespace Azure.ResourceManager.Logic.Models
             SendAgreement = sendAgreement;
         }
 
-        /// <summary> The EDIFACT one-way receive agreement. </summary>
+        /// <summary>
+        /// The EDIFACT one-way receive agreement.
+        /// Serialized Name: EdifactAgreementContent.receiveAgreement
+        /// </summary>
         public EdifactOneWayAgreement ReceiveAgreement { get; set; }
-        /// <summary> The EDIFACT one-way send agreement. </summary>
+        /// <summary>
+        /// The EDIFACT one-way send agreement.
+        /// Serialized Name: EdifactAgreementContent.sendAgreement
+        /// </summary>
         public EdifactOneWayAgreement SendAgreement { get; set; }
     }
 }

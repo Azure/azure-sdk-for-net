@@ -9,13 +9,25 @@ using System;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The tracking event. </summary>
+    /// <summary>
+    /// The tracking event.
+    /// Serialized Name: TrackingEvent
+    /// </summary>
     public partial class TrackingEvent
     {
         /// <summary> Initializes a new instance of TrackingEvent. </summary>
-        /// <param name="eventLevel"> The event level. </param>
-        /// <param name="eventOn"> The event time. </param>
-        /// <param name="recordType"> The record type. </param>
+        /// <param name="eventLevel">
+        /// The event level.
+        /// Serialized Name: TrackingEvent.eventLevel
+        /// </param>
+        /// <param name="eventOn">
+        /// The event time.
+        /// Serialized Name: TrackingEvent.eventTime
+        /// </param>
+        /// <param name="recordType">
+        /// The record type.
+        /// Serialized Name: TrackingEvent.recordType
+        /// </param>
         public TrackingEvent(EventLevel eventLevel, DateTimeOffset eventOn, TrackingRecordType recordType)
         {
             EventLevel = eventLevel;
@@ -23,15 +35,30 @@ namespace Azure.ResourceManager.Logic.Models
             RecordType = recordType;
         }
 
-        /// <summary> The event level. </summary>
+        /// <summary>
+        /// The event level.
+        /// Serialized Name: TrackingEvent.eventLevel
+        /// </summary>
         public EventLevel EventLevel { get; }
-        /// <summary> The event time. </summary>
+        /// <summary>
+        /// The event time.
+        /// Serialized Name: TrackingEvent.eventTime
+        /// </summary>
         public DateTimeOffset EventOn { get; }
-        /// <summary> The record type. </summary>
+        /// <summary>
+        /// The record type.
+        /// Serialized Name: TrackingEvent.recordType
+        /// </summary>
         public TrackingRecordType RecordType { get; }
-        /// <summary> The record. </summary>
+        /// <summary>
+        /// The record.
+        /// Serialized Name: TrackingEvent.record
+        /// </summary>
         public BinaryData Record { get; set; }
-        /// <summary> The error. </summary>
+        /// <summary>
+        /// The error.
+        /// Serialized Name: TrackingEvent.error
+        /// </summary>
         public TrackingEventErrorInfo Error { get; set; }
     }
 }

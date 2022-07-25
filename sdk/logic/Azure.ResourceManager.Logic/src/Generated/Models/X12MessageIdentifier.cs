@@ -9,11 +9,17 @@ using System;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The X12 message identifier. </summary>
+    /// <summary>
+    /// The X12 message identifier.
+    /// Serialized Name: X12MessageIdentifier
+    /// </summary>
     public partial class X12MessageIdentifier
     {
         /// <summary> Initializes a new instance of X12MessageIdentifier. </summary>
-        /// <param name="messageId"> The message id. </param>
+        /// <param name="messageId">
+        /// The message id.
+        /// Serialized Name: X12MessageIdentifier.messageId
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="messageId"/> is null. </exception>
         public X12MessageIdentifier(string messageId)
         {
@@ -25,7 +31,10 @@ namespace Azure.ResourceManager.Logic.Models
             MessageId = messageId;
         }
 
-        /// <summary> The message id. </summary>
+        /// <summary>
+        /// The message id.
+        /// Serialized Name: X12MessageIdentifier.messageId
+        /// </summary>
         public string MessageId { get; set; }
     }
 }

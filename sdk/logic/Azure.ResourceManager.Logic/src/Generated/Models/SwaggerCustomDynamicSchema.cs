@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The swagger custom dynamic schema. </summary>
+    /// <summary>
+    /// The swagger custom dynamic schema.
+    /// Serialized Name: SwaggerCustomDynamicSchema
+    /// </summary>
     public partial class SwaggerCustomDynamicSchema
     {
         /// <summary> Initializes a new instance of SwaggerCustomDynamicSchema. </summary>
@@ -21,9 +24,18 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of SwaggerCustomDynamicSchema. </summary>
-        /// <param name="operationId"> The operation id to fetch dynamic schema. </param>
-        /// <param name="valuePath"> Json pointer to the dynamic schema on the response body. </param>
-        /// <param name="parameters"> The operation parameters. </param>
+        /// <param name="operationId">
+        /// The operation id to fetch dynamic schema.
+        /// Serialized Name: SwaggerCustomDynamicSchema.operationId
+        /// </param>
+        /// <param name="valuePath">
+        /// Json pointer to the dynamic schema on the response body.
+        /// Serialized Name: SwaggerCustomDynamicSchema.valuePath
+        /// </param>
+        /// <param name="parameters">
+        /// The operation parameters.
+        /// Serialized Name: SwaggerCustomDynamicSchema.parameters
+        /// </param>
         internal SwaggerCustomDynamicSchema(string operationId, string valuePath, IDictionary<string, BinaryData> parameters)
         {
             OperationId = operationId;
@@ -31,11 +43,20 @@ namespace Azure.ResourceManager.Logic.Models
             Parameters = parameters;
         }
 
-        /// <summary> The operation id to fetch dynamic schema. </summary>
+        /// <summary>
+        /// The operation id to fetch dynamic schema.
+        /// Serialized Name: SwaggerCustomDynamicSchema.operationId
+        /// </summary>
         public string OperationId { get; set; }
-        /// <summary> Json pointer to the dynamic schema on the response body. </summary>
+        /// <summary>
+        /// Json pointer to the dynamic schema on the response body.
+        /// Serialized Name: SwaggerCustomDynamicSchema.valuePath
+        /// </summary>
         public string ValuePath { get; set; }
-        /// <summary> The operation parameters. </summary>
+        /// <summary>
+        /// The operation parameters.
+        /// Serialized Name: SwaggerCustomDynamicSchema.parameters
+        /// </summary>
         public IDictionary<string, BinaryData> Parameters { get; }
     }
 }

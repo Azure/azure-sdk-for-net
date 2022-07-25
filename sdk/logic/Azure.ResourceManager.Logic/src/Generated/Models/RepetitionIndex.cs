@@ -7,28 +7,46 @@
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The workflow run action repetition index. </summary>
+    /// <summary>
+    /// The workflow run action repetition index.
+    /// Serialized Name: RepetitionIndex
+    /// </summary>
     public partial class RepetitionIndex
     {
         /// <summary> Initializes a new instance of RepetitionIndex. </summary>
-        /// <param name="itemIndex"> The index. </param>
+        /// <param name="itemIndex">
+        /// The index.
+        /// Serialized Name: RepetitionIndex.itemIndex
+        /// </param>
         public RepetitionIndex(int itemIndex)
         {
             ItemIndex = itemIndex;
         }
 
         /// <summary> Initializes a new instance of RepetitionIndex. </summary>
-        /// <param name="scopeName"> The scope. </param>
-        /// <param name="itemIndex"> The index. </param>
+        /// <param name="scopeName">
+        /// The scope.
+        /// Serialized Name: RepetitionIndex.scopeName
+        /// </param>
+        /// <param name="itemIndex">
+        /// The index.
+        /// Serialized Name: RepetitionIndex.itemIndex
+        /// </param>
         internal RepetitionIndex(string scopeName, int itemIndex)
         {
             ScopeName = scopeName;
             ItemIndex = itemIndex;
         }
 
-        /// <summary> The scope. </summary>
+        /// <summary>
+        /// The scope.
+        /// Serialized Name: RepetitionIndex.scopeName
+        /// </summary>
         public string ScopeName { get; set; }
-        /// <summary> The index. </summary>
+        /// <summary>
+        /// The index.
+        /// Serialized Name: RepetitionIndex.itemIndex
+        /// </summary>
         public int ItemIndex { get; set; }
     }
 }

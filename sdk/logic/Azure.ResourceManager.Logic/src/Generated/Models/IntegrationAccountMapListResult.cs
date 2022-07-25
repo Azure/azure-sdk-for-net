@@ -11,7 +11,10 @@ using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The list of integration account maps. </summary>
+    /// <summary>
+    /// The list of integration account maps.
+    /// Serialized Name: IntegrationAccountMapListResult
+    /// </summary>
     internal partial class IntegrationAccountMapListResult
     {
         /// <summary> Initializes a new instance of IntegrationAccountMapListResult. </summary>
@@ -21,17 +24,29 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of IntegrationAccountMapListResult. </summary>
-        /// <param name="value"> The list of integration account maps. </param>
-        /// <param name="nextLink"> The URL to get the next set of results. </param>
+        /// <param name="value">
+        /// The list of integration account maps.
+        /// Serialized Name: IntegrationAccountMapListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The URL to get the next set of results.
+        /// Serialized Name: IntegrationAccountMapListResult.nextLink
+        /// </param>
         internal IntegrationAccountMapListResult(IReadOnlyList<IntegrationAccountMapData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> The list of integration account maps. </summary>
+        /// <summary>
+        /// The list of integration account maps.
+        /// Serialized Name: IntegrationAccountMapListResult.value
+        /// </summary>
         public IReadOnlyList<IntegrationAccountMapData> Value { get; }
-        /// <summary> The URL to get the next set of results. </summary>
+        /// <summary>
+        /// The URL to get the next set of results.
+        /// Serialized Name: IntegrationAccountMapListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

@@ -9,11 +9,17 @@ using System;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The error info. </summary>
+    /// <summary>
+    /// The error info.
+    /// Serialized Name: ErrorInfo
+    /// </summary>
     public partial class ErrorInfo
     {
         /// <summary> Initializes a new instance of ErrorInfo. </summary>
-        /// <param name="code"> The error code. </param>
+        /// <param name="code">
+        /// The error code.
+        /// Serialized Name: ErrorInfo.code
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="code"/> is null. </exception>
         internal ErrorInfo(string code)
         {
@@ -25,7 +31,10 @@ namespace Azure.ResourceManager.Logic.Models
             Code = code;
         }
 
-        /// <summary> The error code. </summary>
+        /// <summary>
+        /// The error code.
+        /// Serialized Name: ErrorInfo.code
+        /// </summary>
         public string Code { get; }
     }
 }

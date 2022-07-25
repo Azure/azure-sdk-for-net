@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The tracking record type. </summary>
+    /// <summary>
+    /// The tracking record type.
+    /// Serialized Name: TrackingRecordType
+    /// </summary>
     public readonly partial struct TrackingRecordType : IEquatable<TrackingRecordType>
     {
         private readonly string _value;
@@ -39,37 +42,85 @@ namespace Azure.ResourceManager.Logic.Models
         private const string EdifactFunctionalGroupAcknowledgmentValue = "EdifactFunctionalGroupAcknowledgment";
         private const string EdifactTransactionSetAcknowledgmentValue = "EdifactTransactionSetAcknowledgment";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary>
+        /// NotSpecified
+        /// Serialized Name: TrackingRecordType.NotSpecified
+        /// </summary>
         public static TrackingRecordType NotSpecified { get; } = new TrackingRecordType(NotSpecifiedValue);
-        /// <summary> Custom. </summary>
+        /// <summary>
+        /// Custom
+        /// Serialized Name: TrackingRecordType.Custom
+        /// </summary>
         public static TrackingRecordType Custom { get; } = new TrackingRecordType(CustomValue);
-        /// <summary> AS2Message. </summary>
+        /// <summary>
+        /// AS2Message
+        /// Serialized Name: TrackingRecordType.AS2Message
+        /// </summary>
         public static TrackingRecordType AS2Message { get; } = new TrackingRecordType(AS2MessageValue);
-        /// <summary> AS2MDN. </summary>
+        /// <summary>
+        /// AS2MDN
+        /// Serialized Name: TrackingRecordType.AS2MDN
+        /// </summary>
         public static TrackingRecordType AS2MDN { get; } = new TrackingRecordType(AS2MDNValue);
-        /// <summary> X12Interchange. </summary>
+        /// <summary>
+        /// X12Interchange
+        /// Serialized Name: TrackingRecordType.X12Interchange
+        /// </summary>
         public static TrackingRecordType X12Interchange { get; } = new TrackingRecordType(X12InterchangeValue);
-        /// <summary> X12FunctionalGroup. </summary>
+        /// <summary>
+        /// X12FunctionalGroup
+        /// Serialized Name: TrackingRecordType.X12FunctionalGroup
+        /// </summary>
         public static TrackingRecordType X12FunctionalGroup { get; } = new TrackingRecordType(X12FunctionalGroupValue);
-        /// <summary> X12TransactionSet. </summary>
+        /// <summary>
+        /// X12TransactionSet
+        /// Serialized Name: TrackingRecordType.X12TransactionSet
+        /// </summary>
         public static TrackingRecordType X12TransactionSet { get; } = new TrackingRecordType(X12TransactionSetValue);
-        /// <summary> X12InterchangeAcknowledgment. </summary>
+        /// <summary>
+        /// X12InterchangeAcknowledgment
+        /// Serialized Name: TrackingRecordType.X12InterchangeAcknowledgment
+        /// </summary>
         public static TrackingRecordType X12InterchangeAcknowledgment { get; } = new TrackingRecordType(X12InterchangeAcknowledgmentValue);
-        /// <summary> X12FunctionalGroupAcknowledgment. </summary>
+        /// <summary>
+        /// X12FunctionalGroupAcknowledgment
+        /// Serialized Name: TrackingRecordType.X12FunctionalGroupAcknowledgment
+        /// </summary>
         public static TrackingRecordType X12FunctionalGroupAcknowledgment { get; } = new TrackingRecordType(X12FunctionalGroupAcknowledgmentValue);
-        /// <summary> X12TransactionSetAcknowledgment. </summary>
+        /// <summary>
+        /// X12TransactionSetAcknowledgment
+        /// Serialized Name: TrackingRecordType.X12TransactionSetAcknowledgment
+        /// </summary>
         public static TrackingRecordType X12TransactionSetAcknowledgment { get; } = new TrackingRecordType(X12TransactionSetAcknowledgmentValue);
-        /// <summary> EdifactInterchange. </summary>
+        /// <summary>
+        /// EdifactInterchange
+        /// Serialized Name: TrackingRecordType.EdifactInterchange
+        /// </summary>
         public static TrackingRecordType EdifactInterchange { get; } = new TrackingRecordType(EdifactInterchangeValue);
-        /// <summary> EdifactFunctionalGroup. </summary>
+        /// <summary>
+        /// EdifactFunctionalGroup
+        /// Serialized Name: TrackingRecordType.EdifactFunctionalGroup
+        /// </summary>
         public static TrackingRecordType EdifactFunctionalGroup { get; } = new TrackingRecordType(EdifactFunctionalGroupValue);
-        /// <summary> EdifactTransactionSet. </summary>
+        /// <summary>
+        /// EdifactTransactionSet
+        /// Serialized Name: TrackingRecordType.EdifactTransactionSet
+        /// </summary>
         public static TrackingRecordType EdifactTransactionSet { get; } = new TrackingRecordType(EdifactTransactionSetValue);
-        /// <summary> EdifactInterchangeAcknowledgment. </summary>
+        /// <summary>
+        /// EdifactInterchangeAcknowledgment
+        /// Serialized Name: TrackingRecordType.EdifactInterchangeAcknowledgment
+        /// </summary>
         public static TrackingRecordType EdifactInterchangeAcknowledgment { get; } = new TrackingRecordType(EdifactInterchangeAcknowledgmentValue);
-        /// <summary> EdifactFunctionalGroupAcknowledgment. </summary>
+        /// <summary>
+        /// EdifactFunctionalGroupAcknowledgment
+        /// Serialized Name: TrackingRecordType.EdifactFunctionalGroupAcknowledgment
+        /// </summary>
         public static TrackingRecordType EdifactFunctionalGroupAcknowledgment { get; } = new TrackingRecordType(EdifactFunctionalGroupAcknowledgmentValue);
-        /// <summary> EdifactTransactionSetAcknowledgment. </summary>
+        /// <summary>
+        /// EdifactTransactionSetAcknowledgment
+        /// Serialized Name: TrackingRecordType.EdifactTransactionSetAcknowledgment
+        /// </summary>
         public static TrackingRecordType EdifactTransactionSetAcknowledgment { get; } = new TrackingRecordType(EdifactTransactionSetAcknowledgmentValue);
         /// <summary> Determines if two <see cref="TrackingRecordType"/> values are the same. </summary>
         public static bool operator ==(TrackingRecordType left, TrackingRecordType right) => left.Equals(right);

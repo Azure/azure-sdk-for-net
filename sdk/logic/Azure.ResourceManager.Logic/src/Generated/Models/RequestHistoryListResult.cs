@@ -11,7 +11,10 @@ using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The list of workflow request histories. </summary>
+    /// <summary>
+    /// The list of workflow request histories.
+    /// Serialized Name: RequestHistoryListResult
+    /// </summary>
     internal partial class RequestHistoryListResult
     {
         /// <summary> Initializes a new instance of RequestHistoryListResult. </summary>
@@ -21,17 +24,29 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of RequestHistoryListResult. </summary>
-        /// <param name="value"> A list of workflow request histories. </param>
-        /// <param name="nextLink"> The URL to get the next set of results. </param>
+        /// <param name="value">
+        /// A list of workflow request histories.
+        /// Serialized Name: RequestHistoryListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The URL to get the next set of results.
+        /// Serialized Name: RequestHistoryListResult.nextLink
+        /// </param>
         internal RequestHistoryListResult(IReadOnlyList<RequestHistoryData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> A list of workflow request histories. </summary>
+        /// <summary>
+        /// A list of workflow request histories.
+        /// Serialized Name: RequestHistoryListResult.value
+        /// </summary>
         public IReadOnlyList<RequestHistoryData> Value { get; }
-        /// <summary> The URL to get the next set of results. </summary>
+        /// <summary>
+        /// The URL to get the next set of results.
+        /// Serialized Name: RequestHistoryListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

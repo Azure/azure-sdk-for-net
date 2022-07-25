@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The swagger custom dynamic tree settings. </summary>
+    /// <summary>
+    /// The swagger custom dynamic tree settings.
+    /// Serialized Name: SwaggerCustomDynamicTreeSettings
+    /// </summary>
     public partial class SwaggerCustomDynamicTreeSettings
     {
         /// <summary> Initializes a new instance of SwaggerCustomDynamicTreeSettings. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of SwaggerCustomDynamicTreeSettings. </summary>
-        /// <param name="canSelectParentNodes"> Indicates whether parent nodes can be selected. </param>
-        /// <param name="canSelectLeafNodes"> Indicates whether leaf nodes can be selected. </param>
+        /// <param name="canSelectParentNodes">
+        /// Indicates whether parent nodes can be selected.
+        /// Serialized Name: SwaggerCustomDynamicTreeSettings.CanSelectParentNodes
+        /// </param>
+        /// <param name="canSelectLeafNodes">
+        /// Indicates whether leaf nodes can be selected.
+        /// Serialized Name: SwaggerCustomDynamicTreeSettings.CanSelectLeafNodes
+        /// </param>
         internal SwaggerCustomDynamicTreeSettings(bool? canSelectParentNodes, bool? canSelectLeafNodes)
         {
             CanSelectParentNodes = canSelectParentNodes;
             CanSelectLeafNodes = canSelectLeafNodes;
         }
 
-        /// <summary> Indicates whether parent nodes can be selected. </summary>
+        /// <summary>
+        /// Indicates whether parent nodes can be selected.
+        /// Serialized Name: SwaggerCustomDynamicTreeSettings.CanSelectParentNodes
+        /// </summary>
         public bool? CanSelectParentNodes { get; set; }
-        /// <summary> Indicates whether leaf nodes can be selected. </summary>
+        /// <summary>
+        /// Indicates whether leaf nodes can be selected.
+        /// Serialized Name: SwaggerCustomDynamicTreeSettings.CanSelectLeafNodes
+        /// </summary>
         public bool? CanSelectLeafNodes { get; set; }
     }
 }

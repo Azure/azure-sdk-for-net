@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The integration service environment network dependency health state. </summary>
+    /// <summary>
+    /// The integration service environment network dependency health state.
+    /// Serialized Name: IntegrationServiceEnvironmentNetworkDependencyHealthState
+    /// </summary>
     public readonly partial struct IntegrationServiceEnvironmentNetworkDependencyHealthState : IEquatable<IntegrationServiceEnvironmentNetworkDependencyHealthState>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.Logic.Models
         private const string UnhealthyValue = "Unhealthy";
         private const string UnknownValue = "Unknown";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary>
+        /// NotSpecified
+        /// Serialized Name: IntegrationServiceEnvironmentNetworkDependencyHealthState.NotSpecified
+        /// </summary>
         public static IntegrationServiceEnvironmentNetworkDependencyHealthState NotSpecified { get; } = new IntegrationServiceEnvironmentNetworkDependencyHealthState(NotSpecifiedValue);
-        /// <summary> Healthy. </summary>
+        /// <summary>
+        /// Healthy
+        /// Serialized Name: IntegrationServiceEnvironmentNetworkDependencyHealthState.Healthy
+        /// </summary>
         public static IntegrationServiceEnvironmentNetworkDependencyHealthState Healthy { get; } = new IntegrationServiceEnvironmentNetworkDependencyHealthState(HealthyValue);
-        /// <summary> Unhealthy. </summary>
+        /// <summary>
+        /// Unhealthy
+        /// Serialized Name: IntegrationServiceEnvironmentNetworkDependencyHealthState.Unhealthy
+        /// </summary>
         public static IntegrationServiceEnvironmentNetworkDependencyHealthState Unhealthy { get; } = new IntegrationServiceEnvironmentNetworkDependencyHealthState(UnhealthyValue);
-        /// <summary> Unknown. </summary>
+        /// <summary>
+        /// Unknown
+        /// Serialized Name: IntegrationServiceEnvironmentNetworkDependencyHealthState.Unknown
+        /// </summary>
         public static IntegrationServiceEnvironmentNetworkDependencyHealthState Unknown { get; } = new IntegrationServiceEnvironmentNetworkDependencyHealthState(UnknownValue);
         /// <summary> Determines if two <see cref="IntegrationServiceEnvironmentNetworkDependencyHealthState"/> values are the same. </summary>
         public static bool operator ==(IntegrationServiceEnvironmentNetworkDependencyHealthState left, IntegrationServiceEnvironmentNetworkDependencyHealthState right) => left.Equals(right);

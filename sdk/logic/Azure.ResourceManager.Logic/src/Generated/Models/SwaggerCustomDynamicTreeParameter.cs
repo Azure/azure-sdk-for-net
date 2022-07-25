@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The swagger custom dynamic tree parameter. </summary>
+    /// <summary>
+    /// The swagger custom dynamic tree parameter.
+    /// Serialized Name: SwaggerCustomDynamicTreeParameter
+    /// </summary>
     public partial class SwaggerCustomDynamicTreeParameter
     {
         /// <summary> Initializes a new instance of SwaggerCustomDynamicTreeParameter. </summary>
@@ -18,10 +21,22 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of SwaggerCustomDynamicTreeParameter. </summary>
-        /// <param name="selectedItemValuePath"> Gets or sets a path to a property in the currently selected item to pass as a value to a parameter for the given operation. </param>
-        /// <param name="value"> The parameter value. </param>
-        /// <param name="parameterReference"> The parameter reference. </param>
-        /// <param name="required"> Indicates whether the parameter is required. </param>
+        /// <param name="selectedItemValuePath">
+        /// Gets or sets a path to a property in the currently selected item to pass as a value to a parameter for the given operation.
+        /// Serialized Name: SwaggerCustomDynamicTreeParameter.selectedItemValuePath
+        /// </param>
+        /// <param name="value">
+        /// The parameter value.
+        /// Serialized Name: SwaggerCustomDynamicTreeParameter.value
+        /// </param>
+        /// <param name="parameterReference">
+        /// The parameter reference.
+        /// Serialized Name: SwaggerCustomDynamicTreeParameter.parameterReference
+        /// </param>
+        /// <param name="required">
+        /// Indicates whether the parameter is required.
+        /// Serialized Name: SwaggerCustomDynamicTreeParameter.required
+        /// </param>
         internal SwaggerCustomDynamicTreeParameter(string selectedItemValuePath, BinaryData value, string parameterReference, bool? required)
         {
             SelectedItemValuePath = selectedItemValuePath;
@@ -30,13 +45,25 @@ namespace Azure.ResourceManager.Logic.Models
             Required = required;
         }
 
-        /// <summary> Gets or sets a path to a property in the currently selected item to pass as a value to a parameter for the given operation. </summary>
+        /// <summary>
+        /// Gets or sets a path to a property in the currently selected item to pass as a value to a parameter for the given operation.
+        /// Serialized Name: SwaggerCustomDynamicTreeParameter.selectedItemValuePath
+        /// </summary>
         public string SelectedItemValuePath { get; set; }
-        /// <summary> The parameter value. </summary>
+        /// <summary>
+        /// The parameter value.
+        /// Serialized Name: SwaggerCustomDynamicTreeParameter.value
+        /// </summary>
         public BinaryData Value { get; set; }
-        /// <summary> The parameter reference. </summary>
+        /// <summary>
+        /// The parameter reference.
+        /// Serialized Name: SwaggerCustomDynamicTreeParameter.parameterReference
+        /// </summary>
         public string ParameterReference { get; set; }
-        /// <summary> Indicates whether the parameter is required. </summary>
+        /// <summary>
+        /// Indicates whether the parameter is required.
+        /// Serialized Name: SwaggerCustomDynamicTreeParameter.required
+        /// </summary>
         public bool? Required { get; set; }
     }
 }

@@ -7,19 +7,49 @@
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The Edifact agreement framing settings. </summary>
+    /// <summary>
+    /// The Edifact agreement framing settings.
+    /// Serialized Name: EdifactFramingSettings
+    /// </summary>
     public partial class EdifactFramingSettings
     {
         /// <summary> Initializes a new instance of EdifactFramingSettings. </summary>
-        /// <param name="protocolVersion"> The protocol version. </param>
-        /// <param name="dataElementSeparator"> The data element separator. </param>
-        /// <param name="componentSeparator"> The component separator. </param>
-        /// <param name="segmentTerminator"> The segment terminator. </param>
-        /// <param name="releaseIndicator"> The release indicator. </param>
-        /// <param name="repetitionSeparator"> The repetition separator. </param>
-        /// <param name="characterSet"> The EDIFACT frame setting characterSet. </param>
-        /// <param name="decimalPointIndicator"> The EDIFACT frame setting decimal indicator. </param>
-        /// <param name="segmentTerminatorSuffix"> The EDIFACT frame setting segment terminator suffix. </param>
+        /// <param name="protocolVersion">
+        /// The protocol version.
+        /// Serialized Name: EdifactFramingSettings.protocolVersion
+        /// </param>
+        /// <param name="dataElementSeparator">
+        /// The data element separator.
+        /// Serialized Name: EdifactFramingSettings.dataElementSeparator
+        /// </param>
+        /// <param name="componentSeparator">
+        /// The component separator.
+        /// Serialized Name: EdifactFramingSettings.componentSeparator
+        /// </param>
+        /// <param name="segmentTerminator">
+        /// The segment terminator.
+        /// Serialized Name: EdifactFramingSettings.segmentTerminator
+        /// </param>
+        /// <param name="releaseIndicator">
+        /// The release indicator.
+        /// Serialized Name: EdifactFramingSettings.releaseIndicator
+        /// </param>
+        /// <param name="repetitionSeparator">
+        /// The repetition separator.
+        /// Serialized Name: EdifactFramingSettings.repetitionSeparator
+        /// </param>
+        /// <param name="characterSet">
+        /// The EDIFACT frame setting characterSet.
+        /// Serialized Name: EdifactFramingSettings.characterSet
+        /// </param>
+        /// <param name="decimalPointIndicator">
+        /// The EDIFACT frame setting decimal indicator.
+        /// Serialized Name: EdifactFramingSettings.decimalPointIndicator
+        /// </param>
+        /// <param name="segmentTerminatorSuffix">
+        /// The EDIFACT frame setting segment terminator suffix.
+        /// Serialized Name: EdifactFramingSettings.segmentTerminatorSuffix
+        /// </param>
         public EdifactFramingSettings(int protocolVersion, int dataElementSeparator, int componentSeparator, int segmentTerminator, int releaseIndicator, int repetitionSeparator, EdifactCharacterSet characterSet, EdifactDecimalIndicator decimalPointIndicator, SegmentTerminatorSuffix segmentTerminatorSuffix)
         {
             ProtocolVersion = protocolVersion;
@@ -34,17 +64,50 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of EdifactFramingSettings. </summary>
-        /// <param name="serviceCodeListDirectoryVersion"> The service code list directory version. </param>
-        /// <param name="characterEncoding"> The character encoding. </param>
-        /// <param name="protocolVersion"> The protocol version. </param>
-        /// <param name="dataElementSeparator"> The data element separator. </param>
-        /// <param name="componentSeparator"> The component separator. </param>
-        /// <param name="segmentTerminator"> The segment terminator. </param>
-        /// <param name="releaseIndicator"> The release indicator. </param>
-        /// <param name="repetitionSeparator"> The repetition separator. </param>
-        /// <param name="characterSet"> The EDIFACT frame setting characterSet. </param>
-        /// <param name="decimalPointIndicator"> The EDIFACT frame setting decimal indicator. </param>
-        /// <param name="segmentTerminatorSuffix"> The EDIFACT frame setting segment terminator suffix. </param>
+        /// <param name="serviceCodeListDirectoryVersion">
+        /// The service code list directory version.
+        /// Serialized Name: EdifactFramingSettings.serviceCodeListDirectoryVersion
+        /// </param>
+        /// <param name="characterEncoding">
+        /// The character encoding.
+        /// Serialized Name: EdifactFramingSettings.characterEncoding
+        /// </param>
+        /// <param name="protocolVersion">
+        /// The protocol version.
+        /// Serialized Name: EdifactFramingSettings.protocolVersion
+        /// </param>
+        /// <param name="dataElementSeparator">
+        /// The data element separator.
+        /// Serialized Name: EdifactFramingSettings.dataElementSeparator
+        /// </param>
+        /// <param name="componentSeparator">
+        /// The component separator.
+        /// Serialized Name: EdifactFramingSettings.componentSeparator
+        /// </param>
+        /// <param name="segmentTerminator">
+        /// The segment terminator.
+        /// Serialized Name: EdifactFramingSettings.segmentTerminator
+        /// </param>
+        /// <param name="releaseIndicator">
+        /// The release indicator.
+        /// Serialized Name: EdifactFramingSettings.releaseIndicator
+        /// </param>
+        /// <param name="repetitionSeparator">
+        /// The repetition separator.
+        /// Serialized Name: EdifactFramingSettings.repetitionSeparator
+        /// </param>
+        /// <param name="characterSet">
+        /// The EDIFACT frame setting characterSet.
+        /// Serialized Name: EdifactFramingSettings.characterSet
+        /// </param>
+        /// <param name="decimalPointIndicator">
+        /// The EDIFACT frame setting decimal indicator.
+        /// Serialized Name: EdifactFramingSettings.decimalPointIndicator
+        /// </param>
+        /// <param name="segmentTerminatorSuffix">
+        /// The EDIFACT frame setting segment terminator suffix.
+        /// Serialized Name: EdifactFramingSettings.segmentTerminatorSuffix
+        /// </param>
         internal EdifactFramingSettings(string serviceCodeListDirectoryVersion, string characterEncoding, int protocolVersion, int dataElementSeparator, int componentSeparator, int segmentTerminator, int releaseIndicator, int repetitionSeparator, EdifactCharacterSet characterSet, EdifactDecimalIndicator decimalPointIndicator, SegmentTerminatorSuffix segmentTerminatorSuffix)
         {
             ServiceCodeListDirectoryVersion = serviceCodeListDirectoryVersion;
@@ -60,27 +123,60 @@ namespace Azure.ResourceManager.Logic.Models
             SegmentTerminatorSuffix = segmentTerminatorSuffix;
         }
 
-        /// <summary> The service code list directory version. </summary>
+        /// <summary>
+        /// The service code list directory version.
+        /// Serialized Name: EdifactFramingSettings.serviceCodeListDirectoryVersion
+        /// </summary>
         public string ServiceCodeListDirectoryVersion { get; set; }
-        /// <summary> The character encoding. </summary>
+        /// <summary>
+        /// The character encoding.
+        /// Serialized Name: EdifactFramingSettings.characterEncoding
+        /// </summary>
         public string CharacterEncoding { get; set; }
-        /// <summary> The protocol version. </summary>
+        /// <summary>
+        /// The protocol version.
+        /// Serialized Name: EdifactFramingSettings.protocolVersion
+        /// </summary>
         public int ProtocolVersion { get; set; }
-        /// <summary> The data element separator. </summary>
+        /// <summary>
+        /// The data element separator.
+        /// Serialized Name: EdifactFramingSettings.dataElementSeparator
+        /// </summary>
         public int DataElementSeparator { get; set; }
-        /// <summary> The component separator. </summary>
+        /// <summary>
+        /// The component separator.
+        /// Serialized Name: EdifactFramingSettings.componentSeparator
+        /// </summary>
         public int ComponentSeparator { get; set; }
-        /// <summary> The segment terminator. </summary>
+        /// <summary>
+        /// The segment terminator.
+        /// Serialized Name: EdifactFramingSettings.segmentTerminator
+        /// </summary>
         public int SegmentTerminator { get; set; }
-        /// <summary> The release indicator. </summary>
+        /// <summary>
+        /// The release indicator.
+        /// Serialized Name: EdifactFramingSettings.releaseIndicator
+        /// </summary>
         public int ReleaseIndicator { get; set; }
-        /// <summary> The repetition separator. </summary>
+        /// <summary>
+        /// The repetition separator.
+        /// Serialized Name: EdifactFramingSettings.repetitionSeparator
+        /// </summary>
         public int RepetitionSeparator { get; set; }
-        /// <summary> The EDIFACT frame setting characterSet. </summary>
+        /// <summary>
+        /// The EDIFACT frame setting characterSet.
+        /// Serialized Name: EdifactFramingSettings.characterSet
+        /// </summary>
         public EdifactCharacterSet CharacterSet { get; set; }
-        /// <summary> The EDIFACT frame setting decimal indicator. </summary>
+        /// <summary>
+        /// The EDIFACT frame setting decimal indicator.
+        /// Serialized Name: EdifactFramingSettings.decimalPointIndicator
+        /// </summary>
         public EdifactDecimalIndicator DecimalPointIndicator { get; set; }
-        /// <summary> The EDIFACT frame setting segment terminator suffix. </summary>
+        /// <summary>
+        /// The EDIFACT frame setting segment terminator suffix.
+        /// Serialized Name: EdifactFramingSettings.segmentTerminatorSuffix
+        /// </summary>
         public SegmentTerminatorSuffix SegmentTerminatorSuffix { get; set; }
     }
 }

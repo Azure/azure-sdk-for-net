@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The track events operation options. </summary>
+    /// <summary>
+    /// The track events operation options.
+    /// Serialized Name: TrackEventsOperationOptions
+    /// </summary>
     public readonly partial struct TrackEventsOperationOption : IEquatable<TrackEventsOperationOption>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.Logic.Models
         private const string NoneValue = "None";
         private const string DisableSourceInfoEnrichValue = "DisableSourceInfoEnrich";
 
-        /// <summary> None. </summary>
+        /// <summary>
+        /// None
+        /// Serialized Name: TrackEventsOperationOptions.None
+        /// </summary>
         public static TrackEventsOperationOption None { get; } = new TrackEventsOperationOption(NoneValue);
-        /// <summary> DisableSourceInfoEnrich. </summary>
+        /// <summary>
+        /// DisableSourceInfoEnrich
+        /// Serialized Name: TrackEventsOperationOptions.DisableSourceInfoEnrich
+        /// </summary>
         public static TrackEventsOperationOption DisableSourceInfoEnrich { get; } = new TrackEventsOperationOption(DisableSourceInfoEnrichValue);
         /// <summary> Determines if two <see cref="TrackEventsOperationOption"/> values are the same. </summary>
         public static bool operator ==(TrackEventsOperationOption left, TrackEventsOperationOption right) => left.Equals(right);

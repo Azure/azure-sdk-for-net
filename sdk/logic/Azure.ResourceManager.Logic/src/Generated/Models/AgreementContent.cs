@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The integration account agreement content. </summary>
+    /// <summary>
+    /// The integration account agreement content.
+    /// Serialized Name: AgreementContent
+    /// </summary>
     public partial class AgreementContent
     {
         /// <summary> Initializes a new instance of AgreementContent. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of AgreementContent. </summary>
-        /// <param name="aS2"> The AS2 agreement content. </param>
-        /// <param name="x12"> The X12 agreement content. </param>
-        /// <param name="edifact"> The EDIFACT agreement content. </param>
+        /// <param name="aS2">
+        /// The AS2 agreement content.
+        /// Serialized Name: AgreementContent.aS2
+        /// </param>
+        /// <param name="x12">
+        /// The X12 agreement content.
+        /// Serialized Name: AgreementContent.x12
+        /// </param>
+        /// <param name="edifact">
+        /// The EDIFACT agreement content.
+        /// Serialized Name: AgreementContent.edifact
+        /// </param>
         internal AgreementContent(AS2AgreementContent aS2, X12AgreementContent x12, EdifactAgreementContent edifact)
         {
             AS2 = aS2;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.Logic.Models
             Edifact = edifact;
         }
 
-        /// <summary> The AS2 agreement content. </summary>
+        /// <summary>
+        /// The AS2 agreement content.
+        /// Serialized Name: AgreementContent.aS2
+        /// </summary>
         public AS2AgreementContent AS2 { get; set; }
-        /// <summary> The X12 agreement content. </summary>
+        /// <summary>
+        /// The X12 agreement content.
+        /// Serialized Name: AgreementContent.x12
+        /// </summary>
         public X12AgreementContent X12 { get; set; }
-        /// <summary> The EDIFACT agreement content. </summary>
+        /// <summary>
+        /// The EDIFACT agreement content.
+        /// Serialized Name: AgreementContent.edifact
+        /// </summary>
         public EdifactAgreementContent Edifact { get; set; }
     }
 }

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The map type. </summary>
+    /// <summary>
+    /// The map type.
+    /// Serialized Name: MapType
+    /// </summary>
     public readonly partial struct MapType : IEquatable<MapType>
     {
         private readonly string _value;
@@ -28,15 +31,30 @@ namespace Azure.ResourceManager.Logic.Models
         private const string Xslt30Value = "Xslt30";
         private const string LiquidValue = "Liquid";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary>
+        /// NotSpecified
+        /// Serialized Name: MapType.NotSpecified
+        /// </summary>
         public static MapType NotSpecified { get; } = new MapType(NotSpecifiedValue);
-        /// <summary> Xslt. </summary>
+        /// <summary>
+        /// Xslt
+        /// Serialized Name: MapType.Xslt
+        /// </summary>
         public static MapType Xslt { get; } = new MapType(XsltValue);
-        /// <summary> Xslt20. </summary>
+        /// <summary>
+        /// Xslt20
+        /// Serialized Name: MapType.Xslt20
+        /// </summary>
         public static MapType Xslt20 { get; } = new MapType(Xslt20Value);
-        /// <summary> Xslt30. </summary>
+        /// <summary>
+        /// Xslt30
+        /// Serialized Name: MapType.Xslt30
+        /// </summary>
         public static MapType Xslt30 { get; } = new MapType(Xslt30Value);
-        /// <summary> Liquid. </summary>
+        /// <summary>
+        /// Liquid
+        /// Serialized Name: MapType.Liquid
+        /// </summary>
         public static MapType Liquid { get; } = new MapType(LiquidValue);
         /// <summary> Determines if two <see cref="MapType"/> values are the same. </summary>
         public static bool operator ==(MapType left, MapType right) => left.Equals(right);

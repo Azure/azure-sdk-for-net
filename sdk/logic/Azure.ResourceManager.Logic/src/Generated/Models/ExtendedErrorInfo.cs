@@ -11,12 +11,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The extended error info. </summary>
+    /// <summary>
+    /// The extended error info.
+    /// Serialized Name: ExtendedErrorInfo
+    /// </summary>
     public partial class ExtendedErrorInfo
     {
         /// <summary> Initializes a new instance of ExtendedErrorInfo. </summary>
-        /// <param name="code"> The error code. </param>
-        /// <param name="message"> The error message. </param>
+        /// <param name="code">
+        /// The error code.
+        /// Serialized Name: ExtendedErrorInfo.code
+        /// </param>
+        /// <param name="message">
+        /// The error message.
+        /// Serialized Name: ExtendedErrorInfo.message
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
         internal ExtendedErrorInfo(ErrorResponseCode code, string message)
         {
@@ -31,10 +40,22 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of ExtendedErrorInfo. </summary>
-        /// <param name="code"> The error code. </param>
-        /// <param name="message"> The error message. </param>
-        /// <param name="details"> The error message details. </param>
-        /// <param name="innerError"> The inner error. </param>
+        /// <param name="code">
+        /// The error code.
+        /// Serialized Name: ExtendedErrorInfo.code
+        /// </param>
+        /// <param name="message">
+        /// The error message.
+        /// Serialized Name: ExtendedErrorInfo.message
+        /// </param>
+        /// <param name="details">
+        /// The error message details.
+        /// Serialized Name: ExtendedErrorInfo.details
+        /// </param>
+        /// <param name="innerError">
+        /// The inner error.
+        /// Serialized Name: ExtendedErrorInfo.innerError
+        /// </param>
         internal ExtendedErrorInfo(ErrorResponseCode code, string message, IReadOnlyList<ExtendedErrorInfo> details, BinaryData innerError)
         {
             Code = code;
@@ -43,13 +64,25 @@ namespace Azure.ResourceManager.Logic.Models
             InnerError = innerError;
         }
 
-        /// <summary> The error code. </summary>
+        /// <summary>
+        /// The error code.
+        /// Serialized Name: ExtendedErrorInfo.code
+        /// </summary>
         public ErrorResponseCode Code { get; }
-        /// <summary> The error message. </summary>
+        /// <summary>
+        /// The error message.
+        /// Serialized Name: ExtendedErrorInfo.message
+        /// </summary>
         public string Message { get; }
-        /// <summary> The error message details. </summary>
+        /// <summary>
+        /// The error message details.
+        /// Serialized Name: ExtendedErrorInfo.details
+        /// </summary>
         public IReadOnlyList<ExtendedErrorInfo> Details { get; }
-        /// <summary> The inner error. </summary>
+        /// <summary>
+        /// The inner error.
+        /// Serialized Name: ExtendedErrorInfo.innerError
+        /// </summary>
         public BinaryData InnerError { get; }
     }
 }

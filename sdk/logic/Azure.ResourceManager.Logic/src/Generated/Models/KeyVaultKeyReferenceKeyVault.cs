@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The key vault reference. </summary>
+    /// <summary>
+    /// The key vault reference.
+    /// Serialized Name: KeyVaultKeyReferenceKeyVault
+    /// </summary>
     public partial class KeyVaultKeyReferenceKeyVault
     {
         /// <summary> Initializes a new instance of KeyVaultKeyReferenceKeyVault. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of KeyVaultKeyReferenceKeyVault. </summary>
-        /// <param name="id"> The resource id. </param>
-        /// <param name="name"> The resource name. </param>
-        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="id">
+        /// The resource id.
+        /// Serialized Name: KeyVaultKeyReferenceKeyVault.id
+        /// </param>
+        /// <param name="name">
+        /// The resource name.
+        /// Serialized Name: KeyVaultKeyReferenceKeyVault.name
+        /// </param>
+        /// <param name="resourceType">
+        /// The resource type.
+        /// Serialized Name: KeyVaultKeyReferenceKeyVault.type
+        /// </param>
         internal KeyVaultKeyReferenceKeyVault(string id, string name, string resourceType)
         {
             Id = id;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.Logic.Models
             ResourceType = resourceType;
         }
 
-        /// <summary> The resource id. </summary>
+        /// <summary>
+        /// The resource id.
+        /// Serialized Name: KeyVaultKeyReferenceKeyVault.id
+        /// </summary>
         public string Id { get; set; }
-        /// <summary> The resource name. </summary>
+        /// <summary>
+        /// The resource name.
+        /// Serialized Name: KeyVaultKeyReferenceKeyVault.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> The resource type. </summary>
+        /// <summary>
+        /// The resource type.
+        /// Serialized Name: KeyVaultKeyReferenceKeyVault.type
+        /// </summary>
         public string ResourceType { get; }
     }
 }

@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The tracking event error info. </summary>
+    /// <summary>
+    /// The tracking event error info.
+    /// Serialized Name: TrackingEventErrorInfo
+    /// </summary>
     public partial class TrackingEventErrorInfo
     {
         /// <summary> Initializes a new instance of TrackingEventErrorInfo. </summary>
@@ -15,9 +18,15 @@ namespace Azure.ResourceManager.Logic.Models
         {
         }
 
-        /// <summary> The message. </summary>
+        /// <summary>
+        /// The message.
+        /// Serialized Name: TrackingEventErrorInfo.message
+        /// </summary>
         public string Message { get; set; }
-        /// <summary> The code. </summary>
+        /// <summary>
+        /// The code.
+        /// Serialized Name: TrackingEventErrorInfo.code
+        /// </summary>
         public string Code { get; set; }
     }
 }
