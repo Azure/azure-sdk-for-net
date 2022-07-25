@@ -484,16 +484,28 @@ function Invoke-GenerateAndBuildSDK () {
             # handle the sdk package already exists. The service may be onboarded before.
             $serviceSDKDirectory = (Join-Path $sdkRootPath "sdk" $service)
             $folders = Get-ChildItem $serviceSDKDirectory -Directory -exclude *.*Management*,Azure.ResourceManager*
+            $regexForMatch="$service"
+            if ($readmeAbsolutePath -match ".*$service(?<spec>.*)[/|\\]readme.md" ) {
+                $regexForMatch = $matches["spec"] -replace "/|\\", "[/|\\]"
+                $regexForMatch = "$service$regexForMatch"
+            }
             foreach ($item in $folders) {
                 $folder=$item.Name
-                New-DataPlanePackageFolder -service $service -namespace $folder -sdkPath $sdkRootPath -readme $readmeFile -outputJsonFile $newpackageoutput
-                if ( !$? ) {
-                    Write-Error "Failed to create sdk project folder. exit code: $?"
-                    exit 1
+                # filter out the valid sdk package by the readme path to process.
+                $autorestFilePath = (Join-Path $serviceSDKDirectory $folder "src" "autorest.md")
+                if (Test-Path -Path $autorestFilePath) {
+                    $fileContent = Get-Content $autorestFilePath -Raw
+                    if ($fileContent -match $regexForMatch) {
+                        New-DataPlanePackageFolder -service $service -namespace $folder -sdkPath $sdkRootPath -readme $readmeFile -outputJsonFile $newpackageoutput
+                        if ( !$? ) {
+                            Write-Error "Failed to create sdk project folder. exit code: $?"
+                            exit 1
+                        }
+                        $newPackageOutputJson = Get-Content $newPackageOutput | Out-String | ConvertFrom-Json
+                        $packagesToGen = $packagesToGen + @($newPackageOutputJson)
+                        Remove-Item $newPackageOutput
+                    }
                 }
-                $newPackageOutputJson = Get-Content $newPackageOutput | Out-String | ConvertFrom-Json
-                $packagesToGen = $packagesToGen + @($newPackageOutputJson)
-                Remove-Item $newPackageOutput
             }
         }
     }
