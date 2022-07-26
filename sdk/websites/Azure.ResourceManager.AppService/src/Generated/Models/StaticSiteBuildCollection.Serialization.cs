@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static StaticSiteBuildCollection DeserializeStaticSiteBuildCollection(JsonElement element)
         {
-            IReadOnlyList<StaticSiteBuildARMResourceData> value = default;
+            IReadOnlyList<StaticSiteBuildARMData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<StaticSiteBuildARMResourceData> array = new List<StaticSiteBuildARMResourceData>();
+                    List<StaticSiteBuildARMData> array = new List<StaticSiteBuildARMData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StaticSiteBuildARMResourceData.DeserializeStaticSiteBuildARMResourceData(item));
+                        array.Add(StaticSiteBuildARMData.DeserializeStaticSiteBuildARMData(item));
                     }
                     value = array;
                     continue;

@@ -15,15 +15,15 @@ namespace Azure.ResourceManager.AppService.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IncludePrivacy))
+            if (Optional.IsDefined(IsIncludePrivacy))
             {
                 writer.WritePropertyName("includePrivacy");
-                writer.WriteBooleanValue(IncludePrivacy.Value);
+                writer.WriteBooleanValue(IsIncludePrivacy.Value);
             }
-            if (Optional.IsDefined(ForTransfer))
+            if (Optional.IsDefined(IsForTransfer))
             {
                 writer.WritePropertyName("forTransfer");
-                writer.WriteBooleanValue(ForTransfer.Value);
+                writer.WriteBooleanValue(IsForTransfer.Value);
             }
             writer.WriteEndObject();
         }

@@ -15,28 +15,28 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of BackupSchedule. </summary>
         /// <param name="frequencyInterval"> How often the backup should be executed (e.g. for weekly backup, this should be set to 7 and FrequencyUnit should be set to Day). </param>
         /// <param name="frequencyUnit"> The unit of time for how often the backup should be executed (e.g. for weekly backup, this should be set to Day and FrequencyInterval should be set to 7). </param>
-        /// <param name="keepAtLeastOneBackup"> True if the retention policy should always keep at least one backup in the storage account, regardless how old it is; false otherwise. </param>
+        /// <param name="isKeepAtLeastOneBackup"> True if the retention policy should always keep at least one backup in the storage account, regardless how old it is; false otherwise. </param>
         /// <param name="retentionPeriodInDays"> After how many days backups should be deleted. </param>
-        public BackupSchedule(int frequencyInterval, FrequencyUnit frequencyUnit, bool keepAtLeastOneBackup, int retentionPeriodInDays)
+        public BackupSchedule(int frequencyInterval, FrequencyUnit frequencyUnit, bool isKeepAtLeastOneBackup, int retentionPeriodInDays)
         {
             FrequencyInterval = frequencyInterval;
             FrequencyUnit = frequencyUnit;
-            KeepAtLeastOneBackup = keepAtLeastOneBackup;
+            IsKeepAtLeastOneBackup = isKeepAtLeastOneBackup;
             RetentionPeriodInDays = retentionPeriodInDays;
         }
 
         /// <summary> Initializes a new instance of BackupSchedule. </summary>
         /// <param name="frequencyInterval"> How often the backup should be executed (e.g. for weekly backup, this should be set to 7 and FrequencyUnit should be set to Day). </param>
         /// <param name="frequencyUnit"> The unit of time for how often the backup should be executed (e.g. for weekly backup, this should be set to Day and FrequencyInterval should be set to 7). </param>
-        /// <param name="keepAtLeastOneBackup"> True if the retention policy should always keep at least one backup in the storage account, regardless how old it is; false otherwise. </param>
+        /// <param name="isKeepAtLeastOneBackup"> True if the retention policy should always keep at least one backup in the storage account, regardless how old it is; false otherwise. </param>
         /// <param name="retentionPeriodInDays"> After how many days backups should be deleted. </param>
         /// <param name="startOn"> When the schedule should start working. </param>
         /// <param name="lastExecutionOn"> Last time when this schedule was triggered. </param>
-        internal BackupSchedule(int frequencyInterval, FrequencyUnit frequencyUnit, bool keepAtLeastOneBackup, int retentionPeriodInDays, DateTimeOffset? startOn, DateTimeOffset? lastExecutionOn)
+        internal BackupSchedule(int frequencyInterval, FrequencyUnit frequencyUnit, bool isKeepAtLeastOneBackup, int retentionPeriodInDays, DateTimeOffset? startOn, DateTimeOffset? lastExecutionOn)
         {
             FrequencyInterval = frequencyInterval;
             FrequencyUnit = frequencyUnit;
-            KeepAtLeastOneBackup = keepAtLeastOneBackup;
+            IsKeepAtLeastOneBackup = isKeepAtLeastOneBackup;
             RetentionPeriodInDays = retentionPeriodInDays;
             StartOn = startOn;
             LastExecutionOn = lastExecutionOn;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> The unit of time for how often the backup should be executed (e.g. for weekly backup, this should be set to Day and FrequencyInterval should be set to 7). </summary>
         public FrequencyUnit FrequencyUnit { get; set; }
         /// <summary> True if the retention policy should always keep at least one backup in the storage account, regardless how old it is; false otherwise. </summary>
-        public bool KeepAtLeastOneBackup { get; set; }
+        public bool IsKeepAtLeastOneBackup { get; set; }
         /// <summary> After how many days backups should be deleted. </summary>
         public int RetentionPeriodInDays { get; set; }
         /// <summary> When the schedule should start working. </summary>

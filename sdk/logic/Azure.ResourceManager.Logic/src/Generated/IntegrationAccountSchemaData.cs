@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="content"> The content. </param>
         /// <param name="contentType"> The content type. </param>
         /// <param name="contentLink"> The content link. </param>
-        internal IntegrationAccountSchemaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SchemaType schemaType, string targetNamespace, string documentName, string fileName, DateTimeOffset? createdOn, DateTimeOffset? changedOn, BinaryData metadata, string content, string contentType, ContentLink contentLink) : base(id, name, resourceType, systemData, tags, location)
+        internal IntegrationAccountSchemaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SchemaType schemaType, string targetNamespace, string documentName, string fileName, DateTimeOffset? createdOn, DateTimeOffset? changedOn, BinaryData metadata, string content, string contentType, LogicContentLink contentLink) : base(id, name, resourceType, systemData, tags, location)
         {
             SchemaType = schemaType;
             TargetNamespace = targetNamespace;
@@ -74,6 +74,6 @@ namespace Azure.ResourceManager.Logic
         /// <summary> The content type. </summary>
         public string ContentType { get; set; }
         /// <summary> The content link. </summary>
-        public ContentLink ContentLink { get; }
+        public LogicContentLink ContentLink { get; }
     }
 }

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Monitor.Models
         internal static ScaleRule DeserializeScaleRule(JsonElement element)
         {
             MetricTrigger metricTrigger = default;
-            ScaleAction scaleAction = default;
+            MonitorScaleAction scaleAction = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("metricTrigger"))
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (property.NameEquals("scaleAction"))
                 {
-                    scaleAction = ScaleAction.DeserializeScaleAction(property.Value);
+                    scaleAction = MonitorScaleAction.DeserializeMonitorScaleAction(property.Value);
                     continue;
                 }
             }

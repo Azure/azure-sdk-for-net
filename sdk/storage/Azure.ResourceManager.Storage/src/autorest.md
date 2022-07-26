@@ -20,7 +20,7 @@ list-exception:
 override-operation-name:
   StorageAccounts_CheckNameAvailability: CheckStorageAccountNameAvailability
   StorageAccounts_HierarchicalNamespaceMigration: EnableHierarchicalNamespace
-  BlobContainers_ObjectLevelWorm: EnableObjectLevelWorm
+  BlobContainers_ObjectLevelWorm: EnableVersionLevelImmutability
 
 request-path-to-singleton-resource:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/managementPolicies/{managementPolicyName}: managementPolicies/default
@@ -230,9 +230,6 @@ rename-mapping:
   StorageAccountInternetEndpoints.file: FileUri
   StorageAccountInternetEndpoints.web: WebUri
   StorageAccountInternetEndpoints.dfs: DfsUri
-
-# mgmt-debug:
-#   show-serialized-names: true
 
 directive:
   - from: swagger-document

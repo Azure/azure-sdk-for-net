@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("isLinux");
                 writer.WriteBooleanValue(IsLinux.Value);
             }
-            if (Optional.IsDefined(GenerateWorkflowFile))
+            if (Optional.IsDefined(IsGenerateWorkflowFile))
             {
                 writer.WritePropertyName("generateWorkflowFile");
-                writer.WriteBooleanValue(GenerateWorkflowFile.Value);
+                writer.WriteBooleanValue(IsGenerateWorkflowFile.Value);
             }
             writer.WriteEndObject();
         }

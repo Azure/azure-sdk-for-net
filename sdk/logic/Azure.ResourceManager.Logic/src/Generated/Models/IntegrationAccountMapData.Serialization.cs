@@ -72,13 +72,13 @@ namespace Azure.ResourceManager.Logic
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            MapType mapType = default;
+            IntegrationAccountMapType mapType = default;
             Optional<IntegrationAccountMapPropertiesParametersSchema> parametersSchema = default;
             Optional<DateTimeOffset> createdTime = default;
             Optional<DateTimeOffset> changedTime = default;
             Optional<string> content = default;
             Optional<string> contentType = default;
-            Optional<ContentLink> contentLink = default;
+            Optional<LogicContentLink> contentLink = default;
             Optional<BinaryData> metadata = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Logic
                     {
                         if (property0.NameEquals("mapType"))
                         {
-                            mapType = new MapType(property0.Value.GetString());
+                            mapType = new IntegrationAccountMapType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("parametersSchema"))
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Logic
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            contentLink = ContentLink.DeserializeContentLink(property0.Value);
+                            contentLink = LogicContentLink.DeserializeLogicContentLink(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("metadata"))

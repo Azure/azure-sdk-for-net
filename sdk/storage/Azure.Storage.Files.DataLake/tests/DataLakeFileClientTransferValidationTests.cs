@@ -8,6 +8,7 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Storage.Files.DataLake.Models;
 using Azure.Storage.Test.Shared;
+using NUnit.Framework;
 
 namespace Azure.Storage.Files.DataLake.Tests
 {
@@ -128,6 +129,14 @@ namespace Azure.Storage.Files.DataLake.Tests
         protected override bool ParallelUploadIsChecksumExpected(Request request)
         {
             return request.Uri.Query.Contains("action=append");
+        }
+
+        [Test]
+        public override void TestAutoResolve()
+        {
+            Assert.AreEqual(
+                ValidationAlgorithm.StorageCrc64,
+                TransferValidationOptionsExtensions.ResolveAuto(ValidationAlgorithm.Auto));
         }
     }
 }

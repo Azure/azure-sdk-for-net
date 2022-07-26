@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of AppServiceCertificateResources in the AppServiceCertificateOrder. </summary>
-        /// <returns> An object representing collection of AppServiceCertificateResources and their operations over a AppServiceCertificateResource. </returns>
-        public virtual AppServiceCertificateResourceCollection GetAppServiceCertificateResources()
+        /// <summary> Gets a collection of AppServicCertificateResources in the AppServiceCertificateOrder. </summary>
+        /// <returns> An object representing collection of AppServicCertificateResources and their operations over a AppServicCertificateResource. </returns>
+        public virtual AppServicCertificateCollection GetAppServicCertificates()
         {
-            return GetCachedClient(Client => new AppServiceCertificateResourceCollection(Client, Id));
+            return GetCachedClient(Client => new AppServicCertificateCollection(Client, Id));
         }
 
         /// <summary>
@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<AppServiceCertificateResource>> GetAppServiceCertificateResourceAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppServicCertificateResource>> GetAppServicCertificateAsync(string name, CancellationToken cancellationToken = default)
         {
-            return await GetAppServiceCertificateResources().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetAppServicCertificates().GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -121,9 +121,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<AppServiceCertificateResource> GetAppServiceCertificateResource(string name, CancellationToken cancellationToken = default)
+        public virtual Response<AppServicCertificateResource> GetAppServicCertificate(string name, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceCertificateResources().Get(name, cancellationToken);
+            return GetAppServicCertificates().Get(name, cancellationToken);
         }
 
         /// <summary> Gets a collection of CertificateOrderDetectorResources in the AppServiceCertificateOrder. </summary>
