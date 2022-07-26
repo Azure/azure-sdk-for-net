@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -14,22 +15,59 @@ namespace Azure.Template.Models
     {
         internal static OutputModel DeserializeOutputModel(JsonElement element)
         {
-            NestedOutputOnlyModel nestedOutputModel = default;
-            NestedRoundTripSharedModel nestedSharedModel = default;
+            Optional<string> optionalString = default;
+            Optional<int> optionalInt = default;
+            Optional<IReadOnlyList<string>> optionalStringList = default;
+            Optional<IReadOnlyList<int>> optionalIntList = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("NestedOutputModel"))
+                if (property.NameEquals("optionalString"))
                 {
-                    nestedOutputModel = NestedOutputOnlyModel.DeserializeNestedOutputOnlyModel(property.Value);
+                    optionalString = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("NestedSharedModel"))
+                if (property.NameEquals("optionalInt"))
                 {
-                    nestedSharedModel = NestedRoundTripSharedModel.DeserializeNestedRoundTripSharedModel(property.Value);
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    optionalInt = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("optionalStringList"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    optionalStringList = array;
+                    continue;
+                }
+                if (property.NameEquals("optionalIntList"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<int> array = new List<int>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetInt32());
+                    }
+                    optionalIntList = array;
                     continue;
                 }
             }
-            return new OutputModel(nestedOutputModel, nestedSharedModel);
+            return new OutputModel(optionalString.Value, Optional.ToNullable(optionalInt), Optional.ToList(optionalStringList), Optional.ToList(optionalIntList));
         }
     }
 }

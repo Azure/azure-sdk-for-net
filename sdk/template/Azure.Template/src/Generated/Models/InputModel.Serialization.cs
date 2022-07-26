@@ -15,10 +15,36 @@ namespace Azure.Template.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("NestedInputModel");
-            writer.WriteObjectValue(NestedInputModel);
-            writer.WritePropertyName("NestedSharedModel");
-            writer.WriteObjectValue(NestedSharedModel);
+            if (Optional.IsDefined(OptionalString))
+            {
+                writer.WritePropertyName("optionalString");
+                writer.WriteStringValue(OptionalString);
+            }
+            if (Optional.IsDefined(OptionalInt))
+            {
+                writer.WritePropertyName("optionalInt");
+                writer.WriteNumberValue(OptionalInt.Value);
+            }
+            if (Optional.IsCollectionDefined(OptionalStringList))
+            {
+                writer.WritePropertyName("optionalStringList");
+                writer.WriteStartArray();
+                foreach (var item in OptionalStringList)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(OptionalIntList))
+            {
+                writer.WritePropertyName("optionalIntList");
+                writer.WriteStartArray();
+                foreach (var item in OptionalIntList)
+                {
+                    writer.WriteNumberValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
         }
     }

@@ -5,30 +5,28 @@
 
 #nullable disable
 
-using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Template.Models
 {
-    /// <summary> Input model with nested model properties. </summary>
+    /// <summary> Input model with optional properties. </summary>
     public partial class InputModel
     {
         /// <summary> Initializes a new instance of InputModel. </summary>
-        /// <param name="nestedInputModel"> Required nested input model. </param>
-        /// <param name="nestedSharedModel"> Required nested shared model. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nestedInputModel"/> or <paramref name="nestedSharedModel"/> is null. </exception>
-        public InputModel(NestedInputOnlyModel nestedInputModel, NestedRoundTripSharedModel nestedSharedModel)
+        public InputModel()
         {
-            Argument.AssertNotNull(nestedInputModel, nameof(nestedInputModel));
-            Argument.AssertNotNull(nestedSharedModel, nameof(nestedSharedModel));
-
-            NestedInputModel = nestedInputModel;
-            NestedSharedModel = nestedSharedModel;
+            OptionalStringList = new ChangeTrackingList<string>();
+            OptionalIntList = new ChangeTrackingList<int>();
         }
 
-        /// <summary> Required nested input model. </summary>
-        public NestedInputOnlyModel NestedInputModel { get; }
-        /// <summary> Required nested shared model. </summary>
-        public NestedRoundTripSharedModel NestedSharedModel { get; }
+        /// <summary> Optional string, illustrating an optional reference type property. </summary>
+        public string OptionalString { get; set; }
+        /// <summary> Optional int, illustrating an optional value type property. </summary>
+        public int? OptionalInt { get; set; }
+        /// <summary> Optional string collection. </summary>
+        public IList<string> OptionalStringList { get; }
+        /// <summary> Optional int collection. </summary>
+        public IList<int> OptionalIntList { get; }
     }
 }

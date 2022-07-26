@@ -5,30 +5,41 @@
 
 #nullable disable
 
-using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Template.Models
 {
-    /// <summary> Round-trip model with nested model properties. </summary>
+    /// <summary> Round-trip model with optional properties. </summary>
     public partial class RoundTripModel
     {
         /// <summary> Initializes a new instance of RoundTripModel. </summary>
-        /// <param name="nestedRoundTripModel"> Required nested round-trip model. </param>
-        /// <param name="nestedSharedModel"> Required nested shared model. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nestedRoundTripModel"/> or <paramref name="nestedSharedModel"/> is null. </exception>
-        public RoundTripModel(NestedRoundTripOnlyModel nestedRoundTripModel, NestedRoundTripSharedModel nestedSharedModel)
+        public RoundTripModel()
         {
-            Argument.AssertNotNull(nestedRoundTripModel, nameof(nestedRoundTripModel));
-            Argument.AssertNotNull(nestedSharedModel, nameof(nestedSharedModel));
-
-            NestedRoundTripModel = nestedRoundTripModel;
-            NestedSharedModel = nestedSharedModel;
+            OptionalStringList = new ChangeTrackingList<string>();
+            OptionalIntList = new ChangeTrackingList<int>();
         }
 
-        /// <summary> Required nested round-trip model. </summary>
-        public NestedRoundTripOnlyModel NestedRoundTripModel { get; set; }
-        /// <summary> Required nested shared model. </summary>
-        public NestedRoundTripSharedModel NestedSharedModel { get; set; }
+        /// <summary> Initializes a new instance of RoundTripModel. </summary>
+        /// <param name="optionalString"> Optional string, illustrating an optional reference type property. </param>
+        /// <param name="optionalInt"> Optional int, illustrating an optional value type property. </param>
+        /// <param name="optionalStringList"> Optional string collection. </param>
+        /// <param name="optionalIntList"> Optional int collection. </param>
+        internal RoundTripModel(string optionalString, int? optionalInt, IList<string> optionalStringList, IList<int> optionalIntList)
+        {
+            OptionalString = optionalString;
+            OptionalInt = optionalInt;
+            OptionalStringList = optionalStringList;
+            OptionalIntList = optionalIntList;
+        }
+
+        /// <summary> Optional string, illustrating an optional reference type property. </summary>
+        public string OptionalString { get; set; }
+        /// <summary> Optional int, illustrating an optional value type property. </summary>
+        public int? OptionalInt { get; set; }
+        /// <summary> Optional string collection. </summary>
+        public IList<string> OptionalStringList { get; }
+        /// <summary> Optional int collection. </summary>
+        public IList<int> OptionalIntList { get; }
     }
 }

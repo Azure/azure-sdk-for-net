@@ -5,30 +5,41 @@
 
 #nullable disable
 
-using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Template.Models
 {
-    /// <summary> Output model with nested model properties. </summary>
+    /// <summary> Output model with optional properties. </summary>
     public partial class OutputModel
     {
         /// <summary> Initializes a new instance of OutputModel. </summary>
-        /// <param name="nestedOutputModel"> Required nested output model. </param>
-        /// <param name="nestedSharedModel"> Required nested shared model. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nestedOutputModel"/> or <paramref name="nestedSharedModel"/> is null. </exception>
-        internal OutputModel(NestedOutputOnlyModel nestedOutputModel, NestedRoundTripSharedModel nestedSharedModel)
+        internal OutputModel()
         {
-            Argument.AssertNotNull(nestedOutputModel, nameof(nestedOutputModel));
-            Argument.AssertNotNull(nestedSharedModel, nameof(nestedSharedModel));
-
-            NestedOutputModel = nestedOutputModel;
-            NestedSharedModel = nestedSharedModel;
+            OptionalStringList = new ChangeTrackingList<string>();
+            OptionalIntList = new ChangeTrackingList<int>();
         }
 
-        /// <summary> Required nested output model. </summary>
-        public NestedOutputOnlyModel NestedOutputModel { get; }
-        /// <summary> Required nested shared model. </summary>
-        public NestedRoundTripSharedModel NestedSharedModel { get; }
+        /// <summary> Initializes a new instance of OutputModel. </summary>
+        /// <param name="optionalString"> Optional string, illustrating an optional reference type property. </param>
+        /// <param name="optionalInt"> Optional int, illustrating an optional value type property. </param>
+        /// <param name="optionalStringList"> Optional string collection. </param>
+        /// <param name="optionalIntList"> Optional int collection. </param>
+        internal OutputModel(string optionalString, int? optionalInt, IReadOnlyList<string> optionalStringList, IReadOnlyList<int> optionalIntList)
+        {
+            OptionalString = optionalString;
+            OptionalInt = optionalInt;
+            OptionalStringList = optionalStringList;
+            OptionalIntList = optionalIntList;
+        }
+
+        /// <summary> Optional string, illustrating an optional reference type property. </summary>
+        public string OptionalString { get; }
+        /// <summary> Optional int, illustrating an optional value type property. </summary>
+        public int? OptionalInt { get; }
+        /// <summary> Optional string collection. </summary>
+        public IReadOnlyList<string> OptionalStringList { get; }
+        /// <summary> Optional int collection. </summary>
+        public IReadOnlyList<int> OptionalIntList { get; }
     }
 }

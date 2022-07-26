@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,31 +16,94 @@ namespace Azure.Template.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("NestedRoundTripModel");
-            writer.WriteObjectValue(NestedRoundTripModel);
-            writer.WritePropertyName("NestedSharedModel");
-            writer.WriteObjectValue(NestedSharedModel);
+            if (Optional.IsDefined(OptionalString))
+            {
+                writer.WritePropertyName("optionalString");
+                writer.WriteStringValue(OptionalString);
+            }
+            if (Optional.IsDefined(OptionalInt))
+            {
+                writer.WritePropertyName("optionalInt");
+                writer.WriteNumberValue(OptionalInt.Value);
+            }
+            if (Optional.IsCollectionDefined(OptionalStringList))
+            {
+                writer.WritePropertyName("optionalStringList");
+                writer.WriteStartArray();
+                foreach (var item in OptionalStringList)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(OptionalIntList))
+            {
+                writer.WritePropertyName("optionalIntList");
+                writer.WriteStartArray();
+                foreach (var item in OptionalIntList)
+                {
+                    writer.WriteNumberValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
         }
 
         internal static RoundTripModel DeserializeRoundTripModel(JsonElement element)
         {
-            NestedRoundTripOnlyModel nestedRoundTripModel = default;
-            NestedRoundTripSharedModel nestedSharedModel = default;
+            Optional<string> optionalString = default;
+            Optional<int> optionalInt = default;
+            Optional<IList<string>> optionalStringList = default;
+            Optional<IList<int>> optionalIntList = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("NestedRoundTripModel"))
+                if (property.NameEquals("optionalString"))
                 {
-                    nestedRoundTripModel = NestedRoundTripOnlyModel.DeserializeNestedRoundTripOnlyModel(property.Value);
+                    optionalString = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("NestedSharedModel"))
+                if (property.NameEquals("optionalInt"))
                 {
-                    nestedSharedModel = NestedRoundTripSharedModel.DeserializeNestedRoundTripSharedModel(property.Value);
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    optionalInt = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("optionalStringList"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    optionalStringList = array;
+                    continue;
+                }
+                if (property.NameEquals("optionalIntList"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<int> array = new List<int>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetInt32());
+                    }
+                    optionalIntList = array;
                     continue;
                 }
             }
-            return new RoundTripModel(nestedRoundTripModel, nestedSharedModel);
+            return new RoundTripModel(optionalString.Value, Optional.ToNullable(optionalInt), Optional.ToList(optionalStringList), Optional.ToList(optionalIntList));
         }
     }
 }

@@ -1,9 +1,9 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "NestedModelsBasicClient",
+    "title": "OptionalPropertiesClient",
     "version": "1.0.0",
-    "description": "Illustrates input, output, and round-trip models with required properties of types that are also models.",
+    "description": "Illustrates models with optional properties.",
     "x-cadl-generated": [
       {
         "emitter": "@azure-tools/cadl-autorest"
@@ -24,7 +24,7 @@
   "paths": {
     "/models": {
       "post": {
-        "operationId": "NestedModelsBasic_SendNestedModel",
+        "operationId": "OptionalProperties_SendOptionalPropertyModel",
         "parameters": [
           {
             "name": "input",
@@ -48,7 +48,7 @@
         }
       },
       "get": {
-        "operationId": "NestedModelsBasic_GetNestedModel",
+        "operationId": "OptionalProperties_GetOptionalPropertyModel",
         "parameters": [],
         "responses": {
           "200": {
@@ -66,7 +66,7 @@
         }
       },
       "put": {
-        "operationId": "NestedModelsBasic_SetNestedModel",
+        "operationId": "OptionalProperties_SetOptionalPropertyModel",
         "parameters": [
           {
             "name": "input",
@@ -159,208 +159,98 @@
     "InputModel": {
       "type": "object",
       "properties": {
-        "NestedInputModel": {
-          "$ref": "#/definitions/NestedInputOnlyModel",
-          "description": "Required nested input model."
-        },
-        "NestedSharedModel": {
-          "$ref": "#/definitions/NestedRoundTripSharedModel",
-          "description": "Required nested shared model."
-        }
-      },
-      "description": "Input model with nested model properties.",
-      "required": [
-        "NestedInputModel",
-        "NestedSharedModel"
-      ]
-    },
-    "NestedInputOnlyModel": {
-      "type": "object",
-      "properties": {
-        "requiredString": {
+        "optionalString": {
           "type": "string",
-          "description": "Required string, illustrating a reference type property."
+          "description": "Optional string, illustrating an optional reference type property."
         },
-        "requiredInt": {
+        "optionalInt": {
           "type": "integer",
           "format": "int32",
-          "description": "Required int, illustrating a value type property."
+          "description": "Optional int, illustrating an optional value type property."
         },
-        "requiredStringList": {
+        "optionalStringList": {
           "type": "array",
           "items": {
             "type": "string"
           },
           "x-cadl-name": "string[]",
-          "description": "Required collection of strings, illustrating a collection of reference types."
+          "description": "Optional string collection."
         },
-        "requiredIntList": {
+        "optionalIntList": {
           "type": "array",
           "items": {
             "type": "integer",
             "format": "int32"
           },
           "x-cadl-name": "int32[]",
-          "description": "Required collection of ints, illustrating a collection of value types."
+          "description": "Optional int collection."
         }
       },
-      "description": "Model to illustrate a nested model that only appears on an input model.",
-      "required": [
-        "requiredString",
-        "requiredInt",
-        "requiredStringList",
-        "requiredIntList"
-      ]
-    },
-    "NestedOutputOnlyModel": {
-      "type": "object",
-      "properties": {
-        "requiredString": {
-          "type": "string",
-          "description": "Required string, illustrating a reference type property."
-        },
-        "requiredInt": {
-          "type": "integer",
-          "format": "int32",
-          "description": "Required int, illustrating a value type property."
-        },
-        "requiredStringList": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "x-cadl-name": "string[]",
-          "description": "Required collection of strings, illustrating a collection of reference types."
-        },
-        "requiredIntList": {
-          "type": "array",
-          "items": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "x-cadl-name": "int32[]",
-          "description": "Required collection of ints, illustrating a collection of value types."
-        }
-      },
-      "description": "Model to illustrate a nested model that only appears on an output model.",
-      "required": [
-        "requiredString",
-        "requiredInt",
-        "requiredStringList",
-        "requiredIntList"
-      ]
-    },
-    "NestedRoundTripOnlyModel": {
-      "type": "object",
-      "properties": {
-        "requiredString": {
-          "type": "string",
-          "description": "Required string, illustrating a reference type property."
-        },
-        "requiredInt": {
-          "type": "integer",
-          "format": "int32",
-          "description": "Required int, illustrating a value type property."
-        },
-        "requiredStringList": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "x-cadl-name": "string[]",
-          "description": "Required collection of strings, illustrating a collection of reference types."
-        },
-        "requiredIntList": {
-          "type": "array",
-          "items": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "x-cadl-name": "int32[]",
-          "description": "Required collection of ints, illustrating a collection of value types."
-        }
-      },
-      "description": "Model to illustrate a nested model that only appears on a nested model.",
-      "required": [
-        "requiredString",
-        "requiredInt",
-        "requiredStringList",
-        "requiredIntList"
-      ]
-    },
-    "NestedRoundTripSharedModel": {
-      "type": "object",
-      "properties": {
-        "requiredString": {
-          "type": "string",
-          "description": "Required string, illustrating a reference type property."
-        },
-        "requiredInt": {
-          "type": "integer",
-          "format": "int32",
-          "description": "Required int, illustrating a value type property."
-        },
-        "requiredStringList": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "x-cadl-name": "string[]",
-          "description": "Required collection of strings, illustrating a collection of reference types."
-        },
-        "requiredIntList": {
-          "type": "array",
-          "items": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "x-cadl-name": "int32[]",
-          "description": "Required collection of ints, illustrating a collection of value types."
-        }
-      },
-      "description": "Model to illustrate a nested model that appears as a nested model on input, output, and round-trip models.",
-      "required": [
-        "requiredString",
-        "requiredInt",
-        "requiredStringList",
-        "requiredIntList"
-      ]
+      "description": "Input model with optional properties."
     },
     "OutputModel": {
       "type": "object",
       "properties": {
-        "NestedOutputModel": {
-          "$ref": "#/definitions/NestedOutputOnlyModel",
-          "description": "Required nested output model."
+        "optionalString": {
+          "type": "string",
+          "description": "Optional string, illustrating an optional reference type property."
         },
-        "NestedSharedModel": {
-          "$ref": "#/definitions/NestedRoundTripSharedModel",
-          "description": "Required nested shared model."
+        "optionalInt": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Optional int, illustrating an optional value type property."
+        },
+        "optionalStringList": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-cadl-name": "string[]",
+          "description": "Optional string collection."
+        },
+        "optionalIntList": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "x-cadl-name": "int32[]",
+          "description": "Optional int collection."
         }
       },
-      "description": "Output model with nested model properties",
-      "required": [
-        "NestedOutputModel",
-        "NestedSharedModel"
-      ]
+      "description": "Output model with optional properties."
     },
     "RoundTripModel": {
       "type": "object",
       "properties": {
-        "NestedRoundTripModel": {
-          "$ref": "#/definitions/NestedRoundTripOnlyModel",
-          "description": "Required nested round-trip model."
+        "optionalString": {
+          "type": "string",
+          "description": "Optional string, illustrating an optional reference type property."
         },
-        "NestedSharedModel": {
-          "$ref": "#/definitions/NestedRoundTripSharedModel",
-          "description": "Required nested shared model."
+        "optionalInt": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Optional int, illustrating an optional value type property."
+        },
+        "optionalStringList": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-cadl-name": "string[]",
+          "description": "Optional string collection."
+        },
+        "optionalIntList": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "x-cadl-name": "int32[]",
+          "description": "Optional int collection."
         }
       },
-      "description": "Round-trip model with nested model properties",
-      "required": [
-        "NestedRoundTripModel",
-        "NestedSharedModel"
-      ]
+      "description": "Round-trip model with optional properties."
     }
   },
   "parameters": {}
