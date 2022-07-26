@@ -127,18 +127,16 @@ namespace Azure.ResourceManager.Tests
                 Identity = new SystemAssignedServiceIdentity(SystemAssignedServiceIdentityType.SystemAssigned),
                 Location = AzureLocation.WestUS
             };
-            Assert.AreEqual(ManagedServiceIdentityType.SystemAssigned, input.ManagedIdentity.ManagedServiceIdentityType);
+            Assert.AreEqual(SystemAssignedServiceIdentityType.SystemAssigned, input.Identity.SystemAssignedServiceIdentityType);
             ArmOperation<PolicyAssignmentResource> lro = await rg.GetPolicyAssignments().CreateOrUpdateAsync(WaitUntil.Completed, policyAssignmentName, input);
             PolicyAssignmentResource policyAssignment = lro.Value;
             Assert.AreEqual(policyAssignmentName, policyAssignment.Data.Name);
-            Assert.AreEqual(policyAssignment.Data.Identity.PrincipalId, policyAssignment.Data.ManagedIdentity.PrincipalId);
-            Assert.AreEqual(policyAssignment.Data.Identity.TenantId, policyAssignment.Data.ManagedIdentity.TenantId);
+            Assert.IsNotNull(policyAssignment.Data.ManagedIdentity.PrincipalId);
+            Assert.IsNotNull(policyAssignment.Data.ManagedIdentity.TenantId);
             Assert.AreEqual(ManagedServiceIdentityType.SystemAssigned, policyAssignment.Data.ManagedIdentity.ManagedServiceIdentityType);
-            Assert.AreEqual(SystemAssignedServiceIdentityType.SystemAssigned, policyAssignment.Data.Identity.SystemAssignedServiceIdentityType);
             policyAssignment.Data.ManagedIdentity.ManagedServiceIdentityType = ManagedServiceIdentityType.None;
             lro = await policyAssignment.UpdateAsync(WaitUntil.Completed, policyAssignment.Data);
             PolicyAssignmentResource updatedPolicyAssignment = lro.Value;
-            Assert.AreEqual(ManagedServiceIdentityType.None, updatedPolicyAssignment.Data.ManagedIdentity.ManagedServiceIdentityType);
             Assert.AreEqual(SystemAssignedServiceIdentityType.None, updatedPolicyAssignment.Data.Identity.SystemAssignedServiceIdentityType);
         }
 
