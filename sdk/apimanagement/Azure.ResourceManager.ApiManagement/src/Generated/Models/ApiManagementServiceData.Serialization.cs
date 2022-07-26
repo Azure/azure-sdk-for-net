@@ -25,8 +25,15 @@ namespace Azure.ResourceManager.ApiManagement
             writer.WriteObjectValue(Sku);
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity");
-                JsonSerializer.Serialize(writer, Identity);
+                if (Identity != null)
+                {
+                    writer.WritePropertyName("identity");
+                    writer.WriteObjectValue(Identity);
+                }
+                else
+                {
+                    writer.WriteNull("identity");
+                }
             }
             if (Optional.IsCollectionDefined(Zones))
             {
@@ -195,7 +202,7 @@ namespace Azure.ResourceManager.ApiManagement
         internal static ApiManagementServiceData DeserializeApiManagementServiceData(JsonElement element)
         {
             ApiManagementServiceSkuProperties sku = default;
-            Optional<ManagedServiceIdentity> identity = default;
+            Optional<ApiManagementServiceIdentity> identity = default;
             Optional<ETag> etag = default;
             Optional<IList<string>> zones = default;
             Optional<IDictionary<string, string>> tags = default;
@@ -243,10 +250,10 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        identity = null;
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString());
+                    identity = ApiManagementServiceIdentity.DeserializeApiManagementServiceIdentity(property.Value);
                     continue;
                 }
                 if (property.NameEquals("etag"))
@@ -622,7 +629,7 @@ namespace Azure.ResourceManager.ApiManagement
                     continue;
                 }
             }
-            return new ApiManagementServiceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, identity, Optional.ToNullable(etag), Optional.ToList(zones), notificationSenderEmail.Value, provisioningState.Value, targetProvisioningState.Value, Optional.ToNullable(createdAtUtc), gatewayUri.Value, gatewayRegionalUri.Value, portalUri.Value, managementApiUri.Value, scmUri.Value, developerPortalUri.Value, Optional.ToList(hostnameConfigurations), Optional.ToList(publicIPAddresses), Optional.ToList(privateIPAddresses), publicIPAddressId.Value, Optional.ToNullable(publicNetworkAccess), virtualNetworkConfiguration.Value, Optional.ToList(additionalLocations), Optional.ToDictionary(customProperties), Optional.ToList(certificates), Optional.ToNullable(enableClientCertificate), Optional.ToNullable(disableGateway), Optional.ToNullable(virtualNetworkType), apiVersionConstraint.Value, Optional.ToNullable(restore), Optional.ToList(privateEndpointConnections), Optional.ToNullable(platformVersion), publisherEmail, publisherName);
+            return new ApiManagementServiceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, identity.Value, Optional.ToNullable(etag), Optional.ToList(zones), notificationSenderEmail.Value, provisioningState.Value, targetProvisioningState.Value, Optional.ToNullable(createdAtUtc), gatewayUri.Value, gatewayRegionalUri.Value, portalUri.Value, managementApiUri.Value, scmUri.Value, developerPortalUri.Value, Optional.ToList(hostnameConfigurations), Optional.ToList(publicIPAddresses), Optional.ToList(privateIPAddresses), publicIPAddressId.Value, Optional.ToNullable(publicNetworkAccess), virtualNetworkConfiguration.Value, Optional.ToList(additionalLocations), Optional.ToDictionary(customProperties), Optional.ToList(certificates), Optional.ToNullable(enableClientCertificate), Optional.ToNullable(disableGateway), Optional.ToNullable(virtualNetworkType), apiVersionConstraint.Value, Optional.ToNullable(restore), Optional.ToList(privateEndpointConnections), Optional.ToNullable(platformVersion), publisherEmail, publisherName);
         }
     }
 }

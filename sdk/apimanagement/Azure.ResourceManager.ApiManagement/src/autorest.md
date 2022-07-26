@@ -291,13 +291,12 @@ directive:
   - from: apimdeployment.json
     where: $.definitions
     transform: >
+      $.ApiManagementServiceIdentity.properties["foo"] = {
+          "description": "This property is set for disable ManagedServiceIdentity common type mapping, do not set.",
+          "type": "string"
+        };
       $.ApiManagementServiceResource.properties.identity["x-nullable"] = true;
-      # $.ApiManagementServiceResource.properties.identity = {
-      #     "$ref": "#/definitions/ApiManagementServiceIdentity",
-      #     "description": "Managed service identity of the Api Management service.",
-      #     "x-nullable": true
-      #   };
-      # $.ApiManagementServiceUpdateParameters.properties.identity["x-nullable"] = true;
+
   - from: apimanagement.json
     where: $.parameters
     transform: >
