@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="systemData"> The systemData. </param>
         /// <param name="etag"> The etag of the record set. </param>
         /// <param name="metadata"> The metadata attached to the record set. </param>
-        /// <param name="ttl"> The TTL (time-to-live) of the records in the record set. </param>
+        /// <param name="ttl"> The Ttl (time-to-live) of the records in the record set. </param>
         /// <param name="fqdn"> Fully qualified domain name of the record set. </param>
         /// <param name="provisioningState"> provisioning State of the record set. </param>
         /// <param name="targetResource"> A reference to an azure resource from where the dns resource value is taken. </param>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Dns
         {
             ETag = etag;
             Metadata = metadata;
-            TTL = ttl;
+            Ttl = ttl;
             Fqdn = fqdn;
             ProvisioningState = provisioningState;
             TargetResource = targetResource;
@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.Dns
         public ETag? ETag { get; set; }
         /// <summary> The metadata attached to the record set. </summary>
         public IDictionary<string, string> Metadata { get; }
-        /// <summary> The TTL (time-to-live) of the records in the record set. </summary>
-        public long? TTL { get; set; }
+        /// <summary> The Ttl (time-to-live) of the records in the record set. </summary>
+        public long? Ttl { get; set; }
         /// <summary> Fully qualified domain name of the record set. </summary>
         public string Fqdn { get; }
         /// <summary> provisioning State of the record set. </summary>
