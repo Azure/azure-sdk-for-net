@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.Logic
     }
     public partial class IntegrationAccountAgreementData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public IntegrationAccountAgreementData(Azure.Core.AzureLocation location, Azure.ResourceManager.Logic.Models.AgreementType agreementType, string hostPartner, string guestPartner, Azure.ResourceManager.Logic.Models.BusinessIdentity hostIdentity, Azure.ResourceManager.Logic.Models.BusinessIdentity guestIdentity, Azure.ResourceManager.Logic.Models.AgreementContent content) : base (default(Azure.Core.AzureLocation)) { }
-        public Azure.ResourceManager.Logic.Models.AgreementType AgreementType { get { throw null; } set { } }
+        public IntegrationAccountAgreementData(Azure.Core.AzureLocation location, Azure.ResourceManager.Logic.Models.IntegrationAccountAgreementType agreementType, string hostPartner, string guestPartner, Azure.ResourceManager.Logic.Models.IntegrationAccountBusinessIdentity hostIdentity, Azure.ResourceManager.Logic.Models.IntegrationAccountBusinessIdentity guestIdentity, Azure.ResourceManager.Logic.Models.IntegrationAccountAgreementContent content) : base (default(Azure.Core.AzureLocation)) { }
+        public Azure.ResourceManager.Logic.Models.IntegrationAccountAgreementType AgreementType { get { throw null; } set { } }
         public System.DateTimeOffset? ChangedOn { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.AgreementContent Content { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.IntegrationAccountAgreementContent Content { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.BusinessIdentity GuestIdentity { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.IntegrationAccountBusinessIdentity GuestIdentity { get { throw null; } set { } }
         public string GuestPartner { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.BusinessIdentity HostIdentity { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.IntegrationAccountBusinessIdentity HostIdentity { get { throw null; } set { } }
         public string HostPartner { get { throw null; } set { } }
         public System.BinaryData Metadata { get { throw null; } set { } }
     }
@@ -67,8 +67,8 @@ namespace Azure.ResourceManager.Logic
     }
     public partial class IntegrationAccountAssemblyDefinitionData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public IntegrationAccountAssemblyDefinitionData(Azure.Core.AzureLocation location, Azure.ResourceManager.Logic.Models.AssemblyProperties properties) : base (default(Azure.Core.AzureLocation)) { }
-        public Azure.ResourceManager.Logic.Models.AssemblyProperties Properties { get { throw null; } set { } }
+        public IntegrationAccountAssemblyDefinitionData(Azure.Core.AzureLocation location, Azure.ResourceManager.Logic.Models.IntegrationAccountAssemblyProperties properties) : base (default(Azure.Core.AzureLocation)) { }
+        public Azure.ResourceManager.Logic.Models.IntegrationAccountAssemblyProperties Properties { get { throw null; } set { } }
     }
     public partial class IntegrationAccountAssemblyDefinitionResource : Azure.ResourceManager.ArmResource
     {
@@ -109,8 +109,8 @@ namespace Azure.ResourceManager.Logic
     }
     public partial class IntegrationAccountBatchConfigurationData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public IntegrationAccountBatchConfigurationData(Azure.Core.AzureLocation location, Azure.ResourceManager.Logic.Models.BatchConfigurationProperties properties) : base (default(Azure.Core.AzureLocation)) { }
-        public Azure.ResourceManager.Logic.Models.BatchConfigurationProperties Properties { get { throw null; } set { } }
+        public IntegrationAccountBatchConfigurationData(Azure.Core.AzureLocation location, Azure.ResourceManager.Logic.Models.IntegrationAccountBatchConfigurationProperties properties) : base (default(Azure.Core.AzureLocation)) { }
+        public Azure.ResourceManager.Logic.Models.IntegrationAccountBatchConfigurationProperties Properties { get { throw null; } set { } }
     }
     public partial class IntegrationAccountBatchConfigurationResource : Azure.ResourceManager.ArmResource
     {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Logic
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public Azure.ResourceManager.Logic.Models.KeyVaultKeyReference Key { get { throw null; } set { } }
         public System.BinaryData Metadata { get { throw null; } set { } }
-        public string PublicCertificate { get { throw null; } set { } }
+        public System.BinaryData PublicCertificate { get { throw null; } set { } }
     }
     public partial class IntegrationAccountCertificateResource : Azure.ResourceManager.ArmResource
     {
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Logic
     public partial class IntegrationAccountData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public IntegrationAccountData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public Azure.ResourceManager.Logic.Models.ResourceReference IntegrationServiceEnvironment { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.LogicAppResourceReference IntegrationServiceEnvironment { get { throw null; } set { } }
         public Azure.ResourceManager.Logic.Models.IntegrationAccountSkuName? SkuName { get { throw null; } set { } }
         public Azure.ResourceManager.Logic.Models.LogicAppWorkflowState? State { get { throw null; } set { } }
     }
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.Logic
     public partial class IntegrationAccountPartnerData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public IntegrationAccountPartnerData(Azure.Core.AzureLocation location, Azure.ResourceManager.Logic.Models.PartnerType partnerType, Azure.ResourceManager.Logic.Models.PartnerContent content) : base (default(Azure.Core.AzureLocation)) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Logic.Models.BusinessIdentity> B2BBusinessIdentities { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Logic.Models.IntegrationAccountBusinessIdentity> B2BBusinessIdentities { get { throw null; } }
         public System.DateTimeOffset? ChangedOn { get { throw null; } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public System.BinaryData Metadata { get { throw null; } set { } }
@@ -478,19 +478,19 @@ namespace Azure.ResourceManager.Logic
     public partial class IntegrationServiceEnvironmentManagedApiData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public IntegrationServiceEnvironmentManagedApiData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public Azure.ResourceManager.Logic.Models.ApiResourceDefinitions ApiDefinitions { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.LogicAppApiResourceDefinitions ApiDefinitions { get { throw null; } }
         public System.Uri ApiDefinitionUri { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Capabilities { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.ApiTier? Category { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.LogicAppApiTier? Category { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> ConnectionParameters { get { throw null; } }
         public Azure.ResourceManager.Logic.Models.ContentLink DeploymentParametersContentLinkDefinition { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.ApiResourceGeneralInformation GeneralInformation { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.ResourceReference IntegrationServiceEnvironment { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.ApiResourceMetadata Metadata { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.LogicAppApiResourceGeneralInformation GeneralInformation { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.LogicAppResourceReference IntegrationServiceEnvironment { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.LogicAppApiResourceMetadata Metadata { get { throw null; } }
         public string NamePropertiesName { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.ApiResourcePolicies Policies { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.LogicAppApiResourcePolicies Policies { get { throw null; } }
         public Azure.ResourceManager.Logic.Models.LogicAppWorkflowProvisioningState? ProvisioningState { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> RuntimeUrls { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<System.Uri> RuntimeUris { get { throw null; } }
         public System.Uri ServiceUri { get { throw null; } }
     }
     public partial class IntegrationServiceEnvironmentManagedApiResource : Azure.ResourceManager.ArmResource
@@ -506,8 +506,8 @@ namespace Azure.ResourceManager.Logic
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Logic.IntegrationServiceEnvironmentManagedApiResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.IntegrationServiceEnvironmentManagedApiResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Logic.Models.ApiOperation> GetIntegrationServiceEnvironmentManagedApiOperations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Logic.Models.ApiOperation> GetIntegrationServiceEnvironmentManagedApiOperationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Logic.Models.LogicAppApiOperation> GetIntegrationServiceEnvironmentManagedApiOperations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Logic.Models.LogicAppApiOperation> GetIntegrationServiceEnvironmentManagedApiOperationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Logic.IntegrationServiceEnvironmentManagedApiResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.IntegrationServiceEnvironmentManagedApiResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Logic.IntegrationServiceEnvironmentManagedApiResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -569,8 +569,8 @@ namespace Azure.ResourceManager.Logic
         public System.BinaryData Definition { get { throw null; } set { } }
         public Azure.ResourceManager.Logic.Models.FlowEndpointsConfiguration EndpointsConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.Logic.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.ResourceReference IntegrationAccount { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.ResourceReference IntegrationServiceEnvironment { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.LogicAppResourceReference IntegrationAccount { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.LogicAppResourceReference IntegrationServiceEnvironment { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Logic.Models.LogicAppWorkflowParameterInfo> Parameters { get { throw null; } }
         public Azure.ResourceManager.Logic.Models.LogicAppWorkflowProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Logic.Models.LogicAppSku Sku { get { throw null; } }
@@ -648,7 +648,7 @@ namespace Azure.ResourceManager.Logic
         public System.DateTimeOffset? StartOn { get { throw null; } }
         public Azure.ResourceManager.Logic.Models.LogicAppWorkflowStatus? Status { get { throw null; } }
         public System.BinaryData TrackedProperties { get { throw null; } }
-        public string TrackingId { get { throw null; } }
+        public System.Guid? TrackingId { get { throw null; } }
     }
     public partial class LogicAppWorkflowRunActionRepetitionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.LogicAppWorkflowRunActionRepetitionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.LogicAppWorkflowRunActionRepetitionResource>, System.Collections.IEnumerable
     {
@@ -680,7 +680,7 @@ namespace Azure.ResourceManager.Logic
         public System.DateTimeOffset? StartOn { get { throw null; } set { } }
         public Azure.ResourceManager.Logic.Models.LogicAppWorkflowStatus? Status { get { throw null; } set { } }
         public System.BinaryData TrackedProperties { get { throw null; } }
-        public string TrackingId { get { throw null; } }
+        public System.Guid? TrackingId { get { throw null; } }
     }
     public partial class LogicAppWorkflowRunActionRepetitionRequestHistoryCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.LogicAppWorkflowRunActionRepetitionRequestHistoryResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.LogicAppWorkflowRunActionRepetitionRequestHistoryResource>, System.Collections.IEnumerable
     {
@@ -838,7 +838,7 @@ namespace Azure.ResourceManager.Logic
         public Azure.ResourceManager.Logic.Models.LogicAppWorkflowStatus? Status { get { throw null; } }
         public Azure.ResourceManager.Logic.Models.LogicAppWorkflowRunTrigger Trigger { get { throw null; } }
         public System.DateTimeOffset? WaitEndOn { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.ResourceReference Workflow { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.LogicAppResourceReference Workflow { get { throw null; } }
     }
     public partial class LogicAppWorkflowRunOperationCollection : Azure.ResourceManager.ArmCollection
     {
@@ -900,7 +900,7 @@ namespace Azure.ResourceManager.Logic
         public Azure.ResourceManager.Logic.Models.LogicAppWorkflowTriggerRecurrence Recurrence { get { throw null; } }
         public Azure.ResourceManager.Logic.Models.LogicAppWorkflowState? State { get { throw null; } }
         public Azure.ResourceManager.Logic.Models.LogicAppWorkflowStatus? Status { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.ResourceReference Workflow { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.LogicAppResourceReference Workflow { get { throw null; } }
     }
     public partial class LogicAppWorkflowTriggerHistoryCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.LogicAppWorkflowTriggerHistoryResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.LogicAppWorkflowTriggerHistoryResource>, System.Collections.IEnumerable
     {
@@ -922,14 +922,14 @@ namespace Azure.ResourceManager.Logic
         public string CorrelationClientTrackingId { get { throw null; } }
         public System.DateTimeOffset? EndOn { get { throw null; } }
         public System.BinaryData Error { get { throw null; } }
-        public bool? Fired { get { throw null; } }
         public Azure.ResourceManager.Logic.Models.ContentLink InputsLink { get { throw null; } }
+        public bool? IsFired { get { throw null; } }
         public Azure.ResourceManager.Logic.Models.ContentLink OutputsLink { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.ResourceReference Run { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.LogicAppResourceReference Run { get { throw null; } }
         public System.DateTimeOffset? ScheduledOn { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
         public Azure.ResourceManager.Logic.Models.LogicAppWorkflowStatus? Status { get { throw null; } }
-        public string TrackingId { get { throw null; } }
+        public System.Guid? TrackingId { get { throw null; } }
     }
     public partial class LogicAppWorkflowTriggerHistoryResource : Azure.ResourceManager.ArmResource
     {
@@ -988,7 +988,7 @@ namespace Azure.ResourceManager.Logic
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public System.BinaryData Definition { get { throw null; } set { } }
         public Azure.ResourceManager.Logic.Models.FlowEndpointsConfiguration EndpointsConfiguration { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.ResourceReference IntegrationAccount { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.LogicAppResourceReference IntegrationAccount { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Logic.Models.LogicAppWorkflowParameterInfo> Parameters { get { throw null; } }
         public Azure.ResourceManager.Logic.Models.LogicAppWorkflowProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Logic.Models.LogicAppSku Sku { get { throw null; } }
@@ -1063,171 +1063,9 @@ namespace Azure.ResourceManager.Logic
 }
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class AgreementContent
+    public partial class ArtifactContentProperties : Azure.ResourceManager.Logic.Models.ArtifactProperties
     {
-        public AgreementContent() { }
-        public Azure.ResourceManager.Logic.Models.AS2AgreementContent AS2 { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.EdifactAgreementContent Edifact { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.X12AgreementContent X12 { get { throw null; } set { } }
-    }
-    public enum AgreementType
-    {
-        NotSpecified = 0,
-        AS2 = 1,
-        X12 = 2,
-        Edifact = 3,
-    }
-    public partial class ApiDeploymentParameterMetadata
-    {
-        internal ApiDeploymentParameterMetadata() { }
-        public string ApiDeploymentParameterMetadataType { get { throw null; } }
-        public string Description { get { throw null; } }
-        public string DisplayName { get { throw null; } }
-        public bool? IsRequired { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.ApiDeploymentParameterVisibility? Visibility { get { throw null; } }
-    }
-    public partial class ApiDeploymentParameterMetadataSet
-    {
-        internal ApiDeploymentParameterMetadataSet() { }
-        public Azure.ResourceManager.Logic.Models.ApiDeploymentParameterMetadata PackageContentLink { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.ApiDeploymentParameterMetadata RedisCacheConnectionString { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ApiDeploymentParameterVisibility : System.IEquatable<Azure.ResourceManager.Logic.Models.ApiDeploymentParameterVisibility>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ApiDeploymentParameterVisibility(string value) { throw null; }
-        public static Azure.ResourceManager.Logic.Models.ApiDeploymentParameterVisibility Default { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.ApiDeploymentParameterVisibility Internal { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.ApiDeploymentParameterVisibility NotSpecified { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Logic.Models.ApiDeploymentParameterVisibility other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Logic.Models.ApiDeploymentParameterVisibility left, Azure.ResourceManager.Logic.Models.ApiDeploymentParameterVisibility right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Logic.Models.ApiDeploymentParameterVisibility (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Logic.Models.ApiDeploymentParameterVisibility left, Azure.ResourceManager.Logic.Models.ApiDeploymentParameterVisibility right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class ApiOperation : Azure.ResourceManager.Models.TrackedResourceData
-    {
-        public ApiOperation(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public Azure.ResourceManager.Logic.Models.ApiOperationPropertiesDefinition Properties { get { throw null; } set { } }
-    }
-    public partial class ApiOperationAnnotation
-    {
-        public ApiOperationAnnotation() { }
-        public string Family { get { throw null; } set { } }
-        public int? Revision { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.StatusAnnotation? Status { get { throw null; } set { } }
-    }
-    public partial class ApiOperationPropertiesDefinition
-    {
-        public ApiOperationPropertiesDefinition() { }
-        public Azure.ResourceManager.Logic.Models.ApiOperationAnnotation Annotation { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.ApiReference Api { get { throw null; } set { } }
-        public string Description { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.SwaggerSchema InputsDefinition { get { throw null; } set { } }
-        public bool? IsNotification { get { throw null; } set { } }
-        public bool? IsWebhook { get { throw null; } set { } }
-        public bool? Pageable { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Logic.Models.SwaggerSchema> ResponsesDefinition { get { throw null; } }
-        public string Summary { get { throw null; } set { } }
-        public string Trigger { get { throw null; } set { } }
-        public string TriggerHint { get { throw null; } set { } }
-        public string Visibility { get { throw null; } set { } }
-    }
-    public partial class ApiReference : Azure.ResourceManager.Logic.Models.ResourceReference
-    {
-        public ApiReference() { }
-        public string BrandColor { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.ApiTier? Category { get { throw null; } set { } }
-        public string Description { get { throw null; } set { } }
-        public string DisplayName { get { throw null; } set { } }
-        public System.Uri IconUri { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.ResourceReference IntegrationServiceEnvironment { get { throw null; } set { } }
-        public System.BinaryData Swagger { get { throw null; } set { } }
-    }
-    public partial class ApiResourceDefinitions
-    {
-        internal ApiResourceDefinitions() { }
-        public System.Uri ModifiedSwaggerUri { get { throw null; } }
-        public System.Uri OriginalSwaggerUri { get { throw null; } }
-    }
-    public partial class ApiResourceGeneralInformation
-    {
-        internal ApiResourceGeneralInformation() { }
-        public string Description { get { throw null; } }
-        public string DisplayName { get { throw null; } }
-        public System.Uri IconUri { get { throw null; } }
-        public string ReleaseTag { get { throw null; } }
-        public System.Uri TermsOfUseUri { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.ApiTier? Tier { get { throw null; } }
-    }
-    public partial class ApiResourceMetadata
-    {
-        internal ApiResourceMetadata() { }
-        public Azure.ResourceManager.Logic.Models.ApiType? ApiType { get { throw null; } }
-        public string BrandColor { get { throw null; } }
-        public string ConnectionType { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.ApiDeploymentParameterMetadataSet DeploymentParameters { get { throw null; } }
-        public string HideKey { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.LogicAppWorkflowProvisioningState? ProvisioningState { get { throw null; } }
-        public string Source { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.LogicAppWsdlImportMethod? WsdlImportMethod { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.LogicAppWsdlService WsdlService { get { throw null; } }
-    }
-    public partial class ApiResourcePolicies
-    {
-        internal ApiResourcePolicies() { }
-        public string Content { get { throw null; } }
-        public string ContentLink { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ApiTier : System.IEquatable<Azure.ResourceManager.Logic.Models.ApiTier>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ApiTier(string value) { throw null; }
-        public static Azure.ResourceManager.Logic.Models.ApiTier Enterprise { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.ApiTier NotSpecified { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.ApiTier Premium { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.ApiTier Standard { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Logic.Models.ApiTier other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Logic.Models.ApiTier left, Azure.ResourceManager.Logic.Models.ApiTier right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Logic.Models.ApiTier (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Logic.Models.ApiTier left, Azure.ResourceManager.Logic.Models.ApiTier right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ApiType : System.IEquatable<Azure.ResourceManager.Logic.Models.ApiType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ApiType(string value) { throw null; }
-        public static Azure.ResourceManager.Logic.Models.ApiType NotSpecified { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.ApiType Rest { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.ApiType Soap { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Logic.Models.ApiType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Logic.Models.ApiType left, Azure.ResourceManager.Logic.Models.ApiType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Logic.Models.ApiType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Logic.Models.ApiType left, Azure.ResourceManager.Logic.Models.ApiType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class ArtifactContentPropertiesDefinition : Azure.ResourceManager.Logic.Models.ArtifactProperties
-    {
-        public ArtifactContentPropertiesDefinition() { }
+        public ArtifactContentProperties() { }
         public System.BinaryData Content { get { throw null; } set { } }
         public Azure.ResourceManager.Logic.Models.ContentLink ContentLink { get { throw null; } set { } }
         public string ContentType { get { throw null; } set { } }
@@ -1264,22 +1102,22 @@ namespace Azure.ResourceManager.Logic.Models
     }
     public partial class AS2ErrorSettings
     {
-        public AS2ErrorSettings(bool suspendDuplicateMessage, bool resendIfMDNNotReceived) { }
-        public bool ResendIfMDNNotReceived { get { throw null; } set { } }
+        public AS2ErrorSettings(bool suspendDuplicateMessage, bool resendIfMdnNotReceived) { }
+        public bool ResendIfMdnNotReceived { get { throw null; } set { } }
         public bool SuspendDuplicateMessage { get { throw null; } set { } }
     }
     public partial class AS2MdnSettings
     {
-        public AS2MdnSettings(bool needMDN, bool signMDN, bool sendMDNAsynchronously, bool signOutboundMDNIfOptional, bool sendInboundMDNToMessageBox, Azure.ResourceManager.Logic.Models.HashingAlgorithm micHashingAlgorithm) { }
+        public AS2MdnSettings(bool needMdn, bool signMdn, bool sendMdnAsynchronously, bool signOutboundMdnIfOptional, bool sendInboundMdnToMessageBox, Azure.ResourceManager.Logic.Models.HashingAlgorithm micHashingAlgorithm) { }
         public string DispositionNotificationTo { get { throw null; } set { } }
         public string MdnText { get { throw null; } set { } }
         public Azure.ResourceManager.Logic.Models.HashingAlgorithm MicHashingAlgorithm { get { throw null; } set { } }
-        public bool NeedMDN { get { throw null; } set { } }
+        public bool NeedMdn { get { throw null; } set { } }
         public System.Uri ReceiptDeliveryUri { get { throw null; } set { } }
-        public bool SendInboundMDNToMessageBox { get { throw null; } set { } }
-        public bool SendMDNAsynchronously { get { throw null; } set { } }
-        public bool SignMDN { get { throw null; } set { } }
-        public bool SignOutboundMDNIfOptional { get { throw null; } set { } }
+        public bool SendInboundMdnToMessageBox { get { throw null; } set { } }
+        public bool SendMdnAsynchronously { get { throw null; } set { } }
+        public bool SignMdn { get { throw null; } set { } }
+        public bool SignOutboundMdnIfOptional { get { throw null; } set { } }
     }
     public partial class AS2MessageConnectionSettings
     {
@@ -1291,10 +1129,10 @@ namespace Azure.ResourceManager.Logic.Models
     }
     public partial class AS2OneWayAgreement
     {
-        public AS2OneWayAgreement(Azure.ResourceManager.Logic.Models.BusinessIdentity senderBusinessIdentity, Azure.ResourceManager.Logic.Models.BusinessIdentity receiverBusinessIdentity, Azure.ResourceManager.Logic.Models.AS2ProtocolSettings protocolSettings) { }
+        public AS2OneWayAgreement(Azure.ResourceManager.Logic.Models.IntegrationAccountBusinessIdentity senderBusinessIdentity, Azure.ResourceManager.Logic.Models.IntegrationAccountBusinessIdentity receiverBusinessIdentity, Azure.ResourceManager.Logic.Models.AS2ProtocolSettings protocolSettings) { }
         public Azure.ResourceManager.Logic.Models.AS2ProtocolSettings ProtocolSettings { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.BusinessIdentity ReceiverBusinessIdentity { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.BusinessIdentity SenderBusinessIdentity { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.IntegrationAccountBusinessIdentity ReceiverBusinessIdentity { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.IntegrationAccountBusinessIdentity SenderBusinessIdentity { get { throw null; } set { } }
     }
     public partial class AS2ProtocolSettings
     {
@@ -1309,13 +1147,13 @@ namespace Azure.ResourceManager.Logic.Models
     }
     public partial class AS2SecuritySettings
     {
-        public AS2SecuritySettings(bool overrideGroupSigningCertificate, bool enableNRRForInboundEncodedMessages, bool enableNRRForInboundDecodedMessages, bool enableNRRForOutboundMDN, bool enableNRRForOutboundEncodedMessages, bool enableNRRForOutboundDecodedMessages, bool enableNRRForInboundMDN) { }
-        public bool EnableNRRForInboundDecodedMessages { get { throw null; } set { } }
-        public bool EnableNRRForInboundEncodedMessages { get { throw null; } set { } }
-        public bool EnableNRRForInboundMDN { get { throw null; } set { } }
-        public bool EnableNRRForOutboundDecodedMessages { get { throw null; } set { } }
-        public bool EnableNRRForOutboundEncodedMessages { get { throw null; } set { } }
-        public bool EnableNRRForOutboundMDN { get { throw null; } set { } }
+        public AS2SecuritySettings(bool overrideGroupSigningCertificate, bool enableNrrForInboundEncodedMessages, bool enableNrrForInboundDecodedMessages, bool enableNrrForOutboundMdn, bool enableNrrForOutboundEncodedMessages, bool enableNrrForOutboundDecodedMessages, bool enableNrrForInboundMdn) { }
+        public bool EnableNrrForInboundDecodedMessages { get { throw null; } set { } }
+        public bool EnableNrrForInboundEncodedMessages { get { throw null; } set { } }
+        public bool EnableNrrForInboundMdn { get { throw null; } set { } }
+        public bool EnableNrrForOutboundDecodedMessages { get { throw null; } set { } }
+        public bool EnableNrrForOutboundEncodedMessages { get { throw null; } set { } }
+        public bool EnableNrrForOutboundMdn { get { throw null; } set { } }
         public string EncryptionCertificateName { get { throw null; } set { } }
         public bool OverrideGroupSigningCertificate { get { throw null; } set { } }
         public string Sha2AlgorithmFormat { get { throw null; } set { } }
@@ -1334,39 +1172,6 @@ namespace Azure.ResourceManager.Logic.Models
         public bool OverrideMessageProperties { get { throw null; } set { } }
         public Azure.ResourceManager.Logic.Models.SigningAlgorithm? SigningAlgorithm { get { throw null; } set { } }
         public bool SignMessage { get { throw null; } set { } }
-    }
-    public partial class AssemblyProperties : Azure.ResourceManager.Logic.Models.ArtifactContentPropertiesDefinition
-    {
-        public AssemblyProperties(string assemblyName) { }
-        public string AssemblyCulture { get { throw null; } set { } }
-        public string AssemblyName { get { throw null; } set { } }
-        public string AssemblyPublicKeyToken { get { throw null; } set { } }
-        public string AssemblyVersion { get { throw null; } set { } }
-    }
-    public partial class AzureResourceErrorInfo : Azure.ResourceManager.Logic.Models.ErrorInfo
-    {
-        internal AzureResourceErrorInfo() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Logic.Models.AzureResourceErrorInfo> Details { get { throw null; } }
-        public string Message { get { throw null; } }
-    }
-    public partial class BatchConfigurationProperties : Azure.ResourceManager.Logic.Models.ArtifactProperties
-    {
-        public BatchConfigurationProperties(string batchGroupName, Azure.ResourceManager.Logic.Models.BatchReleaseCriteria releaseCriteria) { }
-        public string BatchGroupName { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.BatchReleaseCriteria ReleaseCriteria { get { throw null; } set { } }
-    }
-    public partial class BatchReleaseCriteria
-    {
-        public BatchReleaseCriteria() { }
-        public int? BatchSize { get { throw null; } set { } }
-        public int? MessageCount { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.LogicAppWorkflowTriggerRecurrence Recurrence { get { throw null; } set { } }
-    }
-    public partial class BusinessIdentity
-    {
-        public BusinessIdentity(string qualifier, string value) { }
-        public string Qualifier { get { throw null; } set { } }
-        public string Value { get { throw null; } set { } }
     }
     public partial class CallbackUri
     {
@@ -1573,10 +1378,10 @@ namespace Azure.ResourceManager.Logic.Models
     }
     public partial class EdifactOneWayAgreement
     {
-        public EdifactOneWayAgreement(Azure.ResourceManager.Logic.Models.BusinessIdentity senderBusinessIdentity, Azure.ResourceManager.Logic.Models.BusinessIdentity receiverBusinessIdentity, Azure.ResourceManager.Logic.Models.EdifactProtocolSettings protocolSettings) { }
+        public EdifactOneWayAgreement(Azure.ResourceManager.Logic.Models.IntegrationAccountBusinessIdentity senderBusinessIdentity, Azure.ResourceManager.Logic.Models.IntegrationAccountBusinessIdentity receiverBusinessIdentity, Azure.ResourceManager.Logic.Models.EdifactProtocolSettings protocolSettings) { }
         public Azure.ResourceManager.Logic.Models.EdifactProtocolSettings ProtocolSettings { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.BusinessIdentity ReceiverBusinessIdentity { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.BusinessIdentity SenderBusinessIdentity { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.IntegrationAccountBusinessIdentity ReceiverBusinessIdentity { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.IntegrationAccountBusinessIdentity SenderBusinessIdentity { get { throw null; } set { } }
     }
     public partial class EdifactProcessingSettings
     {
@@ -1704,7 +1509,7 @@ namespace Azure.ResourceManager.Logic.Models
     public partial class Expression
     {
         internal Expression() { }
-        public Azure.ResourceManager.Logic.Models.AzureResourceErrorInfo Error { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.LogicAppExpressionErrorInfo Error { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Logic.Models.Expression> Subexpressions { get { throw null; } }
         public string Text { get { throw null; } }
         public System.BinaryData Value { get { throw null; } }
@@ -1782,6 +1587,47 @@ namespace Azure.ResourceManager.Logic.Models
         public static bool operator !=(Azure.ResourceManager.Logic.Models.HashingAlgorithm left, Azure.ResourceManager.Logic.Models.HashingAlgorithm right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class IntegrationAccountAgreementContent
+    {
+        public IntegrationAccountAgreementContent() { }
+        public Azure.ResourceManager.Logic.Models.AS2AgreementContent AS2 { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.EdifactAgreementContent Edifact { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.X12AgreementContent X12 { get { throw null; } set { } }
+    }
+    public enum IntegrationAccountAgreementType
+    {
+        NotSpecified = 0,
+        AS2 = 1,
+        X12 = 2,
+        Edifact = 3,
+    }
+    public partial class IntegrationAccountAssemblyProperties : Azure.ResourceManager.Logic.Models.ArtifactContentProperties
+    {
+        public IntegrationAccountAssemblyProperties(string assemblyName) { }
+        public string AssemblyCulture { get { throw null; } set { } }
+        public string AssemblyName { get { throw null; } set { } }
+        public string AssemblyPublicKeyToken { get { throw null; } set { } }
+        public string AssemblyVersion { get { throw null; } set { } }
+    }
+    public partial class IntegrationAccountBatchConfigurationProperties : Azure.ResourceManager.Logic.Models.ArtifactProperties
+    {
+        public IntegrationAccountBatchConfigurationProperties(string batchGroupName, Azure.ResourceManager.Logic.Models.IntegrationAccountBatchReleaseCriteria releaseCriteria) { }
+        public string BatchGroupName { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.IntegrationAccountBatchReleaseCriteria ReleaseCriteria { get { throw null; } set { } }
+    }
+    public partial class IntegrationAccountBatchReleaseCriteria
+    {
+        public IntegrationAccountBatchReleaseCriteria() { }
+        public int? BatchSize { get { throw null; } set { } }
+        public int? MessageCount { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.LogicAppWorkflowTriggerRecurrence Recurrence { get { throw null; } set { } }
+    }
+    public partial class IntegrationAccountBusinessIdentity
+    {
+        public IntegrationAccountBusinessIdentity(string qualifier, string value) { }
+        public string Qualifier { get { throw null; } set { } }
+        public string Value { get { throw null; } set { } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct IntegrationAccountSkuName : System.IEquatable<Azure.ResourceManager.Logic.Models.IntegrationAccountSkuName>
     {
@@ -1806,7 +1652,7 @@ namespace Azure.ResourceManager.Logic.Models
     {
         public IntegrationServiceEnvironmenEncryptionKeyReference() { }
         public string KeyName { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.ResourceReference KeyVault { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.LogicAppResourceReference KeyVault { get { throw null; } set { } }
         public string KeyVersion { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -2060,7 +1906,7 @@ namespace Azure.ResourceManager.Logic.Models
         public string Name { get { throw null; } }
         public string ResourceType { get { throw null; } }
     }
-    public partial class KeyVaultReference : Azure.ResourceManager.Logic.Models.ResourceReference
+    public partial class KeyVaultReference : Azure.ResourceManager.Logic.Models.LogicAppResourceReference
     {
         public KeyVaultReference() { }
     }
@@ -2070,11 +1916,172 @@ namespace Azure.ResourceManager.Logic.Models
         public Azure.ResourceManager.Logic.Models.KeyVaultReference KeyVault { get { throw null; } }
         public string SkipToken { get { throw null; } set { } }
     }
+    public partial class LogicAppApiDeploymentParameterMetadata
+    {
+        internal LogicAppApiDeploymentParameterMetadata() { }
+        public string ApiDeploymentParameterMetadataType { get { throw null; } }
+        public string Description { get { throw null; } }
+        public string DisplayName { get { throw null; } }
+        public bool? IsRequired { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.LogicAppApiDeploymentParameterVisibility? Visibility { get { throw null; } }
+    }
+    public partial class LogicAppApiDeploymentParameterMetadataSet
+    {
+        internal LogicAppApiDeploymentParameterMetadataSet() { }
+        public Azure.ResourceManager.Logic.Models.LogicAppApiDeploymentParameterMetadata PackageContentLink { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.LogicAppApiDeploymentParameterMetadata RedisCacheConnectionString { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct LogicAppApiDeploymentParameterVisibility : System.IEquatable<Azure.ResourceManager.Logic.Models.LogicAppApiDeploymentParameterVisibility>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public LogicAppApiDeploymentParameterVisibility(string value) { throw null; }
+        public static Azure.ResourceManager.Logic.Models.LogicAppApiDeploymentParameterVisibility Default { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicAppApiDeploymentParameterVisibility Internal { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicAppApiDeploymentParameterVisibility NotSpecified { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Logic.Models.LogicAppApiDeploymentParameterVisibility other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Logic.Models.LogicAppApiDeploymentParameterVisibility left, Azure.ResourceManager.Logic.Models.LogicAppApiDeploymentParameterVisibility right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Logic.Models.LogicAppApiDeploymentParameterVisibility (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Logic.Models.LogicAppApiDeploymentParameterVisibility left, Azure.ResourceManager.Logic.Models.LogicAppApiDeploymentParameterVisibility right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class LogicAppApiOperation : Azure.ResourceManager.Models.TrackedResourceData
+    {
+        public LogicAppApiOperation(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public Azure.ResourceManager.Logic.Models.LogicAppApiOperationProperties Properties { get { throw null; } set { } }
+    }
+    public partial class LogicAppApiOperationAnnotation
+    {
+        public LogicAppApiOperationAnnotation() { }
+        public string Family { get { throw null; } set { } }
+        public int? Revision { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.StatusAnnotation? Status { get { throw null; } set { } }
+    }
+    public partial class LogicAppApiOperationProperties
+    {
+        public LogicAppApiOperationProperties() { }
+        public Azure.ResourceManager.Logic.Models.LogicAppApiOperationAnnotation Annotation { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.LogicAppApiReference Api { get { throw null; } set { } }
+        public string Description { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.SwaggerSchema InputsDefinition { get { throw null; } set { } }
+        public bool? IsNotification { get { throw null; } set { } }
+        public bool? IsPageable { get { throw null; } set { } }
+        public bool? IsWebhook { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Logic.Models.SwaggerSchema> ResponsesDefinition { get { throw null; } }
+        public string Summary { get { throw null; } set { } }
+        public string Trigger { get { throw null; } set { } }
+        public string TriggerHint { get { throw null; } set { } }
+        public string Visibility { get { throw null; } set { } }
+    }
+    public partial class LogicAppApiReference : Azure.ResourceManager.Logic.Models.LogicAppResourceReference
+    {
+        public LogicAppApiReference() { }
+        public string BrandColor { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.LogicAppApiTier? Category { get { throw null; } set { } }
+        public string Description { get { throw null; } set { } }
+        public string DisplayName { get { throw null; } set { } }
+        public System.Uri IconUri { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.LogicAppResourceReference IntegrationServiceEnvironment { get { throw null; } set { } }
+        public System.BinaryData Swagger { get { throw null; } set { } }
+    }
+    public partial class LogicAppApiResourceDefinitions
+    {
+        internal LogicAppApiResourceDefinitions() { }
+        public System.Uri ModifiedSwaggerUri { get { throw null; } }
+        public System.Uri OriginalSwaggerUri { get { throw null; } }
+    }
+    public partial class LogicAppApiResourceGeneralInformation
+    {
+        internal LogicAppApiResourceGeneralInformation() { }
+        public string Description { get { throw null; } }
+        public string DisplayName { get { throw null; } }
+        public System.Uri IconUri { get { throw null; } }
+        public string ReleaseTag { get { throw null; } }
+        public System.Uri TermsOfUseUri { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.LogicAppApiTier? Tier { get { throw null; } }
+    }
+    public partial class LogicAppApiResourceMetadata
+    {
+        internal LogicAppApiResourceMetadata() { }
+        public Azure.ResourceManager.Logic.Models.LogicAppApiType? ApiType { get { throw null; } }
+        public string BrandColor { get { throw null; } }
+        public string ConnectionType { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.LogicAppApiDeploymentParameterMetadataSet DeploymentParameters { get { throw null; } }
+        public string HideKey { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.LogicAppWorkflowProvisioningState? ProvisioningState { get { throw null; } }
+        public string Source { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.LogicAppWsdlImportMethod? WsdlImportMethod { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.LogicAppWsdlService WsdlService { get { throw null; } }
+    }
+    public partial class LogicAppApiResourcePolicies
+    {
+        internal LogicAppApiResourcePolicies() { }
+        public string Content { get { throw null; } }
+        public string ContentLink { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct LogicAppApiTier : System.IEquatable<Azure.ResourceManager.Logic.Models.LogicAppApiTier>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public LogicAppApiTier(string value) { throw null; }
+        public static Azure.ResourceManager.Logic.Models.LogicAppApiTier Enterprise { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicAppApiTier NotSpecified { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicAppApiTier Premium { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicAppApiTier Standard { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Logic.Models.LogicAppApiTier other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Logic.Models.LogicAppApiTier left, Azure.ResourceManager.Logic.Models.LogicAppApiTier right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Logic.Models.LogicAppApiTier (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Logic.Models.LogicAppApiTier left, Azure.ResourceManager.Logic.Models.LogicAppApiTier right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct LogicAppApiType : System.IEquatable<Azure.ResourceManager.Logic.Models.LogicAppApiType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public LogicAppApiType(string value) { throw null; }
+        public static Azure.ResourceManager.Logic.Models.LogicAppApiType NotSpecified { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicAppApiType Rest { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicAppApiType Soap { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Logic.Models.LogicAppApiType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Logic.Models.LogicAppApiType left, Azure.ResourceManager.Logic.Models.LogicAppApiType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Logic.Models.LogicAppApiType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Logic.Models.LogicAppApiType left, Azure.ResourceManager.Logic.Models.LogicAppApiType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class LogicAppExpressionErrorInfo : Azure.ResourceManager.Logic.Models.ErrorInfo
+    {
+        internal LogicAppExpressionErrorInfo() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Logic.Models.LogicAppExpressionErrorInfo> Details { get { throw null; } }
+        public string Message { get { throw null; } }
+    }
+    public partial class LogicAppResourceReference
+    {
+        public LogicAppResourceReference() { }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
+        public string Name { get { throw null; } }
+        public Azure.Core.ResourceType? ResourceType { get { throw null; } }
+    }
     public partial class LogicAppSku
     {
         internal LogicAppSku() { }
         public Azure.ResourceManager.Logic.Models.LogicAppSkuName Name { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.ResourceReference Plan { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.LogicAppResourceReference Plan { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct LogicAppSkuName : System.IEquatable<Azure.ResourceManager.Logic.Models.LogicAppSkuName>
@@ -2149,7 +2156,7 @@ namespace Azure.ResourceManager.Logic.Models
         public static bool operator !=(Azure.ResourceManager.Logic.Models.LogicAppWorkflowProvisioningState left, Azure.ResourceManager.Logic.Models.LogicAppWorkflowProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class LogicAppWorkflowReference : Azure.ResourceManager.Logic.Models.ResourceReference
+    public partial class LogicAppWorkflowReference : Azure.ResourceManager.Logic.Models.LogicAppResourceReference
     {
         public LogicAppWorkflowReference() { }
     }
@@ -2169,7 +2176,7 @@ namespace Azure.ResourceManager.Logic.Models
         public System.DateTimeOffset? StartOn { get { throw null; } }
         public Azure.ResourceManager.Logic.Models.LogicAppWorkflowStatus? Status { get { throw null; } }
         public System.BinaryData TrackedProperties { get { throw null; } }
-        public string TrackingId { get { throw null; } }
+        public System.Guid? TrackingId { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct LogicAppWorkflowState : System.IEquatable<Azure.ResourceManager.Logic.Models.LogicAppWorkflowState>
@@ -2285,7 +2292,7 @@ namespace Azure.ResourceManager.Logic.Models
         public string StartTime { get { throw null; } set { } }
         public string TimeZone { get { throw null; } set { } }
     }
-    public partial class LogicAppWorkflowTriggerReference : Azure.ResourceManager.Logic.Models.ResourceReference
+    public partial class LogicAppWorkflowTriggerReference : Azure.ResourceManager.Logic.Models.LogicAppResourceReference
     {
         public LogicAppWorkflowTriggerReference() { }
         public string FlowName { get { throw null; } set { } }
@@ -2387,7 +2394,7 @@ namespace Azure.ResourceManager.Logic.Models
     {
         public NetworkConfiguration() { }
         public Azure.ResourceManager.Logic.Models.IntegrationServiceEnvironmentAccessEndpointType? EndpointType { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Logic.Models.ResourceReference> Subnets { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Logic.Models.LogicAppResourceReference> Subnets { get { throw null; } }
         public string VirtualNetworkAddressSpace { get { throw null; } set { } }
     }
     public partial class OpenAuthenticationAccessPolicy
@@ -2447,7 +2454,7 @@ namespace Azure.ResourceManager.Logic.Models
     public partial class PartnerContent
     {
         public PartnerContent() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Logic.Models.BusinessIdentity> B2BBusinessIdentities { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Logic.Models.IntegrationAccountBusinessIdentity> B2BBusinessIdentities { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PartnerType : System.IEquatable<Azure.ResourceManager.Logic.Models.PartnerType>
@@ -2532,13 +2539,6 @@ namespace Azure.ResourceManager.Logic.Models
         public Azure.ResourceManager.Logic.Models.Response Response { get { throw null; } set { } }
         public System.DateTimeOffset? StartOn { get { throw null; } set { } }
     }
-    public partial class ResourceReference
-    {
-        public ResourceReference() { }
-        public string Id { get { throw null; } set { } }
-        public string Name { get { throw null; } }
-        public string ResourceType { get { throw null; } }
-    }
     public partial class Response
     {
         public Response() { }
@@ -2559,7 +2559,7 @@ namespace Azure.ResourceManager.Logic.Models
     public partial class RunActionCorrelation : Azure.ResourceManager.Logic.Models.RunCorrelation
     {
         public RunActionCorrelation() { }
-        public string ActionTrackingId { get { throw null; } set { } }
+        public System.Guid? ActionTrackingId { get { throw null; } set { } }
     }
     public partial class RunCorrelation
     {
@@ -2807,7 +2807,7 @@ namespace Azure.ResourceManager.Logic.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public TrackingRecordType(string value) { throw null; }
-        public static Azure.ResourceManager.Logic.Models.TrackingRecordType AS2MDN { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.TrackingRecordType AS2Mdn { get { throw null; } }
         public static Azure.ResourceManager.Logic.Models.TrackingRecordType AS2Message { get { throw null; } }
         public static Azure.ResourceManager.Logic.Models.TrackingRecordType Custom { get { throw null; } }
         public static Azure.ResourceManager.Logic.Models.TrackingRecordType EdifactFunctionalGroup { get { throw null; } }
@@ -3015,10 +3015,10 @@ namespace Azure.ResourceManager.Logic.Models
     }
     public partial class X12OneWayAgreement
     {
-        public X12OneWayAgreement(Azure.ResourceManager.Logic.Models.BusinessIdentity senderBusinessIdentity, Azure.ResourceManager.Logic.Models.BusinessIdentity receiverBusinessIdentity, Azure.ResourceManager.Logic.Models.X12ProtocolSettings protocolSettings) { }
+        public X12OneWayAgreement(Azure.ResourceManager.Logic.Models.IntegrationAccountBusinessIdentity senderBusinessIdentity, Azure.ResourceManager.Logic.Models.IntegrationAccountBusinessIdentity receiverBusinessIdentity, Azure.ResourceManager.Logic.Models.X12ProtocolSettings protocolSettings) { }
         public Azure.ResourceManager.Logic.Models.X12ProtocolSettings ProtocolSettings { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.BusinessIdentity ReceiverBusinessIdentity { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.BusinessIdentity SenderBusinessIdentity { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.IntegrationAccountBusinessIdentity ReceiverBusinessIdentity { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.IntegrationAccountBusinessIdentity SenderBusinessIdentity { get { throw null; } set { } }
     }
     public partial class X12ProcessingSettings
     {
