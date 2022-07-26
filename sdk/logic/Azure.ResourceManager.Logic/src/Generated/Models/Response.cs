@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// Details on the location of the body content.
         /// Serialized Name: Response.bodyLink
         /// </param>
-        internal Response(BinaryData headers, int? statusCode, ContentLink bodyLink)
+        internal Response(BinaryData headers, int? statusCode, LogicAppContentLink bodyLink)
         {
             Headers = headers;
             StatusCode = statusCode;
@@ -54,6 +54,6 @@ namespace Azure.ResourceManager.Logic.Models
         /// Details on the location of the body content.
         /// Serialized Name: Response.bodyLink
         /// </summary>
-        public ContentLink BodyLink { get; set; }
+        public LogicAppContentLink BodyLink { get; set; }
     }
 }

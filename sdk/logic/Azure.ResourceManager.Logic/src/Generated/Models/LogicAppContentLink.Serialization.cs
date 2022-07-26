@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class ContentLink : IUtf8JsonSerializable
+    public partial class LogicAppContentLink : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteEndObject();
         }
 
-        internal static ContentLink DeserializeContentLink(JsonElement element)
+        internal static LogicAppContentLink DeserializeLogicAppContentLink(JsonElement element)
         {
             Optional<Uri> uri = default;
             Optional<string> contentVersion = default;
             Optional<long> contentSize = default;
-            Optional<ContentHash> contentHash = default;
+            Optional<LogicAppContentHash> contentHash = default;
             Optional<BinaryData> metadata = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Logic.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    contentHash = ContentHash.DeserializeContentHash(property.Value);
+                    contentHash = LogicAppContentHash.DeserializeLogicAppContentHash(property.Value);
                     continue;
                 }
                 if (property.NameEquals("metadata"))
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new ContentLink(uri.Value, contentVersion.Value, Optional.ToNullable(contentSize), contentHash.Value, metadata.Value);
+            return new LogicAppContentLink(uri.Value, contentVersion.Value, Optional.ToNullable(contentSize), contentHash.Value, metadata.Value);
         }
     }
 }

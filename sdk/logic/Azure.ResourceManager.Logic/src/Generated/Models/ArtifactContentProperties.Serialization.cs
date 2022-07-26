@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Logic.Models
         {
             Optional<BinaryData> content = default;
             Optional<string> contentType = default;
-            Optional<ContentLink> contentLink = default;
+            Optional<LogicAppContentLink> contentLink = default;
             Optional<DateTimeOffset> createdTime = default;
             Optional<DateTimeOffset> changedTime = default;
             Optional<BinaryData> metadata = default;
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Logic.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    contentLink = ContentLink.DeserializeContentLink(property.Value);
+                    contentLink = LogicAppContentLink.DeserializeLogicAppContentLink(property.Value);
                     continue;
                 }
                 if (property.NameEquals("createdTime"))

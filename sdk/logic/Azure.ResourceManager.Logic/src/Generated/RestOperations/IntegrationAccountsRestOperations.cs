@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="integrationAccountName"/> or <paramref name="getCallbackUrlParameters"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="integrationAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CallbackUri>> ListCallbackUrlAsync(string subscriptionId, string resourceGroupName, string integrationAccountName, GetCallbackUrlParameters getCallbackUrlParameters, CancellationToken cancellationToken = default)
+        public async Task<Response<IntegrationAccountCallbackUri>> ListCallbackUrlAsync(string subscriptionId, string resourceGroupName, string integrationAccountName, GetCallbackUrlParameters getCallbackUrlParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -561,9 +561,9 @@ namespace Azure.ResourceManager.Logic
             {
                 case 200:
                     {
-                        CallbackUri value = default;
+                        IntegrationAccountCallbackUri value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CallbackUri.DeserializeCallbackUri(document.RootElement);
+                        value = IntegrationAccountCallbackUri.DeserializeIntegrationAccountCallbackUri(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -579,7 +579,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="integrationAccountName"/> or <paramref name="getCallbackUrlParameters"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="integrationAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CallbackUri> ListCallbackUrl(string subscriptionId, string resourceGroupName, string integrationAccountName, GetCallbackUrlParameters getCallbackUrlParameters, CancellationToken cancellationToken = default)
+        public Response<IntegrationAccountCallbackUri> ListCallbackUrl(string subscriptionId, string resourceGroupName, string integrationAccountName, GetCallbackUrlParameters getCallbackUrlParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -592,9 +592,9 @@ namespace Azure.ResourceManager.Logic
             {
                 case 200:
                     {
-                        CallbackUri value = default;
+                        IntegrationAccountCallbackUri value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CallbackUri.DeserializeCallbackUri(document.RootElement);
+                        value = IntegrationAccountCallbackUri.DeserializeIntegrationAccountCallbackUri(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

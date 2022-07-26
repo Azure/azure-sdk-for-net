@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Logic
         /// Gets the retry histories.
         /// Serialized Name: WorkflowRunAction.properties.retryHistory
         /// </param>
-        internal LogicAppWorkflowRunActionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? startOn, DateTimeOffset? endOn, LogicAppWorkflowStatus? status, string code, BinaryData error, Guid? trackingId, RunActionCorrelation correlation, ContentLink inputsLink, ContentLink outputsLink, BinaryData trackedProperties, IReadOnlyList<RetryHistory> retryHistory) : base(id, name, resourceType, systemData)
+        internal LogicAppWorkflowRunActionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? startOn, DateTimeOffset? endOn, LogicAppWorkflowStatus? status, string code, BinaryData error, Guid? trackingId, RunActionCorrelation correlation, LogicAppContentLink inputsLink, LogicAppContentLink outputsLink, BinaryData trackedProperties, IReadOnlyList<RetryHistory> retryHistory) : base(id, name, resourceType, systemData)
         {
             StartOn = startOn;
             EndOn = endOn;
@@ -125,12 +125,12 @@ namespace Azure.ResourceManager.Logic
         /// Gets the link to inputs.
         /// Serialized Name: WorkflowRunAction.properties.inputsLink
         /// </summary>
-        public ContentLink InputsLink { get; }
+        public LogicAppContentLink InputsLink { get; }
         /// <summary>
         /// Gets the link to outputs.
         /// Serialized Name: WorkflowRunAction.properties.outputsLink
         /// </summary>
-        public ContentLink OutputsLink { get; }
+        public LogicAppContentLink OutputsLink { get; }
         /// <summary>
         /// Gets the tracked properties.
         /// Serialized Name: WorkflowRunAction.properties.trackedProperties

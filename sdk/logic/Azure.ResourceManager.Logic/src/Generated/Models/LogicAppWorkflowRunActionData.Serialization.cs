@@ -29,8 +29,8 @@ namespace Azure.ResourceManager.Logic
             Optional<BinaryData> error = default;
             Optional<Guid> trackingId = default;
             Optional<RunActionCorrelation> correlation = default;
-            Optional<ContentLink> inputsLink = default;
-            Optional<ContentLink> outputsLink = default;
+            Optional<LogicAppContentLink> inputsLink = default;
+            Optional<LogicAppContentLink> outputsLink = default;
             Optional<BinaryData> trackedProperties = default;
             Optional<IReadOnlyList<RetryHistory>> retryHistory = default;
             foreach (var property in element.EnumerateObject())
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Logic
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            inputsLink = ContentLink.DeserializeContentLink(property0.Value);
+                            inputsLink = LogicAppContentLink.DeserializeLogicAppContentLink(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("outputsLink"))
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Logic
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            outputsLink = ContentLink.DeserializeContentLink(property0.Value);
+                            outputsLink = LogicAppContentLink.DeserializeLogicAppContentLink(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("trackedProperties"))

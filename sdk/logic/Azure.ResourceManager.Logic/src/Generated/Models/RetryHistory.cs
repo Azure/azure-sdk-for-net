@@ -41,18 +41,18 @@ namespace Azure.ResourceManager.Logic.Models
         /// Gets the service request Id.
         /// Serialized Name: RetryHistory.serviceRequestId
         /// </param>
-        /// <param name="errorResponse">
+        /// <param name="error">
         /// Gets the error response.
         /// Serialized Name: RetryHistory.error
         /// </param>
-        internal RetryHistory(DateTimeOffset? startOn, DateTimeOffset? endOn, string code, string clientRequestId, string serviceRequestId, ErrorResponse errorResponse)
+        internal RetryHistory(DateTimeOffset? startOn, DateTimeOffset? endOn, string code, string clientRequestId, string serviceRequestId, LogicAppErrorResponse error)
         {
             StartOn = startOn;
             EndOn = endOn;
             Code = code;
             ClientRequestId = clientRequestId;
             ServiceRequestId = serviceRequestId;
-            ErrorResponse = errorResponse;
+            Error = error;
         }
 
         /// <summary>
@@ -84,20 +84,6 @@ namespace Azure.ResourceManager.Logic.Models
         /// Gets the error response.
         /// Serialized Name: RetryHistory.error
         /// </summary>
-        internal ErrorResponse ErrorResponse { get; set; }
-        /// <summary>
-        /// The error properties.
-        /// Serialized Name: ErrorResponse.error
-        /// </summary>
-        public ErrorProperties Error
-        {
-            get => ErrorResponse is null ? default : ErrorResponse.Error;
-            set
-            {
-                if (ErrorResponse is null)
-                    ErrorResponse = new ErrorResponse();
-                ErrorResponse.Error = value;
-            }
-        }
+        public LogicAppErrorResponse Error { get; set; }
     }
 }

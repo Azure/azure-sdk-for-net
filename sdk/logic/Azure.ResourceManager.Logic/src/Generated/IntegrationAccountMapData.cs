@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Logic
         /// The metadata.
         /// Serialized Name: IntegrationAccountMap.properties.metadata
         /// </param>
-        internal IntegrationAccountMapData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MapType mapType, IntegrationAccountMapPropertiesParametersSchema parametersSchema, DateTimeOffset? createdOn, DateTimeOffset? changedOn, string content, string contentType, ContentLink contentLink, BinaryData metadata) : base(id, name, resourceType, systemData, tags, location)
+        internal IntegrationAccountMapData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MapType mapType, IntegrationAccountMapPropertiesParametersSchema parametersSchema, DateTimeOffset? createdOn, DateTimeOffset? changedOn, string content, string contentType, LogicAppContentLink contentLink, BinaryData metadata) : base(id, name, resourceType, systemData, tags, location)
         {
             MapType = mapType;
             ParametersSchema = parametersSchema;
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Logic
         /// The content link.
         /// Serialized Name: IntegrationAccountMap.properties.contentLink
         /// </summary>
-        public ContentLink ContentLink { get; }
+        public LogicAppContentLink ContentLink { get; }
         /// <summary>
         /// The metadata.
         /// Serialized Name: IntegrationAccountMap.properties.metadata

@@ -545,7 +545,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="getCallbackUrlParameters"> The callback URL parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="getCallbackUrlParameters"/> is null. </exception>
-        public virtual async Task<Response<CallbackUri>> GetCallbackUrlAsync(GetCallbackUrlParameters getCallbackUrlParameters, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IntegrationAccountCallbackUri>> GetCallbackUrlAsync(GetCallbackUrlParameters getCallbackUrlParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(getCallbackUrlParameters, nameof(getCallbackUrlParameters));
 
@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="getCallbackUrlParameters"> The callback URL parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="getCallbackUrlParameters"/> is null. </exception>
-        public virtual Response<CallbackUri> GetCallbackUrl(GetCallbackUrlParameters getCallbackUrlParameters, CancellationToken cancellationToken = default)
+        public virtual Response<IntegrationAccountCallbackUri> GetCallbackUrl(GetCallbackUrlParameters getCallbackUrlParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(getCallbackUrlParameters, nameof(getCallbackUrlParameters));
 

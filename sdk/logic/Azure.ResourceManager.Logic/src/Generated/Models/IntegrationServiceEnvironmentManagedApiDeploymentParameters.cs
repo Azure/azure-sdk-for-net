@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// The integration service environment managed api content link for deployment.
         /// Serialized Name: IntegrationServiceEnvironmentManagedApiDeploymentParameters.contentLinkDefinition
         /// </param>
-        internal IntegrationServiceEnvironmentManagedApiDeploymentParameters(ContentLink contentLinkDefinition)
+        internal IntegrationServiceEnvironmentManagedApiDeploymentParameters(LogicAppContentLink contentLinkDefinition)
         {
             ContentLinkDefinition = contentLinkDefinition;
         }
@@ -32,6 +32,6 @@ namespace Azure.ResourceManager.Logic.Models
         /// The integration service environment managed api content link for deployment.
         /// Serialized Name: IntegrationServiceEnvironmentManagedApiDeploymentParameters.contentLinkDefinition
         /// </summary>
-        public ContentLink ContentLinkDefinition { get; set; }
+        public LogicAppContentLink ContentLinkDefinition { get; set; }
     }
 }

@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Logic
         /// The content link.
         /// Serialized Name: IntegrationAccountSchema.properties.contentLink
         /// </param>
-        internal IntegrationAccountSchemaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SchemaType schemaType, string targetNamespace, string documentName, string fileName, DateTimeOffset? createdOn, DateTimeOffset? changedOn, BinaryData metadata, string content, string contentType, ContentLink contentLink) : base(id, name, resourceType, systemData, tags, location)
+        internal IntegrationAccountSchemaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SchemaType schemaType, string targetNamespace, string documentName, string fileName, DateTimeOffset? createdOn, DateTimeOffset? changedOn, BinaryData metadata, string content, string contentType, LogicAppContentLink contentLink) : base(id, name, resourceType, systemData, tags, location)
         {
             SchemaType = schemaType;
             TargetNamespace = targetNamespace;
@@ -137,6 +137,6 @@ namespace Azure.ResourceManager.Logic
         /// The content link.
         /// Serialized Name: IntegrationAccountSchema.properties.contentLink
         /// </summary>
-        public ContentLink ContentLink { get; }
+        public LogicAppContentLink ContentLink { get; }
     }
 }

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// The value indicating whether technical acknowledgement is needed.
         /// Serialized Name: EdifactAcknowledgementSettings.needTechnicalAcknowledgement
         /// </param>
-        /// <param name="batchTechnicalAcknowledgements">
+        /// <param name="batchTechnicalAcknowledgement">
         /// The value indicating whether to batch the technical acknowledgements.
         /// Serialized Name: EdifactAcknowledgementSettings.batchTechnicalAcknowledgements
         /// </param>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// The value indicating whether functional acknowledgement is needed.
         /// Serialized Name: EdifactAcknowledgementSettings.needFunctionalAcknowledgement
         /// </param>
-        /// <param name="batchFunctionalAcknowledgements">
+        /// <param name="batchFunctionalAcknowledgement">
         /// The value indicating whether to batch functional acknowledgements.
         /// Serialized Name: EdifactAcknowledgementSettings.batchFunctionalAcknowledgements
         /// </param>
@@ -50,12 +50,12 @@ namespace Azure.ResourceManager.Logic.Models
         /// The value indicating whether to rollover acknowledgement control number.
         /// Serialized Name: EdifactAcknowledgementSettings.rolloverAcknowledgementControlNumber
         /// </param>
-        public EdifactAcknowledgementSettings(bool needTechnicalAcknowledgement, bool batchTechnicalAcknowledgements, bool needFunctionalAcknowledgement, bool batchFunctionalAcknowledgements, bool needLoopForValidMessages, bool sendSynchronousAcknowledgement, int acknowledgementControlNumberLowerBound, int acknowledgementControlNumberUpperBound, bool rolloverAcknowledgementControlNumber)
+        public EdifactAcknowledgementSettings(bool needTechnicalAcknowledgement, bool batchTechnicalAcknowledgement, bool needFunctionalAcknowledgement, bool batchFunctionalAcknowledgement, bool needLoopForValidMessages, bool sendSynchronousAcknowledgement, int acknowledgementControlNumberLowerBound, int acknowledgementControlNumberUpperBound, bool rolloverAcknowledgementControlNumber)
         {
             NeedTechnicalAcknowledgement = needTechnicalAcknowledgement;
-            BatchTechnicalAcknowledgements = batchTechnicalAcknowledgements;
+            BatchTechnicalAcknowledgement = batchTechnicalAcknowledgement;
             NeedFunctionalAcknowledgement = needFunctionalAcknowledgement;
-            BatchFunctionalAcknowledgements = batchFunctionalAcknowledgements;
+            BatchFunctionalAcknowledgement = batchFunctionalAcknowledgement;
             NeedLoopForValidMessages = needLoopForValidMessages;
             SendSynchronousAcknowledgement = sendSynchronousAcknowledgement;
             AcknowledgementControlNumberLowerBound = acknowledgementControlNumberLowerBound;
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// The value indicating whether technical acknowledgement is needed.
         /// Serialized Name: EdifactAcknowledgementSettings.needTechnicalAcknowledgement
         /// </param>
-        /// <param name="batchTechnicalAcknowledgements">
+        /// <param name="batchTechnicalAcknowledgement">
         /// The value indicating whether to batch the technical acknowledgements.
         /// Serialized Name: EdifactAcknowledgementSettings.batchTechnicalAcknowledgements
         /// </param>
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// The value indicating whether functional acknowledgement is needed.
         /// Serialized Name: EdifactAcknowledgementSettings.needFunctionalAcknowledgement
         /// </param>
-        /// <param name="batchFunctionalAcknowledgements">
+        /// <param name="batchFunctionalAcknowledgement">
         /// The value indicating whether to batch functional acknowledgements.
         /// Serialized Name: EdifactAcknowledgementSettings.batchFunctionalAcknowledgements
         /// </param>
@@ -108,12 +108,12 @@ namespace Azure.ResourceManager.Logic.Models
         /// The value indicating whether to rollover acknowledgement control number.
         /// Serialized Name: EdifactAcknowledgementSettings.rolloverAcknowledgementControlNumber
         /// </param>
-        internal EdifactAcknowledgementSettings(bool needTechnicalAcknowledgement, bool batchTechnicalAcknowledgements, bool needFunctionalAcknowledgement, bool batchFunctionalAcknowledgements, bool needLoopForValidMessages, bool sendSynchronousAcknowledgement, string acknowledgementControlNumberPrefix, string acknowledgementControlNumberSuffix, int acknowledgementControlNumberLowerBound, int acknowledgementControlNumberUpperBound, bool rolloverAcknowledgementControlNumber)
+        internal EdifactAcknowledgementSettings(bool needTechnicalAcknowledgement, bool batchTechnicalAcknowledgement, bool needFunctionalAcknowledgement, bool batchFunctionalAcknowledgement, bool needLoopForValidMessages, bool sendSynchronousAcknowledgement, string acknowledgementControlNumberPrefix, string acknowledgementControlNumberSuffix, int acknowledgementControlNumberLowerBound, int acknowledgementControlNumberUpperBound, bool rolloverAcknowledgementControlNumber)
         {
             NeedTechnicalAcknowledgement = needTechnicalAcknowledgement;
-            BatchTechnicalAcknowledgements = batchTechnicalAcknowledgements;
+            BatchTechnicalAcknowledgement = batchTechnicalAcknowledgement;
             NeedFunctionalAcknowledgement = needFunctionalAcknowledgement;
-            BatchFunctionalAcknowledgements = batchFunctionalAcknowledgements;
+            BatchFunctionalAcknowledgement = batchFunctionalAcknowledgement;
             NeedLoopForValidMessages = needLoopForValidMessages;
             SendSynchronousAcknowledgement = sendSynchronousAcknowledgement;
             AcknowledgementControlNumberPrefix = acknowledgementControlNumberPrefix;
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// The value indicating whether to batch the technical acknowledgements.
         /// Serialized Name: EdifactAcknowledgementSettings.batchTechnicalAcknowledgements
         /// </summary>
-        public bool BatchTechnicalAcknowledgements { get; set; }
+        public bool BatchTechnicalAcknowledgement { get; set; }
         /// <summary>
         /// The value indicating whether functional acknowledgement is needed.
         /// Serialized Name: EdifactAcknowledgementSettings.needFunctionalAcknowledgement
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// The value indicating whether to batch functional acknowledgements.
         /// Serialized Name: EdifactAcknowledgementSettings.batchFunctionalAcknowledgements
         /// </summary>
-        public bool BatchFunctionalAcknowledgements { get; set; }
+        public bool BatchFunctionalAcknowledgement { get; set; }
         /// <summary>
         /// The value indicating whether a loop is needed for valid messages.
         /// Serialized Name: EdifactAcknowledgementSettings.needLoopForValidMessages

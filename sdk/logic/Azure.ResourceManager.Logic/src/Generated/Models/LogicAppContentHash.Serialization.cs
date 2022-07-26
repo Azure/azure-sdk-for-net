@@ -10,20 +10,26 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class CallbackUri
+    public partial class LogicAppContentHash
     {
-        internal static CallbackUri DeserializeCallbackUri(JsonElement element)
+        internal static LogicAppContentHash DeserializeLogicAppContentHash(JsonElement element)
         {
+            Optional<string> algorithm = default;
             Optional<string> value = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("algorithm"))
+                {
+                    algorithm = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("value"))
                 {
                     value = property.Value.GetString();
                     continue;
                 }
             }
-            return new CallbackUri(value.Value);
+            return new LogicAppContentHash(algorithm.Value, value.Value);
         }
     }
 }

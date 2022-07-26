@@ -11,19 +11,19 @@ namespace Azure.ResourceManager.Logic.Models
     /// The callback url.
     /// Serialized Name: CallbackUrl
     /// </summary>
-    public partial class CallbackUri
+    public partial class IntegrationAccountCallbackUri
     {
-        /// <summary> Initializes a new instance of CallbackUri. </summary>
-        internal CallbackUri()
+        /// <summary> Initializes a new instance of IntegrationAccountCallbackUri. </summary>
+        internal IntegrationAccountCallbackUri()
         {
         }
 
-        /// <summary> Initializes a new instance of CallbackUri. </summary>
+        /// <summary> Initializes a new instance of IntegrationAccountCallbackUri. </summary>
         /// <param name="value">
         /// The URL value.
         /// Serialized Name: CallbackUrl.value
         /// </param>
-        internal CallbackUri(string value)
+        internal IntegrationAccountCallbackUri(string value)
         {
             Value = value;
         }

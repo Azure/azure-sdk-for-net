@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Logic.Models
     /// The azure resource error info.
     /// Serialized Name: AzureResourceErrorInfo
     /// </summary>
-    public partial class LogicAppExpressionErrorInfo : ErrorInfo
+    public partial class LogicAppExpressionErrorInfo : LogicAppErrorInfo
     {
         /// <summary> Initializes a new instance of LogicAppExpressionErrorInfo. </summary>
         /// <param name="code">

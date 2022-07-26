@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// The content link.
         /// Serialized Name: ArtifactContentPropertiesDefinition.contentLink
         /// </param>
-        internal ArtifactContentProperties(DateTimeOffset? createdOn, DateTimeOffset? changedOn, BinaryData metadata, BinaryData content, string contentType, ContentLink contentLink) : base(createdOn, changedOn, metadata)
+        internal ArtifactContentProperties(DateTimeOffset? createdOn, DateTimeOffset? changedOn, BinaryData metadata, BinaryData content, string contentType, LogicAppContentLink contentLink) : base(createdOn, changedOn, metadata)
         {
             Content = content;
             ContentType = contentType;
@@ -66,6 +66,6 @@ namespace Azure.ResourceManager.Logic.Models
         /// The content link.
         /// Serialized Name: ArtifactContentPropertiesDefinition.contentLink
         /// </summary>
-        public ContentLink ContentLink { get; set; }
+        public LogicAppContentLink ContentLink { get; set; }
     }
 }

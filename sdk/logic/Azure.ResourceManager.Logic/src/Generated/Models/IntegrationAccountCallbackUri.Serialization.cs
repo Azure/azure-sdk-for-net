@@ -10,20 +10,20 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class ErrorInfo
+    public partial class IntegrationAccountCallbackUri
     {
-        internal static ErrorInfo DeserializeErrorInfo(JsonElement element)
+        internal static IntegrationAccountCallbackUri DeserializeIntegrationAccountCallbackUri(JsonElement element)
         {
-            string code = default;
+            Optional<string> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("code"))
+                if (property.NameEquals("value"))
                 {
-                    code = property.Value.GetString();
+                    value = property.Value.GetString();
                     continue;
                 }
             }
-            return new ErrorInfo(code);
+            return new IntegrationAccountCallbackUri(value.Value);
         }
     }
 }

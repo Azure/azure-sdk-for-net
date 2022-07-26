@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Logic
         public IntegrationAccountMapData(Azure.Core.AzureLocation location, Azure.ResourceManager.Logic.Models.MapType mapType) : base (default(Azure.Core.AzureLocation)) { }
         public System.DateTimeOffset? ChangedOn { get { throw null; } }
         public string Content { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.ContentLink ContentLink { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.LogicAppContentLink ContentLink { get { throw null; } }
         public string ContentType { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public Azure.ResourceManager.Logic.Models.MapType MapType { get { throw null; } set { } }
@@ -306,8 +306,8 @@ namespace Azure.ResourceManager.Logic
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Logic.Models.CallbackUri> GetCallbackUrl(Azure.ResourceManager.Logic.Models.GetCallbackUrlParameters getCallbackUrlParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.Models.CallbackUri>> GetCallbackUrlAsync(Azure.ResourceManager.Logic.Models.GetCallbackUrlParameters getCallbackUrlParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Logic.Models.IntegrationAccountCallbackUri> GetCallbackUrl(Azure.ResourceManager.Logic.Models.GetCallbackUrlParameters getCallbackUrlParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.Models.IntegrationAccountCallbackUri>> GetCallbackUrlAsync(Azure.ResourceManager.Logic.Models.GetCallbackUrlParameters getCallbackUrlParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountAgreementResource> GetIntegrationAccountAgreement(string agreementName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountAgreementResource>> GetIntegrationAccountAgreementAsync(string agreementName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Logic.IntegrationAccountAgreementCollection GetIntegrationAccountAgreements() { throw null; }
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.Logic
         public IntegrationAccountSchemaData(Azure.Core.AzureLocation location, Azure.ResourceManager.Logic.Models.SchemaType schemaType) : base (default(Azure.Core.AzureLocation)) { }
         public System.DateTimeOffset? ChangedOn { get { throw null; } }
         public string Content { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.ContentLink ContentLink { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.LogicAppContentLink ContentLink { get { throw null; } }
         public string ContentType { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string DocumentName { get { throw null; } set { } }
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.Logic
         public System.Collections.Generic.IReadOnlyList<string> Capabilities { get { throw null; } }
         public Azure.ResourceManager.Logic.Models.LogicAppApiTier? Category { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> ConnectionParameters { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.ContentLink DeploymentParametersContentLinkDefinition { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.LogicAppContentLink DeploymentParametersContentLinkDefinition { get { throw null; } set { } }
         public Azure.ResourceManager.Logic.Models.LogicAppApiResourceGeneralInformation GeneralInformation { get { throw null; } }
         public Azure.ResourceManager.Logic.Models.LogicAppResourceReference IntegrationServiceEnvironment { get { throw null; } set { } }
         public Azure.ResourceManager.Logic.Models.LogicAppApiResourceMetadata Metadata { get { throw null; } }
@@ -642,8 +642,8 @@ namespace Azure.ResourceManager.Logic
         public Azure.ResourceManager.Logic.Models.RunActionCorrelation Correlation { get { throw null; } }
         public System.DateTimeOffset? EndOn { get { throw null; } }
         public System.BinaryData Error { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.ContentLink InputsLink { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.ContentLink OutputsLink { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.LogicAppContentLink InputsLink { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.LogicAppContentLink OutputsLink { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Logic.Models.RetryHistory> RetryHistory { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
         public Azure.ResourceManager.Logic.Models.LogicAppWorkflowStatus? Status { get { throw null; } }
@@ -671,10 +671,10 @@ namespace Azure.ResourceManager.Logic
         public System.DateTimeOffset? EndOn { get { throw null; } set { } }
         public System.BinaryData Error { get { throw null; } set { } }
         public System.BinaryData Inputs { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.ContentLink InputsLink { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.LogicAppContentLink InputsLink { get { throw null; } }
         public int? IterationCount { get { throw null; } set { } }
         public System.BinaryData Outputs { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.ContentLink OutputsLink { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.LogicAppContentLink OutputsLink { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Logic.Models.RepetitionIndex> RepetitionIndexes { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Logic.Models.RetryHistory> RetryHistory { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } set { } }
@@ -922,9 +922,9 @@ namespace Azure.ResourceManager.Logic
         public string CorrelationClientTrackingId { get { throw null; } }
         public System.DateTimeOffset? EndOn { get { throw null; } }
         public System.BinaryData Error { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.ContentLink InputsLink { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.LogicAppContentLink InputsLink { get { throw null; } }
         public bool? IsFired { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.ContentLink OutputsLink { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.LogicAppContentLink OutputsLink { get { throw null; } }
         public Azure.ResourceManager.Logic.Models.LogicAppResourceReference Run { get { throw null; } }
         public System.DateTimeOffset? ScheduledOn { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
@@ -1067,7 +1067,7 @@ namespace Azure.ResourceManager.Logic.Models
     {
         public ArtifactContentProperties() { }
         public System.BinaryData Content { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.ContentLink ContentLink { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.LogicAppContentLink ContentLink { get { throw null; } set { } }
         public string ContentType { get { throw null; } set { } }
     }
     public partial class ArtifactProperties
@@ -1173,26 +1173,6 @@ namespace Azure.ResourceManager.Logic.Models
         public Azure.ResourceManager.Logic.Models.SigningAlgorithm? SigningAlgorithm { get { throw null; } set { } }
         public bool SignMessage { get { throw null; } set { } }
     }
-    public partial class CallbackUri
-    {
-        internal CallbackUri() { }
-        public string Value { get { throw null; } }
-    }
-    public partial class ContentHash
-    {
-        internal ContentHash() { }
-        public string Algorithm { get { throw null; } }
-        public string Value { get { throw null; } }
-    }
-    public partial class ContentLink
-    {
-        public ContentLink() { }
-        public Azure.ResourceManager.Logic.Models.ContentHash ContentHash { get { throw null; } }
-        public long? ContentSize { get { throw null; } }
-        public string ContentVersion { get { throw null; } }
-        public System.BinaryData Metadata { get { throw null; } }
-        public System.Uri Uri { get { throw null; } set { } }
-    }
     public enum DayOfWeek
     {
         Sunday = 0,
@@ -1215,13 +1195,13 @@ namespace Azure.ResourceManager.Logic.Models
     }
     public partial class EdifactAcknowledgementSettings
     {
-        public EdifactAcknowledgementSettings(bool needTechnicalAcknowledgement, bool batchTechnicalAcknowledgements, bool needFunctionalAcknowledgement, bool batchFunctionalAcknowledgements, bool needLoopForValidMessages, bool sendSynchronousAcknowledgement, int acknowledgementControlNumberLowerBound, int acknowledgementControlNumberUpperBound, bool rolloverAcknowledgementControlNumber) { }
+        public EdifactAcknowledgementSettings(bool needTechnicalAcknowledgement, bool batchTechnicalAcknowledgement, bool needFunctionalAcknowledgement, bool batchFunctionalAcknowledgement, bool needLoopForValidMessages, bool sendSynchronousAcknowledgement, int acknowledgementControlNumberLowerBound, int acknowledgementControlNumberUpperBound, bool rolloverAcknowledgementControlNumber) { }
         public int AcknowledgementControlNumberLowerBound { get { throw null; } set { } }
         public string AcknowledgementControlNumberPrefix { get { throw null; } set { } }
         public string AcknowledgementControlNumberSuffix { get { throw null; } set { } }
         public int AcknowledgementControlNumberUpperBound { get { throw null; } set { } }
-        public bool BatchFunctionalAcknowledgements { get { throw null; } set { } }
-        public bool BatchTechnicalAcknowledgements { get { throw null; } set { } }
+        public bool BatchFunctionalAcknowledgement { get { throw null; } set { } }
+        public bool BatchTechnicalAcknowledgement { get { throw null; } set { } }
         public bool NeedFunctionalAcknowledgement { get { throw null; } set { } }
         public bool NeedLoopForValidMessages { get { throw null; } set { } }
         public bool NeedTechnicalAcknowledgement { get { throw null; } set { } }
@@ -1420,18 +1400,18 @@ namespace Azure.ResourceManager.Logic.Models
     }
     public partial class EdifactValidationOverride
     {
-        public EdifactValidationOverride(string messageId, bool enforceCharacterSet, bool validateEDITypes, bool validateXSDTypes, bool allowLeadingAndTrailingSpacesAndZeroes, Azure.ResourceManager.Logic.Models.TrailingSeparatorPolicy trailingSeparatorPolicy, bool trimLeadingAndTrailingSpacesAndZeroes) { }
+        public EdifactValidationOverride(string messageId, bool enforceCharacterSet, bool validateEdiTypes, bool validateXsdTypes, bool allowLeadingAndTrailingSpacesAndZeroes, Azure.ResourceManager.Logic.Models.TrailingSeparatorPolicy trailingSeparatorPolicy, bool trimLeadingAndTrailingSpacesAndZeroes) { }
         public bool AllowLeadingAndTrailingSpacesAndZeroes { get { throw null; } set { } }
         public bool EnforceCharacterSet { get { throw null; } set { } }
         public string MessageId { get { throw null; } set { } }
         public Azure.ResourceManager.Logic.Models.TrailingSeparatorPolicy TrailingSeparatorPolicy { get { throw null; } set { } }
         public bool TrimLeadingAndTrailingSpacesAndZeroes { get { throw null; } set { } }
-        public bool ValidateEDITypes { get { throw null; } set { } }
-        public bool ValidateXSDTypes { get { throw null; } set { } }
+        public bool ValidateEdiTypes { get { throw null; } set { } }
+        public bool ValidateXsdTypes { get { throw null; } set { } }
     }
     public partial class EdifactValidationSettings
     {
-        public EdifactValidationSettings(bool validateCharacterSet, bool checkDuplicateInterchangeControlNumber, int interchangeControlNumberValidityDays, bool checkDuplicateGroupControlNumber, bool checkDuplicateTransactionSetControlNumber, bool validateEDITypes, bool validateXSDTypes, bool allowLeadingAndTrailingSpacesAndZeroes, bool trimLeadingAndTrailingSpacesAndZeroes, Azure.ResourceManager.Logic.Models.TrailingSeparatorPolicy trailingSeparatorPolicy) { }
+        public EdifactValidationSettings(bool validateCharacterSet, bool checkDuplicateInterchangeControlNumber, int interchangeControlNumberValidityDays, bool checkDuplicateGroupControlNumber, bool checkDuplicateTransactionSetControlNumber, bool validateEdiTypes, bool validateXsdTypes, bool allowLeadingAndTrailingSpacesAndZeroes, bool trimLeadingAndTrailingSpacesAndZeroes, Azure.ResourceManager.Logic.Models.TrailingSeparatorPolicy trailingSeparatorPolicy) { }
         public bool AllowLeadingAndTrailingSpacesAndZeroes { get { throw null; } set { } }
         public bool CheckDuplicateGroupControlNumber { get { throw null; } set { } }
         public bool CheckDuplicateInterchangeControlNumber { get { throw null; } set { } }
@@ -1440,8 +1420,8 @@ namespace Azure.ResourceManager.Logic.Models
         public Azure.ResourceManager.Logic.Models.TrailingSeparatorPolicy TrailingSeparatorPolicy { get { throw null; } set { } }
         public bool TrimLeadingAndTrailingSpacesAndZeroes { get { throw null; } set { } }
         public bool ValidateCharacterSet { get { throw null; } set { } }
-        public bool ValidateEDITypes { get { throw null; } set { } }
-        public bool ValidateXSDTypes { get { throw null; } set { } }
+        public bool ValidateEdiTypes { get { throw null; } set { } }
+        public bool ValidateXsdTypes { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EncryptionAlgorithm : System.IEquatable<Azure.ResourceManager.Logic.Models.EncryptionAlgorithm>
@@ -1449,10 +1429,10 @@ namespace Azure.ResourceManager.Logic.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public EncryptionAlgorithm(string value) { throw null; }
-        public static Azure.ResourceManager.Logic.Models.EncryptionAlgorithm AES128 { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.EncryptionAlgorithm AES192 { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.EncryptionAlgorithm AES256 { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.EncryptionAlgorithm DES3 { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.EncryptionAlgorithm Aes128 { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.EncryptionAlgorithm Aes192 { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.EncryptionAlgorithm Aes256 { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.EncryptionAlgorithm Des3 { get { throw null; } }
         public static Azure.ResourceManager.Logic.Models.EncryptionAlgorithm None { get { throw null; } }
         public static Azure.ResourceManager.Logic.Models.EncryptionAlgorithm NotSpecified { get { throw null; } }
         public static Azure.ResourceManager.Logic.Models.EncryptionAlgorithm RC2 { get { throw null; } }
@@ -1465,17 +1445,6 @@ namespace Azure.ResourceManager.Logic.Models
         public static implicit operator Azure.ResourceManager.Logic.Models.EncryptionAlgorithm (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Logic.Models.EncryptionAlgorithm left, Azure.ResourceManager.Logic.Models.EncryptionAlgorithm right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class ErrorInfo
-    {
-        internal ErrorInfo() { }
-        public string Code { get { throw null; } }
-    }
-    public partial class ErrorProperties
-    {
-        public ErrorProperties() { }
-        public string Code { get { throw null; } set { } }
-        public string Message { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ErrorResponseCode : System.IEquatable<Azure.ResourceManager.Logic.Models.ErrorResponseCode>
@@ -1627,6 +1596,11 @@ namespace Azure.ResourceManager.Logic.Models
         public IntegrationAccountBusinessIdentity(string qualifier, string value) { }
         public string Qualifier { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
+    }
+    public partial class IntegrationAccountCallbackUri
+    {
+        internal IntegrationAccountCallbackUri() { }
+        public string Value { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct IntegrationAccountSkuName : System.IEquatable<Azure.ResourceManager.Logic.Models.IntegrationAccountSkuName>
@@ -2064,7 +2038,33 @@ namespace Azure.ResourceManager.Logic.Models
         public static bool operator !=(Azure.ResourceManager.Logic.Models.LogicAppApiType left, Azure.ResourceManager.Logic.Models.LogicAppApiType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class LogicAppExpressionErrorInfo : Azure.ResourceManager.Logic.Models.ErrorInfo
+    public partial class LogicAppContentHash
+    {
+        internal LogicAppContentHash() { }
+        public string Algorithm { get { throw null; } }
+        public string Value { get { throw null; } }
+    }
+    public partial class LogicAppContentLink
+    {
+        public LogicAppContentLink() { }
+        public Azure.ResourceManager.Logic.Models.LogicAppContentHash ContentHash { get { throw null; } }
+        public long? ContentSize { get { throw null; } }
+        public string ContentVersion { get { throw null; } }
+        public System.BinaryData Metadata { get { throw null; } }
+        public System.Uri Uri { get { throw null; } set { } }
+    }
+    public partial class LogicAppErrorInfo
+    {
+        internal LogicAppErrorInfo() { }
+        public string Code { get { throw null; } }
+    }
+    public partial class LogicAppErrorResponse
+    {
+        public LogicAppErrorResponse() { }
+        public string Code { get { throw null; } set { } }
+        public string Message { get { throw null; } set { } }
+    }
+    public partial class LogicAppExpressionErrorInfo : Azure.ResourceManager.Logic.Models.LogicAppErrorInfo
     {
         internal LogicAppExpressionErrorInfo() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Logic.Models.LogicAppExpressionErrorInfo> Details { get { throw null; } }
@@ -2168,10 +2168,10 @@ namespace Azure.ResourceManager.Logic.Models
         public System.DateTimeOffset? EndOn { get { throw null; } }
         public System.BinaryData Error { get { throw null; } }
         public System.BinaryData Inputs { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.ContentLink InputsLink { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.LogicAppContentLink InputsLink { get { throw null; } }
         public string Name { get { throw null; } }
         public System.BinaryData Outputs { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.ContentLink OutputsLink { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.LogicAppContentLink OutputsLink { get { throw null; } }
         public System.DateTimeOffset? ScheduledOn { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
         public Azure.ResourceManager.Logic.Models.LogicAppWorkflowStatus? Status { get { throw null; } }
@@ -2542,7 +2542,7 @@ namespace Azure.ResourceManager.Logic.Models
     public partial class Response
     {
         public Response() { }
-        public Azure.ResourceManager.Logic.Models.ContentLink BodyLink { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.LogicAppContentLink BodyLink { get { throw null; } set { } }
         public System.BinaryData Headers { get { throw null; } set { } }
         public int? StatusCode { get { throw null; } set { } }
     }
@@ -2552,7 +2552,7 @@ namespace Azure.ResourceManager.Logic.Models
         public string ClientRequestId { get { throw null; } set { } }
         public string Code { get { throw null; } set { } }
         public System.DateTimeOffset? EndOn { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.ErrorProperties Error { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.LogicAppErrorResponse Error { get { throw null; } set { } }
         public string ServiceRequestId { get { throw null; } set { } }
         public System.DateTimeOffset? StartOn { get { throw null; } set { } }
     }
@@ -2875,14 +2875,14 @@ namespace Azure.ResourceManager.Logic.Models
     }
     public partial class X12AcknowledgementSettings
     {
-        public X12AcknowledgementSettings(bool needTechnicalAcknowledgement, bool batchTechnicalAcknowledgements, bool needFunctionalAcknowledgement, bool batchFunctionalAcknowledgements, bool needImplementationAcknowledgement, bool batchImplementationAcknowledgements, bool needLoopForValidMessages, bool sendSynchronousAcknowledgement, int acknowledgementControlNumberLowerBound, int acknowledgementControlNumberUpperBound, bool rolloverAcknowledgementControlNumber) { }
+        public X12AcknowledgementSettings(bool needTechnicalAcknowledgement, bool batchTechnicalAcknowledgement, bool needFunctionalAcknowledgement, bool batchFunctionalAcknowledgement, bool needImplementationAcknowledgement, bool batchImplementationAcknowledgement, bool needLoopForValidMessages, bool sendSynchronousAcknowledgement, int acknowledgementControlNumberLowerBound, int acknowledgementControlNumberUpperBound, bool rolloverAcknowledgementControlNumber) { }
         public int AcknowledgementControlNumberLowerBound { get { throw null; } set { } }
         public string AcknowledgementControlNumberPrefix { get { throw null; } set { } }
         public string AcknowledgementControlNumberSuffix { get { throw null; } set { } }
         public int AcknowledgementControlNumberUpperBound { get { throw null; } set { } }
-        public bool BatchFunctionalAcknowledgements { get { throw null; } set { } }
-        public bool BatchImplementationAcknowledgements { get { throw null; } set { } }
-        public bool BatchTechnicalAcknowledgements { get { throw null; } set { } }
+        public bool BatchFunctionalAcknowledgement { get { throw null; } set { } }
+        public bool BatchImplementationAcknowledgement { get { throw null; } set { } }
+        public bool BatchTechnicalAcknowledgement { get { throw null; } set { } }
         public string FunctionalAcknowledgementVersion { get { throw null; } set { } }
         public string ImplementationAcknowledgementVersion { get { throw null; } set { } }
         public bool NeedFunctionalAcknowledgement { get { throw null; } set { } }
@@ -3085,18 +3085,18 @@ namespace Azure.ResourceManager.Logic.Models
     }
     public partial class X12ValidationOverride
     {
-        public X12ValidationOverride(string messageId, bool validateEDITypes, bool validateXSDTypes, bool allowLeadingAndTrailingSpacesAndZeroes, bool validateCharacterSet, bool trimLeadingAndTrailingSpacesAndZeroes, Azure.ResourceManager.Logic.Models.TrailingSeparatorPolicy trailingSeparatorPolicy) { }
+        public X12ValidationOverride(string messageId, bool validateEdiTypes, bool validateXsdTypes, bool allowLeadingAndTrailingSpacesAndZeroes, bool validateCharacterSet, bool trimLeadingAndTrailingSpacesAndZeroes, Azure.ResourceManager.Logic.Models.TrailingSeparatorPolicy trailingSeparatorPolicy) { }
         public bool AllowLeadingAndTrailingSpacesAndZeroes { get { throw null; } set { } }
         public string MessageId { get { throw null; } set { } }
         public Azure.ResourceManager.Logic.Models.TrailingSeparatorPolicy TrailingSeparatorPolicy { get { throw null; } set { } }
         public bool TrimLeadingAndTrailingSpacesAndZeroes { get { throw null; } set { } }
         public bool ValidateCharacterSet { get { throw null; } set { } }
-        public bool ValidateEDITypes { get { throw null; } set { } }
-        public bool ValidateXSDTypes { get { throw null; } set { } }
+        public bool ValidateEdiTypes { get { throw null; } set { } }
+        public bool ValidateXsdTypes { get { throw null; } set { } }
     }
     public partial class X12ValidationSettings
     {
-        public X12ValidationSettings(bool validateCharacterSet, bool checkDuplicateInterchangeControlNumber, int interchangeControlNumberValidityDays, bool checkDuplicateGroupControlNumber, bool checkDuplicateTransactionSetControlNumber, bool validateEDITypes, bool validateXSDTypes, bool allowLeadingAndTrailingSpacesAndZeroes, bool trimLeadingAndTrailingSpacesAndZeroes, Azure.ResourceManager.Logic.Models.TrailingSeparatorPolicy trailingSeparatorPolicy) { }
+        public X12ValidationSettings(bool validateCharacterSet, bool checkDuplicateInterchangeControlNumber, int interchangeControlNumberValidityDays, bool checkDuplicateGroupControlNumber, bool checkDuplicateTransactionSetControlNumber, bool validateEdiTypes, bool validateXsdTypes, bool allowLeadingAndTrailingSpacesAndZeroes, bool trimLeadingAndTrailingSpacesAndZeroes, Azure.ResourceManager.Logic.Models.TrailingSeparatorPolicy trailingSeparatorPolicy) { }
         public bool AllowLeadingAndTrailingSpacesAndZeroes { get { throw null; } set { } }
         public bool CheckDuplicateGroupControlNumber { get { throw null; } set { } }
         public bool CheckDuplicateInterchangeControlNumber { get { throw null; } set { } }
@@ -3105,7 +3105,7 @@ namespace Azure.ResourceManager.Logic.Models
         public Azure.ResourceManager.Logic.Models.TrailingSeparatorPolicy TrailingSeparatorPolicy { get { throw null; } set { } }
         public bool TrimLeadingAndTrailingSpacesAndZeroes { get { throw null; } set { } }
         public bool ValidateCharacterSet { get { throw null; } set { } }
-        public bool ValidateEDITypes { get { throw null; } set { } }
-        public bool ValidateXSDTypes { get { throw null; } set { } }
+        public bool ValidateEdiTypes { get { throw null; } set { } }
+        public bool ValidateXsdTypes { get { throw null; } set { } }
     }
 }

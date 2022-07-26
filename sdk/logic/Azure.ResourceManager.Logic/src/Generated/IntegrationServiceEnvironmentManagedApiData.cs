@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Logic
         /// The integration service environment managed api content link for deployment.
         /// Serialized Name: IntegrationServiceEnvironmentManagedApiDeploymentParameters.contentLinkDefinition
         /// </summary>
-        public ContentLink DeploymentParametersContentLinkDefinition
+        public LogicAppContentLink DeploymentParametersContentLinkDefinition
         {
             get => DeploymentParameters is null ? default : DeploymentParameters.ContentLinkDefinition;
             set

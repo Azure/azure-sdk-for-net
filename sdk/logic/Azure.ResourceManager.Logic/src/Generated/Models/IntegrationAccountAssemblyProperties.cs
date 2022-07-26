@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// The assembly public key token.
         /// Serialized Name: AssemblyProperties.assemblyPublicKeyToken
         /// </param>
-        internal IntegrationAccountAssemblyProperties(DateTimeOffset? createdOn, DateTimeOffset? changedOn, BinaryData metadata, BinaryData content, string contentType, ContentLink contentLink, string assemblyName, string assemblyVersion, string assemblyCulture, string assemblyPublicKeyToken) : base(createdOn, changedOn, metadata, content, contentType, contentLink)
+        internal IntegrationAccountAssemblyProperties(DateTimeOffset? createdOn, DateTimeOffset? changedOn, BinaryData metadata, BinaryData content, string contentType, LogicAppContentLink contentLink, string assemblyName, string assemblyVersion, string assemblyCulture, string assemblyPublicKeyToken) : base(createdOn, changedOn, metadata, content, contentType, contentLink)
         {
             AssemblyName = assemblyName;
             AssemblyVersion = assemblyVersion;

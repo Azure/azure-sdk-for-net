@@ -31,13 +31,41 @@ mgmt-debug:
   show-serialized-names: true
 
 rename-mapping:
+  AgreementContent: IntegrationAccountAgreementContent
   AssemblyDefinition: IntegrationAccountAssemblyDefinition
   AssemblyProperties: IntegrationAccountAssemblyProperties
   AssemblyCollection: IntegrationAccountAssemblyList
+  AgreementType: IntegrationAccountAgreementType
+  ApiDeploymentParameterMetadata: LogicAppApiDeploymentParameterMetadata
+  ApiDeploymentParameterMetadataSet: LogicAppApiDeploymentParameterMetadataSet
+  ApiDeploymentParameterVisibility: LogicAppApiDeploymentParameterVisibility
+  ApiOperation: LogicAppApiOperation
+  ApiOperationAnnotation: LogicAppApiOperationAnnotation
+  ApiOperationListResult: LogicAppApiOperationListResult
+  ApiOperationPropertiesDefinition.pageable: IsPageable
+  ApiOperationPropertiesDefinition: LogicAppApiOperationProperties
+  ApiReference: LogicAppApiReference
+  ApiResourceBackendService: LogicAppApiResourceBackendService
+  ApiResourceDefinitions: LogicAppApiResourceDefinitions
+  ApiResourceGeneralInformation: LogicAppApiResourceGeneralInformation
+  ApiResourceMetadata: LogicAppApiResourceMetadata
+  ApiResourceGeneralMetadata: LogicAppApiResourceGeneralMetadata
+  ApiResourcePolicies: LogicAppApiResourcePolicies
+  ApiTier: LogicAppApiTier
+  ApiType: LogicAppApiType
+  ArtifactContentPropertiesDefinition: ArtifactContentProperties
+  AzureResourceErrorInfo: LogicAppExpressionErrorInfo
   BatchConfiguration: IntegrationAccountBatchConfiguration
   BatchConfigurationProperties: IntegrationAccountBatchConfigurationProperties
   BatchReleaseCriteria: IntegrationAccountBatchReleaseCriteria
   BusinessIdentity: IntegrationAccountBusinessIdentity
+  CallbackUrl: IntegrationAccountCallbackUrl
+  ContentLink: LogicAppContentLink
+  ContentHash: LogicAppContentHash
+  EdifactAcknowledgementSettings.batchFunctionalAcknowledgements: BatchFunctionalAcknowledgement
+  EdifactAcknowledgementSettings.batchTechnicalAcknowledgements: BatchTechnicalAcknowledgement
+  ErrorInfo: LogicAppErrorInfo
+  ErrorResponse: LogicAppErrorResponse
   Workflow: LogicAppWorkflow
   WorkflowListResult: LogicAppWorkflowListResult
   WorkflowRunAction: LogicAppWorkflowRunAction
@@ -71,27 +99,9 @@ rename-mapping:
   IntegrationServiceEnvironmentManagedApi.properties.runtimeUrls: runtimeUris
   ResourceReference: LogicAppResourceReference
   WorkflowTriggerHistory.properties.fired: IsFired
-  AgreementContent: IntegrationAccountAgreementContent
-  AgreementType: IntegrationAccountAgreementType
-  ApiDeploymentParameterMetadata: LogicAppApiDeploymentParameterMetadata
-  ApiDeploymentParameterMetadataSet: LogicAppApiDeploymentParameterMetadataSet
-  ApiDeploymentParameterVisibility: LogicAppApiDeploymentParameterVisibility
-  ApiOperation: LogicAppApiOperation
-  ApiOperationAnnotation: LogicAppApiOperationAnnotation
-  ApiOperationListResult: LogicAppApiOperationListResult
-  ApiOperationPropertiesDefinition.pageable: IsPageable
-  ApiOperationPropertiesDefinition: LogicAppApiOperationProperties
-  ApiReference: LogicAppApiReference
-  ApiResourceBackendService: LogicAppApiResourceBackendService
-  ApiResourceDefinitions: LogicAppApiResourceDefinitions
-  ApiResourceGeneralInformation: LogicAppApiResourceGeneralInformation
-  ApiResourceMetadata: LogicAppApiResourceMetadata
-  ApiResourceGeneralMetadata: LogicAppApiResourceGeneralMetadata
-  ApiResourcePolicies: LogicAppApiResourcePolicies
-  ApiTier: LogicAppApiTier
-  ApiType: LogicAppApiType
-  ArtifactContentPropertiesDefinition: ArtifactContentProperties
-  AzureResourceErrorInfo: LogicAppExpressionErrorInfo
+  X12AcknowledgementSettings.batchTechnicalAcknowledgements: BatchTechnicalAcknowledgement
+  X12AcknowledgementSettings.batchFunctionalAcknowledgements: BatchFunctionalAcknowledgement
+  X12AcknowledgementSettings.batchImplementationAcknowledgements: BatchImplementationAcknowledgement
   
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -127,12 +137,18 @@ rename-rules:
   Etag: ETag|etag
   MDN: Mdn
   NRR: Nrr
+  EDI: Edi
+  XSD: Xsd
+  AES128: Aes128
+  AES192: Aes192
+  AES256: Aes256
+  DES3: Des3
 
 directive:
   - from: logic.json
     where: $.definitions
     transform: >
-      $.RetryHistory.properties.error['x-ms-client-name'] = 'ErrorResponse';
+      $.ErrorResponse.properties.error['x-ms-client-flatten'] = true;
       $.OpenAuthenticationAccessPolicies.properties.policies['x-ms-client-name'] = 'AccessPolicies';
       $.ResourceReference.properties.id['x-ms-format'] = 'arm-id';
       $.ResourceReference.properties.type['x-ms-format'] = 'resource-type';

@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Logic
             Optional<BinaryData> metadata = default;
             Optional<string> content = default;
             Optional<string> contentType = default;
-            Optional<ContentLink> contentLink = default;
+            Optional<LogicAppContentLink> contentLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"))
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Logic
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            contentLink = ContentLink.DeserializeContentLink(property0.Value);
+                            contentLink = LogicAppContentLink.DeserializeLogicAppContentLink(property0.Value);
                             continue;
                         }
                     }

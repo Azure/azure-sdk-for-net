@@ -34,11 +34,11 @@ namespace Azure.ResourceManager.Logic.Models
         /// The value indicating whether to check for duplicate transaction set control number.
         /// Serialized Name: EdifactValidationSettings.checkDuplicateTransactionSetControlNumber
         /// </param>
-        /// <param name="validateEDITypes">
+        /// <param name="validateEdiTypes">
         /// The value indicating whether to Whether to validate EDI types.
         /// Serialized Name: EdifactValidationSettings.validateEDITypes
         /// </param>
-        /// <param name="validateXSDTypes">
+        /// <param name="validateXsdTypes">
         /// The value indicating whether to Whether to validate XSD types.
         /// Serialized Name: EdifactValidationSettings.validateXSDTypes
         /// </param>
@@ -54,15 +54,15 @@ namespace Azure.ResourceManager.Logic.Models
         /// The trailing separator policy.
         /// Serialized Name: EdifactValidationSettings.trailingSeparatorPolicy
         /// </param>
-        public EdifactValidationSettings(bool validateCharacterSet, bool checkDuplicateInterchangeControlNumber, int interchangeControlNumberValidityDays, bool checkDuplicateGroupControlNumber, bool checkDuplicateTransactionSetControlNumber, bool validateEDITypes, bool validateXSDTypes, bool allowLeadingAndTrailingSpacesAndZeroes, bool trimLeadingAndTrailingSpacesAndZeroes, TrailingSeparatorPolicy trailingSeparatorPolicy)
+        public EdifactValidationSettings(bool validateCharacterSet, bool checkDuplicateInterchangeControlNumber, int interchangeControlNumberValidityDays, bool checkDuplicateGroupControlNumber, bool checkDuplicateTransactionSetControlNumber, bool validateEdiTypes, bool validateXsdTypes, bool allowLeadingAndTrailingSpacesAndZeroes, bool trimLeadingAndTrailingSpacesAndZeroes, TrailingSeparatorPolicy trailingSeparatorPolicy)
         {
             ValidateCharacterSet = validateCharacterSet;
             CheckDuplicateInterchangeControlNumber = checkDuplicateInterchangeControlNumber;
             InterchangeControlNumberValidityDays = interchangeControlNumberValidityDays;
             CheckDuplicateGroupControlNumber = checkDuplicateGroupControlNumber;
             CheckDuplicateTransactionSetControlNumber = checkDuplicateTransactionSetControlNumber;
-            ValidateEDITypes = validateEDITypes;
-            ValidateXSDTypes = validateXSDTypes;
+            ValidateEdiTypes = validateEdiTypes;
+            ValidateXsdTypes = validateXsdTypes;
             AllowLeadingAndTrailingSpacesAndZeroes = allowLeadingAndTrailingSpacesAndZeroes;
             TrimLeadingAndTrailingSpacesAndZeroes = trimLeadingAndTrailingSpacesAndZeroes;
             TrailingSeparatorPolicy = trailingSeparatorPolicy;
@@ -97,12 +97,12 @@ namespace Azure.ResourceManager.Logic.Models
         /// The value indicating whether to Whether to validate EDI types.
         /// Serialized Name: EdifactValidationSettings.validateEDITypes
         /// </summary>
-        public bool ValidateEDITypes { get; set; }
+        public bool ValidateEdiTypes { get; set; }
         /// <summary>
         /// The value indicating whether to Whether to validate XSD types.
         /// Serialized Name: EdifactValidationSettings.validateXSDTypes
         /// </summary>
-        public bool ValidateXSDTypes { get; set; }
+        public bool ValidateXsdTypes { get; set; }
         /// <summary>
         /// The value indicating whether to allow leading and trailing spaces and zeroes.
         /// Serialized Name: EdifactValidationSettings.allowLeadingAndTrailingSpacesAndZeroes

@@ -11,14 +11,14 @@ namespace Azure.ResourceManager.Logic.Models
     /// The content hash.
     /// Serialized Name: ContentHash
     /// </summary>
-    public partial class ContentHash
+    public partial class LogicAppContentHash
     {
-        /// <summary> Initializes a new instance of ContentHash. </summary>
-        internal ContentHash()
+        /// <summary> Initializes a new instance of LogicAppContentHash. </summary>
+        internal LogicAppContentHash()
         {
         }
 
-        /// <summary> Initializes a new instance of ContentHash. </summary>
+        /// <summary> Initializes a new instance of LogicAppContentHash. </summary>
         /// <param name="algorithm">
         /// The algorithm of the content hash.
         /// Serialized Name: ContentHash.algorithm
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// The value of the content hash.
         /// Serialized Name: ContentHash.value
         /// </param>
-        internal ContentHash(string algorithm, string value)
+        internal LogicAppContentHash(string algorithm, string value)
         {
             Algorithm = algorithm;
             Value = value;

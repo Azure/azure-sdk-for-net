@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Logic.Models
         {
             Optional<BinaryData> headers = default;
             Optional<int> statusCode = default;
-            Optional<ContentLink> bodyLink = default;
+            Optional<LogicAppContentLink> bodyLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("headers"))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Logic.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    bodyLink = ContentLink.DeserializeContentLink(property.Value);
+                    bodyLink = LogicAppContentLink.DeserializeLogicAppContentLink(property.Value);
                     continue;
                 }
             }

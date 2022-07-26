@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Logic
         /// The repetition indexes.
         /// Serialized Name: WorkflowRunActionRepetitionDefinition.properties.repetitionIndexes
         /// </param>
-        internal LogicAppWorkflowRunActionRepetitionDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DateTimeOffset? startOn, DateTimeOffset? endOn, RunActionCorrelation correlation, LogicAppWorkflowStatus? status, string code, BinaryData error, Guid? trackingId, BinaryData inputs, ContentLink inputsLink, BinaryData outputs, ContentLink outputsLink, BinaryData trackedProperties, IList<RetryHistory> retryHistory, int? iterationCount, IList<RepetitionIndex> repetitionIndexes) : base(id, name, resourceType, systemData, tags, location)
+        internal LogicAppWorkflowRunActionRepetitionDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DateTimeOffset? startOn, DateTimeOffset? endOn, RunActionCorrelation correlation, LogicAppWorkflowStatus? status, string code, BinaryData error, Guid? trackingId, BinaryData inputs, LogicAppContentLink inputsLink, BinaryData outputs, LogicAppContentLink outputsLink, BinaryData trackedProperties, IList<RetryHistory> retryHistory, int? iterationCount, IList<RepetitionIndex> repetitionIndexes) : base(id, name, resourceType, systemData, tags, location)
         {
             StartOn = startOn;
             EndOn = endOn;
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Logic
         /// Gets the link to inputs.
         /// Serialized Name: WorkflowRunActionRepetitionDefinition.properties.inputsLink
         /// </summary>
-        public ContentLink InputsLink { get; }
+        public LogicAppContentLink InputsLink { get; }
         /// <summary>
         /// Gets the outputs.
         /// Serialized Name: WorkflowRunActionRepetitionDefinition.properties.outputs
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Logic
         /// Gets the link to outputs.
         /// Serialized Name: WorkflowRunActionRepetitionDefinition.properties.outputsLink
         /// </summary>
-        public ContentLink OutputsLink { get; }
+        public LogicAppContentLink OutputsLink { get; }
         /// <summary>
         /// Gets the tracked properties.
         /// Serialized Name: WorkflowRunActionRepetitionDefinition.properties.trackedProperties

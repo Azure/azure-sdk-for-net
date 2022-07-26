@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Logic
         /// Gets the reference to workflow run.
         /// Serialized Name: WorkflowTriggerHistory.properties.run
         /// </param>
-        internal LogicAppWorkflowTriggerHistoryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? scheduledOn, LogicAppWorkflowStatus? status, string code, BinaryData error, Guid? trackingId, Correlation correlation, ContentLink inputsLink, ContentLink outputsLink, bool? isFired, LogicAppResourceReference run) : base(id, name, resourceType, systemData)
+        internal LogicAppWorkflowTriggerHistoryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? scheduledOn, LogicAppWorkflowStatus? status, string code, BinaryData error, Guid? trackingId, Correlation correlation, LogicAppContentLink inputsLink, LogicAppContentLink outputsLink, bool? isFired, LogicAppResourceReference run) : base(id, name, resourceType, systemData)
         {
             StartOn = startOn;
             EndOn = endOn;
@@ -142,12 +142,12 @@ namespace Azure.ResourceManager.Logic
         /// Gets the link to input parameters.
         /// Serialized Name: WorkflowTriggerHistory.properties.inputsLink
         /// </summary>
-        public ContentLink InputsLink { get; }
+        public LogicAppContentLink InputsLink { get; }
         /// <summary>
         /// Gets the link to output parameters.
         /// Serialized Name: WorkflowTriggerHistory.properties.outputsLink
         /// </summary>
-        public ContentLink OutputsLink { get; }
+        public LogicAppContentLink OutputsLink { get; }
         /// <summary>
         /// The value indicating whether trigger was fired.
         /// Serialized Name: WorkflowTriggerHistory.properties.fired

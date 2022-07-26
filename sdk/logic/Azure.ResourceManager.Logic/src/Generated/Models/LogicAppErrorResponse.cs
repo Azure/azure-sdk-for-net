@@ -8,26 +8,26 @@
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary>
-    /// Error properties indicate why the Logic service was not able to process the incoming request. The reason is provided in the error message.
-    /// Serialized Name: ErrorProperties
+    /// Error response indicates Logic service is not able to process the incoming request. The error property contains the error details.
+    /// Serialized Name: ErrorResponse
     /// </summary>
-    public partial class ErrorProperties
+    public partial class LogicAppErrorResponse
     {
-        /// <summary> Initializes a new instance of ErrorProperties. </summary>
-        public ErrorProperties()
+        /// <summary> Initializes a new instance of LogicAppErrorResponse. </summary>
+        public LogicAppErrorResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of ErrorProperties. </summary>
+        /// <summary> Initializes a new instance of LogicAppErrorResponse. </summary>
         /// <param name="code">
         /// Error code.
-        /// Serialized Name: ErrorProperties.code
+        /// Serialized Name: ErrorResponse.error.code
         /// </param>
         /// <param name="message">
         /// Error message indicating why the operation failed.
-        /// Serialized Name: ErrorProperties.message
+        /// Serialized Name: ErrorResponse.error.message
         /// </param>
-        internal ErrorProperties(string code, string message)
+        internal LogicAppErrorResponse(string code, string message)
         {
             Code = code;
             Message = message;
@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.Logic.Models
 
         /// <summary>
         /// Error code.
-        /// Serialized Name: ErrorProperties.code
+        /// Serialized Name: ErrorResponse.error.code
         /// </summary>
         public string Code { get; set; }
         /// <summary>
         /// Error message indicating why the operation failed.
-        /// Serialized Name: ErrorProperties.message
+        /// Serialized Name: ErrorResponse.error.message
         /// </summary>
         public string Message { get; set; }
     }

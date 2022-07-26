@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WritePropertyName("serviceRequestId");
                 writer.WriteStringValue(ServiceRequestId);
             }
-            if (Optional.IsDefined(ErrorResponse))
+            if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error");
-                writer.WriteObjectValue(ErrorResponse);
+                writer.WriteObjectValue(Error);
             }
             writer.WriteEndObject();
         }
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<string> code = default;
             Optional<string> clientRequestId = default;
             Optional<string> serviceRequestId = default;
-            Optional<ErrorResponse> error = default;
+            Optional<LogicAppErrorResponse> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("startTime"))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Logic.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    error = ErrorResponse.DeserializeErrorResponse(property.Value);
+                    error = LogicAppErrorResponse.DeserializeLogicAppErrorResponse(property.Value);
                     continue;
                 }
             }

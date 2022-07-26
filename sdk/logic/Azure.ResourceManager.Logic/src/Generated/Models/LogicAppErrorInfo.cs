@@ -13,15 +13,15 @@ namespace Azure.ResourceManager.Logic.Models
     /// The error info.
     /// Serialized Name: ErrorInfo
     /// </summary>
-    public partial class ErrorInfo
+    public partial class LogicAppErrorInfo
     {
-        /// <summary> Initializes a new instance of ErrorInfo. </summary>
+        /// <summary> Initializes a new instance of LogicAppErrorInfo. </summary>
         /// <param name="code">
         /// The error code.
         /// Serialized Name: ErrorInfo.code
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="code"/> is null. </exception>
-        internal ErrorInfo(string code)
+        internal LogicAppErrorInfo(string code)
         {
             if (code == null)
             {

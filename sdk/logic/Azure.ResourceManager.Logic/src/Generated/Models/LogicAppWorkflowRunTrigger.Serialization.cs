@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Logic.Models
         {
             Optional<string> name = default;
             Optional<BinaryData> inputs = default;
-            Optional<ContentLink> inputsLink = default;
+            Optional<LogicAppContentLink> inputsLink = default;
             Optional<BinaryData> outputs = default;
-            Optional<ContentLink> outputsLink = default;
+            Optional<LogicAppContentLink> outputsLink = default;
             Optional<DateTimeOffset> scheduledTime = default;
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> endTime = default;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Logic.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    inputsLink = ContentLink.DeserializeContentLink(property.Value);
+                    inputsLink = LogicAppContentLink.DeserializeLogicAppContentLink(property.Value);
                     continue;
                 }
                 if (property.NameEquals("outputs"))
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Logic.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    outputsLink = ContentLink.DeserializeContentLink(property.Value);
+                    outputsLink = LogicAppContentLink.DeserializeLogicAppContentLink(property.Value);
                     continue;
                 }
                 if (property.NameEquals("scheduledTime"))

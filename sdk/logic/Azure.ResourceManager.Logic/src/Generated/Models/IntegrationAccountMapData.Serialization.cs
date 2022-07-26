@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Logic
             Optional<DateTimeOffset> changedTime = default;
             Optional<string> content = default;
             Optional<string> contentType = default;
-            Optional<ContentLink> contentLink = default;
+            Optional<LogicAppContentLink> contentLink = default;
             Optional<BinaryData> metadata = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Logic
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            contentLink = ContentLink.DeserializeContentLink(property0.Value);
+                            contentLink = LogicAppContentLink.DeserializeLogicAppContentLink(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("metadata"))

@@ -20,11 +20,11 @@ namespace Azure.ResourceManager.Logic.Models
         /// The message id on which the validation settings has to be applied.
         /// Serialized Name: X12ValidationOverride.messageId
         /// </param>
-        /// <param name="validateEDITypes">
+        /// <param name="validateEdiTypes">
         /// The value indicating whether to validate EDI types.
         /// Serialized Name: X12ValidationOverride.validateEDITypes
         /// </param>
-        /// <param name="validateXSDTypes">
+        /// <param name="validateXsdTypes">
         /// The value indicating whether to validate XSD types.
         /// Serialized Name: X12ValidationOverride.validateXSDTypes
         /// </param>
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// Serialized Name: X12ValidationOverride.trailingSeparatorPolicy
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="messageId"/> is null. </exception>
-        public X12ValidationOverride(string messageId, bool validateEDITypes, bool validateXSDTypes, bool allowLeadingAndTrailingSpacesAndZeroes, bool validateCharacterSet, bool trimLeadingAndTrailingSpacesAndZeroes, TrailingSeparatorPolicy trailingSeparatorPolicy)
+        public X12ValidationOverride(string messageId, bool validateEdiTypes, bool validateXsdTypes, bool allowLeadingAndTrailingSpacesAndZeroes, bool validateCharacterSet, bool trimLeadingAndTrailingSpacesAndZeroes, TrailingSeparatorPolicy trailingSeparatorPolicy)
         {
             if (messageId == null)
             {
@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             MessageId = messageId;
-            ValidateEDITypes = validateEDITypes;
-            ValidateXSDTypes = validateXSDTypes;
+            ValidateEdiTypes = validateEdiTypes;
+            ValidateXsdTypes = validateXsdTypes;
             AllowLeadingAndTrailingSpacesAndZeroes = allowLeadingAndTrailingSpacesAndZeroes;
             ValidateCharacterSet = validateCharacterSet;
             TrimLeadingAndTrailingSpacesAndZeroes = trimLeadingAndTrailingSpacesAndZeroes;
@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.Logic.Models
         /// The value indicating whether to validate EDI types.
         /// Serialized Name: X12ValidationOverride.validateEDITypes
         /// </summary>
-        public bool ValidateEDITypes { get; set; }
+        public bool ValidateEdiTypes { get; set; }
         /// <summary>
         /// The value indicating whether to validate XSD types.
         /// Serialized Name: X12ValidationOverride.validateXSDTypes
         /// </summary>
-        public bool ValidateXSDTypes { get; set; }
+        public bool ValidateXsdTypes { get; set; }
         /// <summary>
         /// The value indicating whether to allow leading and trailing spaces and zeroes.
         /// Serialized Name: X12ValidationOverride.allowLeadingAndTrailingSpacesAndZeroes

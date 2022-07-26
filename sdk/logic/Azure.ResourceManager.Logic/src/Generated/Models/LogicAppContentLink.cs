@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Logic.Models
     /// The content link.
     /// Serialized Name: ContentLink
     /// </summary>
-    public partial class ContentLink
+    public partial class LogicAppContentLink
     {
-        /// <summary> Initializes a new instance of ContentLink. </summary>
-        public ContentLink()
+        /// <summary> Initializes a new instance of LogicAppContentLink. </summary>
+        public LogicAppContentLink()
         {
         }
 
-        /// <summary> Initializes a new instance of ContentLink. </summary>
+        /// <summary> Initializes a new instance of LogicAppContentLink. </summary>
         /// <param name="uri">
         /// The content link URI.
         /// Serialized Name: ContentLink.uri
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// The metadata.
         /// Serialized Name: ContentLink.metadata
         /// </param>
-        internal ContentLink(Uri uri, string contentVersion, long? contentSize, ContentHash contentHash, BinaryData metadata)
+        internal LogicAppContentLink(Uri uri, string contentVersion, long? contentSize, LogicAppContentHash contentHash, BinaryData metadata)
         {
             Uri = uri;
             ContentVersion = contentVersion;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// The content hash.
         /// Serialized Name: ContentLink.contentHash
         /// </summary>
-        public ContentHash ContentHash { get; }
+        public LogicAppContentHash ContentHash { get; }
         /// <summary>
         /// The metadata.
         /// Serialized Name: ContentLink.metadata
