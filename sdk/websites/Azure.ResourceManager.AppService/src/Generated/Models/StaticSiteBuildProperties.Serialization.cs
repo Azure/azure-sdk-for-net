@@ -15,25 +15,25 @@ namespace Azure.ResourceManager.AppService.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AppLocation))
+            if (Optional.IsDefined(AppAzureLocation))
             {
                 writer.WritePropertyName("appLocation");
-                writer.WriteStringValue(AppLocation);
+                writer.WriteStringValue(AppAzureLocation);
             }
-            if (Optional.IsDefined(ApiLocation))
+            if (Optional.IsDefined(ApiAzureLocation))
             {
                 writer.WritePropertyName("apiLocation");
-                writer.WriteStringValue(ApiLocation);
+                writer.WriteStringValue(ApiAzureLocation);
             }
-            if (Optional.IsDefined(AppArtifactLocation))
+            if (Optional.IsDefined(AppArtifactAzureLocation))
             {
                 writer.WritePropertyName("appArtifactLocation");
-                writer.WriteStringValue(AppArtifactLocation);
+                writer.WriteStringValue(AppArtifactAzureLocation);
             }
-            if (Optional.IsDefined(OutputLocation))
+            if (Optional.IsDefined(OutputAzureLocation))
             {
                 writer.WritePropertyName("outputLocation");
-                writer.WriteStringValue(OutputLocation);
+                writer.WriteStringValue(OutputAzureLocation);
             }
             if (Optional.IsDefined(AppBuildCommand))
             {
@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("apiBuildCommand");
                 writer.WriteStringValue(ApiBuildCommand);
             }
-            if (Optional.IsDefined(SkipGithubActionWorkflowGeneration))
+            if (Optional.IsDefined(IsSkipGithubActionWorkflowGeneration))
             {
                 writer.WritePropertyName("skipGithubActionWorkflowGeneration");
-                writer.WriteBooleanValue(SkipGithubActionWorkflowGeneration.Value);
+                writer.WriteBooleanValue(IsSkipGithubActionWorkflowGeneration.Value);
             }
             if (Optional.IsDefined(GithubActionSecretNameOverride))
             {

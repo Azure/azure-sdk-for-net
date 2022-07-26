@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <param name="receiverBusinessIdentity"> The receiver business identity. </param>
         /// <param name="protocolSettings"> The EDIFACT protocol settings. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="senderBusinessIdentity"/>, <paramref name="receiverBusinessIdentity"/> or <paramref name="protocolSettings"/> is null. </exception>
-        public EdifactOneWayAgreement(BusinessIdentity senderBusinessIdentity, BusinessIdentity receiverBusinessIdentity, EdifactProtocolSettings protocolSettings)
+        public EdifactOneWayAgreement(IntegrationAccountBusinessIdentity senderBusinessIdentity, IntegrationAccountBusinessIdentity receiverBusinessIdentity, EdifactProtocolSettings protocolSettings)
         {
             if (senderBusinessIdentity == null)
             {
@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> The sender business identity. </summary>
-        public BusinessIdentity SenderBusinessIdentity { get; set; }
+        public IntegrationAccountBusinessIdentity SenderBusinessIdentity { get; set; }
         /// <summary> The receiver business identity. </summary>
-        public BusinessIdentity ReceiverBusinessIdentity { get; set; }
+        public IntegrationAccountBusinessIdentity ReceiverBusinessIdentity { get; set; }
         /// <summary> The EDIFACT protocol settings. </summary>
         public EdifactProtocolSettings ProtocolSettings { get; set; }
     }

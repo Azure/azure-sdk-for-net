@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Authorization
             );
         }
 
-        /// <summary> Gets a collection of ProviderOperationsResources in the TenantResource. </summary>
+        /// <summary> Gets a collection of ProviderOperationsMetadataResources in the TenantResource. </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of ProviderOperationsResources and their operations over a ProviderOperationsResource. </returns>
-        public static ProviderOperationsCollection GetProviderOperations(this TenantResource tenantResource)
+        /// <returns> An object representing collection of ProviderOperationsMetadataResources and their operations over a ProviderOperationsMetadataResource. </returns>
+        public static ProviderOperationsMetadataCollection GetAllProviderOperationsMetadata(this TenantResource tenantResource)
         {
-            return GetExtensionClient(tenantResource).GetProviderOperations();
+            return GetExtensionClient(tenantResource).GetAllProviderOperationsMetadata();
         }
 
         /// <summary>
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentException"> <paramref name="resourceProviderNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ProviderOperationsResource>> GetProviderOperationsAsync(this TenantResource tenantResource, string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<ProviderOperationsMetadataResource>> GetProviderOperationsMetadataAsync(this TenantResource tenantResource, string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await tenantResource.GetProviderOperations().GetAsync(resourceProviderNamespace, expand, cancellationToken).ConfigureAwait(false);
+            return await tenantResource.GetAllProviderOperationsMetadata().GetAsync(resourceProviderNamespace, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -65,9 +65,9 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentException"> <paramref name="resourceProviderNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ProviderOperationsResource> GetProviderOperations(this TenantResource tenantResource, string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
+        public static Response<ProviderOperationsMetadataResource> GetProviderOperationsMetadata(this TenantResource tenantResource, string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
-            return tenantResource.GetProviderOperations().Get(resourceProviderNamespace, expand, cancellationToken);
+            return tenantResource.GetAllProviderOperationsMetadata().Get(resourceProviderNamespace, expand, cancellationToken);
         }
 
         /// <summary>
@@ -640,20 +640,20 @@ namespace Azure.ResourceManager.Authorization
         }
         #endregion
 
-        #region ProviderOperationsResource
+        #region ProviderOperationsMetadataResource
         /// <summary>
-        /// Gets an object representing a <see cref="ProviderOperationsResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ProviderOperationsResource.CreateResourceIdentifier" /> to create a <see cref="ProviderOperationsResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ProviderOperationsMetadataResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ProviderOperationsMetadataResource.CreateResourceIdentifier" /> to create a <see cref="ProviderOperationsMetadataResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProviderOperationsResource" /> object. </returns>
-        public static ProviderOperationsResource GetProviderOperationsResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ProviderOperationsMetadataResource" /> object. </returns>
+        public static ProviderOperationsMetadataResource GetProviderOperationsMetadataResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ProviderOperationsResource.ValidateResourceId(id);
-                return new ProviderOperationsResource(client, id);
+                ProviderOperationsMetadataResource.ValidateResourceId(id);
+                return new ProviderOperationsMetadataResource(client, id);
             }
             );
         }

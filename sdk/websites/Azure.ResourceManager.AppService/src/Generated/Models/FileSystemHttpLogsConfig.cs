@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppService.Models
         /// Remove files older than X days.
         /// 0 or lower means no retention.
         /// </param>
-        /// <param name="enabled"> True if configuration is enabled, false if it is disabled and null if configuration is not set. </param>
-        internal FileSystemHttpLogsConfig(int? retentionInMb, int? retentionInDays, bool? enabled)
+        /// <param name="isEnabled"> True if configuration is enabled, false if it is disabled and null if configuration is not set. </param>
+        internal FileSystemHttpLogsConfig(int? retentionInMb, int? retentionInDays, bool? isEnabled)
         {
             RetentionInMb = retentionInMb;
             RetentionInDays = retentionInDays;
-            Enabled = enabled;
+            IsEnabled = isEnabled;
         }
 
         /// <summary>
@@ -47,6 +47,6 @@ namespace Azure.ResourceManager.AppService.Models
         /// </summary>
         public int? RetentionInDays { get; set; }
         /// <summary> True if configuration is enabled, false if it is disabled and null if configuration is not set. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
     }
 }

@@ -19,10 +19,142 @@ modelerfour:
 list-exception:
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/workflows/{workflowName}/runs/{runName}/operations/{operationId}
 
+request-path-to-resource-name:
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/workflows/{workflowName}/runs/{runName}/operations/{operationId}: LogicWorkflowRunOperation
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/workflows/{workflowName}/runs/{runName}: LogicWorkflowRun
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/workflows/{workflowName}/runs/{runName}/actions/{actionName}/repetitions/{repetitionName}: LogicWorkflowRunActionRepetition
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/workflows/{workflowName}/runs/{runName}/actions/{actionName}/repetitions/{repetitionName}/requestHistories/{requestHistoryName}: LogicWorkflowRunActionRepetitionRequestHistory
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/workflows/{workflowName}/runs/{runName}/actions/{actionName}/requestHistories/{requestHistoryName}: LogicWorkflowRunActionRequestHistory
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/workflows/{workflowName}/runs/{runName}/actions/{actionName}/scopeRepetitions/{repetitionName}: LogicWorkflowRunActionScopeRepetition
+
+rename-mapping:
+  AgreementContent: IntegrationAccountAgreementContent
+  AssemblyDefinition: IntegrationAccountAssemblyDefinition
+  AssemblyProperties: IntegrationAccountAssemblyProperties
+  AssemblyCollection: IntegrationAccountAssemblyList
+  AgreementType: IntegrationAccountAgreementType
+  ApiDeploymentParameterMetadata: LogicApiDeploymentParameterMetadata
+  ApiDeploymentParameterMetadataSet: LogicApiDeploymentParameterMetadataSet
+  ApiDeploymentParameterVisibility: LogicApiDeploymentParameterVisibility
+  ApiOperation: LogicApiOperationInfo
+  ApiOperationAnnotation: LogicApiOperationAnnotation
+  ApiOperationListResult: LogicApiOperationListResult
+  ApiOperationPropertiesDefinition.pageable: IsPageable
+  ApiOperationPropertiesDefinition: LogicApiOperationProperties
+  ApiReference: LogicApiReference
+  ApiResourceBackendService: LogicApiResourceBackendService
+  ApiResourceDefinitions: LogicApiResourceDefinitions
+  ApiResourceGeneralInformation: LogicApiResourceGeneralInformation
+  ApiResourceMetadata: LogicApiResourceMetadata
+  ApiResourceGeneralMetadata: LogicApiResourceGeneralMetadata
+  ApiResourcePolicies: LogicApiResourcePolicies
+  ApiTier: LogicApiTier
+  ApiType: LogicApiType
+  ArtifactContentPropertiesDefinition: ArtifactContentProperties
+  AzureResourceErrorInfo: LogicExpressionErrorInfo
+  BatchConfiguration: IntegrationAccountBatchConfiguration
+  BatchConfigurationProperties: IntegrationAccountBatchConfigurationProperties
+  BatchReleaseCriteria: IntegrationAccountBatchReleaseCriteria
+  BusinessIdentity: IntegrationAccountBusinessIdentity
+  CallbackUrl: ListOperationCallbackUrl
+  ContentLink: LogicContentLink
+  ContentHash: LogicContentHash
+  DayOfWeek: LogicWorkflowDayOfWeek
+  EdifactAcknowledgementSettings.batchFunctionalAcknowledgements: BatchFunctionalAcknowledgement
+  EdifactAcknowledgementSettings.batchTechnicalAcknowledgements: BatchTechnicalAcknowledgement
+  ErrorInfo: LogicErrorInfo
+  ErrorResponse: LogicErrorResponse
+  ErrorResponseCode: IntegrationServiceErrorCode
+  EventLevel: IntegrationAccountEventLevel
+  ExtendedErrorInfo: IntegrationServiceErrorInfo
+  Expression: LogicExpression
+  ExpressionRoot: LogicExpressionRoot
+  GetCallbackUrlParameters: ListOperationCallbackUrlParameterInfo
+  HashingAlgorithm: AS2MdnHashingAlgorithm
+  IpAddress: FlowEndpointIPAddress
+  IpAddressRange: FlowAccessControlIPAddressRange
+  JsonSchema: LogicJsonSchema
+  KeyType: LogicKeyType
+  KeyVaultReference: IntegrationAccountKeyVaultNameReference
+  KeyVaultKeyCollection: IntegrationAccountKeyVaultKeyList
+  KeyVaultKey: IntegrationAccountKeyVaultKey
+  KeyVaultKey.attributes.enabled: IsEnabled
+  KeyVaultKey.attributes.created: CreatedOn
+  KeyVaultKey.attributes.updated: Updated
+  KeyVaultKeyReference: IntegrationAccountKeyVaultKeyReference
+  KeyVaultKeyReference.keyVault.id: ResourceId
+  KeyVaultKeyReference.keyVault.name: ResourceName
+  ListKeyVaultKeysDefinition: IntegrationAccountListKeyVaultKeyContent
+  MapType: IntegrationAccountMapType
+  NetworkConfiguration: IntegrationServiceNetworkConfiguration
+  ParameterType: LogicWorkflowParameterType
+  PartnerContent: IntegrationAccountPartnerContent
+  PartnerType: IntegrationAccountPartnerType
+  RecurrenceFrequency: LogicWorkflowRecurrenceFrequency
+  RecurrenceSchedule: LogicWorkflowRecurrenceSchedule
+  RecurrenceScheduleOccurrence: LogicWorkflowRecurrenceScheduleOccurrence
+  RegenerateActionParameter: LogicWorkflowRegenerateActionContent
+  RequestHistoryListResult: LogicWorkflowRequestHistoryListResult
+  RequestHistory: LogicWorkflowRequestHistory
+  RequestHistoryProperties: LogicWorkflowRequestHistoryProperties
+  Request: LogicWorkflowRequest
+  Response: LogicWorkflowResponse
+  RetryHistory: LogicWorkRetryHistory
+  RunActionCorrelation: LogicWorkflowRunActionCorrelation
+  RunCorrelation: LogicWorkflowRunCorrelation
+  Workflow: LogicWorkflow
+  WorkflowListResult: LogicWorkflowListResult
+  WorkflowRunAction: LogicWorkflowRunAction
+  WorkflowVersion: LogicWorkflowVersion
+  WorkflowState: LogicWorkflowState
+  WorkflowStatus: LogicWorkflowStatus
+  WorkflowParameter: LogicWorkflowParameterInfo
+  WorkflowOutputParameter: LogicWorkflowOutputParameterInfo
+  WorkflowRun: LogicWorkflowRun
+  WorkflowRunListResult: LogicWorkflowRunListResult
+  WorkflowProvisioningState: LogicWorkflowProvisioningState
+  WorkflowTriggerProvisioningState: LogicWorkflowTriggerProvisioningState
+  WorkflowRunTrigger: LogicWorkflowRunTrigger
+  WorkflowVersionListResult: LogicWorkflowVersionListResult
+  WorkflowTriggerReference: LogicWorkflowTriggerReference
+  WorkflowTriggerRecurrence: LogicWorkflowTriggerRecurrence
+  WorkflowTriggerListResult: LogicWorkflowTriggerListResult
+  WorkflowTriggerListCallbackUrlQueries: LogicWorkflowTriggerCallbackQueryParameterInfo
+  WorkflowRunActionRepetitionDefinition: LogicWorkflowRunActionRepetitionDefinition
+  WorkflowRunActionRepetitionDefinitionCollection: LogicWorkflowRunActionRepetitionDefinitionList
+  WorkflowTrigger: LogicWorkflowTrigger
+  WorkflowTriggerHistory: LogicWorkflowTriggerHistory
+  WorkflowTriggerHistory.properties.fired: IsFired
+  WorkflowTriggerHistoryListResult: LogicWorkflowTriggerHistoryListResult
+  WorkflowTriggerCallbackUrl: LogicWorkflowTriggerCallbackUri
+  WorkflowReference: LogicWorkflowReference
+  WorkflowRunActionListResult: LogicWorkflowRunActionListResult
+  WsdlService: LogicWsdlService
+  WsdlImportMethod: LogicWsdlImportMethod
+  Sku: LogicSku
+  SkuName: LogicSkuName
+  IntegrationServiceEnvironmentManagedApi.properties.runtimeUrls: runtimeUris
+  ResourceReference: LogicResourceReference
+  RepetitionIndex: LogicWorkflowRepetitionIndex
+  SetTriggerStateActionDefinition: LogicWorkflowTriggerStateActionContent
+  StatusAnnotation: LogicApiOperationAnnotationStatus
+  SwaggerCustomDynamicTreeParameter: SwaggerCustomDynamicTreeParameterInfo
+  TrackingEventsDefinition: IntegrationAccountTrackingEventsContent
+  TrackingEvent: IntegrationAccountTrackingEvent
+  TrackingRecordType: IntegrationAccountTrackingRecordType
+  TrackEventsOperationOptions: IntegrationAccountTrackEventOperationOption
+  TrackingEventErrorInfo: IntegrationAccountTrackingEventErrorInfo
+  X12AcknowledgementSettings.batchTechnicalAcknowledgements: BatchTechnicalAcknowledgement
+  X12AcknowledgementSettings.batchFunctionalAcknowledgements: BatchFunctionalAcknowledgement
+  X12AcknowledgementSettings.batchImplementationAcknowledgements: BatchImplementationAcknowledgement
+  
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
   'location': 'azure-location'
+  'trackingId': 'uuid'
+  'actionTrackingId': 'uuid'
+  'PublicCertificate': 'any'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
@@ -48,12 +180,38 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  MDN: Mdn
+  NRR: Nrr
+  EDI: Edi
+  XSD: Xsd
+  AES128: Aes128
+  AES192: Aes192
+  AES256: Aes256
+  DES3: Des3
+  SHA1: Sha1
+  SHA2256: Sha2256
+  SHA2384: Sha2384
+  SHA2512: Sha2512
+  SQL: Sql
+  SSL: Ssl
+  UTF8: Utf8
 
 directive:
   - from: logic.json
     where: $.definitions
     transform: >
-      $.RetryHistory.properties.error['x-ms-client-name'] = 'ErrorResponse';
+      $.ErrorResponse.properties.error['x-ms-client-flatten'] = true;
       $.OpenAuthenticationAccessPolicies.properties.policies['x-ms-client-name'] = 'AccessPolicies';
+      $.ResourceReference.properties.id['x-ms-format'] = 'arm-id';
+      $.ResourceReference.properties.type['x-ms-format'] = 'resource-type';
+      $.IpAddress.properties.address['x-ms-format'] = 'ip-address';
+      $.IntegrationServiceEnvironmentSkuDefinition.properties.resourceType['x-ms-format'] = 'resource-type';
+      $.KeyVaultKey.properties.attributes['x-ms-client-flatten'] = true;
+      $.KeyVaultKeyReference.properties.keyVault['x-ms-client-flatten'] = true;
+      $.KeyVaultKeyReference.properties.keyVault.properties.id['x-ms-format'] = 'arm-id';
+      $.KeyVaultKeyReference.properties.keyVault.properties.type['x-ms-format'] = 'resource-type';
+      $.WorkflowTriggerRecurrence.properties.startTime['format'] = 'date-time';
+      $.WorkflowTriggerRecurrence.properties.endTime['format'] = 'date-time';
+      $.RecurrenceSchedule.properties.weekDays.items['x-ms-enum']['name'] = 'DayOfWeek';
 
 ```

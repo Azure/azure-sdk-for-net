@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DomainControlCenterSsoRequest>> GetControlCenterSsoRequestAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<DomainControlCenterSsoRequestInfo>> GetControlCenterSsoRequestAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -211,9 +211,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        DomainControlCenterSsoRequest value = default;
+                        DomainControlCenterSsoRequestInfo value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DomainControlCenterSsoRequest.DeserializeDomainControlCenterSsoRequest(document.RootElement);
+                        value = DomainControlCenterSsoRequestInfo.DeserializeDomainControlCenterSsoRequestInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DomainControlCenterSsoRequest> GetControlCenterSsoRequest(string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<DomainControlCenterSsoRequestInfo> GetControlCenterSsoRequest(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -236,9 +236,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        DomainControlCenterSsoRequest value = default;
+                        DomainControlCenterSsoRequestInfo value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DomainControlCenterSsoRequest.DeserializeDomainControlCenterSsoRequest(document.RootElement);
+                        value = DomainControlCenterSsoRequestInfo.DeserializeDomainControlCenterSsoRequestInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

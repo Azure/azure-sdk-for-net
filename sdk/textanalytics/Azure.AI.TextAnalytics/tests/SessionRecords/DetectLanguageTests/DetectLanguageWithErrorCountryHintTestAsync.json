@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/:analyze-text?api-version=2022-04-01-preview",
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/:analyze-text?api-version=2022-05-01",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "146",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-5e6f472b73615541b9ac2eaf2701eb52-2f604a716828b64d-00",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220427.1 (.NET Framework 4.8.4470.0; Microsoft Windows 10.0.19044 )",
-        "x-ms-client-request-id": "aa81c0d3eb7eb2257d03913f30f9d48b",
+        "traceparent": "00-3f4bc905959a3b543b644b80fd2e87cf-8709542299fe4c62-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220721.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "5d37c0c4027562712805f1cf8faa932b",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -27,10 +27,10 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "6525dbac-e4ba-40af-abdf-74f225a579ba",
+        "apim-request-id": "b543b401-7bfc-42af-9a2b-b4f5603a33c5",
         "Content-Length": "325",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 27 Apr 2022 22:38:29 GMT",
+        "Date": "Thu, 21 Jul 2022 23:23:12 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
         "x-envoy-upstream-service-time": "2"
@@ -58,7 +58,7 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1862955290",
+    "RandomSeed": "1908352048",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
     "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com"
   }

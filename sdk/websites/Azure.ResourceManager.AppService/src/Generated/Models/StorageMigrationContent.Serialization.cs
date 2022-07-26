@@ -38,10 +38,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("switchSiteAfterMigration");
                 writer.WriteBooleanValue(SwitchSiteAfterMigration.Value);
             }
-            if (Optional.IsDefined(BlockWriteAccessToSite))
+            if (Optional.IsDefined(IsBlockWriteAccessToSite))
             {
                 writer.WritePropertyName("blockWriteAccessToSite");
-                writer.WriteBooleanValue(BlockWriteAccessToSite.Value);
+                writer.WriteBooleanValue(IsBlockWriteAccessToSite.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

@@ -256,18 +256,18 @@ namespace Azure.ResourceManager.Storage.Tests
             FileShareResource share = (await _fileShareCollection.CreateOrUpdateAsync(WaitUntil.Completed, fileShareName, new FileShareData())).Value;
 
             // Prepare signedIdentifiers to set
-            List<SignedIdentifier> sigs = new List<SignedIdentifier>();
+            var sigs = new List<StorageSignedIdentifier>();
             DateTimeOffset datenow = Recording.Now;
             DateTimeOffset start1 = datenow.ToUniversalTime();
             DateTimeOffset end1 = datenow.AddHours(2).ToUniversalTime();
             DateTimeOffset start2 = datenow.AddMinutes(1).ToUniversalTime();
             DateTimeOffset end2 = datenow.AddMinutes(40).ToUniversalTime();
             var updateParameters2 = new FileShareData();
-            SignedIdentifier sig1 = new SignedIdentifier("testSig1",
+            var sig1 = new StorageSignedIdentifier("testSig1",
                 new StorageServiceAccessPolicy(startOn: start1,
                     expireOn: end1,
                     permission: "rw"));
-            SignedIdentifier sig2 = new SignedIdentifier("testSig2",
+            var sig2 = new StorageSignedIdentifier("testSig2",
                 new StorageServiceAccessPolicy(startOn: start2,
                     expireOn: end2,
                     permission: "rwdl"));
@@ -307,9 +307,9 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual(proposedLeaseID1, leaseResponse.LeaseId);
 
             share = await share.GetAsync();
-            Assert.AreEqual(LeaseDuration.Fixed, share.Data.LeaseDuration);
-            Assert.AreEqual(LeaseState.Leased, share.Data.LeaseState);
-            Assert.AreEqual(LeaseStatus.Locked, share.Data.LeaseStatus);
+            Assert.AreEqual(StorageLeaseDurationType.Fixed, share.Data.LeaseDuration);
+            Assert.AreEqual(StorageLeaseState.Leased, share.Data.LeaseState);
+            Assert.AreEqual(StorageLeaseStatus.Locked, share.Data.LeaseStatus);
 
             //renew lease share
             leaseResponse = await share.LeaseAsync(content: new LeaseShareContent(LeaseShareAction.Renew) { LeaseId = proposedLeaseID1 });
@@ -333,9 +333,9 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.AreEqual(proposedLeaseID1, leaseResponse.LeaseId);
 
             shareSnapshot = await shareSnapshot.GetAsync(xMsSnapshot: shareSnapshot.Data.SnapshotOn.Value.UtcDateTime.ToString("o"));
-            Assert.AreEqual(LeaseDuration.Fixed, share.Data.LeaseDuration);
-            Assert.AreEqual(LeaseState.Leased, share.Data.LeaseState);
-            Assert.AreEqual(LeaseStatus.Locked, share.Data.LeaseStatus);
+            Assert.AreEqual(StorageLeaseDurationType.Fixed, share.Data.LeaseDuration);
+            Assert.AreEqual(StorageLeaseState.Leased, share.Data.LeaseState);
+            Assert.AreEqual(StorageLeaseStatus.Locked, share.Data.LeaseStatus);
 
             bool DeleteFail = false;
             // try delete with include = none
@@ -376,17 +376,17 @@ namespace Azure.ResourceManager.Storage.Tests
                 CorsRules =
                 {
                     new StorageCorsRule(new string[] { "http://www.contoso.com", "http://www.fabrikam.com" },
-                        new CorsRuleAllowedMethodsItem[] { CorsRuleAllowedMethodsItem.GET, CorsRuleAllowedMethodsItem.PUT },
+                        new[] { CorsRuleAllowedMethod.Get, CorsRuleAllowedMethod.Put },
                         100, new string[] { "x-ms-meta-*" },
                         new string[] { "x-ms-meta-abc", "x-ms-meta-data*", "x-ms-meta-target*" }
                         ),
                     new StorageCorsRule(new string[] { "*" },
-                        new CorsRuleAllowedMethodsItem[] { CorsRuleAllowedMethodsItem.GET },
+                        new[] { CorsRuleAllowedMethod.Get },
                         2, new string[] { "*" },
                         new string[] { "*" }
                         ),
                     new StorageCorsRule(new string[] { "http://www.abc23.com", "https://www.fabrikam.com/*" },
-                        new CorsRuleAllowedMethodsItem[] { CorsRuleAllowedMethodsItem.GET, CorsRuleAllowedMethodsItem.PUT, CorsRuleAllowedMethodsItem.Post },
+                        new[] { CorsRuleAllowedMethod.Get, CorsRuleAllowedMethod.Put, CorsRuleAllowedMethod.Post },
                         2000, new string[] { "x-ms-meta-12345675754564*" },
                         new string[] { "x-ms-meta-abc", "x-ms-meta-data*", "x-ms-meta-target*" }
                         )

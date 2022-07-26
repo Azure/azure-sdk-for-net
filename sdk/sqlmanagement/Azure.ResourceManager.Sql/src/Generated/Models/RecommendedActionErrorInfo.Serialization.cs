@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Sql.Models
         internal static RecommendedActionErrorInfo DeserializeRecommendedActionErrorInfo(JsonElement element)
         {
             Optional<string> errorCode = default;
-            Optional<ActionIsRetryable> isRetryable = default;
+            Optional<ActionRetryableState> isRetryable = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("errorCode"))
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    isRetryable = property.Value.GetString().ToActionIsRetryable();
+                    isRetryable = property.Value.GetString().ToActionRetryableState();
                     continue;
                 }
             }

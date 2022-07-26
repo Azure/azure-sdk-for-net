@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("secretVersion");
                 writer.WriteStringValue(SecretVersion);
             }
-            if (Optional.IsDefined(IdentityType))
+            if (Optional.IsDefined(AppServiceIdentity))
             {
                 writer.WritePropertyName("identityType");
-                JsonSerializer.Serialize(writer, IdentityType);
+                JsonSerializer.Serialize(writer, AppServiceIdentity);
             }
             if (Optional.IsDefined(Details))
             {

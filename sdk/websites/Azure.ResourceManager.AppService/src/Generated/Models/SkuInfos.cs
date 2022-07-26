@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of SkuInfos. </summary>
         /// <param name="resourceType"> Resource type that this SKU applies to. </param>
         /// <param name="skus"> List of SKUs the subscription is able to use. </param>
-        internal SkuInfos(string resourceType, IReadOnlyList<GlobalCsmSkuDescription> skus)
+        internal SkuInfos(ResourceType? resourceType, IReadOnlyList<GlobalCsmSkuDescription> skus)
         {
             ResourceType = resourceType;
             Skus = skus;
         }
 
         /// <summary> Resource type that this SKU applies to. </summary>
-        public string ResourceType { get; }
+        public ResourceType? ResourceType { get; }
         /// <summary> List of SKUs the subscription is able to use. </summary>
         public IReadOnlyList<GlobalCsmSkuDescription> Skus { get; }
     }
