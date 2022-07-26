@@ -10,19 +10,19 @@ using System;
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The swagger custom dynamic tree parameter. </summary>
-    public partial class SwaggerCustomDynamicTreeParameter
+    public partial class SwaggerCustomDynamicTreeParameterInfo
     {
-        /// <summary> Initializes a new instance of SwaggerCustomDynamicTreeParameter. </summary>
-        public SwaggerCustomDynamicTreeParameter()
+        /// <summary> Initializes a new instance of SwaggerCustomDynamicTreeParameterInfo. </summary>
+        public SwaggerCustomDynamicTreeParameterInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of SwaggerCustomDynamicTreeParameter. </summary>
+        /// <summary> Initializes a new instance of SwaggerCustomDynamicTreeParameterInfo. </summary>
         /// <param name="selectedItemValuePath"> Gets or sets a path to a property in the currently selected item to pass as a value to a parameter for the given operation. </param>
         /// <param name="value"> The parameter value. </param>
         /// <param name="parameterReference"> The parameter reference. </param>
         /// <param name="required"> Indicates whether the parameter is required. </param>
-        internal SwaggerCustomDynamicTreeParameter(string selectedItemValuePath, BinaryData value, string parameterReference, bool? required)
+        internal SwaggerCustomDynamicTreeParameterInfo(string selectedItemValuePath, BinaryData value, string parameterReference, bool? required)
         {
             SelectedItemValuePath = selectedItemValuePath;
             Value = value;

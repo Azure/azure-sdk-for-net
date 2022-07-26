@@ -10,13 +10,13 @@ using System;
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The tracking event. </summary>
-    public partial class TrackingEvent
+    public partial class IntegrationAccountTrackingEvent
     {
-        /// <summary> Initializes a new instance of TrackingEvent. </summary>
+        /// <summary> Initializes a new instance of IntegrationAccountTrackingEvent. </summary>
         /// <param name="eventLevel"> The event level. </param>
         /// <param name="eventOn"> The event time. </param>
         /// <param name="recordType"> The record type. </param>
-        public TrackingEvent(EventLevel eventLevel, DateTimeOffset eventOn, TrackingRecordType recordType)
+        public IntegrationAccountTrackingEvent(IntegrationAccountEventLevel eventLevel, DateTimeOffset eventOn, IntegrationAccountTrackingRecordType recordType)
         {
             EventLevel = eventLevel;
             EventOn = eventOn;
@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> The event level. </summary>
-        public EventLevel EventLevel { get; }
+        public IntegrationAccountEventLevel EventLevel { get; }
         /// <summary> The event time. </summary>
         public DateTimeOffset EventOn { get; }
         /// <summary> The record type. </summary>
-        public TrackingRecordType RecordType { get; }
+        public IntegrationAccountTrackingRecordType RecordType { get; }
         /// <summary> The record. </summary>
         public BinaryData Record { get; set; }
         /// <summary> The error. </summary>
-        public TrackingEventErrorInfo Error { get; set; }
+        public IntegrationAccountTrackingEventErrorInfo Error { get; set; }
     }
 }

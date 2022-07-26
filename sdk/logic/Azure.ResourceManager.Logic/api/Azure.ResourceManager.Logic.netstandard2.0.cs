@@ -334,8 +334,8 @@ namespace Azure.ResourceManager.Logic
         public virtual Azure.ResourceManager.Logic.IntegrationAccountSessionCollection GetIntegrationAccountSessions() { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Logic.Models.IntegrationAccountKeyVaultKey> GetKeyVaultKeys(Azure.ResourceManager.Logic.Models.IntegrationAccountListKeyVaultKeyContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Logic.Models.IntegrationAccountKeyVaultKey> GetKeyVaultKeysAsync(Azure.ResourceManager.Logic.Models.IntegrationAccountListKeyVaultKeyContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response LogTrackingEvents(Azure.ResourceManager.Logic.Models.TrackingEventsDefinition logTrackingEvents, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> LogTrackingEventsAsync(Azure.ResourceManager.Logic.Models.TrackingEventsDefinition logTrackingEvents, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response LogTrackingEvents(Azure.ResourceManager.Logic.Models.IntegrationAccountTrackingEventsContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> LogTrackingEventsAsync(Azure.ResourceManager.Logic.Models.IntegrationAccountTrackingEventsContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountResource> RegenerateAccessKey(Azure.ResourceManager.Logic.Models.LogicWorkflowRegenerateActionContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountResource>> RegenerateAccessKeyAsync(Azure.ResourceManager.Logic.Models.LogicWorkflowRegenerateActionContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1010,8 +1010,8 @@ namespace Azure.ResourceManager.Logic
         public virtual System.Threading.Tasks.Task<Azure.Response> ResetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Run(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> RunAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response SetState(Azure.ResourceManager.Logic.Models.SetTriggerStateActionDefinition setState, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> SetStateAsync(Azure.ResourceManager.Logic.Models.SetTriggerStateActionDefinition setState, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response SetState(Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerStateActionContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> SetStateAsync(Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerStateActionContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class LogicWorkflowVersionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.LogicWorkflowVersionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.LogicWorkflowVersionResource>, System.Collections.IEnumerable
     {
@@ -1195,26 +1195,6 @@ namespace Azure.ResourceManager.Logic.Models
         public bool OverrideMessageProperties { get { throw null; } set { } }
         public Azure.ResourceManager.Logic.Models.SigningAlgorithm? SigningAlgorithm { get { throw null; } set { } }
         public bool SignMessage { get { throw null; } set { } }
-    }
-    public enum DayOfWeek
-    {
-        Sunday = 0,
-        Monday = 1,
-        Tuesday = 2,
-        Wednesday = 3,
-        Thursday = 4,
-        Friday = 5,
-        Saturday = 6,
-    }
-    public enum DaysOfWeek
-    {
-        Sunday = 0,
-        Monday = 1,
-        Tuesday = 2,
-        Wednesday = 3,
-        Thursday = 4,
-        Friday = 5,
-        Saturday = 6,
     }
     public partial class EdifactAcknowledgementSettings
     {
@@ -1469,15 +1449,6 @@ namespace Azure.ResourceManager.Logic.Models
         public static bool operator !=(Azure.ResourceManager.Logic.Models.EncryptionAlgorithm left, Azure.ResourceManager.Logic.Models.EncryptionAlgorithm right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public enum EventLevel
-    {
-        LogAlways = 0,
-        Critical = 1,
-        Error = 2,
-        Warning = 3,
-        Informational = 4,
-        Verbose = 5,
-    }
     public partial class FlowAccessControlConfiguration
     {
         public FlowAccessControlConfiguration() { }
@@ -1559,6 +1530,15 @@ namespace Azure.ResourceManager.Logic.Models
         public IntegrationAccountBusinessIdentity(string qualifier, string value) { }
         public string Qualifier { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
+    }
+    public enum IntegrationAccountEventLevel
+    {
+        LogAlways = 0,
+        Critical = 1,
+        Error = 2,
+        Warning = 3,
+        Informational = 4,
+        Verbose = 5,
     }
     public partial class IntegrationAccountKeyVaultKey
     {
@@ -1649,6 +1629,78 @@ namespace Azure.ResourceManager.Logic.Models
         public static bool operator ==(Azure.ResourceManager.Logic.Models.IntegrationAccountSkuName left, Azure.ResourceManager.Logic.Models.IntegrationAccountSkuName right) { throw null; }
         public static implicit operator Azure.ResourceManager.Logic.Models.IntegrationAccountSkuName (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Logic.Models.IntegrationAccountSkuName left, Azure.ResourceManager.Logic.Models.IntegrationAccountSkuName right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct IntegrationAccountTrackEventOperationOption : System.IEquatable<Azure.ResourceManager.Logic.Models.IntegrationAccountTrackEventOperationOption>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public IntegrationAccountTrackEventOperationOption(string value) { throw null; }
+        public static Azure.ResourceManager.Logic.Models.IntegrationAccountTrackEventOperationOption DisableSourceInfoEnrich { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.IntegrationAccountTrackEventOperationOption None { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Logic.Models.IntegrationAccountTrackEventOperationOption other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Logic.Models.IntegrationAccountTrackEventOperationOption left, Azure.ResourceManager.Logic.Models.IntegrationAccountTrackEventOperationOption right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Logic.Models.IntegrationAccountTrackEventOperationOption (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Logic.Models.IntegrationAccountTrackEventOperationOption left, Azure.ResourceManager.Logic.Models.IntegrationAccountTrackEventOperationOption right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class IntegrationAccountTrackingEvent
+    {
+        public IntegrationAccountTrackingEvent(Azure.ResourceManager.Logic.Models.IntegrationAccountEventLevel eventLevel, System.DateTimeOffset eventOn, Azure.ResourceManager.Logic.Models.IntegrationAccountTrackingRecordType recordType) { }
+        public Azure.ResourceManager.Logic.Models.IntegrationAccountTrackingEventErrorInfo Error { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.IntegrationAccountEventLevel EventLevel { get { throw null; } }
+        public System.DateTimeOffset EventOn { get { throw null; } }
+        public System.BinaryData Record { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.IntegrationAccountTrackingRecordType RecordType { get { throw null; } }
+    }
+    public partial class IntegrationAccountTrackingEventErrorInfo
+    {
+        public IntegrationAccountTrackingEventErrorInfo() { }
+        public string Code { get { throw null; } set { } }
+        public string Message { get { throw null; } set { } }
+    }
+    public partial class IntegrationAccountTrackingEventsContent
+    {
+        public IntegrationAccountTrackingEventsContent(string sourceType, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.Models.IntegrationAccountTrackingEvent> events) { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Logic.Models.IntegrationAccountTrackingEvent> Events { get { throw null; } }
+        public string SourceType { get { throw null; } }
+        public Azure.ResourceManager.Logic.Models.IntegrationAccountTrackEventOperationOption? TrackEventsOptions { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct IntegrationAccountTrackingRecordType : System.IEquatable<Azure.ResourceManager.Logic.Models.IntegrationAccountTrackingRecordType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public IntegrationAccountTrackingRecordType(string value) { throw null; }
+        public static Azure.ResourceManager.Logic.Models.IntegrationAccountTrackingRecordType AS2Mdn { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.IntegrationAccountTrackingRecordType AS2Message { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.IntegrationAccountTrackingRecordType Custom { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.IntegrationAccountTrackingRecordType EdifactFunctionalGroup { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.IntegrationAccountTrackingRecordType EdifactFunctionalGroupAcknowledgment { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.IntegrationAccountTrackingRecordType EdifactInterchange { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.IntegrationAccountTrackingRecordType EdifactInterchangeAcknowledgment { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.IntegrationAccountTrackingRecordType EdifactTransactionSet { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.IntegrationAccountTrackingRecordType EdifactTransactionSetAcknowledgment { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.IntegrationAccountTrackingRecordType NotSpecified { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.IntegrationAccountTrackingRecordType X12FunctionalGroup { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.IntegrationAccountTrackingRecordType X12FunctionalGroupAcknowledgment { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.IntegrationAccountTrackingRecordType X12Interchange { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.IntegrationAccountTrackingRecordType X12InterchangeAcknowledgment { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.IntegrationAccountTrackingRecordType X12TransactionSet { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.IntegrationAccountTrackingRecordType X12TransactionSetAcknowledgment { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Logic.Models.IntegrationAccountTrackingRecordType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Logic.Models.IntegrationAccountTrackingRecordType left, Azure.ResourceManager.Logic.Models.IntegrationAccountTrackingRecordType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Logic.Models.IntegrationAccountTrackingRecordType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Logic.Models.IntegrationAccountTrackingRecordType left, Azure.ResourceManager.Logic.Models.IntegrationAccountTrackingRecordType right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class IntegrationServiceEnvironmenEncryptionKeyReference
@@ -1932,7 +1984,26 @@ namespace Azure.ResourceManager.Logic.Models
         public LogicApiOperationAnnotation() { }
         public string Family { get { throw null; } set { } }
         public int? Revision { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.StatusAnnotation? Status { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.LogicApiOperationAnnotationStatus? Status { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct LogicApiOperationAnnotationStatus : System.IEquatable<Azure.ResourceManager.Logic.Models.LogicApiOperationAnnotationStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public LogicApiOperationAnnotationStatus(string value) { throw null; }
+        public static Azure.ResourceManager.Logic.Models.LogicApiOperationAnnotationStatus NotSpecified { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicApiOperationAnnotationStatus Preview { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicApiOperationAnnotationStatus Production { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Logic.Models.LogicApiOperationAnnotationStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Logic.Models.LogicApiOperationAnnotationStatus left, Azure.ResourceManager.Logic.Models.LogicApiOperationAnnotationStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Logic.Models.LogicApiOperationAnnotationStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Logic.Models.LogicApiOperationAnnotationStatus left, Azure.ResourceManager.Logic.Models.LogicApiOperationAnnotationStatus right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class LogicApiOperationInfo : Azure.ResourceManager.Models.TrackedResourceData
     {
@@ -2146,6 +2217,16 @@ namespace Azure.ResourceManager.Logic.Models
         public static bool operator !=(Azure.ResourceManager.Logic.Models.LogicSkuName left, Azure.ResourceManager.Logic.Models.LogicSkuName right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public enum LogicWorkflowDayOfWeek
+    {
+        Sunday = 0,
+        Monday = 1,
+        Tuesday = 2,
+        Wednesday = 3,
+        Thursday = 4,
+        Friday = 5,
+        Saturday = 6,
+    }
     public partial class LogicWorkflowOutputParameterInfo : Azure.ResourceManager.Logic.Models.LogicWorkflowParameterInfo
     {
         public LogicWorkflowOutputParameterInfo() { }
@@ -2253,12 +2334,12 @@ namespace Azure.ResourceManager.Logic.Models
         public System.Collections.Generic.IList<int> Minutes { get { throw null; } }
         public System.Collections.Generic.IList<int> MonthDays { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Logic.Models.LogicWorkflowRecurrenceScheduleOccurrence> MonthlyOccurrences { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Logic.Models.DaysOfWeek> WeekDays { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Logic.Models.LogicWorkflowDayOfWeek> WeekDays { get { throw null; } }
     }
     public partial class LogicWorkflowRecurrenceScheduleOccurrence
     {
         public LogicWorkflowRecurrenceScheduleOccurrence() { }
-        public Azure.ResourceManager.Logic.Models.DayOfWeek? Day { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.LogicWorkflowDayOfWeek? Day { get { throw null; } set { } }
         public int? Occurrence { get { throw null; } set { } }
     }
     public partial class LogicWorkflowReference : Azure.ResourceManager.Logic.Models.LogicResourceReference
@@ -2434,11 +2515,11 @@ namespace Azure.ResourceManager.Logic.Models
     public partial class LogicWorkflowTriggerRecurrence
     {
         public LogicWorkflowTriggerRecurrence() { }
-        public string EndTime { get { throw null; } set { } }
+        public System.DateTimeOffset? EndOn { get { throw null; } set { } }
         public Azure.ResourceManager.Logic.Models.LogicWorkflowRecurrenceFrequency? Frequency { get { throw null; } set { } }
         public int? Interval { get { throw null; } set { } }
         public Azure.ResourceManager.Logic.Models.LogicWorkflowRecurrenceSchedule Schedule { get { throw null; } set { } }
-        public string StartTime { get { throw null; } set { } }
+        public System.DateTimeOffset? StartOn { get { throw null; } set { } }
         public string TimeZone { get { throw null; } set { } }
     }
     public partial class LogicWorkflowTriggerReference : Azure.ResourceManager.Logic.Models.LogicResourceReference
@@ -2446,6 +2527,11 @@ namespace Azure.ResourceManager.Logic.Models
         public LogicWorkflowTriggerReference() { }
         public string FlowName { get { throw null; } set { } }
         public string TriggerName { get { throw null; } set { } }
+    }
+    public partial class LogicWorkflowTriggerStateActionContent
+    {
+        public LogicWorkflowTriggerStateActionContent(Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerReference source) { }
+        public Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerReference Source { get { throw null; } }
     }
     public partial class LogicWorkRetryHistory
     {
@@ -2583,11 +2669,6 @@ namespace Azure.ResourceManager.Logic.Models
         LF = 3,
         Crlf = 4,
     }
-    public partial class SetTriggerStateActionDefinition
-    {
-        public SetTriggerStateActionDefinition(Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerReference source) { }
-        public Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerReference Source { get { throw null; } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SigningAlgorithm : System.IEquatable<Azure.ResourceManager.Logic.Models.SigningAlgorithm>
     {
@@ -2608,25 +2689,6 @@ namespace Azure.ResourceManager.Logic.Models
         public static bool operator ==(Azure.ResourceManager.Logic.Models.SigningAlgorithm left, Azure.ResourceManager.Logic.Models.SigningAlgorithm right) { throw null; }
         public static implicit operator Azure.ResourceManager.Logic.Models.SigningAlgorithm (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Logic.Models.SigningAlgorithm left, Azure.ResourceManager.Logic.Models.SigningAlgorithm right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct StatusAnnotation : System.IEquatable<Azure.ResourceManager.Logic.Models.StatusAnnotation>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public StatusAnnotation(string value) { throw null; }
-        public static Azure.ResourceManager.Logic.Models.StatusAnnotation NotSpecified { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.StatusAnnotation Preview { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.StatusAnnotation Production { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Logic.Models.StatusAnnotation other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Logic.Models.StatusAnnotation left, Azure.ResourceManager.Logic.Models.StatusAnnotation right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Logic.Models.StatusAnnotation (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Logic.Models.StatusAnnotation left, Azure.ResourceManager.Logic.Models.StatusAnnotation right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class SwaggerCustomDynamicList
@@ -2669,12 +2731,12 @@ namespace Azure.ResourceManager.Logic.Models
         public string ItemTitlePath { get { throw null; } set { } }
         public string ItemValuePath { get { throw null; } set { } }
         public string OperationId { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Logic.Models.SwaggerCustomDynamicTreeParameter> Parameters { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Logic.Models.SwaggerCustomDynamicTreeParameterInfo> Parameters { get { throw null; } }
         public string SelectableFilter { get { throw null; } set { } }
     }
-    public partial class SwaggerCustomDynamicTreeParameter
+    public partial class SwaggerCustomDynamicTreeParameterInfo
     {
-        public SwaggerCustomDynamicTreeParameter() { }
+        public SwaggerCustomDynamicTreeParameterInfo() { }
         public string ParameterReference { get { throw null; } set { } }
         public bool? Required { get { throw null; } set { } }
         public string SelectedItemValuePath { get { throw null; } set { } }
@@ -2752,78 +2814,6 @@ namespace Azure.ResourceManager.Logic.Models
         public bool? Wrapped { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct TrackEventsOperationOption : System.IEquatable<Azure.ResourceManager.Logic.Models.TrackEventsOperationOption>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public TrackEventsOperationOption(string value) { throw null; }
-        public static Azure.ResourceManager.Logic.Models.TrackEventsOperationOption DisableSourceInfoEnrich { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.TrackEventsOperationOption None { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Logic.Models.TrackEventsOperationOption other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Logic.Models.TrackEventsOperationOption left, Azure.ResourceManager.Logic.Models.TrackEventsOperationOption right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Logic.Models.TrackEventsOperationOption (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Logic.Models.TrackEventsOperationOption left, Azure.ResourceManager.Logic.Models.TrackEventsOperationOption right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class TrackingEvent
-    {
-        public TrackingEvent(Azure.ResourceManager.Logic.Models.EventLevel eventLevel, System.DateTimeOffset eventOn, Azure.ResourceManager.Logic.Models.TrackingRecordType recordType) { }
-        public Azure.ResourceManager.Logic.Models.TrackingEventErrorInfo Error { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.EventLevel EventLevel { get { throw null; } }
-        public System.DateTimeOffset EventOn { get { throw null; } }
-        public System.BinaryData Record { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.TrackingRecordType RecordType { get { throw null; } }
-    }
-    public partial class TrackingEventErrorInfo
-    {
-        public TrackingEventErrorInfo() { }
-        public string Code { get { throw null; } set { } }
-        public string Message { get { throw null; } set { } }
-    }
-    public partial class TrackingEventsDefinition
-    {
-        public TrackingEventsDefinition(string sourceType, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.Models.TrackingEvent> events) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Logic.Models.TrackingEvent> Events { get { throw null; } }
-        public string SourceType { get { throw null; } }
-        public Azure.ResourceManager.Logic.Models.TrackEventsOperationOption? TrackEventsOptions { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct TrackingRecordType : System.IEquatable<Azure.ResourceManager.Logic.Models.TrackingRecordType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public TrackingRecordType(string value) { throw null; }
-        public static Azure.ResourceManager.Logic.Models.TrackingRecordType AS2Mdn { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.TrackingRecordType AS2Message { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.TrackingRecordType Custom { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.TrackingRecordType EdifactFunctionalGroup { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.TrackingRecordType EdifactFunctionalGroupAcknowledgment { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.TrackingRecordType EdifactInterchange { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.TrackingRecordType EdifactInterchangeAcknowledgment { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.TrackingRecordType EdifactTransactionSet { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.TrackingRecordType EdifactTransactionSetAcknowledgment { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.TrackingRecordType NotSpecified { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.TrackingRecordType X12FunctionalGroup { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.TrackingRecordType X12FunctionalGroupAcknowledgment { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.TrackingRecordType X12Interchange { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.TrackingRecordType X12InterchangeAcknowledgment { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.TrackingRecordType X12TransactionSet { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.TrackingRecordType X12TransactionSetAcknowledgment { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Logic.Models.TrackingRecordType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Logic.Models.TrackingRecordType left, Azure.ResourceManager.Logic.Models.TrackingRecordType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Logic.Models.TrackingRecordType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Logic.Models.TrackingRecordType left, Azure.ResourceManager.Logic.Models.TrackingRecordType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct TrailingSeparatorPolicy : System.IEquatable<Azure.ResourceManager.Logic.Models.TrailingSeparatorPolicy>
     {
         private readonly object _dummy;
@@ -2897,7 +2887,7 @@ namespace Azure.ResourceManager.Logic.Models
         public static Azure.ResourceManager.Logic.Models.X12CharacterSet Basic { get { throw null; } }
         public static Azure.ResourceManager.Logic.Models.X12CharacterSet Extended { get { throw null; } }
         public static Azure.ResourceManager.Logic.Models.X12CharacterSet NotSpecified { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.X12CharacterSet UTF8 { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.X12CharacterSet Utf8 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Logic.Models.X12CharacterSet other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }

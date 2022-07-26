@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -25,15 +26,15 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WritePropertyName("interval");
                 writer.WriteNumberValue(Interval.Value);
             }
-            if (Optional.IsDefined(StartTime))
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime");
-                writer.WriteStringValue(StartTime);
+                writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(EndTime))
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime");
-                writer.WriteStringValue(EndTime);
+                writer.WriteStringValue(EndOn.Value, "O");
             }
             if (Optional.IsDefined(TimeZone))
             {
@@ -52,8 +53,8 @@ namespace Azure.ResourceManager.Logic.Models
         {
             Optional<LogicWorkflowRecurrenceFrequency> frequency = default;
             Optional<int> interval = default;
-            Optional<string> startTime = default;
-            Optional<string> endTime = default;
+            Optional<DateTimeOffset> startTime = default;
+            Optional<DateTimeOffset> endTime = default;
             Optional<string> timeZone = default;
             Optional<LogicWorkflowRecurrenceSchedule> schedule = default;
             foreach (var property in element.EnumerateObject())
@@ -80,12 +81,22 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 if (property.NameEquals("startTime"))
                 {
-                    startTime = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("endTime"))
                 {
-                    endTime = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    endTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("timeZone"))
@@ -104,7 +115,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new LogicWorkflowTriggerRecurrence(Optional.ToNullable(frequency), Optional.ToNullable(interval), startTime.Value, endTime.Value, timeZone.Value, schedule.Value);
+            return new LogicWorkflowTriggerRecurrence(Optional.ToNullable(frequency), Optional.ToNullable(interval), Optional.ToNullable(startTime), Optional.ToNullable(endTime), timeZone.Value, schedule.Value);
         }
     }
 }

@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Logic.Models
         {
             Optional<IList<int>> minutes = default;
             Optional<IList<int>> hours = default;
-            Optional<IList<DaysOfWeek>> weekDays = default;
+            Optional<IList<LogicWorkflowDayOfWeek>> weekDays = default;
             Optional<IList<int>> monthDays = default;
             Optional<IList<LogicWorkflowRecurrenceScheduleOccurrence>> monthlyOccurrences = default;
             foreach (var property in element.EnumerateObject())
@@ -115,10 +115,10 @@ namespace Azure.ResourceManager.Logic.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DaysOfWeek> array = new List<DaysOfWeek>();
+                    List<LogicWorkflowDayOfWeek> array = new List<LogicWorkflowDayOfWeek>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString().ToDaysOfWeek());
+                        array.Add(item.GetString().ToLogicWorkflowDayOfWeek());
                     }
                     weekDays = array;
                     continue;

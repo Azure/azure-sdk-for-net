@@ -309,18 +309,18 @@ namespace Azure.ResourceManager.Logic
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/workflows/{workflowName}/triggers/{triggerName}/setState
         /// Operation Id: WorkflowTriggers_SetState
         /// </summary>
-        /// <param name="setState"> The workflow trigger state. </param>
+        /// <param name="content"> The workflow trigger state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="setState"/> is null. </exception>
-        public virtual async Task<Response> SetStateAsync(SetTriggerStateActionDefinition setState, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response> SetStateAsync(LogicWorkflowTriggerStateActionContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(setState, nameof(setState));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _logicWorkflowTriggerWorkflowTriggersClientDiagnostics.CreateScope("LogicWorkflowTriggerResource.SetState");
             scope.Start();
             try
             {
-                var response = await _logicWorkflowTriggerWorkflowTriggersRestClient.SetStateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, setState, cancellationToken).ConfigureAwait(false);
+                var response = await _logicWorkflowTriggerWorkflowTriggersRestClient.SetStateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -335,18 +335,18 @@ namespace Azure.ResourceManager.Logic
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/workflows/{workflowName}/triggers/{triggerName}/setState
         /// Operation Id: WorkflowTriggers_SetState
         /// </summary>
-        /// <param name="setState"> The workflow trigger state. </param>
+        /// <param name="content"> The workflow trigger state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="setState"/> is null. </exception>
-        public virtual Response SetState(SetTriggerStateActionDefinition setState, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response SetState(LogicWorkflowTriggerStateActionContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(setState, nameof(setState));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _logicWorkflowTriggerWorkflowTriggersClientDiagnostics.CreateScope("LogicWorkflowTriggerResource.SetState");
             scope.Start();
             try
             {
-                var response = _logicWorkflowTriggerWorkflowTriggersRestClient.SetState(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, setState, cancellationToken);
+                var response = _logicWorkflowTriggerWorkflowTriggersRestClient.SetState(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

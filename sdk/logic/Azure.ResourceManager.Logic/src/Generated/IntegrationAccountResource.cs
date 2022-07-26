@@ -656,18 +656,18 @@ namespace Azure.ResourceManager.Logic
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/integrationAccounts/{integrationAccountName}/logTrackingEvents
         /// Operation Id: IntegrationAccounts_LogTrackingEvents
         /// </summary>
-        /// <param name="logTrackingEvents"> The callback URL parameters. </param>
+        /// <param name="content"> The callback URL parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="logTrackingEvents"/> is null. </exception>
-        public virtual async Task<Response> LogTrackingEventsAsync(TrackingEventsDefinition logTrackingEvents, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response> LogTrackingEventsAsync(IntegrationAccountTrackingEventsContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(logTrackingEvents, nameof(logTrackingEvents));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _integrationAccountClientDiagnostics.CreateScope("IntegrationAccountResource.LogTrackingEvents");
             scope.Start();
             try
             {
-                var response = await _integrationAccountRestClient.LogTrackingEventsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, logTrackingEvents, cancellationToken).ConfigureAwait(false);
+                var response = await _integrationAccountRestClient.LogTrackingEventsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -682,18 +682,18 @@ namespace Azure.ResourceManager.Logic
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/integrationAccounts/{integrationAccountName}/logTrackingEvents
         /// Operation Id: IntegrationAccounts_LogTrackingEvents
         /// </summary>
-        /// <param name="logTrackingEvents"> The callback URL parameters. </param>
+        /// <param name="content"> The callback URL parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="logTrackingEvents"/> is null. </exception>
-        public virtual Response LogTrackingEvents(TrackingEventsDefinition logTrackingEvents, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response LogTrackingEvents(IntegrationAccountTrackingEventsContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(logTrackingEvents, nameof(logTrackingEvents));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _integrationAccountClientDiagnostics.CreateScope("IntegrationAccountResource.LogTrackingEvents");
             scope.Start();
             try
             {
-                var response = _integrationAccountRestClient.LogTrackingEvents(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, logTrackingEvents, cancellationToken);
+                var response = _integrationAccountRestClient.LogTrackingEvents(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

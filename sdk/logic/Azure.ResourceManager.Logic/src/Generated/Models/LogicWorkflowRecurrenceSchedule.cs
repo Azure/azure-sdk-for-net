@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Logic.Models
         {
             Minutes = new ChangeTrackingList<int>();
             Hours = new ChangeTrackingList<int>();
-            WeekDays = new ChangeTrackingList<DaysOfWeek>();
+            WeekDays = new ChangeTrackingList<LogicWorkflowDayOfWeek>();
             MonthDays = new ChangeTrackingList<int>();
             MonthlyOccurrences = new ChangeTrackingList<LogicWorkflowRecurrenceScheduleOccurrence>();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <param name="weekDays"> The days of the week. </param>
         /// <param name="monthDays"> The month days. </param>
         /// <param name="monthlyOccurrences"> The monthly occurrences. </param>
-        internal LogicWorkflowRecurrenceSchedule(IList<int> minutes, IList<int> hours, IList<DaysOfWeek> weekDays, IList<int> monthDays, IList<LogicWorkflowRecurrenceScheduleOccurrence> monthlyOccurrences)
+        internal LogicWorkflowRecurrenceSchedule(IList<int> minutes, IList<int> hours, IList<LogicWorkflowDayOfWeek> weekDays, IList<int> monthDays, IList<LogicWorkflowRecurrenceScheduleOccurrence> monthlyOccurrences)
         {
             Minutes = minutes;
             Hours = hours;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> The hours. </summary>
         public IList<int> Hours { get; }
         /// <summary> The days of the week. </summary>
-        public IList<DaysOfWeek> WeekDays { get; }
+        public IList<LogicWorkflowDayOfWeek> WeekDays { get; }
         /// <summary> The month days. </summary>
         public IList<int> MonthDays { get; }
         /// <summary> The monthly occurrences. </summary>

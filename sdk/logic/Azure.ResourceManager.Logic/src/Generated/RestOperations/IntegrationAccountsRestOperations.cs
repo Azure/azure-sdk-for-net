@@ -689,7 +689,7 @@ namespace Azure.ResourceManager.Logic
             }
         }
 
-        internal HttpMessage CreateLogTrackingEventsRequest(string subscriptionId, string resourceGroupName, string integrationAccountName, TrackingEventsDefinition logTrackingEvents)
+        internal HttpMessage CreateLogTrackingEventsRequest(string subscriptionId, string resourceGroupName, string integrationAccountName, IntegrationAccountTrackingEventsContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -708,7 +708,7 @@ namespace Azure.ResourceManager.Logic
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(logTrackingEvents);
+            content0.JsonWriter.WriteObjectValue(content);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -718,18 +718,18 @@ namespace Azure.ResourceManager.Logic
         /// <param name="subscriptionId"> The subscription id. </param>
         /// <param name="resourceGroupName"> The resource group name. </param>
         /// <param name="integrationAccountName"> The integration account name. </param>
-        /// <param name="logTrackingEvents"> The callback URL parameters. </param>
+        /// <param name="content"> The callback URL parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="integrationAccountName"/> or <paramref name="logTrackingEvents"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="integrationAccountName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="integrationAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> LogTrackingEventsAsync(string subscriptionId, string resourceGroupName, string integrationAccountName, TrackingEventsDefinition logTrackingEvents, CancellationToken cancellationToken = default)
+        public async Task<Response> LogTrackingEventsAsync(string subscriptionId, string resourceGroupName, string integrationAccountName, IntegrationAccountTrackingEventsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(integrationAccountName, nameof(integrationAccountName));
-            Argument.AssertNotNull(logTrackingEvents, nameof(logTrackingEvents));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateLogTrackingEventsRequest(subscriptionId, resourceGroupName, integrationAccountName, logTrackingEvents);
+            using var message = CreateLogTrackingEventsRequest(subscriptionId, resourceGroupName, integrationAccountName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -744,18 +744,18 @@ namespace Azure.ResourceManager.Logic
         /// <param name="subscriptionId"> The subscription id. </param>
         /// <param name="resourceGroupName"> The resource group name. </param>
         /// <param name="integrationAccountName"> The integration account name. </param>
-        /// <param name="logTrackingEvents"> The callback URL parameters. </param>
+        /// <param name="content"> The callback URL parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="integrationAccountName"/> or <paramref name="logTrackingEvents"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="integrationAccountName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="integrationAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response LogTrackingEvents(string subscriptionId, string resourceGroupName, string integrationAccountName, TrackingEventsDefinition logTrackingEvents, CancellationToken cancellationToken = default)
+        public Response LogTrackingEvents(string subscriptionId, string resourceGroupName, string integrationAccountName, IntegrationAccountTrackingEventsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(integrationAccountName, nameof(integrationAccountName));
-            Argument.AssertNotNull(logTrackingEvents, nameof(logTrackingEvents));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateLogTrackingEventsRequest(subscriptionId, resourceGroupName, integrationAccountName, logTrackingEvents);
+            using var message = CreateLogTrackingEventsRequest(subscriptionId, resourceGroupName, integrationAccountName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

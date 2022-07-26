@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The event level. </summary>
-    public enum EventLevel
+    public enum IntegrationAccountEventLevel
     {
         /// <summary> LogAlways. </summary>
         LogAlways,

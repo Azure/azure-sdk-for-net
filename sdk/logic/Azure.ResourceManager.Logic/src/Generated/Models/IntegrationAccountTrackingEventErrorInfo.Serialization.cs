@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class TrackingEventErrorInfo : IUtf8JsonSerializable
+    public partial class IntegrationAccountTrackingEventErrorInfo : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

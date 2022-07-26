@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static LogicApiOperationAnnotation DeserializeLogicApiOperationAnnotation(JsonElement element)
         {
-            Optional<StatusAnnotation> status = default;
+            Optional<LogicApiOperationAnnotationStatus> status = default;
             Optional<string> family = default;
             Optional<int> revision = default;
             foreach (var property in element.EnumerateObject())
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Logic.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = new StatusAnnotation(property.Value.GetString());
+                    status = new LogicApiOperationAnnotationStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("family"))

@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.Logic
             }
         }
 
-        internal HttpMessage CreateSetStateRequest(string subscriptionId, string resourceGroupName, string workflowName, string triggerName, SetTriggerStateActionDefinition setState)
+        internal HttpMessage CreateSetStateRequest(string subscriptionId, string resourceGroupName, string workflowName, string triggerName, LogicWorkflowTriggerStateActionContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -473,9 +473,9 @@ namespace Azure.ResourceManager.Logic
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(setState);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -485,19 +485,19 @@ namespace Azure.ResourceManager.Logic
         /// <param name="resourceGroupName"> The resource group name. </param>
         /// <param name="workflowName"> The workflow name. </param>
         /// <param name="triggerName"> The workflow trigger name. </param>
-        /// <param name="setState"> The workflow trigger state. </param>
+        /// <param name="content"> The workflow trigger state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workflowName"/>, <paramref name="triggerName"/> or <paramref name="setState"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workflowName"/>, <paramref name="triggerName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workflowName"/> or <paramref name="triggerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> SetStateAsync(string subscriptionId, string resourceGroupName, string workflowName, string triggerName, SetTriggerStateActionDefinition setState, CancellationToken cancellationToken = default)
+        public async Task<Response> SetStateAsync(string subscriptionId, string resourceGroupName, string workflowName, string triggerName, LogicWorkflowTriggerStateActionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
             Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
-            Argument.AssertNotNull(setState, nameof(setState));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateSetStateRequest(subscriptionId, resourceGroupName, workflowName, triggerName, setState);
+            using var message = CreateSetStateRequest(subscriptionId, resourceGroupName, workflowName, triggerName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -513,19 +513,19 @@ namespace Azure.ResourceManager.Logic
         /// <param name="resourceGroupName"> The resource group name. </param>
         /// <param name="workflowName"> The workflow name. </param>
         /// <param name="triggerName"> The workflow trigger name. </param>
-        /// <param name="setState"> The workflow trigger state. </param>
+        /// <param name="content"> The workflow trigger state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workflowName"/>, <paramref name="triggerName"/> or <paramref name="setState"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workflowName"/>, <paramref name="triggerName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workflowName"/> or <paramref name="triggerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response SetState(string subscriptionId, string resourceGroupName, string workflowName, string triggerName, SetTriggerStateActionDefinition setState, CancellationToken cancellationToken = default)
+        public Response SetState(string subscriptionId, string resourceGroupName, string workflowName, string triggerName, LogicWorkflowTriggerStateActionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
             Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
-            Argument.AssertNotNull(setState, nameof(setState));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateSetStateRequest(subscriptionId, resourceGroupName, workflowName, triggerName, setState);
+            using var message = CreateSetStateRequest(subscriptionId, resourceGroupName, workflowName, triggerName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

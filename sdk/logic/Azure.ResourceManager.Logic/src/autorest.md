@@ -59,11 +59,13 @@ rename-mapping:
   CallbackUrl: ListOperationCallbackUrl
   ContentLink: LogicContentLink
   ContentHash: LogicContentHash
+  DayOfWeek: LogicWorkflowDayOfWeek
   EdifactAcknowledgementSettings.batchFunctionalAcknowledgements: BatchFunctionalAcknowledgement
   EdifactAcknowledgementSettings.batchTechnicalAcknowledgements: BatchTechnicalAcknowledgement
   ErrorInfo: LogicErrorInfo
   ErrorResponse: LogicErrorResponse
   ErrorResponseCode: IntegrationServiceErrorCode
+  EventLevel: IntegrationAccountEventLevel
   ExtendedErrorInfo: IntegrationServiceErrorInfo
   Expression: LogicExpression
   ExpressionRoot: LogicExpressionRoot
@@ -104,8 +106,6 @@ rename-mapping:
   WorkflowListResult: LogicWorkflowListResult
   WorkflowRunAction: LogicWorkflowRunAction
   WorkflowVersion: LogicWorkflowVersion
-  WorkflowTrigger: LogicWorkflowTrigger
-  WorkflowTriggerHistory: LogicWorkflowTriggerHistory
   WorkflowState: LogicWorkflowState
   WorkflowStatus: LogicWorkflowStatus
   WorkflowParameter: LogicWorkflowParameterInfo
@@ -122,6 +122,9 @@ rename-mapping:
   WorkflowTriggerListCallbackUrlQueries: LogicWorkflowTriggerCallbackQueryParameterInfo
   WorkflowRunActionRepetitionDefinition: LogicWorkflowRunActionRepetitionDefinition
   WorkflowRunActionRepetitionDefinitionCollection: LogicWorkflowRunActionRepetitionDefinitionList
+  WorkflowTrigger: LogicWorkflowTrigger
+  WorkflowTriggerHistory: LogicWorkflowTriggerHistory
+  WorkflowTriggerHistory.properties.fired: IsFired
   WorkflowTriggerHistoryListResult: LogicWorkflowTriggerHistoryListResult
   WorkflowTriggerCallbackUrl: LogicWorkflowTriggerCallbackUri
   WorkflowReference: LogicWorkflowReference
@@ -133,7 +136,14 @@ rename-mapping:
   IntegrationServiceEnvironmentManagedApi.properties.runtimeUrls: runtimeUris
   ResourceReference: LogicResourceReference
   RepetitionIndex: LogicWorkflowRepetitionIndex
-  WorkflowTriggerHistory.properties.fired: IsFired
+  SetTriggerStateActionDefinition: LogicWorkflowTriggerStateActionContent
+  StatusAnnotation: LogicApiOperationAnnotationStatus
+  SwaggerCustomDynamicTreeParameter: SwaggerCustomDynamicTreeParameterInfo
+  TrackingEventsDefinition: IntegrationAccountTrackingEventsContent
+  TrackingEvent: IntegrationAccountTrackingEvent
+  TrackingRecordType: IntegrationAccountTrackingRecordType
+  TrackEventsOperationOptions: IntegrationAccountTrackEventOperationOption
+  TrackingEventErrorInfo: IntegrationAccountTrackingEventErrorInfo
   X12AcknowledgementSettings.batchTechnicalAcknowledgements: BatchTechnicalAcknowledgement
   X12AcknowledgementSettings.batchFunctionalAcknowledgements: BatchFunctionalAcknowledgement
   X12AcknowledgementSettings.batchImplementationAcknowledgements: BatchImplementationAcknowledgement
@@ -184,6 +194,7 @@ rename-rules:
   SHA2512: Sha2512
   SQL: Sql
   SSL: Ssl
+  UTF8: Utf8
 
 directive:
   - from: logic.json
@@ -199,5 +210,8 @@ directive:
       $.KeyVaultKeyReference.properties.keyVault['x-ms-client-flatten'] = true;
       $.KeyVaultKeyReference.properties.keyVault.properties.id['x-ms-format'] = 'arm-id';
       $.KeyVaultKeyReference.properties.keyVault.properties.type['x-ms-format'] = 'resource-type';
+      $.WorkflowTriggerRecurrence.properties.startTime['format'] = 'date-time';
+      $.WorkflowTriggerRecurrence.properties.endTime['format'] = 'date-time';
+      $.RecurrenceSchedule.properties.weekDays.items['x-ms-enum']['name'] = 'DayOfWeek';
 
 ```

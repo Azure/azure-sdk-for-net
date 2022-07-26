@@ -7,8 +7,8 @@
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary> The DaysOfWeek. </summary>
-    public enum DaysOfWeek
+    /// <summary> The LogicWorkflowDayOfWeek. </summary>
+    public enum LogicWorkflowDayOfWeek
     {
         /// <summary> Sunday. </summary>
         Sunday,

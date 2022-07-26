@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <param name="status"> The status annotation. </param>
         /// <param name="family"> The family. </param>
         /// <param name="revision"> The revision. </param>
-        internal LogicApiOperationAnnotation(StatusAnnotation? status, string family, int? revision)
+        internal LogicApiOperationAnnotation(LogicApiOperationAnnotationStatus? status, string family, int? revision)
         {
             Status = status;
             Family = family;
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> The status annotation. </summary>
-        public StatusAnnotation? Status { get; set; }
+        public LogicApiOperationAnnotationStatus? Status { get; set; }
         /// <summary> The family. </summary>
         public string Family { get; set; }
         /// <summary> The revision. </summary>

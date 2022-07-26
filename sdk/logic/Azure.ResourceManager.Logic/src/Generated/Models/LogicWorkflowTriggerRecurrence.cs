@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The workflow trigger recurrence. </summary>
@@ -18,16 +20,16 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> Initializes a new instance of LogicWorkflowTriggerRecurrence. </summary>
         /// <param name="frequency"> The frequency. </param>
         /// <param name="interval"> The interval. </param>
-        /// <param name="startTime"> The start time. </param>
-        /// <param name="endTime"> The end time. </param>
+        /// <param name="startOn"> The start time. </param>
+        /// <param name="endOn"> The end time. </param>
         /// <param name="timeZone"> The time zone. </param>
         /// <param name="schedule"> The recurrence schedule. </param>
-        internal LogicWorkflowTriggerRecurrence(LogicWorkflowRecurrenceFrequency? frequency, int? interval, string startTime, string endTime, string timeZone, LogicWorkflowRecurrenceSchedule schedule)
+        internal LogicWorkflowTriggerRecurrence(LogicWorkflowRecurrenceFrequency? frequency, int? interval, DateTimeOffset? startOn, DateTimeOffset? endOn, string timeZone, LogicWorkflowRecurrenceSchedule schedule)
         {
             Frequency = frequency;
             Interval = interval;
-            StartTime = startTime;
-            EndTime = endTime;
+            StartOn = startOn;
+            EndOn = endOn;
             TimeZone = timeZone;
             Schedule = schedule;
         }
@@ -37,9 +39,9 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> The interval. </summary>
         public int? Interval { get; set; }
         /// <summary> The start time. </summary>
-        public string StartTime { get; set; }
+        public DateTimeOffset? StartOn { get; set; }
         /// <summary> The end time. </summary>
-        public string EndTime { get; set; }
+        public DateTimeOffset? EndOn { get; set; }
         /// <summary> The time zone. </summary>
         public string TimeZone { get; set; }
         /// <summary> The recurrence schedule. </summary>

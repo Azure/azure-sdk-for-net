@@ -10,12 +10,12 @@ using System;
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The set trigger state action definition. </summary>
-    public partial class SetTriggerStateActionDefinition
+    public partial class LogicWorkflowTriggerStateActionContent
     {
-        /// <summary> Initializes a new instance of SetTriggerStateActionDefinition. </summary>
+        /// <summary> Initializes a new instance of LogicWorkflowTriggerStateActionContent. </summary>
         /// <param name="source"> The source. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="source"/> is null. </exception>
-        public SetTriggerStateActionDefinition(LogicWorkflowTriggerReference source)
+        public LogicWorkflowTriggerStateActionContent(LogicWorkflowTriggerReference source)
         {
             if (source == null)
             {

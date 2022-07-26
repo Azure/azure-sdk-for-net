@@ -12,13 +12,13 @@ using System.Linq;
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The tracking events definition. </summary>
-    public partial class TrackingEventsDefinition
+    public partial class IntegrationAccountTrackingEventsContent
     {
-        /// <summary> Initializes a new instance of TrackingEventsDefinition. </summary>
+        /// <summary> Initializes a new instance of IntegrationAccountTrackingEventsContent. </summary>
         /// <param name="sourceType"> The source type. </param>
         /// <param name="events"> The events. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceType"/> or <paramref name="events"/> is null. </exception>
-        public TrackingEventsDefinition(string sourceType, IEnumerable<TrackingEvent> events)
+        public IntegrationAccountTrackingEventsContent(string sourceType, IEnumerable<IntegrationAccountTrackingEvent> events)
         {
             if (sourceType == null)
             {
@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> The source type. </summary>
         public string SourceType { get; }
         /// <summary> The track events options. </summary>
-        public TrackEventsOperationOption? TrackEventsOptions { get; set; }
+        public IntegrationAccountTrackEventOperationOption? TrackEventsOptions { get; set; }
         /// <summary> The events. </summary>
-        public IList<TrackingEvent> Events { get; }
+        public IList<IntegrationAccountTrackingEvent> Events { get; }
     }
 }

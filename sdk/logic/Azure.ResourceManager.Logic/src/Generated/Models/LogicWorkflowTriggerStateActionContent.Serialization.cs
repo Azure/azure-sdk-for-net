@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class SetTriggerStateActionDefinition : IUtf8JsonSerializable
+    public partial class LogicWorkflowTriggerStateActionContent : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

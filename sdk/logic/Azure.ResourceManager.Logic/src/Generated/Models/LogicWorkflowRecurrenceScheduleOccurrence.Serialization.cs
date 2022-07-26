@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static LogicWorkflowRecurrenceScheduleOccurrence DeserializeLogicWorkflowRecurrenceScheduleOccurrence(JsonElement element)
         {
-            Optional<DayOfWeek> day = default;
+            Optional<LogicWorkflowDayOfWeek> day = default;
             Optional<int> occurrence = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Logic.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    day = property.Value.GetString().ToDayOfWeek();
+                    day = property.Value.GetString().ToLogicWorkflowDayOfWeek();
                     continue;
                 }
                 if (property.NameEquals("occurrence"))

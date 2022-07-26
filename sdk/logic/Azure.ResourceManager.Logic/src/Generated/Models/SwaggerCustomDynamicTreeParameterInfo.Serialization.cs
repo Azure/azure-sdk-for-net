@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class SwaggerCustomDynamicTreeParameter : IUtf8JsonSerializable
+    public partial class SwaggerCustomDynamicTreeParameterInfo : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteEndObject();
         }
 
-        internal static SwaggerCustomDynamicTreeParameter DeserializeSwaggerCustomDynamicTreeParameter(JsonElement element)
+        internal static SwaggerCustomDynamicTreeParameterInfo DeserializeSwaggerCustomDynamicTreeParameterInfo(JsonElement element)
         {
             Optional<string> selectedItemValuePath = default;
             Optional<BinaryData> value = default;
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new SwaggerCustomDynamicTreeParameter(selectedItemValuePath.Value, value.Value, parameterReference.Value, Optional.ToNullable(required));
+            return new SwaggerCustomDynamicTreeParameterInfo(selectedItemValuePath.Value, value.Value, parameterReference.Value, Optional.ToNullable(required));
         }
     }
 }
