@@ -8,17 +8,20 @@ using Azure.ResourceManager.DataFactory;
 using Azure.ResourceManager.DataFactory.Models;
 using Azure.ResourceManager.DataFactory.Tests;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Storage;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.IotHub.Tests.Scenario
 {
     internal class DataFactoryDatasetResourceTests : DataFactoryManagementTestBase
     {
-        private const string _accessKey = "REDACTED";
-        private DataFactoryResource _dataFactory;
+        private string _accessKey;
         private string _linkedServiceName;
+        private ResourceGroupResource _resourceGroup;
+        private DataFactoryResource _dataFactory;
         public DataFactoryDatasetResourceTests(bool isAsync) : base(isAsync)
         {
+            JsonPathSanitizers.Add("$.keys.[*].value");
         }
 
         [SetUp]
@@ -27,11 +30,24 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
             // Create a resource group
             string dataFactoryName = Recording.GenerateAssetName("DataFactory-");
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
-            var resourceGroup = await CreateResourceGroup(subscription, "DataFactory-RG-", AzureLocation.WestUS2);
+            _resourceGroup = await CreateResourceGroup(subscription, "DataFactory-RG-", AzureLocation.WestUS2);
             // Create a DataFactory and a LinkedService
-            _dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
+            _dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            // Create a LinkedService
+            _accessKey = await GetStorageAccountAccessKey(_resourceGroup);
             _linkedServiceName = Recording.GenerateAssetName("LinkedService");
             await CreateLinkedService(_dataFactory, _linkedServiceName, _accessKey);
+        }
+
+        [TearDown]
+        public async Task TestlTearDown()
+        {
+            // Delete Storage Account ASAP.
+            var list = await _resourceGroup.GetStorageAccounts().GetAllAsync().ToEnumerableAsync();
+            foreach (var storageAccount in list)
+            {
+                await storageAccount.DeleteAsync(WaitUntil.Completed);
+            }
         }
 
         private async Task<DatasetResource> CreateDefaultDataset(string datasetName)
@@ -45,7 +61,6 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        [PlaybackOnly("Add ref Storage mgmt package. Temporarily use a known AccessKey instead")]
         public async Task CreateOrUpdate()
         {
             string datasetName = Recording.GenerateAssetName("dataset");
@@ -56,7 +71,6 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        [PlaybackOnly("Add ref Storage mgmt package. Temporarily use a known AccessKey instead")]
         public async Task Exist()
         {
             string datasetName = Recording.GenerateAssetName("dataset");
@@ -67,7 +81,6 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        [PlaybackOnly("Add ref Storage mgmt package. Temporarily use a known AccessKey instead")]
         public async Task Get()
         {
             string datasetName = Recording.GenerateAssetName("dataset");
@@ -79,18 +92,17 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        [PlaybackOnly("Add ref Storage mgmt package. Temporarily use a known AccessKey instead")]
         public async Task GetAll()
         {
             string datasetName = Recording.GenerateAssetName("dataset");
             await CreateDefaultDataset(datasetName);
             var list = await _dataFactory.GetDatasetResources().GetAllAsync().ToEnumerableAsync();
-            System.Console.WriteLine(list);
+            Assert.IsNotEmpty(list);
+            Assert.AreEqual(1,list.Count);
         }
 
         [Test]
         [RecordedTest]
-        [PlaybackOnly("Add ref Storage mgmt package. Temporarily use a known AccessKey instead")]
         public async Task Delete()
         {
             string datasetName = Recording.GenerateAssetName("dataset");
