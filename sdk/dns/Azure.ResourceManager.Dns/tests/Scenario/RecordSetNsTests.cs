@@ -14,12 +14,12 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Dns.Tests.Scenario
 {
-    internal class RecordSetNsTests : DnsServiceClientTestBase
+    internal class RecordSetNSTests : DnsServiceClientTestBase
     {
         private ResourceGroupResource _resourceGroup;
         private DnsZoneResource _dnsZone;
         private string _recordSetName;
-        public RecordSetNsTests(bool isAsync) : base(isAsync)
+        public RecordSetNSTests(bool isAsync) : base(isAsync)
         {
         }
         [OneTimeSetUp]
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         [TearDown]
         public async Task TearDown()
         {
-            var collection = _dnsZone.GetRecordSetNs();
+            var collection = _dnsZone.GetRecordSetNS();
             if (collection.Exists(_recordSetName))
             {
-                var recordSetNsResource = await collection.GetAsync(_recordSetName);
-                await recordSetNsResource.Value.DeleteAsync(WaitUntil.Completed);
+                var recordSetNSResource = await collection.GetAsync(_recordSetName);
+                await recordSetNSResource.Value.DeleteAsync(WaitUntil.Completed);
             }
         }
 
@@ -55,12 +55,12 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         {
             string dnsZoneName = $"{SessionRecording.GenerateAssetName("sample")}.com";
             _dnsZone = await CreateADnsZone(dnsZoneName, _resourceGroup);
-            var collection = _dnsZone.GetRecordSetNs();
-            var recordSetNsResource = await collection.CreateOrUpdateAsync(WaitUntil.Completed, _recordSetName, new NsRecordSetData() { });
-            Assert.IsNotNull(recordSetNsResource);
-            Assert.AreEqual(_recordSetName, recordSetNsResource.Value.Data.Name);
-            Assert.AreEqual("Succeeded", recordSetNsResource.Value.Data.ProvisioningState);
-            Assert.AreEqual("dnszones/NS", recordSetNsResource.Value.Data.ResourceType.Type);
+            var collection = _dnsZone.GetRecordSetNS();
+            var recordSetNSResource = await collection.CreateOrUpdateAsync(WaitUntil.Completed, _recordSetName, new NSRecordSetData() { });
+            Assert.IsNotNull(recordSetNSResource);
+            Assert.AreEqual(_recordSetName, recordSetNSResource.Value.Data.Name);
+            Assert.AreEqual("Succeeded", recordSetNSResource.Value.Data.ProvisioningState);
+            Assert.AreEqual("dnszones/NS", recordSetNSResource.Value.Data.ResourceType.Type);
         }
 
         [Test]
@@ -69,11 +69,11 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         {
             string dnsZoneName = $"{SessionRecording.GenerateAssetName("sample")}.com";
             _dnsZone = await CreateADnsZone(dnsZoneName, _resourceGroup);
-            var collection = _dnsZone.GetRecordSetNs();
-            var recordSetNsResource = await collection.CreateOrUpdateAsync(WaitUntil.Completed, _recordSetName, new NsRecordSetData() { });
+            var collection = _dnsZone.GetRecordSetNS();
+            var recordSetNSResource = await collection.CreateOrUpdateAsync(WaitUntil.Completed, _recordSetName, new NSRecordSetData() { });
             Assert.IsTrue(collection.Exists(_recordSetName));
 
-            await recordSetNsResource.Value.DeleteAsync(WaitUntil.Completed);
+            await recordSetNSResource.Value.DeleteAsync(WaitUntil.Completed);
             Assert.IsFalse(collection.Exists(_recordSetName));
         }
 
@@ -83,8 +83,8 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         {
             string dnsZoneName = $"{SessionRecording.GenerateAssetName("sample")}.com";
             _dnsZone = await CreateADnsZone(dnsZoneName, _resourceGroup);
-            var collection = _dnsZone.GetRecordSetNs();
-            await collection.CreateOrUpdateAsync(WaitUntil.Completed, _recordSetName, new NsRecordSetData() { });
+            var collection = _dnsZone.GetRecordSetNS();
+            await collection.CreateOrUpdateAsync(WaitUntil.Completed, _recordSetName, new NSRecordSetData() { });
             Assert.IsTrue(collection.Exists(_recordSetName));
         }
 
@@ -94,14 +94,14 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         {
             string dnsZoneName = $"{SessionRecording.GenerateAssetName("sample")}.com";
             _dnsZone = await CreateADnsZone(dnsZoneName, _resourceGroup);
-            var collection = _dnsZone.GetRecordSetNs();
-            await collection.CreateOrUpdateAsync(WaitUntil.Completed, _recordSetName, new NsRecordSetData() { });
+            var collection = _dnsZone.GetRecordSetNS();
+            await collection.CreateOrUpdateAsync(WaitUntil.Completed, _recordSetName, new NSRecordSetData() { });
 
-            var recordSetNsResource = await collection.GetAsync(_recordSetName);
-            Assert.IsNotNull(recordSetNsResource);
-            Assert.AreEqual(_recordSetName, recordSetNsResource.Value.Data.Name);
-            Assert.AreEqual("Succeeded", recordSetNsResource.Value.Data.ProvisioningState);
-            Assert.AreEqual("dnszones/NS", recordSetNsResource.Value.Data.ResourceType.Type);
+            var recordSetNSResource = await collection.GetAsync(_recordSetName);
+            Assert.IsNotNull(recordSetNSResource);
+            Assert.AreEqual(_recordSetName, recordSetNSResource.Value.Data.Name);
+            Assert.AreEqual("Succeeded", recordSetNSResource.Value.Data.ProvisioningState);
+            Assert.AreEqual("dnszones/NS", recordSetNSResource.Value.Data.ResourceType.Type);
         }
 
         [Test]
@@ -110,8 +110,8 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         {
             string dnsZoneName = $"{SessionRecording.GenerateAssetName("sample")}.com";
             _dnsZone = await CreateADnsZone(dnsZoneName, _resourceGroup);
-            var collection = _dnsZone.GetRecordSetNs();
-            await collection.CreateOrUpdateAsync(WaitUntil.Completed, _recordSetName, new NsRecordSetData() { });
+            var collection = _dnsZone.GetRecordSetNS();
+            await collection.CreateOrUpdateAsync(WaitUntil.Completed, _recordSetName, new NSRecordSetData() { });
 
             var list = await collection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotNull(list);

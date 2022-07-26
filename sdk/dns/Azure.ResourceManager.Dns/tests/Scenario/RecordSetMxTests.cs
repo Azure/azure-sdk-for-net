@@ -14,11 +14,11 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Dns.Tests.Scenario
 {
-    internal class RecordSetMxTests : DnsServiceClientTestBase
+    internal class RecordSetMXTests : DnsServiceClientTestBase
     {
         private ResourceGroupResource _resourceGroup;
         private DnsZoneResource _dnsZone;
-        public RecordSetMxTests(bool isAsync) : base(isAsync)
+        public RecordSetMXTests(bool isAsync) : base(isAsync)
         {
         }
 
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         [TearDown]
         public async Task TearDown()
         {
-            var list = await _dnsZone.GetRecordSetMxes().GetAllAsync().ToEnumerableAsync();
+            var list = await _dnsZone.GetRecordSetMXes().GetAllAsync().ToEnumerableAsync();
             foreach (var item in list)
             {
                 await item.DeleteAsync(WaitUntil.Completed);
@@ -53,13 +53,13 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         {
             string dnsZoneName = $"{SessionRecording.GenerateAssetName("sample")}.com";
             _dnsZone = await CreateADnsZone(dnsZoneName, _resourceGroup);
-            var collection = _dnsZone.GetRecordSetMxes();
+            var collection = _dnsZone.GetRecordSetMXes();
             string name = "mx";
-            var recordSetMxResource = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, new MxRecordSetData() { });
-            Assert.IsNotNull(recordSetMxResource);
-            Assert.AreEqual(name, recordSetMxResource.Value.Data.Name);
-            Assert.AreEqual("Succeeded", recordSetMxResource.Value.Data.ProvisioningState);
-            Assert.AreEqual("dnszones/MX", recordSetMxResource.Value.Data.ResourceType.Type);
+            var recordSetMXResource = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, new MXRecordSetData() { });
+            Assert.IsNotNull(recordSetMXResource);
+            Assert.AreEqual(name, recordSetMXResource.Value.Data.Name);
+            Assert.AreEqual("Succeeded", recordSetMXResource.Value.Data.ProvisioningState);
+            Assert.AreEqual("dnszones/MX", recordSetMXResource.Value.Data.ResourceType.Type);
         }
 
         [Test]
@@ -68,12 +68,12 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         {
             string dnsZoneName = $"{SessionRecording.GenerateAssetName("sample")}.com";
             _dnsZone = await CreateADnsZone(dnsZoneName, _resourceGroup);
-            var collection = _dnsZone.GetRecordSetMxes();
+            var collection = _dnsZone.GetRecordSetMXes();
             string name = "mx";
-            var recordSetMxResource = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, new MxRecordSetData() { });
+            var recordSetMXResource = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, new MXRecordSetData() { });
             Assert.IsTrue(collection.Exists(name));
 
-            await recordSetMxResource.Value.DeleteAsync(WaitUntil.Completed);
+            await recordSetMXResource.Value.DeleteAsync(WaitUntil.Completed);
             Assert.IsFalse(collection.Exists(name));
         }
 
@@ -83,9 +83,9 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         {
             string dnsZoneName = $"{SessionRecording.GenerateAssetName("sample")}.com";
             _dnsZone = await CreateADnsZone(dnsZoneName, _resourceGroup);
-            var collection = _dnsZone.GetRecordSetMxes();
+            var collection = _dnsZone.GetRecordSetMXes();
             string name = "mx";
-            await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, new MxRecordSetData() { });
+            await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, new MXRecordSetData() { });
             Assert.IsTrue(collection.Exists(name));
         }
 
@@ -95,15 +95,15 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         {
             string dnsZoneName = $"{SessionRecording.GenerateAssetName("sample")}.com";
             _dnsZone = await CreateADnsZone(dnsZoneName, _resourceGroup);
-            var collection = _dnsZone.GetRecordSetMxes();
+            var collection = _dnsZone.GetRecordSetMXes();
             string name = "mx";
-            await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, new MxRecordSetData() { });
+            await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, new MXRecordSetData() { });
 
-            var recordSetMxResource = await collection.GetAsync(name);
-            Assert.IsNotNull(recordSetMxResource);
-            Assert.AreEqual(name, recordSetMxResource.Value.Data.Name);
-            Assert.AreEqual("Succeeded", recordSetMxResource.Value.Data.ProvisioningState);
-            Assert.AreEqual("dnszones/MX", recordSetMxResource.Value.Data.ResourceType.Type);
+            var recordSetMXResource = await collection.GetAsync(name);
+            Assert.IsNotNull(recordSetMXResource);
+            Assert.AreEqual(name, recordSetMXResource.Value.Data.Name);
+            Assert.AreEqual("Succeeded", recordSetMXResource.Value.Data.ProvisioningState);
+            Assert.AreEqual("dnszones/MX", recordSetMXResource.Value.Data.ResourceType.Type);
         }
 
         [Test]
@@ -112,9 +112,9 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
         {
             string dnsZoneName = $"{SessionRecording.GenerateAssetName("sample")}.com";
             _dnsZone = await CreateADnsZone(dnsZoneName, _resourceGroup);
-            var collection = _dnsZone.GetRecordSetMxes();
+            var collection = _dnsZone.GetRecordSetMXes();
             string name = "mx";
-            await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, new MxRecordSetData() { });
+            await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, new MXRecordSetData() { });
 
             var list = await collection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotNull(list);
