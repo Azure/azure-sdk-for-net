@@ -15,10 +15,10 @@ namespace Azure.Template.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("NestedModel");
-            writer.WriteObjectValue(NestedModel);
-            writer.WritePropertyName("NestedCollectionModel");
-            writer.WriteObjectValue(NestedCollectionModel);
+            writer.WritePropertyName("NestedInputModel");
+            writer.WriteObjectValue(NestedInputModel);
+            writer.WritePropertyName("NestedSharedModel");
+            writer.WriteObjectValue(NestedSharedModel);
             writer.WriteEndObject();
         }
     }

@@ -159,22 +159,22 @@
     "InputModel": {
       "type": "object",
       "properties": {
-        "NestedModel": {
-          "$ref": "#/definitions/NestedBasicInputModel",
-          "description": "Required nested basic model."
+        "NestedInputModel": {
+          "$ref": "#/definitions/NestedInputOnlyModel",
+          "description": "Required nested input model."
         },
-        "NestedCollectionModel": {
-          "$ref": "#/definitions/NestedCollectionInputModel",
-          "description": "Required nested collection-property model."
+        "NestedSharedModel": {
+          "$ref": "#/definitions/NestedRoundTripSharedModel",
+          "description": "Required nested shared model."
         }
       },
       "description": "Input model with nested model properties.",
       "required": [
-        "NestedModel",
-        "NestedCollectionModel"
+        "NestedInputModel",
+        "NestedSharedModel"
       ]
     },
-    "NestedBasicInputModel": {
+    "NestedInputOnlyModel": {
       "type": "object",
       "properties": {
         "requiredString": {
@@ -185,36 +185,7 @@
           "type": "integer",
           "format": "int32",
           "description": "Required int, illustrating a value type property."
-        }
-      },
-      "description": "Model to illustrate nesting, having properties of reference and value types.",
-      "required": [
-        "requiredString",
-        "requiredInt"
-      ]
-    },
-    "NestedBasicModel": {
-      "type": "object",
-      "properties": {
-        "requiredString": {
-          "type": "string",
-          "description": "Required string, illustrating a reference type property."
         },
-        "requiredInt": {
-          "type": "integer",
-          "format": "int32",
-          "description": "Required int, illustrating a value type property."
-        }
-      },
-      "description": "Model to illustrate nesting, having properties of reference and value types.",
-      "required": [
-        "requiredString",
-        "requiredInt"
-      ]
-    },
-    "NestedCollectionInputModel": {
-      "type": "object",
-      "properties": {
         "requiredStringList": {
           "type": "array",
           "items": {
@@ -233,15 +204,26 @@
           "description": "Required collection of ints, illustrating a collection of value types."
         }
       },
-      "description": "Model to illustrate nesting, having properties of collection types.",
+      "description": "Model to illustrate a nested model that only appears on an input model.",
       "required": [
+        "requiredString",
+        "requiredInt",
         "requiredStringList",
         "requiredIntList"
       ]
     },
-    "NestedCollectionModel": {
+    "NestedOutputOnlyModel": {
       "type": "object",
       "properties": {
+        "requiredString": {
+          "type": "string",
+          "description": "Required string, illustrating a reference type property."
+        },
+        "requiredInt": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Required int, illustrating a value type property."
+        },
         "requiredStringList": {
           "type": "array",
           "items": {
@@ -260,8 +242,86 @@
           "description": "Required collection of ints, illustrating a collection of value types."
         }
       },
-      "description": "Model to illustrate nesting, having properties of collection types.",
+      "description": "Model to illustrate a nested model that only appears on an output model.",
       "required": [
+        "requiredString",
+        "requiredInt",
+        "requiredStringList",
+        "requiredIntList"
+      ]
+    },
+    "NestedRoundTripOnlyModel": {
+      "type": "object",
+      "properties": {
+        "requiredString": {
+          "type": "string",
+          "description": "Required string, illustrating a reference type property."
+        },
+        "requiredInt": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Required int, illustrating a value type property."
+        },
+        "requiredStringList": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-cadl-name": "string[]",
+          "description": "Required collection of strings, illustrating a collection of reference types."
+        },
+        "requiredIntList": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "x-cadl-name": "int32[]",
+          "description": "Required collection of ints, illustrating a collection of value types."
+        }
+      },
+      "description": "Model to illustrate a nested model that only appears on a nested model.",
+      "required": [
+        "requiredString",
+        "requiredInt",
+        "requiredStringList",
+        "requiredIntList"
+      ]
+    },
+    "NestedRoundTripSharedModel": {
+      "type": "object",
+      "properties": {
+        "requiredString": {
+          "type": "string",
+          "description": "Required string, illustrating a reference type property."
+        },
+        "requiredInt": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Required int, illustrating a value type property."
+        },
+        "requiredStringList": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-cadl-name": "string[]",
+          "description": "Required collection of strings, illustrating a collection of reference types."
+        },
+        "requiredIntList": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "x-cadl-name": "int32[]",
+          "description": "Required collection of ints, illustrating a collection of value types."
+        }
+      },
+      "description": "Model to illustrate a nested model that appears as a nested model on input, output, and round-trip models.",
+      "required": [
+        "requiredString",
+        "requiredInt",
         "requiredStringList",
         "requiredIntList"
       ]
@@ -269,37 +329,37 @@
     "OutputModel": {
       "type": "object",
       "properties": {
-        "NestedModel": {
-          "$ref": "#/definitions/NestedBasicModel",
-          "description": "Required nested basic model."
+        "NestedOutputModel": {
+          "$ref": "#/definitions/NestedOutputOnlyModel",
+          "description": "Required nested output model."
         },
-        "NestedCollectionModel": {
-          "$ref": "#/definitions/NestedCollectionModel",
-          "description": "Required nested collection-property model."
+        "NestedSharedModel": {
+          "$ref": "#/definitions/NestedRoundTripSharedModel",
+          "description": "Required nested shared model."
         }
       },
       "description": "Output model with nested model properties",
       "required": [
-        "NestedModel",
-        "NestedCollectionModel"
+        "NestedOutputModel",
+        "NestedSharedModel"
       ]
     },
     "RoundTripModel": {
       "type": "object",
       "properties": {
-        "NestedModel": {
-          "$ref": "#/definitions/NestedBasicModel",
-          "description": "Required nested basic model."
+        "NestedRoundTripModel": {
+          "$ref": "#/definitions/NestedRoundTripOnlyModel",
+          "description": "Required nested round-trip model."
         },
-        "NestedCollectionModel": {
-          "$ref": "#/definitions/NestedCollectionModel",
-          "description": "Required nested collection-property model."
+        "NestedSharedModel": {
+          "$ref": "#/definitions/NestedRoundTripSharedModel",
+          "description": "Required nested shared model."
         }
       },
       "description": "Round-trip model with nested model properties",
       "required": [
-        "NestedModel",
-        "NestedCollectionModel"
+        "NestedRoundTripModel",
+        "NestedSharedModel"
       ]
     }
   },

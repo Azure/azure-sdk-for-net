@@ -13,27 +13,27 @@ namespace Azure.Template.Models
     public partial class InputModel
     {
         /// <summary> Initializes a new instance of InputModel. </summary>
-        /// <param name="nestedModel"> Required nested basic model. </param>
-        /// <param name="nestedCollectionModel"> Required nested collection-property model. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nestedModel"/> or <paramref name="nestedCollectionModel"/> is null. </exception>
-        public InputModel(NestedBasicInputModel nestedModel, NestedCollectionInputModel nestedCollectionModel)
+        /// <param name="nestedInputModel"> Required nested input model. </param>
+        /// <param name="nestedSharedModel"> Required nested shared model. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nestedInputModel"/> or <paramref name="nestedSharedModel"/> is null. </exception>
+        public InputModel(NestedInputOnlyModel nestedInputModel, NestedRoundTripSharedModel nestedSharedModel)
         {
-            if (nestedModel == null)
+            if (nestedInputModel == null)
             {
-                throw new ArgumentNullException(nameof(nestedModel));
+                throw new ArgumentNullException(nameof(nestedInputModel));
             }
-            if (nestedCollectionModel == null)
+            if (nestedSharedModel == null)
             {
-                throw new ArgumentNullException(nameof(nestedCollectionModel));
+                throw new ArgumentNullException(nameof(nestedSharedModel));
             }
 
-            NestedModel = nestedModel;
-            NestedCollectionModel = nestedCollectionModel;
+            NestedInputModel = nestedInputModel;
+            NestedSharedModel = nestedSharedModel;
         }
 
-        /// <summary> Required nested basic model. </summary>
-        public NestedBasicInputModel NestedModel { get; }
-        /// <summary> Required nested collection-property model. </summary>
-        public NestedCollectionInputModel NestedCollectionModel { get; }
+        /// <summary> Required nested input model. </summary>
+        public NestedInputOnlyModel NestedInputModel { get; }
+        /// <summary> Required nested shared model. </summary>
+        public NestedRoundTripSharedModel NestedSharedModel { get; }
     }
 }

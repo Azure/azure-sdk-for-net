@@ -14,22 +14,22 @@ namespace Azure.Template.Models
     {
         internal static OutputModel DeserializeOutputModel(JsonElement element)
         {
-            NestedBasicModel nestedModel = default;
-            NestedCollectionModel nestedCollectionModel = default;
+            NestedOutputOnlyModel nestedOutputModel = default;
+            NestedRoundTripSharedModel nestedSharedModel = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("NestedModel"))
+                if (property.NameEquals("NestedOutputModel"))
                 {
-                    nestedModel = NestedBasicModel.DeserializeNestedBasicModel(property.Value);
+                    nestedOutputModel = NestedOutputOnlyModel.DeserializeNestedOutputOnlyModel(property.Value);
                     continue;
                 }
-                if (property.NameEquals("NestedCollectionModel"))
+                if (property.NameEquals("NestedSharedModel"))
                 {
-                    nestedCollectionModel = NestedCollectionModel.DeserializeNestedCollectionModel(property.Value);
+                    nestedSharedModel = NestedRoundTripSharedModel.DeserializeNestedRoundTripSharedModel(property.Value);
                     continue;
                 }
             }
-            return new OutputModel(nestedModel, nestedCollectionModel);
+            return new OutputModel(nestedOutputModel, nestedSharedModel);
         }
     }
 }

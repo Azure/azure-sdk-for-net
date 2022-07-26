@@ -5,18 +5,35 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+using System.Linq;
+
 namespace Azure.Template.Models
 {
     /// <summary> Model factory for read-only models. </summary>
     public static partial class NestedModelsBasicModelFactory
     {
         /// <summary> Initializes a new instance of OutputModel. </summary>
-        /// <param name="nestedModel"> Required nested basic model. </param>
-        /// <param name="nestedCollectionModel"> Required nested collection-property model. </param>
+        /// <param name="nestedOutputModel"> Required nested output model. </param>
+        /// <param name="nestedSharedModel"> Required nested shared model. </param>
         /// <returns> A new <see cref="Models.OutputModel"/> instance for mocking. </returns>
-        public static OutputModel OutputModel(NestedBasicModel nestedModel = null, NestedCollectionModel nestedCollectionModel = null)
+        public static OutputModel OutputModel(NestedOutputOnlyModel nestedOutputModel = null, NestedRoundTripSharedModel nestedSharedModel = null)
         {
-            return new OutputModel(nestedModel, nestedCollectionModel);
+            return new OutputModel(nestedOutputModel, nestedSharedModel);
+        }
+
+        /// <summary> Initializes a new instance of NestedOutputOnlyModel. </summary>
+        /// <param name="requiredString"> Required string, illustrating a reference type property. </param>
+        /// <param name="requiredInt"> Required int, illustrating a value type property. </param>
+        /// <param name="requiredStringList"> Required collection of strings, illustrating a collection of reference types. </param>
+        /// <param name="requiredIntList"> Required collection of ints, illustrating a collection of value types. </param>
+        /// <returns> A new <see cref="Models.NestedOutputOnlyModel"/> instance for mocking. </returns>
+        public static NestedOutputOnlyModel NestedOutputOnlyModel(string requiredString = null, int requiredInt = default, IEnumerable<string> requiredStringList = null, IEnumerable<int> requiredIntList = null)
+        {
+            requiredStringList ??= new List<string>();
+            requiredIntList ??= new List<int>();
+
+            return new NestedOutputOnlyModel(requiredString, requiredInt, requiredStringList?.ToList(), requiredIntList?.ToList());
         }
     }
 }

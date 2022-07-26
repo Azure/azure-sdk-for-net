@@ -13,27 +13,27 @@ namespace Azure.Template.Models
     public partial class OutputModel
     {
         /// <summary> Initializes a new instance of OutputModel. </summary>
-        /// <param name="nestedModel"> Required nested basic model. </param>
-        /// <param name="nestedCollectionModel"> Required nested collection-property model. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nestedModel"/> or <paramref name="nestedCollectionModel"/> is null. </exception>
-        internal OutputModel(NestedBasicModel nestedModel, NestedCollectionModel nestedCollectionModel)
+        /// <param name="nestedOutputModel"> Required nested output model. </param>
+        /// <param name="nestedSharedModel"> Required nested shared model. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nestedOutputModel"/> or <paramref name="nestedSharedModel"/> is null. </exception>
+        internal OutputModel(NestedOutputOnlyModel nestedOutputModel, NestedRoundTripSharedModel nestedSharedModel)
         {
-            if (nestedModel == null)
+            if (nestedOutputModel == null)
             {
-                throw new ArgumentNullException(nameof(nestedModel));
+                throw new ArgumentNullException(nameof(nestedOutputModel));
             }
-            if (nestedCollectionModel == null)
+            if (nestedSharedModel == null)
             {
-                throw new ArgumentNullException(nameof(nestedCollectionModel));
+                throw new ArgumentNullException(nameof(nestedSharedModel));
             }
 
-            NestedModel = nestedModel;
-            NestedCollectionModel = nestedCollectionModel;
+            NestedOutputModel = nestedOutputModel;
+            NestedSharedModel = nestedSharedModel;
         }
 
-        /// <summary> Required nested basic model. </summary>
-        public NestedBasicModel NestedModel { get; }
-        /// <summary> Required nested collection-property model. </summary>
-        public NestedCollectionModel NestedCollectionModel { get; }
+        /// <summary> Required nested output model. </summary>
+        public NestedOutputOnlyModel NestedOutputModel { get; }
+        /// <summary> Required nested shared model. </summary>
+        public NestedRoundTripSharedModel NestedSharedModel { get; }
     }
 }

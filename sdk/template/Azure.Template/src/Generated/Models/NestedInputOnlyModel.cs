@@ -11,15 +11,21 @@ using System.Linq;
 
 namespace Azure.Template.Models
 {
-    /// <summary> Model to illustrate nesting, having properties of collection types. </summary>
-    public partial class NestedCollectionModel
+    /// <summary> Model to illustrate a nested model that only appears on an input model. </summary>
+    public partial class NestedInputOnlyModel
     {
-        /// <summary> Initializes a new instance of NestedCollectionModel. </summary>
+        /// <summary> Initializes a new instance of NestedInputOnlyModel. </summary>
+        /// <param name="requiredString"> Required string, illustrating a reference type property. </param>
+        /// <param name="requiredInt"> Required int, illustrating a value type property. </param>
         /// <param name="requiredStringList"> Required collection of strings, illustrating a collection of reference types. </param>
         /// <param name="requiredIntList"> Required collection of ints, illustrating a collection of value types. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="requiredStringList"/> or <paramref name="requiredIntList"/> is null. </exception>
-        public NestedCollectionModel(IEnumerable<string> requiredStringList, IEnumerable<int> requiredIntList)
+        /// <exception cref="ArgumentNullException"> <paramref name="requiredString"/>, <paramref name="requiredStringList"/> or <paramref name="requiredIntList"/> is null. </exception>
+        public NestedInputOnlyModel(string requiredString, int requiredInt, IEnumerable<string> requiredStringList, IEnumerable<int> requiredIntList)
         {
+            if (requiredString == null)
+            {
+                throw new ArgumentNullException(nameof(requiredString));
+            }
             if (requiredStringList == null)
             {
                 throw new ArgumentNullException(nameof(requiredStringList));
@@ -29,19 +35,16 @@ namespace Azure.Template.Models
                 throw new ArgumentNullException(nameof(requiredIntList));
             }
 
+            RequiredString = requiredString;
+            RequiredInt = requiredInt;
             RequiredStringList = requiredStringList.ToList();
             RequiredIntList = requiredIntList.ToList();
         }
 
-        /// <summary> Initializes a new instance of NestedCollectionModel. </summary>
-        /// <param name="requiredStringList"> Required collection of strings, illustrating a collection of reference types. </param>
-        /// <param name="requiredIntList"> Required collection of ints, illustrating a collection of value types. </param>
-        internal NestedCollectionModel(IList<string> requiredStringList, IList<int> requiredIntList)
-        {
-            RequiredStringList = requiredStringList;
-            RequiredIntList = requiredIntList;
-        }
-
+        /// <summary> Required string, illustrating a reference type property. </summary>
+        public string RequiredString { get; }
+        /// <summary> Required int, illustrating a value type property. </summary>
+        public int RequiredInt { get; }
         /// <summary> Required collection of strings, illustrating a collection of reference types. </summary>
         public IList<string> RequiredStringList { get; }
         /// <summary> Required collection of ints, illustrating a collection of value types. </summary>

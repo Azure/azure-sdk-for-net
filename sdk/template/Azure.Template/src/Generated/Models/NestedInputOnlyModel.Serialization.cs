@@ -10,11 +10,15 @@ using Azure.Core;
 
 namespace Azure.Template.Models
 {
-    public partial class NestedCollectionInputModel : IUtf8JsonSerializable
+    public partial class NestedInputOnlyModel : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            writer.WritePropertyName("requiredString");
+            writer.WriteStringValue(RequiredString);
+            writer.WritePropertyName("requiredInt");
+            writer.WriteNumberValue(RequiredInt);
             writer.WritePropertyName("requiredStringList");
             writer.WriteStartArray();
             foreach (var item in RequiredStringList)

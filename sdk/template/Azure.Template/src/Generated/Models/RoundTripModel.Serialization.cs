@@ -15,31 +15,31 @@ namespace Azure.Template.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("NestedModel");
-            writer.WriteObjectValue(NestedModel);
-            writer.WritePropertyName("NestedCollectionModel");
-            writer.WriteObjectValue(NestedCollectionModel);
+            writer.WritePropertyName("NestedRoundTripModel");
+            writer.WriteObjectValue(NestedRoundTripModel);
+            writer.WritePropertyName("NestedSharedModel");
+            writer.WriteObjectValue(NestedSharedModel);
             writer.WriteEndObject();
         }
 
         internal static RoundTripModel DeserializeRoundTripModel(JsonElement element)
         {
-            NestedBasicModel nestedModel = default;
-            NestedCollectionModel nestedCollectionModel = default;
+            NestedRoundTripOnlyModel nestedRoundTripModel = default;
+            NestedRoundTripSharedModel nestedSharedModel = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("NestedModel"))
+                if (property.NameEquals("NestedRoundTripModel"))
                 {
-                    nestedModel = NestedBasicModel.DeserializeNestedBasicModel(property.Value);
+                    nestedRoundTripModel = NestedRoundTripOnlyModel.DeserializeNestedRoundTripOnlyModel(property.Value);
                     continue;
                 }
-                if (property.NameEquals("NestedCollectionModel"))
+                if (property.NameEquals("NestedSharedModel"))
                 {
-                    nestedCollectionModel = NestedCollectionModel.DeserializeNestedCollectionModel(property.Value);
+                    nestedSharedModel = NestedRoundTripSharedModel.DeserializeNestedRoundTripSharedModel(property.Value);
                     continue;
                 }
             }
-            return new RoundTripModel(nestedModel, nestedCollectionModel);
+            return new RoundTripModel(nestedRoundTripModel, nestedSharedModel);
         }
     }
 }

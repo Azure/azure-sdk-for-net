@@ -11,11 +11,15 @@ using Azure.Core;
 
 namespace Azure.Template.Models
 {
-    public partial class NestedCollectionModel : IUtf8JsonSerializable
+    public partial class NestedRoundTripSharedModel : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            writer.WritePropertyName("requiredString");
+            writer.WriteStringValue(RequiredString);
+            writer.WritePropertyName("requiredInt");
+            writer.WriteNumberValue(RequiredInt);
             writer.WritePropertyName("requiredStringList");
             writer.WriteStartArray();
             foreach (var item in RequiredStringList)
@@ -33,12 +37,24 @@ namespace Azure.Template.Models
             writer.WriteEndObject();
         }
 
-        internal static NestedCollectionModel DeserializeNestedCollectionModel(JsonElement element)
+        internal static NestedRoundTripSharedModel DeserializeNestedRoundTripSharedModel(JsonElement element)
         {
+            string requiredString = default;
+            int requiredInt = default;
             IList<string> requiredStringList = default;
             IList<int> requiredIntList = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("requiredString"))
+                {
+                    requiredString = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("requiredInt"))
+                {
+                    requiredInt = property.Value.GetInt32();
+                    continue;
+                }
                 if (property.NameEquals("requiredStringList"))
                 {
                     List<string> array = new List<string>();
@@ -60,7 +76,7 @@ namespace Azure.Template.Models
                     continue;
                 }
             }
-            return new NestedCollectionModel(requiredStringList, requiredIntList);
+            return new NestedRoundTripSharedModel(requiredString, requiredInt, requiredStringList, requiredIntList);
         }
     }
 }

@@ -13,27 +13,27 @@ namespace Azure.Template.Models
     public partial class RoundTripModel
     {
         /// <summary> Initializes a new instance of RoundTripModel. </summary>
-        /// <param name="nestedModel"> Required nested basic model. </param>
-        /// <param name="nestedCollectionModel"> Required nested collection-property model. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nestedModel"/> or <paramref name="nestedCollectionModel"/> is null. </exception>
-        public RoundTripModel(NestedBasicModel nestedModel, NestedCollectionModel nestedCollectionModel)
+        /// <param name="nestedRoundTripModel"> Required nested round-trip model. </param>
+        /// <param name="nestedSharedModel"> Required nested shared model. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nestedRoundTripModel"/> or <paramref name="nestedSharedModel"/> is null. </exception>
+        public RoundTripModel(NestedRoundTripOnlyModel nestedRoundTripModel, NestedRoundTripSharedModel nestedSharedModel)
         {
-            if (nestedModel == null)
+            if (nestedRoundTripModel == null)
             {
-                throw new ArgumentNullException(nameof(nestedModel));
+                throw new ArgumentNullException(nameof(nestedRoundTripModel));
             }
-            if (nestedCollectionModel == null)
+            if (nestedSharedModel == null)
             {
-                throw new ArgumentNullException(nameof(nestedCollectionModel));
+                throw new ArgumentNullException(nameof(nestedSharedModel));
             }
 
-            NestedModel = nestedModel;
-            NestedCollectionModel = nestedCollectionModel;
+            NestedRoundTripModel = nestedRoundTripModel;
+            NestedSharedModel = nestedSharedModel;
         }
 
-        /// <summary> Required nested basic model. </summary>
-        public NestedBasicModel NestedModel { get; set; }
-        /// <summary> Required nested collection-property model. </summary>
-        public NestedCollectionModel NestedCollectionModel { get; set; }
+        /// <summary> Required nested round-trip model. </summary>
+        public NestedRoundTripOnlyModel NestedRoundTripModel { get; set; }
+        /// <summary> Required nested shared model. </summary>
+        public NestedRoundTripSharedModel NestedSharedModel { get; set; }
     }
 }
