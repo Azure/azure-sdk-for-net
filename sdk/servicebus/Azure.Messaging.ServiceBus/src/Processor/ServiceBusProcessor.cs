@@ -238,7 +238,7 @@ namespace Azure.Messaging.ServiceBus
             Options = options?.Clone() ?? new ServiceBusProcessorOptions();
             Connection = connection;
             EntityPath = EntityNameFormatter.FormatEntityPath(entityPath, Options.SubQueue);
-            Identifier = options.Identifier ?? DiagnosticUtilities.GenerateIdentifier(EntityPath);
+            Identifier = Options.Identifier ?? DiagnosticUtilities.GenerateIdentifier(EntityPath);
 
             ReceiveMode = Options.ReceiveMode;
             PrefetchCount = Options.PrefetchCount;
