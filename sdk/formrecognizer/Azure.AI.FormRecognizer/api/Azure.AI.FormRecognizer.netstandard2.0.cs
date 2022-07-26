@@ -340,12 +340,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     public partial class CopyAuthorization
     {
         public CopyAuthorization(string targetResourceId, string targetResourceRegion, string targetModelId, System.Uri targetModelLocation, string accessToken, System.DateTimeOffset expiresOn) { }
-        public string AccessToken { get { throw null; } set { } }
+        public string AccessToken { get { throw null; } }
         public System.DateTimeOffset ExpiresOn { get { throw null; } }
-        public string TargetModelId { get { throw null; } set { } }
+        public string TargetModelId { get { throw null; } }
         public System.Uri TargetModelLocation { get { throw null; } }
-        public string TargetResourceId { get { throw null; } set { } }
-        public string TargetResourceRegion { get { throw null; } set { } }
+        public string TargetResourceId { get { throw null; } }
+        public string TargetResourceRegion { get { throw null; } }
     }
     public partial class CopyModelOperation : Azure.Operation<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentModelDetails>
     {
