@@ -44,6 +44,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public Uri TargetModelLocation { get; }
 
         /// <summary> Date/time when the access token expires. </summary>
+        [CodeGenMember("ExpirationDateTime")]
         public DateTimeOffset ExpiresOn { get; }
 
         /// <summary> Token used to authorize the request. </summary>
