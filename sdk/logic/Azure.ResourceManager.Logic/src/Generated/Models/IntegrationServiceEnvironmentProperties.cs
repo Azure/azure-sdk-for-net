@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary>
-    /// The integration service environment properties.
-    /// Serialized Name: IntegrationServiceEnvironmentProperties
-    /// </summary>
+    /// <summary> The integration service environment properties. </summary>
     public partial class IntegrationServiceEnvironmentProperties
     {
         /// <summary> Initializes a new instance of IntegrationServiceEnvironmentProperties. </summary>
@@ -19,31 +16,13 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of IntegrationServiceEnvironmentProperties. </summary>
-        /// <param name="provisioningState">
-        /// The provisioning state.
-        /// Serialized Name: IntegrationServiceEnvironmentProperties.provisioningState
-        /// </param>
-        /// <param name="state">
-        /// The integration service environment state.
-        /// Serialized Name: IntegrationServiceEnvironmentProperties.state
-        /// </param>
-        /// <param name="integrationServiceEnvironmentId">
-        /// Gets the tracking id.
-        /// Serialized Name: IntegrationServiceEnvironmentProperties.integrationServiceEnvironmentId
-        /// </param>
-        /// <param name="endpointsConfiguration">
-        /// The endpoints configuration.
-        /// Serialized Name: IntegrationServiceEnvironmentProperties.endpointsConfiguration
-        /// </param>
-        /// <param name="networkConfiguration">
-        /// The network configuration.
-        /// Serialized Name: IntegrationServiceEnvironmentProperties.networkConfiguration
-        /// </param>
-        /// <param name="encryptionConfiguration">
-        /// The encryption configuration.
-        /// Serialized Name: IntegrationServiceEnvironmentProperties.encryptionConfiguration
-        /// </param>
-        internal IntegrationServiceEnvironmentProperties(LogicAppWorkflowProvisioningState? provisioningState, LogicAppWorkflowState? state, string integrationServiceEnvironmentId, FlowEndpointsConfiguration endpointsConfiguration, NetworkConfiguration networkConfiguration, IntegrationServiceEnvironmenEncryptionConfiguration encryptionConfiguration)
+        /// <param name="provisioningState"> The provisioning state. </param>
+        /// <param name="state"> The integration service environment state. </param>
+        /// <param name="integrationServiceEnvironmentId"> Gets the tracking id. </param>
+        /// <param name="endpointsConfiguration"> The endpoints configuration. </param>
+        /// <param name="networkConfiguration"> The network configuration. </param>
+        /// <param name="encryptionConfiguration"> The encryption configuration. </param>
+        internal IntegrationServiceEnvironmentProperties(LogicWorkflowProvisioningState? provisioningState, LogicWorkflowState? state, string integrationServiceEnvironmentId, FlowEndpointsConfiguration endpointsConfiguration, IntegrationServiceNetworkConfiguration networkConfiguration, IntegrationServiceEnvironmenEncryptionConfiguration encryptionConfiguration)
         {
             ProvisioningState = provisioningState;
             State = state;
@@ -53,40 +32,19 @@ namespace Azure.ResourceManager.Logic.Models
             EncryptionConfiguration = encryptionConfiguration;
         }
 
-        /// <summary>
-        /// The provisioning state.
-        /// Serialized Name: IntegrationServiceEnvironmentProperties.provisioningState
-        /// </summary>
-        public LogicAppWorkflowProvisioningState? ProvisioningState { get; set; }
-        /// <summary>
-        /// The integration service environment state.
-        /// Serialized Name: IntegrationServiceEnvironmentProperties.state
-        /// </summary>
-        public LogicAppWorkflowState? State { get; set; }
-        /// <summary>
-        /// Gets the tracking id.
-        /// Serialized Name: IntegrationServiceEnvironmentProperties.integrationServiceEnvironmentId
-        /// </summary>
+        /// <summary> The provisioning state. </summary>
+        public LogicWorkflowProvisioningState? ProvisioningState { get; set; }
+        /// <summary> The integration service environment state. </summary>
+        public LogicWorkflowState? State { get; set; }
+        /// <summary> Gets the tracking id. </summary>
         public string IntegrationServiceEnvironmentId { get; set; }
-        /// <summary>
-        /// The endpoints configuration.
-        /// Serialized Name: IntegrationServiceEnvironmentProperties.endpointsConfiguration
-        /// </summary>
+        /// <summary> The endpoints configuration. </summary>
         public FlowEndpointsConfiguration EndpointsConfiguration { get; set; }
-        /// <summary>
-        /// The network configuration.
-        /// Serialized Name: IntegrationServiceEnvironmentProperties.networkConfiguration
-        /// </summary>
-        public NetworkConfiguration NetworkConfiguration { get; set; }
-        /// <summary>
-        /// The encryption configuration.
-        /// Serialized Name: IntegrationServiceEnvironmentProperties.encryptionConfiguration
-        /// </summary>
+        /// <summary> The network configuration. </summary>
+        public IntegrationServiceNetworkConfiguration NetworkConfiguration { get; set; }
+        /// <summary> The encryption configuration. </summary>
         internal IntegrationServiceEnvironmenEncryptionConfiguration EncryptionConfiguration { get; set; }
-        /// <summary>
-        /// The encryption key reference.
-        /// Serialized Name: IntegrationServiceEnvironmenEncryptionConfiguration.encryptionKeyReference
-        /// </summary>
+        /// <summary> The encryption key reference. </summary>
         public IntegrationServiceEnvironmenEncryptionKeyReference EncryptionKeyReference
         {
             get => EncryptionConfiguration is null ? default : EncryptionConfiguration.EncryptionKeyReference;

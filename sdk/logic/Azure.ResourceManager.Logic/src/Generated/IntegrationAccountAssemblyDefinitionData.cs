@@ -18,10 +18,7 @@ namespace Azure.ResourceManager.Logic
     {
         /// <summary> Initializes a new instance of IntegrationAccountAssemblyDefinitionData. </summary>
         /// <param name="location"> The location. </param>
-        /// <param name="properties">
-        /// The assembly properties.
-        /// Serialized Name: AssemblyDefinition.properties
-        /// </param>
+        /// <param name="properties"> The assembly properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public IntegrationAccountAssemblyDefinitionData(AzureLocation location, IntegrationAccountAssemblyProperties properties) : base(location)
         {
@@ -40,19 +37,13 @@ namespace Azure.ResourceManager.Logic
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="properties">
-        /// The assembly properties.
-        /// Serialized Name: AssemblyDefinition.properties
-        /// </param>
+        /// <param name="properties"> The assembly properties. </param>
         internal IntegrationAccountAssemblyDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IntegrationAccountAssemblyProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
         }
 
-        /// <summary>
-        /// The assembly properties.
-        /// Serialized Name: AssemblyDefinition.properties
-        /// </summary>
+        /// <summary> The assembly properties. </summary>
         public IntegrationAccountAssemblyProperties Properties { get; set; }
     }
 }

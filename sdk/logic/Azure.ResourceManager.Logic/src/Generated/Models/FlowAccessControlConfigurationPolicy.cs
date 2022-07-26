@@ -10,47 +10,29 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary>
-    /// The access control configuration policy.
-    /// Serialized Name: FlowAccessControlConfigurationPolicy
-    /// </summary>
+    /// <summary> The access control configuration policy. </summary>
     public partial class FlowAccessControlConfigurationPolicy
     {
         /// <summary> Initializes a new instance of FlowAccessControlConfigurationPolicy. </summary>
         public FlowAccessControlConfigurationPolicy()
         {
-            AllowedCallerIPAddresses = new ChangeTrackingList<IPAddressRange>();
+            AllowedCallerIPAddresses = new ChangeTrackingList<FlowAccessControlIPAddressRange>();
         }
 
         /// <summary> Initializes a new instance of FlowAccessControlConfigurationPolicy. </summary>
-        /// <param name="allowedCallerIPAddresses">
-        /// The allowed caller IP address ranges.
-        /// Serialized Name: FlowAccessControlConfigurationPolicy.allowedCallerIpAddresses
-        /// </param>
-        /// <param name="openAuthenticationPolicies">
-        /// The authentication policies for workflow.
-        /// Serialized Name: FlowAccessControlConfigurationPolicy.openAuthenticationPolicies
-        /// </param>
-        internal FlowAccessControlConfigurationPolicy(IList<IPAddressRange> allowedCallerIPAddresses, OpenAuthenticationAccessPolicies openAuthenticationPolicies)
+        /// <param name="allowedCallerIPAddresses"> The allowed caller IP address ranges. </param>
+        /// <param name="openAuthenticationPolicies"> The authentication policies for workflow. </param>
+        internal FlowAccessControlConfigurationPolicy(IList<FlowAccessControlIPAddressRange> allowedCallerIPAddresses, OpenAuthenticationAccessPolicies openAuthenticationPolicies)
         {
             AllowedCallerIPAddresses = allowedCallerIPAddresses;
             OpenAuthenticationPolicies = openAuthenticationPolicies;
         }
 
-        /// <summary>
-        /// The allowed caller IP address ranges.
-        /// Serialized Name: FlowAccessControlConfigurationPolicy.allowedCallerIpAddresses
-        /// </summary>
-        public IList<IPAddressRange> AllowedCallerIPAddresses { get; }
-        /// <summary>
-        /// The authentication policies for workflow.
-        /// Serialized Name: FlowAccessControlConfigurationPolicy.openAuthenticationPolicies
-        /// </summary>
+        /// <summary> The allowed caller IP address ranges. </summary>
+        public IList<FlowAccessControlIPAddressRange> AllowedCallerIPAddresses { get; }
+        /// <summary> The authentication policies for workflow. </summary>
         internal OpenAuthenticationAccessPolicies OpenAuthenticationPolicies { get; set; }
-        /// <summary>
-        /// Open authentication policies.
-        /// Serialized Name: OpenAuthenticationAccessPolicies.policies
-        /// </summary>
+        /// <summary> Open authentication policies. </summary>
         public IDictionary<string, OpenAuthenticationAccessPolicy> AccessPolicies
         {
             get

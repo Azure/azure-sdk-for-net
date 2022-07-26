@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary>
-    /// The encryption configuration for the integration service environment.
-    /// Serialized Name: IntegrationServiceEnvironmenEncryptionConfiguration
-    /// </summary>
+    /// <summary> The encryption configuration for the integration service environment. </summary>
     internal partial class IntegrationServiceEnvironmenEncryptionConfiguration
     {
         /// <summary> Initializes a new instance of IntegrationServiceEnvironmenEncryptionConfiguration. </summary>
@@ -19,19 +16,13 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of IntegrationServiceEnvironmenEncryptionConfiguration. </summary>
-        /// <param name="encryptionKeyReference">
-        /// The encryption key reference.
-        /// Serialized Name: IntegrationServiceEnvironmenEncryptionConfiguration.encryptionKeyReference
-        /// </param>
+        /// <param name="encryptionKeyReference"> The encryption key reference. </param>
         internal IntegrationServiceEnvironmenEncryptionConfiguration(IntegrationServiceEnvironmenEncryptionKeyReference encryptionKeyReference)
         {
             EncryptionKeyReference = encryptionKeyReference;
         }
 
-        /// <summary>
-        /// The encryption key reference.
-        /// Serialized Name: IntegrationServiceEnvironmenEncryptionConfiguration.encryptionKeyReference
-        /// </summary>
+        /// <summary> The encryption key reference. </summary>
         public IntegrationServiceEnvironmenEncryptionKeyReference EncryptionKeyReference { get; set; }
     }
 }

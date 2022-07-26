@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary>
-    /// The list of integration service environment skus.
-    /// Serialized Name: IntegrationServiceEnvironmentSkuList
-    /// </summary>
+    /// <summary> The list of integration service environment skus. </summary>
     internal partial class IntegrationServiceEnvironmentSkuList
     {
         /// <summary> Initializes a new instance of IntegrationServiceEnvironmentSkuList. </summary>
@@ -23,29 +20,17 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of IntegrationServiceEnvironmentSkuList. </summary>
-        /// <param name="value">
-        /// The list of integration service environment skus.
-        /// Serialized Name: IntegrationServiceEnvironmentSkuList.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The URL to get the next set of results.
-        /// Serialized Name: IntegrationServiceEnvironmentSkuList.nextLink
-        /// </param>
+        /// <param name="value"> The list of integration service environment skus. </param>
+        /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal IntegrationServiceEnvironmentSkuList(IReadOnlyList<IntegrationServiceEnvironmentSkuDefinition> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// The list of integration service environment skus.
-        /// Serialized Name: IntegrationServiceEnvironmentSkuList.value
-        /// </summary>
+        /// <summary> The list of integration service environment skus. </summary>
         public IReadOnlyList<IntegrationServiceEnvironmentSkuDefinition> Value { get; }
-        /// <summary>
-        /// The URL to get the next set of results.
-        /// Serialized Name: IntegrationServiceEnvironmentSkuList.nextLink
-        /// </summary>
+        /// <summary> The URL to get the next set of results. </summary>
         public string NextLink { get; }
     }
 }

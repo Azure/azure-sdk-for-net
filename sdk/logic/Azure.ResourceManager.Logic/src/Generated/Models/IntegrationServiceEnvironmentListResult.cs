@@ -11,10 +11,7 @@ using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary>
-    /// The list of integration service environments.
-    /// Serialized Name: IntegrationServiceEnvironmentListResult
-    /// </summary>
+    /// <summary> The list of integration service environments. </summary>
     internal partial class IntegrationServiceEnvironmentListResult
     {
         /// <summary> Initializes a new instance of IntegrationServiceEnvironmentListResult. </summary>
@@ -24,23 +21,17 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of IntegrationServiceEnvironmentListResult. </summary>
-        /// <param name="value"> Serialized Name: IntegrationServiceEnvironmentListResult.value. </param>
-        /// <param name="nextLink">
-        /// The URL to get the next set of results.
-        /// Serialized Name: IntegrationServiceEnvironmentListResult.nextLink
-        /// </param>
+        /// <param name="value"></param>
+        /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal IntegrationServiceEnvironmentListResult(IReadOnlyList<IntegrationServiceEnvironmentData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Serialized Name: IntegrationServiceEnvironmentListResult.value. </summary>
+        /// <summary> Gets the value. </summary>
         public IReadOnlyList<IntegrationServiceEnvironmentData> Value { get; }
-        /// <summary>
-        /// The URL to get the next set of results.
-        /// Serialized Name: IntegrationServiceEnvironmentListResult.nextLink
-        /// </summary>
+        /// <summary> The URL to get the next set of results. </summary>
         public string NextLink { get; }
     }
 }

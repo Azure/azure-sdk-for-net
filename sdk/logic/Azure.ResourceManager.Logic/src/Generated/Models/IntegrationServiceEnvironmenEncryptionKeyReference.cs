@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary>
-    /// The encryption key details for the integration service environment.
-    /// Serialized Name: IntegrationServiceEnvironmenEncryptionKeyReference
-    /// </summary>
+    /// <summary> The encryption key details for the integration service environment. </summary>
     public partial class IntegrationServiceEnvironmenEncryptionKeyReference
     {
         /// <summary> Initializes a new instance of IntegrationServiceEnvironmenEncryptionKeyReference. </summary>
@@ -19,39 +16,21 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of IntegrationServiceEnvironmenEncryptionKeyReference. </summary>
-        /// <param name="keyVault">
-        /// The key vault reference.
-        /// Serialized Name: IntegrationServiceEnvironmenEncryptionKeyReference.keyVault
-        /// </param>
-        /// <param name="keyName">
-        /// Gets the key name in the Key Vault.
-        /// Serialized Name: IntegrationServiceEnvironmenEncryptionKeyReference.keyName
-        /// </param>
-        /// <param name="keyVersion">
-        /// Gets the version of the key specified in the keyName property.
-        /// Serialized Name: IntegrationServiceEnvironmenEncryptionKeyReference.keyVersion
-        /// </param>
-        internal IntegrationServiceEnvironmenEncryptionKeyReference(LogicAppResourceReference keyVault, string keyName, string keyVersion)
+        /// <param name="keyVault"> The key vault reference. </param>
+        /// <param name="keyName"> Gets the key name in the Key Vault. </param>
+        /// <param name="keyVersion"> Gets the version of the key specified in the keyName property. </param>
+        internal IntegrationServiceEnvironmenEncryptionKeyReference(LogicResourceReference keyVault, string keyName, string keyVersion)
         {
             KeyVault = keyVault;
             KeyName = keyName;
             KeyVersion = keyVersion;
         }
 
-        /// <summary>
-        /// The key vault reference.
-        /// Serialized Name: IntegrationServiceEnvironmenEncryptionKeyReference.keyVault
-        /// </summary>
-        public LogicAppResourceReference KeyVault { get; set; }
-        /// <summary>
-        /// Gets the key name in the Key Vault.
-        /// Serialized Name: IntegrationServiceEnvironmenEncryptionKeyReference.keyName
-        /// </summary>
+        /// <summary> The key vault reference. </summary>
+        public LogicResourceReference KeyVault { get; set; }
+        /// <summary> Gets the key name in the Key Vault. </summary>
         public string KeyName { get; set; }
-        /// <summary>
-        /// Gets the version of the key specified in the keyName property.
-        /// Serialized Name: IntegrationServiceEnvironmenEncryptionKeyReference.keyVersion
-        /// </summary>
+        /// <summary> Gets the version of the key specified in the keyName property. </summary>
         public string KeyVersion { get; set; }
     }
 }

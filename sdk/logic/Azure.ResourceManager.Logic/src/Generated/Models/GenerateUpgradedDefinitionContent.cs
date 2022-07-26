@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary>
-    /// The parameters to generate upgraded definition.
-    /// Serialized Name: GenerateUpgradedDefinitionParameters
-    /// </summary>
+    /// <summary> The parameters to generate upgraded definition. </summary>
     public partial class GenerateUpgradedDefinitionContent
     {
         /// <summary> Initializes a new instance of GenerateUpgradedDefinitionContent. </summary>
@@ -18,10 +15,7 @@ namespace Azure.ResourceManager.Logic.Models
         {
         }
 
-        /// <summary>
-        /// The target schema version.
-        /// Serialized Name: GenerateUpgradedDefinitionParameters.targetSchemaVersion
-        /// </summary>
+        /// <summary> The target schema version. </summary>
         public string TargetSchemaVersion { get; set; }
     }
 }

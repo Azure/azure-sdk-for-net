@@ -7,69 +7,24 @@
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary>
-    /// The Edifact agreement envelope settings.
-    /// Serialized Name: EdifactEnvelopeSettings
-    /// </summary>
+    /// <summary> The Edifact agreement envelope settings. </summary>
     public partial class EdifactEnvelopeSettings
     {
         /// <summary> Initializes a new instance of EdifactEnvelopeSettings. </summary>
-        /// <param name="applyDelimiterStringAdvice">
-        /// The value indicating whether to apply delimiter string advice.
-        /// Serialized Name: EdifactEnvelopeSettings.applyDelimiterStringAdvice
-        /// </param>
-        /// <param name="createGroupingSegments">
-        /// The value indicating whether to create grouping segments.
-        /// Serialized Name: EdifactEnvelopeSettings.createGroupingSegments
-        /// </param>
-        /// <param name="enableDefaultGroupHeaders">
-        /// The value indicating whether to enable default group headers.
-        /// Serialized Name: EdifactEnvelopeSettings.enableDefaultGroupHeaders
-        /// </param>
-        /// <param name="interchangeControlNumberLowerBound">
-        /// The interchange control number lower bound.
-        /// Serialized Name: EdifactEnvelopeSettings.interchangeControlNumberLowerBound
-        /// </param>
-        /// <param name="interchangeControlNumberUpperBound">
-        /// The interchange control number upper bound.
-        /// Serialized Name: EdifactEnvelopeSettings.interchangeControlNumberUpperBound
-        /// </param>
-        /// <param name="rolloverInterchangeControlNumber">
-        /// The value indicating whether to rollover interchange control number.
-        /// Serialized Name: EdifactEnvelopeSettings.rolloverInterchangeControlNumber
-        /// </param>
-        /// <param name="groupControlNumberLowerBound">
-        /// The group control number lower bound.
-        /// Serialized Name: EdifactEnvelopeSettings.groupControlNumberLowerBound
-        /// </param>
-        /// <param name="groupControlNumberUpperBound">
-        /// The group control number upper bound.
-        /// Serialized Name: EdifactEnvelopeSettings.groupControlNumberUpperBound
-        /// </param>
-        /// <param name="rolloverGroupControlNumber">
-        /// The value indicating whether to rollover group control number.
-        /// Serialized Name: EdifactEnvelopeSettings.rolloverGroupControlNumber
-        /// </param>
-        /// <param name="overwriteExistingTransactionSetControlNumber">
-        /// The value indicating whether to overwrite existing transaction set control number.
-        /// Serialized Name: EdifactEnvelopeSettings.overwriteExistingTransactionSetControlNumber
-        /// </param>
-        /// <param name="transactionSetControlNumberLowerBound">
-        /// The transaction set control number lower bound.
-        /// Serialized Name: EdifactEnvelopeSettings.transactionSetControlNumberLowerBound
-        /// </param>
-        /// <param name="transactionSetControlNumberUpperBound">
-        /// The transaction set control number upper bound.
-        /// Serialized Name: EdifactEnvelopeSettings.transactionSetControlNumberUpperBound
-        /// </param>
-        /// <param name="rolloverTransactionSetControlNumber">
-        /// The value indicating whether to rollover transaction set control number.
-        /// Serialized Name: EdifactEnvelopeSettings.rolloverTransactionSetControlNumber
-        /// </param>
-        /// <param name="isTestInterchange">
-        /// The value indicating whether the message is a test interchange.
-        /// Serialized Name: EdifactEnvelopeSettings.isTestInterchange
-        /// </param>
+        /// <param name="applyDelimiterStringAdvice"> The value indicating whether to apply delimiter string advice. </param>
+        /// <param name="createGroupingSegments"> The value indicating whether to create grouping segments. </param>
+        /// <param name="enableDefaultGroupHeaders"> The value indicating whether to enable default group headers. </param>
+        /// <param name="interchangeControlNumberLowerBound"> The interchange control number lower bound. </param>
+        /// <param name="interchangeControlNumberUpperBound"> The interchange control number upper bound. </param>
+        /// <param name="rolloverInterchangeControlNumber"> The value indicating whether to rollover interchange control number. </param>
+        /// <param name="groupControlNumberLowerBound"> The group control number lower bound. </param>
+        /// <param name="groupControlNumberUpperBound"> The group control number upper bound. </param>
+        /// <param name="rolloverGroupControlNumber"> The value indicating whether to rollover group control number. </param>
+        /// <param name="overwriteExistingTransactionSetControlNumber"> The value indicating whether to overwrite existing transaction set control number. </param>
+        /// <param name="transactionSetControlNumberLowerBound"> The transaction set control number lower bound. </param>
+        /// <param name="transactionSetControlNumberUpperBound"> The transaction set control number upper bound. </param>
+        /// <param name="rolloverTransactionSetControlNumber"> The value indicating whether to rollover transaction set control number. </param>
+        /// <param name="isTestInterchange"> The value indicating whether the message is a test interchange. </param>
         public EdifactEnvelopeSettings(bool applyDelimiterStringAdvice, bool createGroupingSegments, bool enableDefaultGroupHeaders, long interchangeControlNumberLowerBound, long interchangeControlNumberUpperBound, bool rolloverInterchangeControlNumber, long groupControlNumberLowerBound, long groupControlNumberUpperBound, bool rolloverGroupControlNumber, bool overwriteExistingTransactionSetControlNumber, long transactionSetControlNumberLowerBound, long transactionSetControlNumberUpperBound, bool rolloverTransactionSetControlNumber, bool isTestInterchange)
         {
             ApplyDelimiterStringAdvice = applyDelimiterStringAdvice;
@@ -89,170 +44,47 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of EdifactEnvelopeSettings. </summary>
-        /// <param name="groupAssociationAssignedCode">
-        /// The group association assigned code.
-        /// Serialized Name: EdifactEnvelopeSettings.groupAssociationAssignedCode
-        /// </param>
-        /// <param name="communicationAgreementId">
-        /// The communication agreement id.
-        /// Serialized Name: EdifactEnvelopeSettings.communicationAgreementId
-        /// </param>
-        /// <param name="applyDelimiterStringAdvice">
-        /// The value indicating whether to apply delimiter string advice.
-        /// Serialized Name: EdifactEnvelopeSettings.applyDelimiterStringAdvice
-        /// </param>
-        /// <param name="createGroupingSegments">
-        /// The value indicating whether to create grouping segments.
-        /// Serialized Name: EdifactEnvelopeSettings.createGroupingSegments
-        /// </param>
-        /// <param name="enableDefaultGroupHeaders">
-        /// The value indicating whether to enable default group headers.
-        /// Serialized Name: EdifactEnvelopeSettings.enableDefaultGroupHeaders
-        /// </param>
-        /// <param name="recipientReferencePasswordValue">
-        /// The recipient reference password value.
-        /// Serialized Name: EdifactEnvelopeSettings.recipientReferencePasswordValue
-        /// </param>
-        /// <param name="recipientReferencePasswordQualifier">
-        /// The recipient reference password qualifier.
-        /// Serialized Name: EdifactEnvelopeSettings.recipientReferencePasswordQualifier
-        /// </param>
-        /// <param name="applicationReferenceId">
-        /// The application reference id.
-        /// Serialized Name: EdifactEnvelopeSettings.applicationReferenceId
-        /// </param>
-        /// <param name="processingPriorityCode">
-        /// The processing priority code.
-        /// Serialized Name: EdifactEnvelopeSettings.processingPriorityCode
-        /// </param>
-        /// <param name="interchangeControlNumberLowerBound">
-        /// The interchange control number lower bound.
-        /// Serialized Name: EdifactEnvelopeSettings.interchangeControlNumberLowerBound
-        /// </param>
-        /// <param name="interchangeControlNumberUpperBound">
-        /// The interchange control number upper bound.
-        /// Serialized Name: EdifactEnvelopeSettings.interchangeControlNumberUpperBound
-        /// </param>
-        /// <param name="rolloverInterchangeControlNumber">
-        /// The value indicating whether to rollover interchange control number.
-        /// Serialized Name: EdifactEnvelopeSettings.rolloverInterchangeControlNumber
-        /// </param>
-        /// <param name="interchangeControlNumberPrefix">
-        /// The interchange control number prefix.
-        /// Serialized Name: EdifactEnvelopeSettings.interchangeControlNumberPrefix
-        /// </param>
-        /// <param name="interchangeControlNumberSuffix">
-        /// The interchange control number suffix.
-        /// Serialized Name: EdifactEnvelopeSettings.interchangeControlNumberSuffix
-        /// </param>
-        /// <param name="senderReverseRoutingAddress">
-        /// The sender reverse routing address.
-        /// Serialized Name: EdifactEnvelopeSettings.senderReverseRoutingAddress
-        /// </param>
-        /// <param name="receiverReverseRoutingAddress">
-        /// The receiver reverse routing address.
-        /// Serialized Name: EdifactEnvelopeSettings.receiverReverseRoutingAddress
-        /// </param>
-        /// <param name="functionalGroupId">
-        /// The functional group id.
-        /// Serialized Name: EdifactEnvelopeSettings.functionalGroupId
-        /// </param>
-        /// <param name="groupControllingAgencyCode">
-        /// The group controlling agency code.
-        /// Serialized Name: EdifactEnvelopeSettings.groupControllingAgencyCode
-        /// </param>
-        /// <param name="groupMessageVersion">
-        /// The group message version.
-        /// Serialized Name: EdifactEnvelopeSettings.groupMessageVersion
-        /// </param>
-        /// <param name="groupMessageRelease">
-        /// The group message release.
-        /// Serialized Name: EdifactEnvelopeSettings.groupMessageRelease
-        /// </param>
-        /// <param name="groupControlNumberLowerBound">
-        /// The group control number lower bound.
-        /// Serialized Name: EdifactEnvelopeSettings.groupControlNumberLowerBound
-        /// </param>
-        /// <param name="groupControlNumberUpperBound">
-        /// The group control number upper bound.
-        /// Serialized Name: EdifactEnvelopeSettings.groupControlNumberUpperBound
-        /// </param>
-        /// <param name="rolloverGroupControlNumber">
-        /// The value indicating whether to rollover group control number.
-        /// Serialized Name: EdifactEnvelopeSettings.rolloverGroupControlNumber
-        /// </param>
-        /// <param name="groupControlNumberPrefix">
-        /// The group control number prefix.
-        /// Serialized Name: EdifactEnvelopeSettings.groupControlNumberPrefix
-        /// </param>
-        /// <param name="groupControlNumberSuffix">
-        /// The group control number suffix.
-        /// Serialized Name: EdifactEnvelopeSettings.groupControlNumberSuffix
-        /// </param>
-        /// <param name="groupApplicationReceiverQualifier">
-        /// The group application receiver qualifier.
-        /// Serialized Name: EdifactEnvelopeSettings.groupApplicationReceiverQualifier
-        /// </param>
-        /// <param name="groupApplicationReceiverId">
-        /// The group application receiver id.
-        /// Serialized Name: EdifactEnvelopeSettings.groupApplicationReceiverId
-        /// </param>
-        /// <param name="groupApplicationSenderQualifier">
-        /// The group application sender qualifier.
-        /// Serialized Name: EdifactEnvelopeSettings.groupApplicationSenderQualifier
-        /// </param>
-        /// <param name="groupApplicationSenderId">
-        /// The group application sender id.
-        /// Serialized Name: EdifactEnvelopeSettings.groupApplicationSenderId
-        /// </param>
-        /// <param name="groupApplicationPassword">
-        /// The group application password.
-        /// Serialized Name: EdifactEnvelopeSettings.groupApplicationPassword
-        /// </param>
-        /// <param name="overwriteExistingTransactionSetControlNumber">
-        /// The value indicating whether to overwrite existing transaction set control number.
-        /// Serialized Name: EdifactEnvelopeSettings.overwriteExistingTransactionSetControlNumber
-        /// </param>
-        /// <param name="transactionSetControlNumberPrefix">
-        /// The transaction set control number prefix.
-        /// Serialized Name: EdifactEnvelopeSettings.transactionSetControlNumberPrefix
-        /// </param>
-        /// <param name="transactionSetControlNumberSuffix">
-        /// The transaction set control number suffix.
-        /// Serialized Name: EdifactEnvelopeSettings.transactionSetControlNumberSuffix
-        /// </param>
-        /// <param name="transactionSetControlNumberLowerBound">
-        /// The transaction set control number lower bound.
-        /// Serialized Name: EdifactEnvelopeSettings.transactionSetControlNumberLowerBound
-        /// </param>
-        /// <param name="transactionSetControlNumberUpperBound">
-        /// The transaction set control number upper bound.
-        /// Serialized Name: EdifactEnvelopeSettings.transactionSetControlNumberUpperBound
-        /// </param>
-        /// <param name="rolloverTransactionSetControlNumber">
-        /// The value indicating whether to rollover transaction set control number.
-        /// Serialized Name: EdifactEnvelopeSettings.rolloverTransactionSetControlNumber
-        /// </param>
-        /// <param name="isTestInterchange">
-        /// The value indicating whether the message is a test interchange.
-        /// Serialized Name: EdifactEnvelopeSettings.isTestInterchange
-        /// </param>
-        /// <param name="senderInternalIdentification">
-        /// The sender internal identification.
-        /// Serialized Name: EdifactEnvelopeSettings.senderInternalIdentification
-        /// </param>
-        /// <param name="senderInternalSubIdentification">
-        /// The sender internal sub identification.
-        /// Serialized Name: EdifactEnvelopeSettings.senderInternalSubIdentification
-        /// </param>
-        /// <param name="receiverInternalIdentification">
-        /// The receiver internal identification.
-        /// Serialized Name: EdifactEnvelopeSettings.receiverInternalIdentification
-        /// </param>
-        /// <param name="receiverInternalSubIdentification">
-        /// The receiver internal sub identification.
-        /// Serialized Name: EdifactEnvelopeSettings.receiverInternalSubIdentification
-        /// </param>
+        /// <param name="groupAssociationAssignedCode"> The group association assigned code. </param>
+        /// <param name="communicationAgreementId"> The communication agreement id. </param>
+        /// <param name="applyDelimiterStringAdvice"> The value indicating whether to apply delimiter string advice. </param>
+        /// <param name="createGroupingSegments"> The value indicating whether to create grouping segments. </param>
+        /// <param name="enableDefaultGroupHeaders"> The value indicating whether to enable default group headers. </param>
+        /// <param name="recipientReferencePasswordValue"> The recipient reference password value. </param>
+        /// <param name="recipientReferencePasswordQualifier"> The recipient reference password qualifier. </param>
+        /// <param name="applicationReferenceId"> The application reference id. </param>
+        /// <param name="processingPriorityCode"> The processing priority code. </param>
+        /// <param name="interchangeControlNumberLowerBound"> The interchange control number lower bound. </param>
+        /// <param name="interchangeControlNumberUpperBound"> The interchange control number upper bound. </param>
+        /// <param name="rolloverInterchangeControlNumber"> The value indicating whether to rollover interchange control number. </param>
+        /// <param name="interchangeControlNumberPrefix"> The interchange control number prefix. </param>
+        /// <param name="interchangeControlNumberSuffix"> The interchange control number suffix. </param>
+        /// <param name="senderReverseRoutingAddress"> The sender reverse routing address. </param>
+        /// <param name="receiverReverseRoutingAddress"> The receiver reverse routing address. </param>
+        /// <param name="functionalGroupId"> The functional group id. </param>
+        /// <param name="groupControllingAgencyCode"> The group controlling agency code. </param>
+        /// <param name="groupMessageVersion"> The group message version. </param>
+        /// <param name="groupMessageRelease"> The group message release. </param>
+        /// <param name="groupControlNumberLowerBound"> The group control number lower bound. </param>
+        /// <param name="groupControlNumberUpperBound"> The group control number upper bound. </param>
+        /// <param name="rolloverGroupControlNumber"> The value indicating whether to rollover group control number. </param>
+        /// <param name="groupControlNumberPrefix"> The group control number prefix. </param>
+        /// <param name="groupControlNumberSuffix"> The group control number suffix. </param>
+        /// <param name="groupApplicationReceiverQualifier"> The group application receiver qualifier. </param>
+        /// <param name="groupApplicationReceiverId"> The group application receiver id. </param>
+        /// <param name="groupApplicationSenderQualifier"> The group application sender qualifier. </param>
+        /// <param name="groupApplicationSenderId"> The group application sender id. </param>
+        /// <param name="groupApplicationPassword"> The group application password. </param>
+        /// <param name="overwriteExistingTransactionSetControlNumber"> The value indicating whether to overwrite existing transaction set control number. </param>
+        /// <param name="transactionSetControlNumberPrefix"> The transaction set control number prefix. </param>
+        /// <param name="transactionSetControlNumberSuffix"> The transaction set control number suffix. </param>
+        /// <param name="transactionSetControlNumberLowerBound"> The transaction set control number lower bound. </param>
+        /// <param name="transactionSetControlNumberUpperBound"> The transaction set control number upper bound. </param>
+        /// <param name="rolloverTransactionSetControlNumber"> The value indicating whether to rollover transaction set control number. </param>
+        /// <param name="isTestInterchange"> The value indicating whether the message is a test interchange. </param>
+        /// <param name="senderInternalIdentification"> The sender internal identification. </param>
+        /// <param name="senderInternalSubIdentification"> The sender internal sub identification. </param>
+        /// <param name="receiverInternalIdentification"> The receiver internal identification. </param>
+        /// <param name="receiverInternalSubIdentification"> The receiver internal sub identification. </param>
         internal EdifactEnvelopeSettings(string groupAssociationAssignedCode, string communicationAgreementId, bool applyDelimiterStringAdvice, bool createGroupingSegments, bool enableDefaultGroupHeaders, string recipientReferencePasswordValue, string recipientReferencePasswordQualifier, string applicationReferenceId, string processingPriorityCode, long interchangeControlNumberLowerBound, long interchangeControlNumberUpperBound, bool rolloverInterchangeControlNumber, string interchangeControlNumberPrefix, string interchangeControlNumberSuffix, string senderReverseRoutingAddress, string receiverReverseRoutingAddress, string functionalGroupId, string groupControllingAgencyCode, string groupMessageVersion, string groupMessageRelease, long groupControlNumberLowerBound, long groupControlNumberUpperBound, bool rolloverGroupControlNumber, string groupControlNumberPrefix, string groupControlNumberSuffix, string groupApplicationReceiverQualifier, string groupApplicationReceiverId, string groupApplicationSenderQualifier, string groupApplicationSenderId, string groupApplicationPassword, bool overwriteExistingTransactionSetControlNumber, string transactionSetControlNumberPrefix, string transactionSetControlNumberSuffix, long transactionSetControlNumberLowerBound, long transactionSetControlNumberUpperBound, bool rolloverTransactionSetControlNumber, bool isTestInterchange, string senderInternalIdentification, string senderInternalSubIdentification, string receiverInternalIdentification, string receiverInternalSubIdentification)
         {
             GroupAssociationAssignedCode = groupAssociationAssignedCode;
@@ -298,210 +130,87 @@ namespace Azure.ResourceManager.Logic.Models
             ReceiverInternalSubIdentification = receiverInternalSubIdentification;
         }
 
-        /// <summary>
-        /// The group association assigned code.
-        /// Serialized Name: EdifactEnvelopeSettings.groupAssociationAssignedCode
-        /// </summary>
+        /// <summary> The group association assigned code. </summary>
         public string GroupAssociationAssignedCode { get; set; }
-        /// <summary>
-        /// The communication agreement id.
-        /// Serialized Name: EdifactEnvelopeSettings.communicationAgreementId
-        /// </summary>
+        /// <summary> The communication agreement id. </summary>
         public string CommunicationAgreementId { get; set; }
-        /// <summary>
-        /// The value indicating whether to apply delimiter string advice.
-        /// Serialized Name: EdifactEnvelopeSettings.applyDelimiterStringAdvice
-        /// </summary>
+        /// <summary> The value indicating whether to apply delimiter string advice. </summary>
         public bool ApplyDelimiterStringAdvice { get; set; }
-        /// <summary>
-        /// The value indicating whether to create grouping segments.
-        /// Serialized Name: EdifactEnvelopeSettings.createGroupingSegments
-        /// </summary>
+        /// <summary> The value indicating whether to create grouping segments. </summary>
         public bool CreateGroupingSegments { get; set; }
-        /// <summary>
-        /// The value indicating whether to enable default group headers.
-        /// Serialized Name: EdifactEnvelopeSettings.enableDefaultGroupHeaders
-        /// </summary>
+        /// <summary> The value indicating whether to enable default group headers. </summary>
         public bool EnableDefaultGroupHeaders { get; set; }
-        /// <summary>
-        /// The recipient reference password value.
-        /// Serialized Name: EdifactEnvelopeSettings.recipientReferencePasswordValue
-        /// </summary>
+        /// <summary> The recipient reference password value. </summary>
         public string RecipientReferencePasswordValue { get; set; }
-        /// <summary>
-        /// The recipient reference password qualifier.
-        /// Serialized Name: EdifactEnvelopeSettings.recipientReferencePasswordQualifier
-        /// </summary>
+        /// <summary> The recipient reference password qualifier. </summary>
         public string RecipientReferencePasswordQualifier { get; set; }
-        /// <summary>
-        /// The application reference id.
-        /// Serialized Name: EdifactEnvelopeSettings.applicationReferenceId
-        /// </summary>
+        /// <summary> The application reference id. </summary>
         public string ApplicationReferenceId { get; set; }
-        /// <summary>
-        /// The processing priority code.
-        /// Serialized Name: EdifactEnvelopeSettings.processingPriorityCode
-        /// </summary>
+        /// <summary> The processing priority code. </summary>
         public string ProcessingPriorityCode { get; set; }
-        /// <summary>
-        /// The interchange control number lower bound.
-        /// Serialized Name: EdifactEnvelopeSettings.interchangeControlNumberLowerBound
-        /// </summary>
+        /// <summary> The interchange control number lower bound. </summary>
         public long InterchangeControlNumberLowerBound { get; set; }
-        /// <summary>
-        /// The interchange control number upper bound.
-        /// Serialized Name: EdifactEnvelopeSettings.interchangeControlNumberUpperBound
-        /// </summary>
+        /// <summary> The interchange control number upper bound. </summary>
         public long InterchangeControlNumberUpperBound { get; set; }
-        /// <summary>
-        /// The value indicating whether to rollover interchange control number.
-        /// Serialized Name: EdifactEnvelopeSettings.rolloverInterchangeControlNumber
-        /// </summary>
+        /// <summary> The value indicating whether to rollover interchange control number. </summary>
         public bool RolloverInterchangeControlNumber { get; set; }
-        /// <summary>
-        /// The interchange control number prefix.
-        /// Serialized Name: EdifactEnvelopeSettings.interchangeControlNumberPrefix
-        /// </summary>
+        /// <summary> The interchange control number prefix. </summary>
         public string InterchangeControlNumberPrefix { get; set; }
-        /// <summary>
-        /// The interchange control number suffix.
-        /// Serialized Name: EdifactEnvelopeSettings.interchangeControlNumberSuffix
-        /// </summary>
+        /// <summary> The interchange control number suffix. </summary>
         public string InterchangeControlNumberSuffix { get; set; }
-        /// <summary>
-        /// The sender reverse routing address.
-        /// Serialized Name: EdifactEnvelopeSettings.senderReverseRoutingAddress
-        /// </summary>
+        /// <summary> The sender reverse routing address. </summary>
         public string SenderReverseRoutingAddress { get; set; }
-        /// <summary>
-        /// The receiver reverse routing address.
-        /// Serialized Name: EdifactEnvelopeSettings.receiverReverseRoutingAddress
-        /// </summary>
+        /// <summary> The receiver reverse routing address. </summary>
         public string ReceiverReverseRoutingAddress { get; set; }
-        /// <summary>
-        /// The functional group id.
-        /// Serialized Name: EdifactEnvelopeSettings.functionalGroupId
-        /// </summary>
+        /// <summary> The functional group id. </summary>
         public string FunctionalGroupId { get; set; }
-        /// <summary>
-        /// The group controlling agency code.
-        /// Serialized Name: EdifactEnvelopeSettings.groupControllingAgencyCode
-        /// </summary>
+        /// <summary> The group controlling agency code. </summary>
         public string GroupControllingAgencyCode { get; set; }
-        /// <summary>
-        /// The group message version.
-        /// Serialized Name: EdifactEnvelopeSettings.groupMessageVersion
-        /// </summary>
+        /// <summary> The group message version. </summary>
         public string GroupMessageVersion { get; set; }
-        /// <summary>
-        /// The group message release.
-        /// Serialized Name: EdifactEnvelopeSettings.groupMessageRelease
-        /// </summary>
+        /// <summary> The group message release. </summary>
         public string GroupMessageRelease { get; set; }
-        /// <summary>
-        /// The group control number lower bound.
-        /// Serialized Name: EdifactEnvelopeSettings.groupControlNumberLowerBound
-        /// </summary>
+        /// <summary> The group control number lower bound. </summary>
         public long GroupControlNumberLowerBound { get; set; }
-        /// <summary>
-        /// The group control number upper bound.
-        /// Serialized Name: EdifactEnvelopeSettings.groupControlNumberUpperBound
-        /// </summary>
+        /// <summary> The group control number upper bound. </summary>
         public long GroupControlNumberUpperBound { get; set; }
-        /// <summary>
-        /// The value indicating whether to rollover group control number.
-        /// Serialized Name: EdifactEnvelopeSettings.rolloverGroupControlNumber
-        /// </summary>
+        /// <summary> The value indicating whether to rollover group control number. </summary>
         public bool RolloverGroupControlNumber { get; set; }
-        /// <summary>
-        /// The group control number prefix.
-        /// Serialized Name: EdifactEnvelopeSettings.groupControlNumberPrefix
-        /// </summary>
+        /// <summary> The group control number prefix. </summary>
         public string GroupControlNumberPrefix { get; set; }
-        /// <summary>
-        /// The group control number suffix.
-        /// Serialized Name: EdifactEnvelopeSettings.groupControlNumberSuffix
-        /// </summary>
+        /// <summary> The group control number suffix. </summary>
         public string GroupControlNumberSuffix { get; set; }
-        /// <summary>
-        /// The group application receiver qualifier.
-        /// Serialized Name: EdifactEnvelopeSettings.groupApplicationReceiverQualifier
-        /// </summary>
+        /// <summary> The group application receiver qualifier. </summary>
         public string GroupApplicationReceiverQualifier { get; set; }
-        /// <summary>
-        /// The group application receiver id.
-        /// Serialized Name: EdifactEnvelopeSettings.groupApplicationReceiverId
-        /// </summary>
+        /// <summary> The group application receiver id. </summary>
         public string GroupApplicationReceiverId { get; set; }
-        /// <summary>
-        /// The group application sender qualifier.
-        /// Serialized Name: EdifactEnvelopeSettings.groupApplicationSenderQualifier
-        /// </summary>
+        /// <summary> The group application sender qualifier. </summary>
         public string GroupApplicationSenderQualifier { get; set; }
-        /// <summary>
-        /// The group application sender id.
-        /// Serialized Name: EdifactEnvelopeSettings.groupApplicationSenderId
-        /// </summary>
+        /// <summary> The group application sender id. </summary>
         public string GroupApplicationSenderId { get; set; }
-        /// <summary>
-        /// The group application password.
-        /// Serialized Name: EdifactEnvelopeSettings.groupApplicationPassword
-        /// </summary>
+        /// <summary> The group application password. </summary>
         public string GroupApplicationPassword { get; set; }
-        /// <summary>
-        /// The value indicating whether to overwrite existing transaction set control number.
-        /// Serialized Name: EdifactEnvelopeSettings.overwriteExistingTransactionSetControlNumber
-        /// </summary>
+        /// <summary> The value indicating whether to overwrite existing transaction set control number. </summary>
         public bool OverwriteExistingTransactionSetControlNumber { get; set; }
-        /// <summary>
-        /// The transaction set control number prefix.
-        /// Serialized Name: EdifactEnvelopeSettings.transactionSetControlNumberPrefix
-        /// </summary>
+        /// <summary> The transaction set control number prefix. </summary>
         public string TransactionSetControlNumberPrefix { get; set; }
-        /// <summary>
-        /// The transaction set control number suffix.
-        /// Serialized Name: EdifactEnvelopeSettings.transactionSetControlNumberSuffix
-        /// </summary>
+        /// <summary> The transaction set control number suffix. </summary>
         public string TransactionSetControlNumberSuffix { get; set; }
-        /// <summary>
-        /// The transaction set control number lower bound.
-        /// Serialized Name: EdifactEnvelopeSettings.transactionSetControlNumberLowerBound
-        /// </summary>
+        /// <summary> The transaction set control number lower bound. </summary>
         public long TransactionSetControlNumberLowerBound { get; set; }
-        /// <summary>
-        /// The transaction set control number upper bound.
-        /// Serialized Name: EdifactEnvelopeSettings.transactionSetControlNumberUpperBound
-        /// </summary>
+        /// <summary> The transaction set control number upper bound. </summary>
         public long TransactionSetControlNumberUpperBound { get; set; }
-        /// <summary>
-        /// The value indicating whether to rollover transaction set control number.
-        /// Serialized Name: EdifactEnvelopeSettings.rolloverTransactionSetControlNumber
-        /// </summary>
+        /// <summary> The value indicating whether to rollover transaction set control number. </summary>
         public bool RolloverTransactionSetControlNumber { get; set; }
-        /// <summary>
-        /// The value indicating whether the message is a test interchange.
-        /// Serialized Name: EdifactEnvelopeSettings.isTestInterchange
-        /// </summary>
+        /// <summary> The value indicating whether the message is a test interchange. </summary>
         public bool IsTestInterchange { get; set; }
-        /// <summary>
-        /// The sender internal identification.
-        /// Serialized Name: EdifactEnvelopeSettings.senderInternalIdentification
-        /// </summary>
+        /// <summary> The sender internal identification. </summary>
         public string SenderInternalIdentification { get; set; }
-        /// <summary>
-        /// The sender internal sub identification.
-        /// Serialized Name: EdifactEnvelopeSettings.senderInternalSubIdentification
-        /// </summary>
+        /// <summary> The sender internal sub identification. </summary>
         public string SenderInternalSubIdentification { get; set; }
-        /// <summary>
-        /// The receiver internal identification.
-        /// Serialized Name: EdifactEnvelopeSettings.receiverInternalIdentification
-        /// </summary>
+        /// <summary> The receiver internal identification. </summary>
         public string ReceiverInternalIdentification { get; set; }
-        /// <summary>
-        /// The receiver internal sub identification.
-        /// Serialized Name: EdifactEnvelopeSettings.receiverInternalSubIdentification
-        /// </summary>
+        /// <summary> The receiver internal sub identification. </summary>
         public string ReceiverInternalSubIdentification { get; set; }
     }
 }

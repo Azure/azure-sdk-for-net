@@ -7,26 +7,17 @@
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary>
-    /// The Edifact message filter for odata query.
-    /// Serialized Name: EdifactMessageFilter
-    /// </summary>
+    /// <summary> The Edifact message filter for odata query. </summary>
     public partial class EdifactMessageFilter
     {
         /// <summary> Initializes a new instance of EdifactMessageFilter. </summary>
-        /// <param name="messageFilterType">
-        /// The message filter type.
-        /// Serialized Name: EdifactMessageFilter.messageFilterType
-        /// </param>
+        /// <param name="messageFilterType"> The message filter type. </param>
         public EdifactMessageFilter(MessageFilterType messageFilterType)
         {
             MessageFilterType = messageFilterType;
         }
 
-        /// <summary>
-        /// The message filter type.
-        /// Serialized Name: EdifactMessageFilter.messageFilterType
-        /// </summary>
+        /// <summary> The message filter type. </summary>
         public MessageFilterType MessageFilterType { get; set; }
     }
 }

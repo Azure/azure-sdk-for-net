@@ -9,25 +9,13 @@ using System;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary>
-    /// The X12 one-way agreement.
-    /// Serialized Name: X12OneWayAgreement
-    /// </summary>
+    /// <summary> The X12 one-way agreement. </summary>
     public partial class X12OneWayAgreement
     {
         /// <summary> Initializes a new instance of X12OneWayAgreement. </summary>
-        /// <param name="senderBusinessIdentity">
-        /// The sender business identity
-        /// Serialized Name: X12OneWayAgreement.senderBusinessIdentity
-        /// </param>
-        /// <param name="receiverBusinessIdentity">
-        /// The receiver business identity
-        /// Serialized Name: X12OneWayAgreement.receiverBusinessIdentity
-        /// </param>
-        /// <param name="protocolSettings">
-        /// The X12 protocol settings.
-        /// Serialized Name: X12OneWayAgreement.protocolSettings
-        /// </param>
+        /// <param name="senderBusinessIdentity"> The sender business identity. </param>
+        /// <param name="receiverBusinessIdentity"> The receiver business identity. </param>
+        /// <param name="protocolSettings"> The X12 protocol settings. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="senderBusinessIdentity"/>, <paramref name="receiverBusinessIdentity"/> or <paramref name="protocolSettings"/> is null. </exception>
         public X12OneWayAgreement(IntegrationAccountBusinessIdentity senderBusinessIdentity, IntegrationAccountBusinessIdentity receiverBusinessIdentity, X12ProtocolSettings protocolSettings)
         {
@@ -49,20 +37,11 @@ namespace Azure.ResourceManager.Logic.Models
             ProtocolSettings = protocolSettings;
         }
 
-        /// <summary>
-        /// The sender business identity
-        /// Serialized Name: X12OneWayAgreement.senderBusinessIdentity
-        /// </summary>
+        /// <summary> The sender business identity. </summary>
         public IntegrationAccountBusinessIdentity SenderBusinessIdentity { get; set; }
-        /// <summary>
-        /// The receiver business identity
-        /// Serialized Name: X12OneWayAgreement.receiverBusinessIdentity
-        /// </summary>
+        /// <summary> The receiver business identity. </summary>
         public IntegrationAccountBusinessIdentity ReceiverBusinessIdentity { get; set; }
-        /// <summary>
-        /// The X12 protocol settings.
-        /// Serialized Name: X12OneWayAgreement.protocolSettings
-        /// </summary>
+        /// <summary> The X12 protocol settings. </summary>
         public X12ProtocolSettings ProtocolSettings { get; set; }
     }
 }

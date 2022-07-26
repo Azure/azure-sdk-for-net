@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary>
-    /// The swagger tree command.
-    /// Serialized Name: SwaggerCustomDynamicTreeCommand
-    /// </summary>
+    /// <summary> The swagger tree command. </summary>
     public partial class SwaggerCustomDynamicTreeCommand
     {
         /// <summary> Initializes a new instance of SwaggerCustomDynamicTreeCommand. </summary>
@@ -23,38 +20,14 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of SwaggerCustomDynamicTreeCommand. </summary>
-        /// <param name="operationId">
-        /// The path to an item property which defines the display name of the item.
-        /// Serialized Name: SwaggerCustomDynamicTreeCommand.operationId
-        /// </param>
-        /// <param name="itemsPath">
-        /// The path to an item property which defines the display name of the item.
-        /// Serialized Name: SwaggerCustomDynamicTreeCommand.itemsPath
-        /// </param>
-        /// <param name="itemValuePath">
-        /// The path to an item property which defines the display name of the item.
-        /// Serialized Name: SwaggerCustomDynamicTreeCommand.itemValuePath
-        /// </param>
-        /// <param name="itemTitlePath">
-        /// The path to an item property which defines the display name of the item.
-        /// Serialized Name: SwaggerCustomDynamicTreeCommand.itemTitlePath
-        /// </param>
-        /// <param name="itemFullTitlePath">
-        /// The path to an item property which defines the display name of the item.
-        /// Serialized Name: SwaggerCustomDynamicTreeCommand.itemFullTitlePath
-        /// </param>
-        /// <param name="itemIsParent">
-        /// The path to an item property which defines the display name of the item.
-        /// Serialized Name: SwaggerCustomDynamicTreeCommand.itemIsParent
-        /// </param>
-        /// <param name="selectableFilter">
-        /// The path to an item property which defines the display name of the item.
-        /// Serialized Name: SwaggerCustomDynamicTreeCommand.selectableFilter
-        /// </param>
-        /// <param name="parameters">
-        /// Dictionary of &lt;SwaggerCustomDynamicTreeParameter&gt;
-        /// Serialized Name: SwaggerCustomDynamicTreeCommand.parameters
-        /// </param>
+        /// <param name="operationId"> The path to an item property which defines the display name of the item. </param>
+        /// <param name="itemsPath"> The path to an item property which defines the display name of the item. </param>
+        /// <param name="itemValuePath"> The path to an item property which defines the display name of the item. </param>
+        /// <param name="itemTitlePath"> The path to an item property which defines the display name of the item. </param>
+        /// <param name="itemFullTitlePath"> The path to an item property which defines the display name of the item. </param>
+        /// <param name="itemIsParent"> The path to an item property which defines the display name of the item. </param>
+        /// <param name="selectableFilter"> The path to an item property which defines the display name of the item. </param>
+        /// <param name="parameters"> Dictionary of &lt;SwaggerCustomDynamicTreeParameter&gt;. </param>
         internal SwaggerCustomDynamicTreeCommand(string operationId, string itemsPath, string itemValuePath, string itemTitlePath, string itemFullTitlePath, string itemIsParent, string selectableFilter, IDictionary<string, SwaggerCustomDynamicTreeParameter> parameters)
         {
             OperationId = operationId;
@@ -67,45 +40,21 @@ namespace Azure.ResourceManager.Logic.Models
             Parameters = parameters;
         }
 
-        /// <summary>
-        /// The path to an item property which defines the display name of the item.
-        /// Serialized Name: SwaggerCustomDynamicTreeCommand.operationId
-        /// </summary>
+        /// <summary> The path to an item property which defines the display name of the item. </summary>
         public string OperationId { get; set; }
-        /// <summary>
-        /// The path to an item property which defines the display name of the item.
-        /// Serialized Name: SwaggerCustomDynamicTreeCommand.itemsPath
-        /// </summary>
+        /// <summary> The path to an item property which defines the display name of the item. </summary>
         public string ItemsPath { get; set; }
-        /// <summary>
-        /// The path to an item property which defines the display name of the item.
-        /// Serialized Name: SwaggerCustomDynamicTreeCommand.itemValuePath
-        /// </summary>
+        /// <summary> The path to an item property which defines the display name of the item. </summary>
         public string ItemValuePath { get; set; }
-        /// <summary>
-        /// The path to an item property which defines the display name of the item.
-        /// Serialized Name: SwaggerCustomDynamicTreeCommand.itemTitlePath
-        /// </summary>
+        /// <summary> The path to an item property which defines the display name of the item. </summary>
         public string ItemTitlePath { get; set; }
-        /// <summary>
-        /// The path to an item property which defines the display name of the item.
-        /// Serialized Name: SwaggerCustomDynamicTreeCommand.itemFullTitlePath
-        /// </summary>
+        /// <summary> The path to an item property which defines the display name of the item. </summary>
         public string ItemFullTitlePath { get; set; }
-        /// <summary>
-        /// The path to an item property which defines the display name of the item.
-        /// Serialized Name: SwaggerCustomDynamicTreeCommand.itemIsParent
-        /// </summary>
+        /// <summary> The path to an item property which defines the display name of the item. </summary>
         public string ItemIsParent { get; set; }
-        /// <summary>
-        /// The path to an item property which defines the display name of the item.
-        /// Serialized Name: SwaggerCustomDynamicTreeCommand.selectableFilter
-        /// </summary>
+        /// <summary> The path to an item property which defines the display name of the item. </summary>
         public string SelectableFilter { get; set; }
-        /// <summary>
-        /// Dictionary of &lt;SwaggerCustomDynamicTreeParameter&gt;
-        /// Serialized Name: SwaggerCustomDynamicTreeCommand.parameters
-        /// </summary>
+        /// <summary> Dictionary of &lt;SwaggerCustomDynamicTreeParameter&gt;. </summary>
         public IDictionary<string, SwaggerCustomDynamicTreeParameter> Parameters { get; }
     }
 }

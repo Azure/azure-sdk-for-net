@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary>
-    /// The edifact character set.
-    /// Serialized Name: EdifactCharacterSet
-    /// </summary>
+    /// <summary> The edifact character set. </summary>
     public readonly partial struct EdifactCharacterSet : IEquatable<EdifactCharacterSet>
     {
         private readonly string _value;
@@ -41,80 +38,35 @@ namespace Azure.ResourceManager.Logic.Models
         private const string UnoyValue = "UNOY";
         private const string KecaValue = "KECA";
 
-        /// <summary>
-        /// NotSpecified
-        /// Serialized Name: EdifactCharacterSet.NotSpecified
-        /// </summary>
+        /// <summary> NotSpecified. </summary>
         public static EdifactCharacterSet NotSpecified { get; } = new EdifactCharacterSet(NotSpecifiedValue);
-        /// <summary>
-        /// UNOB
-        /// Serialized Name: EdifactCharacterSet.UNOB
-        /// </summary>
+        /// <summary> UNOB. </summary>
         public static EdifactCharacterSet Unob { get; } = new EdifactCharacterSet(UnobValue);
-        /// <summary>
-        /// UNOA
-        /// Serialized Name: EdifactCharacterSet.UNOA
-        /// </summary>
+        /// <summary> UNOA. </summary>
         public static EdifactCharacterSet Unoa { get; } = new EdifactCharacterSet(UnoaValue);
-        /// <summary>
-        /// UNOC
-        /// Serialized Name: EdifactCharacterSet.UNOC
-        /// </summary>
+        /// <summary> UNOC. </summary>
         public static EdifactCharacterSet Unoc { get; } = new EdifactCharacterSet(UnocValue);
-        /// <summary>
-        /// UNOD
-        /// Serialized Name: EdifactCharacterSet.UNOD
-        /// </summary>
+        /// <summary> UNOD. </summary>
         public static EdifactCharacterSet Unod { get; } = new EdifactCharacterSet(UnodValue);
-        /// <summary>
-        /// UNOE
-        /// Serialized Name: EdifactCharacterSet.UNOE
-        /// </summary>
+        /// <summary> UNOE. </summary>
         public static EdifactCharacterSet Unoe { get; } = new EdifactCharacterSet(UnoeValue);
-        /// <summary>
-        /// UNOF
-        /// Serialized Name: EdifactCharacterSet.UNOF
-        /// </summary>
+        /// <summary> UNOF. </summary>
         public static EdifactCharacterSet Unof { get; } = new EdifactCharacterSet(UnofValue);
-        /// <summary>
-        /// UNOG
-        /// Serialized Name: EdifactCharacterSet.UNOG
-        /// </summary>
+        /// <summary> UNOG. </summary>
         public static EdifactCharacterSet Unog { get; } = new EdifactCharacterSet(UnogValue);
-        /// <summary>
-        /// UNOH
-        /// Serialized Name: EdifactCharacterSet.UNOH
-        /// </summary>
+        /// <summary> UNOH. </summary>
         public static EdifactCharacterSet Unoh { get; } = new EdifactCharacterSet(UnohValue);
-        /// <summary>
-        /// UNOI
-        /// Serialized Name: EdifactCharacterSet.UNOI
-        /// </summary>
+        /// <summary> UNOI. </summary>
         public static EdifactCharacterSet Unoi { get; } = new EdifactCharacterSet(UnoiValue);
-        /// <summary>
-        /// UNOJ
-        /// Serialized Name: EdifactCharacterSet.UNOJ
-        /// </summary>
+        /// <summary> UNOJ. </summary>
         public static EdifactCharacterSet Unoj { get; } = new EdifactCharacterSet(UnojValue);
-        /// <summary>
-        /// UNOK
-        /// Serialized Name: EdifactCharacterSet.UNOK
-        /// </summary>
+        /// <summary> UNOK. </summary>
         public static EdifactCharacterSet Unok { get; } = new EdifactCharacterSet(UnokValue);
-        /// <summary>
-        /// UNOX
-        /// Serialized Name: EdifactCharacterSet.UNOX
-        /// </summary>
+        /// <summary> UNOX. </summary>
         public static EdifactCharacterSet Unox { get; } = new EdifactCharacterSet(UnoxValue);
-        /// <summary>
-        /// UNOY
-        /// Serialized Name: EdifactCharacterSet.UNOY
-        /// </summary>
+        /// <summary> UNOY. </summary>
         public static EdifactCharacterSet Unoy { get; } = new EdifactCharacterSet(UnoyValue);
-        /// <summary>
-        /// KECA
-        /// Serialized Name: EdifactCharacterSet.KECA
-        /// </summary>
+        /// <summary> KECA. </summary>
         public static EdifactCharacterSet Keca { get; } = new EdifactCharacterSet(KecaValue);
         /// <summary> Determines if two <see cref="EdifactCharacterSet"/> values are the same. </summary>
         public static bool operator ==(EdifactCharacterSet left, EdifactCharacterSet right) => left.Equals(right);

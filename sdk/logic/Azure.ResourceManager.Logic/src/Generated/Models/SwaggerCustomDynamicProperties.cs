@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary>
-    /// The swagger custom dynamic properties.
-    /// Serialized Name: SwaggerCustomDynamicProperties
-    /// </summary>
+    /// <summary> The swagger custom dynamic properties. </summary>
     public partial class SwaggerCustomDynamicProperties
     {
         /// <summary> Initializes a new instance of SwaggerCustomDynamicProperties. </summary>
@@ -23,18 +20,9 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of SwaggerCustomDynamicProperties. </summary>
-        /// <param name="operationId">
-        /// The operation id to fetch dynamic schema.
-        /// Serialized Name: SwaggerCustomDynamicProperties.operationId
-        /// </param>
-        /// <param name="valuePath">
-        /// Json pointer to the dynamic schema on the response body.
-        /// Serialized Name: SwaggerCustomDynamicProperties.valuePath
-        /// </param>
-        /// <param name="parameters">
-        /// The operation parameters.
-        /// Serialized Name: SwaggerCustomDynamicProperties.parameters
-        /// </param>
+        /// <param name="operationId"> The operation id to fetch dynamic schema. </param>
+        /// <param name="valuePath"> Json pointer to the dynamic schema on the response body. </param>
+        /// <param name="parameters"> The operation parameters. </param>
         internal SwaggerCustomDynamicProperties(string operationId, string valuePath, IDictionary<string, SwaggerCustomDynamicProperties> parameters)
         {
             OperationId = operationId;
@@ -42,20 +30,11 @@ namespace Azure.ResourceManager.Logic.Models
             Parameters = parameters;
         }
 
-        /// <summary>
-        /// The operation id to fetch dynamic schema.
-        /// Serialized Name: SwaggerCustomDynamicProperties.operationId
-        /// </summary>
+        /// <summary> The operation id to fetch dynamic schema. </summary>
         public string OperationId { get; set; }
-        /// <summary>
-        /// Json pointer to the dynamic schema on the response body.
-        /// Serialized Name: SwaggerCustomDynamicProperties.valuePath
-        /// </summary>
+        /// <summary> Json pointer to the dynamic schema on the response body. </summary>
         public string ValuePath { get; set; }
-        /// <summary>
-        /// The operation parameters.
-        /// Serialized Name: SwaggerCustomDynamicProperties.parameters
-        /// </summary>
+        /// <summary> The operation parameters. </summary>
         public IDictionary<string, SwaggerCustomDynamicProperties> Parameters { get; }
     }
 }

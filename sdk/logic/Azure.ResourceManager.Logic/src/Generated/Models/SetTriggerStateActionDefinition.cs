@@ -9,19 +9,13 @@ using System;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary>
-    /// The set trigger state action definition.
-    /// Serialized Name: SetTriggerStateActionDefinition
-    /// </summary>
+    /// <summary> The set trigger state action definition. </summary>
     public partial class SetTriggerStateActionDefinition
     {
         /// <summary> Initializes a new instance of SetTriggerStateActionDefinition. </summary>
-        /// <param name="source">
-        /// The source.
-        /// Serialized Name: SetTriggerStateActionDefinition.source
-        /// </param>
+        /// <param name="source"> The source. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="source"/> is null. </exception>
-        public SetTriggerStateActionDefinition(LogicAppWorkflowTriggerReference source)
+        public SetTriggerStateActionDefinition(LogicWorkflowTriggerReference source)
         {
             if (source == null)
             {
@@ -31,10 +25,7 @@ namespace Azure.ResourceManager.Logic.Models
             Source = source;
         }
 
-        /// <summary>
-        /// The source.
-        /// Serialized Name: SetTriggerStateActionDefinition.source
-        /// </summary>
-        public LogicAppWorkflowTriggerReference Source { get; }
+        /// <summary> The source. </summary>
+        public LogicWorkflowTriggerReference Source { get; }
     }
 }

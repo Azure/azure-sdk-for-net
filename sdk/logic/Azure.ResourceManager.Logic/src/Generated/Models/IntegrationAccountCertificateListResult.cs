@@ -11,10 +11,7 @@ using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary>
-    /// The list of integration account certificates.
-    /// Serialized Name: IntegrationAccountCertificateListResult
-    /// </summary>
+    /// <summary> The list of integration account certificates. </summary>
     internal partial class IntegrationAccountCertificateListResult
     {
         /// <summary> Initializes a new instance of IntegrationAccountCertificateListResult. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of IntegrationAccountCertificateListResult. </summary>
-        /// <param name="value">
-        /// The list of integration account certificates.
-        /// Serialized Name: IntegrationAccountCertificateListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The URL to get the next set of results.
-        /// Serialized Name: IntegrationAccountCertificateListResult.nextLink
-        /// </param>
+        /// <param name="value"> The list of integration account certificates. </param>
+        /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal IntegrationAccountCertificateListResult(IReadOnlyList<IntegrationAccountCertificateData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// The list of integration account certificates.
-        /// Serialized Name: IntegrationAccountCertificateListResult.value
-        /// </summary>
+        /// <summary> The list of integration account certificates. </summary>
         public IReadOnlyList<IntegrationAccountCertificateData> Value { get; }
-        /// <summary>
-        /// The URL to get the next set of results.
-        /// Serialized Name: IntegrationAccountCertificateListResult.nextLink
-        /// </summary>
+        /// <summary> The URL to get the next set of results. </summary>
         public string NextLink { get; }
     }
 }

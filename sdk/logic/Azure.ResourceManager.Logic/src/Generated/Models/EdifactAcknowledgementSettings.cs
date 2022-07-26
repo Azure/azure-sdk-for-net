@@ -7,49 +7,19 @@
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary>
-    /// The Edifact agreement acknowledgement settings.
-    /// Serialized Name: EdifactAcknowledgementSettings
-    /// </summary>
+    /// <summary> The Edifact agreement acknowledgement settings. </summary>
     public partial class EdifactAcknowledgementSettings
     {
         /// <summary> Initializes a new instance of EdifactAcknowledgementSettings. </summary>
-        /// <param name="needTechnicalAcknowledgement">
-        /// The value indicating whether technical acknowledgement is needed.
-        /// Serialized Name: EdifactAcknowledgementSettings.needTechnicalAcknowledgement
-        /// </param>
-        /// <param name="batchTechnicalAcknowledgement">
-        /// The value indicating whether to batch the technical acknowledgements.
-        /// Serialized Name: EdifactAcknowledgementSettings.batchTechnicalAcknowledgements
-        /// </param>
-        /// <param name="needFunctionalAcknowledgement">
-        /// The value indicating whether functional acknowledgement is needed.
-        /// Serialized Name: EdifactAcknowledgementSettings.needFunctionalAcknowledgement
-        /// </param>
-        /// <param name="batchFunctionalAcknowledgement">
-        /// The value indicating whether to batch functional acknowledgements.
-        /// Serialized Name: EdifactAcknowledgementSettings.batchFunctionalAcknowledgements
-        /// </param>
-        /// <param name="needLoopForValidMessages">
-        /// The value indicating whether a loop is needed for valid messages.
-        /// Serialized Name: EdifactAcknowledgementSettings.needLoopForValidMessages
-        /// </param>
-        /// <param name="sendSynchronousAcknowledgement">
-        /// The value indicating whether to send synchronous acknowledgement.
-        /// Serialized Name: EdifactAcknowledgementSettings.sendSynchronousAcknowledgement
-        /// </param>
-        /// <param name="acknowledgementControlNumberLowerBound">
-        /// The acknowledgement control number lower bound.
-        /// Serialized Name: EdifactAcknowledgementSettings.acknowledgementControlNumberLowerBound
-        /// </param>
-        /// <param name="acknowledgementControlNumberUpperBound">
-        /// The acknowledgement control number upper bound.
-        /// Serialized Name: EdifactAcknowledgementSettings.acknowledgementControlNumberUpperBound
-        /// </param>
-        /// <param name="rolloverAcknowledgementControlNumber">
-        /// The value indicating whether to rollover acknowledgement control number.
-        /// Serialized Name: EdifactAcknowledgementSettings.rolloverAcknowledgementControlNumber
-        /// </param>
+        /// <param name="needTechnicalAcknowledgement"> The value indicating whether technical acknowledgement is needed. </param>
+        /// <param name="batchTechnicalAcknowledgement"> The value indicating whether to batch the technical acknowledgements. </param>
+        /// <param name="needFunctionalAcknowledgement"> The value indicating whether functional acknowledgement is needed. </param>
+        /// <param name="batchFunctionalAcknowledgement"> The value indicating whether to batch functional acknowledgements. </param>
+        /// <param name="needLoopForValidMessages"> The value indicating whether a loop is needed for valid messages. </param>
+        /// <param name="sendSynchronousAcknowledgement"> The value indicating whether to send synchronous acknowledgement. </param>
+        /// <param name="acknowledgementControlNumberLowerBound"> The acknowledgement control number lower bound. </param>
+        /// <param name="acknowledgementControlNumberUpperBound"> The acknowledgement control number upper bound. </param>
+        /// <param name="rolloverAcknowledgementControlNumber"> The value indicating whether to rollover acknowledgement control number. </param>
         public EdifactAcknowledgementSettings(bool needTechnicalAcknowledgement, bool batchTechnicalAcknowledgement, bool needFunctionalAcknowledgement, bool batchFunctionalAcknowledgement, bool needLoopForValidMessages, bool sendSynchronousAcknowledgement, int acknowledgementControlNumberLowerBound, int acknowledgementControlNumberUpperBound, bool rolloverAcknowledgementControlNumber)
         {
             NeedTechnicalAcknowledgement = needTechnicalAcknowledgement;
@@ -64,50 +34,17 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of EdifactAcknowledgementSettings. </summary>
-        /// <param name="needTechnicalAcknowledgement">
-        /// The value indicating whether technical acknowledgement is needed.
-        /// Serialized Name: EdifactAcknowledgementSettings.needTechnicalAcknowledgement
-        /// </param>
-        /// <param name="batchTechnicalAcknowledgement">
-        /// The value indicating whether to batch the technical acknowledgements.
-        /// Serialized Name: EdifactAcknowledgementSettings.batchTechnicalAcknowledgements
-        /// </param>
-        /// <param name="needFunctionalAcknowledgement">
-        /// The value indicating whether functional acknowledgement is needed.
-        /// Serialized Name: EdifactAcknowledgementSettings.needFunctionalAcknowledgement
-        /// </param>
-        /// <param name="batchFunctionalAcknowledgement">
-        /// The value indicating whether to batch functional acknowledgements.
-        /// Serialized Name: EdifactAcknowledgementSettings.batchFunctionalAcknowledgements
-        /// </param>
-        /// <param name="needLoopForValidMessages">
-        /// The value indicating whether a loop is needed for valid messages.
-        /// Serialized Name: EdifactAcknowledgementSettings.needLoopForValidMessages
-        /// </param>
-        /// <param name="sendSynchronousAcknowledgement">
-        /// The value indicating whether to send synchronous acknowledgement.
-        /// Serialized Name: EdifactAcknowledgementSettings.sendSynchronousAcknowledgement
-        /// </param>
-        /// <param name="acknowledgementControlNumberPrefix">
-        /// The acknowledgement control number prefix.
-        /// Serialized Name: EdifactAcknowledgementSettings.acknowledgementControlNumberPrefix
-        /// </param>
-        /// <param name="acknowledgementControlNumberSuffix">
-        /// The acknowledgement control number suffix.
-        /// Serialized Name: EdifactAcknowledgementSettings.acknowledgementControlNumberSuffix
-        /// </param>
-        /// <param name="acknowledgementControlNumberLowerBound">
-        /// The acknowledgement control number lower bound.
-        /// Serialized Name: EdifactAcknowledgementSettings.acknowledgementControlNumberLowerBound
-        /// </param>
-        /// <param name="acknowledgementControlNumberUpperBound">
-        /// The acknowledgement control number upper bound.
-        /// Serialized Name: EdifactAcknowledgementSettings.acknowledgementControlNumberUpperBound
-        /// </param>
-        /// <param name="rolloverAcknowledgementControlNumber">
-        /// The value indicating whether to rollover acknowledgement control number.
-        /// Serialized Name: EdifactAcknowledgementSettings.rolloverAcknowledgementControlNumber
-        /// </param>
+        /// <param name="needTechnicalAcknowledgement"> The value indicating whether technical acknowledgement is needed. </param>
+        /// <param name="batchTechnicalAcknowledgement"> The value indicating whether to batch the technical acknowledgements. </param>
+        /// <param name="needFunctionalAcknowledgement"> The value indicating whether functional acknowledgement is needed. </param>
+        /// <param name="batchFunctionalAcknowledgement"> The value indicating whether to batch functional acknowledgements. </param>
+        /// <param name="needLoopForValidMessages"> The value indicating whether a loop is needed for valid messages. </param>
+        /// <param name="sendSynchronousAcknowledgement"> The value indicating whether to send synchronous acknowledgement. </param>
+        /// <param name="acknowledgementControlNumberPrefix"> The acknowledgement control number prefix. </param>
+        /// <param name="acknowledgementControlNumberSuffix"> The acknowledgement control number suffix. </param>
+        /// <param name="acknowledgementControlNumberLowerBound"> The acknowledgement control number lower bound. </param>
+        /// <param name="acknowledgementControlNumberUpperBound"> The acknowledgement control number upper bound. </param>
+        /// <param name="rolloverAcknowledgementControlNumber"> The value indicating whether to rollover acknowledgement control number. </param>
         internal EdifactAcknowledgementSettings(bool needTechnicalAcknowledgement, bool batchTechnicalAcknowledgement, bool needFunctionalAcknowledgement, bool batchFunctionalAcknowledgement, bool needLoopForValidMessages, bool sendSynchronousAcknowledgement, string acknowledgementControlNumberPrefix, string acknowledgementControlNumberSuffix, int acknowledgementControlNumberLowerBound, int acknowledgementControlNumberUpperBound, bool rolloverAcknowledgementControlNumber)
         {
             NeedTechnicalAcknowledgement = needTechnicalAcknowledgement;
@@ -123,60 +60,27 @@ namespace Azure.ResourceManager.Logic.Models
             RolloverAcknowledgementControlNumber = rolloverAcknowledgementControlNumber;
         }
 
-        /// <summary>
-        /// The value indicating whether technical acknowledgement is needed.
-        /// Serialized Name: EdifactAcknowledgementSettings.needTechnicalAcknowledgement
-        /// </summary>
+        /// <summary> The value indicating whether technical acknowledgement is needed. </summary>
         public bool NeedTechnicalAcknowledgement { get; set; }
-        /// <summary>
-        /// The value indicating whether to batch the technical acknowledgements.
-        /// Serialized Name: EdifactAcknowledgementSettings.batchTechnicalAcknowledgements
-        /// </summary>
+        /// <summary> The value indicating whether to batch the technical acknowledgements. </summary>
         public bool BatchTechnicalAcknowledgement { get; set; }
-        /// <summary>
-        /// The value indicating whether functional acknowledgement is needed.
-        /// Serialized Name: EdifactAcknowledgementSettings.needFunctionalAcknowledgement
-        /// </summary>
+        /// <summary> The value indicating whether functional acknowledgement is needed. </summary>
         public bool NeedFunctionalAcknowledgement { get; set; }
-        /// <summary>
-        /// The value indicating whether to batch functional acknowledgements.
-        /// Serialized Name: EdifactAcknowledgementSettings.batchFunctionalAcknowledgements
-        /// </summary>
+        /// <summary> The value indicating whether to batch functional acknowledgements. </summary>
         public bool BatchFunctionalAcknowledgement { get; set; }
-        /// <summary>
-        /// The value indicating whether a loop is needed for valid messages.
-        /// Serialized Name: EdifactAcknowledgementSettings.needLoopForValidMessages
-        /// </summary>
+        /// <summary> The value indicating whether a loop is needed for valid messages. </summary>
         public bool NeedLoopForValidMessages { get; set; }
-        /// <summary>
-        /// The value indicating whether to send synchronous acknowledgement.
-        /// Serialized Name: EdifactAcknowledgementSettings.sendSynchronousAcknowledgement
-        /// </summary>
+        /// <summary> The value indicating whether to send synchronous acknowledgement. </summary>
         public bool SendSynchronousAcknowledgement { get; set; }
-        /// <summary>
-        /// The acknowledgement control number prefix.
-        /// Serialized Name: EdifactAcknowledgementSettings.acknowledgementControlNumberPrefix
-        /// </summary>
+        /// <summary> The acknowledgement control number prefix. </summary>
         public string AcknowledgementControlNumberPrefix { get; set; }
-        /// <summary>
-        /// The acknowledgement control number suffix.
-        /// Serialized Name: EdifactAcknowledgementSettings.acknowledgementControlNumberSuffix
-        /// </summary>
+        /// <summary> The acknowledgement control number suffix. </summary>
         public string AcknowledgementControlNumberSuffix { get; set; }
-        /// <summary>
-        /// The acknowledgement control number lower bound.
-        /// Serialized Name: EdifactAcknowledgementSettings.acknowledgementControlNumberLowerBound
-        /// </summary>
+        /// <summary> The acknowledgement control number lower bound. </summary>
         public int AcknowledgementControlNumberLowerBound { get; set; }
-        /// <summary>
-        /// The acknowledgement control number upper bound.
-        /// Serialized Name: EdifactAcknowledgementSettings.acknowledgementControlNumberUpperBound
-        /// </summary>
+        /// <summary> The acknowledgement control number upper bound. </summary>
         public int AcknowledgementControlNumberUpperBound { get; set; }
-        /// <summary>
-        /// The value indicating whether to rollover acknowledgement control number.
-        /// Serialized Name: EdifactAcknowledgementSettings.rolloverAcknowledgementControlNumber
-        /// </summary>
+        /// <summary> The value indicating whether to rollover acknowledgement control number. </summary>
         public bool RolloverAcknowledgementControlNumber { get; set; }
     }
 }

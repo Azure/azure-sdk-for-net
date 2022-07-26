@@ -7,41 +7,17 @@
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary>
-    /// The Edifact delimiter override settings.
-    /// Serialized Name: EdifactDelimiterOverride
-    /// </summary>
+    /// <summary> The Edifact delimiter override settings. </summary>
     public partial class EdifactDelimiterOverride
     {
         /// <summary> Initializes a new instance of EdifactDelimiterOverride. </summary>
-        /// <param name="dataElementSeparator">
-        /// The data element separator.
-        /// Serialized Name: EdifactDelimiterOverride.dataElementSeparator
-        /// </param>
-        /// <param name="componentSeparator">
-        /// The component separator.
-        /// Serialized Name: EdifactDelimiterOverride.componentSeparator
-        /// </param>
-        /// <param name="segmentTerminator">
-        /// The segment terminator.
-        /// Serialized Name: EdifactDelimiterOverride.segmentTerminator
-        /// </param>
-        /// <param name="repetitionSeparator">
-        /// The repetition separator.
-        /// Serialized Name: EdifactDelimiterOverride.repetitionSeparator
-        /// </param>
-        /// <param name="segmentTerminatorSuffix">
-        /// The segment terminator suffix.
-        /// Serialized Name: EdifactDelimiterOverride.segmentTerminatorSuffix
-        /// </param>
-        /// <param name="decimalPointIndicator">
-        /// The decimal point indicator.
-        /// Serialized Name: EdifactDelimiterOverride.decimalPointIndicator
-        /// </param>
-        /// <param name="releaseIndicator">
-        /// The release indicator.
-        /// Serialized Name: EdifactDelimiterOverride.releaseIndicator
-        /// </param>
+        /// <param name="dataElementSeparator"> The data element separator. </param>
+        /// <param name="componentSeparator"> The component separator. </param>
+        /// <param name="segmentTerminator"> The segment terminator. </param>
+        /// <param name="repetitionSeparator"> The repetition separator. </param>
+        /// <param name="segmentTerminatorSuffix"> The segment terminator suffix. </param>
+        /// <param name="decimalPointIndicator"> The decimal point indicator. </param>
+        /// <param name="releaseIndicator"> The release indicator. </param>
         public EdifactDelimiterOverride(int dataElementSeparator, int componentSeparator, int segmentTerminator, int repetitionSeparator, SegmentTerminatorSuffix segmentTerminatorSuffix, EdifactDecimalIndicator decimalPointIndicator, int releaseIndicator)
         {
             DataElementSeparator = dataElementSeparator;
@@ -54,54 +30,18 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of EdifactDelimiterOverride. </summary>
-        /// <param name="messageId">
-        /// The message id.
-        /// Serialized Name: EdifactDelimiterOverride.messageId
-        /// </param>
-        /// <param name="messageVersion">
-        /// The message version.
-        /// Serialized Name: EdifactDelimiterOverride.messageVersion
-        /// </param>
-        /// <param name="messageRelease">
-        /// The message release.
-        /// Serialized Name: EdifactDelimiterOverride.messageRelease
-        /// </param>
-        /// <param name="dataElementSeparator">
-        /// The data element separator.
-        /// Serialized Name: EdifactDelimiterOverride.dataElementSeparator
-        /// </param>
-        /// <param name="componentSeparator">
-        /// The component separator.
-        /// Serialized Name: EdifactDelimiterOverride.componentSeparator
-        /// </param>
-        /// <param name="segmentTerminator">
-        /// The segment terminator.
-        /// Serialized Name: EdifactDelimiterOverride.segmentTerminator
-        /// </param>
-        /// <param name="repetitionSeparator">
-        /// The repetition separator.
-        /// Serialized Name: EdifactDelimiterOverride.repetitionSeparator
-        /// </param>
-        /// <param name="segmentTerminatorSuffix">
-        /// The segment terminator suffix.
-        /// Serialized Name: EdifactDelimiterOverride.segmentTerminatorSuffix
-        /// </param>
-        /// <param name="decimalPointIndicator">
-        /// The decimal point indicator.
-        /// Serialized Name: EdifactDelimiterOverride.decimalPointIndicator
-        /// </param>
-        /// <param name="releaseIndicator">
-        /// The release indicator.
-        /// Serialized Name: EdifactDelimiterOverride.releaseIndicator
-        /// </param>
-        /// <param name="messageAssociationAssignedCode">
-        /// The message association assigned code.
-        /// Serialized Name: EdifactDelimiterOverride.messageAssociationAssignedCode
-        /// </param>
-        /// <param name="targetNamespace">
-        /// The target namespace on which this delimiter settings has to be applied.
-        /// Serialized Name: EdifactDelimiterOverride.targetNamespace
-        /// </param>
+        /// <param name="messageId"> The message id. </param>
+        /// <param name="messageVersion"> The message version. </param>
+        /// <param name="messageRelease"> The message release. </param>
+        /// <param name="dataElementSeparator"> The data element separator. </param>
+        /// <param name="componentSeparator"> The component separator. </param>
+        /// <param name="segmentTerminator"> The segment terminator. </param>
+        /// <param name="repetitionSeparator"> The repetition separator. </param>
+        /// <param name="segmentTerminatorSuffix"> The segment terminator suffix. </param>
+        /// <param name="decimalPointIndicator"> The decimal point indicator. </param>
+        /// <param name="releaseIndicator"> The release indicator. </param>
+        /// <param name="messageAssociationAssignedCode"> The message association assigned code. </param>
+        /// <param name="targetNamespace"> The target namespace on which this delimiter settings has to be applied. </param>
         internal EdifactDelimiterOverride(string messageId, string messageVersion, string messageRelease, int dataElementSeparator, int componentSeparator, int segmentTerminator, int repetitionSeparator, SegmentTerminatorSuffix segmentTerminatorSuffix, EdifactDecimalIndicator decimalPointIndicator, int releaseIndicator, string messageAssociationAssignedCode, string targetNamespace)
         {
             MessageId = messageId;
@@ -118,65 +58,29 @@ namespace Azure.ResourceManager.Logic.Models
             TargetNamespace = targetNamespace;
         }
 
-        /// <summary>
-        /// The message id.
-        /// Serialized Name: EdifactDelimiterOverride.messageId
-        /// </summary>
+        /// <summary> The message id. </summary>
         public string MessageId { get; set; }
-        /// <summary>
-        /// The message version.
-        /// Serialized Name: EdifactDelimiterOverride.messageVersion
-        /// </summary>
+        /// <summary> The message version. </summary>
         public string MessageVersion { get; set; }
-        /// <summary>
-        /// The message release.
-        /// Serialized Name: EdifactDelimiterOverride.messageRelease
-        /// </summary>
+        /// <summary> The message release. </summary>
         public string MessageRelease { get; set; }
-        /// <summary>
-        /// The data element separator.
-        /// Serialized Name: EdifactDelimiterOverride.dataElementSeparator
-        /// </summary>
+        /// <summary> The data element separator. </summary>
         public int DataElementSeparator { get; set; }
-        /// <summary>
-        /// The component separator.
-        /// Serialized Name: EdifactDelimiterOverride.componentSeparator
-        /// </summary>
+        /// <summary> The component separator. </summary>
         public int ComponentSeparator { get; set; }
-        /// <summary>
-        /// The segment terminator.
-        /// Serialized Name: EdifactDelimiterOverride.segmentTerminator
-        /// </summary>
+        /// <summary> The segment terminator. </summary>
         public int SegmentTerminator { get; set; }
-        /// <summary>
-        /// The repetition separator.
-        /// Serialized Name: EdifactDelimiterOverride.repetitionSeparator
-        /// </summary>
+        /// <summary> The repetition separator. </summary>
         public int RepetitionSeparator { get; set; }
-        /// <summary>
-        /// The segment terminator suffix.
-        /// Serialized Name: EdifactDelimiterOverride.segmentTerminatorSuffix
-        /// </summary>
+        /// <summary> The segment terminator suffix. </summary>
         public SegmentTerminatorSuffix SegmentTerminatorSuffix { get; set; }
-        /// <summary>
-        /// The decimal point indicator.
-        /// Serialized Name: EdifactDelimiterOverride.decimalPointIndicator
-        /// </summary>
+        /// <summary> The decimal point indicator. </summary>
         public EdifactDecimalIndicator DecimalPointIndicator { get; set; }
-        /// <summary>
-        /// The release indicator.
-        /// Serialized Name: EdifactDelimiterOverride.releaseIndicator
-        /// </summary>
+        /// <summary> The release indicator. </summary>
         public int ReleaseIndicator { get; set; }
-        /// <summary>
-        /// The message association assigned code.
-        /// Serialized Name: EdifactDelimiterOverride.messageAssociationAssignedCode
-        /// </summary>
+        /// <summary> The message association assigned code. </summary>
         public string MessageAssociationAssignedCode { get; set; }
-        /// <summary>
-        /// The target namespace on which this delimiter settings has to be applied.
-        /// Serialized Name: EdifactDelimiterOverride.targetNamespace
-        /// </summary>
+        /// <summary> The target namespace on which this delimiter settings has to be applied. </summary>
         public string TargetNamespace { get; set; }
     }
 }

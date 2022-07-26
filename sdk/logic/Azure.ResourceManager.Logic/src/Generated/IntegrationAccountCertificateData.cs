@@ -29,27 +29,12 @@ namespace Azure.ResourceManager.Logic
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="createdOn">
-        /// The created time.
-        /// Serialized Name: IntegrationAccountCertificate.properties.createdTime
-        /// </param>
-        /// <param name="changedOn">
-        /// The changed time.
-        /// Serialized Name: IntegrationAccountCertificate.properties.changedTime
-        /// </param>
-        /// <param name="metadata">
-        /// The metadata.
-        /// Serialized Name: IntegrationAccountCertificate.properties.metadata
-        /// </param>
-        /// <param name="key">
-        /// The key details in the key vault.
-        /// Serialized Name: IntegrationAccountCertificate.properties.key
-        /// </param>
-        /// <param name="publicCertificate">
-        /// The public certificate.
-        /// Serialized Name: IntegrationAccountCertificate.properties.publicCertificate
-        /// </param>
-        internal IntegrationAccountCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DateTimeOffset? createdOn, DateTimeOffset? changedOn, BinaryData metadata, KeyVaultKeyReference key, BinaryData publicCertificate) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="createdOn"> The created time. </param>
+        /// <param name="changedOn"> The changed time. </param>
+        /// <param name="metadata"> The metadata. </param>
+        /// <param name="key"> The key details in the key vault. </param>
+        /// <param name="publicCertificate"> The public certificate. </param>
+        internal IntegrationAccountCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DateTimeOffset? createdOn, DateTimeOffset? changedOn, BinaryData metadata, IntegrationAccountKeyVaultKeyReference key, BinaryData publicCertificate) : base(id, name, resourceType, systemData, tags, location)
         {
             CreatedOn = createdOn;
             ChangedOn = changedOn;
@@ -58,30 +43,15 @@ namespace Azure.ResourceManager.Logic
             PublicCertificate = publicCertificate;
         }
 
-        /// <summary>
-        /// The created time.
-        /// Serialized Name: IntegrationAccountCertificate.properties.createdTime
-        /// </summary>
+        /// <summary> The created time. </summary>
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary>
-        /// The changed time.
-        /// Serialized Name: IntegrationAccountCertificate.properties.changedTime
-        /// </summary>
+        /// <summary> The changed time. </summary>
         public DateTimeOffset? ChangedOn { get; }
-        /// <summary>
-        /// The metadata.
-        /// Serialized Name: IntegrationAccountCertificate.properties.metadata
-        /// </summary>
+        /// <summary> The metadata. </summary>
         public BinaryData Metadata { get; set; }
-        /// <summary>
-        /// The key details in the key vault.
-        /// Serialized Name: IntegrationAccountCertificate.properties.key
-        /// </summary>
-        public KeyVaultKeyReference Key { get; set; }
-        /// <summary>
-        /// The public certificate.
-        /// Serialized Name: IntegrationAccountCertificate.properties.publicCertificate
-        /// </summary>
+        /// <summary> The key details in the key vault. </summary>
+        public IntegrationAccountKeyVaultKeyReference Key { get; set; }
+        /// <summary> The public certificate. </summary>
         public BinaryData PublicCertificate { get; set; }
     }
 }

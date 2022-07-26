@@ -7,26 +7,14 @@
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary>
-    /// The edifact decimal indicator.
-    /// Serialized Name: EdifactDecimalIndicator
-    /// </summary>
+    /// <summary> The edifact decimal indicator. </summary>
     public enum EdifactDecimalIndicator
     {
-        /// <summary>
-        /// NotSpecified
-        /// Serialized Name: EdifactDecimalIndicator.NotSpecified
-        /// </summary>
+        /// <summary> NotSpecified. </summary>
         NotSpecified,
-        /// <summary>
-        /// Comma
-        /// Serialized Name: EdifactDecimalIndicator.Comma
-        /// </summary>
+        /// <summary> Comma. </summary>
         Comma,
-        /// <summary>
-        /// Decimal
-        /// Serialized Name: EdifactDecimalIndicator.Decimal
-        /// </summary>
+        /// <summary> Decimal. </summary>
         Decimal
     }
 }

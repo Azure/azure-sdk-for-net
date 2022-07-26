@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary>
-    /// Open authentication policy provider type.
-    /// Serialized Name: OpenAuthenticationProviderType
-    /// </summary>
+    /// <summary> Open authentication policy provider type. </summary>
     public readonly partial struct OpenAuthenticationProviderType : IEquatable<OpenAuthenticationProviderType>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.Logic.Models
 
         private const string AADValue = "AAD";
 
-        /// <summary>
-        /// AAD
-        /// Serialized Name: OpenAuthenticationProviderType.AAD
-        /// </summary>
+        /// <summary> AAD. </summary>
         public static OpenAuthenticationProviderType AAD { get; } = new OpenAuthenticationProviderType(AADValue);
         /// <summary> Determines if two <see cref="OpenAuthenticationProviderType"/> values are the same. </summary>
         public static bool operator ==(OpenAuthenticationProviderType left, OpenAuthenticationProviderType right) => left.Equals(right);

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary>
-    /// The integration service environment network dependency category type.
-    /// Serialized Name: IntegrationServiceEnvironmentNetworkDependencyCategoryType
-    /// </summary>
+    /// <summary> The integration service environment network dependency category type. </summary>
     public readonly partial struct IntegrationServiceEnvironmentNetworkDependencyCategoryType : IEquatable<IntegrationServiceEnvironmentNetworkDependencyCategoryType>
     {
         private readonly string _value;
@@ -29,74 +26,38 @@ namespace Azure.ResourceManager.Logic.Models
         private const string AzureStorageValue = "AzureStorage";
         private const string AzureManagementValue = "AzureManagement";
         private const string AzureActiveDirectoryValue = "AzureActiveDirectory";
-        private const string SSLCertificateVerificationValue = "SSLCertificateVerification";
+        private const string SslCertificateVerificationValue = "SSLCertificateVerification";
         private const string DiagnosticLogsAndMetricsValue = "DiagnosticLogsAndMetrics";
         private const string IntegrationServiceEnvironmentConnectorsValue = "IntegrationServiceEnvironmentConnectors";
         private const string RedisCacheValue = "RedisCache";
         private const string AccessEndpointsValue = "AccessEndpoints";
         private const string RecoveryServiceValue = "RecoveryService";
-        private const string SQLValue = "SQL";
+        private const string SqlValue = "SQL";
         private const string RegionalServiceValue = "RegionalService";
 
-        /// <summary>
-        /// NotSpecified
-        /// Serialized Name: IntegrationServiceEnvironmentNetworkDependencyCategoryType.NotSpecified
-        /// </summary>
+        /// <summary> NotSpecified. </summary>
         public static IntegrationServiceEnvironmentNetworkDependencyCategoryType NotSpecified { get; } = new IntegrationServiceEnvironmentNetworkDependencyCategoryType(NotSpecifiedValue);
-        /// <summary>
-        /// AzureStorage
-        /// Serialized Name: IntegrationServiceEnvironmentNetworkDependencyCategoryType.AzureStorage
-        /// </summary>
+        /// <summary> AzureStorage. </summary>
         public static IntegrationServiceEnvironmentNetworkDependencyCategoryType AzureStorage { get; } = new IntegrationServiceEnvironmentNetworkDependencyCategoryType(AzureStorageValue);
-        /// <summary>
-        /// AzureManagement
-        /// Serialized Name: IntegrationServiceEnvironmentNetworkDependencyCategoryType.AzureManagement
-        /// </summary>
+        /// <summary> AzureManagement. </summary>
         public static IntegrationServiceEnvironmentNetworkDependencyCategoryType AzureManagement { get; } = new IntegrationServiceEnvironmentNetworkDependencyCategoryType(AzureManagementValue);
-        /// <summary>
-        /// AzureActiveDirectory
-        /// Serialized Name: IntegrationServiceEnvironmentNetworkDependencyCategoryType.AzureActiveDirectory
-        /// </summary>
+        /// <summary> AzureActiveDirectory. </summary>
         public static IntegrationServiceEnvironmentNetworkDependencyCategoryType AzureActiveDirectory { get; } = new IntegrationServiceEnvironmentNetworkDependencyCategoryType(AzureActiveDirectoryValue);
-        /// <summary>
-        /// SSLCertificateVerification
-        /// Serialized Name: IntegrationServiceEnvironmentNetworkDependencyCategoryType.SSLCertificateVerification
-        /// </summary>
-        public static IntegrationServiceEnvironmentNetworkDependencyCategoryType SSLCertificateVerification { get; } = new IntegrationServiceEnvironmentNetworkDependencyCategoryType(SSLCertificateVerificationValue);
-        /// <summary>
-        /// DiagnosticLogsAndMetrics
-        /// Serialized Name: IntegrationServiceEnvironmentNetworkDependencyCategoryType.DiagnosticLogsAndMetrics
-        /// </summary>
+        /// <summary> SSLCertificateVerification. </summary>
+        public static IntegrationServiceEnvironmentNetworkDependencyCategoryType SslCertificateVerification { get; } = new IntegrationServiceEnvironmentNetworkDependencyCategoryType(SslCertificateVerificationValue);
+        /// <summary> DiagnosticLogsAndMetrics. </summary>
         public static IntegrationServiceEnvironmentNetworkDependencyCategoryType DiagnosticLogsAndMetrics { get; } = new IntegrationServiceEnvironmentNetworkDependencyCategoryType(DiagnosticLogsAndMetricsValue);
-        /// <summary>
-        /// IntegrationServiceEnvironmentConnectors
-        /// Serialized Name: IntegrationServiceEnvironmentNetworkDependencyCategoryType.IntegrationServiceEnvironmentConnectors
-        /// </summary>
+        /// <summary> IntegrationServiceEnvironmentConnectors. </summary>
         public static IntegrationServiceEnvironmentNetworkDependencyCategoryType IntegrationServiceEnvironmentConnectors { get; } = new IntegrationServiceEnvironmentNetworkDependencyCategoryType(IntegrationServiceEnvironmentConnectorsValue);
-        /// <summary>
-        /// RedisCache
-        /// Serialized Name: IntegrationServiceEnvironmentNetworkDependencyCategoryType.RedisCache
-        /// </summary>
+        /// <summary> RedisCache. </summary>
         public static IntegrationServiceEnvironmentNetworkDependencyCategoryType RedisCache { get; } = new IntegrationServiceEnvironmentNetworkDependencyCategoryType(RedisCacheValue);
-        /// <summary>
-        /// AccessEndpoints
-        /// Serialized Name: IntegrationServiceEnvironmentNetworkDependencyCategoryType.AccessEndpoints
-        /// </summary>
+        /// <summary> AccessEndpoints. </summary>
         public static IntegrationServiceEnvironmentNetworkDependencyCategoryType AccessEndpoints { get; } = new IntegrationServiceEnvironmentNetworkDependencyCategoryType(AccessEndpointsValue);
-        /// <summary>
-        /// RecoveryService
-        /// Serialized Name: IntegrationServiceEnvironmentNetworkDependencyCategoryType.RecoveryService
-        /// </summary>
+        /// <summary> RecoveryService. </summary>
         public static IntegrationServiceEnvironmentNetworkDependencyCategoryType RecoveryService { get; } = new IntegrationServiceEnvironmentNetworkDependencyCategoryType(RecoveryServiceValue);
-        /// <summary>
-        /// SQL
-        /// Serialized Name: IntegrationServiceEnvironmentNetworkDependencyCategoryType.SQL
-        /// </summary>
-        public static IntegrationServiceEnvironmentNetworkDependencyCategoryType SQL { get; } = new IntegrationServiceEnvironmentNetworkDependencyCategoryType(SQLValue);
-        /// <summary>
-        /// RegionalService
-        /// Serialized Name: IntegrationServiceEnvironmentNetworkDependencyCategoryType.RegionalService
-        /// </summary>
+        /// <summary> SQL. </summary>
+        public static IntegrationServiceEnvironmentNetworkDependencyCategoryType Sql { get; } = new IntegrationServiceEnvironmentNetworkDependencyCategoryType(SqlValue);
+        /// <summary> RegionalService. </summary>
         public static IntegrationServiceEnvironmentNetworkDependencyCategoryType RegionalService { get; } = new IntegrationServiceEnvironmentNetworkDependencyCategoryType(RegionalServiceValue);
         /// <summary> Determines if two <see cref="IntegrationServiceEnvironmentNetworkDependencyCategoryType"/> values are the same. </summary>
         public static bool operator ==(IntegrationServiceEnvironmentNetworkDependencyCategoryType left, IntegrationServiceEnvironmentNetworkDependencyCategoryType right) => left.Equals(right);

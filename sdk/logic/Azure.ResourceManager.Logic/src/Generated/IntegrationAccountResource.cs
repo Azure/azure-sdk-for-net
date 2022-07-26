@@ -542,18 +542,18 @@ namespace Azure.ResourceManager.Logic
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/integrationAccounts/{integrationAccountName}/listCallbackUrl
         /// Operation Id: IntegrationAccounts_ListCallbackUrl
         /// </summary>
-        /// <param name="getCallbackUrlParameters"> The callback URL parameters. </param>
+        /// <param name="info"> The callback URL parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="getCallbackUrlParameters"/> is null. </exception>
-        public virtual async Task<Response<IntegrationAccountCallbackUri>> GetCallbackUrlAsync(GetCallbackUrlParameters getCallbackUrlParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
+        public virtual async Task<Response<ListOperationCallbackUri>> GetCallbackUrlAsync(ListOperationCallbackUrlParameterInfo info, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(getCallbackUrlParameters, nameof(getCallbackUrlParameters));
+            Argument.AssertNotNull(info, nameof(info));
 
             using var scope = _integrationAccountClientDiagnostics.CreateScope("IntegrationAccountResource.GetCallbackUrl");
             scope.Start();
             try
             {
-                var response = await _integrationAccountRestClient.ListCallbackUrlAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, getCallbackUrlParameters, cancellationToken).ConfigureAwait(false);
+                var response = await _integrationAccountRestClient.ListCallbackUrlAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, info, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -568,18 +568,18 @@ namespace Azure.ResourceManager.Logic
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/integrationAccounts/{integrationAccountName}/listCallbackUrl
         /// Operation Id: IntegrationAccounts_ListCallbackUrl
         /// </summary>
-        /// <param name="getCallbackUrlParameters"> The callback URL parameters. </param>
+        /// <param name="info"> The callback URL parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="getCallbackUrlParameters"/> is null. </exception>
-        public virtual Response<IntegrationAccountCallbackUri> GetCallbackUrl(GetCallbackUrlParameters getCallbackUrlParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
+        public virtual Response<ListOperationCallbackUri> GetCallbackUrl(ListOperationCallbackUrlParameterInfo info, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(getCallbackUrlParameters, nameof(getCallbackUrlParameters));
+            Argument.AssertNotNull(info, nameof(info));
 
             using var scope = _integrationAccountClientDiagnostics.CreateScope("IntegrationAccountResource.GetCallbackUrl");
             scope.Start();
             try
             {
-                var response = _integrationAccountRestClient.ListCallbackUrl(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, getCallbackUrlParameters, cancellationToken);
+                var response = _integrationAccountRestClient.ListCallbackUrl(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, info, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -594,21 +594,21 @@ namespace Azure.ResourceManager.Logic
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/integrationAccounts/{integrationAccountName}/listKeyVaultKeys
         /// Operation Id: IntegrationAccounts_ListKeyVaultKeys
         /// </summary>
-        /// <param name="listKeyVaultKeys"> The key vault parameters. </param>
+        /// <param name="content"> The key vault parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="listKeyVaultKeys"/> is null. </exception>
-        /// <returns> An async collection of <see cref="KeyVaultKey" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<KeyVaultKey> GetKeyVaultKeysAsync(ListKeyVaultKeysDefinition listKeyVaultKeys, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <returns> An async collection of <see cref="IntegrationAccountKeyVaultKey" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<IntegrationAccountKeyVaultKey> GetKeyVaultKeysAsync(IntegrationAccountListKeyVaultKeyContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(listKeyVaultKeys, nameof(listKeyVaultKeys));
+            Argument.AssertNotNull(content, nameof(content));
 
-            async Task<Page<KeyVaultKey>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<IntegrationAccountKeyVaultKey>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _integrationAccountClientDiagnostics.CreateScope("IntegrationAccountResource.GetKeyVaultKeys");
                 scope.Start();
                 try
                 {
-                    var response = await _integrationAccountRestClient.ListKeyVaultKeysAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, listKeyVaultKeys, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _integrationAccountRestClient.ListKeyVaultKeysAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -625,21 +625,21 @@ namespace Azure.ResourceManager.Logic
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/integrationAccounts/{integrationAccountName}/listKeyVaultKeys
         /// Operation Id: IntegrationAccounts_ListKeyVaultKeys
         /// </summary>
-        /// <param name="listKeyVaultKeys"> The key vault parameters. </param>
+        /// <param name="content"> The key vault parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="listKeyVaultKeys"/> is null. </exception>
-        /// <returns> A collection of <see cref="KeyVaultKey" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<KeyVaultKey> GetKeyVaultKeys(ListKeyVaultKeysDefinition listKeyVaultKeys, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <returns> A collection of <see cref="IntegrationAccountKeyVaultKey" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<IntegrationAccountKeyVaultKey> GetKeyVaultKeys(IntegrationAccountListKeyVaultKeyContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(listKeyVaultKeys, nameof(listKeyVaultKeys));
+            Argument.AssertNotNull(content, nameof(content));
 
-            Page<KeyVaultKey> FirstPageFunc(int? pageSizeHint)
+            Page<IntegrationAccountKeyVaultKey> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _integrationAccountClientDiagnostics.CreateScope("IntegrationAccountResource.GetKeyVaultKeys");
                 scope.Start();
                 try
                 {
-                    var response = _integrationAccountRestClient.ListKeyVaultKeys(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, listKeyVaultKeys, cancellationToken: cancellationToken);
+                    var response = _integrationAccountRestClient.ListKeyVaultKeys(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -708,18 +708,18 @@ namespace Azure.ResourceManager.Logic
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/integrationAccounts/{integrationAccountName}/regenerateAccessKey
         /// Operation Id: IntegrationAccounts_RegenerateAccessKey
         /// </summary>
-        /// <param name="regenerateAccessKey"> The access key type. </param>
+        /// <param name="content"> The access key type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="regenerateAccessKey"/> is null. </exception>
-        public virtual async Task<Response<IntegrationAccountResource>> RegenerateAccessKeyAsync(RegenerateActionParameter regenerateAccessKey, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<IntegrationAccountResource>> RegenerateAccessKeyAsync(LogicWorkflowRegenerateActionContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(regenerateAccessKey, nameof(regenerateAccessKey));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _integrationAccountClientDiagnostics.CreateScope("IntegrationAccountResource.RegenerateAccessKey");
             scope.Start();
             try
             {
-                var response = await _integrationAccountRestClient.RegenerateAccessKeyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, regenerateAccessKey, cancellationToken).ConfigureAwait(false);
+                var response = await _integrationAccountRestClient.RegenerateAccessKeyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new IntegrationAccountResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -734,18 +734,18 @@ namespace Azure.ResourceManager.Logic
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/integrationAccounts/{integrationAccountName}/regenerateAccessKey
         /// Operation Id: IntegrationAccounts_RegenerateAccessKey
         /// </summary>
-        /// <param name="regenerateAccessKey"> The access key type. </param>
+        /// <param name="content"> The access key type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="regenerateAccessKey"/> is null. </exception>
-        public virtual Response<IntegrationAccountResource> RegenerateAccessKey(RegenerateActionParameter regenerateAccessKey, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<IntegrationAccountResource> RegenerateAccessKey(LogicWorkflowRegenerateActionContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(regenerateAccessKey, nameof(regenerateAccessKey));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _integrationAccountClientDiagnostics.CreateScope("IntegrationAccountResource.RegenerateAccessKey");
             scope.Start();
             try
             {
-                var response = _integrationAccountRestClient.RegenerateAccessKey(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, regenerateAccessKey, cancellationToken);
+                var response = _integrationAccountRestClient.RegenerateAccessKey(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
                 return Response.FromValue(new IntegrationAccountResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

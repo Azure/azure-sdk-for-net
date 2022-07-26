@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary>
-    /// The correlation property.
-    /// Serialized Name: Correlation
-    /// </summary>
+    /// <summary> The correlation property. </summary>
     internal partial class Correlation
     {
         /// <summary> Initializes a new instance of Correlation. </summary>
@@ -19,19 +16,13 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of Correlation. </summary>
-        /// <param name="clientTrackingId">
-        /// The client tracking id.
-        /// Serialized Name: Correlation.clientTrackingId
-        /// </param>
+        /// <param name="clientTrackingId"> The client tracking id. </param>
         internal Correlation(string clientTrackingId)
         {
             ClientTrackingId = clientTrackingId;
         }
 
-        /// <summary>
-        /// The client tracking id.
-        /// Serialized Name: Correlation.clientTrackingId
-        /// </summary>
+        /// <summary> The client tracking id. </summary>
         public string ClientTrackingId { get; }
     }
 }

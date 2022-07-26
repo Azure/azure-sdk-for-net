@@ -7,37 +7,16 @@
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary>
-    /// The X12 processing settings.
-    /// Serialized Name: X12ProcessingSettings
-    /// </summary>
+    /// <summary> The X12 processing settings. </summary>
     public partial class X12ProcessingSettings
     {
         /// <summary> Initializes a new instance of X12ProcessingSettings. </summary>
-        /// <param name="maskSecurityInfo">
-        /// The value indicating whether to mask security information.
-        /// Serialized Name: X12ProcessingSettings.maskSecurityInfo
-        /// </param>
-        /// <param name="convertImpliedDecimal">
-        /// The value indicating whether to convert numerical type to implied decimal.
-        /// Serialized Name: X12ProcessingSettings.convertImpliedDecimal
-        /// </param>
-        /// <param name="preserveInterchange">
-        /// The value indicating whether to preserve interchange.
-        /// Serialized Name: X12ProcessingSettings.preserveInterchange
-        /// </param>
-        /// <param name="suspendInterchangeOnError">
-        /// The value indicating whether to suspend interchange on error.
-        /// Serialized Name: X12ProcessingSettings.suspendInterchangeOnError
-        /// </param>
-        /// <param name="createEmptyXmlTagsForTrailingSeparators">
-        /// The value indicating whether to create empty xml tags for trailing separators.
-        /// Serialized Name: X12ProcessingSettings.createEmptyXmlTagsForTrailingSeparators
-        /// </param>
-        /// <param name="useDotAsDecimalSeparator">
-        /// The value indicating whether to use dot as decimal separator.
-        /// Serialized Name: X12ProcessingSettings.useDotAsDecimalSeparator
-        /// </param>
+        /// <param name="maskSecurityInfo"> The value indicating whether to mask security information. </param>
+        /// <param name="convertImpliedDecimal"> The value indicating whether to convert numerical type to implied decimal. </param>
+        /// <param name="preserveInterchange"> The value indicating whether to preserve interchange. </param>
+        /// <param name="suspendInterchangeOnError"> The value indicating whether to suspend interchange on error. </param>
+        /// <param name="createEmptyXmlTagsForTrailingSeparators"> The value indicating whether to create empty xml tags for trailing separators. </param>
+        /// <param name="useDotAsDecimalSeparator"> The value indicating whether to use dot as decimal separator. </param>
         public X12ProcessingSettings(bool maskSecurityInfo, bool convertImpliedDecimal, bool preserveInterchange, bool suspendInterchangeOnError, bool createEmptyXmlTagsForTrailingSeparators, bool useDotAsDecimalSeparator)
         {
             MaskSecurityInfo = maskSecurityInfo;
@@ -48,35 +27,17 @@ namespace Azure.ResourceManager.Logic.Models
             UseDotAsDecimalSeparator = useDotAsDecimalSeparator;
         }
 
-        /// <summary>
-        /// The value indicating whether to mask security information.
-        /// Serialized Name: X12ProcessingSettings.maskSecurityInfo
-        /// </summary>
+        /// <summary> The value indicating whether to mask security information. </summary>
         public bool MaskSecurityInfo { get; set; }
-        /// <summary>
-        /// The value indicating whether to convert numerical type to implied decimal.
-        /// Serialized Name: X12ProcessingSettings.convertImpliedDecimal
-        /// </summary>
+        /// <summary> The value indicating whether to convert numerical type to implied decimal. </summary>
         public bool ConvertImpliedDecimal { get; set; }
-        /// <summary>
-        /// The value indicating whether to preserve interchange.
-        /// Serialized Name: X12ProcessingSettings.preserveInterchange
-        /// </summary>
+        /// <summary> The value indicating whether to preserve interchange. </summary>
         public bool PreserveInterchange { get; set; }
-        /// <summary>
-        /// The value indicating whether to suspend interchange on error.
-        /// Serialized Name: X12ProcessingSettings.suspendInterchangeOnError
-        /// </summary>
+        /// <summary> The value indicating whether to suspend interchange on error. </summary>
         public bool SuspendInterchangeOnError { get; set; }
-        /// <summary>
-        /// The value indicating whether to create empty xml tags for trailing separators.
-        /// Serialized Name: X12ProcessingSettings.createEmptyXmlTagsForTrailingSeparators
-        /// </summary>
+        /// <summary> The value indicating whether to create empty xml tags for trailing separators. </summary>
         public bool CreateEmptyXmlTagsForTrailingSeparators { get; set; }
-        /// <summary>
-        /// The value indicating whether to use dot as decimal separator.
-        /// Serialized Name: X12ProcessingSettings.useDotAsDecimalSeparator
-        /// </summary>
+        /// <summary> The value indicating whether to use dot as decimal separator. </summary>
         public bool UseDotAsDecimalSeparator { get; set; }
     }
 }

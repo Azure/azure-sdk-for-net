@@ -7,57 +7,21 @@
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary>
-    /// The X12 agreement acknowledgement settings.
-    /// Serialized Name: X12AcknowledgementSettings
-    /// </summary>
+    /// <summary> The X12 agreement acknowledgement settings. </summary>
     public partial class X12AcknowledgementSettings
     {
         /// <summary> Initializes a new instance of X12AcknowledgementSettings. </summary>
-        /// <param name="needTechnicalAcknowledgement">
-        /// The value indicating whether technical acknowledgement is needed.
-        /// Serialized Name: X12AcknowledgementSettings.needTechnicalAcknowledgement
-        /// </param>
-        /// <param name="batchTechnicalAcknowledgement">
-        /// The value indicating whether to batch the technical acknowledgements.
-        /// Serialized Name: X12AcknowledgementSettings.batchTechnicalAcknowledgements
-        /// </param>
-        /// <param name="needFunctionalAcknowledgement">
-        /// The value indicating whether functional acknowledgement is needed.
-        /// Serialized Name: X12AcknowledgementSettings.needFunctionalAcknowledgement
-        /// </param>
-        /// <param name="batchFunctionalAcknowledgement">
-        /// The value indicating whether to batch functional acknowledgements.
-        /// Serialized Name: X12AcknowledgementSettings.batchFunctionalAcknowledgements
-        /// </param>
-        /// <param name="needImplementationAcknowledgement">
-        /// The value indicating whether implementation acknowledgement is needed.
-        /// Serialized Name: X12AcknowledgementSettings.needImplementationAcknowledgement
-        /// </param>
-        /// <param name="batchImplementationAcknowledgement">
-        /// The value indicating whether to batch implementation acknowledgements.
-        /// Serialized Name: X12AcknowledgementSettings.batchImplementationAcknowledgements
-        /// </param>
-        /// <param name="needLoopForValidMessages">
-        /// The value indicating whether a loop is needed for valid messages.
-        /// Serialized Name: X12AcknowledgementSettings.needLoopForValidMessages
-        /// </param>
-        /// <param name="sendSynchronousAcknowledgement">
-        /// The value indicating whether to send synchronous acknowledgement.
-        /// Serialized Name: X12AcknowledgementSettings.sendSynchronousAcknowledgement
-        /// </param>
-        /// <param name="acknowledgementControlNumberLowerBound">
-        /// The acknowledgement control number lower bound.
-        /// Serialized Name: X12AcknowledgementSettings.acknowledgementControlNumberLowerBound
-        /// </param>
-        /// <param name="acknowledgementControlNumberUpperBound">
-        /// The acknowledgement control number upper bound.
-        /// Serialized Name: X12AcknowledgementSettings.acknowledgementControlNumberUpperBound
-        /// </param>
-        /// <param name="rolloverAcknowledgementControlNumber">
-        /// The value indicating whether to rollover acknowledgement control number.
-        /// Serialized Name: X12AcknowledgementSettings.rolloverAcknowledgementControlNumber
-        /// </param>
+        /// <param name="needTechnicalAcknowledgement"> The value indicating whether technical acknowledgement is needed. </param>
+        /// <param name="batchTechnicalAcknowledgement"> The value indicating whether to batch the technical acknowledgements. </param>
+        /// <param name="needFunctionalAcknowledgement"> The value indicating whether functional acknowledgement is needed. </param>
+        /// <param name="batchFunctionalAcknowledgement"> The value indicating whether to batch functional acknowledgements. </param>
+        /// <param name="needImplementationAcknowledgement"> The value indicating whether implementation acknowledgement is needed. </param>
+        /// <param name="batchImplementationAcknowledgement"> The value indicating whether to batch implementation acknowledgements. </param>
+        /// <param name="needLoopForValidMessages"> The value indicating whether a loop is needed for valid messages. </param>
+        /// <param name="sendSynchronousAcknowledgement"> The value indicating whether to send synchronous acknowledgement. </param>
+        /// <param name="acknowledgementControlNumberLowerBound"> The acknowledgement control number lower bound. </param>
+        /// <param name="acknowledgementControlNumberUpperBound"> The acknowledgement control number upper bound. </param>
+        /// <param name="rolloverAcknowledgementControlNumber"> The value indicating whether to rollover acknowledgement control number. </param>
         public X12AcknowledgementSettings(bool needTechnicalAcknowledgement, bool batchTechnicalAcknowledgement, bool needFunctionalAcknowledgement, bool batchFunctionalAcknowledgement, bool needImplementationAcknowledgement, bool batchImplementationAcknowledgement, bool needLoopForValidMessages, bool sendSynchronousAcknowledgement, int acknowledgementControlNumberLowerBound, int acknowledgementControlNumberUpperBound, bool rolloverAcknowledgementControlNumber)
         {
             NeedTechnicalAcknowledgement = needTechnicalAcknowledgement;
@@ -74,66 +38,21 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of X12AcknowledgementSettings. </summary>
-        /// <param name="needTechnicalAcknowledgement">
-        /// The value indicating whether technical acknowledgement is needed.
-        /// Serialized Name: X12AcknowledgementSettings.needTechnicalAcknowledgement
-        /// </param>
-        /// <param name="batchTechnicalAcknowledgement">
-        /// The value indicating whether to batch the technical acknowledgements.
-        /// Serialized Name: X12AcknowledgementSettings.batchTechnicalAcknowledgements
-        /// </param>
-        /// <param name="needFunctionalAcknowledgement">
-        /// The value indicating whether functional acknowledgement is needed.
-        /// Serialized Name: X12AcknowledgementSettings.needFunctionalAcknowledgement
-        /// </param>
-        /// <param name="functionalAcknowledgementVersion">
-        /// The functional acknowledgement version.
-        /// Serialized Name: X12AcknowledgementSettings.functionalAcknowledgementVersion
-        /// </param>
-        /// <param name="batchFunctionalAcknowledgement">
-        /// The value indicating whether to batch functional acknowledgements.
-        /// Serialized Name: X12AcknowledgementSettings.batchFunctionalAcknowledgements
-        /// </param>
-        /// <param name="needImplementationAcknowledgement">
-        /// The value indicating whether implementation acknowledgement is needed.
-        /// Serialized Name: X12AcknowledgementSettings.needImplementationAcknowledgement
-        /// </param>
-        /// <param name="implementationAcknowledgementVersion">
-        /// The implementation acknowledgement version.
-        /// Serialized Name: X12AcknowledgementSettings.implementationAcknowledgementVersion
-        /// </param>
-        /// <param name="batchImplementationAcknowledgement">
-        /// The value indicating whether to batch implementation acknowledgements.
-        /// Serialized Name: X12AcknowledgementSettings.batchImplementationAcknowledgements
-        /// </param>
-        /// <param name="needLoopForValidMessages">
-        /// The value indicating whether a loop is needed for valid messages.
-        /// Serialized Name: X12AcknowledgementSettings.needLoopForValidMessages
-        /// </param>
-        /// <param name="sendSynchronousAcknowledgement">
-        /// The value indicating whether to send synchronous acknowledgement.
-        /// Serialized Name: X12AcknowledgementSettings.sendSynchronousAcknowledgement
-        /// </param>
-        /// <param name="acknowledgementControlNumberPrefix">
-        /// The acknowledgement control number prefix.
-        /// Serialized Name: X12AcknowledgementSettings.acknowledgementControlNumberPrefix
-        /// </param>
-        /// <param name="acknowledgementControlNumberSuffix">
-        /// The acknowledgement control number suffix.
-        /// Serialized Name: X12AcknowledgementSettings.acknowledgementControlNumberSuffix
-        /// </param>
-        /// <param name="acknowledgementControlNumberLowerBound">
-        /// The acknowledgement control number lower bound.
-        /// Serialized Name: X12AcknowledgementSettings.acknowledgementControlNumberLowerBound
-        /// </param>
-        /// <param name="acknowledgementControlNumberUpperBound">
-        /// The acknowledgement control number upper bound.
-        /// Serialized Name: X12AcknowledgementSettings.acknowledgementControlNumberUpperBound
-        /// </param>
-        /// <param name="rolloverAcknowledgementControlNumber">
-        /// The value indicating whether to rollover acknowledgement control number.
-        /// Serialized Name: X12AcknowledgementSettings.rolloverAcknowledgementControlNumber
-        /// </param>
+        /// <param name="needTechnicalAcknowledgement"> The value indicating whether technical acknowledgement is needed. </param>
+        /// <param name="batchTechnicalAcknowledgement"> The value indicating whether to batch the technical acknowledgements. </param>
+        /// <param name="needFunctionalAcknowledgement"> The value indicating whether functional acknowledgement is needed. </param>
+        /// <param name="functionalAcknowledgementVersion"> The functional acknowledgement version. </param>
+        /// <param name="batchFunctionalAcknowledgement"> The value indicating whether to batch functional acknowledgements. </param>
+        /// <param name="needImplementationAcknowledgement"> The value indicating whether implementation acknowledgement is needed. </param>
+        /// <param name="implementationAcknowledgementVersion"> The implementation acknowledgement version. </param>
+        /// <param name="batchImplementationAcknowledgement"> The value indicating whether to batch implementation acknowledgements. </param>
+        /// <param name="needLoopForValidMessages"> The value indicating whether a loop is needed for valid messages. </param>
+        /// <param name="sendSynchronousAcknowledgement"> The value indicating whether to send synchronous acknowledgement. </param>
+        /// <param name="acknowledgementControlNumberPrefix"> The acknowledgement control number prefix. </param>
+        /// <param name="acknowledgementControlNumberSuffix"> The acknowledgement control number suffix. </param>
+        /// <param name="acknowledgementControlNumberLowerBound"> The acknowledgement control number lower bound. </param>
+        /// <param name="acknowledgementControlNumberUpperBound"> The acknowledgement control number upper bound. </param>
+        /// <param name="rolloverAcknowledgementControlNumber"> The value indicating whether to rollover acknowledgement control number. </param>
         internal X12AcknowledgementSettings(bool needTechnicalAcknowledgement, bool batchTechnicalAcknowledgement, bool needFunctionalAcknowledgement, string functionalAcknowledgementVersion, bool batchFunctionalAcknowledgement, bool needImplementationAcknowledgement, string implementationAcknowledgementVersion, bool batchImplementationAcknowledgement, bool needLoopForValidMessages, bool sendSynchronousAcknowledgement, string acknowledgementControlNumberPrefix, string acknowledgementControlNumberSuffix, int acknowledgementControlNumberLowerBound, int acknowledgementControlNumberUpperBound, bool rolloverAcknowledgementControlNumber)
         {
             NeedTechnicalAcknowledgement = needTechnicalAcknowledgement;
@@ -153,80 +72,35 @@ namespace Azure.ResourceManager.Logic.Models
             RolloverAcknowledgementControlNumber = rolloverAcknowledgementControlNumber;
         }
 
-        /// <summary>
-        /// The value indicating whether technical acknowledgement is needed.
-        /// Serialized Name: X12AcknowledgementSettings.needTechnicalAcknowledgement
-        /// </summary>
+        /// <summary> The value indicating whether technical acknowledgement is needed. </summary>
         public bool NeedTechnicalAcknowledgement { get; set; }
-        /// <summary>
-        /// The value indicating whether to batch the technical acknowledgements.
-        /// Serialized Name: X12AcknowledgementSettings.batchTechnicalAcknowledgements
-        /// </summary>
+        /// <summary> The value indicating whether to batch the technical acknowledgements. </summary>
         public bool BatchTechnicalAcknowledgement { get; set; }
-        /// <summary>
-        /// The value indicating whether functional acknowledgement is needed.
-        /// Serialized Name: X12AcknowledgementSettings.needFunctionalAcknowledgement
-        /// </summary>
+        /// <summary> The value indicating whether functional acknowledgement is needed. </summary>
         public bool NeedFunctionalAcknowledgement { get; set; }
-        /// <summary>
-        /// The functional acknowledgement version.
-        /// Serialized Name: X12AcknowledgementSettings.functionalAcknowledgementVersion
-        /// </summary>
+        /// <summary> The functional acknowledgement version. </summary>
         public string FunctionalAcknowledgementVersion { get; set; }
-        /// <summary>
-        /// The value indicating whether to batch functional acknowledgements.
-        /// Serialized Name: X12AcknowledgementSettings.batchFunctionalAcknowledgements
-        /// </summary>
+        /// <summary> The value indicating whether to batch functional acknowledgements. </summary>
         public bool BatchFunctionalAcknowledgement { get; set; }
-        /// <summary>
-        /// The value indicating whether implementation acknowledgement is needed.
-        /// Serialized Name: X12AcknowledgementSettings.needImplementationAcknowledgement
-        /// </summary>
+        /// <summary> The value indicating whether implementation acknowledgement is needed. </summary>
         public bool NeedImplementationAcknowledgement { get; set; }
-        /// <summary>
-        /// The implementation acknowledgement version.
-        /// Serialized Name: X12AcknowledgementSettings.implementationAcknowledgementVersion
-        /// </summary>
+        /// <summary> The implementation acknowledgement version. </summary>
         public string ImplementationAcknowledgementVersion { get; set; }
-        /// <summary>
-        /// The value indicating whether to batch implementation acknowledgements.
-        /// Serialized Name: X12AcknowledgementSettings.batchImplementationAcknowledgements
-        /// </summary>
+        /// <summary> The value indicating whether to batch implementation acknowledgements. </summary>
         public bool BatchImplementationAcknowledgement { get; set; }
-        /// <summary>
-        /// The value indicating whether a loop is needed for valid messages.
-        /// Serialized Name: X12AcknowledgementSettings.needLoopForValidMessages
-        /// </summary>
+        /// <summary> The value indicating whether a loop is needed for valid messages. </summary>
         public bool NeedLoopForValidMessages { get; set; }
-        /// <summary>
-        /// The value indicating whether to send synchronous acknowledgement.
-        /// Serialized Name: X12AcknowledgementSettings.sendSynchronousAcknowledgement
-        /// </summary>
+        /// <summary> The value indicating whether to send synchronous acknowledgement. </summary>
         public bool SendSynchronousAcknowledgement { get; set; }
-        /// <summary>
-        /// The acknowledgement control number prefix.
-        /// Serialized Name: X12AcknowledgementSettings.acknowledgementControlNumberPrefix
-        /// </summary>
+        /// <summary> The acknowledgement control number prefix. </summary>
         public string AcknowledgementControlNumberPrefix { get; set; }
-        /// <summary>
-        /// The acknowledgement control number suffix.
-        /// Serialized Name: X12AcknowledgementSettings.acknowledgementControlNumberSuffix
-        /// </summary>
+        /// <summary> The acknowledgement control number suffix. </summary>
         public string AcknowledgementControlNumberSuffix { get; set; }
-        /// <summary>
-        /// The acknowledgement control number lower bound.
-        /// Serialized Name: X12AcknowledgementSettings.acknowledgementControlNumberLowerBound
-        /// </summary>
+        /// <summary> The acknowledgement control number lower bound. </summary>
         public int AcknowledgementControlNumberLowerBound { get; set; }
-        /// <summary>
-        /// The acknowledgement control number upper bound.
-        /// Serialized Name: X12AcknowledgementSettings.acknowledgementControlNumberUpperBound
-        /// </summary>
+        /// <summary> The acknowledgement control number upper bound. </summary>
         public int AcknowledgementControlNumberUpperBound { get; set; }
-        /// <summary>
-        /// The value indicating whether to rollover acknowledgement control number.
-        /// Serialized Name: X12AcknowledgementSettings.rolloverAcknowledgementControlNumber
-        /// </summary>
+        /// <summary> The value indicating whether to rollover acknowledgement control number. </summary>
         public bool RolloverAcknowledgementControlNumber { get; set; }
     }
 }

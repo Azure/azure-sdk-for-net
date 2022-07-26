@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary>
-    /// AuthenticationPolicy of type Open.
-    /// Serialized Name: OpenAuthenticationAccessPolicies
-    /// </summary>
+    /// <summary> AuthenticationPolicy of type Open. </summary>
     internal partial class OpenAuthenticationAccessPolicies
     {
         /// <summary> Initializes a new instance of OpenAuthenticationAccessPolicies. </summary>
@@ -23,19 +20,13 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of OpenAuthenticationAccessPolicies. </summary>
-        /// <param name="accessPolicies">
-        /// Open authentication policies.
-        /// Serialized Name: OpenAuthenticationAccessPolicies.policies
-        /// </param>
+        /// <param name="accessPolicies"> Open authentication policies. </param>
         internal OpenAuthenticationAccessPolicies(IDictionary<string, OpenAuthenticationAccessPolicy> accessPolicies)
         {
             AccessPolicies = accessPolicies;
         }
 
-        /// <summary>
-        /// Open authentication policies.
-        /// Serialized Name: OpenAuthenticationAccessPolicies.policies
-        /// </summary>
+        /// <summary> Open authentication policies. </summary>
         public IDictionary<string, OpenAuthenticationAccessPolicy> AccessPolicies { get; }
     }
 }

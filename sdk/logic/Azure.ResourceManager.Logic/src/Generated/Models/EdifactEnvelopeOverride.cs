@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary>
-    /// The Edifact envelope override settings.
-    /// Serialized Name: EdifactEnvelopeOverride
-    /// </summary>
+    /// <summary> The Edifact envelope override settings. </summary>
     public partial class EdifactEnvelopeOverride
     {
         /// <summary> Initializes a new instance of EdifactEnvelopeOverride. </summary>
@@ -19,66 +16,21 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of EdifactEnvelopeOverride. </summary>
-        /// <param name="messageId">
-        /// The message id on which this envelope settings has to be applied.
-        /// Serialized Name: EdifactEnvelopeOverride.messageId
-        /// </param>
-        /// <param name="messageVersion">
-        /// The message version on which this envelope settings has to be applied.
-        /// Serialized Name: EdifactEnvelopeOverride.messageVersion
-        /// </param>
-        /// <param name="messageRelease">
-        /// The message release version on which this envelope settings has to be applied.
-        /// Serialized Name: EdifactEnvelopeOverride.messageRelease
-        /// </param>
-        /// <param name="messageAssociationAssignedCode">
-        /// The message association assigned code.
-        /// Serialized Name: EdifactEnvelopeOverride.messageAssociationAssignedCode
-        /// </param>
-        /// <param name="targetNamespace">
-        /// The target namespace on which this envelope settings has to be applied.
-        /// Serialized Name: EdifactEnvelopeOverride.targetNamespace
-        /// </param>
-        /// <param name="functionalGroupId">
-        /// The functional group id.
-        /// Serialized Name: EdifactEnvelopeOverride.functionalGroupId
-        /// </param>
-        /// <param name="senderApplicationQualifier">
-        /// The sender application qualifier.
-        /// Serialized Name: EdifactEnvelopeOverride.senderApplicationQualifier
-        /// </param>
-        /// <param name="senderApplicationId">
-        /// The sender application id.
-        /// Serialized Name: EdifactEnvelopeOverride.senderApplicationId
-        /// </param>
-        /// <param name="receiverApplicationQualifier">
-        /// The receiver application qualifier.
-        /// Serialized Name: EdifactEnvelopeOverride.receiverApplicationQualifier
-        /// </param>
-        /// <param name="receiverApplicationId">
-        /// The receiver application id.
-        /// Serialized Name: EdifactEnvelopeOverride.receiverApplicationId
-        /// </param>
-        /// <param name="controllingAgencyCode">
-        /// The controlling agency code.
-        /// Serialized Name: EdifactEnvelopeOverride.controllingAgencyCode
-        /// </param>
-        /// <param name="groupHeaderMessageVersion">
-        /// The group header message version.
-        /// Serialized Name: EdifactEnvelopeOverride.groupHeaderMessageVersion
-        /// </param>
-        /// <param name="groupHeaderMessageRelease">
-        /// The group header message release.
-        /// Serialized Name: EdifactEnvelopeOverride.groupHeaderMessageRelease
-        /// </param>
-        /// <param name="associationAssignedCode">
-        /// The association assigned code.
-        /// Serialized Name: EdifactEnvelopeOverride.associationAssignedCode
-        /// </param>
-        /// <param name="applicationPassword">
-        /// The application password.
-        /// Serialized Name: EdifactEnvelopeOverride.applicationPassword
-        /// </param>
+        /// <param name="messageId"> The message id on which this envelope settings has to be applied. </param>
+        /// <param name="messageVersion"> The message version on which this envelope settings has to be applied. </param>
+        /// <param name="messageRelease"> The message release version on which this envelope settings has to be applied. </param>
+        /// <param name="messageAssociationAssignedCode"> The message association assigned code. </param>
+        /// <param name="targetNamespace"> The target namespace on which this envelope settings has to be applied. </param>
+        /// <param name="functionalGroupId"> The functional group id. </param>
+        /// <param name="senderApplicationQualifier"> The sender application qualifier. </param>
+        /// <param name="senderApplicationId"> The sender application id. </param>
+        /// <param name="receiverApplicationQualifier"> The receiver application qualifier. </param>
+        /// <param name="receiverApplicationId"> The receiver application id. </param>
+        /// <param name="controllingAgencyCode"> The controlling agency code. </param>
+        /// <param name="groupHeaderMessageVersion"> The group header message version. </param>
+        /// <param name="groupHeaderMessageRelease"> The group header message release. </param>
+        /// <param name="associationAssignedCode"> The association assigned code. </param>
+        /// <param name="applicationPassword"> The application password. </param>
         internal EdifactEnvelopeOverride(string messageId, string messageVersion, string messageRelease, string messageAssociationAssignedCode, string targetNamespace, string functionalGroupId, string senderApplicationQualifier, string senderApplicationId, string receiverApplicationQualifier, string receiverApplicationId, string controllingAgencyCode, string groupHeaderMessageVersion, string groupHeaderMessageRelease, string associationAssignedCode, string applicationPassword)
         {
             MessageId = messageId;
@@ -98,80 +50,35 @@ namespace Azure.ResourceManager.Logic.Models
             ApplicationPassword = applicationPassword;
         }
 
-        /// <summary>
-        /// The message id on which this envelope settings has to be applied.
-        /// Serialized Name: EdifactEnvelopeOverride.messageId
-        /// </summary>
+        /// <summary> The message id on which this envelope settings has to be applied. </summary>
         public string MessageId { get; set; }
-        /// <summary>
-        /// The message version on which this envelope settings has to be applied.
-        /// Serialized Name: EdifactEnvelopeOverride.messageVersion
-        /// </summary>
+        /// <summary> The message version on which this envelope settings has to be applied. </summary>
         public string MessageVersion { get; set; }
-        /// <summary>
-        /// The message release version on which this envelope settings has to be applied.
-        /// Serialized Name: EdifactEnvelopeOverride.messageRelease
-        /// </summary>
+        /// <summary> The message release version on which this envelope settings has to be applied. </summary>
         public string MessageRelease { get; set; }
-        /// <summary>
-        /// The message association assigned code.
-        /// Serialized Name: EdifactEnvelopeOverride.messageAssociationAssignedCode
-        /// </summary>
+        /// <summary> The message association assigned code. </summary>
         public string MessageAssociationAssignedCode { get; set; }
-        /// <summary>
-        /// The target namespace on which this envelope settings has to be applied.
-        /// Serialized Name: EdifactEnvelopeOverride.targetNamespace
-        /// </summary>
+        /// <summary> The target namespace on which this envelope settings has to be applied. </summary>
         public string TargetNamespace { get; set; }
-        /// <summary>
-        /// The functional group id.
-        /// Serialized Name: EdifactEnvelopeOverride.functionalGroupId
-        /// </summary>
+        /// <summary> The functional group id. </summary>
         public string FunctionalGroupId { get; set; }
-        /// <summary>
-        /// The sender application qualifier.
-        /// Serialized Name: EdifactEnvelopeOverride.senderApplicationQualifier
-        /// </summary>
+        /// <summary> The sender application qualifier. </summary>
         public string SenderApplicationQualifier { get; set; }
-        /// <summary>
-        /// The sender application id.
-        /// Serialized Name: EdifactEnvelopeOverride.senderApplicationId
-        /// </summary>
+        /// <summary> The sender application id. </summary>
         public string SenderApplicationId { get; set; }
-        /// <summary>
-        /// The receiver application qualifier.
-        /// Serialized Name: EdifactEnvelopeOverride.receiverApplicationQualifier
-        /// </summary>
+        /// <summary> The receiver application qualifier. </summary>
         public string ReceiverApplicationQualifier { get; set; }
-        /// <summary>
-        /// The receiver application id.
-        /// Serialized Name: EdifactEnvelopeOverride.receiverApplicationId
-        /// </summary>
+        /// <summary> The receiver application id. </summary>
         public string ReceiverApplicationId { get; set; }
-        /// <summary>
-        /// The controlling agency code.
-        /// Serialized Name: EdifactEnvelopeOverride.controllingAgencyCode
-        /// </summary>
+        /// <summary> The controlling agency code. </summary>
         public string ControllingAgencyCode { get; set; }
-        /// <summary>
-        /// The group header message version.
-        /// Serialized Name: EdifactEnvelopeOverride.groupHeaderMessageVersion
-        /// </summary>
+        /// <summary> The group header message version. </summary>
         public string GroupHeaderMessageVersion { get; set; }
-        /// <summary>
-        /// The group header message release.
-        /// Serialized Name: EdifactEnvelopeOverride.groupHeaderMessageRelease
-        /// </summary>
+        /// <summary> The group header message release. </summary>
         public string GroupHeaderMessageRelease { get; set; }
-        /// <summary>
-        /// The association assigned code.
-        /// Serialized Name: EdifactEnvelopeOverride.associationAssignedCode
-        /// </summary>
+        /// <summary> The association assigned code. </summary>
         public string AssociationAssignedCode { get; set; }
-        /// <summary>
-        /// The application password.
-        /// Serialized Name: EdifactEnvelopeOverride.applicationPassword
-        /// </summary>
+        /// <summary> The application password. </summary>
         public string ApplicationPassword { get; set; }
     }
 }

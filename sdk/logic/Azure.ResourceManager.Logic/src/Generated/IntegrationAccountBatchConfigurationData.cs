@@ -18,10 +18,7 @@ namespace Azure.ResourceManager.Logic
     {
         /// <summary> Initializes a new instance of IntegrationAccountBatchConfigurationData. </summary>
         /// <param name="location"> The location. </param>
-        /// <param name="properties">
-        /// The batch configuration properties.
-        /// Serialized Name: BatchConfiguration.properties
-        /// </param>
+        /// <param name="properties"> The batch configuration properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public IntegrationAccountBatchConfigurationData(AzureLocation location, IntegrationAccountBatchConfigurationProperties properties) : base(location)
         {
@@ -40,19 +37,13 @@ namespace Azure.ResourceManager.Logic
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="properties">
-        /// The batch configuration properties.
-        /// Serialized Name: BatchConfiguration.properties
-        /// </param>
+        /// <param name="properties"> The batch configuration properties. </param>
         internal IntegrationAccountBatchConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IntegrationAccountBatchConfigurationProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
         }
 
-        /// <summary>
-        /// The batch configuration properties.
-        /// Serialized Name: BatchConfiguration.properties
-        /// </summary>
+        /// <summary> The batch configuration properties. </summary>
         public IntegrationAccountBatchConfigurationProperties Properties { get; set; }
     }
 }

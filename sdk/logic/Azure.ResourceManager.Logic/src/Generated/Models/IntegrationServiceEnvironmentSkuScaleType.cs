@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary>
-    /// The integration service environment sku scale type.
-    /// Serialized Name: IntegrationServiceEnvironmentSkuScaleType
-    /// </summary>
+    /// <summary> The integration service environment sku scale type. </summary>
     public readonly partial struct IntegrationServiceEnvironmentSkuScaleType : IEquatable<IntegrationServiceEnvironmentSkuScaleType>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.Logic.Models
         private const string AutomaticValue = "Automatic";
         private const string NoneValue = "None";
 
-        /// <summary>
-        /// Manual
-        /// Serialized Name: IntegrationServiceEnvironmentSkuScaleType.Manual
-        /// </summary>
+        /// <summary> Manual. </summary>
         public static IntegrationServiceEnvironmentSkuScaleType Manual { get; } = new IntegrationServiceEnvironmentSkuScaleType(ManualValue);
-        /// <summary>
-        /// Automatic
-        /// Serialized Name: IntegrationServiceEnvironmentSkuScaleType.Automatic
-        /// </summary>
+        /// <summary> Automatic. </summary>
         public static IntegrationServiceEnvironmentSkuScaleType Automatic { get; } = new IntegrationServiceEnvironmentSkuScaleType(AutomaticValue);
-        /// <summary>
-        /// None
-        /// Serialized Name: IntegrationServiceEnvironmentSkuScaleType.None
-        /// </summary>
+        /// <summary> None. </summary>
         public static IntegrationServiceEnvironmentSkuScaleType None { get; } = new IntegrationServiceEnvironmentSkuScaleType(NoneValue);
         /// <summary> Determines if two <see cref="IntegrationServiceEnvironmentSkuScaleType"/> values are the same. </summary>
         public static bool operator ==(IntegrationServiceEnvironmentSkuScaleType left, IntegrationServiceEnvironmentSkuScaleType right) => left.Equals(right);

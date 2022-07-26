@@ -5,12 +5,11 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary>
-    /// The integration service environment sku definition.
-    /// Serialized Name: IntegrationServiceEnvironmentSkuDefinition
-    /// </summary>
+    /// <summary> The integration service environment sku definition. </summary>
     public partial class IntegrationServiceEnvironmentSkuDefinition
     {
         /// <summary> Initializes a new instance of IntegrationServiceEnvironmentSkuDefinition. </summary>
@@ -19,39 +18,21 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of IntegrationServiceEnvironmentSkuDefinition. </summary>
-        /// <param name="resourceType">
-        /// The resource type.
-        /// Serialized Name: IntegrationServiceEnvironmentSkuDefinition.resourceType
-        /// </param>
-        /// <param name="sku">
-        /// The sku.
-        /// Serialized Name: IntegrationServiceEnvironmentSkuDefinition.sku
-        /// </param>
-        /// <param name="capacity">
-        /// The sku capacity.
-        /// Serialized Name: IntegrationServiceEnvironmentSkuDefinition.capacity
-        /// </param>
-        internal IntegrationServiceEnvironmentSkuDefinition(string resourceType, IntegrationServiceEnvironmentSkuDefinitionSku sku, IntegrationServiceEnvironmentSkuCapacity capacity)
+        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="sku"> The sku. </param>
+        /// <param name="capacity"> The sku capacity. </param>
+        internal IntegrationServiceEnvironmentSkuDefinition(ResourceType? resourceType, IntegrationServiceEnvironmentSkuDefinitionSku sku, IntegrationServiceEnvironmentSkuCapacity capacity)
         {
             ResourceType = resourceType;
             Sku = sku;
             Capacity = capacity;
         }
 
-        /// <summary>
-        /// The resource type.
-        /// Serialized Name: IntegrationServiceEnvironmentSkuDefinition.resourceType
-        /// </summary>
-        public string ResourceType { get; }
-        /// <summary>
-        /// The sku.
-        /// Serialized Name: IntegrationServiceEnvironmentSkuDefinition.sku
-        /// </summary>
+        /// <summary> The resource type. </summary>
+        public ResourceType? ResourceType { get; }
+        /// <summary> The sku. </summary>
         public IntegrationServiceEnvironmentSkuDefinitionSku Sku { get; }
-        /// <summary>
-        /// The sku capacity.
-        /// Serialized Name: IntegrationServiceEnvironmentSkuDefinition.capacity
-        /// </summary>
+        /// <summary> The sku capacity. </summary>
         public IntegrationServiceEnvironmentSkuCapacity Capacity { get; }
     }
 }

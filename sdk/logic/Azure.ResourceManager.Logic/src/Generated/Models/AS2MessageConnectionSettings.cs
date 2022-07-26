@@ -7,29 +7,14 @@
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary>
-    /// The AS2 agreement message connection settings.
-    /// Serialized Name: AS2MessageConnectionSettings
-    /// </summary>
+    /// <summary> The AS2 agreement message connection settings. </summary>
     public partial class AS2MessageConnectionSettings
     {
         /// <summary> Initializes a new instance of AS2MessageConnectionSettings. </summary>
-        /// <param name="ignoreCertificateNameMismatch">
-        /// The value indicating whether to ignore mismatch in certificate name.
-        /// Serialized Name: AS2MessageConnectionSettings.ignoreCertificateNameMismatch
-        /// </param>
-        /// <param name="supportHttpStatusCodeContinue">
-        /// The value indicating whether to support HTTP status code &apos;CONTINUE&apos;.
-        /// Serialized Name: AS2MessageConnectionSettings.supportHttpStatusCodeContinue
-        /// </param>
-        /// <param name="keepHttpConnectionAlive">
-        /// The value indicating whether to keep the connection alive.
-        /// Serialized Name: AS2MessageConnectionSettings.keepHttpConnectionAlive
-        /// </param>
-        /// <param name="unfoldHttpHeaders">
-        /// The value indicating whether to unfold the HTTP headers.
-        /// Serialized Name: AS2MessageConnectionSettings.unfoldHttpHeaders
-        /// </param>
+        /// <param name="ignoreCertificateNameMismatch"> The value indicating whether to ignore mismatch in certificate name. </param>
+        /// <param name="supportHttpStatusCodeContinue"> The value indicating whether to support HTTP status code &apos;CONTINUE&apos;. </param>
+        /// <param name="keepHttpConnectionAlive"> The value indicating whether to keep the connection alive. </param>
+        /// <param name="unfoldHttpHeaders"> The value indicating whether to unfold the HTTP headers. </param>
         public AS2MessageConnectionSettings(bool ignoreCertificateNameMismatch, bool supportHttpStatusCodeContinue, bool keepHttpConnectionAlive, bool unfoldHttpHeaders)
         {
             IgnoreCertificateNameMismatch = ignoreCertificateNameMismatch;
@@ -38,25 +23,13 @@ namespace Azure.ResourceManager.Logic.Models
             UnfoldHttpHeaders = unfoldHttpHeaders;
         }
 
-        /// <summary>
-        /// The value indicating whether to ignore mismatch in certificate name.
-        /// Serialized Name: AS2MessageConnectionSettings.ignoreCertificateNameMismatch
-        /// </summary>
+        /// <summary> The value indicating whether to ignore mismatch in certificate name. </summary>
         public bool IgnoreCertificateNameMismatch { get; set; }
-        /// <summary>
-        /// The value indicating whether to support HTTP status code &apos;CONTINUE&apos;.
-        /// Serialized Name: AS2MessageConnectionSettings.supportHttpStatusCodeContinue
-        /// </summary>
+        /// <summary> The value indicating whether to support HTTP status code &apos;CONTINUE&apos;. </summary>
         public bool SupportHttpStatusCodeContinue { get; set; }
-        /// <summary>
-        /// The value indicating whether to keep the connection alive.
-        /// Serialized Name: AS2MessageConnectionSettings.keepHttpConnectionAlive
-        /// </summary>
+        /// <summary> The value indicating whether to keep the connection alive. </summary>
         public bool KeepHttpConnectionAlive { get; set; }
-        /// <summary>
-        /// The value indicating whether to unfold the HTTP headers.
-        /// Serialized Name: AS2MessageConnectionSettings.unfoldHttpHeaders
-        /// </summary>
+        /// <summary> The value indicating whether to unfold the HTTP headers. </summary>
         public bool UnfoldHttpHeaders { get; set; }
     }
 }

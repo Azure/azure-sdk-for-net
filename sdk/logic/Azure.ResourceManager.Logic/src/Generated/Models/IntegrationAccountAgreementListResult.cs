@@ -11,10 +11,7 @@ using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary>
-    /// The list of integration account agreements.
-    /// Serialized Name: IntegrationAccountAgreementListResult
-    /// </summary>
+    /// <summary> The list of integration account agreements. </summary>
     internal partial class IntegrationAccountAgreementListResult
     {
         /// <summary> Initializes a new instance of IntegrationAccountAgreementListResult. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of IntegrationAccountAgreementListResult. </summary>
-        /// <param name="value">
-        /// The list of integration account agreements.
-        /// Serialized Name: IntegrationAccountAgreementListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The URL to get the next set of results.
-        /// Serialized Name: IntegrationAccountAgreementListResult.nextLink
-        /// </param>
+        /// <param name="value"> The list of integration account agreements. </param>
+        /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal IntegrationAccountAgreementListResult(IReadOnlyList<IntegrationAccountAgreementData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// The list of integration account agreements.
-        /// Serialized Name: IntegrationAccountAgreementListResult.value
-        /// </summary>
+        /// <summary> The list of integration account agreements. </summary>
         public IReadOnlyList<IntegrationAccountAgreementData> Value { get; }
-        /// <summary>
-        /// The URL to get the next set of results.
-        /// Serialized Name: IntegrationAccountAgreementListResult.nextLink
-        /// </summary>
+        /// <summary> The URL to get the next set of results. </summary>
         public string NextLink { get; }
     }
 }

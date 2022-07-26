@@ -253,18 +253,18 @@ namespace Azure.ResourceManager.Logic
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/integrationAccounts/{integrationAccountName}/agreements/{agreementName}/listContentCallbackUrl
         /// Operation Id: IntegrationAccountAgreements_ListContentCallbackUrl
         /// </summary>
-        /// <param name="listContentCallbackUrl"> The GetCallbackUrlParameters to use. </param>
+        /// <param name="info"> The ListOperationCallbackUrlParameterInfo to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="listContentCallbackUrl"/> is null. </exception>
-        public virtual async Task<Response<LogicAppWorkflowTriggerCallbackUri>> GetContentCallbackUrlAsync(GetCallbackUrlParameters listContentCallbackUrl, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
+        public virtual async Task<Response<LogicWorkflowTriggerCallbackUri>> GetContentCallbackUrlAsync(ListOperationCallbackUrlParameterInfo info, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(listContentCallbackUrl, nameof(listContentCallbackUrl));
+            Argument.AssertNotNull(info, nameof(info));
 
             using var scope = _integrationAccountAgreementClientDiagnostics.CreateScope("IntegrationAccountAgreementResource.GetContentCallbackUrl");
             scope.Start();
             try
             {
-                var response = await _integrationAccountAgreementRestClient.ListContentCallbackUrlAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, listContentCallbackUrl, cancellationToken).ConfigureAwait(false);
+                var response = await _integrationAccountAgreementRestClient.ListContentCallbackUrlAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, info, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -279,18 +279,18 @@ namespace Azure.ResourceManager.Logic
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/integrationAccounts/{integrationAccountName}/agreements/{agreementName}/listContentCallbackUrl
         /// Operation Id: IntegrationAccountAgreements_ListContentCallbackUrl
         /// </summary>
-        /// <param name="listContentCallbackUrl"> The GetCallbackUrlParameters to use. </param>
+        /// <param name="info"> The ListOperationCallbackUrlParameterInfo to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="listContentCallbackUrl"/> is null. </exception>
-        public virtual Response<LogicAppWorkflowTriggerCallbackUri> GetContentCallbackUrl(GetCallbackUrlParameters listContentCallbackUrl, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
+        public virtual Response<LogicWorkflowTriggerCallbackUri> GetContentCallbackUrl(ListOperationCallbackUrlParameterInfo info, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(listContentCallbackUrl, nameof(listContentCallbackUrl));
+            Argument.AssertNotNull(info, nameof(info));
 
             using var scope = _integrationAccountAgreementClientDiagnostics.CreateScope("IntegrationAccountAgreementResource.GetContentCallbackUrl");
             scope.Start();
             try
             {
-                var response = _integrationAccountAgreementRestClient.ListContentCallbackUrl(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, listContentCallbackUrl, cancellationToken);
+                var response = _integrationAccountAgreementRestClient.ListContentCallbackUrl(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, info, cancellationToken);
                 return response;
             }
             catch (Exception e)

@@ -7,41 +7,17 @@
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary>
-    /// The X12 agreement framing settings.
-    /// Serialized Name: X12FramingSettings
-    /// </summary>
+    /// <summary> The X12 agreement framing settings. </summary>
     public partial class X12FramingSettings
     {
         /// <summary> Initializes a new instance of X12FramingSettings. </summary>
-        /// <param name="dataElementSeparator">
-        /// The data element separator.
-        /// Serialized Name: X12FramingSettings.dataElementSeparator
-        /// </param>
-        /// <param name="componentSeparator">
-        /// The component separator.
-        /// Serialized Name: X12FramingSettings.componentSeparator
-        /// </param>
-        /// <param name="replaceSeparatorsInPayload">
-        /// The value indicating whether to replace separators in payload.
-        /// Serialized Name: X12FramingSettings.replaceSeparatorsInPayload
-        /// </param>
-        /// <param name="replaceCharacter">
-        /// The replacement character.
-        /// Serialized Name: X12FramingSettings.replaceCharacter
-        /// </param>
-        /// <param name="segmentTerminator">
-        /// The segment terminator.
-        /// Serialized Name: X12FramingSettings.segmentTerminator
-        /// </param>
-        /// <param name="characterSet">
-        /// The X12 character set.
-        /// Serialized Name: X12FramingSettings.characterSet
-        /// </param>
-        /// <param name="segmentTerminatorSuffix">
-        /// The segment terminator suffix.
-        /// Serialized Name: X12FramingSettings.segmentTerminatorSuffix
-        /// </param>
+        /// <param name="dataElementSeparator"> The data element separator. </param>
+        /// <param name="componentSeparator"> The component separator. </param>
+        /// <param name="replaceSeparatorsInPayload"> The value indicating whether to replace separators in payload. </param>
+        /// <param name="replaceCharacter"> The replacement character. </param>
+        /// <param name="segmentTerminator"> The segment terminator. </param>
+        /// <param name="characterSet"> The X12 character set. </param>
+        /// <param name="segmentTerminatorSuffix"> The segment terminator suffix. </param>
         public X12FramingSettings(int dataElementSeparator, int componentSeparator, bool replaceSeparatorsInPayload, int replaceCharacter, int segmentTerminator, X12CharacterSet characterSet, SegmentTerminatorSuffix segmentTerminatorSuffix)
         {
             DataElementSeparator = dataElementSeparator;
@@ -53,40 +29,19 @@ namespace Azure.ResourceManager.Logic.Models
             SegmentTerminatorSuffix = segmentTerminatorSuffix;
         }
 
-        /// <summary>
-        /// The data element separator.
-        /// Serialized Name: X12FramingSettings.dataElementSeparator
-        /// </summary>
+        /// <summary> The data element separator. </summary>
         public int DataElementSeparator { get; set; }
-        /// <summary>
-        /// The component separator.
-        /// Serialized Name: X12FramingSettings.componentSeparator
-        /// </summary>
+        /// <summary> The component separator. </summary>
         public int ComponentSeparator { get; set; }
-        /// <summary>
-        /// The value indicating whether to replace separators in payload.
-        /// Serialized Name: X12FramingSettings.replaceSeparatorsInPayload
-        /// </summary>
+        /// <summary> The value indicating whether to replace separators in payload. </summary>
         public bool ReplaceSeparatorsInPayload { get; set; }
-        /// <summary>
-        /// The replacement character.
-        /// Serialized Name: X12FramingSettings.replaceCharacter
-        /// </summary>
+        /// <summary> The replacement character. </summary>
         public int ReplaceCharacter { get; set; }
-        /// <summary>
-        /// The segment terminator.
-        /// Serialized Name: X12FramingSettings.segmentTerminator
-        /// </summary>
+        /// <summary> The segment terminator. </summary>
         public int SegmentTerminator { get; set; }
-        /// <summary>
-        /// The X12 character set.
-        /// Serialized Name: X12FramingSettings.characterSet
-        /// </summary>
+        /// <summary> The X12 character set. </summary>
         public X12CharacterSet CharacterSet { get; set; }
-        /// <summary>
-        /// The segment terminator suffix.
-        /// Serialized Name: X12FramingSettings.segmentTerminatorSuffix
-        /// </summary>
+        /// <summary> The segment terminator suffix. </summary>
         public SegmentTerminatorSuffix SegmentTerminatorSuffix { get; set; }
     }
 }

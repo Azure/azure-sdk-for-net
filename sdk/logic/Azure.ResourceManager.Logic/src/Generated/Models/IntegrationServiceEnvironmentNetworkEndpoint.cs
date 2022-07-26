@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary>
-    /// The network endpoint.
-    /// Serialized Name: IntegrationServiceEnvironmentNetworkEndpoint
-    /// </summary>
+    /// <summary> The network endpoint. </summary>
     public partial class IntegrationServiceEnvironmentNetworkEndpoint
     {
         /// <summary> Initializes a new instance of IntegrationServiceEnvironmentNetworkEndpoint. </summary>
@@ -23,18 +20,9 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of IntegrationServiceEnvironmentNetworkEndpoint. </summary>
-        /// <param name="accessibility">
-        /// The accessibility state.
-        /// Serialized Name: IntegrationServiceEnvironmentNetworkEndpoint.accessibility
-        /// </param>
-        /// <param name="domainName">
-        /// The domain name.
-        /// Serialized Name: IntegrationServiceEnvironmentNetworkEndpoint.domainName
-        /// </param>
-        /// <param name="ports">
-        /// The ports.
-        /// Serialized Name: IntegrationServiceEnvironmentNetworkEndpoint.ports
-        /// </param>
+        /// <param name="accessibility"> The accessibility state. </param>
+        /// <param name="domainName"> The domain name. </param>
+        /// <param name="ports"> The ports. </param>
         internal IntegrationServiceEnvironmentNetworkEndpoint(IntegrationServiceEnvironmentNetworkEndPointAccessibilityState? accessibility, string domainName, IReadOnlyList<string> ports)
         {
             Accessibility = accessibility;
@@ -42,20 +30,11 @@ namespace Azure.ResourceManager.Logic.Models
             Ports = ports;
         }
 
-        /// <summary>
-        /// The accessibility state.
-        /// Serialized Name: IntegrationServiceEnvironmentNetworkEndpoint.accessibility
-        /// </summary>
+        /// <summary> The accessibility state. </summary>
         public IntegrationServiceEnvironmentNetworkEndPointAccessibilityState? Accessibility { get; }
-        /// <summary>
-        /// The domain name.
-        /// Serialized Name: IntegrationServiceEnvironmentNetworkEndpoint.domainName
-        /// </summary>
+        /// <summary> The domain name. </summary>
         public string DomainName { get; }
-        /// <summary>
-        /// The ports.
-        /// Serialized Name: IntegrationServiceEnvironmentNetworkEndpoint.ports
-        /// </summary>
+        /// <summary> The ports. </summary>
         public IReadOnlyList<string> Ports { get; }
     }
 }

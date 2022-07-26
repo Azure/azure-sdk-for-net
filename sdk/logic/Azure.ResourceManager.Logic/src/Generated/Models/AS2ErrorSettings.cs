@@ -7,36 +7,21 @@
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary>
-    /// The AS2 agreement error settings.
-    /// Serialized Name: AS2ErrorSettings
-    /// </summary>
+    /// <summary> The AS2 agreement error settings. </summary>
     public partial class AS2ErrorSettings
     {
         /// <summary> Initializes a new instance of AS2ErrorSettings. </summary>
-        /// <param name="suspendDuplicateMessage">
-        /// The value indicating whether to suspend duplicate message.
-        /// Serialized Name: AS2ErrorSettings.suspendDuplicateMessage
-        /// </param>
-        /// <param name="resendIfMdnNotReceived">
-        /// The value indicating whether to resend message If MDN is not received.
-        /// Serialized Name: AS2ErrorSettings.resendIfMDNNotReceived
-        /// </param>
+        /// <param name="suspendDuplicateMessage"> The value indicating whether to suspend duplicate message. </param>
+        /// <param name="resendIfMdnNotReceived"> The value indicating whether to resend message If MDN is not received. </param>
         public AS2ErrorSettings(bool suspendDuplicateMessage, bool resendIfMdnNotReceived)
         {
             SuspendDuplicateMessage = suspendDuplicateMessage;
             ResendIfMdnNotReceived = resendIfMdnNotReceived;
         }
 
-        /// <summary>
-        /// The value indicating whether to suspend duplicate message.
-        /// Serialized Name: AS2ErrorSettings.suspendDuplicateMessage
-        /// </summary>
+        /// <summary> The value indicating whether to suspend duplicate message. </summary>
         public bool SuspendDuplicateMessage { get; set; }
-        /// <summary>
-        /// The value indicating whether to resend message If MDN is not received.
-        /// Serialized Name: AS2ErrorSettings.resendIfMDNNotReceived
-        /// </summary>
+        /// <summary> The value indicating whether to resend message If MDN is not received. </summary>
         public bool ResendIfMdnNotReceived { get; set; }
     }
 }

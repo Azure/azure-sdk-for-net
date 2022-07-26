@@ -28,18 +28,9 @@ namespace Azure.ResourceManager.Logic
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="createdOn">
-        /// The created time.
-        /// Serialized Name: IntegrationAccountSession.properties.createdTime
-        /// </param>
-        /// <param name="changedOn">
-        /// The changed time.
-        /// Serialized Name: IntegrationAccountSession.properties.changedTime
-        /// </param>
-        /// <param name="content">
-        /// The session content.
-        /// Serialized Name: IntegrationAccountSession.properties.content
-        /// </param>
+        /// <param name="createdOn"> The created time. </param>
+        /// <param name="changedOn"> The changed time. </param>
+        /// <param name="content"> The session content. </param>
         internal IntegrationAccountSessionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DateTimeOffset? createdOn, DateTimeOffset? changedOn, BinaryData content) : base(id, name, resourceType, systemData, tags, location)
         {
             CreatedOn = createdOn;
@@ -47,20 +38,11 @@ namespace Azure.ResourceManager.Logic
             Content = content;
         }
 
-        /// <summary>
-        /// The created time.
-        /// Serialized Name: IntegrationAccountSession.properties.createdTime
-        /// </summary>
+        /// <summary> The created time. </summary>
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary>
-        /// The changed time.
-        /// Serialized Name: IntegrationAccountSession.properties.changedTime
-        /// </summary>
+        /// <summary> The changed time. </summary>
         public DateTimeOffset? ChangedOn { get; }
-        /// <summary>
-        /// The session content.
-        /// Serialized Name: IntegrationAccountSession.properties.content
-        /// </summary>
+        /// <summary> The session content. </summary>
         public BinaryData Content { get; set; }
     }
 }

@@ -11,10 +11,7 @@ using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary>
-    /// The list of integration service environment managed APIs.
-    /// Serialized Name: IntegrationServiceEnvironmentManagedApiListResult
-    /// </summary>
+    /// <summary> The list of integration service environment managed APIs. </summary>
     internal partial class IntegrationServiceEnvironmentManagedApiListResult
     {
         /// <summary> Initializes a new instance of IntegrationServiceEnvironmentManagedApiListResult. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of IntegrationServiceEnvironmentManagedApiListResult. </summary>
-        /// <param name="value">
-        /// The integration service environment managed APIs.
-        /// Serialized Name: IntegrationServiceEnvironmentManagedApiListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The URL to get the next set of results.
-        /// Serialized Name: IntegrationServiceEnvironmentManagedApiListResult.nextLink
-        /// </param>
+        /// <param name="value"> The integration service environment managed APIs. </param>
+        /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal IntegrationServiceEnvironmentManagedApiListResult(IReadOnlyList<IntegrationServiceEnvironmentManagedApiData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// The integration service environment managed APIs.
-        /// Serialized Name: IntegrationServiceEnvironmentManagedApiListResult.value
-        /// </summary>
+        /// <summary> The integration service environment managed APIs. </summary>
         public IReadOnlyList<IntegrationServiceEnvironmentManagedApiData> Value { get; }
-        /// <summary>
-        /// The URL to get the next set of results.
-        /// Serialized Name: IntegrationServiceEnvironmentManagedApiListResult.nextLink
-        /// </summary>
+        /// <summary> The URL to get the next set of results. </summary>
         public string NextLink { get; }
     }
 }

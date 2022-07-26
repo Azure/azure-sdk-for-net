@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary>
-    /// The recurrence schedule occurrence.
-    /// Serialized Name: RecurrenceScheduleOccurrence
-    /// </summary>
+    /// <summary> The recurrence schedule occurrence. </summary>
     public partial class RecurrenceScheduleOccurrence
     {
         /// <summary> Initializes a new instance of RecurrenceScheduleOccurrence. </summary>
@@ -19,29 +16,17 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of RecurrenceScheduleOccurrence. </summary>
-        /// <param name="day">
-        /// The day of the week.
-        /// Serialized Name: RecurrenceScheduleOccurrence.day
-        /// </param>
-        /// <param name="occurrence">
-        /// The occurrence.
-        /// Serialized Name: RecurrenceScheduleOccurrence.occurrence
-        /// </param>
+        /// <param name="day"> The day of the week. </param>
+        /// <param name="occurrence"> The occurrence. </param>
         internal RecurrenceScheduleOccurrence(DayOfWeek? day, int? occurrence)
         {
             Day = day;
             Occurrence = occurrence;
         }
 
-        /// <summary>
-        /// The day of the week.
-        /// Serialized Name: RecurrenceScheduleOccurrence.day
-        /// </summary>
+        /// <summary> The day of the week. </summary>
         public DayOfWeek? Day { get; set; }
-        /// <summary>
-        /// The occurrence.
-        /// Serialized Name: RecurrenceScheduleOccurrence.occurrence
-        /// </summary>
+        /// <summary> The occurrence. </summary>
         public int? Occurrence { get; set; }
     }
 }

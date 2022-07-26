@@ -11,10 +11,7 @@ using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary>
-    /// The list of integration account partners.
-    /// Serialized Name: IntegrationAccountPartnerListResult
-    /// </summary>
+    /// <summary> The list of integration account partners. </summary>
     internal partial class IntegrationAccountPartnerListResult
     {
         /// <summary> Initializes a new instance of IntegrationAccountPartnerListResult. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of IntegrationAccountPartnerListResult. </summary>
-        /// <param name="value">
-        /// The list of integration account partners.
-        /// Serialized Name: IntegrationAccountPartnerListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The URL to get the next set of results.
-        /// Serialized Name: IntegrationAccountPartnerListResult.nextLink
-        /// </param>
+        /// <param name="value"> The list of integration account partners. </param>
+        /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal IntegrationAccountPartnerListResult(IReadOnlyList<IntegrationAccountPartnerData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// The list of integration account partners.
-        /// Serialized Name: IntegrationAccountPartnerListResult.value
-        /// </summary>
+        /// <summary> The list of integration account partners. </summary>
         public IReadOnlyList<IntegrationAccountPartnerData> Value { get; }
-        /// <summary>
-        /// The URL to get the next set of results.
-        /// Serialized Name: IntegrationAccountPartnerListResult.nextLink
-        /// </summary>
+        /// <summary> The URL to get the next set of results. </summary>
         public string NextLink { get; }
     }
 }

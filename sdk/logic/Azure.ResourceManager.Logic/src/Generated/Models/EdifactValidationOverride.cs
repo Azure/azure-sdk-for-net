@@ -9,41 +9,17 @@ using System;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary>
-    /// The Edifact validation override settings.
-    /// Serialized Name: EdifactValidationOverride
-    /// </summary>
+    /// <summary> The Edifact validation override settings. </summary>
     public partial class EdifactValidationOverride
     {
         /// <summary> Initializes a new instance of EdifactValidationOverride. </summary>
-        /// <param name="messageId">
-        /// The message id on which the validation settings has to be applied.
-        /// Serialized Name: EdifactValidationOverride.messageId
-        /// </param>
-        /// <param name="enforceCharacterSet">
-        /// The value indicating whether to validate character Set.
-        /// Serialized Name: EdifactValidationOverride.enforceCharacterSet
-        /// </param>
-        /// <param name="validateEdiTypes">
-        /// The value indicating whether to validate EDI types.
-        /// Serialized Name: EdifactValidationOverride.validateEDITypes
-        /// </param>
-        /// <param name="validateXsdTypes">
-        /// The value indicating whether to validate XSD types.
-        /// Serialized Name: EdifactValidationOverride.validateXSDTypes
-        /// </param>
-        /// <param name="allowLeadingAndTrailingSpacesAndZeroes">
-        /// The value indicating whether to allow leading and trailing spaces and zeroes.
-        /// Serialized Name: EdifactValidationOverride.allowLeadingAndTrailingSpacesAndZeroes
-        /// </param>
-        /// <param name="trailingSeparatorPolicy">
-        /// The trailing separator policy.
-        /// Serialized Name: EdifactValidationOverride.trailingSeparatorPolicy
-        /// </param>
-        /// <param name="trimLeadingAndTrailingSpacesAndZeroes">
-        /// The value indicating whether to trim leading and trailing spaces and zeroes.
-        /// Serialized Name: EdifactValidationOverride.trimLeadingAndTrailingSpacesAndZeroes
-        /// </param>
+        /// <param name="messageId"> The message id on which the validation settings has to be applied. </param>
+        /// <param name="enforceCharacterSet"> The value indicating whether to validate character Set. </param>
+        /// <param name="validateEdiTypes"> The value indicating whether to validate EDI types. </param>
+        /// <param name="validateXsdTypes"> The value indicating whether to validate XSD types. </param>
+        /// <param name="allowLeadingAndTrailingSpacesAndZeroes"> The value indicating whether to allow leading and trailing spaces and zeroes. </param>
+        /// <param name="trailingSeparatorPolicy"> The trailing separator policy. </param>
+        /// <param name="trimLeadingAndTrailingSpacesAndZeroes"> The value indicating whether to trim leading and trailing spaces and zeroes. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="messageId"/> is null. </exception>
         public EdifactValidationOverride(string messageId, bool enforceCharacterSet, bool validateEdiTypes, bool validateXsdTypes, bool allowLeadingAndTrailingSpacesAndZeroes, TrailingSeparatorPolicy trailingSeparatorPolicy, bool trimLeadingAndTrailingSpacesAndZeroes)
         {
@@ -61,40 +37,19 @@ namespace Azure.ResourceManager.Logic.Models
             TrimLeadingAndTrailingSpacesAndZeroes = trimLeadingAndTrailingSpacesAndZeroes;
         }
 
-        /// <summary>
-        /// The message id on which the validation settings has to be applied.
-        /// Serialized Name: EdifactValidationOverride.messageId
-        /// </summary>
+        /// <summary> The message id on which the validation settings has to be applied. </summary>
         public string MessageId { get; set; }
-        /// <summary>
-        /// The value indicating whether to validate character Set.
-        /// Serialized Name: EdifactValidationOverride.enforceCharacterSet
-        /// </summary>
+        /// <summary> The value indicating whether to validate character Set. </summary>
         public bool EnforceCharacterSet { get; set; }
-        /// <summary>
-        /// The value indicating whether to validate EDI types.
-        /// Serialized Name: EdifactValidationOverride.validateEDITypes
-        /// </summary>
+        /// <summary> The value indicating whether to validate EDI types. </summary>
         public bool ValidateEdiTypes { get; set; }
-        /// <summary>
-        /// The value indicating whether to validate XSD types.
-        /// Serialized Name: EdifactValidationOverride.validateXSDTypes
-        /// </summary>
+        /// <summary> The value indicating whether to validate XSD types. </summary>
         public bool ValidateXsdTypes { get; set; }
-        /// <summary>
-        /// The value indicating whether to allow leading and trailing spaces and zeroes.
-        /// Serialized Name: EdifactValidationOverride.allowLeadingAndTrailingSpacesAndZeroes
-        /// </summary>
+        /// <summary> The value indicating whether to allow leading and trailing spaces and zeroes. </summary>
         public bool AllowLeadingAndTrailingSpacesAndZeroes { get; set; }
-        /// <summary>
-        /// The trailing separator policy.
-        /// Serialized Name: EdifactValidationOverride.trailingSeparatorPolicy
-        /// </summary>
+        /// <summary> The trailing separator policy. </summary>
         public TrailingSeparatorPolicy TrailingSeparatorPolicy { get; set; }
-        /// <summary>
-        /// The value indicating whether to trim leading and trailing spaces and zeroes.
-        /// Serialized Name: EdifactValidationOverride.trimLeadingAndTrailingSpacesAndZeroes
-        /// </summary>
+        /// <summary> The value indicating whether to trim leading and trailing spaces and zeroes. </summary>
         public bool TrimLeadingAndTrailingSpacesAndZeroes { get; set; }
     }
 }

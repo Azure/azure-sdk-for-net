@@ -9,41 +9,17 @@ using System;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary>
-    /// The AS2 agreement protocol settings.
-    /// Serialized Name: AS2ProtocolSettings
-    /// </summary>
+    /// <summary> The AS2 agreement protocol settings. </summary>
     public partial class AS2ProtocolSettings
     {
         /// <summary> Initializes a new instance of AS2ProtocolSettings. </summary>
-        /// <param name="messageConnectionSettings">
-        /// The message connection settings.
-        /// Serialized Name: AS2ProtocolSettings.messageConnectionSettings
-        /// </param>
-        /// <param name="acknowledgementConnectionSettings">
-        /// The acknowledgement connection settings.
-        /// Serialized Name: AS2ProtocolSettings.acknowledgementConnectionSettings
-        /// </param>
-        /// <param name="mdnSettings">
-        /// The MDN settings.
-        /// Serialized Name: AS2ProtocolSettings.mdnSettings
-        /// </param>
-        /// <param name="securitySettings">
-        /// The security settings.
-        /// Serialized Name: AS2ProtocolSettings.securitySettings
-        /// </param>
-        /// <param name="validationSettings">
-        /// The validation settings.
-        /// Serialized Name: AS2ProtocolSettings.validationSettings
-        /// </param>
-        /// <param name="envelopeSettings">
-        /// The envelope settings.
-        /// Serialized Name: AS2ProtocolSettings.envelopeSettings
-        /// </param>
-        /// <param name="errorSettings">
-        /// The error settings.
-        /// Serialized Name: AS2ProtocolSettings.errorSettings
-        /// </param>
+        /// <param name="messageConnectionSettings"> The message connection settings. </param>
+        /// <param name="acknowledgementConnectionSettings"> The acknowledgement connection settings. </param>
+        /// <param name="mdnSettings"> The MDN settings. </param>
+        /// <param name="securitySettings"> The security settings. </param>
+        /// <param name="validationSettings"> The validation settings. </param>
+        /// <param name="envelopeSettings"> The envelope settings. </param>
+        /// <param name="errorSettings"> The error settings. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="messageConnectionSettings"/>, <paramref name="acknowledgementConnectionSettings"/>, <paramref name="mdnSettings"/>, <paramref name="securitySettings"/>, <paramref name="validationSettings"/>, <paramref name="envelopeSettings"/> or <paramref name="errorSettings"/> is null. </exception>
         public AS2ProtocolSettings(AS2MessageConnectionSettings messageConnectionSettings, AS2AcknowledgementConnectionSettings acknowledgementConnectionSettings, AS2MdnSettings mdnSettings, AS2SecuritySettings securitySettings, AS2ValidationSettings validationSettings, AS2EnvelopeSettings envelopeSettings, AS2ErrorSettings errorSettings)
         {
@@ -85,40 +61,19 @@ namespace Azure.ResourceManager.Logic.Models
             ErrorSettings = errorSettings;
         }
 
-        /// <summary>
-        /// The message connection settings.
-        /// Serialized Name: AS2ProtocolSettings.messageConnectionSettings
-        /// </summary>
+        /// <summary> The message connection settings. </summary>
         public AS2MessageConnectionSettings MessageConnectionSettings { get; set; }
-        /// <summary>
-        /// The acknowledgement connection settings.
-        /// Serialized Name: AS2ProtocolSettings.acknowledgementConnectionSettings
-        /// </summary>
+        /// <summary> The acknowledgement connection settings. </summary>
         public AS2AcknowledgementConnectionSettings AcknowledgementConnectionSettings { get; set; }
-        /// <summary>
-        /// The MDN settings.
-        /// Serialized Name: AS2ProtocolSettings.mdnSettings
-        /// </summary>
+        /// <summary> The MDN settings. </summary>
         public AS2MdnSettings MdnSettings { get; set; }
-        /// <summary>
-        /// The security settings.
-        /// Serialized Name: AS2ProtocolSettings.securitySettings
-        /// </summary>
+        /// <summary> The security settings. </summary>
         public AS2SecuritySettings SecuritySettings { get; set; }
-        /// <summary>
-        /// The validation settings.
-        /// Serialized Name: AS2ProtocolSettings.validationSettings
-        /// </summary>
+        /// <summary> The validation settings. </summary>
         public AS2ValidationSettings ValidationSettings { get; set; }
-        /// <summary>
-        /// The envelope settings.
-        /// Serialized Name: AS2ProtocolSettings.envelopeSettings
-        /// </summary>
+        /// <summary> The envelope settings. </summary>
         public AS2EnvelopeSettings EnvelopeSettings { get; set; }
-        /// <summary>
-        /// The error settings.
-        /// Serialized Name: AS2ProtocolSettings.errorSettings
-        /// </summary>
+        /// <summary> The error settings. </summary>
         public AS2ErrorSettings ErrorSettings { get; set; }
     }
 }

@@ -11,10 +11,7 @@ using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary>
-    /// A collection of assembly definitions.
-    /// Serialized Name: AssemblyCollection
-    /// </summary>
+    /// <summary> A collection of assembly definitions. </summary>
     internal partial class IntegrationAccountAssemblyList
     {
         /// <summary> Initializes a new instance of IntegrationAccountAssemblyList. </summary>
@@ -24,13 +21,13 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of IntegrationAccountAssemblyList. </summary>
-        /// <param name="value"> Serialized Name: AssemblyCollection.value. </param>
+        /// <param name="value"></param>
         internal IntegrationAccountAssemblyList(IReadOnlyList<IntegrationAccountAssemblyDefinitionData> value)
         {
             Value = value;
         }
 
-        /// <summary> Serialized Name: AssemblyCollection.value. </summary>
+        /// <summary> Gets the value. </summary>
         public IReadOnlyList<IntegrationAccountAssemblyDefinitionData> Value { get; }
     }
 }

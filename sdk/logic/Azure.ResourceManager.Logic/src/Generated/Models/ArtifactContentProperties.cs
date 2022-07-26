@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary>
-    /// The artifact content properties definition.
-    /// Serialized Name: ArtifactContentPropertiesDefinition
-    /// </summary>
+    /// <summary> The artifact content properties definition. </summary>
     public partial class ArtifactContentProperties : ArtifactProperties
     {
         /// <summary> Initializes a new instance of ArtifactContentProperties. </summary>
@@ -21,51 +18,24 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of ArtifactContentProperties. </summary>
-        /// <param name="createdOn">
-        /// The artifact creation time.
-        /// Serialized Name: ArtifactProperties.createdTime
-        /// </param>
-        /// <param name="changedOn">
-        /// The artifact changed time.
-        /// Serialized Name: ArtifactProperties.changedTime
-        /// </param>
-        /// <param name="metadata">
-        /// Anything
-        /// Serialized Name: ArtifactProperties.metadata
-        /// </param>
-        /// <param name="content">
-        /// Anything
-        /// Serialized Name: ArtifactContentPropertiesDefinition.content
-        /// </param>
-        /// <param name="contentType">
-        /// The content type.
-        /// Serialized Name: ArtifactContentPropertiesDefinition.contentType
-        /// </param>
-        /// <param name="contentLink">
-        /// The content link.
-        /// Serialized Name: ArtifactContentPropertiesDefinition.contentLink
-        /// </param>
-        internal ArtifactContentProperties(DateTimeOffset? createdOn, DateTimeOffset? changedOn, BinaryData metadata, BinaryData content, string contentType, LogicAppContentLink contentLink) : base(createdOn, changedOn, metadata)
+        /// <param name="createdOn"> The artifact creation time. </param>
+        /// <param name="changedOn"> The artifact changed time. </param>
+        /// <param name="metadata"> Anything. </param>
+        /// <param name="content"> Anything. </param>
+        /// <param name="contentType"> The content type. </param>
+        /// <param name="contentLink"> The content link. </param>
+        internal ArtifactContentProperties(DateTimeOffset? createdOn, DateTimeOffset? changedOn, BinaryData metadata, BinaryData content, string contentType, LogicContentLink contentLink) : base(createdOn, changedOn, metadata)
         {
             Content = content;
             ContentType = contentType;
             ContentLink = contentLink;
         }
 
-        /// <summary>
-        /// Anything
-        /// Serialized Name: ArtifactContentPropertiesDefinition.content
-        /// </summary>
+        /// <summary> Anything. </summary>
         public BinaryData Content { get; set; }
-        /// <summary>
-        /// The content type.
-        /// Serialized Name: ArtifactContentPropertiesDefinition.contentType
-        /// </summary>
+        /// <summary> The content type. </summary>
         public string ContentType { get; set; }
-        /// <summary>
-        /// The content link.
-        /// Serialized Name: ArtifactContentPropertiesDefinition.contentLink
-        /// </summary>
-        public LogicAppContentLink ContentLink { get; set; }
+        /// <summary> The content link. </summary>
+        public LogicContentLink ContentLink { get; set; }
     }
 }

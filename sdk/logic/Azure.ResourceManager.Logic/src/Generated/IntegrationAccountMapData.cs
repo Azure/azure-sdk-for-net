@@ -18,11 +18,8 @@ namespace Azure.ResourceManager.Logic
     {
         /// <summary> Initializes a new instance of IntegrationAccountMapData. </summary>
         /// <param name="location"> The location. </param>
-        /// <param name="mapType">
-        /// The map type.
-        /// Serialized Name: IntegrationAccountMap.properties.mapType
-        /// </param>
-        public IntegrationAccountMapData(AzureLocation location, MapType mapType) : base(location)
+        /// <param name="mapType"> The map type. </param>
+        public IntegrationAccountMapData(AzureLocation location, IntegrationAccountMapType mapType) : base(location)
         {
             MapType = mapType;
         }
@@ -34,39 +31,15 @@ namespace Azure.ResourceManager.Logic
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="mapType">
-        /// The map type.
-        /// Serialized Name: IntegrationAccountMap.properties.mapType
-        /// </param>
-        /// <param name="parametersSchema">
-        /// The parameters schema of integration account map.
-        /// Serialized Name: IntegrationAccountMap.properties.parametersSchema
-        /// </param>
-        /// <param name="createdOn">
-        /// The created time.
-        /// Serialized Name: IntegrationAccountMap.properties.createdTime
-        /// </param>
-        /// <param name="changedOn">
-        /// The changed time.
-        /// Serialized Name: IntegrationAccountMap.properties.changedTime
-        /// </param>
-        /// <param name="content">
-        /// The content.
-        /// Serialized Name: IntegrationAccountMap.properties.content
-        /// </param>
-        /// <param name="contentType">
-        /// The content type.
-        /// Serialized Name: IntegrationAccountMap.properties.contentType
-        /// </param>
-        /// <param name="contentLink">
-        /// The content link.
-        /// Serialized Name: IntegrationAccountMap.properties.contentLink
-        /// </param>
-        /// <param name="metadata">
-        /// The metadata.
-        /// Serialized Name: IntegrationAccountMap.properties.metadata
-        /// </param>
-        internal IntegrationAccountMapData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MapType mapType, IntegrationAccountMapPropertiesParametersSchema parametersSchema, DateTimeOffset? createdOn, DateTimeOffset? changedOn, string content, string contentType, LogicAppContentLink contentLink, BinaryData metadata) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="mapType"> The map type. </param>
+        /// <param name="parametersSchema"> The parameters schema of integration account map. </param>
+        /// <param name="createdOn"> The created time. </param>
+        /// <param name="changedOn"> The changed time. </param>
+        /// <param name="content"> The content. </param>
+        /// <param name="contentType"> The content type. </param>
+        /// <param name="contentLink"> The content link. </param>
+        /// <param name="metadata"> The metadata. </param>
+        internal IntegrationAccountMapData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IntegrationAccountMapType mapType, IntegrationAccountMapPropertiesParametersSchema parametersSchema, DateTimeOffset? createdOn, DateTimeOffset? changedOn, string content, string contentType, LogicContentLink contentLink, BinaryData metadata) : base(id, name, resourceType, systemData, tags, location)
         {
             MapType = mapType;
             ParametersSchema = parametersSchema;
@@ -78,20 +51,11 @@ namespace Azure.ResourceManager.Logic
             Metadata = metadata;
         }
 
-        /// <summary>
-        /// The map type.
-        /// Serialized Name: IntegrationAccountMap.properties.mapType
-        /// </summary>
-        public MapType MapType { get; set; }
-        /// <summary>
-        /// The parameters schema of integration account map.
-        /// Serialized Name: IntegrationAccountMap.properties.parametersSchema
-        /// </summary>
+        /// <summary> The map type. </summary>
+        public IntegrationAccountMapType MapType { get; set; }
+        /// <summary> The parameters schema of integration account map. </summary>
         internal IntegrationAccountMapPropertiesParametersSchema ParametersSchema { get; set; }
-        /// <summary>
-        /// The reference name.
-        /// Serialized Name: IntegrationAccountMapPropertiesParametersSchema.ref
-        /// </summary>
+        /// <summary> The reference name. </summary>
         public string ParametersSchemaRef
         {
             get => ParametersSchema is null ? default : ParametersSchema.Ref;
@@ -103,35 +67,17 @@ namespace Azure.ResourceManager.Logic
             }
         }
 
-        /// <summary>
-        /// The created time.
-        /// Serialized Name: IntegrationAccountMap.properties.createdTime
-        /// </summary>
+        /// <summary> The created time. </summary>
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary>
-        /// The changed time.
-        /// Serialized Name: IntegrationAccountMap.properties.changedTime
-        /// </summary>
+        /// <summary> The changed time. </summary>
         public DateTimeOffset? ChangedOn { get; }
-        /// <summary>
-        /// The content.
-        /// Serialized Name: IntegrationAccountMap.properties.content
-        /// </summary>
+        /// <summary> The content. </summary>
         public string Content { get; set; }
-        /// <summary>
-        /// The content type.
-        /// Serialized Name: IntegrationAccountMap.properties.contentType
-        /// </summary>
+        /// <summary> The content type. </summary>
         public string ContentType { get; set; }
-        /// <summary>
-        /// The content link.
-        /// Serialized Name: IntegrationAccountMap.properties.contentLink
-        /// </summary>
-        public LogicAppContentLink ContentLink { get; }
-        /// <summary>
-        /// The metadata.
-        /// Serialized Name: IntegrationAccountMap.properties.metadata
-        /// </summary>
+        /// <summary> The content link. </summary>
+        public LogicContentLink ContentLink { get; }
+        /// <summary> The metadata. </summary>
         public BinaryData Metadata { get; set; }
     }
 }

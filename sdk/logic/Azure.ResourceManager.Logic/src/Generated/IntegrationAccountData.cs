@@ -28,34 +28,19 @@ namespace Azure.ResourceManager.Logic
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="sku">
-        /// The sku.
-        /// Serialized Name: IntegrationAccount.sku
-        /// </param>
-        /// <param name="integrationServiceEnvironment">
-        /// The integration service environment.
-        /// Serialized Name: IntegrationAccount.properties.integrationServiceEnvironment
-        /// </param>
-        /// <param name="state">
-        /// The workflow state.
-        /// Serialized Name: IntegrationAccount.properties.state
-        /// </param>
-        internal IntegrationAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IntegrationAccountSku sku, LogicAppResourceReference integrationServiceEnvironment, LogicAppWorkflowState? state) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="sku"> The sku. </param>
+        /// <param name="integrationServiceEnvironment"> The integration service environment. </param>
+        /// <param name="state"> The workflow state. </param>
+        internal IntegrationAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IntegrationAccountSku sku, LogicResourceReference integrationServiceEnvironment, LogicWorkflowState? state) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             IntegrationServiceEnvironment = integrationServiceEnvironment;
             State = state;
         }
 
-        /// <summary>
-        /// The sku.
-        /// Serialized Name: IntegrationAccount.sku
-        /// </summary>
+        /// <summary> The sku. </summary>
         internal IntegrationAccountSku Sku { get; set; }
-        /// <summary>
-        /// The sku name.
-        /// Serialized Name: IntegrationAccountSku.name
-        /// </summary>
+        /// <summary> The sku name. </summary>
         public IntegrationAccountSkuName? SkuName
         {
             get => Sku is null ? default(IntegrationAccountSkuName?) : Sku.Name;
@@ -65,15 +50,9 @@ namespace Azure.ResourceManager.Logic
             }
         }
 
-        /// <summary>
-        /// The integration service environment.
-        /// Serialized Name: IntegrationAccount.properties.integrationServiceEnvironment
-        /// </summary>
-        public LogicAppResourceReference IntegrationServiceEnvironment { get; set; }
-        /// <summary>
-        /// The workflow state.
-        /// Serialized Name: IntegrationAccount.properties.state
-        /// </summary>
-        public LogicAppWorkflowState? State { get; set; }
+        /// <summary> The integration service environment. </summary>
+        public LogicResourceReference IntegrationServiceEnvironment { get; set; }
+        /// <summary> The workflow state. </summary>
+        public LogicWorkflowState? State { get; set; }
     }
 }

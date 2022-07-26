@@ -10,43 +10,28 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary>
-    /// The flow endpoints configuration.
-    /// Serialized Name: FlowEndpoints
-    /// </summary>
+    /// <summary> The flow endpoints configuration. </summary>
     public partial class FlowEndpoints
     {
         /// <summary> Initializes a new instance of FlowEndpoints. </summary>
         public FlowEndpoints()
         {
-            OutgoingIPAddresses = new ChangeTrackingList<IPAddress>();
-            AccessEndpointIPAddresses = new ChangeTrackingList<IPAddress>();
+            OutgoingIPAddresses = new ChangeTrackingList<FlowEndpointIPAddress>();
+            AccessEndpointIPAddresses = new ChangeTrackingList<FlowEndpointIPAddress>();
         }
 
         /// <summary> Initializes a new instance of FlowEndpoints. </summary>
-        /// <param name="outgoingIPAddresses">
-        /// The outgoing ip address.
-        /// Serialized Name: FlowEndpoints.outgoingIpAddresses
-        /// </param>
-        /// <param name="accessEndpointIPAddresses">
-        /// The access endpoint ip address.
-        /// Serialized Name: FlowEndpoints.accessEndpointIpAddresses
-        /// </param>
-        internal FlowEndpoints(IList<IPAddress> outgoingIPAddresses, IList<IPAddress> accessEndpointIPAddresses)
+        /// <param name="outgoingIPAddresses"> The outgoing ip address. </param>
+        /// <param name="accessEndpointIPAddresses"> The access endpoint ip address. </param>
+        internal FlowEndpoints(IList<FlowEndpointIPAddress> outgoingIPAddresses, IList<FlowEndpointIPAddress> accessEndpointIPAddresses)
         {
             OutgoingIPAddresses = outgoingIPAddresses;
             AccessEndpointIPAddresses = accessEndpointIPAddresses;
         }
 
-        /// <summary>
-        /// The outgoing ip address.
-        /// Serialized Name: FlowEndpoints.outgoingIpAddresses
-        /// </summary>
-        public IList<IPAddress> OutgoingIPAddresses { get; }
-        /// <summary>
-        /// The access endpoint ip address.
-        /// Serialized Name: FlowEndpoints.accessEndpointIpAddresses
-        /// </summary>
-        public IList<IPAddress> AccessEndpointIPAddresses { get; }
+        /// <summary> The outgoing ip address. </summary>
+        public IList<FlowEndpointIPAddress> OutgoingIPAddresses { get; }
+        /// <summary> The access endpoint ip address. </summary>
+        public IList<FlowEndpointIPAddress> AccessEndpointIPAddresses { get; }
     }
 }

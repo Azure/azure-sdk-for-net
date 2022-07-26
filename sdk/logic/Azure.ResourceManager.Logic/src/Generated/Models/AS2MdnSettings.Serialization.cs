@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Logic.Models
             bool signOutboundMdnIfOptional = default;
             Optional<string> mdnText = default;
             bool sendInboundMdnToMessageBox = default;
-            HashingAlgorithm micHashingAlgorithm = default;
+            AS2MdnHashingAlgorithm micHashingAlgorithm = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("needMDN"))
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 if (property.NameEquals("micHashingAlgorithm"))
                 {
-                    micHashingAlgorithm = new HashingAlgorithm(property.Value.GetString());
+                    micHashingAlgorithm = new AS2MdnHashingAlgorithm(property.Value.GetString());
                     continue;
                 }
             }

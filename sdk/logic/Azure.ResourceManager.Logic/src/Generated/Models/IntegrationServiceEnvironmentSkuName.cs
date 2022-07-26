@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary>
-    /// The integration service environment sku name.
-    /// Serialized Name: IntegrationServiceEnvironmentSkuName
-    /// </summary>
+    /// <summary> The integration service environment sku name. </summary>
     public readonly partial struct IntegrationServiceEnvironmentSkuName : IEquatable<IntegrationServiceEnvironmentSkuName>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.Logic.Models
         private const string PremiumValue = "Premium";
         private const string DeveloperValue = "Developer";
 
-        /// <summary>
-        /// NotSpecified
-        /// Serialized Name: IntegrationServiceEnvironmentSkuName.NotSpecified
-        /// </summary>
+        /// <summary> NotSpecified. </summary>
         public static IntegrationServiceEnvironmentSkuName NotSpecified { get; } = new IntegrationServiceEnvironmentSkuName(NotSpecifiedValue);
-        /// <summary>
-        /// Premium
-        /// Serialized Name: IntegrationServiceEnvironmentSkuName.Premium
-        /// </summary>
+        /// <summary> Premium. </summary>
         public static IntegrationServiceEnvironmentSkuName Premium { get; } = new IntegrationServiceEnvironmentSkuName(PremiumValue);
-        /// <summary>
-        /// Developer
-        /// Serialized Name: IntegrationServiceEnvironmentSkuName.Developer
-        /// </summary>
+        /// <summary> Developer. </summary>
         public static IntegrationServiceEnvironmentSkuName Developer { get; } = new IntegrationServiceEnvironmentSkuName(DeveloperValue);
         /// <summary> Determines if two <see cref="IntegrationServiceEnvironmentSkuName"/> values are the same. </summary>
         public static bool operator ==(IntegrationServiceEnvironmentSkuName left, IntegrationServiceEnvironmentSkuName right) => left.Equals(right);

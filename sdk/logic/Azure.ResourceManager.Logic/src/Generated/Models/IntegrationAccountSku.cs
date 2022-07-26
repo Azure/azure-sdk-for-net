@@ -7,26 +7,17 @@
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary>
-    /// The integration account sku.
-    /// Serialized Name: IntegrationAccountSku
-    /// </summary>
+    /// <summary> The integration account sku. </summary>
     internal partial class IntegrationAccountSku
     {
         /// <summary> Initializes a new instance of IntegrationAccountSku. </summary>
-        /// <param name="name">
-        /// The sku name.
-        /// Serialized Name: IntegrationAccountSku.name
-        /// </param>
+        /// <param name="name"> The sku name. </param>
         public IntegrationAccountSku(IntegrationAccountSkuName name)
         {
             Name = name;
         }
 
-        /// <summary>
-        /// The sku name.
-        /// Serialized Name: IntegrationAccountSku.name
-        /// </summary>
+        /// <summary> The sku name. </summary>
         public IntegrationAccountSkuName Name { get; set; }
     }
 }

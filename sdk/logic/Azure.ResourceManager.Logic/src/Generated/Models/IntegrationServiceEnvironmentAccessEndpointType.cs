@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary>
-    /// The integration service environment access endpoint type.
-    /// Serialized Name: IntegrationServiceEnvironmentAccessEndpointType
-    /// </summary>
+    /// <summary> The integration service environment access endpoint type. </summary>
     public readonly partial struct IntegrationServiceEnvironmentAccessEndpointType : IEquatable<IntegrationServiceEnvironmentAccessEndpointType>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.Logic.Models
         private const string ExternalValue = "External";
         private const string InternalValue = "Internal";
 
-        /// <summary>
-        /// NotSpecified
-        /// Serialized Name: IntegrationServiceEnvironmentAccessEndpointType.NotSpecified
-        /// </summary>
+        /// <summary> NotSpecified. </summary>
         public static IntegrationServiceEnvironmentAccessEndpointType NotSpecified { get; } = new IntegrationServiceEnvironmentAccessEndpointType(NotSpecifiedValue);
-        /// <summary>
-        /// External
-        /// Serialized Name: IntegrationServiceEnvironmentAccessEndpointType.External
-        /// </summary>
+        /// <summary> External. </summary>
         public static IntegrationServiceEnvironmentAccessEndpointType External { get; } = new IntegrationServiceEnvironmentAccessEndpointType(ExternalValue);
-        /// <summary>
-        /// Internal
-        /// Serialized Name: IntegrationServiceEnvironmentAccessEndpointType.Internal
-        /// </summary>
+        /// <summary> Internal. </summary>
         public static IntegrationServiceEnvironmentAccessEndpointType Internal { get; } = new IntegrationServiceEnvironmentAccessEndpointType(InternalValue);
         /// <summary> Determines if two <see cref="IntegrationServiceEnvironmentAccessEndpointType"/> values are the same. </summary>
         public static bool operator ==(IntegrationServiceEnvironmentAccessEndpointType left, IntegrationServiceEnvironmentAccessEndpointType right) => left.Equals(right);

@@ -9,33 +9,15 @@ using System;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary>
-    /// The AS2 agreement envelope settings.
-    /// Serialized Name: AS2EnvelopeSettings
-    /// </summary>
+    /// <summary> The AS2 agreement envelope settings. </summary>
     public partial class AS2EnvelopeSettings
     {
         /// <summary> Initializes a new instance of AS2EnvelopeSettings. </summary>
-        /// <param name="messageContentType">
-        /// The message content type.
-        /// Serialized Name: AS2EnvelopeSettings.messageContentType
-        /// </param>
-        /// <param name="transmitFileNameInMimeHeader">
-        /// The value indicating whether to transmit file name in mime header.
-        /// Serialized Name: AS2EnvelopeSettings.transmitFileNameInMimeHeader
-        /// </param>
-        /// <param name="fileNameTemplate">
-        /// The template for file name.
-        /// Serialized Name: AS2EnvelopeSettings.fileNameTemplate
-        /// </param>
-        /// <param name="suspendMessageOnFileNameGenerationError">
-        /// The value indicating whether to suspend message on file name generation error.
-        /// Serialized Name: AS2EnvelopeSettings.suspendMessageOnFileNameGenerationError
-        /// </param>
-        /// <param name="autogenerateFileName">
-        /// The value indicating whether to auto generate file name.
-        /// Serialized Name: AS2EnvelopeSettings.autogenerateFileName
-        /// </param>
+        /// <param name="messageContentType"> The message content type. </param>
+        /// <param name="transmitFileNameInMimeHeader"> The value indicating whether to transmit file name in mime header. </param>
+        /// <param name="fileNameTemplate"> The template for file name. </param>
+        /// <param name="suspendMessageOnFileNameGenerationError"> The value indicating whether to suspend message on file name generation error. </param>
+        /// <param name="autogenerateFileName"> The value indicating whether to auto generate file name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="messageContentType"/> or <paramref name="fileNameTemplate"/> is null. </exception>
         public AS2EnvelopeSettings(string messageContentType, bool transmitFileNameInMimeHeader, string fileNameTemplate, bool suspendMessageOnFileNameGenerationError, bool autogenerateFileName)
         {
@@ -55,30 +37,15 @@ namespace Azure.ResourceManager.Logic.Models
             AutogenerateFileName = autogenerateFileName;
         }
 
-        /// <summary>
-        /// The message content type.
-        /// Serialized Name: AS2EnvelopeSettings.messageContentType
-        /// </summary>
+        /// <summary> The message content type. </summary>
         public string MessageContentType { get; set; }
-        /// <summary>
-        /// The value indicating whether to transmit file name in mime header.
-        /// Serialized Name: AS2EnvelopeSettings.transmitFileNameInMimeHeader
-        /// </summary>
+        /// <summary> The value indicating whether to transmit file name in mime header. </summary>
         public bool TransmitFileNameInMimeHeader { get; set; }
-        /// <summary>
-        /// The template for file name.
-        /// Serialized Name: AS2EnvelopeSettings.fileNameTemplate
-        /// </summary>
+        /// <summary> The template for file name. </summary>
         public string FileNameTemplate { get; set; }
-        /// <summary>
-        /// The value indicating whether to suspend message on file name generation error.
-        /// Serialized Name: AS2EnvelopeSettings.suspendMessageOnFileNameGenerationError
-        /// </summary>
+        /// <summary> The value indicating whether to suspend message on file name generation error. </summary>
         public bool SuspendMessageOnFileNameGenerationError { get; set; }
-        /// <summary>
-        /// The value indicating whether to auto generate file name.
-        /// Serialized Name: AS2EnvelopeSettings.autogenerateFileName
-        /// </summary>
+        /// <summary> The value indicating whether to auto generate file name. </summary>
         public bool AutogenerateFileName { get; set; }
     }
 }

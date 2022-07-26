@@ -9,29 +9,14 @@ using System;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary>
-    /// The Edifact schema reference.
-    /// Serialized Name: EdifactSchemaReference
-    /// </summary>
+    /// <summary> The Edifact schema reference. </summary>
     public partial class EdifactSchemaReference
     {
         /// <summary> Initializes a new instance of EdifactSchemaReference. </summary>
-        /// <param name="messageId">
-        /// The message id.
-        /// Serialized Name: EdifactSchemaReference.messageId
-        /// </param>
-        /// <param name="messageVersion">
-        /// The message version.
-        /// Serialized Name: EdifactSchemaReference.messageVersion
-        /// </param>
-        /// <param name="messageRelease">
-        /// The message release version.
-        /// Serialized Name: EdifactSchemaReference.messageRelease
-        /// </param>
-        /// <param name="schemaName">
-        /// The schema name.
-        /// Serialized Name: EdifactSchemaReference.schemaName
-        /// </param>
+        /// <param name="messageId"> The message id. </param>
+        /// <param name="messageVersion"> The message version. </param>
+        /// <param name="messageRelease"> The message release version. </param>
+        /// <param name="schemaName"> The schema name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="messageId"/>, <paramref name="messageVersion"/>, <paramref name="messageRelease"/> or <paramref name="schemaName"/> is null. </exception>
         public EdifactSchemaReference(string messageId, string messageVersion, string messageRelease, string schemaName)
         {
@@ -59,34 +44,13 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of EdifactSchemaReference. </summary>
-        /// <param name="messageId">
-        /// The message id.
-        /// Serialized Name: EdifactSchemaReference.messageId
-        /// </param>
-        /// <param name="messageVersion">
-        /// The message version.
-        /// Serialized Name: EdifactSchemaReference.messageVersion
-        /// </param>
-        /// <param name="messageRelease">
-        /// The message release version.
-        /// Serialized Name: EdifactSchemaReference.messageRelease
-        /// </param>
-        /// <param name="senderApplicationId">
-        /// The sender application id.
-        /// Serialized Name: EdifactSchemaReference.senderApplicationId
-        /// </param>
-        /// <param name="senderApplicationQualifier">
-        /// The sender application qualifier.
-        /// Serialized Name: EdifactSchemaReference.senderApplicationQualifier
-        /// </param>
-        /// <param name="associationAssignedCode">
-        /// The association assigned code.
-        /// Serialized Name: EdifactSchemaReference.associationAssignedCode
-        /// </param>
-        /// <param name="schemaName">
-        /// The schema name.
-        /// Serialized Name: EdifactSchemaReference.schemaName
-        /// </param>
+        /// <param name="messageId"> The message id. </param>
+        /// <param name="messageVersion"> The message version. </param>
+        /// <param name="messageRelease"> The message release version. </param>
+        /// <param name="senderApplicationId"> The sender application id. </param>
+        /// <param name="senderApplicationQualifier"> The sender application qualifier. </param>
+        /// <param name="associationAssignedCode"> The association assigned code. </param>
+        /// <param name="schemaName"> The schema name. </param>
         internal EdifactSchemaReference(string messageId, string messageVersion, string messageRelease, string senderApplicationId, string senderApplicationQualifier, string associationAssignedCode, string schemaName)
         {
             MessageId = messageId;
@@ -98,40 +62,19 @@ namespace Azure.ResourceManager.Logic.Models
             SchemaName = schemaName;
         }
 
-        /// <summary>
-        /// The message id.
-        /// Serialized Name: EdifactSchemaReference.messageId
-        /// </summary>
+        /// <summary> The message id. </summary>
         public string MessageId { get; set; }
-        /// <summary>
-        /// The message version.
-        /// Serialized Name: EdifactSchemaReference.messageVersion
-        /// </summary>
+        /// <summary> The message version. </summary>
         public string MessageVersion { get; set; }
-        /// <summary>
-        /// The message release version.
-        /// Serialized Name: EdifactSchemaReference.messageRelease
-        /// </summary>
+        /// <summary> The message release version. </summary>
         public string MessageRelease { get; set; }
-        /// <summary>
-        /// The sender application id.
-        /// Serialized Name: EdifactSchemaReference.senderApplicationId
-        /// </summary>
+        /// <summary> The sender application id. </summary>
         public string SenderApplicationId { get; set; }
-        /// <summary>
-        /// The sender application qualifier.
-        /// Serialized Name: EdifactSchemaReference.senderApplicationQualifier
-        /// </summary>
+        /// <summary> The sender application qualifier. </summary>
         public string SenderApplicationQualifier { get; set; }
-        /// <summary>
-        /// The association assigned code.
-        /// Serialized Name: EdifactSchemaReference.associationAssignedCode
-        /// </summary>
+        /// <summary> The association assigned code. </summary>
         public string AssociationAssignedCode { get; set; }
-        /// <summary>
-        /// The schema name.
-        /// Serialized Name: EdifactSchemaReference.schemaName
-        /// </summary>
+        /// <summary> The schema name. </summary>
         public string SchemaName { get; set; }
     }
 }

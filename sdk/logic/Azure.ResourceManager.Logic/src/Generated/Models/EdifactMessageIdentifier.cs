@@ -9,17 +9,11 @@ using System;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary>
-    /// The Edifact message identifier.
-    /// Serialized Name: EdifactMessageIdentifier
-    /// </summary>
+    /// <summary> The Edifact message identifier. </summary>
     public partial class EdifactMessageIdentifier
     {
         /// <summary> Initializes a new instance of EdifactMessageIdentifier. </summary>
-        /// <param name="messageId">
-        /// The message id on which this envelope settings has to be applied.
-        /// Serialized Name: EdifactMessageIdentifier.messageId
-        /// </param>
+        /// <param name="messageId"> The message id on which this envelope settings has to be applied. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="messageId"/> is null. </exception>
         public EdifactMessageIdentifier(string messageId)
         {
@@ -31,10 +25,7 @@ namespace Azure.ResourceManager.Logic.Models
             MessageId = messageId;
         }
 
-        /// <summary>
-        /// The message id on which this envelope settings has to be applied.
-        /// Serialized Name: EdifactMessageIdentifier.messageId
-        /// </summary>
+        /// <summary> The message id on which this envelope settings has to be applied. </summary>
         public string MessageId { get; set; }
     }
 }

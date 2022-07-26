@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary>
-    /// The integration service environment sku.
-    /// Serialized Name: IntegrationServiceEnvironmentSku
-    /// </summary>
+    /// <summary> The integration service environment sku. </summary>
     public partial class IntegrationServiceEnvironmentSku
     {
         /// <summary> Initializes a new instance of IntegrationServiceEnvironmentSku. </summary>
@@ -19,29 +16,17 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of IntegrationServiceEnvironmentSku. </summary>
-        /// <param name="name">
-        /// The sku name.
-        /// Serialized Name: IntegrationServiceEnvironmentSku.name
-        /// </param>
-        /// <param name="capacity">
-        /// The sku capacity.
-        /// Serialized Name: IntegrationServiceEnvironmentSku.capacity
-        /// </param>
+        /// <param name="name"> The sku name. </param>
+        /// <param name="capacity"> The sku capacity. </param>
         internal IntegrationServiceEnvironmentSku(IntegrationServiceEnvironmentSkuName? name, int? capacity)
         {
             Name = name;
             Capacity = capacity;
         }
 
-        /// <summary>
-        /// The sku name.
-        /// Serialized Name: IntegrationServiceEnvironmentSku.name
-        /// </summary>
+        /// <summary> The sku name. </summary>
         public IntegrationServiceEnvironmentSkuName? Name { get; set; }
-        /// <summary>
-        /// The sku capacity.
-        /// Serialized Name: IntegrationServiceEnvironmentSku.capacity
-        /// </summary>
+        /// <summary> The sku capacity. </summary>
         public int? Capacity { get; set; }
     }
 }

@@ -7,31 +7,16 @@
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary>
-    /// The agreement type.
-    /// Serialized Name: AgreementType
-    /// </summary>
+    /// <summary> The agreement type. </summary>
     public enum IntegrationAccountAgreementType
     {
-        /// <summary>
-        /// NotSpecified
-        /// Serialized Name: AgreementType.NotSpecified
-        /// </summary>
+        /// <summary> NotSpecified. </summary>
         NotSpecified,
-        /// <summary>
-        /// AS2
-        /// Serialized Name: AgreementType.AS2
-        /// </summary>
+        /// <summary> AS2. </summary>
         AS2,
-        /// <summary>
-        /// X12
-        /// Serialized Name: AgreementType.X12
-        /// </summary>
+        /// <summary> X12. </summary>
         X12,
-        /// <summary>
-        /// Edifact
-        /// Serialized Name: AgreementType.Edifact
-        /// </summary>
+        /// <summary> Edifact. </summary>
         Edifact
     }
 }

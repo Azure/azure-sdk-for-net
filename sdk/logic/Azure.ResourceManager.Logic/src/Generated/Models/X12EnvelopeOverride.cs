@@ -9,49 +9,19 @@ using System;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary>
-    /// The X12 envelope override settings.
-    /// Serialized Name: X12EnvelopeOverride
-    /// </summary>
+    /// <summary> The X12 envelope override settings. </summary>
     public partial class X12EnvelopeOverride
     {
         /// <summary> Initializes a new instance of X12EnvelopeOverride. </summary>
-        /// <param name="targetNamespace">
-        /// The target namespace on which this envelope settings has to be applied.
-        /// Serialized Name: X12EnvelopeOverride.targetNamespace
-        /// </param>
-        /// <param name="protocolVersion">
-        /// The protocol version on which this envelope settings has to be applied.
-        /// Serialized Name: X12EnvelopeOverride.protocolVersion
-        /// </param>
-        /// <param name="messageId">
-        /// The message id on which this envelope settings has to be applied.
-        /// Serialized Name: X12EnvelopeOverride.messageId
-        /// </param>
-        /// <param name="responsibleAgencyCode">
-        /// The responsible agency code.
-        /// Serialized Name: X12EnvelopeOverride.responsibleAgencyCode
-        /// </param>
-        /// <param name="headerVersion">
-        /// The header version.
-        /// Serialized Name: X12EnvelopeOverride.headerVersion
-        /// </param>
-        /// <param name="senderApplicationId">
-        /// The sender application id.
-        /// Serialized Name: X12EnvelopeOverride.senderApplicationId
-        /// </param>
-        /// <param name="receiverApplicationId">
-        /// The receiver application id.
-        /// Serialized Name: X12EnvelopeOverride.receiverApplicationId
-        /// </param>
-        /// <param name="dateFormat">
-        /// The date format.
-        /// Serialized Name: X12EnvelopeOverride.dateFormat
-        /// </param>
-        /// <param name="timeFormat">
-        /// The time format.
-        /// Serialized Name: X12EnvelopeOverride.timeFormat
-        /// </param>
+        /// <param name="targetNamespace"> The target namespace on which this envelope settings has to be applied. </param>
+        /// <param name="protocolVersion"> The protocol version on which this envelope settings has to be applied. </param>
+        /// <param name="messageId"> The message id on which this envelope settings has to be applied. </param>
+        /// <param name="responsibleAgencyCode"> The responsible agency code. </param>
+        /// <param name="headerVersion"> The header version. </param>
+        /// <param name="senderApplicationId"> The sender application id. </param>
+        /// <param name="receiverApplicationId"> The receiver application id. </param>
+        /// <param name="dateFormat"> The date format. </param>
+        /// <param name="timeFormat"> The time format. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetNamespace"/>, <paramref name="protocolVersion"/>, <paramref name="messageId"/>, <paramref name="responsibleAgencyCode"/>, <paramref name="headerVersion"/>, <paramref name="senderApplicationId"/> or <paramref name="receiverApplicationId"/> is null. </exception>
         public X12EnvelopeOverride(string targetNamespace, string protocolVersion, string messageId, string responsibleAgencyCode, string headerVersion, string senderApplicationId, string receiverApplicationId, X12DateFormat dateFormat, X12TimeFormat timeFormat)
         {
@@ -96,46 +66,16 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of X12EnvelopeOverride. </summary>
-        /// <param name="targetNamespace">
-        /// The target namespace on which this envelope settings has to be applied.
-        /// Serialized Name: X12EnvelopeOverride.targetNamespace
-        /// </param>
-        /// <param name="protocolVersion">
-        /// The protocol version on which this envelope settings has to be applied.
-        /// Serialized Name: X12EnvelopeOverride.protocolVersion
-        /// </param>
-        /// <param name="messageId">
-        /// The message id on which this envelope settings has to be applied.
-        /// Serialized Name: X12EnvelopeOverride.messageId
-        /// </param>
-        /// <param name="responsibleAgencyCode">
-        /// The responsible agency code.
-        /// Serialized Name: X12EnvelopeOverride.responsibleAgencyCode
-        /// </param>
-        /// <param name="headerVersion">
-        /// The header version.
-        /// Serialized Name: X12EnvelopeOverride.headerVersion
-        /// </param>
-        /// <param name="senderApplicationId">
-        /// The sender application id.
-        /// Serialized Name: X12EnvelopeOverride.senderApplicationId
-        /// </param>
-        /// <param name="receiverApplicationId">
-        /// The receiver application id.
-        /// Serialized Name: X12EnvelopeOverride.receiverApplicationId
-        /// </param>
-        /// <param name="functionalIdentifierCode">
-        /// The functional identifier code.
-        /// Serialized Name: X12EnvelopeOverride.functionalIdentifierCode
-        /// </param>
-        /// <param name="dateFormat">
-        /// The date format.
-        /// Serialized Name: X12EnvelopeOverride.dateFormat
-        /// </param>
-        /// <param name="timeFormat">
-        /// The time format.
-        /// Serialized Name: X12EnvelopeOverride.timeFormat
-        /// </param>
+        /// <param name="targetNamespace"> The target namespace on which this envelope settings has to be applied. </param>
+        /// <param name="protocolVersion"> The protocol version on which this envelope settings has to be applied. </param>
+        /// <param name="messageId"> The message id on which this envelope settings has to be applied. </param>
+        /// <param name="responsibleAgencyCode"> The responsible agency code. </param>
+        /// <param name="headerVersion"> The header version. </param>
+        /// <param name="senderApplicationId"> The sender application id. </param>
+        /// <param name="receiverApplicationId"> The receiver application id. </param>
+        /// <param name="functionalIdentifierCode"> The functional identifier code. </param>
+        /// <param name="dateFormat"> The date format. </param>
+        /// <param name="timeFormat"> The time format. </param>
         internal X12EnvelopeOverride(string targetNamespace, string protocolVersion, string messageId, string responsibleAgencyCode, string headerVersion, string senderApplicationId, string receiverApplicationId, string functionalIdentifierCode, X12DateFormat dateFormat, X12TimeFormat timeFormat)
         {
             TargetNamespace = targetNamespace;
@@ -150,55 +90,25 @@ namespace Azure.ResourceManager.Logic.Models
             TimeFormat = timeFormat;
         }
 
-        /// <summary>
-        /// The target namespace on which this envelope settings has to be applied.
-        /// Serialized Name: X12EnvelopeOverride.targetNamespace
-        /// </summary>
+        /// <summary> The target namespace on which this envelope settings has to be applied. </summary>
         public string TargetNamespace { get; set; }
-        /// <summary>
-        /// The protocol version on which this envelope settings has to be applied.
-        /// Serialized Name: X12EnvelopeOverride.protocolVersion
-        /// </summary>
+        /// <summary> The protocol version on which this envelope settings has to be applied. </summary>
         public string ProtocolVersion { get; set; }
-        /// <summary>
-        /// The message id on which this envelope settings has to be applied.
-        /// Serialized Name: X12EnvelopeOverride.messageId
-        /// </summary>
+        /// <summary> The message id on which this envelope settings has to be applied. </summary>
         public string MessageId { get; set; }
-        /// <summary>
-        /// The responsible agency code.
-        /// Serialized Name: X12EnvelopeOverride.responsibleAgencyCode
-        /// </summary>
+        /// <summary> The responsible agency code. </summary>
         public string ResponsibleAgencyCode { get; set; }
-        /// <summary>
-        /// The header version.
-        /// Serialized Name: X12EnvelopeOverride.headerVersion
-        /// </summary>
+        /// <summary> The header version. </summary>
         public string HeaderVersion { get; set; }
-        /// <summary>
-        /// The sender application id.
-        /// Serialized Name: X12EnvelopeOverride.senderApplicationId
-        /// </summary>
+        /// <summary> The sender application id. </summary>
         public string SenderApplicationId { get; set; }
-        /// <summary>
-        /// The receiver application id.
-        /// Serialized Name: X12EnvelopeOverride.receiverApplicationId
-        /// </summary>
+        /// <summary> The receiver application id. </summary>
         public string ReceiverApplicationId { get; set; }
-        /// <summary>
-        /// The functional identifier code.
-        /// Serialized Name: X12EnvelopeOverride.functionalIdentifierCode
-        /// </summary>
+        /// <summary> The functional identifier code. </summary>
         public string FunctionalIdentifierCode { get; set; }
-        /// <summary>
-        /// The date format.
-        /// Serialized Name: X12EnvelopeOverride.dateFormat
-        /// </summary>
+        /// <summary> The date format. </summary>
         public X12DateFormat DateFormat { get; set; }
-        /// <summary>
-        /// The time format.
-        /// Serialized Name: X12EnvelopeOverride.timeFormat
-        /// </summary>
+        /// <summary> The time format. </summary>
         public X12TimeFormat TimeFormat { get; set; }
     }
 }

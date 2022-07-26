@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary>
-    /// Open authentication policy claim.
-    /// Serialized Name: OpenAuthenticationPolicyClaim
-    /// </summary>
+    /// <summary> Open authentication policy claim. </summary>
     public partial class OpenAuthenticationPolicyClaim
     {
         /// <summary> Initializes a new instance of OpenAuthenticationPolicyClaim. </summary>
@@ -19,29 +16,17 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of OpenAuthenticationPolicyClaim. </summary>
-        /// <param name="name">
-        /// The name of the claim.
-        /// Serialized Name: OpenAuthenticationPolicyClaim.name
-        /// </param>
-        /// <param name="value">
-        /// The value of the claim.
-        /// Serialized Name: OpenAuthenticationPolicyClaim.value
-        /// </param>
+        /// <param name="name"> The name of the claim. </param>
+        /// <param name="value"> The value of the claim. </param>
         internal OpenAuthenticationPolicyClaim(string name, string value)
         {
             Name = name;
             Value = value;
         }
 
-        /// <summary>
-        /// The name of the claim.
-        /// Serialized Name: OpenAuthenticationPolicyClaim.name
-        /// </summary>
+        /// <summary> The name of the claim. </summary>
         public string Name { get; set; }
-        /// <summary>
-        /// The value of the claim.
-        /// Serialized Name: OpenAuthenticationPolicyClaim.value
-        /// </summary>
+        /// <summary> The value of the claim. </summary>
         public string Value { get; set; }
     }
 }

@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary>
-    /// The B2B partner content.
-    /// Serialized Name: B2BPartnerContent
-    /// </summary>
+    /// <summary> The B2B partner content. </summary>
     internal partial class B2BPartnerContent
     {
         /// <summary> Initializes a new instance of B2BPartnerContent. </summary>
@@ -23,19 +20,13 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of B2BPartnerContent. </summary>
-        /// <param name="businessIdentities">
-        /// The list of partner business identities.
-        /// Serialized Name: B2BPartnerContent.businessIdentities
-        /// </param>
+        /// <param name="businessIdentities"> The list of partner business identities. </param>
         internal B2BPartnerContent(IList<IntegrationAccountBusinessIdentity> businessIdentities)
         {
             BusinessIdentities = businessIdentities;
         }
 
-        /// <summary>
-        /// The list of partner business identities.
-        /// Serialized Name: B2BPartnerContent.businessIdentities
-        /// </summary>
+        /// <summary> The list of partner business identities. </summary>
         public IList<IntegrationAccountBusinessIdentity> BusinessIdentities { get; }
     }
 }

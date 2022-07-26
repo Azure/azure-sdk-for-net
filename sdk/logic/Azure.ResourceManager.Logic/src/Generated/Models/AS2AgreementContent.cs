@@ -9,21 +9,12 @@ using System;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary>
-    /// The integration account AS2 agreement content.
-    /// Serialized Name: AS2AgreementContent
-    /// </summary>
+    /// <summary> The integration account AS2 agreement content. </summary>
     public partial class AS2AgreementContent
     {
         /// <summary> Initializes a new instance of AS2AgreementContent. </summary>
-        /// <param name="receiveAgreement">
-        /// The AS2 one-way receive agreement.
-        /// Serialized Name: AS2AgreementContent.receiveAgreement
-        /// </param>
-        /// <param name="sendAgreement">
-        /// The AS2 one-way send agreement.
-        /// Serialized Name: AS2AgreementContent.sendAgreement
-        /// </param>
+        /// <param name="receiveAgreement"> The AS2 one-way receive agreement. </param>
+        /// <param name="sendAgreement"> The AS2 one-way send agreement. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="receiveAgreement"/> or <paramref name="sendAgreement"/> is null. </exception>
         public AS2AgreementContent(AS2OneWayAgreement receiveAgreement, AS2OneWayAgreement sendAgreement)
         {
@@ -40,15 +31,9 @@ namespace Azure.ResourceManager.Logic.Models
             SendAgreement = sendAgreement;
         }
 
-        /// <summary>
-        /// The AS2 one-way receive agreement.
-        /// Serialized Name: AS2AgreementContent.receiveAgreement
-        /// </summary>
+        /// <summary> The AS2 one-way receive agreement. </summary>
         public AS2OneWayAgreement ReceiveAgreement { get; set; }
-        /// <summary>
-        /// The AS2 one-way send agreement.
-        /// Serialized Name: AS2AgreementContent.sendAgreement
-        /// </summary>
+        /// <summary> The AS2 one-way send agreement. </summary>
         public AS2OneWayAgreement SendAgreement { get; set; }
     }
 }

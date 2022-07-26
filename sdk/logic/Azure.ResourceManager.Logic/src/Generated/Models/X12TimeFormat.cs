@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary>
-    /// The x12 time format.
-    /// Serialized Name: X12TimeFormat
-    /// </summary>
+    /// <summary> The x12 time format. </summary>
     public readonly partial struct X12TimeFormat : IEquatable<X12TimeFormat>
     {
         private readonly string _value;
@@ -31,30 +28,15 @@ namespace Azure.ResourceManager.Logic.Models
         private const string HhmmsSddValue = "HHMMSSdd";
         private const string HhmmsSdValue = "HHMMSSd";
 
-        /// <summary>
-        /// NotSpecified
-        /// Serialized Name: X12TimeFormat.NotSpecified
-        /// </summary>
+        /// <summary> NotSpecified. </summary>
         public static X12TimeFormat NotSpecified { get; } = new X12TimeFormat(NotSpecifiedValue);
-        /// <summary>
-        /// HHMM
-        /// Serialized Name: X12TimeFormat.HHMM
-        /// </summary>
+        /// <summary> HHMM. </summary>
         public static X12TimeFormat Hhmm { get; } = new X12TimeFormat(HhmmValue);
-        /// <summary>
-        /// HHMMSS
-        /// Serialized Name: X12TimeFormat.HHMMSS
-        /// </summary>
+        /// <summary> HHMMSS. </summary>
         public static X12TimeFormat Hhmmss { get; } = new X12TimeFormat(HhmmssValue);
-        /// <summary>
-        /// HHMMSSdd
-        /// Serialized Name: X12TimeFormat.HHMMSSdd
-        /// </summary>
+        /// <summary> HHMMSSdd. </summary>
         public static X12TimeFormat HhmmsSdd { get; } = new X12TimeFormat(HhmmsSddValue);
-        /// <summary>
-        /// HHMMSSd
-        /// Serialized Name: X12TimeFormat.HHMMSSd
-        /// </summary>
+        /// <summary> HHMMSSd. </summary>
         public static X12TimeFormat HhmmsSd { get; } = new X12TimeFormat(HhmmsSdValue);
         /// <summary> Determines if two <see cref="X12TimeFormat"/> values are the same. </summary>
         public static bool operator ==(X12TimeFormat left, X12TimeFormat right) => left.Equals(right);

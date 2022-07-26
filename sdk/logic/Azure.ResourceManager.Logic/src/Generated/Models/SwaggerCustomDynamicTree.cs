@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary>
-    /// The swagger custom dynamic tree.
-    /// Serialized Name: SwaggerCustomDynamicTree
-    /// </summary>
+    /// <summary> The swagger custom dynamic tree. </summary>
     public partial class SwaggerCustomDynamicTree
     {
         /// <summary> Initializes a new instance of SwaggerCustomDynamicTree. </summary>
@@ -19,18 +16,9 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of SwaggerCustomDynamicTree. </summary>
-        /// <param name="settings">
-        /// The tree settings
-        /// Serialized Name: SwaggerCustomDynamicTree.settings
-        /// </param>
-        /// <param name="open">
-        /// The tree on-open configuration
-        /// Serialized Name: SwaggerCustomDynamicTree.open
-        /// </param>
-        /// <param name="browse">
-        /// The tree on-browse configuration
-        /// Serialized Name: SwaggerCustomDynamicTree.browse
-        /// </param>
+        /// <param name="settings"> The tree settings. </param>
+        /// <param name="open"> The tree on-open configuration. </param>
+        /// <param name="browse"> The tree on-browse configuration. </param>
         internal SwaggerCustomDynamicTree(SwaggerCustomDynamicTreeSettings settings, SwaggerCustomDynamicTreeCommand open, SwaggerCustomDynamicTreeCommand browse)
         {
             Settings = settings;
@@ -38,20 +26,11 @@ namespace Azure.ResourceManager.Logic.Models
             Browse = browse;
         }
 
-        /// <summary>
-        /// The tree settings
-        /// Serialized Name: SwaggerCustomDynamicTree.settings
-        /// </summary>
+        /// <summary> The tree settings. </summary>
         public SwaggerCustomDynamicTreeSettings Settings { get; set; }
-        /// <summary>
-        /// The tree on-open configuration
-        /// Serialized Name: SwaggerCustomDynamicTree.open
-        /// </summary>
+        /// <summary> The tree on-open configuration. </summary>
         public SwaggerCustomDynamicTreeCommand Open { get; set; }
-        /// <summary>
-        /// The tree on-browse configuration
-        /// Serialized Name: SwaggerCustomDynamicTree.browse
-        /// </summary>
+        /// <summary> The tree on-browse configuration. </summary>
         public SwaggerCustomDynamicTreeCommand Browse { get; set; }
     }
 }

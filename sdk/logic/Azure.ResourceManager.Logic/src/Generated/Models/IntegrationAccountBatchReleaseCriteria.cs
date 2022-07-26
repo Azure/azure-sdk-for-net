@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary>
-    /// The batch release criteria.
-    /// Serialized Name: BatchReleaseCriteria
-    /// </summary>
+    /// <summary> The batch release criteria. </summary>
     public partial class IntegrationAccountBatchReleaseCriteria
     {
         /// <summary> Initializes a new instance of IntegrationAccountBatchReleaseCriteria. </summary>
@@ -19,39 +16,21 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of IntegrationAccountBatchReleaseCriteria. </summary>
-        /// <param name="messageCount">
-        /// The message count.
-        /// Serialized Name: BatchReleaseCriteria.messageCount
-        /// </param>
-        /// <param name="batchSize">
-        /// The batch size in bytes.
-        /// Serialized Name: BatchReleaseCriteria.batchSize
-        /// </param>
-        /// <param name="recurrence">
-        /// The recurrence.
-        /// Serialized Name: BatchReleaseCriteria.recurrence
-        /// </param>
-        internal IntegrationAccountBatchReleaseCriteria(int? messageCount, int? batchSize, LogicAppWorkflowTriggerRecurrence recurrence)
+        /// <param name="messageCount"> The message count. </param>
+        /// <param name="batchSize"> The batch size in bytes. </param>
+        /// <param name="recurrence"> The recurrence. </param>
+        internal IntegrationAccountBatchReleaseCriteria(int? messageCount, int? batchSize, LogicWorkflowTriggerRecurrence recurrence)
         {
             MessageCount = messageCount;
             BatchSize = batchSize;
             Recurrence = recurrence;
         }
 
-        /// <summary>
-        /// The message count.
-        /// Serialized Name: BatchReleaseCriteria.messageCount
-        /// </summary>
+        /// <summary> The message count. </summary>
         public int? MessageCount { get; set; }
-        /// <summary>
-        /// The batch size in bytes.
-        /// Serialized Name: BatchReleaseCriteria.batchSize
-        /// </summary>
+        /// <summary> The batch size in bytes. </summary>
         public int? BatchSize { get; set; }
-        /// <summary>
-        /// The recurrence.
-        /// Serialized Name: BatchReleaseCriteria.recurrence
-        /// </summary>
-        public LogicAppWorkflowTriggerRecurrence Recurrence { get; set; }
+        /// <summary> The recurrence. </summary>
+        public LogicWorkflowTriggerRecurrence Recurrence { get; set; }
     }
 }

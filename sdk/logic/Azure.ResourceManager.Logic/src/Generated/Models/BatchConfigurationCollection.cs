@@ -11,10 +11,7 @@ using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary>
-    /// A collection of batch configurations.
-    /// Serialized Name: BatchConfigurationCollection
-    /// </summary>
+    /// <summary> A collection of batch configurations. </summary>
     internal partial class BatchConfigurationCollection
     {
         /// <summary> Initializes a new instance of BatchConfigurationCollection. </summary>
@@ -24,13 +21,13 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of BatchConfigurationCollection. </summary>
-        /// <param name="value"> Serialized Name: BatchConfigurationCollection.value. </param>
+        /// <param name="value"></param>
         internal BatchConfigurationCollection(IReadOnlyList<IntegrationAccountBatchConfigurationData> value)
         {
             Value = value;
         }
 
-        /// <summary> Serialized Name: BatchConfigurationCollection.value. </summary>
+        /// <summary> Gets the value. </summary>
         public IReadOnlyList<IntegrationAccountBatchConfigurationData> Value { get; }
     }
 }

@@ -9,17 +9,11 @@ using System;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary>
-    /// The assembly properties definition.
-    /// Serialized Name: AssemblyProperties
-    /// </summary>
+    /// <summary> The assembly properties definition. </summary>
     public partial class IntegrationAccountAssemblyProperties : ArtifactContentProperties
     {
         /// <summary> Initializes a new instance of IntegrationAccountAssemblyProperties. </summary>
-        /// <param name="assemblyName">
-        /// The assembly name.
-        /// Serialized Name: AssemblyProperties.assemblyName
-        /// </param>
+        /// <param name="assemblyName"> The assembly name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assemblyName"/> is null. </exception>
         public IntegrationAccountAssemblyProperties(string assemblyName)
         {
@@ -32,47 +26,17 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of IntegrationAccountAssemblyProperties. </summary>
-        /// <param name="createdOn">
-        /// The artifact creation time.
-        /// Serialized Name: ArtifactProperties.createdTime
-        /// </param>
-        /// <param name="changedOn">
-        /// The artifact changed time.
-        /// Serialized Name: ArtifactProperties.changedTime
-        /// </param>
-        /// <param name="metadata">
-        /// Anything
-        /// Serialized Name: ArtifactProperties.metadata
-        /// </param>
-        /// <param name="content">
-        /// Anything
-        /// Serialized Name: ArtifactContentPropertiesDefinition.content
-        /// </param>
-        /// <param name="contentType">
-        /// The content type.
-        /// Serialized Name: ArtifactContentPropertiesDefinition.contentType
-        /// </param>
-        /// <param name="contentLink">
-        /// The content link.
-        /// Serialized Name: ArtifactContentPropertiesDefinition.contentLink
-        /// </param>
-        /// <param name="assemblyName">
-        /// The assembly name.
-        /// Serialized Name: AssemblyProperties.assemblyName
-        /// </param>
-        /// <param name="assemblyVersion">
-        /// The assembly version.
-        /// Serialized Name: AssemblyProperties.assemblyVersion
-        /// </param>
-        /// <param name="assemblyCulture">
-        /// The assembly culture.
-        /// Serialized Name: AssemblyProperties.assemblyCulture
-        /// </param>
-        /// <param name="assemblyPublicKeyToken">
-        /// The assembly public key token.
-        /// Serialized Name: AssemblyProperties.assemblyPublicKeyToken
-        /// </param>
-        internal IntegrationAccountAssemblyProperties(DateTimeOffset? createdOn, DateTimeOffset? changedOn, BinaryData metadata, BinaryData content, string contentType, LogicAppContentLink contentLink, string assemblyName, string assemblyVersion, string assemblyCulture, string assemblyPublicKeyToken) : base(createdOn, changedOn, metadata, content, contentType, contentLink)
+        /// <param name="createdOn"> The artifact creation time. </param>
+        /// <param name="changedOn"> The artifact changed time. </param>
+        /// <param name="metadata"> Anything. </param>
+        /// <param name="content"> Anything. </param>
+        /// <param name="contentType"> The content type. </param>
+        /// <param name="contentLink"> The content link. </param>
+        /// <param name="assemblyName"> The assembly name. </param>
+        /// <param name="assemblyVersion"> The assembly version. </param>
+        /// <param name="assemblyCulture"> The assembly culture. </param>
+        /// <param name="assemblyPublicKeyToken"> The assembly public key token. </param>
+        internal IntegrationAccountAssemblyProperties(DateTimeOffset? createdOn, DateTimeOffset? changedOn, BinaryData metadata, BinaryData content, string contentType, LogicContentLink contentLink, string assemblyName, string assemblyVersion, string assemblyCulture, string assemblyPublicKeyToken) : base(createdOn, changedOn, metadata, content, contentType, contentLink)
         {
             AssemblyName = assemblyName;
             AssemblyVersion = assemblyVersion;
@@ -80,25 +44,13 @@ namespace Azure.ResourceManager.Logic.Models
             AssemblyPublicKeyToken = assemblyPublicKeyToken;
         }
 
-        /// <summary>
-        /// The assembly name.
-        /// Serialized Name: AssemblyProperties.assemblyName
-        /// </summary>
+        /// <summary> The assembly name. </summary>
         public string AssemblyName { get; set; }
-        /// <summary>
-        /// The assembly version.
-        /// Serialized Name: AssemblyProperties.assemblyVersion
-        /// </summary>
+        /// <summary> The assembly version. </summary>
         public string AssemblyVersion { get; set; }
-        /// <summary>
-        /// The assembly culture.
-        /// Serialized Name: AssemblyProperties.assemblyCulture
-        /// </summary>
+        /// <summary> The assembly culture. </summary>
         public string AssemblyCulture { get; set; }
-        /// <summary>
-        /// The assembly public key token.
-        /// Serialized Name: AssemblyProperties.assemblyPublicKeyToken
-        /// </summary>
+        /// <summary> The assembly public key token. </summary>
         public string AssemblyPublicKeyToken { get; set; }
     }
 }

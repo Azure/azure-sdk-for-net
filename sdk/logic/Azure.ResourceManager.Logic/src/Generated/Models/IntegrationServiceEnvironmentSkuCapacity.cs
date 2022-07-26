@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary>
-    /// The integration service environment sku capacity.
-    /// Serialized Name: IntegrationServiceEnvironmentSkuCapacity
-    /// </summary>
+    /// <summary> The integration service environment sku capacity. </summary>
     public partial class IntegrationServiceEnvironmentSkuCapacity
     {
         /// <summary> Initializes a new instance of IntegrationServiceEnvironmentSkuCapacity. </summary>
@@ -19,22 +16,10 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of IntegrationServiceEnvironmentSkuCapacity. </summary>
-        /// <param name="minimum">
-        /// The minimum capacity.
-        /// Serialized Name: IntegrationServiceEnvironmentSkuCapacity.minimum
-        /// </param>
-        /// <param name="maximum">
-        /// The maximum capacity.
-        /// Serialized Name: IntegrationServiceEnvironmentSkuCapacity.maximum
-        /// </param>
-        /// <param name="default">
-        /// The default capacity.
-        /// Serialized Name: IntegrationServiceEnvironmentSkuCapacity.default
-        /// </param>
-        /// <param name="scaleType">
-        /// The sku scale type.
-        /// Serialized Name: IntegrationServiceEnvironmentSkuCapacity.scaleType
-        /// </param>
+        /// <param name="minimum"> The minimum capacity. </param>
+        /// <param name="maximum"> The maximum capacity. </param>
+        /// <param name="default"> The default capacity. </param>
+        /// <param name="scaleType"> The sku scale type. </param>
         internal IntegrationServiceEnvironmentSkuCapacity(int? minimum, int? maximum, int? @default, IntegrationServiceEnvironmentSkuScaleType? scaleType)
         {
             Minimum = minimum;
@@ -43,25 +28,13 @@ namespace Azure.ResourceManager.Logic.Models
             ScaleType = scaleType;
         }
 
-        /// <summary>
-        /// The minimum capacity.
-        /// Serialized Name: IntegrationServiceEnvironmentSkuCapacity.minimum
-        /// </summary>
+        /// <summary> The minimum capacity. </summary>
         public int? Minimum { get; }
-        /// <summary>
-        /// The maximum capacity.
-        /// Serialized Name: IntegrationServiceEnvironmentSkuCapacity.maximum
-        /// </summary>
+        /// <summary> The maximum capacity. </summary>
         public int? Maximum { get; }
-        /// <summary>
-        /// The default capacity.
-        /// Serialized Name: IntegrationServiceEnvironmentSkuCapacity.default
-        /// </summary>
+        /// <summary> The default capacity. </summary>
         public int? Default { get; }
-        /// <summary>
-        /// The sku scale type.
-        /// Serialized Name: IntegrationServiceEnvironmentSkuCapacity.scaleType
-        /// </summary>
+        /// <summary> The sku scale type. </summary>
         public IntegrationServiceEnvironmentSkuScaleType? ScaleType { get; }
     }
 }

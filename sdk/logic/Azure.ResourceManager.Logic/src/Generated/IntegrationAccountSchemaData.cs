@@ -18,10 +18,7 @@ namespace Azure.ResourceManager.Logic
     {
         /// <summary> Initializes a new instance of IntegrationAccountSchemaData. </summary>
         /// <param name="location"> The location. </param>
-        /// <param name="schemaType">
-        /// The schema type.
-        /// Serialized Name: IntegrationAccountSchema.properties.schemaType
-        /// </param>
+        /// <param name="schemaType"> The schema type. </param>
         public IntegrationAccountSchemaData(AzureLocation location, SchemaType schemaType) : base(location)
         {
             SchemaType = schemaType;
@@ -34,47 +31,17 @@ namespace Azure.ResourceManager.Logic
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="schemaType">
-        /// The schema type.
-        /// Serialized Name: IntegrationAccountSchema.properties.schemaType
-        /// </param>
-        /// <param name="targetNamespace">
-        /// The target namespace of the schema.
-        /// Serialized Name: IntegrationAccountSchema.properties.targetNamespace
-        /// </param>
-        /// <param name="documentName">
-        /// The document name.
-        /// Serialized Name: IntegrationAccountSchema.properties.documentName
-        /// </param>
-        /// <param name="fileName">
-        /// The file name.
-        /// Serialized Name: IntegrationAccountSchema.properties.fileName
-        /// </param>
-        /// <param name="createdOn">
-        /// The created time.
-        /// Serialized Name: IntegrationAccountSchema.properties.createdTime
-        /// </param>
-        /// <param name="changedOn">
-        /// The changed time.
-        /// Serialized Name: IntegrationAccountSchema.properties.changedTime
-        /// </param>
-        /// <param name="metadata">
-        /// The metadata.
-        /// Serialized Name: IntegrationAccountSchema.properties.metadata
-        /// </param>
-        /// <param name="content">
-        /// The content.
-        /// Serialized Name: IntegrationAccountSchema.properties.content
-        /// </param>
-        /// <param name="contentType">
-        /// The content type.
-        /// Serialized Name: IntegrationAccountSchema.properties.contentType
-        /// </param>
-        /// <param name="contentLink">
-        /// The content link.
-        /// Serialized Name: IntegrationAccountSchema.properties.contentLink
-        /// </param>
-        internal IntegrationAccountSchemaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SchemaType schemaType, string targetNamespace, string documentName, string fileName, DateTimeOffset? createdOn, DateTimeOffset? changedOn, BinaryData metadata, string content, string contentType, LogicAppContentLink contentLink) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="schemaType"> The schema type. </param>
+        /// <param name="targetNamespace"> The target namespace of the schema. </param>
+        /// <param name="documentName"> The document name. </param>
+        /// <param name="fileName"> The file name. </param>
+        /// <param name="createdOn"> The created time. </param>
+        /// <param name="changedOn"> The changed time. </param>
+        /// <param name="metadata"> The metadata. </param>
+        /// <param name="content"> The content. </param>
+        /// <param name="contentType"> The content type. </param>
+        /// <param name="contentLink"> The content link. </param>
+        internal IntegrationAccountSchemaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SchemaType schemaType, string targetNamespace, string documentName, string fileName, DateTimeOffset? createdOn, DateTimeOffset? changedOn, BinaryData metadata, string content, string contentType, LogicContentLink contentLink) : base(id, name, resourceType, systemData, tags, location)
         {
             SchemaType = schemaType;
             TargetNamespace = targetNamespace;
@@ -88,55 +55,25 @@ namespace Azure.ResourceManager.Logic
             ContentLink = contentLink;
         }
 
-        /// <summary>
-        /// The schema type.
-        /// Serialized Name: IntegrationAccountSchema.properties.schemaType
-        /// </summary>
+        /// <summary> The schema type. </summary>
         public SchemaType SchemaType { get; set; }
-        /// <summary>
-        /// The target namespace of the schema.
-        /// Serialized Name: IntegrationAccountSchema.properties.targetNamespace
-        /// </summary>
+        /// <summary> The target namespace of the schema. </summary>
         public string TargetNamespace { get; set; }
-        /// <summary>
-        /// The document name.
-        /// Serialized Name: IntegrationAccountSchema.properties.documentName
-        /// </summary>
+        /// <summary> The document name. </summary>
         public string DocumentName { get; set; }
-        /// <summary>
-        /// The file name.
-        /// Serialized Name: IntegrationAccountSchema.properties.fileName
-        /// </summary>
+        /// <summary> The file name. </summary>
         public string FileName { get; set; }
-        /// <summary>
-        /// The created time.
-        /// Serialized Name: IntegrationAccountSchema.properties.createdTime
-        /// </summary>
+        /// <summary> The created time. </summary>
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary>
-        /// The changed time.
-        /// Serialized Name: IntegrationAccountSchema.properties.changedTime
-        /// </summary>
+        /// <summary> The changed time. </summary>
         public DateTimeOffset? ChangedOn { get; }
-        /// <summary>
-        /// The metadata.
-        /// Serialized Name: IntegrationAccountSchema.properties.metadata
-        /// </summary>
+        /// <summary> The metadata. </summary>
         public BinaryData Metadata { get; set; }
-        /// <summary>
-        /// The content.
-        /// Serialized Name: IntegrationAccountSchema.properties.content
-        /// </summary>
+        /// <summary> The content. </summary>
         public string Content { get; set; }
-        /// <summary>
-        /// The content type.
-        /// Serialized Name: IntegrationAccountSchema.properties.contentType
-        /// </summary>
+        /// <summary> The content type. </summary>
         public string ContentType { get; set; }
-        /// <summary>
-        /// The content link.
-        /// Serialized Name: IntegrationAccountSchema.properties.contentLink
-        /// </summary>
-        public LogicAppContentLink ContentLink { get; }
+        /// <summary> The content link. </summary>
+        public LogicContentLink ContentLink { get; }
     }
 }

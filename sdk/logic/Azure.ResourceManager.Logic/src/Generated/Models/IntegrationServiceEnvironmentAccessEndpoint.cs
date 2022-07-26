@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary>
-    /// The integration service environment access endpoint.
-    /// Serialized Name: IntegrationServiceEnvironmentAccessEndpoint
-    /// </summary>
+    /// <summary> The integration service environment access endpoint. </summary>
     internal partial class IntegrationServiceEnvironmentAccessEndpoint
     {
         /// <summary> Initializes a new instance of IntegrationServiceEnvironmentAccessEndpoint. </summary>
@@ -19,19 +16,13 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of IntegrationServiceEnvironmentAccessEndpoint. </summary>
-        /// <param name="endpointType">
-        /// The access endpoint type.
-        /// Serialized Name: IntegrationServiceEnvironmentAccessEndpoint.type
-        /// </param>
+        /// <param name="endpointType"> The access endpoint type. </param>
         internal IntegrationServiceEnvironmentAccessEndpoint(IntegrationServiceEnvironmentAccessEndpointType? endpointType)
         {
             EndpointType = endpointType;
         }
 
-        /// <summary>
-        /// The access endpoint type.
-        /// Serialized Name: IntegrationServiceEnvironmentAccessEndpoint.type
-        /// </summary>
+        /// <summary> The access endpoint type. </summary>
         public IntegrationServiceEnvironmentAccessEndpointType? EndpointType { get; set; }
     }
 }

@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Logic
             Optional<DateTimeOffset> createdTime = default;
             Optional<DateTimeOffset> changedTime = default;
             Optional<BinaryData> metadata = default;
-            Optional<KeyVaultKeyReference> key = default;
+            Optional<IntegrationAccountKeyVaultKeyReference> key = default;
             Optional<BinaryData> publicCertificate = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Logic
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            key = KeyVaultKeyReference.DeserializeKeyVaultKeyReference(property0.Value);
+                            key = IntegrationAccountKeyVaultKeyReference.DeserializeIntegrationAccountKeyVaultKeyReference(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("publicCertificate"))

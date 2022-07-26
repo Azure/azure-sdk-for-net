@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary>
-    /// The access control configuration.
-    /// Serialized Name: FlowAccessControlConfiguration
-    /// </summary>
+    /// <summary> The access control configuration. </summary>
     public partial class FlowAccessControlConfiguration
     {
         /// <summary> Initializes a new instance of FlowAccessControlConfiguration. </summary>
@@ -19,22 +16,10 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of FlowAccessControlConfiguration. </summary>
-        /// <param name="triggers">
-        /// The access control configuration for invoking workflow triggers.
-        /// Serialized Name: FlowAccessControlConfiguration.triggers
-        /// </param>
-        /// <param name="contents">
-        /// The access control configuration for accessing workflow run contents.
-        /// Serialized Name: FlowAccessControlConfiguration.contents
-        /// </param>
-        /// <param name="actions">
-        /// The access control configuration for workflow actions.
-        /// Serialized Name: FlowAccessControlConfiguration.actions
-        /// </param>
-        /// <param name="workflowManagement">
-        /// The access control configuration for workflow management.
-        /// Serialized Name: FlowAccessControlConfiguration.workflowManagement
-        /// </param>
+        /// <param name="triggers"> The access control configuration for invoking workflow triggers. </param>
+        /// <param name="contents"> The access control configuration for accessing workflow run contents. </param>
+        /// <param name="actions"> The access control configuration for workflow actions. </param>
+        /// <param name="workflowManagement"> The access control configuration for workflow management. </param>
         internal FlowAccessControlConfiguration(FlowAccessControlConfigurationPolicy triggers, FlowAccessControlConfigurationPolicy contents, FlowAccessControlConfigurationPolicy actions, FlowAccessControlConfigurationPolicy workflowManagement)
         {
             Triggers = triggers;
@@ -43,25 +28,13 @@ namespace Azure.ResourceManager.Logic.Models
             WorkflowManagement = workflowManagement;
         }
 
-        /// <summary>
-        /// The access control configuration for invoking workflow triggers.
-        /// Serialized Name: FlowAccessControlConfiguration.triggers
-        /// </summary>
+        /// <summary> The access control configuration for invoking workflow triggers. </summary>
         public FlowAccessControlConfigurationPolicy Triggers { get; set; }
-        /// <summary>
-        /// The access control configuration for accessing workflow run contents.
-        /// Serialized Name: FlowAccessControlConfiguration.contents
-        /// </summary>
+        /// <summary> The access control configuration for accessing workflow run contents. </summary>
         public FlowAccessControlConfigurationPolicy Contents { get; set; }
-        /// <summary>
-        /// The access control configuration for workflow actions.
-        /// Serialized Name: FlowAccessControlConfiguration.actions
-        /// </summary>
+        /// <summary> The access control configuration for workflow actions. </summary>
         public FlowAccessControlConfigurationPolicy Actions { get; set; }
-        /// <summary>
-        /// The access control configuration for workflow management.
-        /// Serialized Name: FlowAccessControlConfiguration.workflowManagement
-        /// </summary>
+        /// <summary> The access control configuration for workflow management. </summary>
         public FlowAccessControlConfigurationPolicy WorkflowManagement { get; set; }
     }
 }

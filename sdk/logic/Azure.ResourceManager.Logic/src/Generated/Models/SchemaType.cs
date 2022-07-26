@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    /// <summary>
-    /// The schema type.
-    /// Serialized Name: SchemaType
-    /// </summary>
+    /// <summary> The schema type. </summary>
     public readonly partial struct SchemaType : IEquatable<SchemaType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.Logic.Models
         private const string NotSpecifiedValue = "NotSpecified";
         private const string XmlValue = "Xml";
 
-        /// <summary>
-        /// NotSpecified
-        /// Serialized Name: SchemaType.NotSpecified
-        /// </summary>
+        /// <summary> NotSpecified. </summary>
         public static SchemaType NotSpecified { get; } = new SchemaType(NotSpecifiedValue);
-        /// <summary>
-        /// Xml
-        /// Serialized Name: SchemaType.Xml
-        /// </summary>
+        /// <summary> Xml. </summary>
         public static SchemaType Xml { get; } = new SchemaType(XmlValue);
         /// <summary> Determines if two <see cref="SchemaType"/> values are the same. </summary>
         public static bool operator ==(SchemaType left, SchemaType right) => left.Equals(right);

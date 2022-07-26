@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Logic
         /// Operation Id: IntegrationAccountAssemblies_ListContentCallbackUrl
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<LogicAppWorkflowTriggerCallbackUri>> GetContentCallbackUrlAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LogicWorkflowTriggerCallbackUri>> GetContentCallbackUrlAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _integrationAccountAssemblyDefinitionIntegrationAccountAssembliesClientDiagnostics.CreateScope("IntegrationAccountAssemblyDefinitionResource.GetContentCallbackUrl");
             scope.Start();
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Logic
         /// Operation Id: IntegrationAccountAssemblies_ListContentCallbackUrl
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<LogicAppWorkflowTriggerCallbackUri> GetContentCallbackUrl(CancellationToken cancellationToken = default)
+        public virtual Response<LogicWorkflowTriggerCallbackUri> GetContentCallbackUrl(CancellationToken cancellationToken = default)
         {
             using var scope = _integrationAccountAssemblyDefinitionIntegrationAccountAssembliesClientDiagnostics.CreateScope("IntegrationAccountAssemblyDefinitionResource.GetContentCallbackUrl");
             scope.Start();
