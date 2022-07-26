@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WritePropertyName("targetSlot");
             writer.WriteStringValue(TargetSlot);
             writer.WritePropertyName("preserveVnet");
-            writer.WriteBooleanValue(PreserveVnet);
+            writer.WriteBooleanValue(IsPreserveVnet);
             writer.WriteEndObject();
         }
     }

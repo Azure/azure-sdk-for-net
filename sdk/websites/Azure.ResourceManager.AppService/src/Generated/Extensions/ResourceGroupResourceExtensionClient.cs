@@ -92,9 +92,9 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets a collection of StaticSiteARMResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of StaticSiteARMResources and their operations over a StaticSiteARMResource. </returns>
-        public virtual StaticSiteARMResourceCollection GetStaticSiteARMResources()
+        public virtual StaticSiteARMCollection GetStaticSiteARMs()
         {
-            return GetCachedClient(Client => new StaticSiteARMResourceCollection(Client, Id));
+            return GetCachedClient(Client => new StaticSiteARMCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of WebSiteResources in the ResourceGroupResource. </summary>

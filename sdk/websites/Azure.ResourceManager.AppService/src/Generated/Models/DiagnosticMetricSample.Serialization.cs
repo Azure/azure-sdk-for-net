@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.AppService.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Timestamp))
+            if (Optional.IsDefined(TimestampOn))
             {
                 writer.WritePropertyName("timestamp");
-                writer.WriteStringValue(Timestamp.Value, "O");
+                writer.WriteStringValue(TimestampOn.Value, "O");
             }
             if (Optional.IsDefined(RoleInstance))
             {

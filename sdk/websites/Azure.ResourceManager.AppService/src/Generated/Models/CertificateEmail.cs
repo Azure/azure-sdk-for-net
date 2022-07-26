@@ -25,19 +25,19 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="emailId"> Email id. </param>
-        /// <param name="timeStamp"> Time stamp. </param>
+        /// <param name="timeStampOn"> Time stamp. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal CertificateEmail(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string emailId, DateTimeOffset? timeStamp, string kind) : base(id, name, resourceType, systemData)
+        internal CertificateEmail(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string emailId, DateTimeOffset? timeStampOn, string kind) : base(id, name, resourceType, systemData)
         {
             EmailId = emailId;
-            TimeStamp = timeStamp;
+            TimeStampOn = timeStampOn;
             Kind = kind;
         }
 
         /// <summary> Email id. </summary>
         public string EmailId { get; set; }
         /// <summary> Time stamp. </summary>
-        public DateTimeOffset? TimeStamp { get; set; }
+        public DateTimeOffset? TimeStampOn { get; set; }
         /// <summary> Kind of resource. </summary>
         public string Kind { get; set; }
     }
