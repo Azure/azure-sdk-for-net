@@ -34,14 +34,11 @@ namespace Azure.ResourceManager
         public virtual Azure.Pageable<Azure.ResourceManager.Resources.Models.TenantResourceProvider> GetTenantResourceProviders(int? top = default(int?), string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Resources.Models.TenantResourceProvider> GetTenantResourceProvidersAsync(int? top = default(int?), string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Resources.TenantCollection GetTenants() { throw null; }
-        public virtual bool IsTagResourcePresent(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<bool> IsTagResourcePresentAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public sealed partial class ArmClientOptions : Azure.Core.ClientOptions
     {
         public ArmClientOptions() { }
         public Azure.ResourceManager.ArmEnvironment? Environment { get { throw null; } set { } }
-        public bool? UseTagResourceApi { get { throw null; } set { } }
         public void SetApiVersion(Azure.Core.ResourceType resourceType, string apiVersion) { }
     }
     public abstract partial class ArmCollection
@@ -107,6 +104,8 @@ namespace Azure.ResourceManager
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.PolicyAssignmentResource>> GetPolicyAssignmentAsync(string policyAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Resources.PolicyAssignmentCollection GetPolicyAssignments() { throw null; }
         public virtual Azure.ResourceManager.Resources.TagResource GetTagResource() { throw null; }
+        protected virtual bool IsTagResourcePresent(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected virtual System.Threading.Tasks.Task<bool> IsTagResourcePresentAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         protected virtual bool TryGetApiVersion(Azure.Core.ResourceType resourceType, out string apiVersion) { throw null; }
     }
 }

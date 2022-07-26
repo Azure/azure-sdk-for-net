@@ -126,5 +126,15 @@ namespace Azure.ResourceManager
         {
             return _clientCache.GetOrAdd(typeof(T), (type) => { return clientFactory(Client); }) as T;
         }
+
+        /// <summary>
+        /// Checks to see if the TagResource API is deployed in the current environment.
+        /// </summary>
+        protected virtual bool IsTagResourcePresent(CancellationToken cancellationToken = default) => Client.IsTagResourcePresent(cancellationToken);
+
+        /// <summary>
+        /// Checks to see if the TagResource API is deployed in the current environment.
+        /// </summary>
+        protected virtual Task<bool> IsTagResourcePresentAsync(CancellationToken cancellationToken = default) => Client.IsTagResourcePresentAsync(cancellationToken);
     }
 }
