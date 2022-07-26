@@ -159,8 +159,6 @@ namespace Azure.ResourceManager.Monitor
 
         internal static ActionGroupData DeserializeActionGroupData(JsonElement element)
         {
-            Optional<string> kind = default;
-            Optional<string> identity = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -169,29 +167,19 @@ namespace Azure.ResourceManager.Monitor
             Optional<SystemData> systemData = default;
             Optional<string> groupShortName = default;
             Optional<bool> enabled = default;
-            Optional<IList<EmailReceiver>> emailReceivers = default;
-            Optional<IList<SmsReceiver>> smsReceivers = default;
-            Optional<IList<WebhookReceiver>> webhookReceivers = default;
-            Optional<IList<ItsmReceiver>> itsmReceivers = default;
-            Optional<IList<AzureAppPushReceiver>> azureAppPushReceivers = default;
-            Optional<IList<AutomationRunbookReceiver>> automationRunbookReceivers = default;
-            Optional<IList<VoiceReceiver>> voiceReceivers = default;
-            Optional<IList<LogicAppReceiver>> logicAppReceivers = default;
-            Optional<IList<AzureFunctionReceiver>> azureFunctionReceivers = default;
-            Optional<IList<ArmRoleReceiver>> armRoleReceivers = default;
-            Optional<IList<EventHubReceiver>> eventHubReceivers = default;
+            Optional<IList<MonitorEmailReceiver>> emailReceivers = default;
+            Optional<IList<MonitorSmsReceiver>> smsReceivers = default;
+            Optional<IList<MonitorWebhookReceiver>> webhookReceivers = default;
+            Optional<IList<MonitorItsmReceiver>> itsmReceivers = default;
+            Optional<IList<MonitorAzureAppPushReceiver>> azureAppPushReceivers = default;
+            Optional<IList<MonitorAutomationRunbookReceiver>> automationRunbookReceivers = default;
+            Optional<IList<MonitorVoiceReceiver>> voiceReceivers = default;
+            Optional<IList<MonitorLogicAppReceiver>> logicAppReceivers = default;
+            Optional<IList<MonitorAzureFunctionReceiver>> azureFunctionReceivers = default;
+            Optional<IList<MonitorArmRoleReceiver>> armRoleReceivers = default;
+            Optional<IList<MonitorEventHubReceiver>> eventHubReceivers = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
-                {
-                    kind = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("identity"))
-                {
-                    identity = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("tags"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -268,10 +256,10 @@ namespace Azure.ResourceManager.Monitor
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<EmailReceiver> array = new List<EmailReceiver>();
+                            List<MonitorEmailReceiver> array = new List<MonitorEmailReceiver>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(EmailReceiver.DeserializeEmailReceiver(item));
+                                array.Add(MonitorEmailReceiver.DeserializeMonitorEmailReceiver(item));
                             }
                             emailReceivers = array;
                             continue;
@@ -283,10 +271,10 @@ namespace Azure.ResourceManager.Monitor
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<SmsReceiver> array = new List<SmsReceiver>();
+                            List<MonitorSmsReceiver> array = new List<MonitorSmsReceiver>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SmsReceiver.DeserializeSmsReceiver(item));
+                                array.Add(MonitorSmsReceiver.DeserializeMonitorSmsReceiver(item));
                             }
                             smsReceivers = array;
                             continue;
@@ -298,10 +286,10 @@ namespace Azure.ResourceManager.Monitor
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<WebhookReceiver> array = new List<WebhookReceiver>();
+                            List<MonitorWebhookReceiver> array = new List<MonitorWebhookReceiver>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(WebhookReceiver.DeserializeWebhookReceiver(item));
+                                array.Add(MonitorWebhookReceiver.DeserializeMonitorWebhookReceiver(item));
                             }
                             webhookReceivers = array;
                             continue;
@@ -313,10 +301,10 @@ namespace Azure.ResourceManager.Monitor
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ItsmReceiver> array = new List<ItsmReceiver>();
+                            List<MonitorItsmReceiver> array = new List<MonitorItsmReceiver>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ItsmReceiver.DeserializeItsmReceiver(item));
+                                array.Add(MonitorItsmReceiver.DeserializeMonitorItsmReceiver(item));
                             }
                             itsmReceivers = array;
                             continue;
@@ -328,10 +316,10 @@ namespace Azure.ResourceManager.Monitor
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<AzureAppPushReceiver> array = new List<AzureAppPushReceiver>();
+                            List<MonitorAzureAppPushReceiver> array = new List<MonitorAzureAppPushReceiver>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AzureAppPushReceiver.DeserializeAzureAppPushReceiver(item));
+                                array.Add(MonitorAzureAppPushReceiver.DeserializeMonitorAzureAppPushReceiver(item));
                             }
                             azureAppPushReceivers = array;
                             continue;
@@ -343,10 +331,10 @@ namespace Azure.ResourceManager.Monitor
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<AutomationRunbookReceiver> array = new List<AutomationRunbookReceiver>();
+                            List<MonitorAutomationRunbookReceiver> array = new List<MonitorAutomationRunbookReceiver>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AutomationRunbookReceiver.DeserializeAutomationRunbookReceiver(item));
+                                array.Add(MonitorAutomationRunbookReceiver.DeserializeMonitorAutomationRunbookReceiver(item));
                             }
                             automationRunbookReceivers = array;
                             continue;
@@ -358,10 +346,10 @@ namespace Azure.ResourceManager.Monitor
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<VoiceReceiver> array = new List<VoiceReceiver>();
+                            List<MonitorVoiceReceiver> array = new List<MonitorVoiceReceiver>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VoiceReceiver.DeserializeVoiceReceiver(item));
+                                array.Add(MonitorVoiceReceiver.DeserializeMonitorVoiceReceiver(item));
                             }
                             voiceReceivers = array;
                             continue;
@@ -373,10 +361,10 @@ namespace Azure.ResourceManager.Monitor
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<LogicAppReceiver> array = new List<LogicAppReceiver>();
+                            List<MonitorLogicAppReceiver> array = new List<MonitorLogicAppReceiver>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(LogicAppReceiver.DeserializeLogicAppReceiver(item));
+                                array.Add(MonitorLogicAppReceiver.DeserializeMonitorLogicAppReceiver(item));
                             }
                             logicAppReceivers = array;
                             continue;
@@ -388,10 +376,10 @@ namespace Azure.ResourceManager.Monitor
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<AzureFunctionReceiver> array = new List<AzureFunctionReceiver>();
+                            List<MonitorAzureFunctionReceiver> array = new List<MonitorAzureFunctionReceiver>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AzureFunctionReceiver.DeserializeAzureFunctionReceiver(item));
+                                array.Add(MonitorAzureFunctionReceiver.DeserializeMonitorAzureFunctionReceiver(item));
                             }
                             azureFunctionReceivers = array;
                             continue;
@@ -403,10 +391,10 @@ namespace Azure.ResourceManager.Monitor
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ArmRoleReceiver> array = new List<ArmRoleReceiver>();
+                            List<MonitorArmRoleReceiver> array = new List<MonitorArmRoleReceiver>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ArmRoleReceiver.DeserializeArmRoleReceiver(item));
+                                array.Add(MonitorArmRoleReceiver.DeserializeMonitorArmRoleReceiver(item));
                             }
                             armRoleReceivers = array;
                             continue;
@@ -418,10 +406,10 @@ namespace Azure.ResourceManager.Monitor
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<EventHubReceiver> array = new List<EventHubReceiver>();
+                            List<MonitorEventHubReceiver> array = new List<MonitorEventHubReceiver>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(EventHubReceiver.DeserializeEventHubReceiver(item));
+                                array.Add(MonitorEventHubReceiver.DeserializeMonitorEventHubReceiver(item));
                             }
                             eventHubReceivers = array;
                             continue;
@@ -430,7 +418,7 @@ namespace Azure.ResourceManager.Monitor
                     continue;
                 }
             }
-            return new ActionGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, groupShortName.Value, Optional.ToNullable(enabled), Optional.ToList(emailReceivers), Optional.ToList(smsReceivers), Optional.ToList(webhookReceivers), Optional.ToList(itsmReceivers), Optional.ToList(azureAppPushReceivers), Optional.ToList(automationRunbookReceivers), Optional.ToList(voiceReceivers), Optional.ToList(logicAppReceivers), Optional.ToList(azureFunctionReceivers), Optional.ToList(armRoleReceivers), Optional.ToList(eventHubReceivers), kind.Value, identity.Value);
+            return new ActionGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, groupShortName.Value, Optional.ToNullable(enabled), Optional.ToList(emailReceivers), Optional.ToList(smsReceivers), Optional.ToList(webhookReceivers), Optional.ToList(itsmReceivers), Optional.ToList(azureAppPushReceivers), Optional.ToList(automationRunbookReceivers), Optional.ToList(voiceReceivers), Optional.ToList(logicAppReceivers), Optional.ToList(azureFunctionReceivers), Optional.ToList(armRoleReceivers), Optional.ToList(eventHubReceivers));
         }
     }
 }
