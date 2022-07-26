@@ -275,6 +275,19 @@ directive:
       $.Operation['x-ms-client-name'] = 'RestApiOperation';
       $.VirtualNetworkConfiguration.properties.vnetid['format'] = 'uuid';
       $.VirtualNetworkConfiguration.properties.subnetResourceId['x-ms-format'] = 'arm-id';
+      $.HostnameConfiguration.properties.encodedCertificate["x-nullable"] = true;
+      $.HostnameConfiguration.properties.keyVaultId["x-nullable"] = true;
+      $.HostnameConfiguration.properties.certificatePassword["x-nullable"] = true;
+      $.HostnameConfiguration.properties.certificate["x-nullable"] = true;
+      $.HostnameConfiguration.properties.identityClientId["x-nullable"] = true;
+      $.HostnameConfiguration.properties.certificateStatus["x-nullable"] = true;
+      $.ApiManagementServiceBaseProperties.properties.privateIPAddresses["x-nullable"] = true;
+      $.ApiManagementServiceBaseProperties.properties.additionalLocations["x-nullable"] = true;
+      $.ApiManagementServiceBaseProperties.properties.virtualNetworkConfiguration["x-nullable"] = true;
+      $.ApiManagementServiceBaseProperties.properties.certificates["x-nullable"] = true;
+      $.ApiManagementServiceBaseProperties.properties.publicIpAddressId["x-nullable"] = true;
+      $.ApiManagementServiceBaseProperties.properties.privateEndpointConnections["x-nullable"] = true;
+      $.ApiVersionConstraint.properties.minApiVersion["x-nullable"] = true;
   - from: apimanagement.json
     where: $.parameters
     transform: >
