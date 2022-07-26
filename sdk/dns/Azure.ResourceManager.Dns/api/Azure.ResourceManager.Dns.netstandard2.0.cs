@@ -4,45 +4,45 @@ namespace Azure.ResourceManager.Dns
     {
         public AaaaRecordSetData() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.AaaaRecord> AaaaRecords { get { throw null; } }
-        public string Etag { get { throw null; } set { } }
+        public Azure.ETag? ETag { get { throw null; } set { } }
         public string Fqdn { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } set { } }
-        public long? TTL { get { throw null; } set { } }
+        public long? Ttl { get { throw null; } set { } }
     }
     public partial class ARecordSetData : Azure.ResourceManager.Models.ResourceData
     {
         public ARecordSetData() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.ARecord> ARecords { get { throw null; } }
-        public string Etag { get { throw null; } set { } }
+        public Azure.ETag? ETag { get { throw null; } set { } }
         public string Fqdn { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } set { } }
-        public long? TTL { get { throw null; } set { } }
+        public long? Ttl { get { throw null; } set { } }
     }
     public partial class CaaRecordSetData : Azure.ResourceManager.Models.ResourceData
     {
         public CaaRecordSetData() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.CaaRecord> CaaRecords { get { throw null; } }
-        public string Etag { get { throw null; } set { } }
+        public Azure.ETag? ETag { get { throw null; } set { } }
         public string Fqdn { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } set { } }
-        public long? TTL { get { throw null; } set { } }
+        public long? Ttl { get { throw null; } set { } }
     }
     public partial class CnameRecordSetData : Azure.ResourceManager.Models.ResourceData
     {
         public CnameRecordSetData() { }
         public string Cname { get { throw null; } set { } }
-        public string Etag { get { throw null; } set { } }
+        public Azure.ETag? ETag { get { throw null; } set { } }
         public string Fqdn { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } set { } }
-        public long? TTL { get { throw null; } set { } }
+        public long? Ttl { get { throw null; } set { } }
     }
     public static partial class DnsExtensions
     {
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.Dns
         public static Azure.ResourceManager.Dns.RecordSetAResource GetRecordSetAResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Dns.RecordSetCaaResource GetRecordSetCaaResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Dns.RecordSetCnameResource GetRecordSetCnameResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Dns.RecordSetMxResource GetRecordSetMxResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Dns.RecordSetNsResource GetRecordSetNsResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Dns.RecordSetMXResource GetRecordSetMXResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Dns.RecordSetNSResource GetRecordSetNSResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Dns.RecordSetPtrResource GetRecordSetPtrResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Dns.RecordSetSoaResource GetRecordSetSoaResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Dns.RecordSetSrvResource GetRecordSetSrvResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Dns
     public partial class DnsZoneData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public DnsZoneData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public string ETag { get { throw null; } set { } }
+        public Azure.ETag? ETag { get { throw null; } set { } }
         public long? MaxNumberOfRecordSets { get { throw null; } }
         public long? MaxNumberOfRecordsPerRecordSet { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> NameServers { get { throw null; } }
@@ -119,12 +119,12 @@ namespace Azure.ResourceManager.Dns
         public virtual Azure.Response<Azure.ResourceManager.Dns.RecordSetCnameResource> GetRecordSetCname(string relativeRecordSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dns.RecordSetCnameResource>> GetRecordSetCnameAsync(string relativeRecordSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Dns.RecordSetCnameCollection GetRecordSetCnames() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Dns.RecordSetMxResource> GetRecordSetMx(string relativeRecordSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dns.RecordSetMxResource>> GetRecordSetMxAsync(string relativeRecordSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Dns.RecordSetMxCollection GetRecordSetMxes() { throw null; }
-        public virtual Azure.ResourceManager.Dns.RecordSetNsCollection GetRecordSetNs() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Dns.RecordSetNsResource> GetRecordSetNs(string relativeRecordSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dns.RecordSetNsResource>> GetRecordSetNsAsync(string relativeRecordSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Dns.RecordSetMXResource> GetRecordSetMX(string relativeRecordSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dns.RecordSetMXResource>> GetRecordSetMXAsync(string relativeRecordSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Dns.RecordSetMXCollection GetRecordSetMXes() { throw null; }
+        public virtual Azure.ResourceManager.Dns.RecordSetNSCollection GetRecordSetNS() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Dns.RecordSetNSResource> GetRecordSetNS(string relativeRecordSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dns.RecordSetNSResource>> GetRecordSetNSAsync(string relativeRecordSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Dns.RecordSetPtrResource> GetRecordSetPtr(string relativeRecordSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dns.RecordSetPtrResource>> GetRecordSetPtrAsync(string relativeRecordSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Dns.RecordSetPtrCollection GetRecordSetPtrs() { throw null; }
@@ -144,24 +144,24 @@ namespace Azure.ResourceManager.Dns
         public virtual Azure.Response<Azure.ResourceManager.Dns.DnsZoneResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dns.DnsZoneResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class MxRecordSetData : Azure.ResourceManager.Models.ResourceData
+    public partial class MXRecordSetData : Azure.ResourceManager.Models.ResourceData
     {
-        public MxRecordSetData() { }
-        public string Etag { get { throw null; } set { } }
+        public MXRecordSetData() { }
+        public Azure.ETag? ETag { get { throw null; } set { } }
         public string Fqdn { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.MxRecord> MxRecords { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.MXRecord> MXRecords { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } set { } }
         public long? TTL { get { throw null; } set { } }
     }
-    public partial class NsRecordSetData : Azure.ResourceManager.Models.ResourceData
+    public partial class NSRecordSetData : Azure.ResourceManager.Models.ResourceData
     {
-        public NsRecordSetData() { }
-        public string Etag { get { throw null; } set { } }
+        public NSRecordSetData() { }
+        public Azure.ETag? ETag { get { throw null; } set { } }
         public string Fqdn { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.NsRecord> NsRecords { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.NSRecord> NSRecords { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } set { } }
         public long? TTL { get { throw null; } set { } }
@@ -169,13 +169,13 @@ namespace Azure.ResourceManager.Dns
     public partial class PtrRecordSetData : Azure.ResourceManager.Models.ResourceData
     {
         public PtrRecordSetData() { }
-        public string Etag { get { throw null; } set { } }
+        public Azure.ETag? ETag { get { throw null; } set { } }
         public string Fqdn { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.PtrRecord> PtrRecords { get { throw null; } }
         public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } set { } }
-        public long? TTL { get { throw null; } set { } }
+        public long? Ttl { get { throw null; } set { } }
     }
     public partial class RecordSetAaaaCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Dns.RecordSetAaaaResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Dns.RecordSetAaaaResource>, System.Collections.IEnumerable
     {
@@ -300,11 +300,11 @@ namespace Azure.ResourceManager.Dns
         public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.ARecord> ARecords { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.CaaRecord> CaaRecords { get { throw null; } }
         public string Cname { get { throw null; } set { } }
-        public string ETag { get { throw null; } set { } }
+        public Azure.ETag? ETag { get { throw null; } set { } }
         public string Fqdn { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.MxRecord> MxRecords { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.NsRecord> NsRecords { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.MXRecord> MxRecords { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.NSRecord> NsRecords { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.PtrRecord> PtrRecords { get { throw null; } }
         public Azure.ResourceManager.Dns.Models.SoaRecord SoaRecord { get { throw null; } set { } }
@@ -313,63 +313,63 @@ namespace Azure.ResourceManager.Dns
         public long? TTL { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.TxtRecord> TxtRecords { get { throw null; } }
     }
-    public partial class RecordSetMxCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Dns.RecordSetMxResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Dns.RecordSetMxResource>, System.Collections.IEnumerable
+    public partial class RecordSetMXCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Dns.RecordSetMXResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Dns.RecordSetMXResource>, System.Collections.IEnumerable
     {
-        protected RecordSetMxCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Dns.RecordSetMxResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string relativeRecordSetName, Azure.ResourceManager.Dns.MxRecordSetData data, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Dns.RecordSetMxResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string relativeRecordSetName, Azure.ResourceManager.Dns.MxRecordSetData data, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected RecordSetMXCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Dns.RecordSetMXResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string relativeRecordSetName, Azure.ResourceManager.Dns.MXRecordSetData data, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Dns.RecordSetMXResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string relativeRecordSetName, Azure.ResourceManager.Dns.MXRecordSetData data, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string relativeRecordSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string relativeRecordSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Dns.RecordSetMxResource> Get(string relativeRecordSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Dns.RecordSetMxResource> GetAll(int? top = default(int?), string recordsetnamesuffix = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Dns.RecordSetMxResource> GetAllAsync(int? top = default(int?), string recordsetnamesuffix = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dns.RecordSetMxResource>> GetAsync(string relativeRecordSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Dns.RecordSetMxResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Dns.RecordSetMxResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Dns.RecordSetMxResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Dns.RecordSetMxResource>.GetEnumerator() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Dns.RecordSetMXResource> Get(string relativeRecordSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Dns.RecordSetMXResource> GetAll(int? top = default(int?), string recordsetnamesuffix = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Dns.RecordSetMXResource> GetAllAsync(int? top = default(int?), string recordsetnamesuffix = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dns.RecordSetMXResource>> GetAsync(string relativeRecordSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Dns.RecordSetMXResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Dns.RecordSetMXResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Dns.RecordSetMXResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Dns.RecordSetMXResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class RecordSetMxResource : Azure.ResourceManager.ArmResource
+    public partial class RecordSetMXResource : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
-        protected RecordSetMxResource() { }
-        public virtual Azure.ResourceManager.Dns.MxRecordSetData Data { get { throw null; } }
+        protected RecordSetMXResource() { }
+        public virtual Azure.ResourceManager.Dns.MXRecordSetData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string zoneName, string relativeRecordSetName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Dns.RecordSetMxResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dns.RecordSetMxResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Dns.RecordSetMxResource> Update(Azure.ResourceManager.Dns.MxRecordSetData data, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dns.RecordSetMxResource>> UpdateAsync(Azure.ResourceManager.Dns.MxRecordSetData data, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Dns.RecordSetMXResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dns.RecordSetMXResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Dns.RecordSetMXResource> Update(Azure.ResourceManager.Dns.MXRecordSetData data, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dns.RecordSetMXResource>> UpdateAsync(Azure.ResourceManager.Dns.MXRecordSetData data, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class RecordSetNsCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Dns.RecordSetNsResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Dns.RecordSetNsResource>, System.Collections.IEnumerable
+    public partial class RecordSetNSCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Dns.RecordSetNSResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Dns.RecordSetNSResource>, System.Collections.IEnumerable
     {
-        protected RecordSetNsCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Dns.RecordSetNsResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string relativeRecordSetName, Azure.ResourceManager.Dns.NsRecordSetData data, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Dns.RecordSetNsResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string relativeRecordSetName, Azure.ResourceManager.Dns.NsRecordSetData data, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected RecordSetNSCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Dns.RecordSetNSResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string relativeRecordSetName, Azure.ResourceManager.Dns.NSRecordSetData data, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Dns.RecordSetNSResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string relativeRecordSetName, Azure.ResourceManager.Dns.NSRecordSetData data, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string relativeRecordSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string relativeRecordSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Dns.RecordSetNsResource> Get(string relativeRecordSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Dns.RecordSetNsResource> GetAll(int? top = default(int?), string recordsetnamesuffix = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Dns.RecordSetNsResource> GetAllAsync(int? top = default(int?), string recordsetnamesuffix = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dns.RecordSetNsResource>> GetAsync(string relativeRecordSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Dns.RecordSetNsResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Dns.RecordSetNsResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Dns.RecordSetNsResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Dns.RecordSetNsResource>.GetEnumerator() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Dns.RecordSetNSResource> Get(string relativeRecordSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Dns.RecordSetNSResource> GetAll(int? top = default(int?), string recordsetnamesuffix = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Dns.RecordSetNSResource> GetAllAsync(int? top = default(int?), string recordsetnamesuffix = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dns.RecordSetNSResource>> GetAsync(string relativeRecordSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Dns.RecordSetNSResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Dns.RecordSetNSResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Dns.RecordSetNSResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Dns.RecordSetNSResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class RecordSetNsResource : Azure.ResourceManager.ArmResource
+    public partial class RecordSetNSResource : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
-        protected RecordSetNsResource() { }
-        public virtual Azure.ResourceManager.Dns.NsRecordSetData Data { get { throw null; } }
+        protected RecordSetNSResource() { }
+        public virtual Azure.ResourceManager.Dns.NSRecordSetData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string zoneName, string relativeRecordSetName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Dns.RecordSetNsResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dns.RecordSetNsResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Dns.RecordSetNsResource> Update(Azure.ResourceManager.Dns.NsRecordSetData data, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dns.RecordSetNsResource>> UpdateAsync(Azure.ResourceManager.Dns.NsRecordSetData data, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Dns.RecordSetNSResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dns.RecordSetNSResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Dns.RecordSetNSResource> Update(Azure.ResourceManager.Dns.NSRecordSetData data, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dns.RecordSetNSResource>> UpdateAsync(Azure.ResourceManager.Dns.NSRecordSetData data, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class RecordSetPtrCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Dns.RecordSetPtrResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Dns.RecordSetPtrResource>, System.Collections.IEnumerable
     {
@@ -496,28 +496,28 @@ namespace Azure.ResourceManager.Dns
         public string ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Dns.Models.SoaRecord SoaRecord { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } set { } }
-        public long? TTL { get { throw null; } set { } }
+        public long? Ttl { get { throw null; } set { } }
     }
     public partial class SrvRecordSetData : Azure.ResourceManager.Models.ResourceData
     {
         public SrvRecordSetData() { }
-        public string Etag { get { throw null; } set { } }
+        public Azure.ETag? ETag { get { throw null; } set { } }
         public string Fqdn { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.SrvRecord> SrvRecords { get { throw null; } }
         public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } set { } }
-        public long? TTL { get { throw null; } set { } }
+        public long? Ttl { get { throw null; } set { } }
     }
     public partial class TxtRecordSetData : Azure.ResourceManager.Models.ResourceData
     {
         public TxtRecordSetData() { }
-        public string Etag { get { throw null; } set { } }
+        public Azure.ETag? ETag { get { throw null; } set { } }
         public string Fqdn { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } set { } }
-        public long? TTL { get { throw null; } set { } }
+        public long? Ttl { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.TxtRecord> TxtRecords { get { throw null; } }
     }
 }
@@ -561,21 +561,21 @@ namespace Azure.ResourceManager.Dns.Models
         public DnsZonePatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
-    public partial class MxRecord
+    public partial class MXRecord
     {
-        public MxRecord() { }
+        public MXRecord() { }
         public string Exchange { get { throw null; } set { } }
         public int? Preference { get { throw null; } set { } }
     }
-    public partial class NsRecord
+    public partial class NSRecord
     {
-        public NsRecord() { }
-        public string Nsdname { get { throw null; } set { } }
+        public NSRecord() { }
+        public string NsdName { get { throw null; } set { } }
     }
     public partial class PtrRecord
     {
         public PtrRecord() { }
-        public string Ptrdname { get { throw null; } set { } }
+        public string PtrdName { get { throw null; } set { } }
     }
     public partial class SoaRecord
     {
