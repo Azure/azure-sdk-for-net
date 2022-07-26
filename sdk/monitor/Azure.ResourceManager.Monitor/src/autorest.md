@@ -7,7 +7,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: Monitor
 namespace: Azure.ResourceManager.Monitor
-require: https://github.com/Azure/azure-rest-api-specs/blob/a211ef525cdd9e186f31b5c11647aae31dccc469/specification/monitor/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/37966a6de2451407408adc2da5ab25631f0dd9b9/specification/monitor/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 tag: package-monitor-track2
 clear-output-folder: true
@@ -273,11 +273,6 @@ directive:
         "type": "string"
       }
   # remove unnecessary property for resources in action groups. Both of these are not used, and identity has an incorrect type.
-  - from: actionGroups_API.json
-    where: $.definitions.AzureResource.properties
-    transform: >
-      $["identity"] = undefined;
-      $["kind"] = undefined;
   - from: scheduledQueryRule_API.json
     where: $.definitions.Resource.properties
     transform: >
@@ -300,27 +295,27 @@ These settings apply only when `--tag=package-monitor-track2` is specified on th
 
 ```yaml $(tag) == 'package-monitor-track2'
 input-file:
-- https://github.com/Azure/azure-rest-api-specs/blob/a211ef525cdd9e186f31b5c11647aae31dccc469/specification/monitor/resource-manager/Microsoft.Insights/stable/2022-10-01/autoscale_API.json
-- https://github.com/Azure/azure-rest-api-specs/blob/a211ef525cdd9e186f31b5c11647aae31dccc469/specification/monitor/resource-manager/Microsoft.Insights/stable/2015-04-01/operations_API.json
-- https://github.com/Azure/azure-rest-api-specs/blob/a211ef525cdd9e186f31b5c11647aae31dccc469/specification/monitor/resource-manager/Microsoft.Insights/stable/2016-03-01/alertRulesIncidents_API.json
-- https://github.com/Azure/azure-rest-api-specs/blob/a211ef525cdd9e186f31b5c11647aae31dccc469/specification/monitor/resource-manager/Microsoft.Insights/stable/2016-03-01/alertRules_API.json
-- https://github.com/Azure/azure-rest-api-specs/blob/a211ef525cdd9e186f31b5c11647aae31dccc469/specification/monitor/resource-manager/Microsoft.Insights/stable/2016-03-01/logProfiles_API.json
-- https://github.com/Azure/azure-rest-api-specs/blob/a211ef525cdd9e186f31b5c11647aae31dccc469/specification/monitor/resource-manager/Microsoft.Insights/preview/2021-05-01-preview/diagnosticsSettings_API.json
-- https://github.com/Azure/azure-rest-api-specs/blob/a211ef525cdd9e186f31b5c11647aae31dccc469/specification/monitor/resource-manager/Microsoft.Insights/preview/2021-05-01-preview/diagnosticsSettingsCategories_API.json
-- https://github.com/Azure/azure-rest-api-specs/blob/a211ef525cdd9e186f31b5c11647aae31dccc469/specification/monitor/resource-manager/Microsoft.Insights/stable/2022-06-01/actionGroups_API.json
-- https://github.com/Azure/azure-rest-api-specs/blob/a211ef525cdd9e186f31b5c11647aae31dccc469/specification/monitor/resource-manager/Microsoft.Insights/stable/2015-04-01/activityLogs_API.json
-- https://github.com/Azure/azure-rest-api-specs/blob/a211ef525cdd9e186f31b5c11647aae31dccc469/specification/monitor/resource-manager/Microsoft.Insights/stable/2015-04-01/eventCategories_API.json
-- https://github.com/Azure/azure-rest-api-specs/blob/a211ef525cdd9e186f31b5c11647aae31dccc469/specification/monitor/resource-manager/Microsoft.Insights/stable/2015-04-01/tenantActivityLogs_API.json
-- https://github.com/Azure/azure-rest-api-specs/blob/a211ef525cdd9e186f31b5c11647aae31dccc469/specification/monitor/resource-manager/Microsoft.Insights/stable/2018-01-01/metricDefinitions_API.json
-- https://github.com/Azure/azure-rest-api-specs/blob/a211ef525cdd9e186f31b5c11647aae31dccc469/specification/monitor/resource-manager/Microsoft.Insights/stable/2018-01-01/metrics_API.json
-- https://github.com/Azure/azure-rest-api-specs/blob/a211ef525cdd9e186f31b5c11647aae31dccc469/specification/monitor/resource-manager/Microsoft.Insights/stable/2019-03-01/metricBaselines_API.json
-- https://github.com/Azure/azure-rest-api-specs/blob/a211ef525cdd9e186f31b5c11647aae31dccc469/specification/monitor/resource-manager/Microsoft.Insights/stable/2018-03-01/metricAlert_API.json
-- https://github.com/Azure/azure-rest-api-specs/blob/a211ef525cdd9e186f31b5c11647aae31dccc469/specification/monitor/resource-manager/Microsoft.Insights/stable/2018-04-16/scheduledQueryRule_API.json
-- https://github.com/Azure/azure-rest-api-specs/blob/a211ef525cdd9e186f31b5c11647aae31dccc469/specification/monitor/resource-manager/Microsoft.Insights/preview/2017-12-01-preview/metricNamespaces_API.json
-- https://github.com/Azure/azure-rest-api-specs/blob/a211ef525cdd9e186f31b5c11647aae31dccc469/specification/monitor/resource-manager/Microsoft.Insights/preview/2018-11-27-preview/vmInsightsOnboarding_API.json
-- https://github.com/Azure/azure-rest-api-specs/blob/a211ef525cdd9e186f31b5c11647aae31dccc469/specification/monitor/resource-manager/Microsoft.Insights/preview/2021-07-01-preview/privateLinkScopes_API.json
-- https://github.com/Azure/azure-rest-api-specs/blob/a211ef525cdd9e186f31b5c11647aae31dccc469/specification/monitor/resource-manager/Microsoft.Insights/stable/2020-10-01/activityLogAlerts_API.json
-- https://github.com/Azure/azure-rest-api-specs/blob/a211ef525cdd9e186f31b5c11647aae31dccc469/specification/monitor/resource-manager/Microsoft.Insights/stable/2021-04-01/dataCollectionEndpoints_API.json
-- https://github.com/Azure/azure-rest-api-specs/blob/a211ef525cdd9e186f31b5c11647aae31dccc469/specification/monitor/resource-manager/Microsoft.Insights/stable/2021-04-01/dataCollectionRuleAssociations_API.json
-- https://github.com/Azure/azure-rest-api-specs/blob/a211ef525cdd9e186f31b5c11647aae31dccc469/specification/monitor/resource-manager/Microsoft.Insights/stable/2021-04-01/dataCollectionRules_API.json
+- https://github.com/Azure/azure-rest-api-specs/blob/37966a6de2451407408adc2da5ab25631f0dd9b9/specification/monitor/resource-manager/Microsoft.Insights/stable/2022-10-01/autoscale_API.json
+- https://github.com/Azure/azure-rest-api-specs/blob/37966a6de2451407408adc2da5ab25631f0dd9b9/specification/monitor/resource-manager/Microsoft.Insights/stable/2015-04-01/operations_API.json
+- https://github.com/Azure/azure-rest-api-specs/blob/37966a6de2451407408adc2da5ab25631f0dd9b9/specification/monitor/resource-manager/Microsoft.Insights/stable/2016-03-01/alertRulesIncidents_API.json
+- https://github.com/Azure/azure-rest-api-specs/blob/37966a6de2451407408adc2da5ab25631f0dd9b9/specification/monitor/resource-manager/Microsoft.Insights/stable/2016-03-01/alertRules_API.json
+- https://github.com/Azure/azure-rest-api-specs/blob/37966a6de2451407408adc2da5ab25631f0dd9b9/specification/monitor/resource-manager/Microsoft.Insights/stable/2016-03-01/logProfiles_API.json
+- https://github.com/Azure/azure-rest-api-specs/blob/37966a6de2451407408adc2da5ab25631f0dd9b9/specification/monitor/resource-manager/Microsoft.Insights/preview/2021-05-01-preview/diagnosticsSettings_API.json
+- https://github.com/Azure/azure-rest-api-specs/blob/37966a6de2451407408adc2da5ab25631f0dd9b9/specification/monitor/resource-manager/Microsoft.Insights/preview/2021-05-01-preview/diagnosticsSettingsCategories_API.json
+- https://github.com/Azure/azure-rest-api-specs/blob/37966a6de2451407408adc2da5ab25631f0dd9b9/specification/monitor/resource-manager/Microsoft.Insights/stable/2022-06-01/actionGroups_API.json
+- https://github.com/Azure/azure-rest-api-specs/blob/37966a6de2451407408adc2da5ab25631f0dd9b9/specification/monitor/resource-manager/Microsoft.Insights/stable/2015-04-01/activityLogs_API.json
+- https://github.com/Azure/azure-rest-api-specs/blob/37966a6de2451407408adc2da5ab25631f0dd9b9/specification/monitor/resource-manager/Microsoft.Insights/stable/2015-04-01/eventCategories_API.json
+- https://github.com/Azure/azure-rest-api-specs/blob/37966a6de2451407408adc2da5ab25631f0dd9b9/specification/monitor/resource-manager/Microsoft.Insights/stable/2015-04-01/tenantActivityLogs_API.json
+- https://github.com/Azure/azure-rest-api-specs/blob/37966a6de2451407408adc2da5ab25631f0dd9b9/specification/monitor/resource-manager/Microsoft.Insights/stable/2018-01-01/metricDefinitions_API.json
+- https://github.com/Azure/azure-rest-api-specs/blob/37966a6de2451407408adc2da5ab25631f0dd9b9/specification/monitor/resource-manager/Microsoft.Insights/stable/2018-01-01/metrics_API.json
+- https://github.com/Azure/azure-rest-api-specs/blob/37966a6de2451407408adc2da5ab25631f0dd9b9/specification/monitor/resource-manager/Microsoft.Insights/stable/2019-03-01/metricBaselines_API.json
+- https://github.com/Azure/azure-rest-api-specs/blob/37966a6de2451407408adc2da5ab25631f0dd9b9/specification/monitor/resource-manager/Microsoft.Insights/stable/2018-03-01/metricAlert_API.json
+- https://github.com/Azure/azure-rest-api-specs/blob/37966a6de2451407408adc2da5ab25631f0dd9b9/specification/monitor/resource-manager/Microsoft.Insights/stable/2018-04-16/scheduledQueryRule_API.json
+- https://github.com/Azure/azure-rest-api-specs/blob/37966a6de2451407408adc2da5ab25631f0dd9b9/specification/monitor/resource-manager/Microsoft.Insights/preview/2017-12-01-preview/metricNamespaces_API.json
+- https://github.com/Azure/azure-rest-api-specs/blob/37966a6de2451407408adc2da5ab25631f0dd9b9/specification/monitor/resource-manager/Microsoft.Insights/preview/2018-11-27-preview/vmInsightsOnboarding_API.json
+- https://github.com/Azure/azure-rest-api-specs/blob/37966a6de2451407408adc2da5ab25631f0dd9b9/specification/monitor/resource-manager/Microsoft.Insights/preview/2021-07-01-preview/privateLinkScopes_API.json
+- https://github.com/Azure/azure-rest-api-specs/blob/37966a6de2451407408adc2da5ab25631f0dd9b9/specification/monitor/resource-manager/Microsoft.Insights/stable/2020-10-01/activityLogAlerts_API.json
+- https://github.com/Azure/azure-rest-api-specs/blob/37966a6de2451407408adc2da5ab25631f0dd9b9/specification/monitor/resource-manager/Microsoft.Insights/stable/2021-04-01/dataCollectionEndpoints_API.json
+- https://github.com/Azure/azure-rest-api-specs/blob/37966a6de2451407408adc2da5ab25631f0dd9b9/specification/monitor/resource-manager/Microsoft.Insights/stable/2021-04-01/dataCollectionRuleAssociations_API.json
+- https://github.com/Azure/azure-rest-api-specs/blob/37966a6de2451407408adc2da5ab25631f0dd9b9/specification/monitor/resource-manager/Microsoft.Insights/stable/2021-04-01/dataCollectionRules_API.json
 ```
