@@ -2222,6 +2222,45 @@ namespace Azure.ResourceManager.Logic.Models
         public static bool operator !=(Azure.ResourceManager.Logic.Models.LogicWorkflowProvisioningState left, Azure.ResourceManager.Logic.Models.LogicWorkflowProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct LogicWorkflowRecurrenceFrequency : System.IEquatable<Azure.ResourceManager.Logic.Models.LogicWorkflowRecurrenceFrequency>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public LogicWorkflowRecurrenceFrequency(string value) { throw null; }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowRecurrenceFrequency Day { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowRecurrenceFrequency Hour { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowRecurrenceFrequency Minute { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowRecurrenceFrequency Month { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowRecurrenceFrequency NotSpecified { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowRecurrenceFrequency Second { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowRecurrenceFrequency Week { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.LogicWorkflowRecurrenceFrequency Year { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Logic.Models.LogicWorkflowRecurrenceFrequency other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Logic.Models.LogicWorkflowRecurrenceFrequency left, Azure.ResourceManager.Logic.Models.LogicWorkflowRecurrenceFrequency right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Logic.Models.LogicWorkflowRecurrenceFrequency (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Logic.Models.LogicWorkflowRecurrenceFrequency left, Azure.ResourceManager.Logic.Models.LogicWorkflowRecurrenceFrequency right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class LogicWorkflowRecurrenceSchedule
+    {
+        public LogicWorkflowRecurrenceSchedule() { }
+        public System.Collections.Generic.IList<int> Hours { get { throw null; } }
+        public System.Collections.Generic.IList<int> Minutes { get { throw null; } }
+        public System.Collections.Generic.IList<int> MonthDays { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Logic.Models.LogicWorkflowRecurrenceScheduleOccurrence> MonthlyOccurrences { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Logic.Models.DaysOfWeek> WeekDays { get { throw null; } }
+    }
+    public partial class LogicWorkflowRecurrenceScheduleOccurrence
+    {
+        public LogicWorkflowRecurrenceScheduleOccurrence() { }
+        public Azure.ResourceManager.Logic.Models.DayOfWeek? Day { get { throw null; } set { } }
+        public int? Occurrence { get { throw null; } set { } }
+    }
     public partial class LogicWorkflowReference : Azure.ResourceManager.Logic.Models.LogicResourceReference
     {
         public LogicWorkflowReference() { }
@@ -2390,44 +2429,11 @@ namespace Azure.ResourceManager.Logic.Models
     {
         public LogicWorkflowTriggerRecurrence() { }
         public string EndTime { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerRecurrenceFrequency? Frequency { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.LogicWorkflowRecurrenceFrequency? Frequency { get { throw null; } set { } }
         public int? Interval { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerRecurrenceSchedule Schedule { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.LogicWorkflowRecurrenceSchedule Schedule { get { throw null; } set { } }
         public string StartTime { get { throw null; } set { } }
         public string TimeZone { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct LogicWorkflowTriggerRecurrenceFrequency : System.IEquatable<Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerRecurrenceFrequency>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public LogicWorkflowTriggerRecurrenceFrequency(string value) { throw null; }
-        public static Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerRecurrenceFrequency Day { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerRecurrenceFrequency Hour { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerRecurrenceFrequency Minute { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerRecurrenceFrequency Month { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerRecurrenceFrequency NotSpecified { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerRecurrenceFrequency Second { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerRecurrenceFrequency Week { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerRecurrenceFrequency Year { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerRecurrenceFrequency other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerRecurrenceFrequency left, Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerRecurrenceFrequency right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerRecurrenceFrequency (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerRecurrenceFrequency left, Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerRecurrenceFrequency right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class LogicWorkflowTriggerRecurrenceSchedule
-    {
-        public LogicWorkflowTriggerRecurrenceSchedule() { }
-        public System.Collections.Generic.IList<int> Hours { get { throw null; } }
-        public System.Collections.Generic.IList<int> Minutes { get { throw null; } }
-        public System.Collections.Generic.IList<int> MonthDays { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Logic.Models.RecurrenceScheduleOccurrence> MonthlyOccurrences { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Logic.Models.DaysOfWeek> WeekDays { get { throw null; } }
     }
     public partial class LogicWorkflowTriggerReference : Azure.ResourceManager.Logic.Models.LogicResourceReference
     {
@@ -2544,12 +2550,6 @@ namespace Azure.ResourceManager.Logic.Models
         public static implicit operator Azure.ResourceManager.Logic.Models.OpenAuthenticationProviderType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Logic.Models.OpenAuthenticationProviderType left, Azure.ResourceManager.Logic.Models.OpenAuthenticationProviderType right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class RecurrenceScheduleOccurrence
-    {
-        public RecurrenceScheduleOccurrence() { }
-        public Azure.ResourceManager.Logic.Models.DayOfWeek? Day { get { throw null; } set { } }
-        public int? Occurrence { get { throw null; } set { } }
     }
     public partial class RepetitionIndex
     {

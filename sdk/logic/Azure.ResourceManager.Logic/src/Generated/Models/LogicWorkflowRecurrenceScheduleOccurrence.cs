@@ -8,17 +8,17 @@
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The recurrence schedule occurrence. </summary>
-    public partial class RecurrenceScheduleOccurrence
+    public partial class LogicWorkflowRecurrenceScheduleOccurrence
     {
-        /// <summary> Initializes a new instance of RecurrenceScheduleOccurrence. </summary>
-        public RecurrenceScheduleOccurrence()
+        /// <summary> Initializes a new instance of LogicWorkflowRecurrenceScheduleOccurrence. </summary>
+        public LogicWorkflowRecurrenceScheduleOccurrence()
         {
         }
 
-        /// <summary> Initializes a new instance of RecurrenceScheduleOccurrence. </summary>
+        /// <summary> Initializes a new instance of LogicWorkflowRecurrenceScheduleOccurrence. </summary>
         /// <param name="day"> The day of the week. </param>
         /// <param name="occurrence"> The occurrence. </param>
-        internal RecurrenceScheduleOccurrence(DayOfWeek? day, int? occurrence)
+        internal LogicWorkflowRecurrenceScheduleOccurrence(DayOfWeek? day, int? occurrence)
         {
             Day = day;
             Occurrence = occurrence;

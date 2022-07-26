@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <param name="endTime"> The end time. </param>
         /// <param name="timeZone"> The time zone. </param>
         /// <param name="schedule"> The recurrence schedule. </param>
-        internal LogicWorkflowTriggerRecurrence(LogicWorkflowTriggerRecurrenceFrequency? frequency, int? interval, string startTime, string endTime, string timeZone, LogicWorkflowTriggerRecurrenceSchedule schedule)
+        internal LogicWorkflowTriggerRecurrence(LogicWorkflowRecurrenceFrequency? frequency, int? interval, string startTime, string endTime, string timeZone, LogicWorkflowRecurrenceSchedule schedule)
         {
             Frequency = frequency;
             Interval = interval;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> The frequency. </summary>
-        public LogicWorkflowTriggerRecurrenceFrequency? Frequency { get; set; }
+        public LogicWorkflowRecurrenceFrequency? Frequency { get; set; }
         /// <summary> The interval. </summary>
         public int? Interval { get; set; }
         /// <summary> The start time. </summary>
@@ -43,6 +43,6 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> The time zone. </summary>
         public string TimeZone { get; set; }
         /// <summary> The recurrence schedule. </summary>
-        public LogicWorkflowTriggerRecurrenceSchedule Schedule { get; set; }
+        public LogicWorkflowRecurrenceSchedule Schedule { get; set; }
     }
 }

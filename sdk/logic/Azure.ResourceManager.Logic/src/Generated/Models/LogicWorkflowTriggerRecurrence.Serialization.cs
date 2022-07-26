@@ -50,12 +50,12 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static LogicWorkflowTriggerRecurrence DeserializeLogicWorkflowTriggerRecurrence(JsonElement element)
         {
-            Optional<LogicWorkflowTriggerRecurrenceFrequency> frequency = default;
+            Optional<LogicWorkflowRecurrenceFrequency> frequency = default;
             Optional<int> interval = default;
             Optional<string> startTime = default;
             Optional<string> endTime = default;
             Optional<string> timeZone = default;
-            Optional<LogicWorkflowTriggerRecurrenceSchedule> schedule = default;
+            Optional<LogicWorkflowRecurrenceSchedule> schedule = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("frequency"))
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Logic.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    frequency = new LogicWorkflowTriggerRecurrenceFrequency(property.Value.GetString());
+                    frequency = new LogicWorkflowRecurrenceFrequency(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("interval"))
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Logic.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    schedule = LogicWorkflowTriggerRecurrenceSchedule.DeserializeLogicWorkflowTriggerRecurrenceSchedule(property.Value);
+                    schedule = LogicWorkflowRecurrenceSchedule.DeserializeLogicWorkflowRecurrenceSchedule(property.Value);
                     continue;
                 }
             }

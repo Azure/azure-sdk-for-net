@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class RecurrenceScheduleOccurrence : IUtf8JsonSerializable
+    public partial class LogicWorkflowRecurrenceScheduleOccurrence : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteEndObject();
         }
 
-        internal static RecurrenceScheduleOccurrence DeserializeRecurrenceScheduleOccurrence(JsonElement element)
+        internal static LogicWorkflowRecurrenceScheduleOccurrence DeserializeLogicWorkflowRecurrenceScheduleOccurrence(JsonElement element)
         {
             Optional<DayOfWeek> day = default;
             Optional<int> occurrence = default;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new RecurrenceScheduleOccurrence(Optional.ToNullable(day), Optional.ToNullable(occurrence));
+            return new LogicWorkflowRecurrenceScheduleOccurrence(Optional.ToNullable(day), Optional.ToNullable(occurrence));
         }
     }
 }

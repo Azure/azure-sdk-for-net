@@ -11,25 +11,25 @@ using Azure.Core;
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The recurrence schedule. </summary>
-    public partial class LogicWorkflowTriggerRecurrenceSchedule
+    public partial class LogicWorkflowRecurrenceSchedule
     {
-        /// <summary> Initializes a new instance of LogicWorkflowTriggerRecurrenceSchedule. </summary>
-        public LogicWorkflowTriggerRecurrenceSchedule()
+        /// <summary> Initializes a new instance of LogicWorkflowRecurrenceSchedule. </summary>
+        public LogicWorkflowRecurrenceSchedule()
         {
             Minutes = new ChangeTrackingList<int>();
             Hours = new ChangeTrackingList<int>();
             WeekDays = new ChangeTrackingList<DaysOfWeek>();
             MonthDays = new ChangeTrackingList<int>();
-            MonthlyOccurrences = new ChangeTrackingList<RecurrenceScheduleOccurrence>();
+            MonthlyOccurrences = new ChangeTrackingList<LogicWorkflowRecurrenceScheduleOccurrence>();
         }
 
-        /// <summary> Initializes a new instance of LogicWorkflowTriggerRecurrenceSchedule. </summary>
+        /// <summary> Initializes a new instance of LogicWorkflowRecurrenceSchedule. </summary>
         /// <param name="minutes"> The minutes. </param>
         /// <param name="hours"> The hours. </param>
         /// <param name="weekDays"> The days of the week. </param>
         /// <param name="monthDays"> The month days. </param>
         /// <param name="monthlyOccurrences"> The monthly occurrences. </param>
-        internal LogicWorkflowTriggerRecurrenceSchedule(IList<int> minutes, IList<int> hours, IList<DaysOfWeek> weekDays, IList<int> monthDays, IList<RecurrenceScheduleOccurrence> monthlyOccurrences)
+        internal LogicWorkflowRecurrenceSchedule(IList<int> minutes, IList<int> hours, IList<DaysOfWeek> weekDays, IList<int> monthDays, IList<LogicWorkflowRecurrenceScheduleOccurrence> monthlyOccurrences)
         {
             Minutes = minutes;
             Hours = hours;
@@ -47,6 +47,6 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> The month days. </summary>
         public IList<int> MonthDays { get; }
         /// <summary> The monthly occurrences. </summary>
-        public IList<RecurrenceScheduleOccurrence> MonthlyOccurrences { get; }
+        public IList<LogicWorkflowRecurrenceScheduleOccurrence> MonthlyOccurrences { get; }
     }
 }

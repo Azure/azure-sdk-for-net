@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class LogicWorkflowTriggerRecurrenceSchedule : IUtf8JsonSerializable
+    public partial class LogicWorkflowRecurrenceSchedule : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -69,13 +69,13 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteEndObject();
         }
 
-        internal static LogicWorkflowTriggerRecurrenceSchedule DeserializeLogicWorkflowTriggerRecurrenceSchedule(JsonElement element)
+        internal static LogicWorkflowRecurrenceSchedule DeserializeLogicWorkflowRecurrenceSchedule(JsonElement element)
         {
             Optional<IList<int>> minutes = default;
             Optional<IList<int>> hours = default;
             Optional<IList<DaysOfWeek>> weekDays = default;
             Optional<IList<int>> monthDays = default;
-            Optional<IList<RecurrenceScheduleOccurrence>> monthlyOccurrences = default;
+            Optional<IList<LogicWorkflowRecurrenceScheduleOccurrence>> monthlyOccurrences = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("minutes"))
@@ -145,16 +145,16 @@ namespace Azure.ResourceManager.Logic.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<RecurrenceScheduleOccurrence> array = new List<RecurrenceScheduleOccurrence>();
+                    List<LogicWorkflowRecurrenceScheduleOccurrence> array = new List<LogicWorkflowRecurrenceScheduleOccurrence>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RecurrenceScheduleOccurrence.DeserializeRecurrenceScheduleOccurrence(item));
+                        array.Add(LogicWorkflowRecurrenceScheduleOccurrence.DeserializeLogicWorkflowRecurrenceScheduleOccurrence(item));
                     }
                     monthlyOccurrences = array;
                     continue;
                 }
             }
-            return new LogicWorkflowTriggerRecurrenceSchedule(Optional.ToList(minutes), Optional.ToList(hours), Optional.ToList(weekDays), Optional.ToList(monthDays), Optional.ToList(monthlyOccurrences));
+            return new LogicWorkflowRecurrenceSchedule(Optional.ToList(minutes), Optional.ToList(hours), Optional.ToList(weekDays), Optional.ToList(monthDays), Optional.ToList(monthlyOccurrences));
         }
     }
 }

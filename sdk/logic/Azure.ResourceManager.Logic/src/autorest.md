@@ -88,8 +88,9 @@ rename-mapping:
   ParameterType: LogicWorkflowParameterType
   PartnerContent: IntegrationAccountPartnerContent
   PartnerType: IntegrationAccountPartnerType
-  RecurrenceFrequency: LogicWorkflowTriggerRecurrenceFrequency
-  RecurrenceSchedule: LogicWorkflowTriggerRecurrenceSchedule
+  RecurrenceFrequency: LogicWorkflowRecurrenceFrequency
+  RecurrenceSchedule: LogicWorkflowRecurrenceSchedule
+  RecurrenceScheduleOccurrence: LogicWorkflowRecurrenceScheduleOccurrence
   RegenerateActionParameter: LogicWorkflowRegenerateActionContent
   RequestHistoryListResult: LogicWorkflowRequestHistoryListResult
   RequestHistory: LogicWorkflowRequestHistory
