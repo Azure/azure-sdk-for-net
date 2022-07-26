@@ -12,6 +12,8 @@ using Azure.Monitor.Query.Models;
 using System.Threading.Tasks;
 using System.Linq;
 using System.Threading;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace Azure.Monitor.Ingestion.Tests
 {
@@ -178,6 +180,50 @@ namespace Azure.Monitor.Ingestion.Tests
 
             Assert.AreEqual("BadArgumentError", exception.ErrorCode);
             StringAssert.StartsWith("Batch query with id '0' failed.", exception.Message);
+        }
+
+        [Test]
+        public void ValidateBatchingOneChunk()
+        {
+            var entries = new List<string>();
+            for (int i = 0; i < 10; i++)
+            {
+                string input = "{" +
+                    "\"Time\": \"2021-12-08T23:51:14.1104269Z\"," +
+                    "\"Computer\": \"Computer1\"," +
+                    "\"AdditionalContext\": \"" + i.ToString() + "\"" + "}";
+                entries.Add(input.Replace("\\", String.Empty));
+            }
+            IEnumerable<BinaryData> x = LogsIngestionClient.Batching(entries);
+            int count = 0;
+            foreach (var entry in x)
+            {
+                Console.WriteLine(entry);
+                count++;
+            }
+            Assert.AreEqual(1, count);
+        }
+
+        [Test]
+        public void ValidateBatchingMultiChunk()
+        {
+            var entries = new List<string>();
+            for (int i = 0; i < 7000; i++)
+            {
+                string input = "{" +
+                    "\"Time\": \"2021-12-08T23:51:14.1104269Z\"," +
+                    "\"Computer\": \"Computer1\"," +
+                    "\"AdditionalContext\": \"" + i.ToString() + "\"" + "}";
+                entries.Add(input.Replace("\\", String.Empty));
+            }
+            IEnumerable<BinaryData> x = LogsIngestionClient.Batching(entries);
+            int count = 0;
+            foreach (var entry in x)
+            {
+                Console.WriteLine(entry);
+                count++;
+            }
+            Assert.AreEqual(2, count);
         }
     }
 }

@@ -60,38 +60,136 @@ namespace Azure.Monitor.Ingestion
             return message;
         }
 
-        private static IEnumerable<(BinaryData Data, int Start)> BatchingInSequence<T>(IEnumerable<T> logEntries)
+        ///// <summary>
+        ///// test
+        ///// </summary>
+        ///// <typeparam name="T"></typeparam>
+        ///// <param name="logEntries"></param>
+        ///// <returns></returns>
+        //public static IEnumerable<(BinaryData Data, int Start)> Batching<T>(IEnumerable<T> logEntries)
+        //{
+        //    //TODO: use Array pool instead
+        //    MemoryStream stream = new MemoryStream(_singleUploadThreshold);
+        //    WriteMemory(stream, BinaryData.FromString("[").ToMemory());
+        //    int start = 0;
+        //    int entryCount = 0;
+        //    foreach (var log in logEntries)
+        //    {
+        //        BinaryData entry = log is BinaryData d ? d : BinaryData.FromObjectAsJson(log);
+
+        //        var memory = entry.ToMemory();
+        //        if ((stream.Length + memory.Length + 1) >= _singleUploadThreshold) // if adding this entry makes stream > 1 Mb send current stream now
+        //        {
+        //            WriteMemory(stream, BinaryData.FromString("]").ToMemory());
+        //            yield return (BinaryData.FromStream(stream), start);
+        //            start = entryCount;
+        //        }
+        //        else
+        //        {
+        //            stream.Position = 0;
+        //        }
+        //        WriteMemory(stream, memory);
+        //        WriteMemory(stream, BinaryData.FromString(",").ToMemory());
+        //        entryCount++;
+        //    }
+        //}
+
+        /// <summary>
+        /// test
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="logEntries"></param>
+        /// <returns></returns>
+        public static IEnumerable<BinaryData> Batching<T>(IEnumerable<T> logEntries)
         {
             //TODO: use Array pool instead
             MemoryStream stream = new MemoryStream(_singleUploadThreshold);
             WriteMemory(stream, BinaryData.FromString("[").ToMemory());
-            int start = 0;
             int entryCount = 0;
             foreach (var log in logEntries)
             {
-                BinaryData data = log is BinaryData d ? d : BinaryData.FromObjectAsJson(log);
+                BinaryData entry = log is BinaryData d ? d : BinaryData.FromObjectAsJson(log);
 
-                var memory = data.ToMemory();
-                if ((stream.Length + memory.Length + 1) >= _singleUploadThreshold)
+                var memory = entry.ToMemory();
+                if ((stream.Length + memory.Length + 1) >= _singleUploadThreshold) // if adding this entry makes stream > 1 Mb send current stream now
                 {
                     WriteMemory(stream, BinaryData.FromString("]").ToMemory());
-                    yield return (BinaryData.FromStream(stream), start);
-                    start = entryCount;
+                    stream.Position = 0;
+                    yield return (BinaryData.FromStream(stream));
+                    stream = new MemoryStream(_singleUploadThreshold);
                 }
                 else
                 {
-                    stream.Position = 0;
+                    WriteMemory(stream, memory);
+                    WriteMemory(stream, BinaryData.FromString(",").ToMemory());
+                    if ((entryCount + 1) == logEntries.Count())
+                    {
+                        // reached end of logEntries and we haven't returned yet
+                        WriteMemory(stream, BinaryData.FromString("]").ToMemory());
+                        stream.Position = 0;
+                        yield return (BinaryData.FromStream(stream));
+                    }
                 }
-                WriteMemory(stream, memory);
-                WriteMemory(stream, BinaryData.FromString(",").ToMemory());
                 entryCount++;
             }
         }
-
         private static void WriteMemory(MemoryStream stream, ReadOnlyMemory<byte> memory)
         {
             stream.Write(memory.ToArray(), 0, memory.Length); //TODO: fix ToArray
         }
+
+        ///// <summary>
+        ///// Overload upload
+        ///// </summary>
+        ///// <param name="ruleId"></param>
+        ///// <param name="streamName"></param>
+        ///// <param name="logEntries"></param>
+        ///// <param name="cancellationToken"></param>
+        //public virtual void Upload<T>(string ruleId, string streamName, IEnumerable<T> logEntries, CancellationToken cancellationToken = default)
+        //{
+        //    Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
+        //    Argument.AssertNotNullOrEmpty(streamName, nameof(streamName));
+        //    Argument.AssertNotNullOrEmpty(logEntries, nameof(logEntries));
+
+        //    using var scope = ClientDiagnostics.CreateScope("LogsIngestionClient.Upload");
+        //    scope.Start();
+        //    try
+        //    {
+        //        foreach (var partition in Batching(logEntries))
+        //        {
+        //            // Upload it in a single request
+        //            //using HttpMessage message = CreateUploadRequest(ruleId, streamName, Batching.Data, "gzip", context); //TODO: catch errors and correlate with Batching.start
+        //            Upload(ruleId, streamName, partition, "gzip", new RequestContext() { CancellationToken = cancellationToken});
+        //        }
+        //        //var binaryData = BinaryData.FromObjectAsJson(logEntries);
+        //        // If we can compute the size and it's small enough
+        //        //if (TryGetLength(binaryData.ToStream(), out long length) && length < _singleUploadThreshold)
+        //        //{
+        //        //    // Upload it in a single request
+        //        //    using HttpMessage message = CreateUploadRequest(ruleId, streamName, BinaryData.FromObjectAsJson(logEntries), "gzip", context);
+        //        //}
+
+        //        // Otherwise stage individual blocks one at a time.  It's not as
+        //        // fast as a parallel upload, but you get the benefit of the retry
+        //        // policy working on a single block instead of the entire stream.
+        //        //return UploadInSequence(
+        //        //    content,
+        //        //    blockSize,
+        //        //    blobHttpHeaders,
+        //        //    metadata,
+        //        //    conditions,
+        //        //    progressHandler,
+        //        //    accessTier,
+        //        //    cancellationToken);
+        //        ////using HttpMessage message = CreateUploadRequest(ruleId, streamName, BinaryData.FromObjectAsJson(logEntries), "gzip", context);
+        //        //return _pipeline.ProcessMessage(message, context);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        scope.Failed(e);
+        //        throw;
+        //    }
+        //}
 
         /// <summary>
         /// Overload upload
@@ -100,7 +198,7 @@ namespace Azure.Monitor.Ingestion
         /// <param name="streamName"></param>
         /// <param name="logEntries"></param>
         /// <param name="cancellationToken"></param>
-        public virtual void Upload<T>(string ruleId, string streamName, IEnumerable<T> logEntries, CancellationToken cancellationToken = default)
+        public virtual Response Upload<T>(string ruleId, string streamName, IEnumerable<T> logEntries, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
             Argument.AssertNotNullOrEmpty(streamName, nameof(streamName));
@@ -110,59 +208,49 @@ namespace Azure.Monitor.Ingestion
             scope.Start();
             try
             {
-                foreach (var partition in BatchingInSequence(logEntries))
+                foreach (var partition in Batching(logEntries))
                 {
-                    // Upload it in a single request
-                    //using HttpMessage message = CreateUploadRequest(ruleId, streamName, BatchingInSequence.Data, "gzip", context); //TODO: catch errors and correlate with BatchingInSequence.start
-                    Upload(ruleId, streamName, partition.Data, "gzip", new RequestContext() { CancellationToken = cancellationToken});
+                    //TODO: catch errors and correlate with Batching.start
+                    return Upload(ruleId, streamName, partition, "gzip", new RequestContext() { CancellationToken = cancellationToken });
                 }
-                //var binaryData = BinaryData.FromObjectAsJson(logEntries);
-                // If we can compute the size and it's small enough
-                //if (TryGetLength(binaryData.ToStream(), out long length) && length < _singleUploadThreshold)
-                //{
-                //    // Upload it in a single request
-                //    using HttpMessage message = CreateUploadRequest(ruleId, streamName, BinaryData.FromObjectAsJson(logEntries), "gzip", context);
-                //}
-
-                // Otherwise stage individual blocks one at a time.  It's not as
-                // fast as a parallel upload, but you get the benefit of the retry
-                // policy working on a single block instead of the entire stream.
-                //return UploadInSequence(
-                //    content,
-                //    blockSize,
-                //    blobHttpHeaders,
-                //    metadata,
-                //    conditions,
-                //    progressHandler,
-                //    accessTier,
-                //    cancellationToken);
-                ////using HttpMessage message = CreateUploadRequest(ruleId, streamName, BinaryData.FromObjectAsJson(logEntries), "gzip", context);
-                //return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
+            return null;
         }
 
-        // Some streams will throw if you try to access their length so we wrap
-        // the check in a TryGet helper.
-        private static bool TryGetLength(Stream content, out long length)
+        /// <summary>
+        /// Overload upload
+        /// </summary>
+        /// <param name="ruleId"></param>
+        /// <param name="streamName"></param>
+        /// <param name="logEntries"></param>
+        /// <param name="cancellationToken"></param>
+        public virtual async Task<Response> UploadAsync<T>(string ruleId, string streamName, IEnumerable<T> logEntries, CancellationToken cancellationToken = default)
         {
-            length = 0;
+            Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
+            Argument.AssertNotNullOrEmpty(streamName, nameof(streamName));
+            Argument.AssertNotNullOrEmpty(logEntries, nameof(logEntries));
+
+            using var scope = ClientDiagnostics.CreateScope("LogsIngestionClient.Upload");
+            scope.Start();
             try
             {
-                if (content.CanSeek)
+                foreach (var partition in Batching(logEntries))
                 {
-                    length = content.Length;
-                    return true;
+                    //TODO: catch errors and correlate with Batching.start
+                    return await UploadAsync(ruleId, streamName, partition, "gzip", new RequestContext() { CancellationToken = cancellationToken }).ConfigureAwait(false);
                 }
             }
-            catch (NotSupportedException)
+            catch (Exception e)
             {
+                scope.Failed(e);
+                throw;
             }
-            return false;
+            return null;
         }
     }
 }
