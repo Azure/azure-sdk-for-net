@@ -62,8 +62,15 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             if (Optional.IsDefined(PredictiveAutoscalePolicy))
             {
-                writer.WritePropertyName("predictiveAutoscalePolicy");
-                writer.WriteObjectValue(PredictiveAutoscalePolicy);
+                if (PredictiveAutoscalePolicy != null)
+                {
+                    writer.WritePropertyName("predictiveAutoscalePolicy");
+                    writer.WriteObjectValue(PredictiveAutoscalePolicy);
+                }
+                else
+                {
+                    writer.WriteNull("predictiveAutoscalePolicy");
+                }
             }
             if (Optional.IsDefined(AutoscaleSettingName))
             {

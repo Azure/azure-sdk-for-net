@@ -202,6 +202,9 @@ directive:
   - from: swagger-document
     where: $.definitions.LogProfileProperties.properties.serviceBusRuleId
     transform: $["x-nullable"] = true;
+  - from: swagger-document
+    where: $.definitions.AutoscaleSetting.properties.predictiveAutoscalePolicy
+    transform: $["x-nullable"] = true;
   # duplicate schema resolution
   - from: activityLogAlerts_API.json
     where: $.definitions.AzureResource
