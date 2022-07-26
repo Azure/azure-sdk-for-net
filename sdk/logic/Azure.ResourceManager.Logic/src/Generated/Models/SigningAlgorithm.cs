@@ -24,23 +24,23 @@ namespace Azure.ResourceManager.Logic.Models
 
         private const string NotSpecifiedValue = "NotSpecified";
         private const string DefaultValue = "Default";
-        private const string SHA1Value = "SHA1";
-        private const string SHA2256Value = "SHA2256";
-        private const string SHA2384Value = "SHA2384";
-        private const string SHA2512Value = "SHA2512";
+        private const string Sha1Value = "SHA1";
+        private const string Sha2256Value = "SHA2256";
+        private const string Sha2384Value = "SHA2384";
+        private const string Sha2512Value = "SHA2512";
 
         /// <summary> NotSpecified. </summary>
         public static SigningAlgorithm NotSpecified { get; } = new SigningAlgorithm(NotSpecifiedValue);
         /// <summary> Default. </summary>
         public static SigningAlgorithm Default { get; } = new SigningAlgorithm(DefaultValue);
         /// <summary> SHA1. </summary>
-        public static SigningAlgorithm SHA1 { get; } = new SigningAlgorithm(SHA1Value);
+        public static SigningAlgorithm Sha1 { get; } = new SigningAlgorithm(Sha1Value);
         /// <summary> SHA2256. </summary>
-        public static SigningAlgorithm SHA2256 { get; } = new SigningAlgorithm(SHA2256Value);
+        public static SigningAlgorithm Sha2256 { get; } = new SigningAlgorithm(Sha2256Value);
         /// <summary> SHA2384. </summary>
-        public static SigningAlgorithm SHA2384 { get; } = new SigningAlgorithm(SHA2384Value);
+        public static SigningAlgorithm Sha2384 { get; } = new SigningAlgorithm(Sha2384Value);
         /// <summary> SHA2512. </summary>
-        public static SigningAlgorithm SHA2512 { get; } = new SigningAlgorithm(SHA2512Value);
+        public static SigningAlgorithm Sha2512 { get; } = new SigningAlgorithm(Sha2512Value);
         /// <summary> Determines if two <see cref="SigningAlgorithm"/> values are the same. </summary>
         public static bool operator ==(SigningAlgorithm left, SigningAlgorithm right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SigningAlgorithm"/> values are not the same. </summary>
