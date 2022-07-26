@@ -22,7 +22,6 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
         private DataFactoryResource _dataFactory;
         public LinkedServiceResourceTests(bool isAsync) : base(isAsync)
         {
-            JsonPathSanitizers.Add("$.keys.[*].value");
         }
 
         [SetUp]
@@ -36,7 +35,7 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
         }
 
         [TearDown]
-        public async Task TestlTearDown()
+        public async Task TestTearDown()
         {
             // Delete Storage Account ASAP.
             var list = await _resourceGroup.GetStorageAccounts().GetAllAsync().ToEnumerableAsync();

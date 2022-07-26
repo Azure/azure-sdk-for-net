@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.DataFactory.Tests
         protected DataFactoryManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
+            JsonPathSanitizers.Add("$.keys.[*].value");
         }
 
         protected DataFactoryManagementTestBase(bool isAsync)
