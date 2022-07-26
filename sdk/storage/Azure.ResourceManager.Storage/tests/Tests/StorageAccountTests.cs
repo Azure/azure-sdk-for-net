@@ -623,14 +623,14 @@ namespace Azure.ResourceManager.Storage.Tests
             VerifyAccountProperties(account1, true);
             var keys = await account1.GetKeysAsync().ToEnumerableAsync();
             StorageAccountKey key2 = keys.First(
-                t => StringComparer.OrdinalIgnoreCase.Equals(t.KeyName, "key2"));
+                t => t.KeyName.Equals("key2", StringComparison.OrdinalIgnoreCase));
             Assert.NotNull(key2);
 
             //regenerate key and verify the key's change
             StorageAccountRegenerateKeyContent keyParameters = new StorageAccountRegenerateKeyContent("key2");
-            StorageAccountGetKeysResult regenKeys = await account1.RegenerateKeyAsync(keyParameters);
-            StorageAccountKey regenKey2 = regenKeys.Keys.First(
-                t => StringComparer.OrdinalIgnoreCase.Equals(t.KeyName, "key2"));
+            var regenKeys = await account1.RegenerateKeyAsync(keyParameters).ToEnumerableAsync();
+            StorageAccountKey regenKey2 = regenKeys.First(
+                t => t.KeyName.Equals("key2", StringComparison.OrdinalIgnoreCase));
             Assert.NotNull(regenKey2);
 
             //validate the key is different from origin one
