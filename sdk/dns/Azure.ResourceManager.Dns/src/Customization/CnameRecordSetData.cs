@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Dns.Models;
 using Azure.ResourceManager.Models;
@@ -34,9 +35,9 @@ namespace Azure.ResourceManager.Dns
         /// <param name="provisioningState"> provisioning State of the record set. </param>
         /// <param name="targetResource"> A reference to an azure resource from where the dns resource value is taken. </param>
         /// <param name="cnameRecord"> The CNAME record in the  record set. </param>
-        internal CnameRecordSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string etag, IDictionary<string, string> metadata, long? ttl, string fqdn, string provisioningState, WritableSubResource targetResource, CnameRecord cnameRecord) : base(id, name, resourceType, systemData)
+        internal CnameRecordSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, string provisioningState, WritableSubResource targetResource, CnameRecord cnameRecord) : base(id, name, resourceType, systemData)
         {
-            Etag = etag;
+            ETag = etag;
             Metadata = metadata;
             TTL = ttl;
             Fqdn = fqdn;
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.Dns
         }
 
         /// <summary> The etag of the record set. </summary>
-        public string Etag { get; set; }
+        public ETag? ETag { get; set; }
         /// <summary> The metadata attached to the record set. </summary>
         public IDictionary<string, string> Metadata { get; }
         /// <summary> The TTL (time-to-live) of the records in the record set. </summary>

@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Dns.Models;
 using Azure.ResourceManager.Models;
@@ -19,10 +20,10 @@ namespace Azure.ResourceManager.Dns
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Etag))
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag");
-                writer.WriteStringValue(Etag);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
@@ -63,7 +64,7 @@ namespace Azure.ResourceManager.Dns
 
         internal static CaaRecordSetData DeserializeCaaRecordSetData(JsonElement element)
         {
-            Optional<string> etag = default;
+            Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -78,7 +79,12 @@ namespace Azure.ResourceManager.Dns
             {
                 if (property.NameEquals("etag"))
                 {
-                    etag = property.Value.GetString();
+                     if (property.Value.ValueKind == JsonValueKind.Null)
+                     {
+                         property.ThrowNonNullablePropertyIsNull();
+                         continue;
+                     }
+                     etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -174,7 +180,7 @@ namespace Azure.ResourceManager.Dns
                     continue;
                 }
             }
-            return new CaaRecordSetData(id, name, type, systemData, etag.Value, Optional.ToDictionary(metadata), Optional.ToNullable(ttl), fqdn.Value, provisioningState.Value, targetResource, Optional.ToList(caaRecords));
+            return new CaaRecordSetData(id, name, type, systemData, Optional.ToNullable(etag), Optional.ToDictionary(metadata), Optional.ToNullable(ttl), fqdn.Value, provisioningState.Value, targetResource, Optional.ToList(caaRecords));
         }
     }
 }
