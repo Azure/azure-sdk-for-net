@@ -539,16 +539,16 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="createdOn"> Date and time (UTC) when the operation was created. </param>
         /// <param name="lastUpdatedOn"> Date and time (UTC) when the status was last updated. </param>
         /// <param name="kind"> Type of operation. </param>
-        /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
+        /// <param name="resourceLocation"> URI of the resource targeted by this operation. </param>
         /// <param name="tags"> List of key-value tag attributes associated with the model. </param>
         /// <param name="error"> Encountered error. </param>
         /// <param name="result"> Operation result upon success. </param>
         /// <returns> A new <see cref="DocumentAnalysis.DocumentModelOperationDetails"/> instance for mocking. </returns>
-        public static DocumentModelOperationDetails DocumentModelOperationDetails(string operationId = null, DocumentOperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DocumentOperationKind kind = default, string resourceLocation = null, IReadOnlyDictionary<string, string> tags = null, ResponseError error = null, DocumentModelDetails result = null)
+        public static DocumentModelOperationDetails DocumentModelOperationDetails(string operationId = null, DocumentOperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DocumentOperationKind kind = default, Uri resourceLocation = null, IReadOnlyDictionary<string, string> tags = null, ResponseError error = null, DocumentModelDetails result = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new DocumentModelOperationDetails(operationId, status, percentCompleted, createdOn, lastUpdatedOn, kind, resourceLocation, apiVersion: null, tags, error, result);
+            return new DocumentModelOperationDetails(operationId, status, percentCompleted, createdOn, lastUpdatedOn, kind, resourceLocation, tags, error, result);
         }
 
         /// <summary> Initializes a new instance of DocumentModelOperationSummary. </summary>
@@ -558,10 +558,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="createdOn"> Date and time (UTC) when the operation was created. </param>
         /// <param name="lastUpdatedOn"> Date and time (UTC) when the status was last updated. </param>
         /// <param name="kind"> Type of operation. </param>
-        /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
+        /// <param name="resourceLocation"> URI of the resource targeted by this operation. </param>
         /// <param name="tags"> List of key-value tag attributes associated with the model. </param>
         /// <returns> A new <see cref="DocumentAnalysis.DocumentModelOperationSummary"/> instance for mocking. </returns>
-        public static DocumentModelOperationSummary DocumentModelOperationSummary(string operationId = null, DocumentOperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DocumentOperationKind kind = default, string resourceLocation = null, IReadOnlyDictionary<string, string> tags = null)
+        public static DocumentModelOperationSummary DocumentModelOperationSummary(string operationId = null, DocumentOperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DocumentOperationKind kind = default, Uri resourceLocation = null, IReadOnlyDictionary<string, string> tags = null)
         {
             tags ??= new Dictionary<string, string>();
 

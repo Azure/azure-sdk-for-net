@@ -540,7 +540,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             try
             {
                 var response = ServiceClient.GetOperation(operationId, cancellationToken);
-                return Response.FromValue(response.Value, response.GetRawResponse());
+                var operationDetails = new DocumentModelOperationDetails(response.Value);
+
+                return Response.FromValue(operationDetails, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -566,7 +568,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             try
             {
                 var response = await ServiceClient.GetOperationAsync(operationId, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value, response.GetRawResponse());
+                var operationDetails = new DocumentModelOperationDetails(response.Value);
+
+                return Response.FromValue(operationDetails, response.GetRawResponse());
             }
             catch (Exception e)
             {

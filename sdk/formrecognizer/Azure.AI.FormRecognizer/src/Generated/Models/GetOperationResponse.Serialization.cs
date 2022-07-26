@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    public partial class DocumentModelOperationDetails
+    internal partial class GetOperationResponse
     {
-        internal static DocumentModelOperationDetails DeserializeDocumentModelOperationDetails(JsonElement element)
+        internal static GetOperationResponse DeserializeGetOperationResponse(JsonElement element)
         {
             Optional<JsonElement> error = default;
             Optional<DocumentModelDetails> result = default;
@@ -24,7 +24,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             DateTimeOffset createdDateTime = default;
             DateTimeOffset lastUpdatedDateTime = default;
             DocumentOperationKind kind = default;
-            string resourceLocation = default;
+            Uri resourceLocation = default;
             Optional<string> apiVersion = default;
             Optional<IReadOnlyDictionary<string, string>> tags = default;
             foreach (var property in element.EnumerateObject())
@@ -81,7 +81,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 }
                 if (property.NameEquals("resourceLocation"))
                 {
-                    resourceLocation = property.Value.GetString();
+                    resourceLocation = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("apiVersion"))
@@ -105,7 +105,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new DocumentModelOperationDetails(operationId, status, Optional.ToNullable(percentCompleted), createdDateTime, lastUpdatedDateTime, kind, resourceLocation, apiVersion.Value, Optional.ToDictionary(tags), error, result.Value);
+            return new GetOperationResponse(operationId, status, Optional.ToNullable(percentCompleted), createdDateTime, lastUpdatedDateTime, kind, resourceLocation, apiVersion.Value, Optional.ToDictionary(tags), error, result.Value);
         }
     }
 }

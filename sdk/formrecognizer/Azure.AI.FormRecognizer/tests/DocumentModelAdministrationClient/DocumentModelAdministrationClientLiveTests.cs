@@ -259,7 +259,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             DocumentModelOperationDetails operationDetails = await client.GetOperationAsync(modelOperationFromList.FirstOrDefault().OperationId);
 
-            ValidateOperationSummary(operationDetails);
+            ValidateOperationDetails(operationDetails);
             if (operationDetails.Status == DocumentOperationStatus.Failed)
             {
                 Assert.NotNull(operationDetails.Error);
@@ -479,15 +479,35 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         private void ValidateOperationSummary(DocumentModelOperationSummary operationSummary)
         {
             Assert.NotNull(operationSummary.OperationId);
-            Assert.NotNull(operationSummary.Status);
-            Assert.AreNotEqual(new DateTimeOffset(), operationSummary.CreatedOn);
-            Assert.AreNotEqual(new DateTimeOffset(), operationSummary.LastUpdatedOn);
-            Assert.NotNull(operationSummary.Kind);
+            Assert.AreNotEqual(default(DateTimeOffset), operationSummary.CreatedOn);
+            Assert.AreNotEqual(default(DateTimeOffset), operationSummary.LastUpdatedOn);
+            Assert.AreNotEqual(default(DocumentOperationKind), operationSummary.Kind);
             Assert.NotNull(operationSummary.ResourceLocation);
+
             if (operationSummary.Status == DocumentOperationStatus.Succeeded)
             {
-                Assert.NotNull(operationSummary.PercentCompleted);
                 Assert.AreEqual(100, operationSummary.PercentCompleted);
+            }
+        }
+
+        private void ValidateOperationDetails(DocumentModelOperationDetails operationDetails)
+        {
+            Assert.NotNull(operationDetails.OperationId);
+            Assert.AreNotEqual(default(DateTimeOffset), operationDetails.CreatedOn);
+            Assert.AreNotEqual(default(DateTimeOffset), operationDetails.LastUpdatedOn);
+            Assert.AreNotEqual(default(DocumentOperationKind), operationDetails.Kind);
+            Assert.NotNull(operationDetails.ResourceLocation);
+
+            if (operationDetails.Status == DocumentOperationStatus.Succeeded)
+            {
+                Assert.AreEqual(100, operationDetails.PercentCompleted);
+                ValidateDocumentModel(operationDetails.Result);
+            }
+            else if (operationDetails.Status == DocumentOperationStatus.Failed)
+            {
+                Assert.NotNull(operationDetails.Error);
+                Assert.NotNull(operationDetails.Error.Code);
+                Assert.NotNull(operationDetails.Error.Message);
             }
         }
 

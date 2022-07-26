@@ -23,9 +23,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public DateTimeOffset LastUpdatedOn { get; }
 
         /// <summary>
-        /// A list of user-defined key-value tag attributes associated with the model.
+        /// URI of the resource targeted by this operation.
         /// </summary>
-        public IReadOnlyDictionary<string, string> Tags { get; }
+        public Uri ResourceLocation { get; }
 
         /// <summary> API version used to create this operation. </summary>
         internal string ApiVersion { get; }
