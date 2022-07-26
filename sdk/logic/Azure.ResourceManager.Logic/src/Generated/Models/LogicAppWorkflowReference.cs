@@ -5,13 +5,15 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary>
     /// The workflow reference.
     /// Serialized Name: WorkflowReference
     /// </summary>
-    public partial class LogicAppWorkflowReference : ResourceReference
+    public partial class LogicAppWorkflowReference : LogicAppResourceReference
     {
         /// <summary> Initializes a new instance of LogicAppWorkflowReference. </summary>
         public LogicAppWorkflowReference()
@@ -31,7 +33,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// Gets the resource type.
         /// Serialized Name: ResourceReference.type
         /// </param>
-        internal LogicAppWorkflowReference(string id, string name, string resourceType) : base(id, name, resourceType)
+        internal LogicAppWorkflowReference(ResourceIdentifier id, string name, ResourceType? resourceType) : base(id, name, resourceType)
         {
         }
     }

@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Logic
             Optional<LogicAppWorkflowStatus> status = default;
             Optional<string> code = default;
             Optional<BinaryData> error = default;
-            Optional<string> trackingId = default;
+            Optional<Guid> trackingId = default;
             Optional<Correlation> correlation = default;
             Optional<ContentLink> inputsLink = default;
             Optional<ContentLink> outputsLink = default;
             Optional<bool> fired = default;
-            Optional<ResourceReference> run = default;
+            Optional<LogicAppResourceReference> run = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -126,7 +126,12 @@ namespace Azure.ResourceManager.Logic
                         }
                         if (property0.NameEquals("trackingId"))
                         {
-                            trackingId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            trackingId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("correlation"))
@@ -176,14 +181,14 @@ namespace Azure.ResourceManager.Logic
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            run = ResourceReference.DeserializeResourceReference(property0.Value);
+                            run = LogicAppResourceReference.DeserializeLogicAppResourceReference(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new LogicAppWorkflowTriggerHistoryData(id, name, type, systemData.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(scheduledTime), Optional.ToNullable(status), code.Value, error.Value, trackingId.Value, correlation.Value, inputsLink.Value, outputsLink.Value, Optional.ToNullable(fired), run.Value);
+            return new LogicAppWorkflowTriggerHistoryData(id, name, type, systemData.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(scheduledTime), Optional.ToNullable(status), code.Value, error.Value, Optional.ToNullable(trackingId), correlation.Value, inputsLink.Value, outputsLink.Value, Optional.ToNullable(fired), run.Value);
         }
     }
 }

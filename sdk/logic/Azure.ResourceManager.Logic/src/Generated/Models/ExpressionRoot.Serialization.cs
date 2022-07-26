@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<string> text = default;
             Optional<BinaryData> value = default;
             Optional<IReadOnlyList<Expression>> subexpressions = default;
-            Optional<AzureResourceErrorInfo> error = default;
+            Optional<LogicAppExpressionErrorInfo> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("path"))
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Logic.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    error = AzureResourceErrorInfo.DeserializeAzureResourceErrorInfo(property.Value);
+                    error = LogicAppExpressionErrorInfo.DeserializeLogicAppExpressionErrorInfo(property.Value);
                     continue;
                 }
             }

@@ -5,13 +5,15 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary>
     /// The workflow trigger reference.
     /// Serialized Name: WorkflowTriggerReference
     /// </summary>
-    public partial class LogicAppWorkflowTriggerReference : ResourceReference
+    public partial class LogicAppWorkflowTriggerReference : LogicAppResourceReference
     {
         /// <summary> Initializes a new instance of LogicAppWorkflowTriggerReference. </summary>
         public LogicAppWorkflowTriggerReference()
@@ -39,7 +41,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// The workflow trigger name.
         /// Serialized Name: WorkflowTriggerReference.triggerName
         /// </param>
-        internal LogicAppWorkflowTriggerReference(string id, string name, string resourceType, string flowName, string triggerName) : base(id, name, resourceType)
+        internal LogicAppWorkflowTriggerReference(ResourceIdentifier id, string name, ResourceType? resourceType, string flowName, string triggerName) : base(id, name, resourceType)
         {
             FlowName = flowName;
             TriggerName = triggerName;

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Logic
         /// Serialized Name: BatchConfiguration.properties
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public IntegrationAccountBatchConfigurationData(AzureLocation location, BatchConfigurationProperties properties) : base(location)
+        public IntegrationAccountBatchConfigurationData(AzureLocation location, IntegrationAccountBatchConfigurationProperties properties) : base(location)
         {
             if (properties == null)
             {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Logic
         /// The batch configuration properties.
         /// Serialized Name: BatchConfiguration.properties
         /// </param>
-        internal IntegrationAccountBatchConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, BatchConfigurationProperties properties) : base(id, name, resourceType, systemData, tags, location)
+        internal IntegrationAccountBatchConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IntegrationAccountBatchConfigurationProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
         }
@@ -53,6 +53,6 @@ namespace Azure.ResourceManager.Logic
         /// The batch configuration properties.
         /// Serialized Name: BatchConfiguration.properties
         /// </summary>
-        public BatchConfigurationProperties Properties { get; set; }
+        public IntegrationAccountBatchConfigurationProperties Properties { get; set; }
     }
 }

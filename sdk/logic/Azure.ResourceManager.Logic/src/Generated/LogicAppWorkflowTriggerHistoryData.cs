@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Logic
         /// Gets the link to output parameters.
         /// Serialized Name: WorkflowTriggerHistory.properties.outputsLink
         /// </param>
-        /// <param name="fired">
+        /// <param name="isFired">
         /// The value indicating whether trigger was fired.
         /// Serialized Name: WorkflowTriggerHistory.properties.fired
         /// </param>
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Logic
         /// Gets the reference to workflow run.
         /// Serialized Name: WorkflowTriggerHistory.properties.run
         /// </param>
-        internal LogicAppWorkflowTriggerHistoryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? scheduledOn, LogicAppWorkflowStatus? status, string code, BinaryData error, string trackingId, Correlation correlation, ContentLink inputsLink, ContentLink outputsLink, bool? fired, ResourceReference run) : base(id, name, resourceType, systemData)
+        internal LogicAppWorkflowTriggerHistoryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? scheduledOn, LogicAppWorkflowStatus? status, string code, BinaryData error, Guid? trackingId, Correlation correlation, ContentLink inputsLink, ContentLink outputsLink, bool? isFired, LogicAppResourceReference run) : base(id, name, resourceType, systemData)
         {
             StartOn = startOn;
             EndOn = endOn;
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Logic
             Correlation = correlation;
             InputsLink = inputsLink;
             OutputsLink = outputsLink;
-            Fired = fired;
+            IsFired = isFired;
             Run = run;
         }
 
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Logic
         /// Gets the tracking id.
         /// Serialized Name: WorkflowTriggerHistory.properties.trackingId
         /// </summary>
-        public string TrackingId { get; }
+        public Guid? TrackingId { get; }
         /// <summary>
         /// The run correlation.
         /// Serialized Name: WorkflowTriggerHistory.properties.correlation
@@ -152,11 +152,11 @@ namespace Azure.ResourceManager.Logic
         /// The value indicating whether trigger was fired.
         /// Serialized Name: WorkflowTriggerHistory.properties.fired
         /// </summary>
-        public bool? Fired { get; }
+        public bool? IsFired { get; }
         /// <summary>
         /// Gets the reference to workflow run.
         /// Serialized Name: WorkflowTriggerHistory.properties.run
         /// </summary>
-        public ResourceReference Run { get; }
+        public LogicAppResourceReference Run { get; }
     }
 }

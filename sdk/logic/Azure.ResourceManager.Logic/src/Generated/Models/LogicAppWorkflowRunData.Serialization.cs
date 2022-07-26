@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Logic
             Optional<BinaryData> error = default;
             Optional<string> correlationId = default;
             Optional<Correlation> correlation = default;
-            Optional<ResourceReference> workflow = default;
+            Optional<LogicAppResourceReference> workflow = default;
             Optional<LogicAppWorkflowRunTrigger> trigger = default;
             Optional<IReadOnlyDictionary<string, LogicAppWorkflowOutputParameterInfo>> outputs = default;
             Optional<LogicAppWorkflowRunTrigger> response = default;
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Logic
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            workflow = ResourceReference.DeserializeResourceReference(property0.Value);
+                            workflow = LogicAppResourceReference.DeserializeLogicAppResourceReference(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("trigger"))

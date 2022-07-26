@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Logic
         /// Gets the response of the flow run.
         /// Serialized Name: WorkflowRun.properties.response
         /// </param>
-        internal LogicAppWorkflowRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? waitEndOn, DateTimeOffset? startOn, DateTimeOffset? endOn, LogicAppWorkflowStatus? status, string code, BinaryData error, string correlationId, Correlation correlation, ResourceReference workflow, LogicAppWorkflowRunTrigger trigger, IReadOnlyDictionary<string, LogicAppWorkflowOutputParameterInfo> outputs, LogicAppWorkflowRunTrigger response) : base(id, name, resourceType, systemData)
+        internal LogicAppWorkflowRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? waitEndOn, DateTimeOffset? startOn, DateTimeOffset? endOn, LogicAppWorkflowStatus? status, string code, BinaryData error, string correlationId, Correlation correlation, LogicAppResourceReference workflow, LogicAppWorkflowRunTrigger trigger, IReadOnlyDictionary<string, LogicAppWorkflowOutputParameterInfo> outputs, LogicAppWorkflowRunTrigger response) : base(id, name, resourceType, systemData)
         {
             WaitEndOn = waitEndOn;
             StartOn = startOn;
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Logic
         /// Gets the reference to workflow version.
         /// Serialized Name: WorkflowRun.properties.workflow
         /// </summary>
-        public ResourceReference Workflow { get; }
+        public LogicAppResourceReference Workflow { get; }
         /// <summary>
         /// Gets the fired trigger.
         /// Serialized Name: WorkflowRun.properties.trigger

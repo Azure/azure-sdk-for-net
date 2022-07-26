@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Logic
         /// The repetition indexes.
         /// Serialized Name: WorkflowRunActionRepetitionDefinition.properties.repetitionIndexes
         /// </param>
-        internal LogicAppWorkflowRunActionRepetitionDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DateTimeOffset? startOn, DateTimeOffset? endOn, RunActionCorrelation correlation, LogicAppWorkflowStatus? status, string code, BinaryData error, string trackingId, BinaryData inputs, ContentLink inputsLink, BinaryData outputs, ContentLink outputsLink, BinaryData trackedProperties, IList<RetryHistory> retryHistory, int? iterationCount, IList<RepetitionIndex> repetitionIndexes) : base(id, name, resourceType, systemData, tags, location)
+        internal LogicAppWorkflowRunActionRepetitionDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DateTimeOffset? startOn, DateTimeOffset? endOn, RunActionCorrelation correlation, LogicAppWorkflowStatus? status, string code, BinaryData error, Guid? trackingId, BinaryData inputs, ContentLink inputsLink, BinaryData outputs, ContentLink outputsLink, BinaryData trackedProperties, IList<RetryHistory> retryHistory, int? iterationCount, IList<RepetitionIndex> repetitionIndexes) : base(id, name, resourceType, systemData, tags, location)
         {
             StartOn = startOn;
             EndOn = endOn;
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Logic
         /// Gets the tracking id.
         /// Serialized Name: WorkflowRunActionRepetitionDefinition.properties.trackingId
         /// </summary>
-        public string TrackingId { get; }
+        public Guid? TrackingId { get; }
         /// <summary>
         /// Gets the inputs.
         /// Serialized Name: WorkflowRunActionRepetitionDefinition.properties.inputs

@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.Logic.Models
         {
             Optional<string> flowName = default;
             Optional<string> triggerName = default;
-            Optional<string> id = default;
+            Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
-            Optional<string> type = default;
+            Optional<ResourceType> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("flowName"))
@@ -54,7 +54,12 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -64,11 +69,16 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
             }
-            return new LogicAppWorkflowTriggerReference(id.Value, name.Value, type.Value, flowName.Value, triggerName.Value);
+            return new LogicAppWorkflowTriggerReference(id.Value, name.Value, Optional.ToNullable(type), flowName.Value, triggerName.Value);
         }
     }
 }

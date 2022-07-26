@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Logic
         /// Serialized Name: AssemblyDefinition.properties
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public IntegrationAccountAssemblyDefinitionData(AzureLocation location, AssemblyProperties properties) : base(location)
+        public IntegrationAccountAssemblyDefinitionData(AzureLocation location, IntegrationAccountAssemblyProperties properties) : base(location)
         {
             if (properties == null)
             {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Logic
         /// The assembly properties.
         /// Serialized Name: AssemblyDefinition.properties
         /// </param>
-        internal IntegrationAccountAssemblyDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AssemblyProperties properties) : base(id, name, resourceType, systemData, tags, location)
+        internal IntegrationAccountAssemblyDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IntegrationAccountAssemblyProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
         }
@@ -53,6 +53,6 @@ namespace Azure.ResourceManager.Logic
         /// The assembly properties.
         /// Serialized Name: AssemblyDefinition.properties
         /// </summary>
-        public AssemblyProperties Properties { get; set; }
+        public IntegrationAccountAssemblyProperties Properties { get; set; }
     }
 }

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// The azure resource error info.
         /// Serialized Name: Expression.error
         /// </param>
-        internal Expression(string text, BinaryData value, IReadOnlyList<Expression> subexpressions, AzureResourceErrorInfo error)
+        internal Expression(string text, BinaryData value, IReadOnlyList<Expression> subexpressions, LogicAppExpressionErrorInfo error)
         {
             Text = text;
             Value = value;
@@ -67,6 +67,6 @@ namespace Azure.ResourceManager.Logic.Models
         /// The azure resource error info.
         /// Serialized Name: Expression.error
         /// </summary>
-        public AzureResourceErrorInfo Error { get; }
+        public LogicAppExpressionErrorInfo Error { get; }
     }
 }

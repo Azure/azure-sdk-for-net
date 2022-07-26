@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> Initializes a new instance of NetworkConfiguration. </summary>
         public NetworkConfiguration()
         {
-            Subnets = new ChangeTrackingList<ResourceReference>();
+            Subnets = new ChangeTrackingList<LogicAppResourceReference>();
         }
 
         /// <summary> Initializes a new instance of NetworkConfiguration. </summary>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// The subnets.
         /// Serialized Name: NetworkConfiguration.subnets
         /// </param>
-        internal NetworkConfiguration(string virtualNetworkAddressSpace, IntegrationServiceEnvironmentAccessEndpoint accessEndpoint, IList<ResourceReference> subnets)
+        internal NetworkConfiguration(string virtualNetworkAddressSpace, IntegrationServiceEnvironmentAccessEndpoint accessEndpoint, IList<LogicAppResourceReference> subnets)
         {
             VirtualNetworkAddressSpace = virtualNetworkAddressSpace;
             AccessEndpoint = accessEndpoint;
@@ -71,6 +71,6 @@ namespace Azure.ResourceManager.Logic.Models
         /// The subnets.
         /// Serialized Name: NetworkConfiguration.subnets
         /// </summary>
-        public IList<ResourceReference> Subnets { get; }
+        public IList<LogicAppResourceReference> Subnets { get; }
     }
 }

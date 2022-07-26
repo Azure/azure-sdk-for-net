@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> Initializes a new instance of B2BPartnerContent. </summary>
         public B2BPartnerContent()
         {
-            BusinessIdentities = new ChangeTrackingList<BusinessIdentity>();
+            BusinessIdentities = new ChangeTrackingList<IntegrationAccountBusinessIdentity>();
         }
 
         /// <summary> Initializes a new instance of B2BPartnerContent. </summary>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// The list of partner business identities.
         /// Serialized Name: B2BPartnerContent.businessIdentities
         /// </param>
-        internal B2BPartnerContent(IList<BusinessIdentity> businessIdentities)
+        internal B2BPartnerContent(IList<IntegrationAccountBusinessIdentity> businessIdentities)
         {
             BusinessIdentities = businessIdentities;
         }
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.Logic.Models
         /// The list of partner business identities.
         /// Serialized Name: B2BPartnerContent.businessIdentities
         /// </summary>
-        public IList<BusinessIdentity> BusinessIdentities { get; }
+        public IList<IntegrationAccountBusinessIdentity> BusinessIdentities { get; }
     }
 }

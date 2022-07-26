@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Logic
         /// The workflow state.
         /// Serialized Name: IntegrationAccount.properties.state
         /// </param>
-        internal IntegrationAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IntegrationAccountSku sku, ResourceReference integrationServiceEnvironment, LogicAppWorkflowState? state) : base(id, name, resourceType, systemData, tags, location)
+        internal IntegrationAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IntegrationAccountSku sku, LogicAppResourceReference integrationServiceEnvironment, LogicAppWorkflowState? state) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             IntegrationServiceEnvironment = integrationServiceEnvironment;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Logic
         /// The integration service environment.
         /// Serialized Name: IntegrationAccount.properties.integrationServiceEnvironment
         /// </summary>
-        public ResourceReference IntegrationServiceEnvironment { get; set; }
+        public LogicAppResourceReference IntegrationServiceEnvironment { get; set; }
         /// <summary>
         /// The workflow state.
         /// Serialized Name: IntegrationAccount.properties.state

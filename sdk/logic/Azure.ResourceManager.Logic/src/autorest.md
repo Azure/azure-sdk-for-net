@@ -32,7 +32,12 @@ mgmt-debug:
 
 rename-mapping:
   AssemblyDefinition: IntegrationAccountAssemblyDefinition
+  AssemblyProperties: IntegrationAccountAssemblyProperties
+  AssemblyCollection: IntegrationAccountAssemblyList
   BatchConfiguration: IntegrationAccountBatchConfiguration
+  BatchConfigurationProperties: IntegrationAccountBatchConfigurationProperties
+  BatchReleaseCriteria: IntegrationAccountBatchReleaseCriteria
+  BusinessIdentity: IntegrationAccountBusinessIdentity
   Workflow: LogicAppWorkflow
   WorkflowListResult: LogicAppWorkflowListResult
   WorkflowRunAction: LogicAppWorkflowRunAction
@@ -54,7 +59,7 @@ rename-mapping:
   WorkflowTriggerListResult: LogicAppWorkflowTriggerListResult
   WorkflowTriggerListCallbackUrlQueries: LogicAppWorkflowTriggerCallbackQueryParameterInfo
   WorkflowRunActionRepetitionDefinition: LogicAppWorkflowRunActionRepetitionDefinition
-  WorkflowRunActionRepetitionDefinitionCollection: LogicAppWorkflowRunActionRepetitionList
+  WorkflowRunActionRepetitionDefinitionCollection: LogicAppWorkflowRunActionRepetitionDefinitionList
   WorkflowTriggerHistoryListResult: LogicAppWorkflowTriggerHistoryListResult
   WorkflowTriggerCallbackUrl: LogicAppWorkflowTriggerCallbackUri
   WorkflowReference: LogicAppWorkflowReference
@@ -63,11 +68,38 @@ rename-mapping:
   WsdlImportMethod: LogicAppWsdlImportMethod
   Sku: LogicAppSku
   SkuName: LogicAppSkuName
+  IntegrationServiceEnvironmentManagedApi.properties.runtimeUrls: runtimeUris
+  ResourceReference: LogicAppResourceReference
+  WorkflowTriggerHistory.properties.fired: IsFired
+  AgreementContent: IntegrationAccountAgreementContent
+  AgreementType: IntegrationAccountAgreementType
+  ApiDeploymentParameterMetadata: LogicAppApiDeploymentParameterMetadata
+  ApiDeploymentParameterMetadataSet: LogicAppApiDeploymentParameterMetadataSet
+  ApiDeploymentParameterVisibility: LogicAppApiDeploymentParameterVisibility
+  ApiOperation: LogicAppApiOperation
+  ApiOperationAnnotation: LogicAppApiOperationAnnotation
+  ApiOperationListResult: LogicAppApiOperationListResult
+  ApiOperationPropertiesDefinition.pageable: IsPageable
+  ApiOperationPropertiesDefinition: LogicAppApiOperationProperties
+  ApiReference: LogicAppApiReference
+  ApiResourceBackendService: LogicAppApiResourceBackendService
+  ApiResourceDefinitions: LogicAppApiResourceDefinitions
+  ApiResourceGeneralInformation: LogicAppApiResourceGeneralInformation
+  ApiResourceMetadata: LogicAppApiResourceMetadata
+  ApiResourceGeneralMetadata: LogicAppApiResourceGeneralMetadata
+  ApiResourcePolicies: LogicAppApiResourcePolicies
+  ApiTier: LogicAppApiTier
+  ApiType: LogicAppApiType
+  ArtifactContentPropertiesDefinition: ArtifactContentProperties
+  AzureResourceErrorInfo: LogicAppExpressionErrorInfo
   
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
   'location': 'azure-location'
+  'trackingId': 'uuid'
+  'actionTrackingId': 'uuid'
+  'PublicCertificate': 'any'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
@@ -93,6 +125,8 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  MDN: Mdn
+  NRR: Nrr
 
 directive:
   - from: logic.json
@@ -100,5 +134,7 @@ directive:
     transform: >
       $.RetryHistory.properties.error['x-ms-client-name'] = 'ErrorResponse';
       $.OpenAuthenticationAccessPolicies.properties.policies['x-ms-client-name'] = 'AccessPolicies';
+      $.ResourceReference.properties.id['x-ms-format'] = 'arm-id';
+      $.ResourceReference.properties.type['x-ms-format'] = 'resource-type';
 
 ```

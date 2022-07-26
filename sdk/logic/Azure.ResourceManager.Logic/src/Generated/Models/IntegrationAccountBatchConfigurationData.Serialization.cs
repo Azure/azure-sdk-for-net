@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Logic
 
         internal static IntegrationAccountBatchConfigurationData DeserializeIntegrationAccountBatchConfigurationData(JsonElement element)
         {
-            BatchConfigurationProperties properties = default;
+            IntegrationAccountBatchConfigurationProperties properties = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Logic
             {
                 if (property.NameEquals("properties"))
                 {
-                    properties = BatchConfigurationProperties.DeserializeBatchConfigurationProperties(property.Value);
+                    properties = IntegrationAccountBatchConfigurationProperties.DeserializeIntegrationAccountBatchConfigurationProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"))

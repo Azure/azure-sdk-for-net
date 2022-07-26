@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// The list of partner business identities.
         /// Serialized Name: B2BPartnerContent.businessIdentities
         /// </summary>
-        public IList<BusinessIdentity> B2BBusinessIdentities
+        public IList<IntegrationAccountBusinessIdentity> B2BBusinessIdentities
         {
             get
             {

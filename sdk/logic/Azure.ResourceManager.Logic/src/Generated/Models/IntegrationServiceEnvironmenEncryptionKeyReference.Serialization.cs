@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static IntegrationServiceEnvironmenEncryptionKeyReference DeserializeIntegrationServiceEnvironmenEncryptionKeyReference(JsonElement element)
         {
-            Optional<ResourceReference> keyVault = default;
+            Optional<LogicAppResourceReference> keyVault = default;
             Optional<string> keyName = default;
             Optional<string> keyVersion = default;
             foreach (var property in element.EnumerateObject())
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Logic.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    keyVault = ResourceReference.DeserializeResourceReference(property.Value);
+                    keyVault = LogicAppResourceReference.DeserializeLogicAppResourceReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("keyName"))

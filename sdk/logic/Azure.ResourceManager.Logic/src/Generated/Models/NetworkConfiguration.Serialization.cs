@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Logic.Models
         {
             Optional<string> virtualNetworkAddressSpace = default;
             Optional<IntegrationServiceEnvironmentAccessEndpoint> accessEndpoint = default;
-            Optional<IList<ResourceReference>> subnets = default;
+            Optional<IList<LogicAppResourceReference>> subnets = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("virtualNetworkAddressSpace"))
@@ -68,10 +68,10 @@ namespace Azure.ResourceManager.Logic.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ResourceReference> array = new List<ResourceReference>();
+                    List<LogicAppResourceReference> array = new List<LogicAppResourceReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceReference.DeserializeResourceReference(item));
+                        array.Add(LogicAppResourceReference.DeserializeLogicAppResourceReference(item));
                     }
                     subnets = array;
                     continue;

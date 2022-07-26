@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<DateTimeOffset> scheduledTime = default;
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> endTime = default;
-            Optional<string> trackingId = default;
+            Optional<Guid> trackingId = default;
             Optional<Correlation> correlation = default;
             Optional<string> code = default;
             Optional<LogicAppWorkflowStatus> status = default;
@@ -108,7 +108,12 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 if (property.NameEquals("trackingId"))
                 {
-                    trackingId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    trackingId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("correlation"))
@@ -157,7 +162,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new LogicAppWorkflowRunTrigger(name.Value, inputs.Value, inputsLink.Value, outputs.Value, outputsLink.Value, Optional.ToNullable(scheduledTime), Optional.ToNullable(startTime), Optional.ToNullable(endTime), trackingId.Value, correlation.Value, code.Value, Optional.ToNullable(status), error.Value, trackedProperties.Value);
+            return new LogicAppWorkflowRunTrigger(name.Value, inputs.Value, inputsLink.Value, outputs.Value, outputsLink.Value, Optional.ToNullable(scheduledTime), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(trackingId), correlation.Value, code.Value, Optional.ToNullable(status), error.Value, trackedProperties.Value);
         }
     }
 }

@@ -17,11 +17,11 @@ namespace Azure.ResourceManager.Logic.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("needMDN");
-            writer.WriteBooleanValue(NeedMDN);
+            writer.WriteBooleanValue(NeedMdn);
             writer.WritePropertyName("signMDN");
-            writer.WriteBooleanValue(SignMDN);
+            writer.WriteBooleanValue(SignMdn);
             writer.WritePropertyName("sendMDNAsynchronously");
-            writer.WriteBooleanValue(SendMDNAsynchronously);
+            writer.WriteBooleanValue(SendMdnAsynchronously);
             if (Optional.IsDefined(ReceiptDeliveryUri))
             {
                 writer.WritePropertyName("receiptDeliveryUrl");
@@ -33,14 +33,14 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStringValue(DispositionNotificationTo);
             }
             writer.WritePropertyName("signOutboundMDNIfOptional");
-            writer.WriteBooleanValue(SignOutboundMDNIfOptional);
+            writer.WriteBooleanValue(SignOutboundMdnIfOptional);
             if (Optional.IsDefined(MdnText))
             {
                 writer.WritePropertyName("mdnText");
                 writer.WriteStringValue(MdnText);
             }
             writer.WritePropertyName("sendInboundMDNToMessageBox");
-            writer.WriteBooleanValue(SendInboundMDNToMessageBox);
+            writer.WriteBooleanValue(SendInboundMdnToMessageBox);
             writer.WritePropertyName("micHashingAlgorithm");
             writer.WriteStringValue(MicHashingAlgorithm.ToString());
             writer.WriteEndObject();
@@ -48,30 +48,30 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static AS2MdnSettings DeserializeAS2MdnSettings(JsonElement element)
         {
-            bool needMDN = default;
-            bool signMDN = default;
-            bool sendMDNAsynchronously = default;
+            bool needMdn = default;
+            bool signMdn = default;
+            bool sendMdnAsynchronously = default;
             Optional<Uri> receiptDeliveryUrl = default;
             Optional<string> dispositionNotificationTo = default;
-            bool signOutboundMDNIfOptional = default;
+            bool signOutboundMdnIfOptional = default;
             Optional<string> mdnText = default;
-            bool sendInboundMDNToMessageBox = default;
+            bool sendInboundMdnToMessageBox = default;
             HashingAlgorithm micHashingAlgorithm = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("needMDN"))
                 {
-                    needMDN = property.Value.GetBoolean();
+                    needMdn = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("signMDN"))
                 {
-                    signMDN = property.Value.GetBoolean();
+                    signMdn = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("sendMDNAsynchronously"))
                 {
-                    sendMDNAsynchronously = property.Value.GetBoolean();
+                    sendMdnAsynchronously = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("receiptDeliveryUrl"))
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 if (property.NameEquals("signOutboundMDNIfOptional"))
                 {
-                    signOutboundMDNIfOptional = property.Value.GetBoolean();
+                    signOutboundMdnIfOptional = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("mdnText"))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 if (property.NameEquals("sendInboundMDNToMessageBox"))
                 {
-                    sendInboundMDNToMessageBox = property.Value.GetBoolean();
+                    sendInboundMdnToMessageBox = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("micHashingAlgorithm"))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new AS2MdnSettings(needMDN, signMDN, sendMDNAsynchronously, receiptDeliveryUrl.Value, dispositionNotificationTo.Value, signOutboundMDNIfOptional, mdnText.Value, sendInboundMDNToMessageBox, micHashingAlgorithm);
+            return new AS2MdnSettings(needMdn, signMdn, sendMdnAsynchronously, receiptDeliveryUrl.Value, dispositionNotificationTo.Value, signOutboundMdnIfOptional, mdnText.Value, sendInboundMdnToMessageBox, micHashingAlgorithm);
         }
     }
 }

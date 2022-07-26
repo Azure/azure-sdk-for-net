@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// The reference to plan.
         /// Serialized Name: Sku.plan
         /// </param>
-        internal LogicAppSku(LogicAppSkuName name, ResourceReference plan)
+        internal LogicAppSku(LogicAppSkuName name, LogicAppResourceReference plan)
         {
             Name = name;
             Plan = plan;
@@ -47,6 +47,6 @@ namespace Azure.ResourceManager.Logic.Models
         /// The reference to plan.
         /// Serialized Name: Sku.plan
         /// </summary>
-        public ResourceReference Plan { get; }
+        public LogicAppResourceReference Plan { get; }
     }
 }

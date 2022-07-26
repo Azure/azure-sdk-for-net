@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Logic
             Optional<DateTimeOffset> lastExecutionTime = default;
             Optional<DateTimeOffset> nextExecutionTime = default;
             Optional<LogicAppWorkflowTriggerRecurrence> recurrence = default;
-            Optional<ResourceReference> workflow = default;
+            Optional<LogicAppResourceReference> workflow = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Logic
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            workflow = ResourceReference.DeserializeResourceReference(property0.Value);
+                            workflow = LogicAppResourceReference.DeserializeLogicAppResourceReference(property0.Value);
                             continue;
                         }
                     }

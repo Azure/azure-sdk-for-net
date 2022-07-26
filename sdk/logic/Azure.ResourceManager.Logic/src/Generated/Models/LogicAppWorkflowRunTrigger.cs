@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// Gets the tracked properties.
         /// Serialized Name: WorkflowRunTrigger.trackedProperties
         /// </param>
-        internal LogicAppWorkflowRunTrigger(string name, BinaryData inputs, ContentLink inputsLink, BinaryData outputs, ContentLink outputsLink, DateTimeOffset? scheduledOn, DateTimeOffset? startOn, DateTimeOffset? endOn, string trackingId, Correlation correlation, string code, LogicAppWorkflowStatus? status, BinaryData error, BinaryData trackedProperties)
+        internal LogicAppWorkflowRunTrigger(string name, BinaryData inputs, ContentLink inputsLink, BinaryData outputs, ContentLink outputsLink, DateTimeOffset? scheduledOn, DateTimeOffset? startOn, DateTimeOffset? endOn, Guid? trackingId, Correlation correlation, string code, LogicAppWorkflowStatus? status, BinaryData error, BinaryData trackedProperties)
         {
             Name = name;
             Inputs = inputs;
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// Gets the tracking id.
         /// Serialized Name: WorkflowRunTrigger.trackingId
         /// </summary>
-        public string TrackingId { get; }
+        public Guid? TrackingId { get; }
         /// <summary>
         /// The run correlation.
         /// Serialized Name: WorkflowRunTrigger.correlation

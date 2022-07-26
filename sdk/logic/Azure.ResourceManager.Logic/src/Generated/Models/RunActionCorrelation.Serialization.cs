@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -19,7 +20,7 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(ActionTrackingId))
             {
                 writer.WritePropertyName("actionTrackingId");
-                writer.WriteStringValue(ActionTrackingId);
+                writer.WriteStringValue(ActionTrackingId.Value);
             }
             if (Optional.IsDefined(ClientTrackingId))
             {
@@ -41,14 +42,19 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static RunActionCorrelation DeserializeRunActionCorrelation(JsonElement element)
         {
-            Optional<string> actionTrackingId = default;
+            Optional<Guid> actionTrackingId = default;
             Optional<string> clientTrackingId = default;
             Optional<IList<string>> clientKeywords = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("actionTrackingId"))
                 {
-                    actionTrackingId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    actionTrackingId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("clientTrackingId"))
@@ -72,7 +78,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new RunActionCorrelation(clientTrackingId.Value, Optional.ToList(clientKeywords), actionTrackingId.Value);
+            return new RunActionCorrelation(clientTrackingId.Value, Optional.ToList(clientKeywords), Optional.ToNullable(actionTrackingId));
         }
     }
 }

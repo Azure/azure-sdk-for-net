@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Logic
             Optional<FlowEndpointsConfiguration> endpointsConfiguration = default;
             Optional<FlowAccessControlConfiguration> accessControl = default;
             Optional<LogicAppSku> sku = default;
-            Optional<ResourceReference> integrationAccount = default;
+            Optional<LogicAppResourceReference> integrationAccount = default;
             Optional<BinaryData> definition = default;
             Optional<IDictionary<string, LogicAppWorkflowParameterInfo>> parameters = default;
             foreach (var property in element.EnumerateObject())
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Logic
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            integrationAccount = ResourceReference.DeserializeResourceReference(property0.Value);
+                            integrationAccount = LogicAppResourceReference.DeserializeLogicAppResourceReference(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("definition"))

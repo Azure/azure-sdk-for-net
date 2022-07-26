@@ -5,13 +5,15 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary>
     /// The key vault reference.
     /// Serialized Name: KeyVaultReference
     /// </summary>
-    public partial class KeyVaultReference : ResourceReference
+    public partial class KeyVaultReference : LogicAppResourceReference
     {
         /// <summary> Initializes a new instance of KeyVaultReference. </summary>
         public KeyVaultReference()
@@ -31,7 +33,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// Gets the resource type.
         /// Serialized Name: ResourceReference.type
         /// </param>
-        internal KeyVaultReference(string id, string name, string resourceType) : base(id, name, resourceType)
+        internal KeyVaultReference(ResourceIdentifier id, string name, ResourceType? resourceType) : base(id, name, resourceType)
         {
         }
     }

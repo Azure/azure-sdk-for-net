@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// Serialized Name: AS2OneWayAgreement.protocolSettings
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="senderBusinessIdentity"/>, <paramref name="receiverBusinessIdentity"/> or <paramref name="protocolSettings"/> is null. </exception>
-        public AS2OneWayAgreement(BusinessIdentity senderBusinessIdentity, BusinessIdentity receiverBusinessIdentity, AS2ProtocolSettings protocolSettings)
+        public AS2OneWayAgreement(IntegrationAccountBusinessIdentity senderBusinessIdentity, IntegrationAccountBusinessIdentity receiverBusinessIdentity, AS2ProtocolSettings protocolSettings)
         {
             if (senderBusinessIdentity == null)
             {
@@ -53,12 +53,12 @@ namespace Azure.ResourceManager.Logic.Models
         /// The sender business identity
         /// Serialized Name: AS2OneWayAgreement.senderBusinessIdentity
         /// </summary>
-        public BusinessIdentity SenderBusinessIdentity { get; set; }
+        public IntegrationAccountBusinessIdentity SenderBusinessIdentity { get; set; }
         /// <summary>
         /// The receiver business identity
         /// Serialized Name: AS2OneWayAgreement.receiverBusinessIdentity
         /// </summary>
-        public BusinessIdentity ReceiverBusinessIdentity { get; set; }
+        public IntegrationAccountBusinessIdentity ReceiverBusinessIdentity { get; set; }
         /// <summary>
         /// The AS2 protocol settings.
         /// Serialized Name: AS2OneWayAgreement.protocolSettings

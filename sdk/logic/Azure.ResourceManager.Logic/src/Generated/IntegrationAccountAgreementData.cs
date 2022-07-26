@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Logic
         /// Serialized Name: IntegrationAccountAgreement.properties.content
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hostPartner"/>, <paramref name="guestPartner"/>, <paramref name="hostIdentity"/>, <paramref name="guestIdentity"/> or <paramref name="content"/> is null. </exception>
-        public IntegrationAccountAgreementData(AzureLocation location, AgreementType agreementType, string hostPartner, string guestPartner, BusinessIdentity hostIdentity, BusinessIdentity guestIdentity, AgreementContent content) : base(location)
+        public IntegrationAccountAgreementData(AzureLocation location, IntegrationAccountAgreementType agreementType, string hostPartner, string guestPartner, IntegrationAccountBusinessIdentity hostIdentity, IntegrationAccountBusinessIdentity guestIdentity, IntegrationAccountAgreementContent content) : base(location)
         {
             if (hostPartner == null)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Logic
         /// The agreement content.
         /// Serialized Name: IntegrationAccountAgreement.properties.content
         /// </param>
-        internal IntegrationAccountAgreementData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DateTimeOffset? createdOn, DateTimeOffset? changedOn, BinaryData metadata, AgreementType agreementType, string hostPartner, string guestPartner, BusinessIdentity hostIdentity, BusinessIdentity guestIdentity, AgreementContent content) : base(id, name, resourceType, systemData, tags, location)
+        internal IntegrationAccountAgreementData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DateTimeOffset? createdOn, DateTimeOffset? changedOn, BinaryData metadata, IntegrationAccountAgreementType agreementType, string hostPartner, string guestPartner, IntegrationAccountBusinessIdentity hostIdentity, IntegrationAccountBusinessIdentity guestIdentity, IntegrationAccountAgreementContent content) : base(id, name, resourceType, systemData, tags, location)
         {
             CreatedOn = createdOn;
             ChangedOn = changedOn;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Logic
         /// The agreement type.
         /// Serialized Name: IntegrationAccountAgreement.properties.agreementType
         /// </summary>
-        public AgreementType AgreementType { get; set; }
+        public IntegrationAccountAgreementType AgreementType { get; set; }
         /// <summary>
         /// The integration account partner that is set as host partner for this agreement.
         /// Serialized Name: IntegrationAccountAgreement.properties.hostPartner
@@ -164,16 +164,16 @@ namespace Azure.ResourceManager.Logic
         /// The business identity of the host partner.
         /// Serialized Name: IntegrationAccountAgreement.properties.hostIdentity
         /// </summary>
-        public BusinessIdentity HostIdentity { get; set; }
+        public IntegrationAccountBusinessIdentity HostIdentity { get; set; }
         /// <summary>
         /// The business identity of the guest partner.
         /// Serialized Name: IntegrationAccountAgreement.properties.guestIdentity
         /// </summary>
-        public BusinessIdentity GuestIdentity { get; set; }
+        public IntegrationAccountBusinessIdentity GuestIdentity { get; set; }
         /// <summary>
         /// The agreement content.
         /// Serialized Name: IntegrationAccountAgreement.properties.content
         /// </summary>
-        public AgreementContent Content { get; set; }
+        public IntegrationAccountAgreementContent Content { get; set; }
     }
 }

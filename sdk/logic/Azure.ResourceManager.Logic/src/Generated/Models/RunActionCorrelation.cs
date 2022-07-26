@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Logic.Models
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// The action tracking identifier.
         /// Serialized Name: RunActionCorrelation.actionTrackingId
         /// </param>
-        internal RunActionCorrelation(string clientTrackingId, IList<string> clientKeywords, string actionTrackingId) : base(clientTrackingId, clientKeywords)
+        internal RunActionCorrelation(string clientTrackingId, IList<string> clientKeywords, Guid? actionTrackingId) : base(clientTrackingId, clientKeywords)
         {
             ActionTrackingId = actionTrackingId;
         }
@@ -42,6 +43,6 @@ namespace Azure.ResourceManager.Logic.Models
         /// The action tracking identifier.
         /// Serialized Name: RunActionCorrelation.actionTrackingId
         /// </summary>
-        public string ActionTrackingId { get; set; }
+        public Guid? ActionTrackingId { get; set; }
     }
 }

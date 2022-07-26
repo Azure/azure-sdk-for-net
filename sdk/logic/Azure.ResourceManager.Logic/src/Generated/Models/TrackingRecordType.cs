@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Logic.Models
         private const string NotSpecifiedValue = "NotSpecified";
         private const string CustomValue = "Custom";
         private const string AS2MessageValue = "AS2Message";
-        private const string AS2MDNValue = "AS2MDN";
+        private const string AS2MdnValue = "AS2MDN";
         private const string X12InterchangeValue = "X12Interchange";
         private const string X12FunctionalGroupValue = "X12FunctionalGroup";
         private const string X12TransactionSetValue = "X12TransactionSet";
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// AS2MDN
         /// Serialized Name: TrackingRecordType.AS2MDN
         /// </summary>
-        public static TrackingRecordType AS2MDN { get; } = new TrackingRecordType(AS2MDNValue);
+        public static TrackingRecordType AS2Mdn { get; } = new TrackingRecordType(AS2MdnValue);
         /// <summary>
         /// X12Interchange
         /// Serialized Name: TrackingRecordType.X12Interchange

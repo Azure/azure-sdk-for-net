@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// The path.
         /// Serialized Name: ExpressionRoot.path
         /// </param>
-        internal ExpressionRoot(string text, BinaryData value, IReadOnlyList<Expression> subexpressions, AzureResourceErrorInfo error, string path) : base(text, value, subexpressions, error)
+        internal ExpressionRoot(string text, BinaryData value, IReadOnlyList<Expression> subexpressions, LogicAppExpressionErrorInfo error, string path) : base(text, value, subexpressions, error)
         {
             Path = path;
         }

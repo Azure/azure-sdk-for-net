@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Logic
         /// The public certificate.
         /// Serialized Name: IntegrationAccountCertificate.properties.publicCertificate
         /// </param>
-        internal IntegrationAccountCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DateTimeOffset? createdOn, DateTimeOffset? changedOn, BinaryData metadata, KeyVaultKeyReference key, string publicCertificate) : base(id, name, resourceType, systemData, tags, location)
+        internal IntegrationAccountCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DateTimeOffset? createdOn, DateTimeOffset? changedOn, BinaryData metadata, KeyVaultKeyReference key, BinaryData publicCertificate) : base(id, name, resourceType, systemData, tags, location)
         {
             CreatedOn = createdOn;
             ChangedOn = changedOn;
@@ -82,6 +82,6 @@ namespace Azure.ResourceManager.Logic
         /// The public certificate.
         /// Serialized Name: IntegrationAccountCertificate.properties.publicCertificate
         /// </summary>
-        public string PublicCertificate { get; set; }
+        public BinaryData PublicCertificate { get; set; }
     }
 }

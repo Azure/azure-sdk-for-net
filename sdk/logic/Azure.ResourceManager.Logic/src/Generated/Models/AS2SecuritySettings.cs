@@ -18,39 +18,39 @@ namespace Azure.ResourceManager.Logic.Models
         /// The value indicating whether to send or request a MDN.
         /// Serialized Name: AS2SecuritySettings.overrideGroupSigningCertificate
         /// </param>
-        /// <param name="enableNRRForInboundEncodedMessages">
+        /// <param name="enableNrrForInboundEncodedMessages">
         /// The value indicating whether to enable NRR for inbound encoded messages.
         /// Serialized Name: AS2SecuritySettings.enableNRRForInboundEncodedMessages
         /// </param>
-        /// <param name="enableNRRForInboundDecodedMessages">
+        /// <param name="enableNrrForInboundDecodedMessages">
         /// The value indicating whether to enable NRR for inbound decoded messages.
         /// Serialized Name: AS2SecuritySettings.enableNRRForInboundDecodedMessages
         /// </param>
-        /// <param name="enableNRRForOutboundMDN">
+        /// <param name="enableNrrForOutboundMdn">
         /// The value indicating whether to enable NRR for outbound MDN.
         /// Serialized Name: AS2SecuritySettings.enableNRRForOutboundMDN
         /// </param>
-        /// <param name="enableNRRForOutboundEncodedMessages">
+        /// <param name="enableNrrForOutboundEncodedMessages">
         /// The value indicating whether to enable NRR for outbound encoded messages.
         /// Serialized Name: AS2SecuritySettings.enableNRRForOutboundEncodedMessages
         /// </param>
-        /// <param name="enableNRRForOutboundDecodedMessages">
+        /// <param name="enableNrrForOutboundDecodedMessages">
         /// The value indicating whether to enable NRR for outbound decoded messages.
         /// Serialized Name: AS2SecuritySettings.enableNRRForOutboundDecodedMessages
         /// </param>
-        /// <param name="enableNRRForInboundMDN">
+        /// <param name="enableNrrForInboundMdn">
         /// The value indicating whether to enable NRR for inbound MDN.
         /// Serialized Name: AS2SecuritySettings.enableNRRForInboundMDN
         /// </param>
-        public AS2SecuritySettings(bool overrideGroupSigningCertificate, bool enableNRRForInboundEncodedMessages, bool enableNRRForInboundDecodedMessages, bool enableNRRForOutboundMDN, bool enableNRRForOutboundEncodedMessages, bool enableNRRForOutboundDecodedMessages, bool enableNRRForInboundMDN)
+        public AS2SecuritySettings(bool overrideGroupSigningCertificate, bool enableNrrForInboundEncodedMessages, bool enableNrrForInboundDecodedMessages, bool enableNrrForOutboundMdn, bool enableNrrForOutboundEncodedMessages, bool enableNrrForOutboundDecodedMessages, bool enableNrrForInboundMdn)
         {
             OverrideGroupSigningCertificate = overrideGroupSigningCertificate;
-            EnableNRRForInboundEncodedMessages = enableNRRForInboundEncodedMessages;
-            EnableNRRForInboundDecodedMessages = enableNRRForInboundDecodedMessages;
-            EnableNRRForOutboundMDN = enableNRRForOutboundMDN;
-            EnableNRRForOutboundEncodedMessages = enableNRRForOutboundEncodedMessages;
-            EnableNRRForOutboundDecodedMessages = enableNRRForOutboundDecodedMessages;
-            EnableNRRForInboundMDN = enableNRRForInboundMDN;
+            EnableNrrForInboundEncodedMessages = enableNrrForInboundEncodedMessages;
+            EnableNrrForInboundDecodedMessages = enableNrrForInboundDecodedMessages;
+            EnableNrrForOutboundMdn = enableNrrForOutboundMdn;
+            EnableNrrForOutboundEncodedMessages = enableNrrForOutboundEncodedMessages;
+            EnableNrrForOutboundDecodedMessages = enableNrrForOutboundDecodedMessages;
+            EnableNrrForInboundMdn = enableNrrForInboundMdn;
         }
 
         /// <summary> Initializes a new instance of AS2SecuritySettings. </summary>
@@ -66,27 +66,27 @@ namespace Azure.ResourceManager.Logic.Models
         /// The name of the encryption certificate.
         /// Serialized Name: AS2SecuritySettings.encryptionCertificateName
         /// </param>
-        /// <param name="enableNRRForInboundEncodedMessages">
+        /// <param name="enableNrrForInboundEncodedMessages">
         /// The value indicating whether to enable NRR for inbound encoded messages.
         /// Serialized Name: AS2SecuritySettings.enableNRRForInboundEncodedMessages
         /// </param>
-        /// <param name="enableNRRForInboundDecodedMessages">
+        /// <param name="enableNrrForInboundDecodedMessages">
         /// The value indicating whether to enable NRR for inbound decoded messages.
         /// Serialized Name: AS2SecuritySettings.enableNRRForInboundDecodedMessages
         /// </param>
-        /// <param name="enableNRRForOutboundMDN">
+        /// <param name="enableNrrForOutboundMdn">
         /// The value indicating whether to enable NRR for outbound MDN.
         /// Serialized Name: AS2SecuritySettings.enableNRRForOutboundMDN
         /// </param>
-        /// <param name="enableNRRForOutboundEncodedMessages">
+        /// <param name="enableNrrForOutboundEncodedMessages">
         /// The value indicating whether to enable NRR for outbound encoded messages.
         /// Serialized Name: AS2SecuritySettings.enableNRRForOutboundEncodedMessages
         /// </param>
-        /// <param name="enableNRRForOutboundDecodedMessages">
+        /// <param name="enableNrrForOutboundDecodedMessages">
         /// The value indicating whether to enable NRR for outbound decoded messages.
         /// Serialized Name: AS2SecuritySettings.enableNRRForOutboundDecodedMessages
         /// </param>
-        /// <param name="enableNRRForInboundMDN">
+        /// <param name="enableNrrForInboundMdn">
         /// The value indicating whether to enable NRR for inbound MDN.
         /// Serialized Name: AS2SecuritySettings.enableNRRForInboundMDN
         /// </param>
@@ -94,17 +94,17 @@ namespace Azure.ResourceManager.Logic.Models
         /// The Sha2 algorithm format. Valid values are Sha2, ShaHashSize, ShaHyphenHashSize, Sha2UnderscoreHashSize.
         /// Serialized Name: AS2SecuritySettings.sha2AlgorithmFormat
         /// </param>
-        internal AS2SecuritySettings(bool overrideGroupSigningCertificate, string signingCertificateName, string encryptionCertificateName, bool enableNRRForInboundEncodedMessages, bool enableNRRForInboundDecodedMessages, bool enableNRRForOutboundMDN, bool enableNRRForOutboundEncodedMessages, bool enableNRRForOutboundDecodedMessages, bool enableNRRForInboundMDN, string sha2AlgorithmFormat)
+        internal AS2SecuritySettings(bool overrideGroupSigningCertificate, string signingCertificateName, string encryptionCertificateName, bool enableNrrForInboundEncodedMessages, bool enableNrrForInboundDecodedMessages, bool enableNrrForOutboundMdn, bool enableNrrForOutboundEncodedMessages, bool enableNrrForOutboundDecodedMessages, bool enableNrrForInboundMdn, string sha2AlgorithmFormat)
         {
             OverrideGroupSigningCertificate = overrideGroupSigningCertificate;
             SigningCertificateName = signingCertificateName;
             EncryptionCertificateName = encryptionCertificateName;
-            EnableNRRForInboundEncodedMessages = enableNRRForInboundEncodedMessages;
-            EnableNRRForInboundDecodedMessages = enableNRRForInboundDecodedMessages;
-            EnableNRRForOutboundMDN = enableNRRForOutboundMDN;
-            EnableNRRForOutboundEncodedMessages = enableNRRForOutboundEncodedMessages;
-            EnableNRRForOutboundDecodedMessages = enableNRRForOutboundDecodedMessages;
-            EnableNRRForInboundMDN = enableNRRForInboundMDN;
+            EnableNrrForInboundEncodedMessages = enableNrrForInboundEncodedMessages;
+            EnableNrrForInboundDecodedMessages = enableNrrForInboundDecodedMessages;
+            EnableNrrForOutboundMdn = enableNrrForOutboundMdn;
+            EnableNrrForOutboundEncodedMessages = enableNrrForOutboundEncodedMessages;
+            EnableNrrForOutboundDecodedMessages = enableNrrForOutboundDecodedMessages;
+            EnableNrrForInboundMdn = enableNrrForInboundMdn;
             Sha2AlgorithmFormat = sha2AlgorithmFormat;
         }
 
@@ -127,32 +127,32 @@ namespace Azure.ResourceManager.Logic.Models
         /// The value indicating whether to enable NRR for inbound encoded messages.
         /// Serialized Name: AS2SecuritySettings.enableNRRForInboundEncodedMessages
         /// </summary>
-        public bool EnableNRRForInboundEncodedMessages { get; set; }
+        public bool EnableNrrForInboundEncodedMessages { get; set; }
         /// <summary>
         /// The value indicating whether to enable NRR for inbound decoded messages.
         /// Serialized Name: AS2SecuritySettings.enableNRRForInboundDecodedMessages
         /// </summary>
-        public bool EnableNRRForInboundDecodedMessages { get; set; }
+        public bool EnableNrrForInboundDecodedMessages { get; set; }
         /// <summary>
         /// The value indicating whether to enable NRR for outbound MDN.
         /// Serialized Name: AS2SecuritySettings.enableNRRForOutboundMDN
         /// </summary>
-        public bool EnableNRRForOutboundMDN { get; set; }
+        public bool EnableNrrForOutboundMdn { get; set; }
         /// <summary>
         /// The value indicating whether to enable NRR for outbound encoded messages.
         /// Serialized Name: AS2SecuritySettings.enableNRRForOutboundEncodedMessages
         /// </summary>
-        public bool EnableNRRForOutboundEncodedMessages { get; set; }
+        public bool EnableNrrForOutboundEncodedMessages { get; set; }
         /// <summary>
         /// The value indicating whether to enable NRR for outbound decoded messages.
         /// Serialized Name: AS2SecuritySettings.enableNRRForOutboundDecodedMessages
         /// </summary>
-        public bool EnableNRRForOutboundDecodedMessages { get; set; }
+        public bool EnableNrrForOutboundDecodedMessages { get; set; }
         /// <summary>
         /// The value indicating whether to enable NRR for inbound MDN.
         /// Serialized Name: AS2SecuritySettings.enableNRRForInboundMDN
         /// </summary>
-        public bool EnableNRRForInboundMDN { get; set; }
+        public bool EnableNrrForInboundMdn { get; set; }
         /// <summary>
         /// The Sha2 algorithm format. Valid values are Sha2, ShaHashSize, ShaHyphenHashSize, Sha2UnderscoreHashSize.
         /// Serialized Name: AS2SecuritySettings.sha2AlgorithmFormat

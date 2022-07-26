@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Logic
         /// Gets the reference to workflow.
         /// Serialized Name: WorkflowTrigger.properties.workflow
         /// </param>
-        internal LogicAppWorkflowTriggerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, LogicAppWorkflowTriggerProvisioningState? provisioningState, DateTimeOffset? createdOn, DateTimeOffset? changedOn, LogicAppWorkflowState? state, LogicAppWorkflowStatus? status, DateTimeOffset? lastExecutionOn, DateTimeOffset? nextExecutionOn, LogicAppWorkflowTriggerRecurrence recurrence, ResourceReference workflow) : base(id, name, resourceType, systemData)
+        internal LogicAppWorkflowTriggerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, LogicAppWorkflowTriggerProvisioningState? provisioningState, DateTimeOffset? createdOn, DateTimeOffset? changedOn, LogicAppWorkflowState? state, LogicAppWorkflowStatus? status, DateTimeOffset? lastExecutionOn, DateTimeOffset? nextExecutionOn, LogicAppWorkflowTriggerRecurrence recurrence, LogicAppResourceReference workflow) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             CreatedOn = createdOn;
@@ -118,6 +118,6 @@ namespace Azure.ResourceManager.Logic
         /// Gets the reference to workflow.
         /// Serialized Name: WorkflowTrigger.properties.workflow
         /// </summary>
-        public ResourceReference Workflow { get; }
+        public LogicAppResourceReference Workflow { get; }
     }
 }

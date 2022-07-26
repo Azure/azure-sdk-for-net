@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Logic
         /// The parameters.
         /// Serialized Name: Workflow.properties.parameters
         /// </param>
-        internal LogicAppWorkflowData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Models.ManagedServiceIdentity identity, LogicAppWorkflowProvisioningState? provisioningState, DateTimeOffset? createdOn, DateTimeOffset? changedOn, LogicAppWorkflowState? state, string version, string accessEndpoint, FlowEndpointsConfiguration endpointsConfiguration, FlowAccessControlConfiguration accessControl, LogicAppSku sku, ResourceReference integrationAccount, ResourceReference integrationServiceEnvironment, BinaryData definition, IDictionary<string, LogicAppWorkflowParameterInfo> parameters) : base(id, name, resourceType, systemData, tags, location)
+        internal LogicAppWorkflowData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Models.ManagedServiceIdentity identity, LogicAppWorkflowProvisioningState? provisioningState, DateTimeOffset? createdOn, DateTimeOffset? changedOn, LogicAppWorkflowState? state, string version, string accessEndpoint, FlowEndpointsConfiguration endpointsConfiguration, FlowAccessControlConfiguration accessControl, LogicAppSku sku, LogicAppResourceReference integrationAccount, LogicAppResourceReference integrationServiceEnvironment, BinaryData definition, IDictionary<string, LogicAppWorkflowParameterInfo> parameters) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             ProvisioningState = provisioningState;
@@ -158,12 +158,12 @@ namespace Azure.ResourceManager.Logic
         /// The integration account.
         /// Serialized Name: Workflow.properties.integrationAccount
         /// </summary>
-        public ResourceReference IntegrationAccount { get; set; }
+        public LogicAppResourceReference IntegrationAccount { get; set; }
         /// <summary>
         /// The integration service environment.
         /// Serialized Name: Workflow.properties.integrationServiceEnvironment
         /// </summary>
-        public ResourceReference IntegrationServiceEnvironment { get; set; }
+        public LogicAppResourceReference IntegrationServiceEnvironment { get; set; }
         /// <summary>
         /// The definition.
         /// Serialized Name: Workflow.properties.definition

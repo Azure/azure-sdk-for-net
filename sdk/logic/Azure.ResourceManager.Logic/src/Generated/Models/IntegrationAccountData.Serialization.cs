@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Logic
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<ResourceReference> integrationServiceEnvironment = default;
+            Optional<LogicAppResourceReference> integrationServiceEnvironment = default;
             Optional<LogicAppWorkflowState> state = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Logic
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            integrationServiceEnvironment = ResourceReference.DeserializeResourceReference(property0.Value);
+                            integrationServiceEnvironment = LogicAppResourceReference.DeserializeLogicAppResourceReference(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("state"))

@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Logic
             Optional<LogicAppWorkflowStatus> status = default;
             Optional<string> code = default;
             Optional<BinaryData> error = default;
-            Optional<string> trackingId = default;
+            Optional<Guid> trackingId = default;
             Optional<BinaryData> inputs = default;
             Optional<ContentLink> inputsLink = default;
             Optional<BinaryData> outputs = default;
@@ -233,7 +233,12 @@ namespace Azure.ResourceManager.Logic
                         }
                         if (property0.NameEquals("trackingId"))
                         {
-                            trackingId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            trackingId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("inputs"))
@@ -330,7 +335,7 @@ namespace Azure.ResourceManager.Logic
                     continue;
                 }
             }
-            return new LogicAppWorkflowRunActionRepetitionDefinitionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(startTime), Optional.ToNullable(endTime), correlation.Value, Optional.ToNullable(status), code.Value, error.Value, trackingId.Value, inputs.Value, inputsLink.Value, outputs.Value, outputsLink.Value, trackedProperties.Value, Optional.ToList(retryHistory), Optional.ToNullable(iterationCount), Optional.ToList(repetitionIndexes));
+            return new LogicAppWorkflowRunActionRepetitionDefinitionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(startTime), Optional.ToNullable(endTime), correlation.Value, Optional.ToNullable(status), code.Value, error.Value, Optional.ToNullable(trackingId), inputs.Value, inputsLink.Value, outputs.Value, outputsLink.Value, trackedProperties.Value, Optional.ToList(retryHistory), Optional.ToNullable(iterationCount), Optional.ToList(repetitionIndexes));
         }
     }
 }

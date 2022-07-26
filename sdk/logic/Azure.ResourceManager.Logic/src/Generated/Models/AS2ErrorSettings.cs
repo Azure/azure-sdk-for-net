@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.Logic.Models
         /// The value indicating whether to suspend duplicate message.
         /// Serialized Name: AS2ErrorSettings.suspendDuplicateMessage
         /// </param>
-        /// <param name="resendIfMDNNotReceived">
+        /// <param name="resendIfMdnNotReceived">
         /// The value indicating whether to resend message If MDN is not received.
         /// Serialized Name: AS2ErrorSettings.resendIfMDNNotReceived
         /// </param>
-        public AS2ErrorSettings(bool suspendDuplicateMessage, bool resendIfMDNNotReceived)
+        public AS2ErrorSettings(bool suspendDuplicateMessage, bool resendIfMdnNotReceived)
         {
             SuspendDuplicateMessage = suspendDuplicateMessage;
-            ResendIfMDNNotReceived = resendIfMDNNotReceived;
+            ResendIfMdnNotReceived = resendIfMdnNotReceived;
         }
 
         /// <summary>
@@ -37,6 +37,6 @@ namespace Azure.ResourceManager.Logic.Models
         /// The value indicating whether to resend message If MDN is not received.
         /// Serialized Name: AS2ErrorSettings.resendIfMDNNotReceived
         /// </summary>
-        public bool ResendIfMDNNotReceived { get; set; }
+        public bool ResendIfMdnNotReceived { get; set; }
     }
 }

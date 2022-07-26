@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Logic
 
         internal static IntegrationAccountAssemblyDefinitionData DeserializeIntegrationAccountAssemblyDefinitionData(JsonElement element)
         {
-            AssemblyProperties properties = default;
+            IntegrationAccountAssemblyProperties properties = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Logic
             {
                 if (property.NameEquals("properties"))
                 {
-                    properties = AssemblyProperties.DeserializeAssemblyProperties(property.Value);
+                    properties = IntegrationAccountAssemblyProperties.DeserializeIntegrationAccountAssemblyProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"))

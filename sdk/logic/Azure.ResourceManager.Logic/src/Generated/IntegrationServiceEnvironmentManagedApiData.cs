@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Logic
         public IntegrationServiceEnvironmentManagedApiData(AzureLocation location) : base(location)
         {
             ConnectionParameters = new ChangeTrackingDictionary<string, BinaryData>();
-            RuntimeUrls = new ChangeTrackingList<string>();
+            RuntimeUris = new ChangeTrackingList<Uri>();
             Capabilities = new ChangeTrackingList<string>();
         }
 
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Logic
         /// The metadata.
         /// Serialized Name: IntegrationServiceEnvironmentManagedApi.properties.metadata
         /// </param>
-        /// <param name="runtimeUrls">
+        /// <param name="runtimeUris">
         /// The runtime urls.
         /// Serialized Name: IntegrationServiceEnvironmentManagedApi.properties.runtimeUrls
         /// </param>
@@ -88,12 +88,12 @@ namespace Azure.ResourceManager.Logic
         /// The integration service environment managed api deployment parameters.
         /// Serialized Name: IntegrationServiceEnvironmentManagedApi.properties.deploymentParameters
         /// </param>
-        internal IntegrationServiceEnvironmentManagedApiData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string namePropertiesName, IReadOnlyDictionary<string, BinaryData> connectionParameters, ApiResourceMetadata metadata, IReadOnlyList<string> runtimeUrls, ApiResourceGeneralInformation generalInformation, IReadOnlyList<string> capabilities, ApiResourceBackendService backendService, ApiResourcePolicies policies, Uri apiDefinitionUri, ApiResourceDefinitions apiDefinitions, ResourceReference integrationServiceEnvironment, LogicAppWorkflowProvisioningState? provisioningState, ApiTier? category, IntegrationServiceEnvironmentManagedApiDeploymentParameters deploymentParameters) : base(id, name, resourceType, systemData, tags, location)
+        internal IntegrationServiceEnvironmentManagedApiData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string namePropertiesName, IReadOnlyDictionary<string, BinaryData> connectionParameters, LogicAppApiResourceMetadata metadata, IReadOnlyList<Uri> runtimeUris, LogicAppApiResourceGeneralInformation generalInformation, IReadOnlyList<string> capabilities, LogicAppApiResourceBackendService backendService, LogicAppApiResourcePolicies policies, Uri apiDefinitionUri, LogicAppApiResourceDefinitions apiDefinitions, LogicAppResourceReference integrationServiceEnvironment, LogicAppWorkflowProvisioningState? provisioningState, LogicAppApiTier? category, IntegrationServiceEnvironmentManagedApiDeploymentParameters deploymentParameters) : base(id, name, resourceType, systemData, tags, location)
         {
             NamePropertiesName = namePropertiesName;
             ConnectionParameters = connectionParameters;
             Metadata = metadata;
-            RuntimeUrls = runtimeUrls;
+            RuntimeUris = runtimeUris;
             GeneralInformation = generalInformation;
             Capabilities = capabilities;
             BackendService = backendService;
@@ -120,17 +120,17 @@ namespace Azure.ResourceManager.Logic
         /// The metadata.
         /// Serialized Name: IntegrationServiceEnvironmentManagedApi.properties.metadata
         /// </summary>
-        public ApiResourceMetadata Metadata { get; }
+        public LogicAppApiResourceMetadata Metadata { get; }
         /// <summary>
         /// The runtime urls.
         /// Serialized Name: IntegrationServiceEnvironmentManagedApi.properties.runtimeUrls
         /// </summary>
-        public IReadOnlyList<string> RuntimeUrls { get; }
+        public IReadOnlyList<Uri> RuntimeUris { get; }
         /// <summary>
         /// The api general information.
         /// Serialized Name: IntegrationServiceEnvironmentManagedApi.properties.generalInformation
         /// </summary>
-        public ApiResourceGeneralInformation GeneralInformation { get; }
+        public LogicAppApiResourceGeneralInformation GeneralInformation { get; }
         /// <summary>
         /// The capabilities.
         /// Serialized Name: IntegrationServiceEnvironmentManagedApi.properties.capabilities
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Logic
         /// The backend service.
         /// Serialized Name: IntegrationServiceEnvironmentManagedApi.properties.backendService
         /// </summary>
-        internal ApiResourceBackendService BackendService { get; }
+        internal LogicAppApiResourceBackendService BackendService { get; }
         /// <summary>
         /// The service URL.
         /// Serialized Name: ApiResourceBackendService.serviceUrl
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Logic
         /// The policies for the API.
         /// Serialized Name: IntegrationServiceEnvironmentManagedApi.properties.policies
         /// </summary>
-        public ApiResourcePolicies Policies { get; }
+        public LogicAppApiResourcePolicies Policies { get; }
         /// <summary>
         /// The API definition.
         /// Serialized Name: IntegrationServiceEnvironmentManagedApi.properties.apiDefinitionUrl
@@ -164,12 +164,12 @@ namespace Azure.ResourceManager.Logic
         /// The api definitions.
         /// Serialized Name: IntegrationServiceEnvironmentManagedApi.properties.apiDefinitions
         /// </summary>
-        public ApiResourceDefinitions ApiDefinitions { get; }
+        public LogicAppApiResourceDefinitions ApiDefinitions { get; }
         /// <summary>
         /// The integration service environment reference.
         /// Serialized Name: IntegrationServiceEnvironmentManagedApi.properties.integrationServiceEnvironment
         /// </summary>
-        public ResourceReference IntegrationServiceEnvironment { get; set; }
+        public LogicAppResourceReference IntegrationServiceEnvironment { get; set; }
         /// <summary>
         /// The provisioning state.
         /// Serialized Name: IntegrationServiceEnvironmentManagedApi.properties.provisioningState
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Logic
         /// The category.
         /// Serialized Name: IntegrationServiceEnvironmentManagedApi.properties.category
         /// </summary>
-        public ApiTier? Category { get; }
+        public LogicAppApiTier? Category { get; }
         /// <summary>
         /// The integration service environment managed api deployment parameters.
         /// Serialized Name: IntegrationServiceEnvironmentManagedApi.properties.deploymentParameters

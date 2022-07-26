@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workflowName"/>, <paramref name="runName"/> or <paramref name="actionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workflowName"/>, <paramref name="runName"/> or <paramref name="actionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<LogicAppWorkflowRunActionRepetitionList>> ListAsync(string subscriptionId, string resourceGroupName, string workflowName, string runName, string actionName, CancellationToken cancellationToken = default)
+        public async Task<Response<LogicAppWorkflowRunActionRepetitionDefinitionList>> ListAsync(string subscriptionId, string resourceGroupName, string workflowName, string runName, string actionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -85,9 +85,9 @@ namespace Azure.ResourceManager.Logic
             {
                 case 200:
                     {
-                        LogicAppWorkflowRunActionRepetitionList value = default;
+                        LogicAppWorkflowRunActionRepetitionDefinitionList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = LogicAppWorkflowRunActionRepetitionList.DeserializeLogicAppWorkflowRunActionRepetitionList(document.RootElement);
+                        value = LogicAppWorkflowRunActionRepetitionDefinitionList.DeserializeLogicAppWorkflowRunActionRepetitionDefinitionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workflowName"/>, <paramref name="runName"/> or <paramref name="actionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workflowName"/>, <paramref name="runName"/> or <paramref name="actionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<LogicAppWorkflowRunActionRepetitionList> List(string subscriptionId, string resourceGroupName, string workflowName, string runName, string actionName, CancellationToken cancellationToken = default)
+        public Response<LogicAppWorkflowRunActionRepetitionDefinitionList> List(string subscriptionId, string resourceGroupName, string workflowName, string runName, string actionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -118,9 +118,9 @@ namespace Azure.ResourceManager.Logic
             {
                 case 200:
                     {
-                        LogicAppWorkflowRunActionRepetitionList value = default;
+                        LogicAppWorkflowRunActionRepetitionDefinitionList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = LogicAppWorkflowRunActionRepetitionList.DeserializeLogicAppWorkflowRunActionRepetitionList(document.RootElement);
+                        value = LogicAppWorkflowRunActionRepetitionDefinitionList.DeserializeLogicAppWorkflowRunActionRepetitionDefinitionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
