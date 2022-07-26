@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Template.Models
 {
@@ -18,14 +19,8 @@ namespace Azure.Template.Models
         /// <exception cref="ArgumentNullException"> <paramref name="nestedOutputModel"/> or <paramref name="nestedSharedModel"/> is null. </exception>
         internal OutputModel(NestedOutputOnlyModel nestedOutputModel, NestedRoundTripSharedModel nestedSharedModel)
         {
-            if (nestedOutputModel == null)
-            {
-                throw new ArgumentNullException(nameof(nestedOutputModel));
-            }
-            if (nestedSharedModel == null)
-            {
-                throw new ArgumentNullException(nameof(nestedSharedModel));
-            }
+            Argument.AssertNotNull(nestedOutputModel, nameof(nestedOutputModel));
+            Argument.AssertNotNull(nestedSharedModel, nameof(nestedSharedModel));
 
             NestedOutputModel = nestedOutputModel;
             NestedSharedModel = nestedSharedModel;

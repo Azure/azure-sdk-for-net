@@ -22,18 +22,9 @@ namespace Azure.Template.Models
         /// <exception cref="ArgumentNullException"> <paramref name="requiredString"/>, <paramref name="requiredStringList"/> or <paramref name="requiredIntList"/> is null. </exception>
         public NestedRoundTripOnlyModel(string requiredString, int requiredInt, IEnumerable<string> requiredStringList, IEnumerable<int> requiredIntList)
         {
-            if (requiredString == null)
-            {
-                throw new ArgumentNullException(nameof(requiredString));
-            }
-            if (requiredStringList == null)
-            {
-                throw new ArgumentNullException(nameof(requiredStringList));
-            }
-            if (requiredIntList == null)
-            {
-                throw new ArgumentNullException(nameof(requiredIntList));
-            }
+            Argument.AssertNotNull(requiredString, nameof(requiredString));
+            Argument.AssertNotNull(requiredStringList, nameof(requiredStringList));
+            Argument.AssertNotNull(requiredIntList, nameof(requiredIntList));
 
             RequiredString = requiredString;
             RequiredInt = requiredInt;
