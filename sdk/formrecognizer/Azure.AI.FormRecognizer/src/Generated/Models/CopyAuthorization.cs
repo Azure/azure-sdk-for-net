@@ -12,14 +12,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary> Authorization to copy a model to the specified target resource and modelId. </summary>
     public partial class CopyAuthorization
     {
-
-        /// <summary> ID of the target Azure resource where the model should be copied to. </summary>
-        public string TargetResourceId { get; set; }
-        /// <summary> Location of the target Azure resource where the model should be copied to. </summary>
-        public string TargetResourceRegion { get; set; }
-        /// <summary> Identifier of the target model. </summary>
-        public string TargetModelId { get; set; }
-        /// <summary> Token used to authorize the request. </summary>
-        public string AccessToken { get; set; }
+        /// <summary> Date/time when the access token expires. </summary>
+        public DateTimeOffset ExpirationDateTime { get; set; }
     }
 }

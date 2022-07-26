@@ -34,11 +34,22 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             ExpiresOn = expiresOn;
         }
 
+        /// <summary> Location of the target Azure resource where the model should be copied to. </summary>
+        public string TargetResourceRegion { get; }
+
+         /// <summary> Identifier of the target model. </summary>
+         public string TargetModelId { get; }
+
         /// <summary> URI of the copied model in the target account. </summary>
         public Uri TargetModelLocation { get; }
 
         /// <summary> Date/time when the access token expires. </summary>
-        [CodeGenMember("ExpirationDateTime")]
         public DateTimeOffset ExpiresOn { get; }
+
+        /// <summary> Token used to authorize the request. </summary>
+        public string AccessToken { get; }
+
+        /// <summary> ID of the target Azure resource where the model should be copied to. </summary>
+        public string TargetResourceId { get; }
     }
 }
