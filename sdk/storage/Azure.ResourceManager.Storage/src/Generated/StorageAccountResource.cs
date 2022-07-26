@@ -444,20 +444,25 @@ namespace Azure.ResourceManager.Storage
         /// </summary>
         /// <param name="expand"> Specifies type of the key to be listed. Possible value is kerb. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<StorageAccountGetKeysResult>> GetKeysAsync(StorageListKeyExpand? expand = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="StorageAccountKey" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<StorageAccountKey> GetKeysAsync(StorageListKeyExpand? expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _storageAccountClientDiagnostics.CreateScope("StorageAccountResource.GetKeys");
-            scope.Start();
-            try
+            async Task<Page<StorageAccountKey>> FirstPageFunc(int? pageSizeHint)
             {
-                var response = await _storageAccountRestClient.ListKeysAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
-                return response;
+                using var scope = _storageAccountClientDiagnostics.CreateScope("StorageAccountResource.GetKeys");
+                scope.Start();
+                try
+                {
+                    var response = await _storageAccountRestClient.ListKeysAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Keys, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
         /// <summary>
@@ -467,20 +472,25 @@ namespace Azure.ResourceManager.Storage
         /// </summary>
         /// <param name="expand"> Specifies type of the key to be listed. Possible value is kerb. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<StorageAccountGetKeysResult> GetKeys(StorageListKeyExpand? expand = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="StorageAccountKey" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<StorageAccountKey> GetKeys(StorageListKeyExpand? expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _storageAccountClientDiagnostics.CreateScope("StorageAccountResource.GetKeys");
-            scope.Start();
-            try
+            Page<StorageAccountKey> FirstPageFunc(int? pageSizeHint)
             {
-                var response = _storageAccountRestClient.ListKeys(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken);
-                return response;
+                using var scope = _storageAccountClientDiagnostics.CreateScope("StorageAccountResource.GetKeys");
+                scope.Start();
+                try
+                {
+                    var response = _storageAccountRestClient.ListKeys(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Keys, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
         /// <summary>

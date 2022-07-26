@@ -1,4 +1,4 @@
-# Example: Managing the Blob Containers
+# Example: Managing the File Shares
 
 >Note: Before getting started with the samples, go through the [prerequisites](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/resourcemanager/Azure.ResourceManager#prerequisites).
 
@@ -46,52 +46,52 @@ StorageAccountResource storageAccount = accountCreateOperation.Value;
 ```
 
 
-Then we need to get the blob service, which is a singleton resource and the name is "default"
+Then we need to get the file service, which is a singleton resource and the name is "default"
 
-```C# Snippet:Managing_BlobContainers_GetBlobService
-BlobServiceResource blobService = storageAccount.GetBlobService();
+```C# Snippet:Managing_FileShares_GetFileService
+FileServiceResource fileService = await storageAccount.GetFileService().GetAsync();
 ```
 
 
-Now that we have the blob service, we can manage the blob containers inside this storage account.
+Now that we have the file service, we can manage the file shares inside this storage account.
 
-***Create a blob container***
+***Create a file share***
 
-```C# Snippet:Managing_BlobContainers_CreateBlobContainer
-BlobContainerCollection blobContainerCollection = blobService.GetBlobContainers();
-string blobContainerName = "myBlobContainer";
-BlobContainerData blobContainerData = new BlobContainerData();
-ArmOperation<BlobContainerResource> blobContainerCreateOperation = await blobContainerCollection.CreateOrUpdateAsync(WaitUntil.Completed, blobContainerName, blobContainerData);
-BlobContainerResource blobContainer = blobContainerCreateOperation.Value;
+```C# Snippet:Managing_FileShares_CreateFileShare
+FileShareCollection fileShareCollection = fileService.GetFileShares();
+string fileShareName = "myFileShare";
+FileShareData fileShareData = new FileShareData();
+ArmOperation<FileShareResource> fileShareCreateOperation = await fileShareCollection.CreateOrUpdateAsync(WaitUntil.Started, fileShareName, fileShareData);
+FileShareResource fileShare =await fileShareCreateOperation.WaitForCompletionAsync();
 ```
 
-***List all blob containers***
+***List all file shares***
 
-```C# Snippet:Managing_BlobContainers_ListBlobContainers
-BlobContainerCollection blobContainerCollection = blobService.GetBlobContainers();
-AsyncPageable<BlobContainerResource> response = blobContainerCollection.GetAllAsync();
-await foreach (BlobContainerResource blobContainer in response)
+```C# Snippet:Managing_FileShares_ListFileShares
+FileShareCollection fileShareCollection = fileService.GetFileShares();
+AsyncPageable<FileShareResource> response = fileShareCollection.GetAllAsync();
+await foreach (FileShareResource fileShare in response)
 {
-    Console.WriteLine(blobContainer.Id.Name);
+    Console.WriteLine(fileShare.Id.Name);
 }
 ```
 
-***Get a blob container***
+***Get a file share***
 
-```C# Snippet:Managing_BlobContainers_GetBlobContainer
-BlobContainerCollection blobContainerCollection = blobService.GetBlobContainers();
-BlobContainerResource blobContainer = await blobContainerCollection.GetAsync("myBlobContainer");
-Console.WriteLine(blobContainer.Id.Name);
+```C# Snippet:Managing_FileShares_GetFileShare
+FileShareCollection fileShareCollection = fileService.GetFileShares();
+FileShareResource fileShare = await fileShareCollection.GetAsync("myFileShare");
+Console.WriteLine(fileShare.Id.Name);
 ```
 
-***Delete a blob container***
+***Delete a file share***
 
-```C# Snippet:Managing_BlobContainers_DeleteBlobContainer
-BlobContainerCollection blobContainerCollection = blobService.GetBlobContainers();
-BlobContainerResource blobContainer = await blobContainerCollection.GetAsync("myBlobContainer");
-await blobContainer.DeleteAsync(WaitUntil.Completed);
+```C# Snippet:Managing_FileShares_DeleteFileShare
+FileShareCollection fileShareCollection = fileService.GetFileShares();
+FileShareResource fileShare = await fileShareCollection.GetAsync("myFileShare");
+await fileShare.DeleteAsync(WaitUntil.Completed);
 ```
 
 ## Next steps
 
-Take a look at the [Managing File Shares](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.ResourceManager.Storage/samples/Sample2_ManagingFileShares.md) samples.
+Take a look at the [Managing Storage Accounts](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.ResourceManager.Storage/samples/Sample1_ManagingStorageAccounts.md) samples.
