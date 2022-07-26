@@ -96,7 +96,12 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// The 2021-08-06 service version.
             /// </summary>
-            V2021_08_06 = 13
+            V2021_08_06 = 13,
+
+            /// <summary>
+            /// The 2021-10-04 service version.
+            /// </summary>
+            V2021_10_04 = 14
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -129,6 +134,16 @@ namespace Azure.Storage.Blobs
         /// between primary and secondary Uri.
         /// </summary>
         public Uri GeoRedundantSecondaryUri { get; set; }
+
+        /// <summary>
+        /// Transfer validation options to be applied to blob uploads from this client.
+        /// </summary>
+        public UploadTransferValidationOptions UploadTransferValidationOptions { get; set; }
+
+        /// <summary>
+        /// Transfer validation options to be applied to blob downloads from this client.
+        /// </summary>
+        public DownloadTransferValidationOptions DownloadTransferValidationOptions { get; set; }
 
         #region Advanced Options
         internal ClientSideEncryptionOptions _clientSideEncryptionOptions;

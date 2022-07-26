@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static PowerState DeserializePowerState(JsonElement element)
         {
-            Optional<Code> code = default;
+            Optional<ManagedClusterStateCode> code = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"))
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    code = new Code(property.Value.GetString());
+                    code = new ManagedClusterStateCode(property.Value.GetString());
                     continue;
                 }
             }

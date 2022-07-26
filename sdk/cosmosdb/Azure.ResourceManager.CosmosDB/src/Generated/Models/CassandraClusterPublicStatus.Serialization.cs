@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         internal static CassandraClusterPublicStatus DeserializeCassandraClusterPublicStatus(JsonElement element)
         {
             Optional<ETag> eTag = default;
-            Optional<ManagedCassandraReaperStatus> reaperStatus = default;
+            Optional<CassandraReaperStatus> reaperStatus = default;
             Optional<IReadOnlyList<CassandraConnectionError>> connectionErrors = default;
             Optional<IReadOnlyList<CassandraClusterPublicStatusDataCentersItem>> dataCenters = default;
             foreach (var property in element.EnumerateObject())
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    reaperStatus = ManagedCassandraReaperStatus.DeserializeManagedCassandraReaperStatus(property.Value);
+                    reaperStatus = CassandraReaperStatus.DeserializeCassandraReaperStatus(property.Value);
                     continue;
                 }
                 if (property.NameEquals("connectionErrors"))

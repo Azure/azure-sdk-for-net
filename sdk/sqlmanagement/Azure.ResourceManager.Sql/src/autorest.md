@@ -4,7 +4,8 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 azure-arm: true
-require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/55090ea4342b5dac48bc2e9706e3a59465ffa34c/specification/sql/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/55090ea4342b5dac48bc2e9706e3a59465ffa34c/specification/sql/resource-manager/readme.md
+tag: package-composite-v5
 namespace: Azure.ResourceManager.Sql
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -46,7 +47,10 @@ format-by-name-rules:
   'clientIP': 'ip-address'
 
 keep-plural-enums:
-  - DiffBackupIntervalInHours
+- DiffBackupIntervalInHours
+
+keep-plural-resource-data:
+- MaintenanceWindows
 
 rename-rules:
   CPU: Cpu
@@ -78,6 +82,9 @@ rename-rules:
   ZRS: Zrs
   Hierarchyid: HierarchyId
   CP1CIAS: Cp1CiAs
+  CatchUP: CatchUp
+  CCN: Ccn
+  SSN: Ssn
 
 prepend-rp-prefix:
   - DatabaseAutomaticTuning
@@ -105,6 +112,21 @@ prepend-rp-prefix:
   - ServerSecurityAlertPolicy
   - ServerTrustGroup
   - ServerVulnerabilityAssessment
+  - ServicePrincipal
+  - ServicePrincipalType
+  - FirewallRule
+  - AdministratorName
+  - AdministratorType
+  - CapabilityGroup
+  - CapabilityStatus
+  - LocationCapabilities
+  - ColumnDataType
+  - DatabaseState
+  - DatabaseStatus
+  - ResourceMoveDefinition
+  - ServerUsage
+  - AdvisorStatus
+  - Advisor
 list-exception:
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/vulnerabilityAssessments/{vulnerabilityAssessmentName}/rules/{ruleId}/baselines/{baselineName}
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/restoreDetails/{restoreDetailsName}
@@ -158,6 +180,9 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/vulnerabilityAssessments/{vulnerabilityAssessmentName}/rules/{ruleId}/baselines/{baselineName}: ManagedDatabaseVulnerabilityAssessmentRuleBaseline
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/vulnerabilityAssessments/{vulnerabilityAssessmentName}/scans/{scanId}: ManagedDatabaseVulnerabilityAssessmentScan
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/advisors/{advisorName}: SqlServerAdvisor
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/virtualNetworkRules/{virtualNetworkRuleName}: SqlServerVirtualNetworkRule
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/replicationLinks/{linkId}: SqlServerDatabaseReplicationLink
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/restorePoints/{restorePointName}: SqlServerDatabaseRestorePoint
   
 
 rename-mapping:
@@ -176,6 +201,10 @@ rename-mapping:
   JobVersion: SqlServerJobVersion
   JobCredential: SqlServerJobCredential
   JobTargetGroup: SqlServerJobTargetGroup
+  JobSchedule: SqlServerJobSchedule
+  JobScheduleType: SqlServerJobScheduleType
+  JobExecution: SqlServerJobExecution
+  JobStep: SqlServerJobStep
   LedgerDigestUploads: LedgerDigestUpload
   ServerDevOpsAuditingSettings: SqlServerDevOpsAuditingSetting
   ManagedDatabaseRestoreDetailsResult: ManagedDatabaseRestoreDetail
@@ -195,7 +224,38 @@ rename-mapping:
   ManagedInstanceExternalAdministrator.azureADOnlyAuthentication: IsAzureADOnlyAuthenticationEnabled
   ServerExternalAdministrator.azureADOnlyAuthentication: IsAzureADOnlyAuthenticationEnabled
   SyncGroup.properties.enableConflictLogging: IsConflictLoggingEnabled
+  PrincipalType: SqlServerPrincipalType
+  IsRetryable: ActionRetryableState
+  ExportDatabaseDefinition: DatabaseExportDefinition
+  ImportNewDatabaseDefinition: DatabaseImportDefinition
+  PartnerInfo: PartnerServerInfo
+  ReplicationMode: DistributedAvailabilityGroupReplicationMode
+  ReplicationState: ReplicationLinkState
+  ServerInfo: ServerTrustGroupServerInfo
+  DatabaseExtensions: SqlDatabaseExtension
+  DatabaseOperation: DatabaseOperationData
+  ServerOperation: ServerOperationData
+  ElasticPoolOperation: ElasticPoolOperationData
+  UpdateManagedInstanceDnsServersOperation: ManagedInstanceUpdateDnsServersOperationData
+  VirtualNetworkRule: SqlServerVirtualNetworkRule
+  VirtualNetworkRuleState: SqlServerVirtualNetworkRuleState
+  MetricAvailability: SqlMetricAvailability
+  PrivateEndpointConnectionProperties: ServerPrivateEndpointConnectionProperties
+  PrivateEndpointProvisioningState: SqlPrivateEndpointProvisioningState
+  PrivateLinkServiceConnectionStateActionsRequire: SqlPrivateLinkServiceConnectionActionsRequired
+  PrivateLinkServiceConnectionStateStatus: SqlPrivateLinkServiceConnectionStatus
+  SecurityAlertPolicyName: SqlSecurityAlertPolicyName
+  ServerKeyType: SqlServerKeyType
+  ServerPrivateEndpointConnection: SqlServerPrivateEndpointConnection
+  ReplicationLink: SqlServerDatabaseReplicationLink
+  ReplicationRole: SqlServerDatabaseReplicationRole
+  ServerVersionCapability: SqlServerVersionCapability
+  RestorePoint: SqlServerDatabaseRestorePoint
+  BackupStorageRedundancy: SqlBackupStorageRedundancy
+  PrimaryAggregationType: SqlMetricPrimaryAggregationType
 
+prompted-enum-values:
+  - Default
 directive:
     - remove-operation: DatabaseExtensions_Get # This operation is not supported
     - remove-operation: FirewallRules_Replace # This operation sends a list of rules but got a single rule in response, which is abnormal. Besides, using FirewallRules_CreateOrUpdate/FirewallRules_Delete multiple times could achieve the same goal.
@@ -379,3 +439,7 @@ directive:
       where: $.definitions.SyncAgentLinkedDatabaseProperties
       transform: >
           $.properties.databaseId['format'] = 'uuid';
+    - from: Jobs.json
+      where: $.definitions
+      transform: >
+          $.JobSchedule.properties.interval['format'] = 'duration';

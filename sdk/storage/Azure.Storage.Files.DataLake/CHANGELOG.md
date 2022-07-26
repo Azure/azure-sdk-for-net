@@ -1,14 +1,12 @@
 # Release History
 
 ## 12.12.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added support for service version 2021-10-04.
+- Added support for SDK-calculated transactional checksums on data transfer.
+- Added support for flush parameter to DataLakeFileClient.Append() and .AppendAsync().
+- Added support for encryption scopes.
+- Added support for encryption scope SAS.
+- Fixed bug where DataLakeFileSystemClient.GetParentServiceClient() persisted the filesystem name in the URL of the returned DataLakeServiceClient
 
 ## 12.11.0 (2022-07-07)
 - Includes all features from 12.11.0-beta.1.

@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.PostgreSql
 {
     /// <summary>
     /// A class representing a collection of <see cref="PostgreSqlPrivateLinkResource" /> and their operations.
-    /// Each <see cref="PostgreSqlPrivateLinkResource" /> in the collection will belong to the same instance of <see cref="ServerResource" />.
-    /// To get a <see cref="PostgreSqlPrivateLinkResourceCollection" /> instance call the GetPostgreSqlPrivateLinkResources method from an instance of <see cref="ServerResource" />.
+    /// Each <see cref="PostgreSqlPrivateLinkResource" /> in the collection will belong to the same instance of <see cref="PostgreSqlServerResource" />.
+    /// To get a <see cref="PostgreSqlPrivateLinkResourceCollection" /> instance call the GetPostgreSqlPrivateLinkResources method from an instance of <see cref="PostgreSqlServerResource" />.
     /// </summary>
     public partial class PostgreSqlPrivateLinkResourceCollection : ArmCollection, IEnumerable<PostgreSqlPrivateLinkResource>, IAsyncEnumerable<PostgreSqlPrivateLinkResource>
     {
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.PostgreSql
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ServerResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ServerResource.ResourceType), nameof(id));
+            if (id.ResourceType != PostgreSqlServerResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, PostgreSqlServerResource.ResourceType), nameof(id));
         }
 
         /// <summary>

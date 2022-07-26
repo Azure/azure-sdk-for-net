@@ -1,6 +1,8 @@
 # Release History
 
 ## 12.12.0-beta.1 (Unreleased)
+- Added support for service version 2021-10-04.
+- Added support for SDK-calculated transactional checksums on data transfer.
 - Fixed bug where ShareClient.GetParentServiceClient() persisted the filesystem name in the URL of the returned ShareServiceClient
 
 ## 12.11.0 (2022-07-07)

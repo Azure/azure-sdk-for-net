@@ -28,9 +28,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             };
 
             AddLoggedHeadersAndQueryParameters();
-
-            //Default Audience to Azure Public Cloud
-            Audience ??= DocumentAnalysisAudience.AzurePublicCloud;
         }
 
         /// <summary>

@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.Monitor
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
-            {
-                writer.WritePropertyName("kind");
-                writer.WriteStringValue(Kind.Value.ToString());
-            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags");
@@ -70,7 +65,6 @@ namespace Azure.ResourceManager.Monitor
 
         internal static DataCollectionRuleData DeserializeDataCollectionRuleData(JsonElement element)
         {
-            Optional<KnownDataCollectionRuleResourceKind> kind = default;
             Optional<ETag> etag = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -83,19 +77,9 @@ namespace Azure.ResourceManager.Monitor
             Optional<DataCollectionRuleDataSources> dataSources = default;
             Optional<DataCollectionRuleDestinations> destinations = default;
             Optional<IList<DataFlow>> dataFlows = default;
-            Optional<KnownDataCollectionRuleProvisioningState> provisioningState = default;
+            Optional<DataCollectionRuleProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    kind = new KnownDataCollectionRuleResourceKind(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("etag"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -212,14 +196,14 @@ namespace Azure.ResourceManager.Monitor
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new KnownDataCollectionRuleProvisioningState(property0.Value.GetString());
+                            provisioningState = new DataCollectionRuleProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new DataCollectionRuleData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(kind), Optional.ToNullable(etag), description.Value, immutableId.Value, dataSources.Value, destinations.Value, Optional.ToList(dataFlows), Optional.ToNullable(provisioningState));
+            return new DataCollectionRuleData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), description.Value, immutableId.Value, dataSources.Value, destinations.Value, Optional.ToList(dataFlows), Optional.ToNullable(provisioningState));
         }
     }
 }

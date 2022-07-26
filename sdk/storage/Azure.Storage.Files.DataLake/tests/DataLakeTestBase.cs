@@ -72,8 +72,9 @@ namespace Azure.Storage.Files.DataLake.Tests
             IDictionary<string, string> metadata = default,
             PublicAccessType? publicAccessType = default,
             bool premium = default,
-            bool hnsEnabled = true)
-            => await DataLakeClientBuilder.GetNewFileSystem(service, fileSystemName, metadata, publicAccessType, premium, hnsEnabled);
+            bool hnsEnabled = true,
+            DataLakeFileSystemEncryptionScopeOptions encryptionScopeOptions = default)
+            => await DataLakeClientBuilder.GetNewFileSystem(service, fileSystemName, metadata, publicAccessType, premium, hnsEnabled, encryptionScopeOptions);
 
         public DataLakeClientOptions GetOptions(bool parallelRange = false)
             => DataLakeClientBuilder.GetOptions(parallelRange);

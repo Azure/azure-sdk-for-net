@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.CosmosDB
             Optional<bool> disableKeyBasedMetadataWriteAccess = default;
             Optional<Uri> keyVaultKeyUri = default;
             Optional<string> defaultIdentity = default;
-            Optional<PublicNetworkAccess> publicNetworkAccess = default;
+            Optional<CosmosDBPublicNetworkAccess> publicNetworkAccess = default;
             Optional<bool> enableFreeTier = default;
             Optional<ApiProperties> apiProperties = default;
             Optional<bool> enableAnalyticalStorage = default;
@@ -552,7 +552,7 @@ namespace Azure.ResourceManager.CosmosDB
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            publicNetworkAccess = new PublicNetworkAccess(property0.Value.GetString());
+                            publicNetworkAccess = new CosmosDBPublicNetworkAccess(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("enableFreeTier"))

@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     public partial class AzureKeyVaultProperties : Azure.ResourceManager.ServiceLinker.Models.AzureResourceBaseProperties
     {
         public AzureKeyVaultProperties() { }
-        public bool? ConnectAsKubernetesCsiDriver { get { throw null; } set { } }
+        public bool? DoesConnectAsKubernetesCsiDriver { get { throw null; } set { } }
     }
     public abstract partial class AzureResourceBaseProperties
     {

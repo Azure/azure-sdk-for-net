@@ -50,6 +50,10 @@ rename-rules:
 
 override-operation-name:
   WebPubSub_CheckNameAvailability: CheckWebPubSubNameAvailability
+
+rename-mapping:
+  RegenerateKeyParameters: WebPubSubRegenerateKeyContent
+
 directive:
   - rename-model:
       from: PrivateLinkResource
@@ -138,4 +142,10 @@ directive:
   - from: swagger-document
     where: $.definitions.ManagedIdentityType
     transform: $.enum.push("SystemAssigned, UserAssigned")
+    reason: Temporary workaround to match with common type.
+  - from: webpubsub.json
+    where: $.definitions.WebPubSub.properties.identity
+    transform: >
+      $.description = "The managed identity response. Current supported identity types: SystemAssigned, UserAssigned, None.";
+    reason: Temporary workaround to update description.
 ```

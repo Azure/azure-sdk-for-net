@@ -26,10 +26,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
             Uri fileUri = DocumentAnalysisTestEnvironment.CreateUri("Form_1.jpg");
 #endif
 
-            AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-invoice", fileUri);
-
-            await operation.WaitForCompletionAsync();
-
+            AnalyzeDocumentOperation operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, "prebuilt-invoice", fileUri);
             AnalyzeResult result = operation.Value;
 
             // To see the list of all the supported fields returned by service and its corresponding types for the

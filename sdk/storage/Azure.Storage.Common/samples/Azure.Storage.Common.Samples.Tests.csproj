@@ -18,6 +18,7 @@
     <Compile Remove="$(AzureStorageSharedTestSources)\ClientSideEncryptionTestExtensions.cs" />
     <Compile Remove="$(AzureStorageSharedTestSources)\StorageTestBase.SasVersion.cs" />
     <Compile Remove="$(AzureStorageSharedTestSources)\Sas\*.cs" />
+    <Compile Remove="$(AzureStorageSharedTestSources)\TransferValidationTestBase.cs" />
     <None Include="$(AzureStorageSharedTestSources)\*.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Grafana.Models
 {
@@ -20,8 +21,10 @@ namespace Azure.ResourceManager.Grafana.Models
         }
 
         /// <summary> The managed identity of the grafana resource. </summary>
-        public ManagedIdentity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The new tags of the grafana resource. </summary>
         public IDictionary<string, string> Tags { get; }
+        /// <summary> Properties specific to the managed grafana resource. </summary>
+        public ManagedGrafanaPatchProperties Properties { get; set; }
     }
 }

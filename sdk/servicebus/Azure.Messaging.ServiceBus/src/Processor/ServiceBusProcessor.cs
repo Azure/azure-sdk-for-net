@@ -23,6 +23,14 @@ namespace Azure.Messaging.ServiceBus
     /// property. The error handler is specified with the <see cref="ProcessErrorAsync"/> property.
     /// To start processing after the handlers have been specified, call <see cref="StartProcessingAsync"/>.
     /// </summary>
+    /// <remarks>
+    /// The <see cref="ServiceBusProcessor" /> is safe to cache and use for the lifetime of an application
+    /// or until the <see cref="ServiceBusClient" /> that it was created by is disposed. Caching the processor
+    /// is recommended when the application is processing messages regularly.  The sender is responsible for
+    /// ensuring efficient network, CPU, and memory use. Calling <see cref="DisposeAsync" /> on the
+    /// associated <see cref="ServiceBusClient" /> as the application is shutting down will ensure that
+    /// network resources and other unmanaged objects used by the processor are properly cleaned up.
+    /// </remarks>
 #pragma warning disable CA1001 // Types that own disposable fields should be disposable
     public class ServiceBusProcessor : IAsyncDisposable
 #pragma warning restore CA1001 // Types that own disposable fields should be disposable

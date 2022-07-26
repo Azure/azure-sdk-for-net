@@ -20,6 +20,15 @@ namespace Azure.Messaging.ServiceBus
     ///   A client responsible for sending <see cref="ServiceBusMessage" /> to a specific Service Bus entity
     ///   (Queue or Topic). It can be used for both session and non-session entities. It is constructed by calling <see cref="ServiceBusClient.CreateSender(string)"/>.
     /// </summary>
+    /// <remarks>
+    ///   The <see cref="ServiceBusSender" /> is safe to cache and use for the lifetime of an
+    ///   application or until the <see cref="ServiceBusClient" /> that it was created by is disposed.
+    ///   Caching the sender is recommended when the application is publishing messages
+    ///   regularly or semi-regularly.  The sender is responsible for ensuring efficient network, CPU,
+    ///   and memory use.  Calling <see cref="DisposeAsync" /> on the associated <see cref="ServiceBusClient" />
+    ///   as the application is shutting down will ensure that network resources and other unmanaged objects used
+    ///   by the sender are properly cleaned up.
+    ///</remarks>
     ///
     public class ServiceBusSender : IAsyncDisposable
     {

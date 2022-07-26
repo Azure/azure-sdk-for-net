@@ -6,7 +6,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 csharp: true
 namespace: Azure.ResourceManager.Storage
-require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/eca38ee0caf445cb1e79c8e7bbaf9e1dca36479a/specification/storage/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/a9e895ccfe29d0646795f7ff1cb78e185bd09529/specification/storage/resource-manager/readme.md
 tag: package-2021-09
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -19,6 +19,8 @@ list-exception:
 
 override-operation-name:
   StorageAccounts_CheckNameAvailability: CheckStorageAccountNameAvailability
+  StorageAccounts_HierarchicalNamespaceMigration: EnableHierarchicalNamespace
+  BlobContainers_ObjectLevelWorm: EnableVersionLevelImmutability
 
 request-path-to-singleton-resource:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/managementPolicies/{managementPolicyName}: managementPolicies/default
@@ -31,6 +33,7 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
   '*Guid': 'uuid'
+  'ifMatch': 'etag'
 
 rename-rules:
   CPU: Cpu
@@ -62,6 +65,9 @@ rename-rules:
   ZRS: Zrs
   GRS: Grs
   TLS: Tls
+  AAD: Aad
+  GET: Get
+  PUT: Put
 
 prepend-rp-prefix:
 - CorsRules
@@ -74,7 +80,6 @@ prepend-rp-prefix:
 - PermissionScope
 - SshPublicKey
 - PublicNetworkAccess
-- PublicAccess
 - RoutingPreference
 - RoutingChoice
 - UsageName
@@ -87,10 +92,10 @@ rename-mapping:
   TableServiceProperties: TableService
   StorageAccountCheckNameAvailabilityParameters: StorageAccountNameAvailabilityContent
   Multichannel.enabled: IsMultiChannelEnabled
-  DeletedAccount.properties.creationTime: createOn
-  DeletedAccount.properties.deletionTime: deleteOn
-  StorageAccount.properties.creationTime: createOn
-  StorageAccount.properties.deletionTime: deleteOn
+  DeletedAccount.properties.creationTime: CreatedOn
+  DeletedAccount.properties.deletionTime: DeletedOn
+  StorageAccount.properties.creationTime: CreatedOn
+  EncryptionScope.properties.creationTime: CreatedOn
   AccessPolicy.expiryTime: expireOn
   AccountStatus: StorageAccountStatus
   ResourceAccessRule: StorageAccountResourceAccessRule
@@ -110,7 +115,7 @@ rename-mapping:
   EncryptionService.enabled: IsEnabled
   Endpoints: StorageAccountEndpoints
   KeySource: StorageAccountKeySource
-  KeyType: StorageKeyType
+  KeyType: StorageEncryptionKeyType
   KeyPolicy: StorageAccountKeyPolicy
   KeyPermission: StorageAccountKeyPermission
   KeyCreationTime: StorageAccountKeyCreationTime
@@ -121,14 +126,15 @@ rename-mapping:
   LastAccessTimeTrackingPolicy.enable: IsEnabled
   HttpProtocol: StorageAccountHttpProtocol
   Name: LastAccessTimeTrackingPolicyName
+  LeaseDuration: StorageLeaseDurationType
   BlobContainer.properties.leaseDuration: LeaseDuration
   FileShare.properties.leaseDuration: LeaseDuration
   ManagementPolicyRule.enabled: IsEnabled
   RuleType: ManagementPolicyRuleType
-  Permissions: AccountSasPermission
-  Services: AccountSasSignedService
+  Permissions: StorageAccountSasPermission
+  Services: StorageAccountSasSignedService
   AccountSasParameters.signedExpiry: SharedAccessExpireOn
-  SignedResourceTypes: AccountSasSignedResourceType
+  SignedResourceTypes: StorageAccountSasSignedResourceType
   SignedResource: ServiceSasSignedResourceType
   Reason: StorageAccountNameUnavailableReason
   Restriction: StorageSkuRestriction
@@ -159,7 +165,71 @@ rename-mapping:
   ImmutableStorageWithVersioning.enabled: IsEnabled
   BlobInventoryPolicyRule.enabled: IsEnabled
   BlobInventoryPolicySchema.enabled: IsEnabled
+  ActiveDirectoryProperties: StorageActiveDirectoryProperties
   ActiveDirectoryPropertiesAccountType: ActiveDirectoryAccountType
+  StorageAccount.properties.failoverInProgress: IsFailoverInProgress
+  StorageAccount.properties.isNfsV3Enabled: IsNfsV3Enabled
+  StorageAccountCreateParameters.properties.isNfsV3Enabled: IsNfsV3Enabled
+  StorageAccount.properties.defaultToOAuthAuthentication: IsDefaultToOAuthAuthentication
+  StorageAccountCreateParameters.properties.defaultToOAuthAuthentication: IsDefaultToOAuthAuthentication
+  StorageAccountUpdateParameters.properties.defaultToOAuthAuthentication: IsDefaultToOAuthAuthentication
+  CustomDomain.useSubDomainName: IsUseSubDomainNameEnabled
+  RoutingPreference.publishMicrosoftEndpoints: IsMicrosoftEndpointsPublished
+  RoutingPreference.publishInternetEndpoints: IsInternetEndpointsPublished
+  BlobContainer.properties.denyEncryptionScopeOverride: PreventEncryptionScopeOverride
+  BlobInventoryPolicy.properties.policy: PolicySchema
+  ProtocolSettings.smb: SmbSetting
+  LocalUser: StorageAccountLocalUser
+  ManagementPolicy: StorageAccountManagementPolicy
+  AzureFilesIdentityBasedAuthentication: FilesIdentityBasedAuthentication
+  BlobInventoryPolicyFilter.prefixMatch: IncludePrefix
+  CorsRuleAllowedMethodsItem: CorsRuleAllowedMethod
+  DefaultSharePermission.StorageFileDataSmbShareReader: Reader
+  DefaultSharePermission.StorageFileDataSmbShareContributor: Contributor
+  DefaultSharePermission.StorageFileDataSmbShareElevatedContributor: ElevatedContributor
+  EncryptionScopeSource.Microsoft.Storage: Storage
+  EncryptionScopeSource.Microsoft.KeyVault: KeyVault
+  GeoReplicationStats: GeoReplicationStatistics
+  InventoryRuleType: BlobInventoryRuleType
+  LeaseContainerRequestAction: LeaseContainerAction
+  LeaseState: StorageLeaseState
+  LeaseStatus: StorageLeaseStatus
+  ListAccountSasResponse: GetAccountSasResult
+  ListServiceSasResponse: GetServiceSasResult
+  ListContainersInclude: BlobContainerState
+  RestorePolicyProperties: RestorePolicy
+  AccountImmutabilityPolicyProperties: AccountImmutabilityPolicy
+  ImmutabilityPolicyProperties: BlobContainerImmutabilityPolicy
+  SignedResource.b: Blob
+  SignedResource.c: Container
+  SignedResource.f: File
+  SignedResource.s: Share
+  SignedIdentifier: StorageSignedIdentifier
+  KeySource.Microsoft.Storage: Storage
+  KeySource.Microsoft.Keyvault: KeyVault
+  StorageAccountListKeysResult: StorageAccountGetKeysResult
+  TableAccessPolicy: StorageTableAccessPolicy
+  TableAccessPolicy.expiryTime: ExpiresOn
+  TableSignedIdentifier: StorageTableSignedIdentifier
+  UpdateHistoryProperty: UpdateHistoryEntry
+  UpdateHistoryProperty.update: UpdateType
+  PublicAccess: StoragePublicAccessType
+  Endpoints.blob: BlobUri
+  Endpoints.queue: QueueUri
+  Endpoints.table: TableUri
+  Endpoints.file: FileUri
+  Endpoints.web: WebUri
+  Endpoints.dfs: DfsUri
+  StorageAccountMicrosoftEndpoints.blob: BlobUri
+  StorageAccountMicrosoftEndpoints.queue: QueueUri
+  StorageAccountMicrosoftEndpoints.table: TableUri
+  StorageAccountMicrosoftEndpoints.file: FileUri
+  StorageAccountMicrosoftEndpoints.web: WebUri
+  StorageAccountMicrosoftEndpoints.dfs: DfsUri
+  StorageAccountInternetEndpoints.blob: BlobUri
+  StorageAccountInternetEndpoints.file: FileUri
+  StorageAccountInternetEndpoints.web: WebUri
+  StorageAccountInternetEndpoints.dfs: DfsUri
 
 directive:
   - from: swagger-document
@@ -223,4 +293,7 @@ directive:
   - from: swagger-document
     where: $.definitions.Encryption
     transform: $.required = undefined; # this is a fix for swagger issue, and it should be resolved in azure-rest-api-specs/pull/19357
+  - from: swagger-document
+    where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/tableServices/default/tables/{tableName}"].put.parameters
+    transform: $[2].required = true
 ```

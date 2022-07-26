@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 throw new ArgumentNullException(nameof(extensionName));
             }
 
-            Streams = new ChangeTrackingList<KnownExtensionDataSourceStream>();
+            Streams = new ChangeTrackingList<ExtensionDataSourceStream>();
             ExtensionName = extensionName;
             InputDataSources = new ChangeTrackingList<string>();
         }
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// A friendly name for the data source. 
         /// This name should be unique across all data sources (regardless of type) within the data collection rule.
         /// </param>
-        internal ExtensionDataSource(IList<KnownExtensionDataSourceStream> streams, string extensionName, BinaryData extensionSettings, IList<string> inputDataSources, string name)
+        internal ExtensionDataSource(IList<ExtensionDataSourceStream> streams, string extensionName, BinaryData extensionSettings, IList<string> inputDataSources, string name)
         {
             Streams = streams;
             ExtensionName = extensionName;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// List of streams that this data source will be sent to.
         /// A stream indicates what schema will be used for this data and usually what table in Log Analytics the data will be sent to.
         /// </summary>
-        public IList<KnownExtensionDataSourceStream> Streams { get; }
+        public IList<ExtensionDataSourceStream> Streams { get; }
         /// <summary> The name of the VM extension. </summary>
         public string ExtensionName { get; set; }
         /// <summary> The extension settings. The format is specific for particular extension. </summary>

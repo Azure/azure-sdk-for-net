@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.Authorization.Models
             if (Optional.IsDefined(MaximumDuration))
             {
                 writer.WritePropertyName("maximumDuration");
-                writer.WriteStringValue(MaximumDuration);
+                writer.WriteStringValue(MaximumDuration.Value, "P");
             }
             if (Optional.IsDefined(Id))
             {
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.Authorization.Models
         internal static RoleManagementPolicyExpirationRule DeserializeRoleManagementPolicyExpirationRule(JsonElement element)
         {
             Optional<bool> isExpirationRequired = default;
-            Optional<string> maximumDuration = default;
+            Optional<TimeSpan> maximumDuration = default;
             Optional<ResourceIdentifier> id = default;
             RoleManagementPolicyRuleType ruleType = default;
             Optional<RoleManagementPolicyRuleTarget> target = default;
@@ -61,7 +62,12 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 if (property.NameEquals("maximumDuration"))
                 {
-                    maximumDuration = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    maximumDuration = property.Value.GetTimeSpan("P");
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -90,7 +96,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     continue;
                 }
             }
-            return new RoleManagementPolicyExpirationRule(id.Value, ruleType, target.Value, Optional.ToNullable(isExpirationRequired), maximumDuration.Value);
+            return new RoleManagementPolicyExpirationRule(id.Value, ruleType, target.Value, Optional.ToNullable(isExpirationRequired), Optional.ToNullable(maximumDuration));
         }
     }
 }

@@ -1,7 +1,7 @@
 # Release History
 
 ## 12.13.0-beta.1 (Unreleased)
-- Fixed bug where DataLakeFileSystemClient.GetParentServiceClient() persisted the filesystem name in the URL of the returned DataLakeServiceClient
+- This release contains bug fixes to improve quality.
 
 ## 12.12.0 (2022-07-07)
 - Includes all features from 12.12.0-beta.1.

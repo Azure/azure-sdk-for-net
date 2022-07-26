@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.ContainerService
         /// <summary> Initializes a new instance of MaintenanceConfigurationData. </summary>
         public MaintenanceConfigurationData()
         {
-            TimeInWeek = new ChangeTrackingList<TimeInWeek>();
-            NotAllowedTime = new ChangeTrackingList<TimeSpan>();
+            TimesInWeek = new ChangeTrackingList<ContainerServiceTimeInWeek>();
+            NotAllowedTimes = new ChangeTrackingList<ContainerServiceTimeSpan>();
         }
 
         /// <summary> Initializes a new instance of MaintenanceConfigurationData. </summary>
@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="timeInWeek"> If two array entries specify the same day of the week, the applied configuration is the union of times in both entries. </param>
-        /// <param name="notAllowedTime"> Time slots on which upgrade is not allowed. </param>
-        internal MaintenanceConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<TimeInWeek> timeInWeek, IList<TimeSpan> notAllowedTime) : base(id, name, resourceType, systemData)
+        /// <param name="timesInWeek"> If two array entries specify the same day of the week, the applied configuration is the union of times in both entries. </param>
+        /// <param name="notAllowedTimes"> Time slots on which upgrade is not allowed. </param>
+        internal MaintenanceConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<ContainerServiceTimeInWeek> timesInWeek, IList<ContainerServiceTimeSpan> notAllowedTimes) : base(id, name, resourceType, systemData)
         {
-            TimeInWeek = timeInWeek;
-            NotAllowedTime = notAllowedTime;
+            TimesInWeek = timesInWeek;
+            NotAllowedTimes = notAllowedTimes;
         }
 
         /// <summary> If two array entries specify the same day of the week, the applied configuration is the union of times in both entries. </summary>
-        public IList<TimeInWeek> TimeInWeek { get; }
+        public IList<ContainerServiceTimeInWeek> TimesInWeek { get; }
         /// <summary> Time slots on which upgrade is not allowed. </summary>
-        public IList<TimeSpan> NotAllowedTime { get; }
+        public IList<ContainerServiceTimeSpan> NotAllowedTimes { get; }
     }
 }

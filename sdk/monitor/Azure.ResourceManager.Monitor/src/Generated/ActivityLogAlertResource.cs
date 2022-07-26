@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> Generate the resource identifier of a <see cref="ActivityLogAlertResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string activityLogAlertName)
         {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}";
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/activityLogAlerts/{activityLogAlertName}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "microsoft.insights/activityLogAlerts";
+        public static readonly ResourceType ResourceType = "Microsoft.Insights/activityLogAlerts";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -90,8 +90,8 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary>
-        /// Get an activity log alert.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
+        /// Get an Activity Log Alert rule.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/activityLogAlerts/{activityLogAlertName}
         /// Operation Id: ActivityLogAlerts_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -114,8 +114,8 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary>
-        /// Get an activity log alert.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
+        /// Get an Activity Log Alert rule.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/activityLogAlerts/{activityLogAlertName}
         /// Operation Id: ActivityLogAlerts_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -138,8 +138,8 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary>
-        /// Delete an activity log alert.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
+        /// Delete an Activity Log Alert rule.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/activityLogAlerts/{activityLogAlertName}
         /// Operation Id: ActivityLogAlerts_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -164,8 +164,8 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary>
-        /// Delete an activity log alert.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
+        /// Delete an Activity Log Alert rule.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/activityLogAlerts/{activityLogAlertName}
         /// Operation Id: ActivityLogAlerts_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -190,8 +190,8 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary>
-        /// Updates an existing ActivityLogAlertResource&apos;s tags. To update other fields use the CreateOrUpdate method.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
+        /// Updates &apos;tags&apos; and &apos;enabled&apos; fields in an existing Alert rule. This method is used to update the Alert rule tags, and to enable or disable the Alert rule. To update other fields use CreateOrUpdate operation.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/activityLogAlerts/{activityLogAlertName}
         /// Operation Id: ActivityLogAlerts_Update
         /// </summary>
         /// <param name="patch"> Parameters supplied to the operation. </param>
@@ -216,8 +216,8 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary>
-        /// Updates an existing ActivityLogAlertResource&apos;s tags. To update other fields use the CreateOrUpdate method.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
+        /// Updates &apos;tags&apos; and &apos;enabled&apos; fields in an existing Alert rule. This method is used to update the Alert rule tags, and to enable or disable the Alert rule. To update other fields use CreateOrUpdate operation.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/activityLogAlerts/{activityLogAlertName}
         /// Operation Id: ActivityLogAlerts_Update
         /// </summary>
         /// <param name="patch"> Parameters supplied to the operation. </param>
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Monitor
 
         /// <summary>
         /// Add a tag to the current resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/activityLogAlerts/{activityLogAlertName}
         /// Operation Id: ActivityLogAlerts_Get
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Monitor
 
         /// <summary>
         /// Add a tag to the current resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/activityLogAlerts/{activityLogAlertName}
         /// Operation Id: ActivityLogAlerts_Get
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.Monitor
 
         /// <summary>
         /// Replace the tags on the resource with the given set.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/activityLogAlerts/{activityLogAlertName}
         /// Operation Id: ActivityLogAlerts_Get
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Monitor
 
         /// <summary>
         /// Replace the tags on the resource with the given set.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/activityLogAlerts/{activityLogAlertName}
         /// Operation Id: ActivityLogAlerts_Get
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.Monitor
 
         /// <summary>
         /// Removes a tag by key from the resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/activityLogAlerts/{activityLogAlertName}
         /// Operation Id: ActivityLogAlerts_Get
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.Monitor
 
         /// <summary>
         /// Removes a tag by key from the resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/activityLogAlerts/{activityLogAlertName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/activityLogAlerts/{activityLogAlertName}
         /// Operation Id: ActivityLogAlerts_Get
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
