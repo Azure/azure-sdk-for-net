@@ -137,7 +137,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         /// </summary>
         ///
         [Test]
-        public async Task ConstructorAssociatesSendLinkSource()
+        public async Task OpenLinkAssociatesSendLinkSource()
         {
             var credential = new Mock<ServiceBusTokenCredential>(Mock.Of<TokenCredential>());
             var endpoint = new Uri("amqp://mine.hubs.com");
@@ -199,7 +199,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         /// </summary>
         ///
         [Test]
-        public async Task ConstructorAssociatesReceiveLinkTarget()
+        public async Task OpenLinkAssociatesReceiveLinkTarget()
         {
             var credential = new Mock<ServiceBusTokenCredential>(Mock.Of<TokenCredential>());
             var endpoint = new Uri("amqp://mine.hubs.com");
