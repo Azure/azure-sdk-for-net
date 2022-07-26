@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32602.215
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Track2SRPSDK", "Track2SRPSDK.csproj", "{BCB8EB69-0650-4C56-9217-6D431AF8B2D0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BCB8EB69-0650-4C56-9217-6D431AF8B2D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCB8EB69-0650-4C56-9217-6D431AF8B2D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCB8EB69-0650-4C56-9217-6D431AF8B2D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCB8EB69-0650-4C56-9217-6D431AF8B2D0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2144DA3D-8541-437E-80A9-2E321B5D52F3}
+	EndGlobalSection
+EndGlobal
