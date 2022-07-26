@@ -58,6 +58,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             var collection = _dnsZone.GetRecordSetNS();
             var recordSetNSResource = await collection.CreateOrUpdateAsync(WaitUntil.Completed, _recordSetName, new NSRecordSetData() { });
             Assert.IsNotNull(recordSetNSResource);
+            Assert.IsNotNull(recordSetNSResource.Value.Data.ETag);
             Assert.AreEqual(_recordSetName, recordSetNSResource.Value.Data.Name);
             Assert.AreEqual("Succeeded", recordSetNSResource.Value.Data.ProvisioningState);
             Assert.AreEqual("dnszones/NS", recordSetNSResource.Value.Data.ResourceType.Type);

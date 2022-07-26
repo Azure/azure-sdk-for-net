@@ -57,6 +57,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             string name = "mx";
             var recordSetMXResource = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, new MXRecordSetData() { });
             Assert.IsNotNull(recordSetMXResource);
+            Assert.IsNotNull(recordSetMXResource.Value.Data.ETag);
             Assert.AreEqual(name, recordSetMXResource.Value.Data.Name);
             Assert.AreEqual("Succeeded", recordSetMXResource.Value.Data.ProvisioningState);
             Assert.AreEqual("dnszones/MX", recordSetMXResource.Value.Data.ResourceType.Type);
