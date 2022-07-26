@@ -132,6 +132,7 @@ rename-mapping:
   SkuName: LogicSkuName
   IntegrationServiceEnvironmentManagedApi.properties.runtimeUrls: runtimeUris
   ResourceReference: LogicResourceReference
+  RepetitionIndex: LogicWorkflowRepetitionIndex
   WorkflowTriggerHistory.properties.fired: IsFired
   X12AcknowledgementSettings.batchTechnicalAcknowledgements: BatchTechnicalAcknowledgement
   X12AcknowledgementSettings.batchFunctionalAcknowledgements: BatchFunctionalAcknowledgement

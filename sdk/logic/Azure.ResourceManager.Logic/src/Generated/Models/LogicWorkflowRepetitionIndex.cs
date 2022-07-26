@@ -8,19 +8,19 @@
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The workflow run action repetition index. </summary>
-    public partial class RepetitionIndex
+    public partial class LogicWorkflowRepetitionIndex
     {
-        /// <summary> Initializes a new instance of RepetitionIndex. </summary>
+        /// <summary> Initializes a new instance of LogicWorkflowRepetitionIndex. </summary>
         /// <param name="itemIndex"> The index. </param>
-        public RepetitionIndex(int itemIndex)
+        public LogicWorkflowRepetitionIndex(int itemIndex)
         {
             ItemIndex = itemIndex;
         }
 
-        /// <summary> Initializes a new instance of RepetitionIndex. </summary>
+        /// <summary> Initializes a new instance of LogicWorkflowRepetitionIndex. </summary>
         /// <param name="scopeName"> The scope. </param>
         /// <param name="itemIndex"> The index. </param>
-        internal RepetitionIndex(string scopeName, int itemIndex)
+        internal LogicWorkflowRepetitionIndex(string scopeName, int itemIndex)
         {
             ScopeName = scopeName;
             ItemIndex = itemIndex;

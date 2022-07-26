@@ -722,7 +722,7 @@ namespace Azure.ResourceManager.Logic
         public int? IterationCount { get { throw null; } set { } }
         public System.BinaryData Outputs { get { throw null; } }
         public Azure.ResourceManager.Logic.Models.LogicContentLink OutputsLink { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Logic.Models.RepetitionIndex> RepetitionIndexes { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Logic.Models.LogicWorkflowRepetitionIndex> RepetitionIndexes { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Logic.Models.LogicWorkRetryHistory> RetryHistory { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } set { } }
         public Azure.ResourceManager.Logic.Models.LogicWorkflowStatus? Status { get { throw null; } set { } }
@@ -2270,6 +2270,12 @@ namespace Azure.ResourceManager.Logic.Models
         public LogicWorkflowRegenerateActionContent() { }
         public Azure.ResourceManager.Logic.Models.LogicKeyType? KeyType { get { throw null; } set { } }
     }
+    public partial class LogicWorkflowRepetitionIndex
+    {
+        public LogicWorkflowRepetitionIndex(int itemIndex) { }
+        public int ItemIndex { get { throw null; } set { } }
+        public string ScopeName { get { throw null; } set { } }
+    }
     public partial class LogicWorkflowRequest
     {
         public LogicWorkflowRequest() { }
@@ -2550,12 +2556,6 @@ namespace Azure.ResourceManager.Logic.Models
         public static implicit operator Azure.ResourceManager.Logic.Models.OpenAuthenticationProviderType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Logic.Models.OpenAuthenticationProviderType left, Azure.ResourceManager.Logic.Models.OpenAuthenticationProviderType right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class RepetitionIndex
-    {
-        public RepetitionIndex(int itemIndex) { }
-        public int ItemIndex { get { throw null; } set { } }
-        public string ScopeName { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SchemaType : System.IEquatable<Azure.ResourceManager.Logic.Models.SchemaType>

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Logic
         public LogicWorkflowRunActionRepetitionDefinitionData(AzureLocation location) : base(location)
         {
             RetryHistory = new ChangeTrackingList<LogicWorkRetryHistory>();
-            RepetitionIndexes = new ChangeTrackingList<RepetitionIndex>();
+            RepetitionIndexes = new ChangeTrackingList<LogicWorkflowRepetitionIndex>();
         }
 
         /// <summary> Initializes a new instance of LogicWorkflowRunActionRepetitionDefinitionData. </summary>
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="retryHistory"> Gets the retry histories. </param>
         /// <param name="iterationCount"></param>
         /// <param name="repetitionIndexes"> The repetition indexes. </param>
-        internal LogicWorkflowRunActionRepetitionDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DateTimeOffset? startOn, DateTimeOffset? endOn, LogicWorkflowRunActionCorrelation correlation, LogicWorkflowStatus? status, string code, BinaryData error, Guid? trackingId, BinaryData inputs, LogicContentLink inputsLink, BinaryData outputs, LogicContentLink outputsLink, BinaryData trackedProperties, IList<LogicWorkRetryHistory> retryHistory, int? iterationCount, IList<RepetitionIndex> repetitionIndexes) : base(id, name, resourceType, systemData, tags, location)
+        internal LogicWorkflowRunActionRepetitionDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DateTimeOffset? startOn, DateTimeOffset? endOn, LogicWorkflowRunActionCorrelation correlation, LogicWorkflowStatus? status, string code, BinaryData error, Guid? trackingId, BinaryData inputs, LogicContentLink inputsLink, BinaryData outputs, LogicContentLink outputsLink, BinaryData trackedProperties, IList<LogicWorkRetryHistory> retryHistory, int? iterationCount, IList<LogicWorkflowRepetitionIndex> repetitionIndexes) : base(id, name, resourceType, systemData, tags, location)
         {
             StartOn = startOn;
             EndOn = endOn;
@@ -94,6 +94,6 @@ namespace Azure.ResourceManager.Logic
         /// <summary> Gets or sets the iteration count. </summary>
         public int? IterationCount { get; set; }
         /// <summary> The repetition indexes. </summary>
-        public IList<RepetitionIndex> RepetitionIndexes { get; }
+        public IList<LogicWorkflowRepetitionIndex> RepetitionIndexes { get; }
     }
 }

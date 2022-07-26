@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Logic
             Optional<BinaryData> trackedProperties = default;
             Optional<IList<LogicWorkRetryHistory>> retryHistory = default;
             Optional<int> iterationCount = default;
-            Optional<IList<RepetitionIndex>> repetitionIndexes = default;
+            Optional<IList<LogicWorkflowRepetitionIndex>> repetitionIndexes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"))
@@ -323,10 +323,10 @@ namespace Azure.ResourceManager.Logic
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<RepetitionIndex> array = new List<RepetitionIndex>();
+                            List<LogicWorkflowRepetitionIndex> array = new List<LogicWorkflowRepetitionIndex>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RepetitionIndex.DeserializeRepetitionIndex(item));
+                                array.Add(LogicWorkflowRepetitionIndex.DeserializeLogicWorkflowRepetitionIndex(item));
                             }
                             repetitionIndexes = array;
                             continue;

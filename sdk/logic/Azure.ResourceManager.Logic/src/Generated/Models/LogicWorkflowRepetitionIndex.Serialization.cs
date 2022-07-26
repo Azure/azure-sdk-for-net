@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class RepetitionIndex : IUtf8JsonSerializable
+    public partial class LogicWorkflowRepetitionIndex : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteEndObject();
         }
 
-        internal static RepetitionIndex DeserializeRepetitionIndex(JsonElement element)
+        internal static LogicWorkflowRepetitionIndex DeserializeLogicWorkflowRepetitionIndex(JsonElement element)
         {
             Optional<string> scopeName = default;
             int itemIndex = default;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new RepetitionIndex(scopeName.Value, itemIndex);
+            return new LogicWorkflowRepetitionIndex(scopeName.Value, itemIndex);
         }
     }
 }
