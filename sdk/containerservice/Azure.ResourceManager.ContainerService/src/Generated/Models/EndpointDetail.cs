@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System.Net;
+
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> connect information from the AKS agent nodes to a single endpoint. </summary>
@@ -20,7 +22,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="port"> The port an endpoint is connected to. </param>
         /// <param name="protocol"> The protocol used for connection. </param>
         /// <param name="description"> Description of the detail. </param>
-        internal EndpointDetail(string ipAddress, int? port, string protocol, string description)
+        internal EndpointDetail(IPAddress ipAddress, int? port, string protocol, string description)
         {
             IPAddress = ipAddress;
             Port = port;
@@ -29,7 +31,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> An IP Address that Domain Name currently resolves to. </summary>
-        public string IPAddress { get; }
+        public IPAddress IPAddress { get; }
         /// <summary> The port an endpoint is connected to. </summary>
         public int? Port { get; }
         /// <summary> The protocol used for connection. </summary>

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ManagedClusterIdentity DeserializeManagedClusterIdentity(JsonElement element)
         {
-            Optional<string> principalId = default;
+            Optional<Guid> principalId = default;
             Optional<Guid> tenantId = default;
             Optional<ResourceIdentityType> type = default;
             Optional<IDictionary<string, ResourceManager.Models.UserAssignedIdentity>> userAssignedIdentities = default;
@@ -47,7 +47,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 if (property.NameEquals("principalId"))
                 {
-                    principalId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    principalId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("tenantId"))
@@ -86,7 +91,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new ManagedClusterIdentity(principalId.Value, Optional.ToNullable(tenantId), Optional.ToNullable(type), Optional.ToDictionary(userAssignedIdentities));
+            return new ManagedClusterIdentity(Optional.ToNullable(principalId), Optional.ToNullable(tenantId), Optional.ToNullable(type), Optional.ToDictionary(userAssignedIdentities));
         }
     }
 }

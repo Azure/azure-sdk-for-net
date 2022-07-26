@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    internal partial class JavaScriptFunctionRetrieveDefaultDefinitionParameters : IUtf8JsonSerializable
+    public partial class JavaScriptFunctionRetrieveDefaultDefinitionParameters : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

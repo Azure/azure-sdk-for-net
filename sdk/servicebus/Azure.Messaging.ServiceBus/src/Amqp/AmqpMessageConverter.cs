@@ -145,13 +145,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         private static ArraySegment<byte> ReadStreamToArraySegment(Stream stream)
         {
-            if (stream == null)
-            {
-                return new ArraySegment<byte>();
-            }
-
             switch (stream)
             {
+                case { Length: < 1 }:
+                    return default;
+
                 case BufferListStream bufferListStream:
                     return bufferListStream.ReadBytes((int)stream.Length);
 
@@ -159,14 +157,22 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 {
                     using var memStreamCopy = new MemoryStream((int)(memStreamSource.Length - memStreamSource.Position));
                     memStreamSource.CopyTo(memStreamCopy, StreamBufferSizeInBytes);
-                    return new ArraySegment<byte>(memStreamCopy.ToArray());
+                    if (!memStreamCopy.TryGetBuffer(out ArraySegment<byte> segment))
+                    {
+                        segment = new ArraySegment<byte>(memStreamCopy.ToArray());
+                    }
+                    return segment;
                 }
 
                 default:
                 {
-                    using var memStream = new MemoryStream(StreamBufferSizeInBytes);
-                    stream.CopyTo(memStream, StreamBufferSizeInBytes);
-                    return new ArraySegment<byte>(memStream.ToArray());
+                    using var memStreamCopy = new MemoryStream(StreamBufferSizeInBytes);
+                    stream.CopyTo(memStreamCopy, StreamBufferSizeInBytes);
+                    if (!memStreamCopy.TryGetBuffer(out ArraySegment<byte> segment))
+                    {
+                        segment = new ArraySegment<byte>(memStreamCopy.ToArray());
+                    }
+                    return segment;
                 }
             }
         }
@@ -689,7 +695,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 case PropertyValueType.Stream:
                     if (mappingType == MappingType.ApplicationProperty)
                     {
-                        amqpObject = StreamToBytes((Stream)netObject);
+                        amqpObject = ReadStreamToArraySegment((Stream)netObject);
                     }
                     break;
                 case PropertyValueType.Uri:
@@ -706,7 +712,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     {
                         if (mappingType == MappingType.ApplicationProperty)
                         {
-                            amqpObject = StreamToBytes(netObjectAsStream);
+                            amqpObject = ReadStreamToArraySegment(netObjectAsStream);
                         }
                     }
                     else if (mappingType == MappingType.ApplicationProperty)
@@ -820,33 +826,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
 
             return netObject != null;
-        }
-
-        private static ArraySegment<byte> StreamToBytes(Stream stream)
-        {
-            ArraySegment<byte> buffer;
-            if (stream == null || stream.Length < 1)
-            {
-                buffer = default;
-            }
-            else
-            {
-                using (var memoryStream = new MemoryStream(512))
-                {
-                    stream.CopyTo(memoryStream, 512);
-                    buffer = new ArraySegment<byte>(memoryStream.ToArray());
-                }
-            }
-
-            return buffer;
-        }
-
-        private static Data ToData(AmqpMessage message)
-        {
-            ArraySegment<byte>[] payload = message.GetPayload();
-            var buffer = new BufferListStream(payload);
-            ArraySegment<byte> value = buffer.ReadBytes((int)buffer.Length);
-            return new Data { Value = value };
         }
 
         internal static AmqpMap GetSqlRuleFilterMap(SqlRuleFilter sqlRuleFilter)

@@ -1675,6 +1675,28 @@ namespace Azure.ResourceManager.MySql.Models
         public Azure.ResourceManager.MySql.Models.StorageProfile StorageProfile { get { throw null; } set { } }
         public Azure.ResourceManager.MySql.Models.ServerVersion? Version { get { throw null; } set { } }
     }
+    public partial class ServerPropertiesForDefaultCreate : Azure.ResourceManager.MySql.Models.ServerPropertiesForCreate
+    {
+        public ServerPropertiesForDefaultCreate(string administratorLogin, string administratorLoginPassword) { }
+        public string AdministratorLogin { get { throw null; } }
+        public string AdministratorLoginPassword { get { throw null; } }
+    }
+    public partial class ServerPropertiesForGeoRestore : Azure.ResourceManager.MySql.Models.ServerPropertiesForCreate
+    {
+        public ServerPropertiesForGeoRestore(string sourceServerId) { }
+        public string SourceServerId { get { throw null; } }
+    }
+    public partial class ServerPropertiesForReplica : Azure.ResourceManager.MySql.Models.ServerPropertiesForCreate
+    {
+        public ServerPropertiesForReplica(string sourceServerId) { }
+        public string SourceServerId { get { throw null; } }
+    }
+    public partial class ServerPropertiesForRestore : Azure.ResourceManager.MySql.Models.ServerPropertiesForCreate
+    {
+        public ServerPropertiesForRestore(string sourceServerId, System.DateTimeOffset restorePointInOn) { }
+        public System.DateTimeOffset RestorePointInOn { get { throw null; } }
+        public string SourceServerId { get { throw null; } }
+    }
     public enum ServerSecurityAlertPolicyState
     {
         Enabled = 0,

@@ -35,14 +35,19 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ManagedClusterAddonProfileIdentity DeserializeManagedClusterAddonProfileIdentity(JsonElement element)
         {
-            Optional<string> resourceId = default;
+            Optional<ResourceIdentifier> resourceId = default;
             Optional<string> clientId = default;
             Optional<string> objectId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceId"))
                 {
-                    resourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    resourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("clientId"))

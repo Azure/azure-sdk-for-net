@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> The parameters needed to retrieve the default function definition for a CSharp function. </summary>
-    internal partial class CSharpFunctionRetrieveDefaultDefinitionParameters : FunctionRetrieveDefaultDefinitionContent
+    public partial class CSharpFunctionRetrieveDefaultDefinitionParameters : FunctionRetrieveDefaultDefinitionContent
     {
         /// <summary> Initializes a new instance of CSharpFunctionRetrieveDefaultDefinitionParameters. </summary>
         public CSharpFunctionRetrieveDefaultDefinitionParameters()

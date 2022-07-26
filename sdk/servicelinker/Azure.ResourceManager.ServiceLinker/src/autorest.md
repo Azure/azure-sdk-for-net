@@ -34,7 +34,7 @@ rename-mapping:
   ValidateOperationResult.properties.reportEndTimeUtc: reportEndOn
   ValidationResultItem: LinkerValidationResultItemInfo
   ValidationResultStatus: LinkerValidationResultStatus
-
+  AzureKeyVaultProperties.connectAsKubernetesCsiDriver: DoesConnectAsKubernetesCsiDriver
 
 format-by-name-rules:
   'tenantId': 'uuid'

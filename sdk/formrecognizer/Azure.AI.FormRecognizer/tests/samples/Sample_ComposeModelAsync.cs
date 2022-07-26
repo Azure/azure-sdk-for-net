@@ -33,9 +33,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 #endif
             var officeSupplieOptions = new BuildModelOptions() { Description = "Purchase order - Office supplies" };
 
-            BuildModelOperation suppliesOperation = await client.StartBuildModelAsync(officeSuppliesUri, DocumentBuildMode.Template, buildModelOptions: officeSupplieOptions);
-            Response<DocumentModel> suppliesOperationResponse = await suppliesOperation.WaitForCompletionAsync();
-            DocumentModel officeSuppliesModel = suppliesOperationResponse.Value;
+            BuildModelOperation suppliesOperation = await client.BuildModelAsync(WaitUntil.Completed, officeSuppliesUri, DocumentBuildMode.Template, options: officeSupplieOptions);
+            DocumentModelDetails officeSuppliesModel = suppliesOperation.Value;
 
 #if SNIPPET
             Uri officeEquipmentUri = new Uri("<purchaseOrderOfficeEquipmentUri>");
@@ -44,9 +43,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 #endif
             var equipmentOptions = new BuildModelOptions() { Description = "Purchase order - Office Equipment" };
 
-            BuildModelOperation equipmentOperation = await client.StartBuildModelAsync(officeSuppliesUri, DocumentBuildMode.Template, buildModelOptions: equipmentOptions);
-            Response<DocumentModel> equipmentOperationResponse = await equipmentOperation.WaitForCompletionAsync();
-            DocumentModel officeEquipmentModel = equipmentOperationResponse.Value;
+            BuildModelOperation equipmentOperation = await client.BuildModelAsync(WaitUntil.Completed, officeSuppliesUri, DocumentBuildMode.Template, options: equipmentOptions);
+            DocumentModelDetails officeEquipmentModel = equipmentOperation.Value;
 
 #if SNIPPET
             Uri furnitureUri = new Uri("<purchaseOrderFurnitureUri>");
@@ -55,9 +53,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 #endif
             var furnitureOptions = new BuildModelOptions() { Description = "Purchase order - Furniture" };
 
-            BuildModelOperation furnitureOperation = await client.StartBuildModelAsync(officeSuppliesUri, DocumentBuildMode.Template, buildModelOptions: equipmentOptions);
-            Response<DocumentModel> furnitureOperationResponse = await furnitureOperation.WaitForCompletionAsync();
-            DocumentModel furnitureModel = furnitureOperationResponse.Value;
+            BuildModelOperation furnitureOperation = await client.BuildModelAsync(WaitUntil.Completed, officeSuppliesUri, DocumentBuildMode.Template, options: equipmentOptions);
+            DocumentModelDetails furnitureModel = furnitureOperation.Value;
 
 #if SNIPPET
             Uri cleaningSuppliesUri = new Uri("<purchaseOrderCleaningSuppliesUri>");
@@ -66,9 +63,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 #endif
             var cleaningOptions = new BuildModelOptions() { Description = "Purchase order - Cleaning Supplies" };
 
-            BuildModelOperation cleaningOperation = await client.StartBuildModelAsync(officeSuppliesUri, DocumentBuildMode.Template, buildModelOptions: equipmentOptions);
-            Response<DocumentModel> cleaningOperationResponse = await cleaningOperation.WaitForCompletionAsync();
-            DocumentModel cleaningSuppliesModel = cleaningOperationResponse.Value;
+            BuildModelOperation cleaningOperation = await client.BuildModelAsync(WaitUntil.Completed, officeSuppliesUri, DocumentBuildMode.Template, options: equipmentOptions);
+            DocumentModelDetails cleaningSuppliesModel = cleaningOperation.Value;
 
             #endregion
 
@@ -82,9 +78,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
                 cleaningSuppliesModel.ModelId
             };
 
-            BuildModelOperation operation = await client.StartComposeModelAsync(modelIds, description: "Composed Purchase order");
-            Response<DocumentModel> operationResponse = await operation.WaitForCompletionAsync();
-            DocumentModel purchaseOrderModel = operationResponse.Value;
+            BuildModelOperation operation = await client.ComposeModelAsync(WaitUntil.Completed, modelIds, description: "Composed Purchase order");
+            DocumentModelDetails purchaseOrderModel = operation.Value;
 
             Console.WriteLine($"  Model Id: {purchaseOrderModel.ModelId}");
             if (string.IsNullOrEmpty(purchaseOrderModel.Description))

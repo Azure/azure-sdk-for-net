@@ -28,7 +28,6 @@ namespace Azure.AI.TextAnalytics.Models
         private const string KeyPhraseExtractionValue = "KeyPhraseExtraction";
         private const string EntityLinkingValue = "EntityLinking";
         private const string HealthcareValue = "Healthcare";
-        private const string ExtractiveSummarizationValue = "ExtractiveSummarization";
         private const string CustomEntityRecognitionValue = "CustomEntityRecognition";
         private const string CustomSingleLabelClassificationValue = "CustomSingleLabelClassification";
         private const string CustomMultiLabelClassificationValue = "CustomMultiLabelClassification";
@@ -45,8 +44,6 @@ namespace Azure.AI.TextAnalytics.Models
         public static AnalyzeTextLROTaskKind EntityLinking { get; } = new AnalyzeTextLROTaskKind(EntityLinkingValue);
         /// <summary> Healthcare. </summary>
         public static AnalyzeTextLROTaskKind Healthcare { get; } = new AnalyzeTextLROTaskKind(HealthcareValue);
-        /// <summary> ExtractiveSummarization. </summary>
-        public static AnalyzeTextLROTaskKind ExtractiveSummarization { get; } = new AnalyzeTextLROTaskKind(ExtractiveSummarizationValue);
         /// <summary> CustomEntityRecognition. </summary>
         public static AnalyzeTextLROTaskKind CustomEntityRecognition { get; } = new AnalyzeTextLROTaskKind(CustomEntityRecognitionValue);
         /// <summary> CustomSingleLabelClassification. </summary>

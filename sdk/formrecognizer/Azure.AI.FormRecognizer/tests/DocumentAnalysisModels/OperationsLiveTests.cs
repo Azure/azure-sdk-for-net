@@ -35,7 +35,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var client = CreateDocumentAnalysisClient(out var nonInstrumentedClient);
 
             var uri = DocumentAnalysisTestEnvironment.CreateUri(TestFile.ReceiptJpg);
-            var operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-receipt", uri);
+            var operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Started, "prebuilt-receipt", uri);
             Assert.IsNotNull(operation.GetRawResponse());
 
             var sameOperation = InstrumentOperation(new AnalyzeDocumentOperation(operation.Id, nonInstrumentedClient));
@@ -52,7 +52,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
             var modelId = Recording.GenerateId();
 
-            var operation = await client.StartBuildModelAsync(trainingFilesUri, DocumentBuildMode.Template, modelId);
+            var operation = await client.BuildModelAsync(WaitUntil.Started, trainingFilesUri, DocumentBuildMode.Template, modelId);
             Assert.IsNotNull(operation.GetRawResponse());
 
             var sameOperation = InstrumentOperation(new BuildModelOperation(operation.Id, nonInstrumentedClient));
@@ -65,12 +65,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [RecordedTest]
         public async Task BuildModelOperationPercentageCompletedValue()
         {
-            var client = CreateDocumentModelAdministrationClient(out var _);
+            var client = CreateDocumentModelAdministrationClient();
             var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
             var modelId = Recording.GenerateId();
 
-            var operation = await client.StartBuildModelAsync(trainingFilesUri, DocumentBuildMode.Template, modelId);
-            Assert.AreEqual(0, operation.PercentCompleted);
+            var operation = await client.BuildModelAsync(WaitUntil.Started, trainingFilesUri, DocumentBuildMode.Template, modelId);
+            Assert.Throws<InvalidOperationException>(() => _ = operation.PercentCompleted);
 
             await operation.WaitForCompletionAsync();
 
@@ -89,7 +89,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var targetModelId = Recording.GenerateId();
             CopyAuthorization targetAuth = await client.GetCopyAuthorizationAsync(targetModelId);
 
-            var operation = await client.StartCopyModelToAsync(trainedModel.ModelId, targetAuth);
+            var operation = await client.CopyModelToAsync(WaitUntil.Started, trainedModel.ModelId, targetAuth);
             Assert.IsNotNull(operation.GetRawResponse());
 
             var sameOperation = InstrumentOperation(new CopyModelOperation(operation.Id, nonInstrumentedClient));
@@ -102,7 +102,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [RecordedTest]
         public async Task CopyModelOperationPercentageCompletedValue()
         {
-            var client = CreateDocumentModelAdministrationClient(out var nonInstrumentedClient);
+            var client = CreateDocumentModelAdministrationClient();
             var modelId = Recording.GenerateId();
 
             await using var trainedModel = await CreateDisposableBuildModelAsync(modelId);
@@ -110,8 +110,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var targetModelId = Recording.GenerateId();
             CopyAuthorization targetAuth = await client.GetCopyAuthorizationAsync(targetModelId);
 
-            var operation = await client.StartCopyModelToAsync(trainedModel.ModelId, targetAuth);
-            Assert.AreEqual(0, operation.PercentCompleted);
+            var operation = await client.CopyModelToAsync(WaitUntil.Started, trainedModel.ModelId, targetAuth);
+            Assert.Throws<InvalidOperationException>(() => _ = operation.PercentCompleted);
 
             await operation.WaitForCompletionAsync();
 

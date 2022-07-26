@@ -3,14 +3,27 @@
 ## 4.0.0-beta.5 (Unreleased)
 
 ### Features Added
+- Added `Length` property to `BoundingPolygon`.
 
 ### Breaking Changes
-- Renamed method `StartCreateComposedModel` to `StartComposeModel`.
+- Updated all long-running operation client methods to a new pattern. This affects `StartAnalyzeDocument`, `StartAnalyzeDocumentFromUri`, `StartBuildModel`, `StartCopyModelTo`, and `StartCreateComposedModel` methods. Changes are:
+  - Removed the "Start" prefix. For example, `StartAnalyzeDocument` was renamed to `AnalyzeDocument`.
+  - Added a new required parameter: `waitUntil`. It specifies whether the operation should run to completion before returning or not, removing the need to call `WaitForCompletion` in most scenarios.
+- Renamed `DocumentModel` to `DocumentModelDetails`.
+- Renamed `DocumentModelInfo` to `DocumentModelSummary`.
+- Renamed `ModelOperation` to `DocumentModelOperationDetails`.
+- Renamed `ModelOperationInfo` to `DocumentModelOperationSummary`.
+- Renamed `AccountProperties` to `ResourceDetails`.
+- Renamed method `GetAccountProperties` to `GetResourceDetails`.
+- Renamed method `StartCreateComposedModel` to `ComposeModel`.
 - Renamed `BuildModelOptions.ModelDescription` to `Description`.
 - Renamed `modelDescription` parameters to `description` in methods `GetCopyAuthorization` and `StartCreateComposedModel` (now called `StartComposeModel`).
 - Renamed `CopyAuthorization.ExpirationDateTime` to `ExpiresOn`.
-- Renamed `DocumentModelInfo` to `DocumentModelSummary`.
 - Removed `DocumentCaption` and `DocumentFootnote` features.
+- Renamed parameter `analyzeDocumentOptions` to `options` in the `StartAnalyzeDocument` and `StartAnalyzeDocumentFromUri` methods.
+- Renamed parameter `buildModelOptions` to `options` in the `StartBuildModel` method.
+- `FormRecognizerClientOptions.Audience` and `DocumentAnalysisClientOptions.Audience` now default to `null`.
+- In the `DocumentAnalysis` namespace, `CopyModelOperation.PercentCompleted` and `BuildModelOperation.PercentCompleted` now throw an `InvalidOperationException` if called before a call to `UpdateStatus`.
 
 ### Bugs Fixed
 
