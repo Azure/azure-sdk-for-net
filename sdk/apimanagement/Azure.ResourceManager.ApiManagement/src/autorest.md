@@ -288,7 +288,15 @@ directive:
       $.ApiManagementServiceBaseProperties.properties.publicIpAddressId["x-nullable"] = true;
       $.ApiManagementServiceBaseProperties.properties.privateEndpointConnections["x-nullable"] = true;
       $.ApiVersionConstraint.properties.minApiVersion["x-nullable"] = true;
-      # $.ApiManagementServiceResource.properties.identity["x-nullable"] = true;
+  - from: apimdeployment.json
+    where: $.definitions
+    transform: >
+      $.ApiManagementServiceResource.properties.identity["x-nullable"] = true;
+      # $.ApiManagementServiceResource.properties.identity = {
+      #     "$ref": "#/definitions/ApiManagementServiceIdentity",
+      #     "description": "Managed service identity of the Api Management service.",
+      #     "x-nullable": true
+      #   };
       # $.ApiManagementServiceUpdateParameters.properties.identity["x-nullable"] = true;
   - from: apimanagement.json
     where: $.parameters
