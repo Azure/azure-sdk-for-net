@@ -16,20 +16,17 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> Initializes a new instance of CallDisconnectedEvent. </summary>
-        /// <param name="type"></param>
+        /// <param name="eventType"></param>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
-        internal CallDisconnectedEvent(AcsEventType? type, string callConnectionId, string serverCallId, string correlationId)
+        internal CallDisconnectedEvent(AcsEventType eventType, string callConnectionId, string serverCallId, string correlationId)
         {
-            Type = type;
+            EventType = eventType;
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
             CorrelationId = correlationId;
         }
-
-        /// <summary> Gets the type. </summary>
-        public AcsEventType? Type { get; }
         /// <summary> Call connection ID. </summary>
         public string CallConnectionId { get; }
         /// <summary> Server call ID. </summary>

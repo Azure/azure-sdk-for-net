@@ -46,51 +46,51 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> Initializes a new instance of CallConnectedEvent. </summary>
-        /// <param name="type"></param>
+        /// <param name="eventType"></param>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <returns> A new <see cref="CallingServer.CallConnectedEvent"/> instance for mocking. </returns>
-        public static CallConnectedEvent CallConnectedEvent(AcsEventType? type = null, string callConnectionId = null, string serverCallId = null, string correlationId = null)
+        public static CallConnectedEvent CallConnectedEvent(AcsEventType eventType = default, string callConnectionId = null, string serverCallId = null, string correlationId = null)
         {
-            return new CallConnectedEvent(type, callConnectionId, serverCallId, correlationId);
+            return new CallConnectedEvent(eventType, callConnectionId, serverCallId, correlationId);
         }
 
         /// <summary> Initializes a new instance of CallDisconnectedEvent. </summary>
-        /// <param name="type"></param>
+        /// <param name="eventType"></param>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <returns> A new <see cref="CallingServer.CallDisconnectedEvent"/> instance for mocking. </returns>
-        public static CallDisconnectedEvent CallDisconnectedEvent(AcsEventType? type = null, string callConnectionId = null, string serverCallId = null, string correlationId = null)
+        public static CallDisconnectedEvent CallDisconnectedEvent(AcsEventType eventType = default, string callConnectionId = null, string serverCallId = null, string correlationId = null)
         {
-            return new CallDisconnectedEvent(type, callConnectionId, serverCallId, correlationId);
+            return new CallDisconnectedEvent(eventType, callConnectionId, serverCallId, correlationId);
         }
 
         /// <summary> Initializes a new instance of CallTransferAcceptedEvent. </summary>
         /// <param name="operationContext"> Operation context. </param>
         /// <param name="resultInfo"></param>
-        /// <param name="type"></param>
+        /// <param name="eventType"></param>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <returns> A new <see cref="CallingServer.CallTransferAcceptedEvent"/> instance for mocking. </returns>
-        public static CallTransferAcceptedEvent CallTransferAcceptedEvent(string operationContext = null, ResultInformation resultInfo = null, AcsEventType? type = null, string callConnectionId = null, string serverCallId = null, string correlationId = null)
+        public static CallTransferAcceptedEvent CallTransferAcceptedEvent(string operationContext = null, ResultInformation resultInfo = null, AcsEventType eventType = default, string callConnectionId = null, string serverCallId = null, string correlationId = null)
         {
-            return new CallTransferAcceptedEvent(operationContext, resultInfo, type, callConnectionId, serverCallId, correlationId);
+            return new CallTransferAcceptedEvent(operationContext, resultInfo, eventType, callConnectionId, serverCallId, correlationId);
         }
 
         /// <summary> Initializes a new instance of CallTransferFailedEvent. </summary>
         /// <param name="operationContext"> Operation context. </param>
         /// <param name="resultInfo"></param>
-        /// <param name="type"></param>
+        /// <param name="eventType"></param>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <returns> A new <see cref="CallingServer.CallTransferFailedEvent"/> instance for mocking. </returns>
-        public static CallTransferFailedEvent CallTransferFailedEvent(string operationContext = null, ResultInformation resultInfo = null, AcsEventType? type = null, string callConnectionId = null, string serverCallId = null, string correlationId = null)
+        public static CallTransferFailedEvent CallTransferFailedEvent(string operationContext = null, ResultInformation resultInfo = null, AcsEventType eventType = default, string callConnectionId = null, string serverCallId = null, string correlationId = null)
         {
-            return new CallTransferFailedEvent(operationContext, resultInfo, type, callConnectionId, serverCallId, correlationId);
+            return new CallTransferFailedEvent(operationContext, resultInfo, eventType, callConnectionId, serverCallId, correlationId);
         }
     }
 }

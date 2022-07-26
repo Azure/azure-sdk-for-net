@@ -46,7 +46,7 @@ namespace Azure.Communication.CallingServer
                     continue;
                 }
             }
-            return new CallConnectedEvent(Optional.ToNullable(type), callConnectionId.Value, serverCallId.Value, correlationId.Value);
+            return new CallConnectedEvent(type, callConnectionId.Value, serverCallId.Value, correlationId.Value);
         }
     }
 }

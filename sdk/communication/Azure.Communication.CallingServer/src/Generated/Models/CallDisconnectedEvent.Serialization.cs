@@ -46,7 +46,7 @@ namespace Azure.Communication.CallingServer
                     continue;
                 }
             }
-            return new CallDisconnectedEvent(Optional.ToNullable(type), callConnectionId.Value, serverCallId.Value, correlationId.Value);
+            return new CallDisconnectedEvent(type, callConnectionId.Value, serverCallId.Value, correlationId.Value);
         }
     }
 }
