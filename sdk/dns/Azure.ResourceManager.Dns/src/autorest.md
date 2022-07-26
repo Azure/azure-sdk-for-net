@@ -75,6 +75,14 @@ directive:
     where: $.definitions.ZoneUpdate
     transform: >
       $["x-ms-client-name"] = "ZoneUpdateOptions";
+
+  - from: swagger-document
+    where: $.definitions.NsRecord.properties.nsdname
+    transform: $["x-ms-client-name"] = "nsdName";
+  - from: swagger-document
+    where: $.definitions.PtrRecord.properties.ptrdname
+    transform: $["x-ms-client-name"] = "ptrdName";
+
   - from: swagger-document
     where: $.definitions.MxRecord
     transform: $["x-ms-client-name"] = "MXRecord";

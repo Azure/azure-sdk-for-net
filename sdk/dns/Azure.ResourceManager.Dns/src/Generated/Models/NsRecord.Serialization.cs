@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.Dns.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Nsdname))
+            if (Optional.IsDefined(NsdName))
             {
                 writer.WritePropertyName("nsdname");
-                writer.WriteStringValue(Nsdname);
+                writer.WriteStringValue(NsdName);
             }
             writer.WriteEndObject();
         }
