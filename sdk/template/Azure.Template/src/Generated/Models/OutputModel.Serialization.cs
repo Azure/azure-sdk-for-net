@@ -14,22 +14,22 @@ namespace Azure.Template.Models
     {
         internal static OutputModel DeserializeOutputModel(JsonElement element)
         {
-            DayOfTheWeek day = default;
-            TranslationLanguage language = default;
+            NestedBasicModel nestedModel = default;
+            NestedCollectionModel nestedCollectionModel = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("Day"))
+                if (property.NameEquals("NestedModel"))
                 {
-                    day = property.Value.GetString().ToDayOfTheWeek();
+                    nestedModel = NestedBasicModel.DeserializeNestedBasicModel(property.Value);
                     continue;
                 }
-                if (property.NameEquals("Language"))
+                if (property.NameEquals("NestedCollectionModel"))
                 {
-                    language = new TranslationLanguage(property.Value.GetString());
+                    nestedCollectionModel = NestedCollectionModel.DeserializeNestedCollectionModel(property.Value);
                     continue;
                 }
             }
-            return new OutputModel(day, language);
+            return new OutputModel(nestedModel, nestedCollectionModel);
         }
     }
 }

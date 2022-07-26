@@ -5,23 +5,35 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Template.Models
 {
-    /// <summary> Output model with enum properties. </summary>
+    /// <summary> Output model with nested model properties. </summary>
     public partial class OutputModel
     {
         /// <summary> Initializes a new instance of OutputModel. </summary>
-        /// <param name="day"> Required standard enum value. </param>
-        /// <param name="language"> Required string enum value. </param>
-        internal OutputModel(DayOfTheWeek day, TranslationLanguage language)
+        /// <param name="nestedModel"> Required nested basic model. </param>
+        /// <param name="nestedCollectionModel"> Required nested collection-property model. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nestedModel"/> or <paramref name="nestedCollectionModel"/> is null. </exception>
+        internal OutputModel(NestedBasicModel nestedModel, NestedCollectionModel nestedCollectionModel)
         {
-            Day = day;
-            Language = language;
+            if (nestedModel == null)
+            {
+                throw new ArgumentNullException(nameof(nestedModel));
+            }
+            if (nestedCollectionModel == null)
+            {
+                throw new ArgumentNullException(nameof(nestedCollectionModel));
+            }
+
+            NestedModel = nestedModel;
+            NestedCollectionModel = nestedCollectionModel;
         }
 
-        /// <summary> Required standard enum value. </summary>
-        public DayOfTheWeek Day { get; }
-        /// <summary> Required string enum value. </summary>
-        public TranslationLanguage Language { get; }
+        /// <summary> Required nested basic model. </summary>
+        public NestedBasicModel NestedModel { get; }
+        /// <summary> Required nested collection-property model. </summary>
+        public NestedCollectionModel NestedCollectionModel { get; }
     }
 }

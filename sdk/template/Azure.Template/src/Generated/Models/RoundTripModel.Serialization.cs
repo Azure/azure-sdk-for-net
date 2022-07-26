@@ -15,31 +15,31 @@ namespace Azure.Template.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("Day");
-            writer.WriteStringValue(Day.ToSerialString());
-            writer.WritePropertyName("Language");
-            writer.WriteStringValue(Language.ToString());
+            writer.WritePropertyName("NestedModel");
+            writer.WriteObjectValue(NestedModel);
+            writer.WritePropertyName("NestedCollectionModel");
+            writer.WriteObjectValue(NestedCollectionModel);
             writer.WriteEndObject();
         }
 
         internal static RoundTripModel DeserializeRoundTripModel(JsonElement element)
         {
-            DayOfTheWeek day = default;
-            TranslationLanguage language = default;
+            NestedBasicModel nestedModel = default;
+            NestedCollectionModel nestedCollectionModel = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("Day"))
+                if (property.NameEquals("NestedModel"))
                 {
-                    day = property.Value.GetString().ToDayOfTheWeek();
+                    nestedModel = NestedBasicModel.DeserializeNestedBasicModel(property.Value);
                     continue;
                 }
-                if (property.NameEquals("Language"))
+                if (property.NameEquals("NestedCollectionModel"))
                 {
-                    language = new TranslationLanguage(property.Value.GetString());
+                    nestedCollectionModel = NestedCollectionModel.DeserializeNestedCollectionModel(property.Value);
                     continue;
                 }
             }
-            return new RoundTripModel(day, language);
+            return new RoundTripModel(nestedModel, nestedCollectionModel);
         }
     }
 }

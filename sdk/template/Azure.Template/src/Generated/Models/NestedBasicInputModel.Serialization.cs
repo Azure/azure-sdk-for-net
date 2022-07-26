@@ -10,15 +10,15 @@ using Azure.Core;
 
 namespace Azure.Template.Models
 {
-    public partial class InputModel : IUtf8JsonSerializable
+    public partial class NestedBasicInputModel : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("NestedModel");
-            writer.WriteObjectValue(NestedModel);
-            writer.WritePropertyName("NestedCollectionModel");
-            writer.WriteObjectValue(NestedCollectionModel);
+            writer.WritePropertyName("requiredString");
+            writer.WriteStringValue(RequiredString);
+            writer.WritePropertyName("requiredInt");
+            writer.WriteNumberValue(RequiredInt);
             writer.WriteEndObject();
         }
     }
