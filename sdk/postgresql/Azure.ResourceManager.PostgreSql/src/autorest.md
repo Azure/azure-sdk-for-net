@@ -78,7 +78,6 @@ prepend-rp-prefix:
   - MinimalTlsVersionEnum
   - GeoRedundantBackup
   - InfrastructureEncryption
-  - NameAvailability
   - NameAvailabilityRequest
   - PerformanceTierListResult
   - PerformanceTierProperties
@@ -121,8 +120,10 @@ rename-mapping:
   PerformanceTierProperties.maxLargeStorageMB: MaxLargeStorageInMB
   PerformanceTierServiceLevelObjectives.maxStorageMB: MaxStorageInMB
   PerformanceTierServiceLevelObjectives.minStorageMB: MinStorageInMB
+  NameAvailability: PostgreSqlNameAvailabilityResult
 override-operation-name:
   ServerParameters_ListUpdateConfigurations: UpdateConfigurations
+  CheckNameAvailability_Execute: CheckPostgreSqlNameAvailability
 directive:
   - from: postgresql.json
     where: $.definitions
@@ -212,20 +213,11 @@ rename-mapping:
   Network: PostgreSqlFlexibleServerNetwork
   HighAvailability: PostgreSqlFlexibleServerHighAvailability
   HighAvailabilityMode: PostgreSqlFlexibleServerHighAvailabilityMode
-#   ServerProperties: PostgreSqlFlexibleServerProperties
-#   ServerPropertiesForUpdate: PostgreSqlFlexibleServerPropertiesForUpdate
-#   ServerForUpdate: PostgreSqlFlexibleServerForUpdate
   ServerListResult: PostgreSqlFlexibleServerListResult
   ServerState: PostgreSqlFlexibleServerState
-#   ServerBackupListResult: PostgreSqlFlexibleServerBackupListResult
-#   FirewallRuleProperties: PostgreSqlFlexibleServerFirewallRuleProperties
   FirewallRuleListResult: PostgreSqlFlexibleServerFirewallRuleListResult
-#   DatabaseProperties: PostgreSqlFlexibleServer
   DatabaseListResult: PostgreSqlFlexibleServerDatabaseListResult
-#   ConfigurationSource: PostgreSqlFlexibleServerConfigurationSource
   ConfigurationListResult: PostgreSqlFlexibleServerConfigurationListResult
-#   ConfigurationForBatchUpdate: PostgreSqlFlexibleServerConfigurationForBatchUpdate
-#   ConfigurationListForBatchUpdate: PostgreSqlFlexibleServerConfigurationListForBatchUpdate
   VirtualNetworkSubnetUsageParameter: PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter
   DelegatedSubnetUsage: PostgreSqlFlexibleServerDelegatedSubnetUsage
   VirtualNetworkSubnetUsageResult: PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult
@@ -235,15 +227,10 @@ rename-mapping:
   ServerEditionCapability: PostgreSqlFlexibleServerEditionCapability
   CapabilityProperties: PostgreSqlFlexibleServerCapabilityProperties
   CapabilitiesListResult: PostgreSqlFlexibleServerCapabilitiesListResult
-#   GetPrivateDnsZoneSuffixResponse: PostgreSqlFlexibleServerPrivateDnsZoneSuffixResponse
   NameAvailabilityRequest: PostgreSqlFlexibleServerNameAvailabilityRequest
-  NameAvailability: PostgreSqlFlexibleServerNameAvailability
+  NameAvailability: PostgreSqlFlexibleServerNameAvailabilityResult
   CreateMode: PostgreSqlFlexibleServerCreateMode
-#   DataEncryptionType: PostgreSqlFlexibleServerDataEncryptionType
   SkuTier: PostgreSqlFlexibleServerSkuTier
-#   IsReadOnly: PostgreSqlFlexibleServerConfigReadOnlyState
-#   IsDynamicConfig: PostgreSqlFlexibleServerConfigDynamicState
-#   IsConfigPendingRestart: PostgreSqlFlexibleServerConfigPendingRestartState
   NameAvailability.nameAvailable: IsNameAvailable
   Storage.storageSizeGB: StorageSizeInGB
   StorageMBCapability.storageSizeMB: StorageSizeInMB
@@ -255,4 +242,6 @@ rename-mapping:
   ServerPublicNetworkAccessState: PostgreSqlFlexibleServerPublicNetworkAccessState
   CapabilityProperties.supportedHAMode: SupportedHAModes
   StorageEditionCapability.supportedStorageMB: SupportedStorageCapabilities
+override-operation-name:
+  CheckNameAvailability_Execute: CheckPostgreSqlFlexibleServerNameAvailability
 ```

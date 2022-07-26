@@ -10,20 +10,20 @@ using Azure.Core;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Represents a resource name availability. </summary>
-    public partial class PostgreSqlFlexibleServerNameAvailability
+    public partial class PostgreSqlFlexibleServerNameAvailabilityResult
     {
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerNameAvailability. </summary>
-        internal PostgreSqlFlexibleServerNameAvailability()
+        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerNameAvailabilityResult. </summary>
+        internal PostgreSqlFlexibleServerNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerNameAvailability. </summary>
+        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerNameAvailabilityResult. </summary>
         /// <param name="message"> Error Message. </param>
         /// <param name="isNameAvailable"> Indicates whether the resource name is available. </param>
         /// <param name="name"> name of the PostgreSQL server. </param>
         /// <param name="resourceType"> type of the server. </param>
         /// <param name="reason"> The name availability reason. </param>
-        internal PostgreSqlFlexibleServerNameAvailability(string message, bool? isNameAvailable, string name, ResourceType? resourceType, PostgreSqlFlexibleServerNameUnavailableReason? reason)
+        internal PostgreSqlFlexibleServerNameAvailabilityResult(string message, bool? isNameAvailable, string name, ResourceType? resourceType, PostgreSqlFlexibleServerNameUnavailableReason? reason)
         {
             Message = message;
             IsNameAvailable = isNameAvailable;

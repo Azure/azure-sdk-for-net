@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    public partial class PostgreSqlFlexibleServerNameAvailability
+    public partial class PostgreSqlFlexibleServerNameAvailabilityResult
     {
-        internal static PostgreSqlFlexibleServerNameAvailability DeserializePostgreSqlFlexibleServerNameAvailability(JsonElement element)
+        internal static PostgreSqlFlexibleServerNameAvailabilityResult DeserializePostgreSqlFlexibleServerNameAvailabilityResult(JsonElement element)
         {
             Optional<string> message = default;
             Optional<bool> nameAvailable = default;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     continue;
                 }
             }
-            return new PostgreSqlFlexibleServerNameAvailability(message.Value, Optional.ToNullable(nameAvailable), name.Value, Optional.ToNullable(type), Optional.ToNullable(reason));
+            return new PostgreSqlFlexibleServerNameAvailabilityResult(message.Value, Optional.ToNullable(nameAvailable), name.Value, Optional.ToNullable(type), Optional.ToNullable(reason));
         }
     }
 }

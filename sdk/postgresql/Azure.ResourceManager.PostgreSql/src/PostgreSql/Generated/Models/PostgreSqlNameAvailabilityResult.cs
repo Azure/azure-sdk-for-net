@@ -8,18 +8,18 @@
 namespace Azure.ResourceManager.PostgreSql.Models
 {
     /// <summary> Represents a resource name availability. </summary>
-    public partial class PostgreSqlNameAvailability
+    public partial class PostgreSqlNameAvailabilityResult
     {
-        /// <summary> Initializes a new instance of PostgreSqlNameAvailability. </summary>
-        internal PostgreSqlNameAvailability()
+        /// <summary> Initializes a new instance of PostgreSqlNameAvailabilityResult. </summary>
+        internal PostgreSqlNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlNameAvailability. </summary>
+        /// <summary> Initializes a new instance of PostgreSqlNameAvailabilityResult. </summary>
         /// <param name="message"> Error Message. </param>
         /// <param name="isNameAvailable"> Indicates whether the resource name is available. </param>
         /// <param name="reason"> Reason for name being unavailable. </param>
-        internal PostgreSqlNameAvailability(string message, bool? isNameAvailable, string reason)
+        internal PostgreSqlNameAvailabilityResult(string message, bool? isNameAvailable, string reason)
         {
             Message = message;
             IsNameAvailable = isNameAvailable;

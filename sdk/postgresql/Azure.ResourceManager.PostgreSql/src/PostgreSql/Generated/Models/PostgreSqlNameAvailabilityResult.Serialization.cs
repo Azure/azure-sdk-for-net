@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
-    public partial class PostgreSqlNameAvailability
+    public partial class PostgreSqlNameAvailabilityResult
     {
-        internal static PostgreSqlNameAvailability DeserializePostgreSqlNameAvailability(JsonElement element)
+        internal static PostgreSqlNameAvailabilityResult DeserializePostgreSqlNameAvailabilityResult(JsonElement element)
         {
             Optional<string> message = default;
             Optional<bool> nameAvailable = default;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                     continue;
                 }
             }
-            return new PostgreSqlNameAvailability(message.Value, Optional.ToNullable(nameAvailable), reason.Value);
+            return new PostgreSqlNameAvailabilityResult(message.Value, Optional.ToNullable(nameAvailable), reason.Value);
         }
     }
 }
