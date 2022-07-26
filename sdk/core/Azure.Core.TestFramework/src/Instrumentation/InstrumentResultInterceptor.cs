@@ -61,17 +61,23 @@ namespace Azure.Core.TestFramework
                 type.GetGenericTypeDefinition() == typeof(Task<>) &&
                 typeof(Operation).IsAssignableFrom(arguments[0]))
             {
-                bool modifiedAskToWait = false;
+                bool swappedWaitUntilArg = false;
                 WaitUntil? current = invocation.Arguments[0] as WaitUntil?;
+
+                // We swap out WaitUntil.Completed for WaitUntil.Started when in Playback because otherwise the operation
+                // would not be instrumented when WaitForCompletion is called on it, which would mean that
+                // the zero polling strategy wouldn't be used.
                 if (current == WaitUntil.Completed && _testMode == RecordedTestMode.Playback)
                 {
-                    modifiedAskToWait = true;
+                    swappedWaitUntilArg = true;
                     invocation.Arguments[0] = WaitUntil.Started;
                 }
 
+                // This will asynchronously invoke the operation and instrument it.
                 DiagnosticScopeValidatingInterceptor.WrapAsyncResult(invocation, this, InstrumentOperationInterceptorMethodInfo);
 
-                if (modifiedAskToWait)
+                // if we swapped out WaitUntil.Completed, we now will need to call WaitForCompletion.
+                if (swappedWaitUntilArg)
                 {
                     if (TaskExtensions.IsTaskFaulted(invocation.ReturnValue))
                         return;
