@@ -2,10 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Globalization;
 
-namespace Azure.Core.TestFramework
+namespace Azure.Core
 {
-    internal readonly struct VersionString : IComparable
+    internal readonly struct ApiVersionString : IComparable
     {
         //length of yyyy-MM-dd string
         private const int DateStringSize = 10;
@@ -15,7 +16,7 @@ namespace Azure.Core.TestFramework
         private string RawVersion { get; }
         private DateTime VersionDate { get; }
 
-        public VersionString(string version)
+        public ApiVersionString(string version)
         {
             Argument.AssertNotNull(version, nameof(version));
 
@@ -32,13 +33,13 @@ namespace Azure.Core.TestFramework
             }
             ReadOnlySpan<char> datePortion = chars.Slice(0, IsGa ? chars.Length : index);
 #if NET6_0_OR_GREATER
-            VersionDate = DateTime.Parse(datePortion);
+            VersionDate = DateTime.Parse(datePortion, CultureInfo.InvariantCulture);
 #else
-            VersionDate = DateTime.Parse(datePortion.ToString());
+            VersionDate = DateTime.Parse(datePortion.ToString(), CultureInfo.InvariantCulture);
 #endif
         }
 
-        private bool IsGreaterThan(VersionString other)
+        private bool IsGreaterThan(ApiVersionString other)
         {
             if (VersionDate != other.VersionDate)
                 return VersionDate > other.VersionDate;
@@ -49,25 +50,25 @@ namespace Azure.Core.TestFramework
             if (other.IsGa)
                 return false;
 
-            return PreviewString.CompareTo(other.PreviewString) > 0;
+            return string.CompareOrdinal(PreviewString, other.PreviewString) > 0;
         }
 
-        public static VersionString FromString(object version)
+        public static ApiVersionString FromString(object version)
         {
             string vStr = version as string;
             if (vStr is null)
                 throw new FormatException();
 
-            return new VersionString(vStr);
+            return new ApiVersionString(vStr);
         }
 
         public int CompareTo(object obj)
         {
-            if (obj is not VersionString other)
+            if (obj is not ApiVersionString other)
             {
                 if (obj is not string otherStr)
                     return 1;
-                other = new VersionString(otherStr);
+                other = new ApiVersionString(otherStr);
             }
 
             if (RawVersion.Equals(other.RawVersion))
