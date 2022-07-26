@@ -305,4 +305,11 @@ directive:
         "itemName": "keys",
         "nextLinkName": null
       };
+  - from: swagger-document
+    where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/regenerateKey"].post
+    transform: >
+      $["x-ms-pageable"] = {
+        "itemName": "keys",
+        "nextLinkName": null
+      };
 ```
