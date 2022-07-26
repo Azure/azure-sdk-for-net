@@ -34,7 +34,6 @@ format-by-name-rules:
   '*SubnetId': 'arm-id'
   '*ResourceId': 'arm-id'
   'ResourceType': 'resource-type'
-#   'LastAvailableBackupDateTime': 'date-time'
   '*IPAddress': 'ip-address'
 
 rename-rules:
@@ -86,10 +85,8 @@ prepend-rp-prefix:
   - MinimalTlsVersionEnum
   - GeoRedundantBackup
   - InfrastructureEncryption
-  - NameAvailability
   - NameAvailabilityRequest
   - PerformanceTierListResult
-  - PerformanceTierProperties
   - PerformanceTierServiceLevelObjectives
   - PrivateEndpointProvisioningState
   - PrivateLinkServiceConnectionStateStatus
@@ -142,6 +139,8 @@ rename-mapping:
   PerformanceTierProperties.maxLargeStorageMB: MaxLargeStorageInMB
   PerformanceTierServiceLevelObjectives.maxStorageMB: MaxStorageInMB
   PerformanceTierServiceLevelObjectives.minStorageMB: MinStorageInMB
+  NameAvailability: MySqlNameAvailabilityResult
+  PerformanceTierProperties: MySqlPerformanceTier
 
 override-operation-name:
   ServerParameters_ListUpdateConfigurations: UpdateConfigurations
@@ -150,6 +149,7 @@ override-operation-name:
   MySqlServers_Start: Start
   MySqlServers_Stop: Stop
   MySqlServers_Upgrade: Upgrade
+  CheckNameAvailability_Execute: CheckMySqlNameAvailability
 
 directive:
   - rename-operation:
@@ -276,7 +276,7 @@ rename-mapping:
   CapabilitiesListResult: MySqlFlexibleServerCapabilitiesListResult
   GetPrivateDnsZoneSuffixResponse: MySqlFlexibleServerPrivateDnsZoneSuffixResponse
   NameAvailabilityRequest: MySqlFlexibleServerNameAvailabilityRequest
-  NameAvailability: MySqlFlexibleServerNameAvailability
+  NameAvailability: MySqlFlexibleServerNameAvailabilityResult
   CreateMode: MySqlFlexibleServerCreateMode
   DataEncryptionType: MySqlFlexibleServerDataEncryptionType
   SkuTier: MySqlFlexibleServerSkuTier
@@ -286,4 +286,6 @@ rename-mapping:
   NameAvailability.nameAvailable: IsNameAvailable
   Storage.storageSizeGB: StorageSizeInGB
   SkuCapability.supportedMemoryPerVCoreMB: SupportedMemoryPerVCoreInMB
+override-operation-name:
+  CheckNameAvailability_Execute: CheckMySqlFlexibleServerNameAvailability
 ```

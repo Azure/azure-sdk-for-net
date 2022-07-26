@@ -121,10 +121,10 @@ namespace Azure.ResourceManager.MySql
         /// </summary>
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MySqlPerformanceTierProperties" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MySqlPerformanceTierProperties> GetLocationBasedPerformanceTiersAsync(string locationName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MySqlPerformanceTier" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MySqlPerformanceTier> GetLocationBasedPerformanceTiersAsync(string locationName, CancellationToken cancellationToken = default)
         {
-            async Task<Page<MySqlPerformanceTierProperties>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<MySqlPerformanceTier>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = LocationBasedPerformanceTierClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLocationBasedPerformanceTiers");
                 scope.Start();
@@ -149,10 +149,10 @@ namespace Azure.ResourceManager.MySql
         /// </summary>
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MySqlPerformanceTierProperties" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MySqlPerformanceTierProperties> GetLocationBasedPerformanceTiers(string locationName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MySqlPerformanceTier" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MySqlPerformanceTier> GetLocationBasedPerformanceTiers(string locationName, CancellationToken cancellationToken = default)
         {
-            Page<MySqlPerformanceTierProperties> FirstPageFunc(int? pageSizeHint)
+            Page<MySqlPerformanceTier> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = LocationBasedPerformanceTierClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLocationBasedPerformanceTiers");
                 scope.Start();
@@ -177,9 +177,9 @@ namespace Azure.ResourceManager.MySql
         /// </summary>
         /// <param name="content"> The required parameters for checking if resource name is available. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MySqlNameAvailability>> ExecuteCheckNameAvailabilityAsync(MySqlNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MySqlNameAvailabilityResult>> CheckMySqlNameAvailabilityAsync(MySqlNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = CheckNameAvailabilityClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ExecuteCheckNameAvailability");
+            using var scope = CheckNameAvailabilityClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckMySqlNameAvailability");
             scope.Start();
             try
             {
@@ -200,9 +200,9 @@ namespace Azure.ResourceManager.MySql
         /// </summary>
         /// <param name="content"> The required parameters for checking if resource name is available. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MySqlNameAvailability> ExecuteCheckNameAvailability(MySqlNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<MySqlNameAvailabilityResult> CheckMySqlNameAvailability(MySqlNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = CheckNameAvailabilityClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.ExecuteCheckNameAvailability");
+            using var scope = CheckNameAvailabilityClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckMySqlNameAvailability");
             scope.Start();
             try
             {

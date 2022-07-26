@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.MySql.Models
         /// <summary> Initializes a new instance of MySqlPerformanceTierListResult. </summary>
         internal MySqlPerformanceTierListResult()
         {
-            Value = new ChangeTrackingList<MySqlPerformanceTierProperties>();
+            Value = new ChangeTrackingList<MySqlPerformanceTier>();
         }
 
         /// <summary> Initializes a new instance of MySqlPerformanceTierListResult. </summary>
         /// <param name="value"> The list of performance tiers. </param>
-        internal MySqlPerformanceTierListResult(IReadOnlyList<MySqlPerformanceTierProperties> value)
+        internal MySqlPerformanceTierListResult(IReadOnlyList<MySqlPerformanceTier> value)
         {
             Value = value;
         }
 
         /// <summary> The list of performance tiers. </summary>
-        public IReadOnlyList<MySqlPerformanceTierProperties> Value { get; }
+        public IReadOnlyList<MySqlPerformanceTier> Value { get; }
     }
 }

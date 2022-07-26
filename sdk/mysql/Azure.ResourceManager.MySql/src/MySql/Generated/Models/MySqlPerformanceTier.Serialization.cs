@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MySql.Models
 {
-    public partial class MySqlPerformanceTierProperties
+    public partial class MySqlPerformanceTier
     {
-        internal static MySqlPerformanceTierProperties DeserializeMySqlPerformanceTierProperties(JsonElement element)
+        internal static MySqlPerformanceTier DeserializeMySqlPerformanceTier(JsonElement element)
         {
             Optional<string> id = default;
             Optional<int> maxBackupRetentionDays = default;
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.MySql.Models
                     continue;
                 }
             }
-            return new MySqlPerformanceTierProperties(id.Value, Optional.ToNullable(maxBackupRetentionDays), Optional.ToNullable(minBackupRetentionDays), Optional.ToNullable(maxStorageMB), Optional.ToNullable(minLargeStorageMB), Optional.ToNullable(maxLargeStorageMB), Optional.ToNullable(minStorageMB), Optional.ToList(serviceLevelObjectives));
+            return new MySqlPerformanceTier(id.Value, Optional.ToNullable(maxBackupRetentionDays), Optional.ToNullable(minBackupRetentionDays), Optional.ToNullable(maxStorageMB), Optional.ToNullable(minLargeStorageMB), Optional.ToNullable(maxLargeStorageMB), Optional.ToNullable(minStorageMB), Optional.ToList(serviceLevelObjectives));
         }
     }
 }

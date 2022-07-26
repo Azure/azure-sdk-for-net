@@ -11,15 +11,15 @@ using Azure.Core;
 namespace Azure.ResourceManager.MySql.Models
 {
     /// <summary> Performance tier properties. </summary>
-    public partial class MySqlPerformanceTierProperties
+    public partial class MySqlPerformanceTier
     {
-        /// <summary> Initializes a new instance of MySqlPerformanceTierProperties. </summary>
-        internal MySqlPerformanceTierProperties()
+        /// <summary> Initializes a new instance of MySqlPerformanceTier. </summary>
+        internal MySqlPerformanceTier()
         {
             ServiceLevelObjectives = new ChangeTrackingList<MySqlPerformanceTierServiceLevelObjectives>();
         }
 
-        /// <summary> Initializes a new instance of MySqlPerformanceTierProperties. </summary>
+        /// <summary> Initializes a new instance of MySqlPerformanceTier. </summary>
         /// <param name="id"> ID of the performance tier. </param>
         /// <param name="maxBackupRetentionDays"> Maximum Backup retention in days for the performance tier edition. </param>
         /// <param name="minBackupRetentionDays"> Minimum Backup retention in days for the performance tier edition. </param>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MySql.Models
         /// <param name="maxLargeStorageInMB"> Max storage allowed for a server. </param>
         /// <param name="minStorageInMB"> Max storage allowed for a server. </param>
         /// <param name="serviceLevelObjectives"> Service level objectives associated with the performance tier. </param>
-        internal MySqlPerformanceTierProperties(string id, int? maxBackupRetentionDays, int? minBackupRetentionDays, int? maxStorageInMB, int? minLargeStorageInMB, int? maxLargeStorageInMB, int? minStorageInMB, IReadOnlyList<MySqlPerformanceTierServiceLevelObjectives> serviceLevelObjectives)
+        internal MySqlPerformanceTier(string id, int? maxBackupRetentionDays, int? minBackupRetentionDays, int? maxStorageInMB, int? minLargeStorageInMB, int? maxLargeStorageInMB, int? minStorageInMB, IReadOnlyList<MySqlPerformanceTierServiceLevelObjectives> serviceLevelObjectives)
         {
             Id = id;
             MaxBackupRetentionDays = maxBackupRetentionDays;

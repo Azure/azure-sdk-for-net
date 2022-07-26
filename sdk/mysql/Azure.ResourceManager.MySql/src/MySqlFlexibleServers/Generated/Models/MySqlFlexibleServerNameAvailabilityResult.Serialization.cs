@@ -8,11 +8,11 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.MySql.Models
+namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    public partial class MySqlNameAvailability
+    public partial class MySqlFlexibleServerNameAvailabilityResult
     {
-        internal static MySqlNameAvailability DeserializeMySqlNameAvailability(JsonElement element)
+        internal static MySqlFlexibleServerNameAvailabilityResult DeserializeMySqlFlexibleServerNameAvailabilityResult(JsonElement element)
         {
             Optional<string> message = default;
             Optional<bool> nameAvailable = default;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MySql.Models
                     continue;
                 }
             }
-            return new MySqlNameAvailability(message.Value, Optional.ToNullable(nameAvailable), reason.Value);
+            return new MySqlFlexibleServerNameAvailabilityResult(message.Value, Optional.ToNullable(nameAvailable), reason.Value);
         }
     }
 }

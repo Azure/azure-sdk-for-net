@@ -5,21 +5,21 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.MySql.FlexibleServers.Models
+namespace Azure.ResourceManager.MySql.Models
 {
     /// <summary> Represents a resource name availability. </summary>
-    public partial class MySqlFlexibleServerNameAvailability
+    public partial class MySqlNameAvailabilityResult
     {
-        /// <summary> Initializes a new instance of MySqlFlexibleServerNameAvailability. </summary>
-        internal MySqlFlexibleServerNameAvailability()
+        /// <summary> Initializes a new instance of MySqlNameAvailabilityResult. </summary>
+        internal MySqlNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of MySqlFlexibleServerNameAvailability. </summary>
+        /// <summary> Initializes a new instance of MySqlNameAvailabilityResult. </summary>
         /// <param name="message"> Error Message. </param>
         /// <param name="isNameAvailable"> Indicates whether the resource name is available. </param>
         /// <param name="reason"> Reason for name being unavailable. </param>
-        internal MySqlFlexibleServerNameAvailability(string message, bool? isNameAvailable, string reason)
+        internal MySqlNameAvailabilityResult(string message, bool? isNameAvailable, string reason)
         {
             Message = message;
             IsNameAvailable = isNameAvailable;

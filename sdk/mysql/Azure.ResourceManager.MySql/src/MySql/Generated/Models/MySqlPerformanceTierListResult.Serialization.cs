@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MySql.Models
     {
         internal static MySqlPerformanceTierListResult DeserializeMySqlPerformanceTierListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<MySqlPerformanceTierProperties>> value = default;
+            Optional<IReadOnlyList<MySqlPerformanceTier>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.MySql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<MySqlPerformanceTierProperties> array = new List<MySqlPerformanceTierProperties>();
+                    List<MySqlPerformanceTier> array = new List<MySqlPerformanceTier>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MySqlPerformanceTierProperties.DeserializeMySqlPerformanceTierProperties(item));
+                        array.Add(MySqlPerformanceTier.DeserializeMySqlPerformanceTier(item));
                     }
                     value = array;
                     continue;

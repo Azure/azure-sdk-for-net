@@ -936,10 +936,10 @@ namespace Azure.ResourceManager.MySql
         /// Operation Id: ServerBasedPerformanceTier_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MySqlPerformanceTierProperties" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MySqlPerformanceTierProperties> GetServerBasedPerformanceTiersAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MySqlPerformanceTier" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MySqlPerformanceTier> GetServerBasedPerformanceTiersAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<MySqlPerformanceTierProperties>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<MySqlPerformanceTier>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _serverBasedPerformanceTierClientDiagnostics.CreateScope("MySqlServerResource.GetServerBasedPerformanceTiers");
                 scope.Start();
@@ -963,10 +963,10 @@ namespace Azure.ResourceManager.MySql
         /// Operation Id: ServerBasedPerformanceTier_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MySqlPerformanceTierProperties" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MySqlPerformanceTierProperties> GetServerBasedPerformanceTiers(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MySqlPerformanceTier" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MySqlPerformanceTier> GetServerBasedPerformanceTiers(CancellationToken cancellationToken = default)
         {
-            Page<MySqlPerformanceTierProperties> FirstPageFunc(int? pageSizeHint)
+            Page<MySqlPerformanceTier> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _serverBasedPerformanceTierClientDiagnostics.CreateScope("MySqlServerResource.GetServerBasedPerformanceTiers");
                 scope.Start();
