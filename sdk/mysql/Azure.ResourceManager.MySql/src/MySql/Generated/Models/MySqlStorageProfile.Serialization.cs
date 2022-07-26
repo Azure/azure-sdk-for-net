@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.MySql.Models
                 writer.WritePropertyName("geoRedundantBackup");
                 writer.WriteStringValue(GeoRedundantBackup.Value.ToString());
             }
-            if (Optional.IsDefined(StorageMB))
+            if (Optional.IsDefined(StorageInMB))
             {
                 writer.WritePropertyName("storageMB");
-                writer.WriteNumberValue(StorageMB.Value);
+                writer.WriteNumberValue(StorageInMB.Value);
             }
             if (Optional.IsDefined(StorageAutogrow))
             {

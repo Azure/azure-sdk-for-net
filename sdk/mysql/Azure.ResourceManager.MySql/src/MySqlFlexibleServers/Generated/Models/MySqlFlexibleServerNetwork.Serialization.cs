@@ -31,8 +31,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         internal static MySqlFlexibleServerNetwork DeserializeMySqlFlexibleServerNetwork(JsonElement element)
         {
             Optional<MySqlFlexibleServerEnableStatusEnum> publicNetworkAccess = default;
-            Optional<string> delegatedSubnetResourceId = default;
-            Optional<string> privateDnsZoneResourceId = default;
+            Optional<ResourceIdentifier> delegatedSubnetResourceId = default;
+            Optional<ResourceIdentifier> privateDnsZoneResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("publicNetworkAccess"))
@@ -47,12 +47,22 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
                 if (property.NameEquals("delegatedSubnetResourceId"))
                 {
-                    delegatedSubnetResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    delegatedSubnetResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("privateDnsZoneResourceId"))
                 {
-                    privateDnsZoneResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    privateDnsZoneResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }

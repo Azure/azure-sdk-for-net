@@ -224,9 +224,9 @@ namespace Azure.ResourceManager.MySql
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="operationId"> The operation identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MySqlRecommendedActionSessionsOperationStatus>> GetLocationBasedRecommendedActionSessionsOperationStatuAsync(string locationName, string operationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MySqlRecommendedActionSessionsOperationStatus>> GetRecommendedActionSessionsOperationStatusAsync(string locationName, string operationId, CancellationToken cancellationToken = default)
         {
-            using var scope = LocationBasedRecommendedActionSessionsOperationStatusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLocationBasedRecommendedActionSessionsOperationStatu");
+            using var scope = LocationBasedRecommendedActionSessionsOperationStatusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRecommendedActionSessionsOperationStatus");
             scope.Start();
             try
             {
@@ -248,9 +248,9 @@ namespace Azure.ResourceManager.MySql
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="operationId"> The operation identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MySqlRecommendedActionSessionsOperationStatus> GetLocationBasedRecommendedActionSessionsOperationStatu(string locationName, string operationId, CancellationToken cancellationToken = default)
+        public virtual Response<MySqlRecommendedActionSessionsOperationStatus> GetRecommendedActionSessionsOperationStatus(string locationName, string operationId, CancellationToken cancellationToken = default)
         {
-            using var scope = LocationBasedRecommendedActionSessionsOperationStatusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLocationBasedRecommendedActionSessionsOperationStatu");
+            using var scope = LocationBasedRecommendedActionSessionsOperationStatusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRecommendedActionSessionsOperationStatus");
             scope.Start();
             try
             {
@@ -273,11 +273,11 @@ namespace Azure.ResourceManager.MySql
         /// <param name="operationId"> The operation identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MySqlRecommendationActionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MySqlRecommendationActionResource> GetMySqlRecommendationActionsByLocationRecommendedActionSessionsOperationResultAsync(string locationName, string operationId, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<MySqlRecommendationActionResource> GetRecommendedActionSessionsOperationResultsAsync(string locationName, string operationId, CancellationToken cancellationToken = default)
         {
             async Task<Page<MySqlRecommendationActionResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = LocationBasedRecommendedActionSessionsResultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMySqlRecommendationActionsByLocationRecommendedActionSessionsOperationResult");
+                using var scope = LocationBasedRecommendedActionSessionsResultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRecommendedActionSessionsOperationResults");
                 scope.Start();
                 try
                 {
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.MySql
             }
             async Task<Page<MySqlRecommendationActionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = LocationBasedRecommendedActionSessionsResultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMySqlRecommendationActionsByLocationRecommendedActionSessionsOperationResult");
+                using var scope = LocationBasedRecommendedActionSessionsResultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRecommendedActionSessionsOperationResults");
                 scope.Start();
                 try
                 {
@@ -317,11 +317,11 @@ namespace Azure.ResourceManager.MySql
         /// <param name="operationId"> The operation identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MySqlRecommendationActionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MySqlRecommendationActionResource> GetMySqlRecommendationActionsByLocationRecommendedActionSessionsOperationResult(string locationName, string operationId, CancellationToken cancellationToken = default)
+        public virtual Pageable<MySqlRecommendationActionResource> GetRecommendedActionSessionsOperationResults(string locationName, string operationId, CancellationToken cancellationToken = default)
         {
             Page<MySqlRecommendationActionResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = LocationBasedRecommendedActionSessionsResultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMySqlRecommendationActionsByLocationRecommendedActionSessionsOperationResult");
+                using var scope = LocationBasedRecommendedActionSessionsResultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRecommendedActionSessionsOperationResults");
                 scope.Start();
                 try
                 {
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.MySql
             }
             Page<MySqlRecommendationActionResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = LocationBasedRecommendedActionSessionsResultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMySqlRecommendationActionsByLocationRecommendedActionSessionsOperationResult");
+                using var scope = LocationBasedRecommendedActionSessionsResultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRecommendedActionSessionsOperationResults");
                 scope.Start();
                 try
                 {

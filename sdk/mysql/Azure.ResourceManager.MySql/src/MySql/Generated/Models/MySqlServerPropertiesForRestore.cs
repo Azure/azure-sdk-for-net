@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.MySql.Models
 {
@@ -16,7 +17,7 @@ namespace Azure.ResourceManager.MySql.Models
         /// <param name="sourceServerId"> The source server id to restore from. </param>
         /// <param name="restorePointInOn"> Restore point creation time (ISO8601 format), specifying the time to restore from. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceServerId"/> is null. </exception>
-        public MySqlServerPropertiesForRestore(string sourceServerId, DateTimeOffset restorePointInOn)
+        public MySqlServerPropertiesForRestore(ResourceIdentifier sourceServerId, DateTimeOffset restorePointInOn)
         {
             if (sourceServerId == null)
             {
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.MySql.Models
         }
 
         /// <summary> The source server id to restore from. </summary>
-        public string SourceServerId { get; }
+        public ResourceIdentifier SourceServerId { get; }
         /// <summary> Restore point creation time (ISO8601 format), specifying the time to restore from. </summary>
         public DateTimeOffset RestorePointInOn { get; }
     }

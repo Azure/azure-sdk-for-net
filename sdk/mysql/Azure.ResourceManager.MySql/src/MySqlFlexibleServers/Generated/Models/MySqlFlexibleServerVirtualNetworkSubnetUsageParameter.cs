@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
     /// <summary> Virtual network subnet usage parameter. </summary>
@@ -16,6 +18,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         }
 
         /// <summary> Virtual network resource id. </summary>
-        public string VirtualNetworkResourceId { get; set; }
+        public ResourceIdentifier VirtualNetworkResourceId { get; set; }
     }
 }

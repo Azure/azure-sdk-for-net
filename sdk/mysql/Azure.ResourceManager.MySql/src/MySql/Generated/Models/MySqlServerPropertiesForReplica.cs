@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.MySql.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.MySql.Models
         /// <summary> Initializes a new instance of MySqlServerPropertiesForReplica. </summary>
         /// <param name="sourceServerId"> The master server id to create replica from. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceServerId"/> is null. </exception>
-        public MySqlServerPropertiesForReplica(string sourceServerId)
+        public MySqlServerPropertiesForReplica(ResourceIdentifier sourceServerId)
         {
             if (sourceServerId == null)
             {
@@ -27,6 +28,6 @@ namespace Azure.ResourceManager.MySql.Models
         }
 
         /// <summary> The master server id to create replica from. </summary>
-        public string SourceServerId { get; }
+        public ResourceIdentifier SourceServerId { get; }
     }
 }

@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.MySql.Models
         /// <summary> Initializes a new instance of MySqlStorageProfile. </summary>
         /// <param name="backupRetentionDays"> Backup retention days for the server. </param>
         /// <param name="geoRedundantBackup"> Enable Geo-redundant or not for server backup. </param>
-        /// <param name="storageMB"> Max storage allowed for a server. </param>
+        /// <param name="storageInMB"> Max storage allowed for a server. </param>
         /// <param name="storageAutogrow"> Enable Storage Auto Grow. </param>
-        internal MySqlStorageProfile(int? backupRetentionDays, MySqlGeoRedundantBackup? geoRedundantBackup, int? storageMB, MySqlStorageAutogrow? storageAutogrow)
+        internal MySqlStorageProfile(int? backupRetentionDays, MySqlGeoRedundantBackup? geoRedundantBackup, int? storageInMB, MySqlStorageAutogrow? storageAutogrow)
         {
             BackupRetentionDays = backupRetentionDays;
             GeoRedundantBackup = geoRedundantBackup;
-            StorageMB = storageMB;
+            StorageInMB = storageInMB;
             StorageAutogrow = storageAutogrow;
         }
 
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MySql.Models
         /// <summary> Enable Geo-redundant or not for server backup. </summary>
         public MySqlGeoRedundantBackup? GeoRedundantBackup { get; set; }
         /// <summary> Max storage allowed for a server. </summary>
-        public int? StorageMB { get; set; }
+        public int? StorageInMB { get; set; }
         /// <summary> Enable Storage Auto Grow. </summary>
         public MySqlStorageAutogrow? StorageAutogrow { get; set; }
     }

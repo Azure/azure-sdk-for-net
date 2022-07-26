@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.MySql.Models
         /// <param name="hardwareGeneration"> Hardware generation associated with the service level objective. </param>
         /// <param name="maxBackupRetentionDays"> Maximum Backup retention in days for the performance tier edition. </param>
         /// <param name="minBackupRetentionDays"> Minimum Backup retention in days for the performance tier edition. </param>
-        /// <param name="maxStorageMB"> Max storage allowed for a server. </param>
-        /// <param name="minStorageMB"> Max storage allowed for a server. </param>
-        internal MySqlPerformanceTierServiceLevelObjectives(string id, string edition, int? vCore, string hardwareGeneration, int? maxBackupRetentionDays, int? minBackupRetentionDays, int? maxStorageMB, int? minStorageMB)
+        /// <param name="maxStorageInMB"> Max storage allowed for a server. </param>
+        /// <param name="minStorageInMB"> Max storage allowed for a server. </param>
+        internal MySqlPerformanceTierServiceLevelObjectives(string id, string edition, int? vCore, string hardwareGeneration, int? maxBackupRetentionDays, int? minBackupRetentionDays, int? maxStorageInMB, int? minStorageInMB)
         {
             Id = id;
             Edition = edition;
@@ -32,8 +32,8 @@ namespace Azure.ResourceManager.MySql.Models
             HardwareGeneration = hardwareGeneration;
             MaxBackupRetentionDays = maxBackupRetentionDays;
             MinBackupRetentionDays = minBackupRetentionDays;
-            MaxStorageMB = maxStorageMB;
-            MinStorageMB = minStorageMB;
+            MaxStorageInMB = maxStorageInMB;
+            MinStorageInMB = minStorageInMB;
         }
 
         /// <summary> ID for the service level objective. </summary>
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.MySql.Models
         /// <summary> Minimum Backup retention in days for the performance tier edition. </summary>
         public int? MinBackupRetentionDays { get; }
         /// <summary> Max storage allowed for a server. </summary>
-        public int? MaxStorageMB { get; }
+        public int? MaxStorageInMB { get; }
         /// <summary> Max storage allowed for a server. </summary>
-        public int? MinStorageMB { get; }
+        public int? MinStorageInMB { get; }
     }
 }

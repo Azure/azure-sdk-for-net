@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="startIPAddress"> The start IP address of the server firewall rule. Must be IPv4 format. </param>
         /// <param name="endIPAddress"> The end IP address of the server firewall rule. Must be IPv4 format. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="startIPAddress"/> or <paramref name="endIPAddress"/> is null. </exception>
-        public MySqlFlexibleServerFirewallRuleData(string startIPAddress, string endIPAddress)
+        public MySqlFlexibleServerFirewallRuleData(IPAddress startIPAddress, IPAddress endIPAddress)
         {
             if (startIPAddress == null)
             {
@@ -40,15 +41,15 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="systemData"> The systemData. </param>
         /// <param name="startIPAddress"> The start IP address of the server firewall rule. Must be IPv4 format. </param>
         /// <param name="endIPAddress"> The end IP address of the server firewall rule. Must be IPv4 format. </param>
-        internal MySqlFlexibleServerFirewallRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string startIPAddress, string endIPAddress) : base(id, name, resourceType, systemData)
+        internal MySqlFlexibleServerFirewallRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IPAddress startIPAddress, IPAddress endIPAddress) : base(id, name, resourceType, systemData)
         {
             StartIPAddress = startIPAddress;
             EndIPAddress = endIPAddress;
         }
 
         /// <summary> The start IP address of the server firewall rule. Must be IPv4 format. </summary>
-        public string StartIPAddress { get; set; }
+        public IPAddress StartIPAddress { get; set; }
         /// <summary> The end IP address of the server firewall rule. Must be IPv4 format. </summary>
-        public string EndIPAddress { get; set; }
+        public IPAddress EndIPAddress { get; set; }
     }
 }

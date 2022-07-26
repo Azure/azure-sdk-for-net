@@ -32,8 +32,8 @@ namespace Azure.ResourceManager.MySql
         /// <param name="databaseName"> Database Name. </param>
         /// <param name="userId"> Database user identifier. </param>
         /// <param name="count"> Wait event count observed in this time interval. </param>
-        /// <param name="totalTimeInMs"> Total time of wait in milliseconds in this time interval. </param>
-        internal MySqlWaitStatisticData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? startOn, DateTimeOffset? endOn, string eventName, string eventTypeName, long? queryId, string databaseName, long? userId, long? count, double? totalTimeInMs) : base(id, name, resourceType, systemData)
+        /// <param name="totalTimeInMinutes"> Total time of wait in milliseconds in this time interval. </param>
+        internal MySqlWaitStatisticData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? startOn, DateTimeOffset? endOn, string eventName, string eventTypeName, long? queryId, string databaseName, long? userId, long? count, double? totalTimeInMinutes) : base(id, name, resourceType, systemData)
         {
             StartOn = startOn;
             EndOn = endOn;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MySql
             DatabaseName = databaseName;
             UserId = userId;
             Count = count;
-            TotalTimeInMs = totalTimeInMs;
+            TotalTimeInMinutes = totalTimeInMinutes;
         }
 
         /// <summary> Observation start time. </summary>
@@ -63,6 +63,6 @@ namespace Azure.ResourceManager.MySql
         /// <summary> Wait event count observed in this time interval. </summary>
         public long? Count { get; set; }
         /// <summary> Total time of wait in milliseconds in this time interval. </summary>
-        public double? TotalTimeInMs { get; set; }
+        public double? TotalTimeInMinutes { get; set; }
     }
 }

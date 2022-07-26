@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="highAvailability"> High availability related properties of a server. </param>
         /// <param name="network"> Network related properties of a server. </param>
         /// <param name="maintenanceWindow"> Maintenance window of a server. </param>
-        internal MySqlFlexibleServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Identity identity, MySqlFlexibleServerSku sku, string administratorLogin, string administratorLoginPassword, MySqlFlexibleServerVersion? version, string availabilityZone, MySqlFlexibleServerCreateMode? createMode, string sourceServerResourceId, DateTimeOffset? restorePointInOn, MySqlFlexibleServerReplicationRole? replicationRole, int? replicaCapacity, MySqlFlexibleServerDataEncryption dataEncryption, MySqlFlexibleServerState? state, string fullyQualifiedDomainName, MySqlFlexibleServerStorage storage, MySqlFlexibleServerBackupProperties backup, MySqlFlexibleServerHighAvailability highAvailability, MySqlFlexibleServerNetwork network, MySqlFlexibleServerMaintenanceWindow maintenanceWindow) : base(id, name, resourceType, systemData, tags, location)
+        internal MySqlFlexibleServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Identity identity, MySqlFlexibleServerSku sku, string administratorLogin, string administratorLoginPassword, MySqlFlexibleServerVersion? version, string availabilityZone, MySqlFlexibleServerCreateMode? createMode, ResourceIdentifier sourceServerResourceId, DateTimeOffset? restorePointInOn, MySqlFlexibleServerReplicationRole? replicationRole, int? replicaCapacity, MySqlFlexibleServerDataEncryption dataEncryption, MySqlFlexibleServerState? state, string fullyQualifiedDomainName, MySqlFlexibleServerStorage storage, MySqlFlexibleServerBackupProperties backup, MySqlFlexibleServerHighAvailability highAvailability, MySqlFlexibleServerNetwork network, MySqlFlexibleServerMaintenanceWindow maintenanceWindow) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             Sku = sku;
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <summary> The mode to create a new MySQL server. </summary>
         public MySqlFlexibleServerCreateMode? CreateMode { get; set; }
         /// <summary> The source MySQL server id. </summary>
-        public string SourceServerResourceId { get; set; }
+        public ResourceIdentifier SourceServerResourceId { get; set; }
         /// <summary> Restore point creation time (ISO8601 format), specifying the time to restore from. </summary>
         public DateTimeOffset? RestorePointInOn { get; set; }
         /// <summary> The replication role. </summary>

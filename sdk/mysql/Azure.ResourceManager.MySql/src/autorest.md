@@ -11,7 +11,7 @@ library-name: MySql
 
 batch:
   - tag: package-2020-01-01
-#   - tag: package-flexibleserver-2021-05-01
+  - tag: package-flexibleserver-2021-05-01
 ```
 
 ``` yaml $(tag) == 'package-2020-01-01'
@@ -30,10 +30,12 @@ format-by-name-rules:
   '*Uris': 'Uri'
   'sessionId': 'uuid'
   'PrincipalId': 'uuid'
-  'masterServerId': 'arm-id'
+  '*ServerId': 'arm-id'
   '*SubnetId': 'arm-id'
   '*ResourceId': 'arm-id'
-  '*UserAssignedIdentityId': 'arm-id'
+  'ResourceType': 'resource-type'
+#   'LastAvailableBackupDateTime': 'date-time'
+  '*IPAddress': 'ip-address'
 
 rename-rules:
   CPU: Cpu
@@ -131,9 +133,23 @@ rename-mapping:
   RecommendationAction.properties.expirationTime: ExpireOn
   ServerKey.properties.creationDate: CreatedOn
   ServerSecurityAlertPolicy.properties.emailAccountAdmins: SendToEmailAccountAdmins
+  NameAvailability.nameAvailable: IsNameAvailable
+  StorageProfile.storageMB: StorageInMB
+  WaitStatistic.properties.totalTimeInMs: TotalTimeInMinutes
+  PerformanceTierProperties.minStorageMB: MinStorageInMB
+  PerformanceTierProperties.maxStorageMB: MaxStorageInMB
+  PerformanceTierProperties.minLargeStorageMB: MinLargeStorageInMB
+  PerformanceTierProperties.maxLargeStorageMB: MaxLargeStorageInMB
+  PerformanceTierServiceLevelObjectives.maxStorageMB: MaxStorageInMB
+  PerformanceTierServiceLevelObjectives.minStorageMB: MinStorageInMB
 
 override-operation-name:
   ServerParameters_ListUpdateConfigurations: UpdateConfigurations
+  LocationBasedRecommendedActionSessionsResult_List: GetRecommendedActionSessionsOperationResults
+  LocationBasedRecommendedActionSessionsOperationStatus_Get: GetRecommendedActionSessionsOperationStatus
+  MySqlServers_Start: Start
+  MySqlServers_Stop: Stop
+  MySqlServers_Upgrade: Upgrade
 
 directive:
   - rename-operation:
@@ -166,6 +182,11 @@ directive:
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/servers/{serverName}/updateConfigurations'].post.parameters[?(@.name === 'value')]
     transform: >
       $.schema['$ref'] = $.schema['$ref'].replace('ConfigurationListResult', 'ConfigurationListContent');
+  - from: mysql.json
+    where: $.definitions
+    transform: >
+      $.ServerPrivateEndpointConnection.properties.id['x-ms-format'] = 'arm-id';
+      $.RecoverableServerProperties.properties.lastAvailableBackupDateTime['format'] = 'date-time';
 ```
 
 ``` yaml $(tag) == 'package-flexibleserver-2021-05-01'
@@ -181,6 +202,12 @@ format-by-name-rules:
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
+  'PrincipalId': 'uuid'
+  '*SubnetId': 'arm-id'
+  '*ResourceId': 'arm-id'
+  '*UserAssignedIdentityId': 'arm-id'
+  'ResourceType': 'resource-type'
+  '*IPAddress': 'ip-address'
 
 rename-rules:
   CPU: Cpu
@@ -256,4 +283,7 @@ rename-mapping:
   IsReadOnly: MySqlFlexibleServerConfigReadOnlyState
   IsDynamicConfig: MySqlFlexibleServerConfigDynamicState
   IsConfigPendingRestart: MySqlFlexibleServerConfigPendingRestartState
+  NameAvailability.nameAvailable: IsNameAvailable
+  Storage.storageSizeGB: StorageSizeInGB
+  SkuCapability.supportedMemoryPerVCoreMB: SupportedMemoryPerVCoreInMB
 ```

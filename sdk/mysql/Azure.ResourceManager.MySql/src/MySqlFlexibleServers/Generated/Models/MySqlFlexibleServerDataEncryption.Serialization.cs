@@ -46,16 +46,21 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 
         internal static MySqlFlexibleServerDataEncryption DeserializeMySqlFlexibleServerDataEncryption(JsonElement element)
         {
-            Optional<string> primaryUserAssignedIdentityId = default;
+            Optional<ResourceIdentifier> primaryUserAssignedIdentityId = default;
             Optional<Uri> primaryKeyUri = default;
-            Optional<string> geoBackupUserAssignedIdentityId = default;
+            Optional<ResourceIdentifier> geoBackupUserAssignedIdentityId = default;
             Optional<Uri> geoBackupKeyUri = default;
             Optional<MySqlFlexibleServerDataEncryptionType> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryUserAssignedIdentityId"))
                 {
-                    primaryUserAssignedIdentityId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    primaryUserAssignedIdentityId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("primaryKeyUri"))
@@ -70,7 +75,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
                 if (property.NameEquals("geoBackupUserAssignedIdentityId"))
                 {
-                    geoBackupUserAssignedIdentityId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    geoBackupUserAssignedIdentityId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("geoBackupKeyUri"))

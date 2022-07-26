@@ -16,20 +16,20 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of MySqlFlexibleServerStorage. </summary>
-        /// <param name="storageSizeGB"> Max storage size allowed for a server. </param>
+        /// <param name="storageSizeInGB"> Max storage size allowed for a server. </param>
         /// <param name="iops"> Storage IOPS for a server. </param>
         /// <param name="autoGrow"> Enable Storage Auto Grow or not. </param>
         /// <param name="storageSku"> The sku name of the server storage. </param>
-        internal MySqlFlexibleServerStorage(int? storageSizeGB, int? iops, MySqlFlexibleServerEnableStatusEnum? autoGrow, string storageSku)
+        internal MySqlFlexibleServerStorage(int? storageSizeInGB, int? iops, MySqlFlexibleServerEnableStatusEnum? autoGrow, string storageSku)
         {
-            StorageSizeGB = storageSizeGB;
+            StorageSizeInGB = storageSizeInGB;
             Iops = iops;
             AutoGrow = autoGrow;
             StorageSku = storageSku;
         }
 
         /// <summary> Max storage size allowed for a server. </summary>
-        public int? StorageSizeGB { get; set; }
+        public int? StorageSizeInGB { get; set; }
         /// <summary> Storage IOPS for a server. </summary>
         public int? Iops { get; set; }
         /// <summary> Enable Storage Auto Grow or not. </summary>

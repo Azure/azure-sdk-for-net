@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.MySql.Models
 {
     /// <summary> A private endpoint connection under a server. </summary>
@@ -18,14 +20,14 @@ namespace Azure.ResourceManager.MySql.Models
         /// <summary> Initializes a new instance of MySqlServerPrivateEndpointConnection. </summary>
         /// <param name="id"> Resource Id of the private endpoint connection. </param>
         /// <param name="properties"> Private endpoint connection properties. </param>
-        internal MySqlServerPrivateEndpointConnection(string id, MySqlServerPrivateEndpointConnectionProperties properties)
+        internal MySqlServerPrivateEndpointConnection(ResourceIdentifier id, MySqlServerPrivateEndpointConnectionProperties properties)
         {
             Id = id;
             Properties = properties;
         }
 
         /// <summary> Resource Id of the private endpoint connection. </summary>
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
         /// <summary> Private endpoint connection properties. </summary>
         public MySqlServerPrivateEndpointConnectionProperties Properties { get; }
     }

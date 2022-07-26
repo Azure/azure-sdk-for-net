@@ -23,20 +23,20 @@ namespace Azure.ResourceManager.MySql.Models
         /// <param name="id"> ID of the performance tier. </param>
         /// <param name="maxBackupRetentionDays"> Maximum Backup retention in days for the performance tier edition. </param>
         /// <param name="minBackupRetentionDays"> Minimum Backup retention in days for the performance tier edition. </param>
-        /// <param name="maxStorageMB"> Max storage allowed for a server. </param>
-        /// <param name="minLargeStorageMB"> Max storage allowed for a server. </param>
-        /// <param name="maxLargeStorageMB"> Max storage allowed for a server. </param>
-        /// <param name="minStorageMB"> Max storage allowed for a server. </param>
+        /// <param name="maxStorageInMB"> Max storage allowed for a server. </param>
+        /// <param name="minLargeStorageInMB"> Max storage allowed for a server. </param>
+        /// <param name="maxLargeStorageInMB"> Max storage allowed for a server. </param>
+        /// <param name="minStorageInMB"> Max storage allowed for a server. </param>
         /// <param name="serviceLevelObjectives"> Service level objectives associated with the performance tier. </param>
-        internal MySqlPerformanceTierProperties(string id, int? maxBackupRetentionDays, int? minBackupRetentionDays, int? maxStorageMB, int? minLargeStorageMB, int? maxLargeStorageMB, int? minStorageMB, IReadOnlyList<MySqlPerformanceTierServiceLevelObjectives> serviceLevelObjectives)
+        internal MySqlPerformanceTierProperties(string id, int? maxBackupRetentionDays, int? minBackupRetentionDays, int? maxStorageInMB, int? minLargeStorageInMB, int? maxLargeStorageInMB, int? minStorageInMB, IReadOnlyList<MySqlPerformanceTierServiceLevelObjectives> serviceLevelObjectives)
         {
             Id = id;
             MaxBackupRetentionDays = maxBackupRetentionDays;
             MinBackupRetentionDays = minBackupRetentionDays;
-            MaxStorageMB = maxStorageMB;
-            MinLargeStorageMB = minLargeStorageMB;
-            MaxLargeStorageMB = maxLargeStorageMB;
-            MinStorageMB = minStorageMB;
+            MaxStorageInMB = maxStorageInMB;
+            MinLargeStorageInMB = minLargeStorageInMB;
+            MaxLargeStorageInMB = maxLargeStorageInMB;
+            MinStorageInMB = minStorageInMB;
             ServiceLevelObjectives = serviceLevelObjectives;
         }
 
@@ -47,13 +47,13 @@ namespace Azure.ResourceManager.MySql.Models
         /// <summary> Minimum Backup retention in days for the performance tier edition. </summary>
         public int? MinBackupRetentionDays { get; }
         /// <summary> Max storage allowed for a server. </summary>
-        public int? MaxStorageMB { get; }
+        public int? MaxStorageInMB { get; }
         /// <summary> Max storage allowed for a server. </summary>
-        public int? MinLargeStorageMB { get; }
+        public int? MinLargeStorageInMB { get; }
         /// <summary> Max storage allowed for a server. </summary>
-        public int? MaxLargeStorageMB { get; }
+        public int? MaxLargeStorageInMB { get; }
         /// <summary> Max storage allowed for a server. </summary>
-        public int? MinStorageMB { get; }
+        public int? MinStorageInMB { get; }
         /// <summary> Service level objectives associated with the performance tier. </summary>
         public IReadOnlyList<MySqlPerformanceTierServiceLevelObjectives> ServiceLevelObjectives { get; }
     }

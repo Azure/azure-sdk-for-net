@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <param name="name"> vCore name. </param>
         /// <param name="vCores"> supported vCores. </param>
         /// <param name="supportedIops"> supported IOPS. </param>
-        /// <param name="supportedMemoryPerVCoreMB"> supported memory per vCore in MB. </param>
-        internal MySqlFlexibleServerSkuCapability(string name, long? vCores, long? supportedIops, long? supportedMemoryPerVCoreMB)
+        /// <param name="supportedMemoryPerVCoreInMB"> supported memory per vCore in MB. </param>
+        internal MySqlFlexibleServerSkuCapability(string name, long? vCores, long? supportedIops, long? supportedMemoryPerVCoreInMB)
         {
             Name = name;
             VCores = vCores;
             SupportedIops = supportedIops;
-            SupportedMemoryPerVCoreMB = supportedMemoryPerVCoreMB;
+            SupportedMemoryPerVCoreInMB = supportedMemoryPerVCoreInMB;
         }
 
         /// <summary> vCore name. </summary>
@@ -35,6 +35,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <summary> supported IOPS. </summary>
         public long? SupportedIops { get; }
         /// <summary> supported memory per vCore in MB. </summary>
-        public long? SupportedMemoryPerVCoreMB { get; }
+        public long? SupportedMemoryPerVCoreInMB { get; }
     }
 }

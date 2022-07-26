@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             Optional<MySqlFlexibleServerVersion> version = default;
             Optional<string> availabilityZone = default;
             Optional<MySqlFlexibleServerCreateMode> createMode = default;
-            Optional<string> sourceServerResourceId = default;
+            Optional<ResourceIdentifier> sourceServerResourceId = default;
             Optional<DateTimeOffset> restorePointInTime = default;
             Optional<MySqlFlexibleServerReplicationRole> replicationRole = default;
             Optional<int> replicaCapacity = default;
@@ -258,7 +258,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                         }
                         if (property0.NameEquals("sourceServerResourceId"))
                         {
-                            sourceServerResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            sourceServerResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("restorePointInTime"))

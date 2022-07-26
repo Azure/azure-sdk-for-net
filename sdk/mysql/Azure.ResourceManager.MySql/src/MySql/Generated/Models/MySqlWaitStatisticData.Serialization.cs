@@ -59,10 +59,10 @@ namespace Azure.ResourceManager.MySql
                 writer.WritePropertyName("count");
                 writer.WriteNumberValue(Count.Value);
             }
-            if (Optional.IsDefined(TotalTimeInMs))
+            if (Optional.IsDefined(TotalTimeInMinutes))
             {
                 writer.WritePropertyName("totalTimeInMs");
-                writer.WriteNumberValue(TotalTimeInMs.Value);
+                writer.WriteNumberValue(TotalTimeInMinutes.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

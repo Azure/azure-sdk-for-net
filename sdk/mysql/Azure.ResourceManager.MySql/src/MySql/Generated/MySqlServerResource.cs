@@ -1035,9 +1035,9 @@ namespace Azure.ResourceManager.MySql
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> StartMySqlServerAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> StartAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _mySqlServersClientDiagnostics.CreateScope("MySqlServerResource.StartMySqlServer");
+            using var scope = _mySqlServersClientDiagnostics.CreateScope("MySqlServerResource.Start");
             scope.Start();
             try
             {
@@ -1061,9 +1061,9 @@ namespace Azure.ResourceManager.MySql
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation StartMySqlServer(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Start(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _mySqlServersClientDiagnostics.CreateScope("MySqlServerResource.StartMySqlServer");
+            using var scope = _mySqlServersClientDiagnostics.CreateScope("MySqlServerResource.Start");
             scope.Start();
             try
             {
@@ -1087,9 +1087,9 @@ namespace Azure.ResourceManager.MySql
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> StopMySqlServerAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> StopAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _mySqlServersClientDiagnostics.CreateScope("MySqlServerResource.StopMySqlServer");
+            using var scope = _mySqlServersClientDiagnostics.CreateScope("MySqlServerResource.Stop");
             scope.Start();
             try
             {
@@ -1113,9 +1113,9 @@ namespace Azure.ResourceManager.MySql
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation StopMySqlServer(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Stop(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _mySqlServersClientDiagnostics.CreateScope("MySqlServerResource.StopMySqlServer");
+            using var scope = _mySqlServersClientDiagnostics.CreateScope("MySqlServerResource.Stop");
             scope.Start();
             try
             {
@@ -1141,11 +1141,11 @@ namespace Azure.ResourceManager.MySql
         /// <param name="content"> The required parameters for updating a server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> UpgradeMySqlServerAsync(WaitUntil waitUntil, MySqlServerUpgradeContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> UpgradeAsync(WaitUntil waitUntil, MySqlServerUpgradeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _mySqlServersClientDiagnostics.CreateScope("MySqlServerResource.UpgradeMySqlServer");
+            using var scope = _mySqlServersClientDiagnostics.CreateScope("MySqlServerResource.Upgrade");
             scope.Start();
             try
             {
@@ -1171,11 +1171,11 @@ namespace Azure.ResourceManager.MySql
         /// <param name="content"> The required parameters for updating a server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation UpgradeMySqlServer(WaitUntil waitUntil, MySqlServerUpgradeContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Upgrade(WaitUntil waitUntil, MySqlServerUpgradeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _mySqlServersClientDiagnostics.CreateScope("MySqlServerResource.UpgradeMySqlServer");
+            using var scope = _mySqlServersClientDiagnostics.CreateScope("MySqlServerResource.Upgrade");
             scope.Start();
             try
             {

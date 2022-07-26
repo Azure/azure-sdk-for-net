@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.MySql.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.MySql.Models
         /// <summary> Initializes a new instance of MySqlServerPropertiesForGeoRestore. </summary>
         /// <param name="sourceServerId"> The source server id to restore from. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceServerId"/> is null. </exception>
-        public MySqlServerPropertiesForGeoRestore(string sourceServerId)
+        public MySqlServerPropertiesForGeoRestore(ResourceIdentifier sourceServerId)
         {
             if (sourceServerId == null)
             {
@@ -27,6 +28,6 @@ namespace Azure.ResourceManager.MySql.Models
         }
 
         /// <summary> The source server id to restore from. </summary>
-        public string SourceServerId { get; }
+        public ResourceIdentifier SourceServerId { get; }
     }
 }

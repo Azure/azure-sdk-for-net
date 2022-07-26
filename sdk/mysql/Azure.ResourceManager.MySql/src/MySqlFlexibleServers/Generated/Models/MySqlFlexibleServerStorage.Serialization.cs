@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(StorageSizeGB))
+            if (Optional.IsDefined(StorageSizeInGB))
             {
                 writer.WritePropertyName("storageSizeGB");
-                writer.WriteNumberValue(StorageSizeGB.Value);
+                writer.WriteNumberValue(StorageSizeInGB.Value);
             }
             if (Optional.IsDefined(Iops))
             {

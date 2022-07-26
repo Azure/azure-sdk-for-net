@@ -133,12 +133,12 @@ namespace Azure.ResourceManager.MySql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="operationId"/> is null. </exception>
-        public static async Task<Response<MySqlRecommendedActionSessionsOperationStatus>> GetLocationBasedRecommendedActionSessionsOperationStatuAsync(this SubscriptionResource subscriptionResource, string locationName, string operationId, CancellationToken cancellationToken = default)
+        public static async Task<Response<MySqlRecommendedActionSessionsOperationStatus>> GetRecommendedActionSessionsOperationStatusAsync(this SubscriptionResource subscriptionResource, string locationName, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-            return await GetExtensionClient(subscriptionResource).GetLocationBasedRecommendedActionSessionsOperationStatuAsync(locationName, operationId, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).GetRecommendedActionSessionsOperationStatusAsync(locationName, operationId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -152,12 +152,12 @@ namespace Azure.ResourceManager.MySql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="operationId"/> is null. </exception>
-        public static Response<MySqlRecommendedActionSessionsOperationStatus> GetLocationBasedRecommendedActionSessionsOperationStatu(this SubscriptionResource subscriptionResource, string locationName, string operationId, CancellationToken cancellationToken = default)
+        public static Response<MySqlRecommendedActionSessionsOperationStatus> GetRecommendedActionSessionsOperationStatus(this SubscriptionResource subscriptionResource, string locationName, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-            return GetExtensionClient(subscriptionResource).GetLocationBasedRecommendedActionSessionsOperationStatu(locationName, operationId, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetRecommendedActionSessionsOperationStatus(locationName, operationId, cancellationToken);
         }
 
         /// <summary>
@@ -172,12 +172,12 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="operationId"/> is null. </exception>
         /// <returns> An async collection of <see cref="MySqlRecommendationActionResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<MySqlRecommendationActionResource> GetMySqlRecommendationActionsByLocationRecommendedActionSessionsOperationResultAsync(this SubscriptionResource subscriptionResource, string locationName, string operationId, CancellationToken cancellationToken = default)
+        public static AsyncPageable<MySqlRecommendationActionResource> GetRecommendedActionSessionsOperationResultsAsync(this SubscriptionResource subscriptionResource, string locationName, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-            return GetExtensionClient(subscriptionResource).GetMySqlRecommendationActionsByLocationRecommendedActionSessionsOperationResultAsync(locationName, operationId, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetRecommendedActionSessionsOperationResultsAsync(locationName, operationId, cancellationToken);
         }
 
         /// <summary>
@@ -192,12 +192,12 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="operationId"/> is null. </exception>
         /// <returns> A collection of <see cref="MySqlRecommendationActionResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<MySqlRecommendationActionResource> GetMySqlRecommendationActionsByLocationRecommendedActionSessionsOperationResult(this SubscriptionResource subscriptionResource, string locationName, string operationId, CancellationToken cancellationToken = default)
+        public static Pageable<MySqlRecommendationActionResource> GetRecommendedActionSessionsOperationResults(this SubscriptionResource subscriptionResource, string locationName, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-            return GetExtensionClient(subscriptionResource).GetMySqlRecommendationActionsByLocationRecommendedActionSessionsOperationResult(locationName, operationId, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetRecommendedActionSessionsOperationResults(locationName, operationId, cancellationToken);
         }
 
         private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)

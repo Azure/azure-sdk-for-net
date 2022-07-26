@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.MySql.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> lastAvailableBackupDateTime = default;
+            Optional<DateTimeOffset> lastAvailableBackupDateTime = default;
             Optional<string> serviceLevelObjective = default;
             Optional<string> edition = default;
             Optional<int> vCore = default;
@@ -72,7 +73,12 @@ namespace Azure.ResourceManager.MySql.Models
                     {
                         if (property0.NameEquals("lastAvailableBackupDateTime"))
                         {
-                            lastAvailableBackupDateTime = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            lastAvailableBackupDateTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("serviceLevelObjective"))
@@ -109,7 +115,7 @@ namespace Azure.ResourceManager.MySql.Models
                     continue;
                 }
             }
-            return new MySqlRecoverableServerResourceData(id, name, type, systemData.Value, lastAvailableBackupDateTime.Value, serviceLevelObjective.Value, edition.Value, Optional.ToNullable(vCore), hardwareGeneration.Value, version.Value);
+            return new MySqlRecoverableServerResourceData(id, name, type, systemData.Value, Optional.ToNullable(lastAvailableBackupDateTime), serviceLevelObjective.Value, edition.Value, Optional.ToNullable(vCore), hardwareGeneration.Value, version.Value);
         }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -23,15 +24,15 @@ namespace Azure.ResourceManager.MySql.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="lastAvailableBackupDateTime"> The last available backup date time. </param>
+        /// <param name="lastAvailableBackupOn"> The last available backup date time. </param>
         /// <param name="serviceLevelObjective"> The service level objective. </param>
         /// <param name="edition"> Edition of the performance tier. </param>
         /// <param name="vCore"> vCore associated with the service level objective. </param>
         /// <param name="hardwareGeneration"> Hardware generation associated with the service level objective. </param>
         /// <param name="version"> The MySQL version. </param>
-        internal MySqlRecoverableServerResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string lastAvailableBackupDateTime, string serviceLevelObjective, string edition, int? vCore, string hardwareGeneration, string version) : base(id, name, resourceType, systemData)
+        internal MySqlRecoverableServerResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? lastAvailableBackupOn, string serviceLevelObjective, string edition, int? vCore, string hardwareGeneration, string version) : base(id, name, resourceType, systemData)
         {
-            LastAvailableBackupDateTime = lastAvailableBackupDateTime;
+            LastAvailableBackupOn = lastAvailableBackupOn;
             ServiceLevelObjective = serviceLevelObjective;
             Edition = edition;
             VCore = vCore;
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.MySql.Models
         }
 
         /// <summary> The last available backup date time. </summary>
-        public string LastAvailableBackupDateTime { get; }
+        public DateTimeOffset? LastAvailableBackupOn { get; }
         /// <summary> The service level objective. </summary>
         public string ServiceLevelObjective { get; }
         /// <summary> Edition of the performance tier. </summary>
