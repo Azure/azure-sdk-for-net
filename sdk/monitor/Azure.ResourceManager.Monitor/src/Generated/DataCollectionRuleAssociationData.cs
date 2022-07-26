@@ -25,17 +25,29 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Resource properties. </param>
         /// <param name="etag"> Resource entity tag (ETag). </param>
-        internal DataCollectionRuleAssociationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataCollectionRuleAssociationProperties properties, ETag? etag) : base(id, name, resourceType, systemData)
+        /// <param name="description"> Description of the association. </param>
+        /// <param name="dataCollectionRuleId"> The resource ID of the data collection rule that is to be associated. </param>
+        /// <param name="dataCollectionEndpointId"> The resource ID of the data collection endpoint that is to be associated. </param>
+        /// <param name="provisioningState"> The resource provisioning state. </param>
+        internal DataCollectionRuleAssociationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, string description, string dataCollectionRuleId, string dataCollectionEndpointId, KnownDataCollectionRuleAssociationProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
-            Properties = properties;
-            Etag = etag;
+            ETag = etag;
+            Description = description;
+            DataCollectionRuleId = dataCollectionRuleId;
+            DataCollectionEndpointId = dataCollectionEndpointId;
+            ProvisioningState = provisioningState;
         }
 
-        /// <summary> Resource properties. </summary>
-        public DataCollectionRuleAssociationProperties Properties { get; set; }
         /// <summary> Resource entity tag (ETag). </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
+        /// <summary> Description of the association. </summary>
+        public string Description { get; set; }
+        /// <summary> The resource ID of the data collection rule that is to be associated. </summary>
+        public string DataCollectionRuleId { get; set; }
+        /// <summary> The resource ID of the data collection endpoint that is to be associated. </summary>
+        public string DataCollectionEndpointId { get; set; }
+        /// <summary> The resource provisioning state. </summary>
+        public KnownDataCollectionRuleAssociationProvisioningState? ProvisioningState { get; }
     }
 }

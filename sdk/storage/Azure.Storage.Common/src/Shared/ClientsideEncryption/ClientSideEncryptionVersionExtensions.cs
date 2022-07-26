@@ -15,8 +15,10 @@ namespace Azure.Storage.Cryptography.Models
         {
             switch (version)
             {
+#pragma warning disable CS0618 // obsolete
                 case ClientSideEncryptionVersion.V1_0:
                     return ClientSideEncryptionVersionString.V1_0;
+#pragma warning restore CS0618 // obsolete
                 case ClientSideEncryptionVersion.V2_0:
                     return ClientSideEncryptionVersionString.V2_0;
                 default:
@@ -29,8 +31,10 @@ namespace Azure.Storage.Cryptography.Models
         {
             switch (versionString)
             {
+#pragma warning disable CS0618 // obsolete
                 case ClientSideEncryptionVersionString.V1_0:
                     return ClientSideEncryptionVersion.V1_0;
+#pragma warning restore CS0618 // obsolete
                 case ClientSideEncryptionVersionString.V2_0:
                     return ClientSideEncryptionVersion.V2_0;
                 default:

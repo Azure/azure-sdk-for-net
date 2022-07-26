@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGuid"> The resourceGuid property of the Virtual Network peering resource. </param>
         internal VirtualNetworkPeeringData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, bool? allowVirtualNetworkAccess, bool? allowForwardedTraffic, bool? allowGatewayTransit, bool? useRemoteGateways, WritableSubResource remoteVirtualNetwork, AddressSpace remoteAddressSpace, AddressSpace remoteVirtualNetworkAddressSpace, VirtualNetworkBgpCommunities remoteBgpCommunities, VirtualNetworkPeeringState? peeringState, VirtualNetworkPeeringLevel? peeringSyncLevel, NetworkProvisioningState? provisioningState, bool? doNotVerifyRemoteGateways, Guid? resourceGuid) : base(id, name, resourceType)
         {
-            Etag = etag;
+            ETag = etag;
             AllowVirtualNetworkAccess = allowVirtualNetworkAccess;
             AllowForwardedTraffic = allowForwardedTraffic;
             AllowGatewayTransit = allowGatewayTransit;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> Whether the VMs in the local virtual network space would be able to access the VMs in remote virtual network space. </summary>
         public bool? AllowVirtualNetworkAccess { get; set; }
         /// <summary> Whether the forwarded traffic from the VMs in the local virtual network will be allowed/disallowed in remote virtual network. </summary>

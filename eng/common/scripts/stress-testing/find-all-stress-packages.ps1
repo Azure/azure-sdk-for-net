@@ -9,6 +9,7 @@ class StressTestPackageInfo {
     [string]$ReleaseName
     [string]$Dockerfile
     [string]$DockerBuildDir
+    [string]$Deployer
 }
 
 function FindStressPackages(
@@ -50,6 +51,17 @@ function MatchesAnnotations([hashtable]$chart, [hashtable]$filters) {
     return $true
 }
 
+function GetUsername() {
+    # Check GITHUB_USER for users in codespaces environments, since the default user is `codespaces` and
+    # we would like to avoid namespace overlaps for different codespaces users.
+    $stressUser = $env:GITHUB_USER ?? $env:USER ?? $env:USERNAME
+    # Remove spaces, underscores, etc. that may be in $namespace.
+    # Value must be a valid RFC 1123 DNS label: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#dns-label-names
+    $stressUser = $stressUser -replace '_|\W', '-'
+
+    return $stressUser.ToLower()
+}
+
 function NewStressTestPackageInfo(
     [hashtable]$chart,
     [System.IO.FileInfo]$chartFile,
@@ -61,18 +73,7 @@ function NewStressTestPackageInfo(
     } elseif ($CI) {
         $chart.annotations.namespace
     } else {
-        # Check GITHUB_USER for users in codespaces environments, since the default user is `codespaces` and
-        # we would like to avoid namespace overlaps for different codespaces users.
-        $namespace = if ($env:GITHUB_USER) {
-            $env:GITHUB_USER
-        } elseif ($env:USER) {
-            $env:USER
-        } else {
-            $env:USERNAME
-        }
-        # Remove spaces, underscores, etc. that may be in $namespace. Value must be a valid RFC 1123 DNS label:
-        # https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#dns-label-names
-        $namespace -replace '_|\W', '-'
+        GetUsername
     }
 
     return [StressTestPackageInfo]@{

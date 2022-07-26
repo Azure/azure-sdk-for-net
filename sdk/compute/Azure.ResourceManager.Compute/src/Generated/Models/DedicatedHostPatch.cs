@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies information about the dedicated host. Only tags, autoReplaceOnFailure and licenseType may be updated. </summary>
-    public partial class DedicatedHostPatch : ComputeUpdateResourceData
+    public partial class DedicatedHostPatch : ComputeResourcePatch
     {
         /// <summary> Initializes a new instance of DedicatedHostPatch. </summary>
         public DedicatedHostPatch()
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> A list of references to all virtual machines in the Dedicated Host. </summary>
         public IReadOnlyList<SubResource> VirtualMachines { get; }
         /// <summary> Specifies the software license type that will be applied to the VMs deployed on the dedicated host. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **None** &lt;br&gt;&lt;br&gt; **Windows_Server_Hybrid** &lt;br&gt;&lt;br&gt; **Windows_Server_Perpetual** &lt;br&gt;&lt;br&gt; Default: **None**. </summary>
-        public DedicatedHostLicenseTypes? LicenseType { get; set; }
+        public DedicatedHostLicenseType? LicenseType { get; set; }
         /// <summary> The date when the host was first provisioned. </summary>
         public DateTimeOffset? ProvisioningOn { get; }
         /// <summary> The provisioning state, which only appears in the response. </summary>

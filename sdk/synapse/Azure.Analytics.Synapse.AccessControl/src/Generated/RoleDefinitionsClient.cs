@@ -62,7 +62,42 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <summary> List role definitions. </summary>
         /// <param name="isBuiltIn"> Is a Synapse Built-In Role or not. </param>
         /// <param name="scope"> Scope of the Synapse Built-in Role. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetRoleDefinitionsAsync and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new RoleDefinitionsClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetRoleDefinitionsAsync();
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result[0].ToString());
+        /// ]]></code>
+        /// This sample shows how to call GetRoleDefinitionsAsync with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new RoleDefinitionsClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetRoleDefinitionsAsync(true, "<scope>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result[0].GetProperty("isBuiltIn").ToString());
+        /// Console.WriteLine(result[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("permissions")[0].GetProperty("actions")[0].ToString());
+        /// Console.WriteLine(result[0].GetProperty("permissions")[0].GetProperty("notActions")[0].ToString());
+        /// Console.WriteLine(result[0].GetProperty("permissions")[0].GetProperty("dataActions")[0].ToString());
+        /// Console.WriteLine(result[0].GetProperty("permissions")[0].GetProperty("notDataActions")[0].ToString());
+        /// Console.WriteLine(result[0].GetProperty("scopes")[0].ToString());
+        /// Console.WriteLine(result[0].GetProperty("availabilityStatus").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -107,7 +142,42 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <summary> List role definitions. </summary>
         /// <param name="isBuiltIn"> Is a Synapse Built-In Role or not. </param>
         /// <param name="scope"> Scope of the Synapse Built-in Role. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetRoleDefinitions and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new RoleDefinitionsClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetRoleDefinitions();
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result[0].ToString());
+        /// ]]></code>
+        /// This sample shows how to call GetRoleDefinitions with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new RoleDefinitionsClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetRoleDefinitions(true, "<scope>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result[0].GetProperty("isBuiltIn").ToString());
+        /// Console.WriteLine(result[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("permissions")[0].GetProperty("actions")[0].ToString());
+        /// Console.WriteLine(result[0].GetProperty("permissions")[0].GetProperty("notActions")[0].ToString());
+        /// Console.WriteLine(result[0].GetProperty("permissions")[0].GetProperty("dataActions")[0].ToString());
+        /// Console.WriteLine(result[0].GetProperty("permissions")[0].GetProperty("notDataActions")[0].ToString());
+        /// Console.WriteLine(result[0].GetProperty("scopes")[0].ToString());
+        /// Console.WriteLine(result[0].GetProperty("availabilityStatus").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -151,9 +221,33 @@ namespace Azure.Analytics.Synapse.AccessControl
 
         /// <summary> Get role definition by role definition Id. </summary>
         /// <param name="roleDefinitionId"> Synapse Built-In Role Definition Id. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetRoleDefinitionByIdAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new RoleDefinitionsClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetRoleDefinitionByIdAsync("<roleDefinitionId>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("isBuiltIn").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("permissions")[0].GetProperty("actions")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("permissions")[0].GetProperty("notActions")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("permissions")[0].GetProperty("dataActions")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("permissions")[0].GetProperty("notDataActions")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("scopes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("availabilityStatus").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -199,9 +293,33 @@ namespace Azure.Analytics.Synapse.AccessControl
 
         /// <summary> Get role definition by role definition Id. </summary>
         /// <param name="roleDefinitionId"> Synapse Built-In Role Definition Id. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetRoleDefinitionById with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new RoleDefinitionsClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetRoleDefinitionById("<roleDefinitionId>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("isBuiltIn").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("permissions")[0].GetProperty("actions")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("permissions")[0].GetProperty("notActions")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("permissions")[0].GetProperty("dataActions")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("permissions")[0].GetProperty("notDataActions")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("scopes")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("availabilityStatus").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -246,7 +364,22 @@ namespace Azure.Analytics.Synapse.AccessControl
         }
 
         /// <summary> List rbac scopes. </summary>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call GetScopesAsync and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new RoleDefinitionsClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetScopesAsync();
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result[0].ToString());
+        /// ]]></code>
+        /// </example>
         public virtual async Task<Response> GetScopesAsync(RequestContext context = null)
         {
             using var scope0 = ClientDiagnostics.CreateScope("RoleDefinitionsClient.GetScopes");
@@ -264,7 +397,22 @@ namespace Azure.Analytics.Synapse.AccessControl
         }
 
         /// <summary> List rbac scopes. </summary>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call GetScopes and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new RoleDefinitionsClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetScopes();
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result[0].ToString());
+        /// ]]></code>
+        /// </example>
         public virtual Response GetScopes(RequestContext context = null)
         {
             using var scope0 = ClientDiagnostics.CreateScope("RoleDefinitionsClient.GetScopes");

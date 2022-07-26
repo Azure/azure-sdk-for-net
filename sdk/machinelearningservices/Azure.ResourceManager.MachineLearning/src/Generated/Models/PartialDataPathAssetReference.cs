@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Reference to an asset via its path in a datastore. </summary>
-    internal partial class PartialDataPathAssetReference : PartialAssetReferenceBase
+    public partial class PartialDataPathAssetReference : PartialAssetReferenceBase
     {
         /// <summary> Initializes a new instance of PartialDataPathAssetReference. </summary>
         public PartialDataPathAssetReference()

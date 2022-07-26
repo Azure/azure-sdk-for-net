@@ -23,50 +23,79 @@ steps:
       # Define this inline, because of the chicken/egg problem with loading a script when nothing
       # has been checked out yet.
       script: |
+        function Clone([Hashtable]$repository)
+        {
+          if (Test-Path .git) {
+            Write-Warning "Deleting existing git repository"
+            Write-Host "Remove-Item -Force -Recurse ./*"
+            Remove-Item -Force -Recurse ./*
+          }
+
+          Write-Host "git clone https://github.com/$($repository.Name) ."
+          git clone https://github.com/$($repository.Name) .
+          if ($LASTEXITCODE) {
+            exit $LASTEXITCODE
+          }
+          Write-Host "git -c advice.detachedHead=false checkout $($repository.Commitish)"
+          # This will use the default branch if repo.Commitish is empty
+          git -c advice.detachedHead=false checkout $($repository.Commitish)
+          if ($LASTEXITCODE) {
+            exit $LASTEXITCODE
+          }
+        }
+
         function SparseCheckout([Array]$paths, [Hashtable]$repository)
         {
-            $dir = $repository.WorkingDirectory
-            if (!$dir) {
-              $dir = "./$($repository.Name)"
-            }
-            New-Item $dir -ItemType Directory -Force
-            Push-Location $dir
+          if (Test-Path .git/info/sparse-checkout) {
+            $hasInitialized = $true
+            Write-Host "Repository $($repository.Name) has already been initialized. Skipping this step."
+          } else {
+            Write-Host "Repository $($repository.Name) is being initialized."
 
-            if (Test-Path .git/info/sparse-checkout) {
-              $hasInitialized = $true
-              Write-Host "Repository $($repository.Name) has already been initialized. Skipping this step."
-            } else {
-              Write-Host "Repository $($repository.Name) is being initialized."
-
-              Write-Host "git clone --no-checkout --filter=tree:0 https://github.com/$($repository.Name) ."
-              git clone --no-checkout --filter=tree:0 https://github.com/$($repository.Name) .
-
-              Write-Host "git sparse-checkout init"
-              git sparse-checkout init
-
-              Write-Host "git sparse-checkout set '/*' '!/*/' '/eng'"
-              git sparse-checkout set '/*' '!/*/' '/eng'
+            Write-Host "git clone --no-checkout --filter=tree:0 https://github.com/$($repository.Name) ."
+            git clone --no-checkout --filter=tree:0 https://github.com/$($repository.Name) .
+            if ($LASTEXITCODE) {
+              throw
             }
 
-            # Prevent wildcard expansion in Invoke-Expression (e.g. for checkout path '/*')
-            $quotedPaths = $paths | ForEach-Object { "'$_'" }
-            $gitsparsecmd = "git sparse-checkout add $quotedPaths"
-            Write-Host $gitsparsecmd
-            Invoke-Expression -Command $gitsparsecmd
-
-            Write-Host "Set sparse checkout paths to:"
-            Get-Content .git/info/sparse-checkout
-
-            # sparse-checkout commands after initial checkout will auto-checkout again
-            if (!$hasInitialized) {
-              Write-Host "git -c advice.detachedHead=false checkout $($repository.Commitish)"
-              # This will use the default branch if repo.Commitish is empty
-              git -c advice.detachedHead=false checkout $($repository.Commitish)
-            } else {
-              Write-Host "Skipping checkout as repo has already been initialized"
+            Write-Host "git sparse-checkout init"
+            git sparse-checkout init
+            if ($LASTEXITCODE) {
+              throw
             }
 
-            Pop-Location
+            # Set non-cone mode otherwise path filters will not work in git >= 2.37.0
+            # See https://github.blog/2022-06-27-highlights-from-git-2-37/#tidbits
+            Write-Host "git sparse-checkout set --no-cone '/*' '!/*/' '/eng'"
+            git sparse-checkout set --no-cone '/*' '!/*/' '/eng'
+            if ($LASTEXITCODE) {
+              throw
+            }
+          }
+
+          # Prevent wildcard expansion in Invoke-Expression (e.g. for checkout path '/*')
+          $quotedPaths = $paths | ForEach-Object { "'$_'" }
+          $gitsparsecmd = "git sparse-checkout add $quotedPaths"
+          Write-Host $gitsparsecmd
+          Invoke-Expression -Command $gitsparsecmd
+          if ($LASTEXITCODE) {
+            throw
+          }
+
+          Write-Host "Set sparse checkout paths to:"
+          Get-Content .git/info/sparse-checkout
+
+          # sparse-checkout commands after initial checkout will auto-checkout again
+          if (!$hasInitialized) {
+            Write-Host "git -c advice.detachedHead=false checkout $($repository.Commitish)"
+            # This will use the default branch if repo.Commitish is empty
+            git -c advice.detachedHead=false checkout $($repository.Commitish)
+            if ($LASTEXITCODE) {
+              throw
+            }
+          } else {
+            Write-Host "Skipping checkout as repo has already been initialized"
+          }
         }
 
         # Paths may be sourced as a yaml object literal OR a dynamically generated variable json string.
@@ -75,7 +104,30 @@ steps:
         # Replace windows backslash paths, as Azure Pipelines default directories are sometimes formatted like 'D:\a\1\s'
         $repositories = '${{ convertToJson(parameters.Repositories) }}' -replace '\\', '/' | ConvertFrom-Json -AsHashtable
         foreach ($repo in $Repositories) {
-          SparseCheckout $paths $repo
+          $dir = $repo.WorkingDirectory
+          if (!$dir) {
+            $dir = "./$($repo.Name)"
+          }
+          New-Item $dir -ItemType Directory -Force
+          Push-Location $dir
+
+          try {
+            # Enable global override if there are sparse checkout issues
+            if ('$(SkipSparseCheckout)' -ne 'true') {
+              try {
+                SparseCheckout $paths $repo
+              } catch {
+                # Fallback to full clone if sparse checkout is not working properly
+                Write-Warning "Sparse checkout failed, falling back to full clone"
+                Clone $repo
+              }
+            } else {
+              Write-Warning "Sparse checkout disabled, performing full clone"
+              Clone $repo
+            }
+          } finally {
+            Pop-Location
+          }
         }
       pwsh: true
       workingDirectory: $(System.DefaultWorkingDirectory)

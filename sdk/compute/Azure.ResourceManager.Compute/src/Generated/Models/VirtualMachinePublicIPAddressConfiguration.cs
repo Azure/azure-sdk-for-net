@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="publicIPPrefix"> The PublicIPPrefix from which to allocate publicIP addresses. </param>
         /// <param name="publicIPAddressVersion"> Available from Api-Version 2019-07-01 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4. Possible values are: &apos;IPv4&apos; and &apos;IPv6&apos;. </param>
         /// <param name="publicIPAllocationMethod"> Specify the public IP allocation type. </param>
-        internal VirtualMachinePublicIPAddressConfiguration(string name, PublicIPAddressSku sku, int? idleTimeoutInMinutes, DeleteOptions? deleteOption, VirtualMachinePublicIPAddressDnsSettingsConfiguration dnsSettings, IList<VirtualMachineIPTag> ipTags, WritableSubResource publicIPPrefix, IPVersion? publicIPAddressVersion, PublicIPAllocationMethod? publicIPAllocationMethod)
+        internal VirtualMachinePublicIPAddressConfiguration(string name, ComputePublicIPAddressSku sku, int? idleTimeoutInMinutes, ComputeDeleteOption? deleteOption, VirtualMachinePublicIPAddressDnsSettingsConfiguration dnsSettings, IList<VirtualMachineIPTag> ipTags, WritableSubResource publicIPPrefix, IPVersion? publicIPAddressVersion, PublicIPAllocationMethod? publicIPAllocationMethod)
         {
             Name = name;
             Sku = sku;
@@ -55,11 +55,11 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The publicIP address configuration name. </summary>
         public string Name { get; set; }
         /// <summary> Describes the public IP Sku. It can only be set with OrchestrationMode as Flexible. </summary>
-        public PublicIPAddressSku Sku { get; set; }
+        public ComputePublicIPAddressSku Sku { get; set; }
         /// <summary> The idle timeout of the public IP address. </summary>
         public int? IdleTimeoutInMinutes { get; set; }
         /// <summary> Specify what happens to the public IP address when the VM is deleted. </summary>
-        public DeleteOptions? DeleteOption { get; set; }
+        public ComputeDeleteOption? DeleteOption { get; set; }
         /// <summary> The dns settings to be applied on the publicIP addresses . </summary>
         internal VirtualMachinePublicIPAddressDnsSettingsConfiguration DnsSettings { get; set; }
         /// <summary> The Domain name label prefix of the PublicIPAddress resources that will be created. The generated name label is the concatenation of the domain name label and vm network profile unique ID. </summary>

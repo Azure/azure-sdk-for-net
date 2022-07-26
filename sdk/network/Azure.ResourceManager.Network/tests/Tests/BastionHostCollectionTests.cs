@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network.Tests
             _subnetIdentifier = subnetLro.Value.Id;
             PublicIPAddressData ipData = new PublicIPAddressData();
             ipData.Location = AzureLocation.WestUS2;
-            ipData.PublicIPAllocationMethod = IPAllocationMethod.Static;
+            ipData.PublicIPAllocationMethod = NetworkIPAllocationMethod.Static;
             ipData.Sku = new PublicIPAddressSku();
             ipData.Sku.Name = PublicIPAddressSkuName.Standard;
             var ipLro = await rg.GetPublicIPAddresses().CreateOrUpdateAsync(WaitUntil.Completed, SessionRecording.GenerateAssetName("ip-"), ipData);

@@ -127,12 +127,16 @@ directive:
       $["x-namespace"] = "Azure.ResourceManager.Models";
       $["x-accessibility"] = "public";
   - from: types.json
-    where: $.definitions['OperationStatusResult']
+    where: $.definitions.OperationStatusResult
     transform: >
       $["x-ms-mgmt-propertyReferenceType"] = false;
       $["x-ms-mgmt-typeReferenceType"] = true;
       $["x-csharp-formats"] = "json";
-      $["x-csharp-usage"] = "model,output";
+      $["x-csharp-usage"] = "model,input,output";
+  - from: types.json
+    where: $.definitions.OperationStatusResult.properties.*
+    transform: >
+      $["readOnly"] = true;
   - from: managedidentity.json
     where: $.definitions.SystemAssignedServiceIdentity
     transform: >
@@ -230,6 +234,9 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
+keep-plural-enums:
+  - ResourceTypeAliasPathAttributes
+
 rename-rules:
   CPU: Cpu
   CPUs: Cpus
@@ -278,6 +285,10 @@ directive:
   - remove-operation: Resources_Get
   - remove-operation: Resources_Delete
   - remove-operation: Providers_RegisterAtManagementGroupScope
+  - from: swagger-document
+    where: $.definitions.ExtendedLocation
+    transform: >
+      $["x-ms-mgmt-propertyReferenceType"] = true;
   # Deduplicate
   - from: subscriptions.json
     where: '$.paths["/providers/Microsoft.Resources/operations"].get'
@@ -700,13 +711,6 @@ directive:
   - rename-model:
       from: CreateParentGroupInfo
       to: ManagementGroupParentCreateOptions
-  - from: management.json
-    where: $.definitions.CheckNameAvailabilityRequest.properties.type
-    transform: >
-      $['x-ms-client-name'] = "ResourceType"
-  - rename-model:
-      from: CheckNameAvailabilityRequest
-      to: ManagementGroupNameAvailabilityRequest
   - rename-operation:
       from: CheckNameAvailability
       to: ManagementGroups_CheckNameAvailability
@@ -791,5 +795,8 @@ directive:
     where: $.definitions
     transform: >
       $.CreateManagementGroupRequest.properties.type['x-ms-format'] = 'resource-type';
-      $.ManagementGroupNameAvailabilityRequest.properties.type['x-ms-format'] = 'resource-type';
+      $.CheckNameAvailabilityRequest["x-ms-client-name"] = "ManagementGroupNameAvailabilityContent";
+      $.CheckNameAvailabilityRequest.properties.type['x-ms-client-name'] = "ResourceType";
+      $.CheckNameAvailabilityRequest.properties.type['x-ms-contant'] = true;
+      $.CheckNameAvailabilityRequest.properties.type['x-ms-format'] = 'resource-type';
 ```

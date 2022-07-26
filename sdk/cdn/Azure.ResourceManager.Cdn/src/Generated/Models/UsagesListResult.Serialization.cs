@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         internal static UsagesListResult DeserializeUsagesListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<CdnUsage>> value = default;
+            Optional<IReadOnlyList<FrontDoorUsage>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Cdn.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<CdnUsage> array = new List<CdnUsage>();
+                    List<FrontDoorUsage> array = new List<FrontDoorUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CdnUsage.DeserializeCdnUsage(item));
+                        array.Add(FrontDoorUsage.DeserializeFrontDoorUsage(item));
                     }
                     value = array;
                     continue;

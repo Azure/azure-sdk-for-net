@@ -69,9 +69,9 @@ namespace Azure.Communication.MediaComposition
     }
     public partial class GridLayoutOptions
     {
-        public GridLayoutOptions(int rows, int columns, object inputIds) { }
+        public GridLayoutOptions(int rows, int columns) { }
         public int Columns { get { throw null; } set { } }
-        public object InputIds { get { throw null; } set { } }
+        public System.Collections.Generic.IList<System.Collections.Generic.IList<string>> InputIds { get { throw null; } }
         public int Rows { get { throw null; } set { } }
     }
     public partial class GroupCall
@@ -81,14 +81,14 @@ namespace Azure.Communication.MediaComposition
     }
     public partial class InputGroup
     {
-        public InputGroup(object inputIds) { }
+        public InputGroup() { }
         public int? Columns { get { throw null; } set { } }
-        public object Height { get { throw null; } set { } }
-        public object InputIds { get { throw null; } set { } }
+        public string Height { get { throw null; } set { } }
+        public System.Collections.Generic.IList<System.Collections.Generic.IList<string>> InputIds { get { throw null; } }
         public string Layer { get { throw null; } set { } }
         public Azure.Communication.MediaComposition.Models.InputPosition Position { get { throw null; } set { } }
         public int? Rows { get { throw null; } set { } }
-        public object Width { get { throw null; } set { } }
+        public string Width { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct LayerVisibility : System.IEquatable<Azure.Communication.MediaComposition.LayerVisibility>
@@ -151,19 +151,27 @@ namespace Azure.Communication.MediaComposition
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(string mediaCompositionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Communication.MediaComposition.MediaCompositionBody> Get(string mediaCompositionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.MediaComposition.MediaCompositionBody>> GetAsync(string mediaCompositionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Communication.MediaComposition.MediaCompositionBody> RemoveInputs(string mediaCompositionId, System.Collections.Generic.IEnumerable<string> inputIds, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.MediaComposition.MediaCompositionBody>> RemoveInputsAsync(string mediaCompositionId, System.Collections.Generic.IEnumerable<string> inputIds, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Communication.MediaComposition.MediaCompositionBody> RemoveOutputs(string mediaCompositionId, System.Collections.Generic.IEnumerable<string> outputIds, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.MediaComposition.MediaCompositionBody>> RemoveOutputsAsync(string mediaCompositionId, System.Collections.Generic.IEnumerable<string> outputIds, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Communication.MediaComposition.CompositionStreamState> Start(string mediaCompositionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.MediaComposition.CompositionStreamState>> StartAsync(string mediaCompositionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Communication.MediaComposition.CompositionStreamState> Stop(string mediaCompositionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.MediaComposition.CompositionStreamState>> StopAsync(string mediaCompositionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Communication.MediaComposition.MediaCompositionBody> Update(string mediaCompositionId, Azure.Communication.MediaComposition.Models.MediaCompositionLayout layout = null, System.Collections.Generic.IDictionary<string, Azure.Communication.MediaComposition.MediaInput> inputs = null, System.Collections.Generic.IDictionary<string, Azure.Communication.MediaComposition.MediaOutput> outputs = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.MediaComposition.MediaCompositionBody>> UpdateAsync(string mediaCompositionId, Azure.Communication.MediaComposition.Models.MediaCompositionLayout layout = null, System.Collections.Generic.IDictionary<string, Azure.Communication.MediaComposition.MediaInput> inputs = null, System.Collections.Generic.IDictionary<string, Azure.Communication.MediaComposition.MediaOutput> outputs = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Communication.MediaComposition.MediaCompositionBody> UpdateLayout(string mediaCompositionId, Azure.Communication.MediaComposition.Models.MediaCompositionLayout layout, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.MediaComposition.MediaCompositionBody>> UpdateLayoutAsync(string mediaCompositionId, Azure.Communication.MediaComposition.Models.MediaCompositionLayout layout, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Communication.MediaComposition.MediaCompositionBody> UpsertInputs(string mediaCompositionId, System.Collections.Generic.IDictionary<string, Azure.Communication.MediaComposition.MediaInput> inputs, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.MediaComposition.MediaCompositionBody>> UpsertInputsAsync(string mediaCompositionId, System.Collections.Generic.IDictionary<string, Azure.Communication.MediaComposition.MediaInput> inputs, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Communication.MediaComposition.MediaCompositionBody> UpsertOutputs(string mediaCompositionId, System.Collections.Generic.IDictionary<string, Azure.Communication.MediaComposition.MediaOutput> outputs, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.MediaComposition.MediaCompositionBody>> UpsertOutputsAsync(string mediaCompositionId, System.Collections.Generic.IDictionary<string, Azure.Communication.MediaComposition.MediaOutput> outputs, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class MediaCompositionClientOptions : Azure.Core.ClientOptions
     {
-        public MediaCompositionClientOptions(Azure.Communication.MediaComposition.MediaCompositionClientOptions.ServiceVersion version = Azure.Communication.MediaComposition.MediaCompositionClientOptions.ServiceVersion.V2022_06_26_Preview) { }
+        public MediaCompositionClientOptions(Azure.Communication.MediaComposition.MediaCompositionClientOptions.ServiceVersion version = Azure.Communication.MediaComposition.MediaCompositionClientOptions.ServiceVersion.V2022_07_16_Preview1) { }
         public enum ServiceVersion
         {
-            V2022_06_26_Preview = 1,
+            V2022_07_16_Preview1 = 1,
         }
     }
     public partial class MediaInput

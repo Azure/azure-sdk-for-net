@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
         {
             Optional<double> limit = default;
             Optional<PerformanceLevelUnit> unit = default;
-            Optional<CapabilityStatus> status = default;
+            Optional<SqlCapabilityStatus> status = default;
             Optional<string> reason = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = property.Value.GetString().ToCapabilityStatus();
+                    status = property.Value.GetString().ToSqlCapabilityStatus();
                     continue;
                 }
                 if (property.NameEquals("reason"))

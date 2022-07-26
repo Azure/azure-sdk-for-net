@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Storage.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("enable");
-            writer.WriteBooleanValue(Enable);
+            writer.WriteBooleanValue(IsEnabled);
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Storage.Models
         internal static LastAccessTimeTrackingPolicy DeserializeLastAccessTimeTrackingPolicy(JsonElement element)
         {
             bool enable = default;
-            Optional<Name> name = default;
+            Optional<LastAccessTimeTrackingPolicyName> name = default;
             Optional<int> trackingGranularityInDays = default;
             Optional<IList<string>> blobType = default;
             foreach (var property in element.EnumerateObject())
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Storage.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    name = new Name(property.Value.GetString());
+                    name = new LastAccessTimeTrackingPolicyName(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("trackingGranularityInDays"))

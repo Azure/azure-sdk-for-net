@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -19,9 +20,9 @@ namespace Azure.ResourceManager.Network
         public PrivateEndpointData()
         {
             NetworkInterfaces = new ChangeTrackingList<NetworkInterfaceData>();
-            PrivateLinkServiceConnections = new ChangeTrackingList<PrivateLinkServiceConnection>();
-            ManualPrivateLinkServiceConnections = new ChangeTrackingList<PrivateLinkServiceConnection>();
-            CustomDnsConfigs = new ChangeTrackingList<CustomDnsConfigPropertiesFormat>();
+            PrivateLinkServiceConnections = new ChangeTrackingList<NetworkPrivateLinkServiceConnection>();
+            ManualPrivateLinkServiceConnections = new ChangeTrackingList<NetworkPrivateLinkServiceConnection>();
+            CustomDnsConfigs = new ChangeTrackingList<CustomDnsConfigProperties>();
         }
 
         /// <summary> Initializes a new instance of PrivateEndpointData. </summary>
@@ -38,10 +39,10 @@ namespace Azure.ResourceManager.Network
         /// <param name="privateLinkServiceConnections"> A grouping of information about the connection to the remote resource. </param>
         /// <param name="manualPrivateLinkServiceConnections"> A grouping of information about the connection to the remote resource. Used when the network admin does not have access to approve connections to the remote resource. </param>
         /// <param name="customDnsConfigs"> An array of custom dns configurations. </param>
-        internal PrivateEndpointData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, ETag? etag, SubnetData subnet, IReadOnlyList<NetworkInterfaceData> networkInterfaces, NetworkProvisioningState? provisioningState, IList<PrivateLinkServiceConnection> privateLinkServiceConnections, IList<PrivateLinkServiceConnection> manualPrivateLinkServiceConnections, IList<CustomDnsConfigPropertiesFormat> customDnsConfigs) : base(id, name, resourceType, location, tags)
+        internal PrivateEndpointData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, ETag? etag, SubnetData subnet, IReadOnlyList<NetworkInterfaceData> networkInterfaces, NetworkProvisioningState? provisioningState, IList<NetworkPrivateLinkServiceConnection> privateLinkServiceConnections, IList<NetworkPrivateLinkServiceConnection> manualPrivateLinkServiceConnections, IList<CustomDnsConfigProperties> customDnsConfigs) : base(id, name, resourceType, location, tags)
         {
             ExtendedLocation = extendedLocation;
-            Etag = etag;
+            ETag = etag;
             Subnet = subnet;
             NetworkInterfaces = networkInterfaces;
             ProvisioningState = provisioningState;
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> The extended location of the load balancer. </summary>
         public ExtendedLocation ExtendedLocation { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> The ID of the subnet from which the private IP will be allocated. </summary>
         public SubnetData Subnet { get; set; }
         /// <summary> An array of references to the network interfaces created for this private endpoint. </summary>
@@ -61,10 +62,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> The provisioning state of the private endpoint resource. </summary>
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> A grouping of information about the connection to the remote resource. </summary>
-        public IList<PrivateLinkServiceConnection> PrivateLinkServiceConnections { get; }
+        public IList<NetworkPrivateLinkServiceConnection> PrivateLinkServiceConnections { get; }
         /// <summary> A grouping of information about the connection to the remote resource. Used when the network admin does not have access to approve connections to the remote resource. </summary>
-        public IList<PrivateLinkServiceConnection> ManualPrivateLinkServiceConnections { get; }
+        public IList<NetworkPrivateLinkServiceConnection> ManualPrivateLinkServiceConnections { get; }
         /// <summary> An array of custom dns configurations. </summary>
-        public IList<CustomDnsConfigPropertiesFormat> CustomDnsConfigs { get; }
+        public IList<CustomDnsConfigProperties> CustomDnsConfigs { get; }
     }
 }

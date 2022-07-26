@@ -17,7 +17,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary> Initializes a new instance of GetModelsResponse. </summary>
         /// <param name="value"> List of models. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal GetModelsResponse(IEnumerable<DocumentModelInfo> value)
+        internal GetModelsResponse(IEnumerable<DocumentModelSummary> value)
         {
             if (value == null)
             {
@@ -30,14 +30,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary> Initializes a new instance of GetModelsResponse. </summary>
         /// <param name="value"> List of models. </param>
         /// <param name="nextLink"> Link to the next page of models. </param>
-        internal GetModelsResponse(IReadOnlyList<DocumentModelInfo> value, string nextLink)
+        internal GetModelsResponse(IReadOnlyList<DocumentModelSummary> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of models. </summary>
-        public IReadOnlyList<DocumentModelInfo> Value { get; }
+        public IReadOnlyList<DocumentModelSummary> Value { get; }
         /// <summary> Link to the next page of models. </summary>
         public string NextLink { get; }
     }

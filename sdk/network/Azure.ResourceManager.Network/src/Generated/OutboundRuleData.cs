@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="idleTimeoutInMinutes"> The timeout for the TCP idle connection. </param>
         internal OutboundRuleData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, int? allocatedOutboundPorts, IList<WritableSubResource> frontendIPConfigurations, WritableSubResource backendAddressPool, NetworkProvisioningState? provisioningState, LoadBalancerOutboundRuleProtocol? protocol, bool? enableTcpReset, int? idleTimeoutInMinutes) : base(id, name, resourceType)
         {
-            Etag = etag;
+            ETag = etag;
             AllocatedOutboundPorts = allocatedOutboundPorts;
             FrontendIPConfigurations = frontendIPConfigurations;
             BackendAddressPool = backendAddressPool;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> The number of outbound ports to be used for NAT. </summary>
         public int? AllocatedOutboundPorts { get; set; }
         /// <summary> The Frontend IP addresses of the load balancer. </summary>

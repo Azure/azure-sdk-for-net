@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="provisioningState"> The provisioning state of the packet capture session. </param>
         internal PacketCaptureData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, string target, long? bytesToCapturePerPacket, long? totalBytesPerSession, int? timeLimitInSeconds, PacketCaptureStorageLocation storageLocation, IReadOnlyList<PacketCaptureFilter> filters, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
-            Etag = etag;
+            ETag = etag;
             Target = target;
             BytesToCapturePerPacket = bytesToCapturePerPacket;
             TotalBytesPerSession = totalBytesPerSession;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> The ID of the targeted resource, only VM is currently supported. </summary>
         public string Target { get; }
         /// <summary> Number of bytes captured per packet, the remaining bytes are truncated. </summary>

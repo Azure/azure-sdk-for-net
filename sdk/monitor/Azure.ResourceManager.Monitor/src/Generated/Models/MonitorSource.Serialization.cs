@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Monitor.Models
         {
             Optional<string> query = default;
             Optional<IList<string>> authorizedResources = default;
-            string dataSourceId = default;
+            ResourceIdentifier dataSourceId = default;
             Optional<QueryType> queryType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (property.NameEquals("dataSourceId"))
                 {
-                    dataSourceId = property.Value.GetString();
+                    dataSourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("queryType"))

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="pathRules"> Path rules specifying redirect configuration. </param>
         internal ApplicationGatewayRedirectConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, ApplicationGatewayRedirectType? redirectType, WritableSubResource targetListener, Uri targetUri, bool? includePath, bool? includeQueryString, IList<WritableSubResource> requestRoutingRules, IList<WritableSubResource> urlPathMaps, IList<WritableSubResource> pathRules) : base(id, name, resourceType)
         {
-            Etag = etag;
+            ETag = etag;
             RedirectType = redirectType;
             TargetListener = targetListener;
             TargetUri = targetUri;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> HTTP redirection type. </summary>
         public ApplicationGatewayRedirectType? RedirectType { get; set; }
         /// <summary> Reference to a listener to redirect the request to. </summary>

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute
             Optional<SystemData> systemData = default;
             Optional<DateTimeOffset> timeCreated = default;
             Optional<ResourceIdentifier> sourceResourceId = default;
-            Optional<OperatingSystemTypes> osType = default;
+            Optional<SupportedOperatingSystemType> osType = default;
             Optional<HyperVGeneration> hyperVGeneration = default;
             Optional<DiskPurchasePlan> purchasePlan = default;
             Optional<SupportedCapabilities> supportedCapabilities = default;
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Compute
             Optional<DiskEncryption> encryption = default;
             Optional<bool> supportsHibernation = default;
             Optional<NetworkAccessPolicy> networkAccessPolicy = default;
-            Optional<PublicNetworkAccess> publicNetworkAccess = default;
+            Optional<DiskPublicNetworkAccess> publicNetworkAccess = default;
             Optional<ResourceIdentifier> diskAccessId = default;
             Optional<float> completionPercent = default;
             Optional<string> replicationState = default;
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            osType = property0.Value.GetString().ToOperatingSystemTypes();
+                            osType = property0.Value.GetString().ToSupportedOperatingSystemType();
                             continue;
                         }
                         if (property0.NameEquals("hyperVGeneration"))
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            publicNetworkAccess = new PublicNetworkAccess(property0.Value.GetString());
+                            publicNetworkAccess = new DiskPublicNetworkAccess(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("diskAccessId"))

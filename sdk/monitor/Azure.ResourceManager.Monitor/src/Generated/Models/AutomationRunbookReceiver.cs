@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="webhookResourceId"> The resource id for webhook linked to this runbook. </param>
         /// <param name="isGlobalRunbook"> Indicates whether this instance is global runbook. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="automationAccountId"/>, <paramref name="runbookName"/> or <paramref name="webhookResourceId"/> is null. </exception>
-        public AutomationRunbookReceiver(string automationAccountId, string runbookName, string webhookResourceId, bool isGlobalRunbook)
+        public AutomationRunbookReceiver(ResourceIdentifier automationAccountId, string runbookName, ResourceIdentifier webhookResourceId, bool isGlobalRunbook)
         {
             if (automationAccountId == null)
             {
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="name"> Indicates name of the webhook. </param>
         /// <param name="serviceUri"> The URI where webhooks should be sent. </param>
         /// <param name="useCommonAlertSchema"> Indicates whether to use common alert schema. </param>
-        internal AutomationRunbookReceiver(string automationAccountId, string runbookName, string webhookResourceId, bool isGlobalRunbook, string name, Uri serviceUri, bool? useCommonAlertSchema)
+        internal AutomationRunbookReceiver(ResourceIdentifier automationAccountId, string runbookName, ResourceIdentifier webhookResourceId, bool isGlobalRunbook, string name, Uri serviceUri, bool? useCommonAlertSchema)
         {
             AutomationAccountId = automationAccountId;
             RunbookName = runbookName;
@@ -59,11 +60,11 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> The Azure automation account Id which holds this runbook and authenticate to Azure resource. </summary>
-        public string AutomationAccountId { get; set; }
+        public ResourceIdentifier AutomationAccountId { get; set; }
         /// <summary> The name for this runbook. </summary>
         public string RunbookName { get; set; }
         /// <summary> The resource id for webhook linked to this runbook. </summary>
-        public string WebhookResourceId { get; set; }
+        public ResourceIdentifier WebhookResourceId { get; set; }
         /// <summary> Indicates whether this instance is global runbook. </summary>
         public bool IsGlobalRunbook { get; set; }
         /// <summary> Indicates name of the webhook. </summary>

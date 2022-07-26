@@ -64,9 +64,41 @@ namespace Azure.Verticals.AgriFood.Farming
 
         /// <summary> Get weather ingestion job. </summary>
         /// <param name="jobId"> ID of the job. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetDataIngestionJobDetailsAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new WeatherClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetDataIngestionJobDetailsAsync("<jobId>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("boundaryId").ToString());
+        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("extensionId").ToString());
+        /// Console.WriteLine(result.GetProperty("extensionApiName").ToString());
+        /// Console.WriteLine(result.GetProperty("extensionApiInput").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("extensionDataProviderAppId").ToString());
+        /// Console.WriteLine(result.GetProperty("extensionDataProviderApiKey").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
+        /// Console.WriteLine(result.GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -120,9 +152,41 @@ namespace Azure.Verticals.AgriFood.Farming
 
         /// <summary> Get weather ingestion job. </summary>
         /// <param name="jobId"> ID of the job. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetDataIngestionJobDetails with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new WeatherClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetDataIngestionJobDetails("<jobId>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("boundaryId").ToString());
+        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("extensionId").ToString());
+        /// Console.WriteLine(result.GetProperty("extensionApiName").ToString());
+        /// Console.WriteLine(result.GetProperty("extensionApiInput").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("extensionDataProviderAppId").ToString());
+        /// Console.WriteLine(result.GetProperty("extensionDataProviderApiKey").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
+        /// Console.WriteLine(result.GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -176,9 +240,41 @@ namespace Azure.Verticals.AgriFood.Farming
 
         /// <summary> Get weather data delete job. </summary>
         /// <param name="jobId"> ID of the job. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetDataDeleteJobDetailsAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new WeatherClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetDataDeleteJobDetailsAsync("<jobId>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("extensionId").ToString());
+        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("boundaryId").ToString());
+        /// Console.WriteLine(result.GetProperty("weatherDataType").ToString());
+        /// Console.WriteLine(result.GetProperty("granularity").ToString());
+        /// Console.WriteLine(result.GetProperty("startDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("endDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
+        /// Console.WriteLine(result.GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -232,9 +328,41 @@ namespace Azure.Verticals.AgriFood.Farming
 
         /// <summary> Get weather data delete job. </summary>
         /// <param name="jobId"> ID of the job. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetDataDeleteJobDetails with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new WeatherClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetDataDeleteJobDetails("<jobId>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("extensionId").ToString());
+        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("boundaryId").ToString());
+        /// Console.WriteLine(result.GetProperty("weatherDataType").ToString());
+        /// Console.WriteLine(result.GetProperty("granularity").ToString());
+        /// Console.WriteLine(result.GetProperty("startDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("endDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
+        /// Console.WriteLine(result.GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -299,8 +427,88 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/>, <paramref name="boundaryId"/>, <paramref name="extensionId"/>, <paramref name="weatherDataType"/> or <paramref name="granularity"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetWeathersAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new WeatherClient(endpoint, credential);
+        /// 
+        /// await foreach (var data in client.GetWeathersAsync("<farmerId>", "<boundaryId>", "<extensionId>", "<weatherDataType>", "<granularity>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
+        ///     Console.WriteLine(result.GetProperty("boundaryId").ToString());
+        ///     Console.WriteLine(result.GetProperty("extensionId").ToString());
+        ///     Console.WriteLine(result.GetProperty("location").GetProperty("latitude").ToString());
+        ///     Console.WriteLine(result.GetProperty("location").GetProperty("longitude").ToString());
+        ///     Console.WriteLine(result.GetProperty("dateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("extensionVersion").ToString());
+        ///     Console.WriteLine(result.GetProperty("weatherDataType").ToString());
+        ///     Console.WriteLine(result.GetProperty("granularity").ToString());
+        /// }
+        /// ]]></code>
+        /// This sample shows how to call GetWeathersAsync with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new WeatherClient(endpoint, credential);
+        /// 
+        /// await foreach (var data in client.GetWeathersAsync("<farmerId>", "<boundaryId>", "<extensionId>", "<weatherDataType>", "<granularity>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
+        ///     Console.WriteLine(result.GetProperty("boundaryId").ToString());
+        ///     Console.WriteLine(result.GetProperty("extensionId").ToString());
+        ///     Console.WriteLine(result.GetProperty("location").GetProperty("latitude").ToString());
+        ///     Console.WriteLine(result.GetProperty("location").GetProperty("longitude").ToString());
+        ///     Console.WriteLine(result.GetProperty("dateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("unitSystemCode").ToString());
+        ///     Console.WriteLine(result.GetProperty("extensionVersion").ToString());
+        ///     Console.WriteLine(result.GetProperty("weatherDataType").ToString());
+        ///     Console.WriteLine(result.GetProperty("granularity").ToString());
+        ///     Console.WriteLine(result.GetProperty("cloudCover").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("cloudCover").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("dewPoint").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("dewPoint").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("growingDegreeDay").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("growingDegreeDay").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("precipitation").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("precipitation").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("pressure").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("pressure").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("relativeHumidity").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("relativeHumidity").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("soilMoisture").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("soilMoisture").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("soilTemperature").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("soilTemperature").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("temperature").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("temperature").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("visibility").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("visibility").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("wetBulbTemperature").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("wetBulbTemperature").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("windChill").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("windChill").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("windDirection").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("windDirection").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("windGust").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("windGust").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("windSpeed").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("windSpeed").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("eTag").ToString());
+        ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// }
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for one item in the pageable response.
         /// 
@@ -391,8 +599,88 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/>, <paramref name="boundaryId"/>, <paramref name="extensionId"/>, <paramref name="weatherDataType"/> or <paramref name="granularity"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetWeathers with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new WeatherClient(endpoint, credential);
+        /// 
+        /// foreach (var data in client.GetWeathers("<farmerId>", "<boundaryId>", "<extensionId>", "<weatherDataType>", "<granularity>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
+        ///     Console.WriteLine(result.GetProperty("boundaryId").ToString());
+        ///     Console.WriteLine(result.GetProperty("extensionId").ToString());
+        ///     Console.WriteLine(result.GetProperty("location").GetProperty("latitude").ToString());
+        ///     Console.WriteLine(result.GetProperty("location").GetProperty("longitude").ToString());
+        ///     Console.WriteLine(result.GetProperty("dateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("extensionVersion").ToString());
+        ///     Console.WriteLine(result.GetProperty("weatherDataType").ToString());
+        ///     Console.WriteLine(result.GetProperty("granularity").ToString());
+        /// }
+        /// ]]></code>
+        /// This sample shows how to call GetWeathers with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new WeatherClient(endpoint, credential);
+        /// 
+        /// foreach (var data in client.GetWeathers("<farmerId>", "<boundaryId>", "<extensionId>", "<weatherDataType>", "<granularity>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
+        ///     Console.WriteLine(result.GetProperty("boundaryId").ToString());
+        ///     Console.WriteLine(result.GetProperty("extensionId").ToString());
+        ///     Console.WriteLine(result.GetProperty("location").GetProperty("latitude").ToString());
+        ///     Console.WriteLine(result.GetProperty("location").GetProperty("longitude").ToString());
+        ///     Console.WriteLine(result.GetProperty("dateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("unitSystemCode").ToString());
+        ///     Console.WriteLine(result.GetProperty("extensionVersion").ToString());
+        ///     Console.WriteLine(result.GetProperty("weatherDataType").ToString());
+        ///     Console.WriteLine(result.GetProperty("granularity").ToString());
+        ///     Console.WriteLine(result.GetProperty("cloudCover").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("cloudCover").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("dewPoint").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("dewPoint").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("growingDegreeDay").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("growingDegreeDay").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("precipitation").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("precipitation").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("pressure").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("pressure").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("relativeHumidity").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("relativeHumidity").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("soilMoisture").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("soilMoisture").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("soilTemperature").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("soilTemperature").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("temperature").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("temperature").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("visibility").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("visibility").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("wetBulbTemperature").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("wetBulbTemperature").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("windChill").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("windChill").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("windDirection").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("windDirection").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("windGust").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("windGust").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("windSpeed").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("windSpeed").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("eTag").ToString());
+        ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// }
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for one item in the pageable response.
         /// 
@@ -473,10 +761,86 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Create a weather data ingestion job. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="jobId"> Job id supplied by user. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call CreateDataIngestionJobAsync with required parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new WeatherClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     boundaryId = "<WeatherDataIngestionJobBoundaryId>",
+        ///     farmerId = "<WeatherDataIngestionJobFarmerId>",
+        ///     extensionId = "<WeatherDataIngestionJobExtensionId>",
+        ///     extensionApiName = "<WeatherDataIngestionJobExtensionApiName>",
+        ///     extensionApiInput = new {
+        ///         key = new {},
+        ///     },
+        /// };
+        /// 
+        /// var operation = await client.CreateDataIngestionJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+        /// 
+        /// BinaryData data = await operation.WaitForCompletionAsync();
+        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        /// Console.WriteLine(result.GetProperty("boundaryId").ToString());
+        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("extensionId").ToString());
+        /// Console.WriteLine(result.GetProperty("extensionApiName").ToString());
+        /// Console.WriteLine(result.GetProperty("extensionApiInput").GetProperty("<test>").ToString());
+        /// ]]></code>
+        /// This sample shows how to call CreateDataIngestionJobAsync with all parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new WeatherClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     boundaryId = "<WeatherDataIngestionJobBoundaryId>",
+        ///     farmerId = "<WeatherDataIngestionJobFarmerId>",
+        ///     extensionId = "<WeatherDataIngestionJobExtensionId>",
+        ///     extensionApiName = "<WeatherDataIngestionJobExtensionApiName>",
+        ///     extensionApiInput = new {
+        ///         key = new {},
+        ///     },
+        ///     extensionDataProviderAppId = "<WeatherDataIngestionJobExtensionDataProviderAppId>",
+        ///     extensionDataProviderApiKey = "<WeatherDataIngestionJobExtensionDataProviderApiKey>",
+        ///     name = "<WeatherDataIngestionJobName>",
+        ///     description = "<WeatherDataIngestionJobDescription>",
+        ///     properties = new {
+        ///         key = new {},
+        ///     },
+        /// };
+        /// 
+        /// var operation = await client.CreateDataIngestionJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+        /// 
+        /// BinaryData data = await operation.WaitForCompletionAsync();
+        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        /// Console.WriteLine(result.GetProperty("boundaryId").ToString());
+        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("extensionId").ToString());
+        /// Console.WriteLine(result.GetProperty("extensionApiName").ToString());
+        /// Console.WriteLine(result.GetProperty("extensionApiInput").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("extensionDataProviderAppId").ToString());
+        /// Console.WriteLine(result.GetProperty("extensionDataProviderApiKey").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
+        /// Console.WriteLine(result.GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
         /// 
@@ -560,10 +924,86 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Create a weather data ingestion job. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="jobId"> Job id supplied by user. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call CreateDataIngestionJob with required parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new WeatherClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     boundaryId = "<WeatherDataIngestionJobBoundaryId>",
+        ///     farmerId = "<WeatherDataIngestionJobFarmerId>",
+        ///     extensionId = "<WeatherDataIngestionJobExtensionId>",
+        ///     extensionApiName = "<WeatherDataIngestionJobExtensionApiName>",
+        ///     extensionApiInput = new {
+        ///         key = new {},
+        ///     },
+        /// };
+        /// 
+        /// var operation = client.CreateDataIngestionJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+        /// 
+        /// BinaryData data = operation.WaitForCompletion();
+        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        /// Console.WriteLine(result.GetProperty("boundaryId").ToString());
+        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("extensionId").ToString());
+        /// Console.WriteLine(result.GetProperty("extensionApiName").ToString());
+        /// Console.WriteLine(result.GetProperty("extensionApiInput").GetProperty("<test>").ToString());
+        /// ]]></code>
+        /// This sample shows how to call CreateDataIngestionJob with all parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new WeatherClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     boundaryId = "<WeatherDataIngestionJobBoundaryId>",
+        ///     farmerId = "<WeatherDataIngestionJobFarmerId>",
+        ///     extensionId = "<WeatherDataIngestionJobExtensionId>",
+        ///     extensionApiName = "<WeatherDataIngestionJobExtensionApiName>",
+        ///     extensionApiInput = new {
+        ///         key = new {},
+        ///     },
+        ///     extensionDataProviderAppId = "<WeatherDataIngestionJobExtensionDataProviderAppId>",
+        ///     extensionDataProviderApiKey = "<WeatherDataIngestionJobExtensionDataProviderApiKey>",
+        ///     name = "<WeatherDataIngestionJobName>",
+        ///     description = "<WeatherDataIngestionJobDescription>",
+        ///     properties = new {
+        ///         key = new {},
+        ///     },
+        /// };
+        /// 
+        /// var operation = client.CreateDataIngestionJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+        /// 
+        /// BinaryData data = operation.WaitForCompletion();
+        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        /// Console.WriteLine(result.GetProperty("boundaryId").ToString());
+        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("extensionId").ToString());
+        /// Console.WriteLine(result.GetProperty("extensionApiName").ToString());
+        /// Console.WriteLine(result.GetProperty("extensionApiInput").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("extensionDataProviderAppId").ToString());
+        /// Console.WriteLine(result.GetProperty("extensionDataProviderApiKey").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
+        /// Console.WriteLine(result.GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
         /// 
@@ -647,10 +1087,78 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Create a weather data delete job. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="jobId"> Job ID supplied by end user. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call CreateDataDeleteJobAsync with required parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new WeatherClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     extensionId = "<WeatherDataDeleteJobExtensionId>",
+        ///     farmerId = "<WeatherDataDeleteJobFarmerId>",
+        ///     boundaryId = "<WeatherDataDeleteJobBoundaryId>",
+        /// };
+        /// 
+        /// var operation = await client.CreateDataDeleteJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+        /// 
+        /// BinaryData data = await operation.WaitForCompletionAsync();
+        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        /// Console.WriteLine(result.GetProperty("extensionId").ToString());
+        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("boundaryId").ToString());
+        /// ]]></code>
+        /// This sample shows how to call CreateDataDeleteJobAsync with all parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new WeatherClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     extensionId = "<WeatherDataDeleteJobExtensionId>",
+        ///     farmerId = "<WeatherDataDeleteJobFarmerId>",
+        ///     boundaryId = "<WeatherDataDeleteJobBoundaryId>",
+        ///     weatherDataType = "<WeatherDataDeleteJobWeatherDataType>",
+        ///     granularity = "<WeatherDataDeleteJobGranularity>",
+        ///     startDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
+        ///     endDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
+        ///     name = "<WeatherDataDeleteJobName>",
+        ///     description = "<WeatherDataDeleteJobDescription>",
+        ///     properties = new {
+        ///         key = new {},
+        ///     },
+        /// };
+        /// 
+        /// var operation = await client.CreateDataDeleteJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+        /// 
+        /// BinaryData data = await operation.WaitForCompletionAsync();
+        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        /// Console.WriteLine(result.GetProperty("extensionId").ToString());
+        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("boundaryId").ToString());
+        /// Console.WriteLine(result.GetProperty("weatherDataType").ToString());
+        /// Console.WriteLine(result.GetProperty("granularity").ToString());
+        /// Console.WriteLine(result.GetProperty("startDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("endDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
+        /// Console.WriteLine(result.GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
         /// 
@@ -734,10 +1242,78 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Create a weather data delete job. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="jobId"> Job ID supplied by end user. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call CreateDataDeleteJob with required parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new WeatherClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     extensionId = "<WeatherDataDeleteJobExtensionId>",
+        ///     farmerId = "<WeatherDataDeleteJobFarmerId>",
+        ///     boundaryId = "<WeatherDataDeleteJobBoundaryId>",
+        /// };
+        /// 
+        /// var operation = client.CreateDataDeleteJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+        /// 
+        /// BinaryData data = operation.WaitForCompletion();
+        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        /// Console.WriteLine(result.GetProperty("extensionId").ToString());
+        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("boundaryId").ToString());
+        /// ]]></code>
+        /// This sample shows how to call CreateDataDeleteJob with all parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new WeatherClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     extensionId = "<WeatherDataDeleteJobExtensionId>",
+        ///     farmerId = "<WeatherDataDeleteJobFarmerId>",
+        ///     boundaryId = "<WeatherDataDeleteJobBoundaryId>",
+        ///     weatherDataType = "<WeatherDataDeleteJobWeatherDataType>",
+        ///     granularity = "<WeatherDataDeleteJobGranularity>",
+        ///     startDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
+        ///     endDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
+        ///     name = "<WeatherDataDeleteJobName>",
+        ///     description = "<WeatherDataDeleteJobDescription>",
+        ///     properties = new {
+        ///         key = new {},
+        ///     },
+        /// };
+        /// 
+        /// var operation = client.CreateDataDeleteJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+        /// 
+        /// BinaryData data = operation.WaitForCompletion();
+        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        /// Console.WriteLine(result.GetProperty("extensionId").ToString());
+        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("boundaryId").ToString());
+        /// Console.WriteLine(result.GetProperty("weatherDataType").ToString());
+        /// Console.WriteLine(result.GetProperty("granularity").ToString());
+        /// Console.WriteLine(result.GetProperty("startDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("endDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
+        /// Console.WriteLine(result.GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
         /// 

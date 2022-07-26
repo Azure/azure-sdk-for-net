@@ -65,9 +65,9 @@ namespace Azure.ResourceManager.AppService.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> serviceIpAddress = default;
-            Optional<string> internalIpAddress = default;
-            Optional<IList<string>> outboundIpAddresses = default;
+            Optional<string> serviceIPAddress = default;
+            Optional<string> internalIPAddress = default;
+            Optional<IList<string>> outboundIPAddresses = default;
             Optional<IList<VirtualIPMapping>> vipMappings = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -112,12 +112,12 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         if (property0.NameEquals("serviceIpAddress"))
                         {
-                            serviceIpAddress = property0.Value.GetString();
+                            serviceIPAddress = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("internalIpAddress"))
                         {
-                            internalIpAddress = property0.Value.GetString();
+                            internalIPAddress = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("outboundIpAddresses"))
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 array.Add(item.GetString());
                             }
-                            outboundIpAddresses = array;
+                            outboundIPAddresses = array;
                             continue;
                         }
                         if (property0.NameEquals("vipMappings"))
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new AddressResponse(id, name, type, systemData.Value, serviceIpAddress.Value, internalIpAddress.Value, Optional.ToList(outboundIpAddresses), Optional.ToList(vipMappings), kind.Value);
+            return new AddressResponse(id, name, type, systemData.Value, serviceIPAddress.Value, internalIPAddress.Value, Optional.ToList(outboundIPAddresses), Optional.ToList(vipMappings), kind.Value);
         }
     }
 }

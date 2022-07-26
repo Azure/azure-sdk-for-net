@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
                 VirtualNetworkData vnetData = new VirtualNetworkData()
                 {
                     Location = "eastus",
-                    Subnets = { new SubnetData() { Name = SubnetName, AddressPrefix = "10.0.0.0/24", PrivateEndpointNetworkPolicies = "Disabled" } }
+                    Subnets = { new SubnetData() { Name = SubnetName, AddressPrefix = "10.0.0.0/24", PrivateEndpointNetworkPolicy = "Disabled" } }
                 };
                 vnetData.AddressPrefixes.Add("10.0.0.0/16");
                 vnetData.DhcpOptionsDnsServers.Add("10.1.1.1");
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
                 PrivateEndpointData privateEndpointData = new PrivateEndpointData()
                 {
                     Location = "eastus",
-                    PrivateLinkServiceConnections = { new PrivateLinkServiceConnection()
+                    PrivateLinkServiceConnections = { new NetworkPrivateLinkServiceConnection()
                         {
                             Name ="myconnection",
                             PrivateLinkServiceId = ConfigStore.Data.Id,

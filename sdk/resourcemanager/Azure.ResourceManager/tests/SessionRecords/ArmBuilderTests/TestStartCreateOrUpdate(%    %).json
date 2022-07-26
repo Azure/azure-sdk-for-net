@@ -6,9 +6,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-8081d6f511e41f2e2df5d2f65283b189-2ee780c7161218ae-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.2.0-alpha.20220621.1 (.NET 6.0.6; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "0a36de54db4609bb3602c8517819f49a",
+        "traceparent": "00-74bfd01bfb0dfb4fb0330418f53ddcc1-2331aed8fedf1847-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.1.1-alpha.20220623.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "976d3b186f38e0f93f57a950efdc286f",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -17,15 +17,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "747",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 21 Jun 2022 12:36:56 GMT",
+        "Date": "Thu, 23 Jun 2022 03:31:09 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "2e566641-c34a-403b-8337-aa865fffe03d",
+        "x-ms-correlation-request-id": "9acb3162-027c-451f-b2d7-5b3c43529b3f",
         "x-ms-ratelimit-remaining-subscription-reads": "11996",
-        "x-ms-request-id": "2e566641-c34a-403b-8337-aa865fffe03d",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220621T123657Z:2e566641-c34a-403b-8337-aa865fffe03d"
+        "x-ms-request-id": "9acb3162-027c-451f-b2d7-5b3c43529b3f",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220623T033110Z:9acb3162-027c-451f-b2d7-5b3c43529b3f"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
@@ -57,8 +57,8 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1902873786",
-    "RESOURCE_MANAGER_URL": "https://management.azure.com",
+    "RandomSeed": "148651057",
+    "RESOURCE_MANAGER_URL": "https://management.azure.com/",
     "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
   }
 }

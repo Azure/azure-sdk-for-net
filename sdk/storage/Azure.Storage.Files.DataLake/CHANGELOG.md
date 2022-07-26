@@ -1,14 +1,15 @@
 # Release History
 
-## 12.11.0-beta.2 (Unreleased)
+## 12.12.0-beta.1 (Unreleased)
+- Added support for service version 2021-10-04.
+- Added support for SDK-calculated transactional checksums on data transfer.
+- Added support for flush parameter to DataLakeFileClient.Append() and .AppendAsync().
+- Added support for encryption scopes.
+- Added support for encryption scope SAS.
 
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+## 12.11.0 (2022-07-07)
+- Includes all features from 12.11.0-beta.1.
+- Fixed bug where DataLakePathClient.Rename() was not passing the AzureSasCredential to the source.
 
 ## 12.11.0-beta.1 (2022-06-15)
 - Added support for service version 2021-08-06.

@@ -425,7 +425,8 @@ namespace Azure.ResourceManager.Models
     }
     public partial class OperationStatusResult
     {
-        internal OperationStatusResult() { }
+        protected OperationStatusResult(Azure.Core.ResourceIdentifier id, string name, string status, float? percentComplete, System.DateTimeOffset? startOn, System.DateTimeOffset? endOn, System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Models.OperationStatusResult> operations, Azure.ResponseError error) { }
+        public OperationStatusResult(string status) { }
         public System.DateTimeOffset? EndOn { get { throw null; } }
         public Azure.ResponseError Error { get { throw null; } }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } }

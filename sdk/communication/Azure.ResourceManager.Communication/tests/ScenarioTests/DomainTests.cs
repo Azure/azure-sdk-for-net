@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Communication.Tests
             string domainName = Recording.GenerateAssetName("domain-") + ".com";
             var collection = _emailService.GetCommunicationDomainResources();
             var domain = await CreateDefaultDomain(domainName, _emailService);
-            var data = new VerificationContent(VerificationType.Spf);
+            var data = new DomainsRecordVerificationContent(DomainRecordVerificationType.Spf);
             await domain.InitiateVerificationAsync(WaitUntil.Completed, data);
             await domain.CancelVerificationAsync(WaitUntil.Completed, data);
         }

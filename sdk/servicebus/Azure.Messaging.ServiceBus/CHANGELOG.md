@@ -1,6 +1,6 @@
 # Release History
 
-## 7.9.0-beta.2 (Unreleased)
+## 7.10.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,15 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+- Reduced memory allocations when converting messages into the underlying AMQP primitives. _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
+
+## 7.9.0 (2022-07-11)
+
+### Features Added
+
+- Stable release of `ServiceBusRuleManager`.
+- `EntityPath` and `FullyQualifiedNamespace` are now included on the various processor event args.
 
 ## 7.9.0-beta.1 (2022-06-06)
 

@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             {
                 count++;
                 Assert.AreEqual(tempResourceUsage.ResourceType, "endpoint");
-                Assert.AreEqual(tempResourceUsage.Unit, ResourceUsageUnit.Count);
+                Assert.AreEqual(tempResourceUsage.Unit, CdnUsageUnit.Count);
                 Assert.AreEqual(tempResourceUsage.CurrentValue, 0);
                 Assert.AreEqual(tempResourceUsage.Limit, 25);
             }

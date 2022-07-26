@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.StoragePool.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="subnetId"> Azure Resource ID of a Subnet for the Disk Pool. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> or <paramref name="subnetId"/> is null. </exception>
-        public DiskPoolCreateOrUpdateContent(StoragePoolSku sku, AzureLocation location, string subnetId)
+        public DiskPoolCreateOrUpdateContent(StoragePoolSku sku, AzureLocation location, ResourceIdentifier subnetId)
         {
             if (sku == null)
             {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.StoragePool.Models
         /// <summary> List of Azure Managed Disks to attach to a Disk Pool. </summary>
         public IList<WritableSubResource> Disks { get; }
         /// <summary> Azure Resource ID of a Subnet for the Disk Pool. </summary>
-        public string SubnetId { get; }
+        public ResourceIdentifier SubnetId { get; }
         /// <summary> List of additional capabilities for a Disk Pool. </summary>
         public IList<string> AdditionalCapabilities { get; }
     }

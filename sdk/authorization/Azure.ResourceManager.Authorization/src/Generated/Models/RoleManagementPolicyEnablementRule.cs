@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <summary> Initializes a new instance of RoleManagementPolicyEnablementRule. </summary>
         public RoleManagementPolicyEnablementRule()
         {
-            EnabledRules = new ChangeTrackingList<EnablementRules>();
+            EnabledRules = new ChangeTrackingList<EnablementRule>();
             RuleType = RoleManagementPolicyRuleType.RoleManagementPolicyEnablementRule;
         }
 
@@ -25,13 +25,13 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="ruleType"> The type of rule. </param>
         /// <param name="target"> The target of the current rule. </param>
         /// <param name="enabledRules"> The list of enabled rules. </param>
-        internal RoleManagementPolicyEnablementRule(string id, RoleManagementPolicyRuleType ruleType, RoleManagementPolicyRuleTarget target, IList<EnablementRules> enabledRules) : base(id, ruleType, target)
+        internal RoleManagementPolicyEnablementRule(ResourceIdentifier id, RoleManagementPolicyRuleType ruleType, RoleManagementPolicyRuleTarget target, IList<EnablementRule> enabledRules) : base(id, ruleType, target)
         {
             EnabledRules = enabledRules;
             RuleType = ruleType;
         }
 
         /// <summary> The list of enabled rules. </summary>
-        public IList<EnablementRules> EnabledRules { get; }
+        public IList<EnablementRule> EnabledRules { get; }
     }
 }

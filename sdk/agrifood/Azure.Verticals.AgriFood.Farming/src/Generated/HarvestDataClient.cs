@@ -65,9 +65,66 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Get a specified harvest data resource under a particular farmer. </summary>
         /// <param name="farmerId"> ID of the associated farmer resource. </param>
         /// <param name="harvestDataId"> ID of the harvest data resource. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="harvestDataId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="harvestDataId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetHarvestDataAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new HarvestDataClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetHarvestDataAsync("<farmerId>", "<harvestDataId>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("totalYield").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("totalYield").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("avgYield").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("avgYield").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("totalWetMass").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("totalWetMass").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("avgWetMass").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("avgWetMass").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("avgMoisture").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("avgMoisture").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("avgSpeed").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("avgSpeed").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("productName").ToString());
+        /// Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("area").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("area").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("totalYield").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("totalYield").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("avgYield").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("avgYield").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("avgMoisture").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("avgMoisture").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("totalWetMass").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("totalWetMass").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("avgWetMass").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("avgWetMass").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("area").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("area").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("operationModifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("operationStartDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("operationEndDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("attachmentsLink").ToString());
+        /// Console.WriteLine(result.GetProperty("associatedBoundaryId").ToString());
+        /// Console.WriteLine(result.GetProperty("operationBoundaryId").ToString());
+        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("eTag").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -142,9 +199,66 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Get a specified harvest data resource under a particular farmer. </summary>
         /// <param name="farmerId"> ID of the associated farmer resource. </param>
         /// <param name="harvestDataId"> ID of the harvest data resource. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="harvestDataId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="harvestDataId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetHarvestData with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new HarvestDataClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetHarvestData("<farmerId>", "<harvestDataId>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("totalYield").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("totalYield").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("avgYield").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("avgYield").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("totalWetMass").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("totalWetMass").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("avgWetMass").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("avgWetMass").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("avgMoisture").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("avgMoisture").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("avgSpeed").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("avgSpeed").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("productName").ToString());
+        /// Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("area").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("area").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("totalYield").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("totalYield").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("avgYield").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("avgYield").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("avgMoisture").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("avgMoisture").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("totalWetMass").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("totalWetMass").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("avgWetMass").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("avgWetMass").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("area").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("area").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("operationModifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("operationStartDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("operationEndDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("attachmentsLink").ToString());
+        /// Console.WriteLine(result.GetProperty("associatedBoundaryId").ToString());
+        /// Console.WriteLine(result.GetProperty("operationBoundaryId").ToString());
+        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("eTag").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -219,10 +333,152 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Creates or updates harvest data resource under a particular farmer. </summary>
         /// <param name="farmerId"> ID of the farmer. </param>
         /// <param name="harvestDataId"> ID of the harvest data resource. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="harvestDataId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="harvestDataId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call CreateOrUpdateAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new HarvestDataClient(endpoint, credential);
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = await client.CreateOrUpdateAsync("<farmerId>", "<harvestDataId>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new HarvestDataClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     totalYield = new {
+        ///         unit = "<MeasureUnit>",
+        ///         value = 1234,
+        ///     },
+        ///     avgYield = new {
+        ///         unit = "<MeasureUnit>",
+        ///         value = 1234,
+        ///     },
+        ///     totalWetMass = new {
+        ///         unit = "<MeasureUnit>",
+        ///         value = 1234,
+        ///     },
+        ///     avgWetMass = new {
+        ///         unit = "<MeasureUnit>",
+        ///         value = 1234,
+        ///     },
+        ///     avgMoisture = new {
+        ///         unit = "<MeasureUnit>",
+        ///         value = 1234,
+        ///     },
+        ///     avgSpeed = new {
+        ///         unit = "<MeasureUnit>",
+        ///         value = 1234,
+        ///     },
+        ///     harvestProductDetails = new[] {
+        ///         new {
+        ///             productName = "<HarvestProductDetailProductName>",
+        ///             area = new {
+        ///                 unit = "<MeasureUnit>",
+        ///                 value = 1234,
+        ///             },
+        ///             totalYield = new {
+        ///                 unit = "<MeasureUnit>",
+        ///                 value = 1234,
+        ///             },
+        ///             avgYield = new {
+        ///                 unit = "<MeasureUnit>",
+        ///                 value = 1234,
+        ///             },
+        ///             avgMoisture = new {
+        ///                 unit = "<MeasureUnit>",
+        ///                 value = 1234,
+        ///             },
+        ///             totalWetMass = new {
+        ///                 unit = "<MeasureUnit>",
+        ///                 value = 1234,
+        ///             },
+        ///             avgWetMass = new {
+        ///                 unit = "<MeasureUnit>",
+        ///                 value = 1234,
+        ///             },
+        ///         }
+        ///     },
+        ///     area = new {
+        ///         unit = "<MeasureUnit>",
+        ///         value = 1234,
+        ///     },
+        ///     source = "<HarvestDataSource>",
+        ///     operationModifiedDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
+        ///     operationStartDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
+        ///     operationEndDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
+        ///     associatedBoundaryId = "<HarvestDataAssociatedBoundaryId>",
+        ///     operationBoundaryId = "<HarvestDataOperationBoundaryId>",
+        ///     status = "<HarvestDataStatus>",
+        ///     name = "<HarvestDataName>",
+        ///     description = "<HarvestDataDescription>",
+        ///     properties = new {
+        ///         key = new {},
+        ///     },
+        /// };
+        /// 
+        /// Response response = await client.CreateOrUpdateAsync("<farmerId>", "<harvestDataId>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("totalYield").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("totalYield").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("avgYield").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("avgYield").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("totalWetMass").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("totalWetMass").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("avgWetMass").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("avgWetMass").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("avgMoisture").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("avgMoisture").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("avgSpeed").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("avgSpeed").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("productName").ToString());
+        /// Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("area").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("area").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("totalYield").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("totalYield").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("avgYield").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("avgYield").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("avgMoisture").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("avgMoisture").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("totalWetMass").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("totalWetMass").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("avgWetMass").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("avgWetMass").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("area").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("area").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("operationModifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("operationStartDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("operationEndDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("attachmentsLink").ToString());
+        /// Console.WriteLine(result.GetProperty("associatedBoundaryId").ToString());
+        /// Console.WriteLine(result.GetProperty("operationBoundaryId").ToString());
+        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("eTag").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
         /// 
@@ -345,10 +601,152 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Creates or updates harvest data resource under a particular farmer. </summary>
         /// <param name="farmerId"> ID of the farmer. </param>
         /// <param name="harvestDataId"> ID of the harvest data resource. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="harvestDataId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="harvestDataId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call CreateOrUpdate with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new HarvestDataClient(endpoint, credential);
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = client.CreateOrUpdate("<farmerId>", "<harvestDataId>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new HarvestDataClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     totalYield = new {
+        ///         unit = "<MeasureUnit>",
+        ///         value = 1234,
+        ///     },
+        ///     avgYield = new {
+        ///         unit = "<MeasureUnit>",
+        ///         value = 1234,
+        ///     },
+        ///     totalWetMass = new {
+        ///         unit = "<MeasureUnit>",
+        ///         value = 1234,
+        ///     },
+        ///     avgWetMass = new {
+        ///         unit = "<MeasureUnit>",
+        ///         value = 1234,
+        ///     },
+        ///     avgMoisture = new {
+        ///         unit = "<MeasureUnit>",
+        ///         value = 1234,
+        ///     },
+        ///     avgSpeed = new {
+        ///         unit = "<MeasureUnit>",
+        ///         value = 1234,
+        ///     },
+        ///     harvestProductDetails = new[] {
+        ///         new {
+        ///             productName = "<HarvestProductDetailProductName>",
+        ///             area = new {
+        ///                 unit = "<MeasureUnit>",
+        ///                 value = 1234,
+        ///             },
+        ///             totalYield = new {
+        ///                 unit = "<MeasureUnit>",
+        ///                 value = 1234,
+        ///             },
+        ///             avgYield = new {
+        ///                 unit = "<MeasureUnit>",
+        ///                 value = 1234,
+        ///             },
+        ///             avgMoisture = new {
+        ///                 unit = "<MeasureUnit>",
+        ///                 value = 1234,
+        ///             },
+        ///             totalWetMass = new {
+        ///                 unit = "<MeasureUnit>",
+        ///                 value = 1234,
+        ///             },
+        ///             avgWetMass = new {
+        ///                 unit = "<MeasureUnit>",
+        ///                 value = 1234,
+        ///             },
+        ///         }
+        ///     },
+        ///     area = new {
+        ///         unit = "<MeasureUnit>",
+        ///         value = 1234,
+        ///     },
+        ///     source = "<HarvestDataSource>",
+        ///     operationModifiedDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
+        ///     operationStartDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
+        ///     operationEndDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
+        ///     associatedBoundaryId = "<HarvestDataAssociatedBoundaryId>",
+        ///     operationBoundaryId = "<HarvestDataOperationBoundaryId>",
+        ///     status = "<HarvestDataStatus>",
+        ///     name = "<HarvestDataName>",
+        ///     description = "<HarvestDataDescription>",
+        ///     properties = new {
+        ///         key = new {},
+        ///     },
+        /// };
+        /// 
+        /// Response response = client.CreateOrUpdate("<farmerId>", "<harvestDataId>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("totalYield").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("totalYield").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("avgYield").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("avgYield").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("totalWetMass").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("totalWetMass").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("avgWetMass").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("avgWetMass").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("avgMoisture").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("avgMoisture").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("avgSpeed").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("avgSpeed").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("productName").ToString());
+        /// Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("area").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("area").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("totalYield").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("totalYield").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("avgYield").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("avgYield").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("avgMoisture").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("avgMoisture").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("totalWetMass").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("totalWetMass").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("avgWetMass").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("avgWetMass").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("area").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("area").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("operationModifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("operationStartDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("operationEndDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("attachmentsLink").ToString());
+        /// Console.WriteLine(result.GetProperty("associatedBoundaryId").ToString());
+        /// Console.WriteLine(result.GetProperty("operationBoundaryId").ToString());
+        /// Console.WriteLine(result.GetProperty("farmerId").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("eTag").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
         /// 
@@ -471,9 +869,22 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Deletes a specified harvest data resource under a particular farmer. </summary>
         /// <param name="farmerId"> ID of the associated farmer resource. </param>
         /// <param name="harvestDataId"> ID of the harvest data. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="harvestDataId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="harvestDataId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call DeleteAsync with required parameters.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new HarvestDataClient(endpoint, credential);
+        /// 
+        /// Response response = await client.DeleteAsync("<farmerId>", "<harvestDataId>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         public virtual async Task<Response> DeleteAsync(string farmerId, string harvestDataId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
@@ -496,9 +907,22 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <summary> Deletes a specified harvest data resource under a particular farmer. </summary>
         /// <param name="farmerId"> ID of the associated farmer resource. </param>
         /// <param name="harvestDataId"> ID of the harvest data. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="harvestDataId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="harvestDataId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call Delete with required parameters.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new HarvestDataClient(endpoint, credential);
+        /// 
+        /// Response response = client.Delete("<farmerId>", "<harvestDataId>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         public virtual Response Delete(string farmerId, string harvestDataId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
@@ -559,9 +983,79 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetAllHarvestDataByFarmerIdAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new HarvestDataClient(endpoint, credential);
+        /// 
+        /// await foreach (var data in client.GetAllHarvestDataByFarmerIdAsync("<farmerId>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.ToString());
+        /// }
+        /// ]]></code>
+        /// This sample shows how to call GetAllHarvestDataByFarmerIdAsync with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new HarvestDataClient(endpoint, credential);
+        /// 
+        /// await foreach (var data in client.GetAllHarvestDataByFarmerIdAsync("<farmerId>", 1234, 1234, 1234, 1234, 1234, 1234, 1234, 1234, 1234, 1234, 1234, 1234, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, new String[]{"<operationBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("totalYield").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("totalYield").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgYield").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgYield").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("totalWetMass").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("totalWetMass").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgWetMass").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgWetMass").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgMoisture").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgMoisture").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgSpeed").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgSpeed").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("productName").ToString());
+        ///     Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("area").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("area").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("totalYield").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("totalYield").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("avgYield").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("avgYield").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("avgMoisture").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("avgMoisture").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("totalWetMass").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("totalWetMass").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("avgWetMass").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("avgWetMass").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("area").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("area").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("source").ToString());
+        ///     Console.WriteLine(result.GetProperty("operationModifiedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("operationStartDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("operationEndDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("attachmentsLink").ToString());
+        ///     Console.WriteLine(result.GetProperty("associatedBoundaryId").ToString());
+        ///     Console.WriteLine(result.GetProperty("operationBoundaryId").ToString());
+        ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("eTag").ToString());
+        ///     Console.WriteLine(result.GetProperty("status").ToString());
+        ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("description").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// }
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for one item in the pageable response.
         /// 
@@ -679,9 +1173,79 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetAllHarvestDataByFarmerId with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new HarvestDataClient(endpoint, credential);
+        /// 
+        /// foreach (var data in client.GetAllHarvestDataByFarmerId("<farmerId>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.ToString());
+        /// }
+        /// ]]></code>
+        /// This sample shows how to call GetAllHarvestDataByFarmerId with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new HarvestDataClient(endpoint, credential);
+        /// 
+        /// foreach (var data in client.GetAllHarvestDataByFarmerId("<farmerId>", 1234, 1234, 1234, 1234, 1234, 1234, 1234, 1234, 1234, 1234, 1234, 1234, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, new String[]{"<operationBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("totalYield").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("totalYield").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgYield").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgYield").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("totalWetMass").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("totalWetMass").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgWetMass").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgWetMass").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgMoisture").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgMoisture").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgSpeed").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgSpeed").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("productName").ToString());
+        ///     Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("area").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("area").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("totalYield").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("totalYield").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("avgYield").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("avgYield").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("avgMoisture").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("avgMoisture").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("totalWetMass").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("totalWetMass").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("avgWetMass").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("avgWetMass").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("area").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("area").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("source").ToString());
+        ///     Console.WriteLine(result.GetProperty("operationModifiedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("operationStartDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("operationEndDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("attachmentsLink").ToString());
+        ///     Console.WriteLine(result.GetProperty("associatedBoundaryId").ToString());
+        ///     Console.WriteLine(result.GetProperty("operationBoundaryId").ToString());
+        ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("eTag").ToString());
+        ///     Console.WriteLine(result.GetProperty("status").ToString());
+        ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("description").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// }
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for one item in the pageable response.
         /// 
@@ -798,7 +1362,77 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetAllHarvestDataAsync and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new HarvestDataClient(endpoint, credential);
+        /// 
+        /// await foreach (var data in client.GetAllHarvestDataAsync())
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.ToString());
+        /// }
+        /// ]]></code>
+        /// This sample shows how to call GetAllHarvestDataAsync with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new HarvestDataClient(endpoint, credential);
+        /// 
+        /// await foreach (var data in client.GetAllHarvestDataAsync(1234, 1234, 1234, 1234, 1234, 1234, 1234, 1234, 1234, 1234, 1234, 1234, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, new String[]{"<operationBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("totalYield").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("totalYield").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgYield").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgYield").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("totalWetMass").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("totalWetMass").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgWetMass").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgWetMass").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgMoisture").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgMoisture").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgSpeed").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgSpeed").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("productName").ToString());
+        ///     Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("area").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("area").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("totalYield").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("totalYield").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("avgYield").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("avgYield").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("avgMoisture").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("avgMoisture").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("totalWetMass").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("totalWetMass").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("avgWetMass").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("avgWetMass").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("area").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("area").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("source").ToString());
+        ///     Console.WriteLine(result.GetProperty("operationModifiedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("operationStartDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("operationEndDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("attachmentsLink").ToString());
+        ///     Console.WriteLine(result.GetProperty("associatedBoundaryId").ToString());
+        ///     Console.WriteLine(result.GetProperty("operationBoundaryId").ToString());
+        ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("eTag").ToString());
+        ///     Console.WriteLine(result.GetProperty("status").ToString());
+        ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("description").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// }
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for one item in the pageable response.
         /// 
@@ -913,7 +1547,77 @@ namespace Azure.Verticals.AgriFood.Farming
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetAllHarvestData and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new HarvestDataClient(endpoint, credential);
+        /// 
+        /// foreach (var data in client.GetAllHarvestData())
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.ToString());
+        /// }
+        /// ]]></code>
+        /// This sample shows how to call GetAllHarvestData with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new HarvestDataClient(endpoint, credential);
+        /// 
+        /// foreach (var data in client.GetAllHarvestData(1234, 1234, 1234, 1234, 1234, 1234, 1234, 1234, 1234, 1234, 1234, 1234, new String[]{"<sources>"}, new String[]{"<associatedBoundaryIds>"}, new String[]{"<operationBoundaryIds>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, 1234, new String[]{"<ids>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("totalYield").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("totalYield").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgYield").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgYield").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("totalWetMass").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("totalWetMass").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgWetMass").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgWetMass").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgMoisture").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgMoisture").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgSpeed").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("avgSpeed").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("productName").ToString());
+        ///     Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("area").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("area").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("totalYield").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("totalYield").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("avgYield").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("avgYield").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("avgMoisture").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("avgMoisture").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("totalWetMass").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("totalWetMass").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("avgWetMass").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("harvestProductDetails")[0].GetProperty("avgWetMass").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("area").GetProperty("unit").ToString());
+        ///     Console.WriteLine(result.GetProperty("area").GetProperty("value").ToString());
+        ///     Console.WriteLine(result.GetProperty("source").ToString());
+        ///     Console.WriteLine(result.GetProperty("operationModifiedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("operationStartDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("operationEndDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("attachmentsLink").ToString());
+        ///     Console.WriteLine(result.GetProperty("associatedBoundaryId").ToString());
+        ///     Console.WriteLine(result.GetProperty("operationBoundaryId").ToString());
+        ///     Console.WriteLine(result.GetProperty("farmerId").ToString());
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("eTag").ToString());
+        ///     Console.WriteLine(result.GetProperty("status").ToString());
+        ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("description").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+        /// }
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for one item in the pageable response.
         /// 

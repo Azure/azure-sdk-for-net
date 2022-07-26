@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Network
         internal NetworkVirtualApplianceData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ManagedServiceIdentity identity, ETag? etag, VirtualApplianceSkuProperties nvaSku, string addressPrefix, IList<string> bootStrapConfigurationBlobs, WritableSubResource virtualHub, IList<string> cloudInitConfigurationBlobs, string cloudInitConfiguration, long? virtualApplianceAsn, IReadOnlyList<VirtualApplianceNicProperties> virtualApplianceNics, IReadOnlyList<WritableSubResource> virtualApplianceSites, IReadOnlyList<WritableSubResource> inboundSecurityRules, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
         {
             Identity = identity;
-            Etag = etag;
+            ETag = etag;
             NvaSku = nvaSku;
             AddressPrefix = addressPrefix;
             BootStrapConfigurationBlobs = bootStrapConfigurationBlobs;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> The service principal that has read access to cloud-init and config blob. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> Network Virtual Appliance SKU. </summary>
         public VirtualApplianceSkuProperties NvaSku { get; set; }
         /// <summary> Address Prefix. </summary>

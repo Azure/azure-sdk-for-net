@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("collation");
                 writer.WriteStringValue(Collation);
             }
-            if (Optional.IsDefined(RestorePointInOn))
+            if (Optional.IsDefined(RestorePointInTime))
             {
                 writer.WritePropertyName("restorePointInTime");
-                writer.WriteStringValue(RestorePointInOn.Value, "O");
+                writer.WriteStringValue(RestorePointInTime.Value, "O");
             }
             if (Optional.IsDefined(CatalogCollation))
             {
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("longTermRetentionBackupResourceId");
                 writer.WriteStringValue(LongTermRetentionBackupResourceId);
             }
-            if (Optional.IsDefined(AutoCompleteRestore))
+            if (Optional.IsDefined(AllowAutoCompleteRestore))
             {
                 writer.WritePropertyName("autoCompleteRestore");
-                writer.WriteBooleanValue(AutoCompleteRestore.Value);
+                writer.WriteBooleanValue(AllowAutoCompleteRestore.Value);
             }
             if (Optional.IsDefined(LastBackupName))
             {
@@ -111,16 +111,16 @@ namespace Azure.ResourceManager.Sql
             Optional<DateTimeOffset> creationDate = default;
             Optional<DateTimeOffset> earliestRestorePoint = default;
             Optional<DateTimeOffset> restorePointInTime = default;
-            Optional<string> defaultSecondaryLocation = default;
+            Optional<AzureLocation> defaultSecondaryLocation = default;
             Optional<CatalogCollationType> catalogCollation = default;
             Optional<ManagedDatabaseCreateMode> createMode = default;
             Optional<Uri> storageContainerUri = default;
-            Optional<string> sourceDatabaseId = default;
-            Optional<string> restorableDroppedDatabaseId = default;
+            Optional<ResourceIdentifier> sourceDatabaseId = default;
+            Optional<ResourceIdentifier> restorableDroppedDatabaseId = default;
             Optional<string> storageContainerSasToken = default;
-            Optional<string> failoverGroupId = default;
-            Optional<string> recoverableDatabaseId = default;
-            Optional<string> longTermRetentionBackupResourceId = default;
+            Optional<ResourceIdentifier> failoverGroupId = default;
+            Optional<ResourceIdentifier> recoverableDatabaseId = default;
+            Optional<ResourceIdentifier> longTermRetentionBackupResourceId = default;
             Optional<bool> autoCompleteRestore = default;
             Optional<string> lastBackupName = default;
             foreach (var property in element.EnumerateObject())
@@ -226,7 +226,12 @@ namespace Azure.ResourceManager.Sql
                         }
                         if (property0.NameEquals("defaultSecondaryLocation"))
                         {
-                            defaultSecondaryLocation = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            defaultSecondaryLocation = new AzureLocation(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("catalogCollation"))
@@ -261,12 +266,22 @@ namespace Azure.ResourceManager.Sql
                         }
                         if (property0.NameEquals("sourceDatabaseId"))
                         {
-                            sourceDatabaseId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            sourceDatabaseId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("restorableDroppedDatabaseId"))
                         {
-                            restorableDroppedDatabaseId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            restorableDroppedDatabaseId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("storageContainerSasToken"))
@@ -276,17 +291,32 @@ namespace Azure.ResourceManager.Sql
                         }
                         if (property0.NameEquals("failoverGroupId"))
                         {
-                            failoverGroupId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            failoverGroupId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("recoverableDatabaseId"))
                         {
-                            recoverableDatabaseId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            recoverableDatabaseId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("longTermRetentionBackupResourceId"))
                         {
-                            longTermRetentionBackupResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            longTermRetentionBackupResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("autoCompleteRestore"))
@@ -308,7 +338,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new ManagedDatabaseData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, collation.Value, Optional.ToNullable(status), Optional.ToNullable(creationDate), Optional.ToNullable(earliestRestorePoint), Optional.ToNullable(restorePointInTime), defaultSecondaryLocation.Value, Optional.ToNullable(catalogCollation), Optional.ToNullable(createMode), storageContainerUri.Value, sourceDatabaseId.Value, restorableDroppedDatabaseId.Value, storageContainerSasToken.Value, failoverGroupId.Value, recoverableDatabaseId.Value, longTermRetentionBackupResourceId.Value, Optional.ToNullable(autoCompleteRestore), lastBackupName.Value);
+            return new ManagedDatabaseData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, collation.Value, Optional.ToNullable(status), Optional.ToNullable(creationDate), Optional.ToNullable(earliestRestorePoint), Optional.ToNullable(restorePointInTime), Optional.ToNullable(defaultSecondaryLocation), Optional.ToNullable(catalogCollation), Optional.ToNullable(createMode), storageContainerUri.Value, sourceDatabaseId.Value, restorableDroppedDatabaseId.Value, storageContainerSasToken.Value, failoverGroupId.Value, recoverableDatabaseId.Value, longTermRetentionBackupResourceId.Value, Optional.ToNullable(autoCompleteRestore), lastBackupName.Value);
         }
     }
 }

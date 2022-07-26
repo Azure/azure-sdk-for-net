@@ -28,13 +28,13 @@ namespace Azure.ResourceManager.Network
         /// <param name="provisioningState"> The provisioning state of the network interface tap configuration resource. </param>
         internal NetworkInterfaceTapConfigurationData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, VirtualNetworkTapData virtualNetworkTap, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
-            Etag = etag;
+            ETag = etag;
             VirtualNetworkTap = virtualNetworkTap;
             ProvisioningState = provisioningState;
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> The reference to the Virtual Network Tap resource. </summary>
         public VirtualNetworkTapData VirtualNetworkTap { get; set; }
         /// <summary> The provisioning state of the network interface tap configuration resource. </summary>

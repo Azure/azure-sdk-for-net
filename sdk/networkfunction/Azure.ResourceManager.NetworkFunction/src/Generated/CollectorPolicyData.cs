@@ -33,14 +33,14 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <param name="provisioningState"> The provisioning state. </param>
         internal CollectorPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IngestionPolicyPropertiesFormat ingestionPolicy, IList<EmissionPoliciesPropertiesFormat> emissionPolicies, CollectorProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
-            Etag = etag;
+            ETag = etag;
             IngestionPolicy = ingestionPolicy;
             EmissionPolicies = emissionPolicies;
             ProvisioningState = provisioningState;
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> Ingestion policies. </summary>
         public IngestionPolicyPropertiesFormat IngestionPolicy { get; set; }
         /// <summary> Emission policies. </summary>
