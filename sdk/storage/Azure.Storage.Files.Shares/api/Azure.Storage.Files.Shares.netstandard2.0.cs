@@ -1084,12 +1084,6 @@ namespace Azure.Storage.Files.Shares.Models
         public int ShareUsageBytes { get { throw null; } }
         public long ShareUsageInBytes { get { throw null; } }
     }
-    public partial class ShareTokenCredentialOptions
-    {
-        public ShareTokenCredentialOptions(Azure.Core.TokenCredential credential) { }
-        public Azure.Core.TokenCredential Credential { get { throw null; } set { } }
-        public Azure.Storage.Files.Shares.Models.ShareFileRequestIntent? FileRequestIntent { get { throw null; } set { } }
-    }
     [System.FlagsAttribute]
     public enum ShareTraits
     {
