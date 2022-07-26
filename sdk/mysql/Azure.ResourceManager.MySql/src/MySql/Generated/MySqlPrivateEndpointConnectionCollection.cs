@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.MySql
 {
     /// <summary>
     /// A class representing a collection of <see cref="MySqlPrivateEndpointConnectionResource" /> and their operations.
-    /// Each <see cref="MySqlPrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="ServerResource" />.
-    /// To get a <see cref="MySqlPrivateEndpointConnectionCollection" /> instance call the GetMySqlPrivateEndpointConnections method from an instance of <see cref="ServerResource" />.
+    /// Each <see cref="MySqlPrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="MySqlServerResource" />.
+    /// To get a <see cref="MySqlPrivateEndpointConnectionCollection" /> instance call the GetMySqlPrivateEndpointConnections method from an instance of <see cref="MySqlServerResource" />.
     /// </summary>
     public partial class MySqlPrivateEndpointConnectionCollection : ArmCollection, IEnumerable<MySqlPrivateEndpointConnectionResource>, IAsyncEnumerable<MySqlPrivateEndpointConnectionResource>
     {
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.MySql
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ServerResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ServerResource.ResourceType), nameof(id));
+            if (id.ResourceType != MySqlServerResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, MySqlServerResource.ResourceType), nameof(id));
         }
 
         /// <summary>
