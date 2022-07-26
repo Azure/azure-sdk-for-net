@@ -1,14 +1,10 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 1.2.1 (2022-07-26)
 
 ### Other Changes
+
+- Changed `OperationStatusResult` serialization constructor from internal to protected.
 
 ## 1.2.0 (2022-07-11)
 
@@ -45,7 +41,7 @@
 - Add Update methods in resource classes.
 
 ## 1.0.0 (2022-04-07)
-This is the first stable release of the Azure Resources management core library. 
+This is the first stable release of the Azure Resources management core library.
 
 ### Breaking Changes
 
