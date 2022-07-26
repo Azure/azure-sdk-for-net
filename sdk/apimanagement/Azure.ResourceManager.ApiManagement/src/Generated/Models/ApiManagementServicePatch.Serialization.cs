@@ -70,15 +70,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             if (Optional.IsDefined(PublicIPAddressId))
             {
-                if (PublicIPAddressId != null)
-                {
-                    writer.WritePropertyName("publicIpAddressId");
-                    writer.WriteStringValue(PublicIPAddressId);
-                }
-                else
-                {
-                    writer.WriteNull("publicIpAddressId");
-                }
+                writer.WritePropertyName("publicIpAddressId");
+                writer.WriteStringValue(PublicIPAddressId);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
@@ -87,32 +80,18 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             if (Optional.IsDefined(VirtualNetworkConfiguration))
             {
-                if (VirtualNetworkConfiguration != null)
-                {
-                    writer.WritePropertyName("virtualNetworkConfiguration");
-                    writer.WriteObjectValue(VirtualNetworkConfiguration);
-                }
-                else
-                {
-                    writer.WriteNull("virtualNetworkConfiguration");
-                }
+                writer.WritePropertyName("virtualNetworkConfiguration");
+                writer.WriteObjectValue(VirtualNetworkConfiguration);
             }
             if (Optional.IsCollectionDefined(AdditionalLocations))
             {
-                if (AdditionalLocations != null)
+                writer.WritePropertyName("additionalLocations");
+                writer.WriteStartArray();
+                foreach (var item in AdditionalLocations)
                 {
-                    writer.WritePropertyName("additionalLocations");
-                    writer.WriteStartArray();
-                    foreach (var item in AdditionalLocations)
-                    {
-                        writer.WriteObjectValue(item);
-                    }
-                    writer.WriteEndArray();
+                    writer.WriteObjectValue(item);
                 }
-                else
-                {
-                    writer.WriteNull("additionalLocations");
-                }
+                writer.WriteEndArray();
             }
             if (Optional.IsCollectionDefined(CustomProperties))
             {
@@ -127,20 +106,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             if (Optional.IsCollectionDefined(Certificates))
             {
-                if (Certificates != null)
+                writer.WritePropertyName("certificates");
+                writer.WriteStartArray();
+                foreach (var item in Certificates)
                 {
-                    writer.WritePropertyName("certificates");
-                    writer.WriteStartArray();
-                    foreach (var item in Certificates)
-                    {
-                        writer.WriteObjectValue(item);
-                    }
-                    writer.WriteEndArray();
+                    writer.WriteObjectValue(item);
                 }
-                else
-                {
-                    writer.WriteNull("certificates");
-                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(EnableClientCertificate))
             {
@@ -169,20 +141,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             if (Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
-                if (PrivateEndpointConnections != null)
+                writer.WritePropertyName("privateEndpointConnections");
+                writer.WriteStartArray();
+                foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WritePropertyName("privateEndpointConnections");
-                    writer.WriteStartArray();
-                    foreach (var item in PrivateEndpointConnections)
-                    {
-                        writer.WriteObjectValue(item);
-                    }
-                    writer.WriteEndArray();
+                    writer.WriteObjectValue(item);
                 }
-                else
-                {
-                    writer.WriteNull("privateEndpointConnections");
-                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(PublisherEmail))
             {
@@ -452,7 +417,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                privateIPAddresses = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<IPAddress> array = new List<IPAddress>();
@@ -465,11 +430,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         }
                         if (property0.NameEquals("publicIpAddressId"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                publicIPAddressId = null;
-                                continue;
-                            }
                             publicIPAddressId = property0.Value.GetString();
                             continue;
                         }
@@ -487,7 +447,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                virtualNetworkConfiguration = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             virtualNetworkConfiguration = VirtualNetworkConfiguration.DeserializeVirtualNetworkConfiguration(property0.Value);
@@ -497,7 +457,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                additionalLocations = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<AdditionalLocation> array = new List<AdditionalLocation>();
@@ -527,7 +487,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                certificates = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<CertificateConfiguration> array = new List<CertificateConfiguration>();
@@ -592,7 +552,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                privateEndpointConnections = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<RemotePrivateEndpointConnectionWrapper> array = new List<RemotePrivateEndpointConnectionWrapper>();

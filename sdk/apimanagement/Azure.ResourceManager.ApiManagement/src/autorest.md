@@ -288,6 +288,8 @@ directive:
       $.ApiManagementServiceBaseProperties.properties.publicIpAddressId["x-nullable"] = true;
       $.ApiManagementServiceBaseProperties.properties.privateEndpointConnections["x-nullable"] = true;
       $.ApiVersionConstraint.properties.minApiVersion["x-nullable"] = true;
+      # $.ApiManagementServiceResource.properties.identity["x-nullable"] = true;
+      # $.ApiManagementServiceUpdateParameters.properties.identity["x-nullable"] = true;
   - from: apimanagement.json
     where: $.parameters
     transform: >
