@@ -77,9 +77,15 @@ namespace Azure.Core.TestFramework
                         return;
 
                     object lro = TaskExtensions.GetResultFromTask(invocation.ReturnValue);
+                    CancellationToken token = invocation.Arguments.Last() switch
+                    {
+                        RequestContext requestContext => requestContext.CancellationToken,
+                        CancellationToken cancellationToken => cancellationToken,
+                        _ => CancellationToken.None
+                    };
                     var valueTask = lro.GetType().BaseType.IsGenericType
-                        ? OperationInterceptor.InvokeWaitForCompletion(lro, lro.GetType(), (CancellationToken)invocation.Arguments.Last())
-                        : OperationInterceptor.InvokeWaitForCompletionResponse(lro as Operation, (CancellationToken)invocation.Arguments.Last());
+                        ? OperationInterceptor.InvokeWaitForCompletion(lro, lro.GetType(), token)
+                        : OperationInterceptor.InvokeWaitForCompletionResponse(lro as Operation, token);
                     _ = TaskExtensions.GetResultFromTask(valueTask);
                 }
                 return;

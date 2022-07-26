@@ -118,11 +118,10 @@ namespace Azure.Core.TestFramework
         {
             try
             {
-                object lro = null;
                 Type returnType = returnValue.GetType();
                 return IsTaskType(returnType)
-                    ? lro = returnType.GetProperty("Result").GetValue(returnValue)
-                    : lro = returnValue;
+                    ? returnType.GetProperty("Result").GetValue(returnValue)
+                    : returnValue;
             }
             catch (TargetInvocationException e)
             {
