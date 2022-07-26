@@ -621,9 +621,8 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
             StorageAccountResource account1 = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, GetDefaultStorageAccountParameters())).Value;
             VerifyAccountProperties(account1, true);
-            StorageAccountGetKeysResult keys = await account1.GetKeysAsync();
-            Assert.NotNull(keys);
-            StorageAccountKey key2 = keys.Keys.First(
+            var keys = await account1.GetKeysAsync().ToEnumerableAsync();
+            StorageAccountKey key2 = keys.First(
                 t => StringComparer.OrdinalIgnoreCase.Equals(t.KeyName, "key2"));
             Assert.NotNull(key2);
 
