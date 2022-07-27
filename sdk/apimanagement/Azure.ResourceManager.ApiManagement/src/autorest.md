@@ -288,15 +288,12 @@ directive:
       $.ApiManagementServiceBaseProperties.properties.publicIpAddressId["x-nullable"] = true;
       $.ApiManagementServiceBaseProperties.properties.privateEndpointConnections["x-nullable"] = true;
       $.ApiVersionConstraint.properties.minApiVersion["x-nullable"] = true;
-  - from: apimdeployment.json
-    where: $.definitions
-    transform: >
       $.ApiManagementServiceIdentity.properties["foo"] = {
           "description": "This property is set for disable ManagedServiceIdentity common type mapping, do not set.",
           "type": "string"
         };
       $.ApiManagementServiceResource.properties.identity["x-nullable"] = true;
-
+      $.ApiManagementServiceResource.properties.zones["x-nullable"] = true;
   - from: apimanagement.json
     where: $.parameters
     transform: >

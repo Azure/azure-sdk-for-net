@@ -37,13 +37,20 @@ namespace Azure.ResourceManager.ApiManagement
             }
             if (Optional.IsCollectionDefined(Zones))
             {
-                writer.WritePropertyName("zones");
-                writer.WriteStartArray();
-                foreach (var item in Zones)
+                if (Zones != null)
                 {
-                    writer.WriteStringValue(item);
+                    writer.WritePropertyName("zones");
+                    writer.WriteStartArray();
+                    foreach (var item in Zones)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("zones");
+                }
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -270,7 +277,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        zones = null;
                         continue;
                     }
                     List<string> array = new List<string>();

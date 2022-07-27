@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> ETag of the resource. </summary>
         public ETag? ETag { get; }
         /// <summary> A list of availability zones denoting where the resource needs to come from. </summary>
-        public IList<string> Zones { get; }
+        public IList<string> Zones { get; set; }
         /// <summary> Email address from which the notification will be sent. </summary>
         public string NotificationSenderEmail { get; set; }
         /// <summary> The current provisioning state of the API Management service which can be one of the following: Created/Activating/Succeeded/Updating/Failed/Stopped/Terminating/TerminationFailed/Deleted. </summary>
