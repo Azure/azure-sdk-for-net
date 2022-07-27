@@ -21,6 +21,10 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/privateLinkResources/{name}: MediaPrivateLink
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}: MediaService
 
+override-operation-name:
+  StreamingEndpoints_Skus: GetSupportedSkus
+  Locations_CheckNameAvailability: CheckMediaNameAvailability
+  
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
@@ -50,21 +54,26 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  Url: Uri
+  AAC: Aac
+  ABR: Abr
+  CBR: Cbr
+  CRF: Crf
 
 list-exception:
 - /subscriptions/{subscriptionId}/providers/Microsoft.Media/locations/{locationName}/mediaServicesOperationResults/{operationId}
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/tracks/{trackName}/operationResults/{operationId}
 
 rename-mapping:
-  Asset: MediaServiceAsset
+  Asset: MediaAsset
   Asset.properties.created: CreatedOn
   Asset.properties.lastModified: LastModifiedOn
-  ProvisioningState: AssetTrackProvisioningState
+  ProvisioningState: MediaProvisioningState
   ContentKeyPolicy.properties.created: CreatedOn
   ContentKeyPolicy.properties.lastModified: LastModifiedOn
   ContentKeyPolicy.properties.options: Preferences
   ContentKeyPolicyOption: ContentKeyPolicyPreference
-  Job: MediaServiceTransformJob
+  Job: MediaTransformJob
   Job.properties.created: CreatedOn
   Job.properties.lastModified: LastModifiedOn
   Priority: TransformOutputsPriority
@@ -72,6 +81,42 @@ rename-mapping:
   LiveEvent.properties.lastModified: LastModifiedOn
   LiveOutput.properties.created: CreatedOn
   LiveOutput.properties.lastModified: LastModifiedOn
+  PublicNetworkAccess: IsMediaServicePublicNetworkAccessEnabled
+  StorageAccount: MediaServiceStorageAccount
+  StreamingEndpoint.properties.cdnEnabled: IsCdnEnabled
+  StreamingEndpoint.properties.created: CreatedOn
+  StreamingEndpoint.properties.lastModified: LastModifiedOn
+  StreamingLocator.properties.created: CreatedOn
+  StreamingPolicy.properties.created: CreatedOn
+  Transform: MediaTransform
+  Transform.properties.created: CreatedOn
+  Transform.properties.lastModified: LastModifiedOn
+  CheckNameAvailabilityInput: MediaNameAvailabilityContent
+  EntityNameAvailabilityCheckOutput: MediaNameAvailabilityResult
+  EntityNameAvailabilityCheckOutput.nameAvailable: IsNameAvailable
+  AssetStreamingLocator.created: CreatedOn
+  Codec: CodecProperties
+  Audio: AudioProperties
+  Overlay: OverlayProperties
+  Complexity: ComplexitySetting
+  ContentKeyPolicyPlayReadyLicense.expirationDate: ExpiresOn
+  ContentKeyPolicyPlayReadyUnknownOutputPassingOption: ContentKeyPolicyPlayReadyUnknownOutputPassingSetting
+  ContentKeyPolicyProperties.created: CreatedOn
+  ContentKeyPolicyProperties.lastModified: LastModifiedOn
+  ContentKeyPolicyProperties.options: Preferences
+  Filters: FilterOperations
+  Rectangle: RectangularWindowProperties
+  Deinterlace: DeinterlaceSettings
+  Rotation: RotationSetting
+  Format: FormatProperties
+  Image: ImageProperties
+  Video: InputVideoEncodingProperties
+  Layer: LayerProperties
+  ListContainerSasInput: GetContainerSasContent
+  ListEdgePoliciesInput: GetEdgePoliciesContent
+  Preset: MediaPreset
+  StorageAccountType: MediaServiceStorageAccountType
+  Visibility: PlayerVisibility
   
 directive:
   - from: Accounts.json
@@ -82,6 +127,7 @@ directive:
     where: $.definitions
     transform: >
       $.LiveEventInput.properties.keyFrameIntervalDuration['format'] = 'duration';
+      $.ArmStreamingEndpointSkuInfo.properties.resourceType['x-ms-format'] = 'resource-type';
   - from: Encoding.json
     where: $.definitions
     transform: >
@@ -90,12 +136,19 @@ directive:
   - from: AssetsAndAssetFilters.json
     where: $.paths
     transform: >
-      $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/listContainerSas'].post["x-ms-pageable"] = {
+      $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/listContainerSas'].post['x-ms-pageable'] = {
           "itemName": "assetContainerSasUrls",
           "nextLinkName": null
         };
-      $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/listStreamingLocators'].post["x-ms-pageable"] = {
+      $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/listStreamingLocators'].post['x-ms-pageable'] = {
           "itemName": "streamingLocators",
+          "nextLinkName": null
+        };
+  - from: StreamingPoliciesAndStreamingLocators.json
+    where: $.paths
+    transform: >
+      $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/streamingLocators/{streamingLocatorName}/listContentKeys'].post['x-ms-pageable'] = {
+          "itemName": "contentKeys",
           "nextLinkName": null
         };
 ```
