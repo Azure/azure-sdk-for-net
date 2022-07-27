@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.IotCentral.Models
         /// <param name="description"> The description of the template. </param>
         /// <param name="industry"> The industry of the template. </param>
         /// <param name="locations"> A list of locations that support the template. </param>
-        internal IotCentralAppTemplate(string manifestId, string manifestVersion, string name, string title, float? order, string description, string industry, IReadOnlyList<IotCentralAppTemplateLocation> locations)
+        internal IotCentralAppTemplate(string manifestId, string manifestVersion, string name, string title, int? order, string description, string industry, IReadOnlyList<IotCentralAppTemplateLocation> locations)
         {
             ManifestId = manifestId;
             ManifestVersion = manifestVersion;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.IotCentral.Models
         /// <summary> The title of the template. </summary>
         public string Title { get; }
         /// <summary> The order of the template in the templates list. </summary>
-        public float? Order { get; }
+        public int? Order { get; }
         /// <summary> The description of the template. </summary>
         public string Description { get; }
         /// <summary> The industry of the template. </summary>

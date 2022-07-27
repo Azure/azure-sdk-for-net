@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.IotCentral.Models
         public string ManifestId { get { throw null; } }
         public string ManifestVersion { get { throw null; } }
         public string Name { get { throw null; } }
-        public float? Order { get { throw null; } }
+        public int? Order { get { throw null; } }
         public string Title { get { throw null; } }
     }
     public partial class IotCentralAppTemplateLocation
