@@ -293,7 +293,23 @@ directive:
   - from: swagger-document
     where: $.definitions.Encryption
     transform: $.required = undefined; # this is a fix for swagger issue, and it should be resolved in azure-rest-api-specs/pull/19357
+# this is a temporary fix
   - from: swagger-document
     where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/tableServices/default/tables/{tableName}"].put.parameters
     transform: $[2].required = true
+# convenience change: expand the array result out
+  - from: swagger-document
+    where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/listKeys"].post
+    transform: >
+      $["x-ms-pageable"] = {
+        "itemName": "keys",
+        "nextLinkName": null
+      };
+  - from: swagger-document
+    where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/regenerateKey"].post
+    transform: >
+      $["x-ms-pageable"] = {
+        "itemName": "keys",
+        "nextLinkName": null
+      };
 ```

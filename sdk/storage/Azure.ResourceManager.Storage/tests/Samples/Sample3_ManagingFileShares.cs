@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Tests.Samples
 {
-    public class Sample2_ManagingFileShares
+    public class Sample3_ManagingFileShares
     {
         private ResourceGroupResource resourceGroup;
         private StorageAccountResource storageAccount;

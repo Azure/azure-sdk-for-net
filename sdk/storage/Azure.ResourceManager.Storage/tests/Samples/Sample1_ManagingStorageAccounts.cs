@@ -13,9 +13,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Tests.Samples
 {
-    public class ReadMe_ManagingStorageAccounts
+    public class Sample1_ManagingStorageAccounts
     {
         private ResourceGroupResource resourceGroup;
+        private StorageAccountResource storageAccount;
         [SetUp]
         public async Task createResourceGroup()
         {
@@ -48,10 +49,23 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
             ArmOperation<StorageAccountResource> accountCreateOperation = await accountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters);
             StorageAccountResource storageAccount = accountCreateOperation.Value;
             #endregion
+
+            this.storageAccount = storageAccount;
         }
         [Test]
         [Ignore("Only verifying that the sample builds")]
-        public async Task list()
+        public async Task GetKeys()
+        {
+            #region Snippet:Managing_StorageAccounts_GetKeys
+            await foreach (StorageAccountKey key in storageAccount.GetKeysAsync())
+            {
+                Console.WriteLine(key.Value);
+            }
+            #endregion
+        }
+        [Test]
+        [Ignore("Only verifying that the sample builds")]
+        public async Task List()
         {
             #region Snippet:Managing_StorageAccounts_ListStorageAccounts
             StorageAccountCollection accountCollection = resourceGroup.GetStorageAccounts();
