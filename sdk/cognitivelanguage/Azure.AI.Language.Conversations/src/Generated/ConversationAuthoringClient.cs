@@ -55,9 +55,9 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     projectKind = "<Conversation>",
-        ///     projectName = "<ConversationalAnalysisAuthoringCreateProjectOptionsProjectName>",
-        ///     language = "<ConversationalAnalysisAuthoringCreateProjectOptionsLanguage>",
+        ///     projectKind = "Conversation",
+        ///     projectName = "<projectName>",
+        ///     language = "<language>",
         /// };
         /// 
         /// Response response = await client.CreateProjectAsync("<projectName>", RequestContent.Create(data));
@@ -76,14 +76,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     projectKind = "<Conversation>",
+        ///     projectKind = "Conversation",
         ///     settings = new {
-        ///         confidenceThreshold = 1234,
+        ///         confidenceThreshold = 123.45f,
         ///     },
-        ///     projectName = "<ConversationalAnalysisAuthoringCreateProjectOptionsProjectName>",
+        ///     projectName = "<projectName>",
         ///     multilingual = true,
-        ///     description = "<ConversationalAnalysisAuthoringCreateProjectOptionsDescription>",
-        ///     language = "<ConversationalAnalysisAuthoringCreateProjectOptionsLanguage>",
+        ///     description = "<description>",
+        ///     language = "<language>",
         /// };
         /// 
         /// Response response = await client.CreateProjectAsync("<projectName>", RequestContent.Create(data));
@@ -174,9 +174,9 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     projectKind = "<Conversation>",
-        ///     projectName = "<ConversationalAnalysisAuthoringCreateProjectOptionsProjectName>",
-        ///     language = "<ConversationalAnalysisAuthoringCreateProjectOptionsLanguage>",
+        ///     projectKind = "Conversation",
+        ///     projectName = "<projectName>",
+        ///     language = "<language>",
         /// };
         /// 
         /// Response response = client.CreateProject("<projectName>", RequestContent.Create(data));
@@ -195,14 +195,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     projectKind = "<Conversation>",
+        ///     projectKind = "Conversation",
         ///     settings = new {
-        ///         confidenceThreshold = 1234,
+        ///         confidenceThreshold = 123.45f,
         ///     },
-        ///     projectName = "<ConversationalAnalysisAuthoringCreateProjectOptionsProjectName>",
+        ///     projectName = "<projectName>",
         ///     multilingual = true,
-        ///     description = "<ConversationalAnalysisAuthoringCreateProjectOptionsDescription>",
-        ///     language = "<ConversationalAnalysisAuthoringCreateProjectOptionsLanguage>",
+        ///     description = "<description>",
+        ///     language = "<language>",
         /// };
         /// 
         /// Response response = client.CreateProject("<projectName>", RequestContent.Create(data));
@@ -454,7 +454,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///   modelId: string, # Required. Represents deployment modelId.
         ///   lastTrainedDateTime: string (ISO 8601 Format), # Required. Represents deployment last trained time.
         ///   lastDeployedDateTime: string (ISO 8601 Format), # Required. Represents deployment last deployed time.
-        ///   deploymentExpirationDate: ConversationalAnalysisAuthoringProjectDeploymentExpirationDate, # Required. Represents deployment expiration date in the runtime.
+        ///   deploymentExpirationDate: string (date), # Required. Represents deployment expiration date in the runtime.
         ///   modelTrainingConfigVersion: string, # Required. Represents model training config version.
         /// }
         /// </code>
@@ -516,7 +516,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///   modelId: string, # Required. Represents deployment modelId.
         ///   lastTrainedDateTime: string (ISO 8601 Format), # Required. Represents deployment last trained time.
         ///   lastDeployedDateTime: string (ISO 8601 Format), # Required. Represents deployment last deployed time.
-        ///   deploymentExpirationDate: ConversationalAnalysisAuthoringProjectDeploymentExpirationDate, # Required. Represents deployment expiration date in the runtime.
+        ///   deploymentExpirationDate: string (date), # Required. Represents deployment expiration date in the runtime.
         ///   modelTrainingConfigVersion: string, # Required. Represents model training config version.
         /// }
         /// </code>
@@ -951,6 +951,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// Response response = await client.GetExportProjectJobStatusAsync("<projectName>", "<jobId>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("resultUrl").ToString());
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
@@ -972,7 +973,6 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
         /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("resultUrl").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -982,6 +982,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// 
         /// Schema for <c>ExportProjectJobState</c>:
         /// <code>{
+        ///   resultUrl: string, # Optional. The URL to use in order to download the exported project.
         ///   jobId: string, # Required. The job ID.
         ///   createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
         ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
@@ -1008,7 +1009,6 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///       }, # Optional. An object containing more specific information than the current object about the error.
         ///     }
         ///   ], # Optional. The errors encountered while executing the job.
-        ///   resultUrl: string, # Optional. The URL to use in order to download the exported project.
         /// }
         /// </code>
         /// 
@@ -1050,6 +1050,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// Response response = client.GetExportProjectJobStatus("<projectName>", "<jobId>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("resultUrl").ToString());
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
@@ -1071,7 +1072,6 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
         /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("resultUrl").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -1081,6 +1081,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// 
         /// Schema for <c>ExportProjectJobState</c>:
         /// <code>{
+        ///   resultUrl: string, # Optional. The URL to use in order to download the exported project.
         ///   jobId: string, # Required. The job ID.
         ///   createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
         ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
@@ -1107,7 +1108,6 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///       }, # Optional. An object containing more specific information than the current object about the error.
         ///     }
         ///   ], # Optional. The errors encountered while executing the job.
-        ///   resultUrl: string, # Optional. The URL to use in order to download the exported project.
         /// }
         /// </code>
         /// 
@@ -1362,7 +1362,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///   modelId: string, # Required. The model ID.
         ///   lastTrainedDateTime: string (ISO 8601 Format), # Required. The last trained date time of the model.
         ///   lastTrainingDurationInSeconds: number, # Required. The duration of the model&apos;s last training request in seconds.
-        ///   modelExpirationDate: ConversationalAnalysisAuthoringProjectTrainedModelExpirationDate, # Required. The model expiration date.
+        ///   modelExpirationDate: string (date), # Required. The model expiration date.
         ///   modelTrainingConfigVersion: string, # Required. The model training config version.
         /// }
         /// </code>
@@ -1424,7 +1424,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///   modelId: string, # Required. The model ID.
         ///   lastTrainedDateTime: string (ISO 8601 Format), # Required. The last trained date time of the model.
         ///   lastTrainingDurationInSeconds: number, # Required. The duration of the model&apos;s last training request in seconds.
-        ///   modelExpirationDate: ConversationalAnalysisAuthoringProjectTrainedModelExpirationDate, # Required. The model expiration date.
+        ///   modelExpirationDate: string (date), # Required. The model expiration date.
         ///   modelTrainingConfigVersion: string, # Required. The model training config version.
         /// }
         /// </code>
@@ -1759,6 +1759,18 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// Response response = await client.GetTrainingJobStatusAsync("<projectName>", "<jobId>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("percentComplete").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("startDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("endDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("percentComplete").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("startDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("endDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("estimatedEndDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
@@ -1780,18 +1792,6 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
         /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingMode").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("percentComplete").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("startDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("endDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("percentComplete").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("startDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("endDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("estimatedEndDateTime").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -1801,6 +1801,19 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// 
         /// Schema for <c>TrainingJobState</c>:
         /// <code>{
+        ///   result: {
+        ///     modelLabel: string, # Required. Represents trained model label.
+        ///     trainingConfigVersion: string, # Required. Represents training config version.
+        ///     trainingMode: &quot;advanced&quot; | &quot;standard&quot;, # Optional. Represents the mode of the training operation.
+        ///     trainingStatus: {
+        ///       percentComplete: number, # Required. Represents progress percentage.
+        ///       startDateTime: string (ISO 8601 Format), # Optional. Represents the start date time.
+        ///       endDateTime: string (ISO 8601 Format), # Optional. Represents the end date time.
+        ///       status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Represents the status of the sub-operation.
+        ///     }, # Required. Represents the model training status.
+        ///     evaluationStatus: SubTrainingJobState, # Optional. Represents model evaluation status.
+        ///     estimatedEndDateTime: string (ISO 8601 Format), # Optional. Represents the estimated end date time for training and evaluation.
+        ///   }, # Required. Represents training tasks detailed result.
         ///   jobId: string, # Required. The job ID.
         ///   createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
         ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
@@ -1827,19 +1840,6 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///       }, # Optional. An object containing more specific information than the current object about the error.
         ///     }
         ///   ], # Optional. The errors encountered while executing the job.
-        ///   result: {
-        ///     modelLabel: string, # Required. Represents trained model label.
-        ///     trainingConfigVersion: string, # Required. Represents training config version.
-        ///     trainingMode: &quot;advanced&quot; | &quot;standard&quot;, # Optional. Represents the mode of the training operation.
-        ///     trainingStatus: {
-        ///       percentComplete: number, # Required. Represents progress percentage.
-        ///       startDateTime: string (ISO 8601 Format), # Optional. Represents the start date time.
-        ///       endDateTime: string (ISO 8601 Format), # Optional. Represents the end date time.
-        ///       status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Represents the status of the sub-operation.
-        ///     }, # Required. Represents the model training status.
-        ///     evaluationStatus: SubTrainingJobState, # Optional. Represents model evaluation status.
-        ///     estimatedEndDateTime: string (ISO 8601 Format), # Optional. Represents the estimated end date time for training and evaluation.
-        ///   }, # Required. Represents training tasks detailed result.
         /// }
         /// </code>
         /// 
@@ -1881,6 +1881,18 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// Response response = client.GetTrainingJobStatus("<projectName>", "<jobId>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("percentComplete").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("startDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("endDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("percentComplete").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("startDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("endDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("estimatedEndDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
@@ -1902,18 +1914,6 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
         /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingMode").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("percentComplete").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("startDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("endDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("percentComplete").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("startDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("endDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("estimatedEndDateTime").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -1923,6 +1923,19 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// 
         /// Schema for <c>TrainingJobState</c>:
         /// <code>{
+        ///   result: {
+        ///     modelLabel: string, # Required. Represents trained model label.
+        ///     trainingConfigVersion: string, # Required. Represents training config version.
+        ///     trainingMode: &quot;advanced&quot; | &quot;standard&quot;, # Optional. Represents the mode of the training operation.
+        ///     trainingStatus: {
+        ///       percentComplete: number, # Required. Represents progress percentage.
+        ///       startDateTime: string (ISO 8601 Format), # Optional. Represents the start date time.
+        ///       endDateTime: string (ISO 8601 Format), # Optional. Represents the end date time.
+        ///       status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Represents the status of the sub-operation.
+        ///     }, # Required. Represents the model training status.
+        ///     evaluationStatus: SubTrainingJobState, # Optional. Represents model evaluation status.
+        ///     estimatedEndDateTime: string (ISO 8601 Format), # Optional. Represents the estimated end date time for training and evaluation.
+        ///   }, # Required. Represents training tasks detailed result.
         ///   jobId: string, # Required. The job ID.
         ///   createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
         ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
@@ -1949,19 +1962,6 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///       }, # Optional. An object containing more specific information than the current object about the error.
         ///     }
         ///   ], # Optional. The errors encountered while executing the job.
-        ///   result: {
-        ///     modelLabel: string, # Required. Represents trained model label.
-        ///     trainingConfigVersion: string, # Required. Represents training config version.
-        ///     trainingMode: &quot;advanced&quot; | &quot;standard&quot;, # Optional. Represents the mode of the training operation.
-        ///     trainingStatus: {
-        ///       percentComplete: number, # Required. Represents progress percentage.
-        ///       startDateTime: string (ISO 8601 Format), # Optional. Represents the start date time.
-        ///       endDateTime: string (ISO 8601 Format), # Optional. Represents the end date time.
-        ///       status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Represents the status of the sub-operation.
-        ///     }, # Required. Represents the model training status.
-        ///     evaluationStatus: SubTrainingJobState, # Optional. Represents model evaluation status.
-        ///     estimatedEndDateTime: string (ISO 8601 Format), # Optional. Represents the estimated end date time for training and evaluation.
-        ///   }, # Required. Represents training tasks detailed result.
         /// }
         /// </code>
         /// 
@@ -2356,7 +2356,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///   modelId: string, # Required. Represents deployment modelId.
         ///   lastTrainedDateTime: string (ISO 8601 Format), # Required. Represents deployment last trained time.
         ///   lastDeployedDateTime: string (ISO 8601 Format), # Required. Represents deployment last deployed time.
-        ///   deploymentExpirationDate: ConversationalAnalysisAuthoringProjectDeploymentExpirationDate, # Required. Represents deployment expiration date in the runtime.
+        ///   deploymentExpirationDate: string (date), # Required. Represents deployment expiration date in the runtime.
         ///   modelTrainingConfigVersion: string, # Required. Represents model training config version.
         /// }
         /// </code>
@@ -2423,7 +2423,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///   modelId: string, # Required. Represents deployment modelId.
         ///   lastTrainedDateTime: string (ISO 8601 Format), # Required. Represents deployment last trained time.
         ///   lastDeployedDateTime: string (ISO 8601 Format), # Required. Represents deployment last deployed time.
-        ///   deploymentExpirationDate: ConversationalAnalysisAuthoringProjectDeploymentExpirationDate, # Required. Represents deployment expiration date in the runtime.
+        ///   deploymentExpirationDate: string (date), # Required. Represents deployment expiration date in the runtime.
         ///   modelTrainingConfigVersion: string, # Required. Represents model training config version.
         /// }
         /// </code>
@@ -2490,7 +2490,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///   modelId: string, # Required. The model ID.
         ///   lastTrainedDateTime: string (ISO 8601 Format), # Required. The last trained date time of the model.
         ///   lastTrainingDurationInSeconds: number, # Required. The duration of the model&apos;s last training request in seconds.
-        ///   modelExpirationDate: ConversationalAnalysisAuthoringProjectTrainedModelExpirationDate, # Required. The model expiration date.
+        ///   modelExpirationDate: string (date), # Required. The model expiration date.
         ///   modelTrainingConfigVersion: string, # Required. The model training config version.
         /// }
         /// </code>
@@ -2557,7 +2557,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///   modelId: string, # Required. The model ID.
         ///   lastTrainedDateTime: string (ISO 8601 Format), # Required. The last trained date time of the model.
         ///   lastTrainingDurationInSeconds: number, # Required. The duration of the model&apos;s last training request in seconds.
-        ///   modelExpirationDate: ConversationalAnalysisAuthoringProjectTrainedModelExpirationDate, # Required. The model expiration date.
+        ///   modelExpirationDate: string (date), # Required. The model expiration date.
         ///   modelTrainingConfigVersion: string, # Required. The model training config version.
         /// }
         /// </code>
@@ -2816,6 +2816,18 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// await foreach (var data in client.GetTrainingJobsAsync("<projectName>"))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
+        ///     Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
+        ///     Console.WriteLine(result.GetProperty("result").GetProperty("trainingMode").ToString());
+        ///     Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("percentComplete").ToString());
+        ///     Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("startDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("endDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("status").ToString());
+        ///     Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("percentComplete").ToString());
+        ///     Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("startDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("endDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("status").ToString());
+        ///     Console.WriteLine(result.GetProperty("result").GetProperty("estimatedEndDateTime").ToString());
         ///     Console.WriteLine(result.GetProperty("jobId").ToString());
         ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         ///     Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
@@ -2837,18 +2849,6 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///     Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
         ///     Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
         ///     Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
-        ///     Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
-        ///     Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
-        ///     Console.WriteLine(result.GetProperty("result").GetProperty("trainingMode").ToString());
-        ///     Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("percentComplete").ToString());
-        ///     Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("startDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("endDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("status").ToString());
-        ///     Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("percentComplete").ToString());
-        ///     Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("startDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("endDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("status").ToString());
-        ///     Console.WriteLine(result.GetProperty("result").GetProperty("estimatedEndDateTime").ToString());
         /// }
         /// ]]></code>
         /// </example>
@@ -2859,6 +2859,19 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// 
         /// Schema for <c>ConversationalAnalysisAuthoringTrainingJobsValue</c>:
         /// <code>{
+        ///   result: {
+        ///     modelLabel: string, # Required. Represents trained model label.
+        ///     trainingConfigVersion: string, # Required. Represents training config version.
+        ///     trainingMode: &quot;advanced&quot; | &quot;standard&quot;, # Optional. Represents the mode of the training operation.
+        ///     trainingStatus: {
+        ///       percentComplete: number, # Required. Represents progress percentage.
+        ///       startDateTime: string (ISO 8601 Format), # Optional. Represents the start date time.
+        ///       endDateTime: string (ISO 8601 Format), # Optional. Represents the end date time.
+        ///       status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Represents the status of the sub-operation.
+        ///     }, # Required. Represents the model training status.
+        ///     evaluationStatus: SubTrainingJobState, # Optional. Represents model evaluation status.
+        ///     estimatedEndDateTime: string (ISO 8601 Format), # Optional. Represents the estimated end date time for training and evaluation.
+        ///   }, # Required. Represents training tasks detailed result.
         ///   jobId: string, # Required. The job ID.
         ///   createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
         ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
@@ -2885,19 +2898,6 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///       }, # Optional. An object containing more specific information than the current object about the error.
         ///     }
         ///   ], # Optional. The errors encountered while executing the job.
-        ///   result: {
-        ///     modelLabel: string, # Required. Represents trained model label.
-        ///     trainingConfigVersion: string, # Required. Represents training config version.
-        ///     trainingMode: &quot;advanced&quot; | &quot;standard&quot;, # Optional. Represents the mode of the training operation.
-        ///     trainingStatus: {
-        ///       percentComplete: number, # Required. Represents progress percentage.
-        ///       startDateTime: string (ISO 8601 Format), # Optional. Represents the start date time.
-        ///       endDateTime: string (ISO 8601 Format), # Optional. Represents the end date time.
-        ///       status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Represents the status of the sub-operation.
-        ///     }, # Required. Represents the model training status.
-        ///     evaluationStatus: SubTrainingJobState, # Optional. Represents model evaluation status.
-        ///     estimatedEndDateTime: string (ISO 8601 Format), # Optional. Represents the estimated end date time for training and evaluation.
-        ///   }, # Required. Represents training tasks detailed result.
         /// }
         /// </code>
         /// 
@@ -2943,6 +2943,18 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// foreach (var data in client.GetTrainingJobs("<projectName>"))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
+        ///     Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
+        ///     Console.WriteLine(result.GetProperty("result").GetProperty("trainingMode").ToString());
+        ///     Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("percentComplete").ToString());
+        ///     Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("startDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("endDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("status").ToString());
+        ///     Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("percentComplete").ToString());
+        ///     Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("startDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("endDateTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("status").ToString());
+        ///     Console.WriteLine(result.GetProperty("result").GetProperty("estimatedEndDateTime").ToString());
         ///     Console.WriteLine(result.GetProperty("jobId").ToString());
         ///     Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         ///     Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
@@ -2964,18 +2976,6 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///     Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
         ///     Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
         ///     Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
-        ///     Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
-        ///     Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
-        ///     Console.WriteLine(result.GetProperty("result").GetProperty("trainingMode").ToString());
-        ///     Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("percentComplete").ToString());
-        ///     Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("startDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("endDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("status").ToString());
-        ///     Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("percentComplete").ToString());
-        ///     Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("startDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("endDateTime").ToString());
-        ///     Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("status").ToString());
-        ///     Console.WriteLine(result.GetProperty("result").GetProperty("estimatedEndDateTime").ToString());
         /// }
         /// ]]></code>
         /// </example>
@@ -2986,6 +2986,19 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// 
         /// Schema for <c>ConversationalAnalysisAuthoringTrainingJobsValue</c>:
         /// <code>{
+        ///   result: {
+        ///     modelLabel: string, # Required. Represents trained model label.
+        ///     trainingConfigVersion: string, # Required. Represents training config version.
+        ///     trainingMode: &quot;advanced&quot; | &quot;standard&quot;, # Optional. Represents the mode of the training operation.
+        ///     trainingStatus: {
+        ///       percentComplete: number, # Required. Represents progress percentage.
+        ///       startDateTime: string (ISO 8601 Format), # Optional. Represents the start date time.
+        ///       endDateTime: string (ISO 8601 Format), # Optional. Represents the end date time.
+        ///       status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Represents the status of the sub-operation.
+        ///     }, # Required. Represents the model training status.
+        ///     evaluationStatus: SubTrainingJobState, # Optional. Represents model evaluation status.
+        ///     estimatedEndDateTime: string (ISO 8601 Format), # Optional. Represents the estimated end date time for training and evaluation.
+        ///   }, # Required. Represents training tasks detailed result.
         ///   jobId: string, # Required. The job ID.
         ///   createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
         ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
@@ -3012,19 +3025,6 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///       }, # Optional. An object containing more specific information than the current object about the error.
         ///     }
         ///   ], # Optional. The errors encountered while executing the job.
-        ///   result: {
-        ///     modelLabel: string, # Required. Represents trained model label.
-        ///     trainingConfigVersion: string, # Required. Represents training config version.
-        ///     trainingMode: &quot;advanced&quot; | &quot;standard&quot;, # Optional. Represents the mode of the training operation.
-        ///     trainingStatus: {
-        ///       percentComplete: number, # Required. Represents progress percentage.
-        ///       startDateTime: string (ISO 8601 Format), # Optional. Represents the start date time.
-        ///       endDateTime: string (ISO 8601 Format), # Optional. Represents the end date time.
-        ///       status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Represents the status of the sub-operation.
-        ///     }, # Required. Represents the model training status.
-        ///     evaluationStatus: SubTrainingJobState, # Optional. Represents model evaluation status.
-        ///     estimatedEndDateTime: string (ISO 8601 Format), # Optional. Represents the estimated end date time for training and evaluation.
-        ///   }, # Required. Represents training tasks detailed result.
         /// }
         /// </code>
         /// 
@@ -3342,7 +3342,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// Schema for <c>ConversationalAnalysisAuthoringTrainingConfigVersionsValue</c>:
         /// <code>{
         ///   trainingConfigVersion: string, # Required. Represents the version of the config.
-        ///   modelExpirationDate: ConversationalAnalysisAuthoringTrainingConfigVersionModelExpirationDate, # Required. Represents the training config version expiration date.
+        ///   modelExpirationDate: string (date), # Required. Represents the training config version expiration date.
         /// }
         /// </code>
         /// 
@@ -3400,7 +3400,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// Schema for <c>ConversationalAnalysisAuthoringTrainingConfigVersionsValue</c>:
         /// <code>{
         ///   trainingConfigVersion: string, # Required. Represents the version of the config.
-        ///   modelExpirationDate: ConversationalAnalysisAuthoringTrainingConfigVersionModelExpirationDate, # Required. Represents the training config version expiration date.
+        ///   modelExpirationDate: string (date), # Required. Represents the training config version expiration date.
         /// }
         /// </code>
         /// 
@@ -3645,10 +3645,6 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// 
         /// BinaryData data = await operation.WaitForCompletionAsync();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        /// Console.WriteLine(result.GetProperty("jobId").ToString());
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call ExportProjectAsync with all parameters, and how to parse the result.
@@ -3661,6 +3657,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// 
         /// BinaryData data = await operation.WaitForCompletionAsync();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        /// Console.WriteLine(result.GetProperty("resultUrl").ToString());
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
@@ -3682,7 +3679,6 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
         /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("resultUrl").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -3692,6 +3688,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// 
         /// Schema for <c>ExportProjectJobState</c>:
         /// <code>{
+        ///   resultUrl: string, # Optional. The URL to use in order to download the exported project.
         ///   jobId: string, # Required. The job ID.
         ///   createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
         ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
@@ -3718,7 +3715,6 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///       }, # Optional. An object containing more specific information than the current object about the error.
         ///     }
         ///   ], # Optional. The errors encountered while executing the job.
-        ///   resultUrl: string, # Optional. The URL to use in order to download the exported project.
         /// }
         /// </code>
         /// 
@@ -3764,10 +3760,6 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// 
         /// BinaryData data = operation.WaitForCompletion();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        /// Console.WriteLine(result.GetProperty("jobId").ToString());
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call ExportProject with all parameters, and how to parse the result.
@@ -3780,6 +3772,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// 
         /// BinaryData data = operation.WaitForCompletion();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        /// Console.WriteLine(result.GetProperty("resultUrl").ToString());
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
@@ -3801,7 +3794,6 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
         /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("resultUrl").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -3811,6 +3803,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// 
         /// Schema for <c>ExportProjectJobState</c>:
         /// <code>{
+        ///   resultUrl: string, # Optional. The URL to use in order to download the exported project.
         ///   jobId: string, # Required. The job ID.
         ///   createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
         ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
@@ -3837,7 +3830,6 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///       }, # Optional. An object containing more specific information than the current object about the error.
         ///     }
         ///   ], # Optional. The errors encountered while executing the job.
-        ///   resultUrl: string, # Optional. The URL to use in order to download the exported project.
         /// }
         /// </code>
         /// 
@@ -3879,12 +3871,12 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     projectFileVersion = "<ConversationalAnalysisAuthoringExportedProjectFileVersion>",
-        ///     stringIndexType = "<Utf16CodeUnit>",
+        ///     projectFileVersion = "<projectFileVersion>",
+        ///     stringIndexType = "Utf16CodeUnit",
         ///     metadata = new {
-        ///         projectKind = "<Conversation>",
-        ///         projectName = "<ConversationalAnalysisAuthoringCreateProjectOptionsProjectName>",
-        ///         language = "<ConversationalAnalysisAuthoringCreateProjectOptionsLanguage>",
+        ///         projectKind = "Conversation",
+        ///         projectName = "<projectName>",
+        ///         language = "<language>",
         ///     },
         /// };
         /// 
@@ -3904,38 +3896,37 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     projectFileVersion = "<ConversationalAnalysisAuthoringExportedProjectFileVersion>",
-        ///     stringIndexType = "<Utf16CodeUnit>",
+        ///     projectFileVersion = "<projectFileVersion>",
+        ///     stringIndexType = "Utf16CodeUnit",
         ///     metadata = new {
-        ///         projectKind = "<Conversation>",
+        ///         projectKind = "Conversation",
         ///         settings = new {
-        ///             confidenceThreshold = 1234,
+        ///             confidenceThreshold = 123.45f,
         ///         },
-        ///         projectName = "<ConversationalAnalysisAuthoringCreateProjectOptionsProjectName>",
+        ///         projectName = "<projectName>",
         ///         multilingual = true,
-        ///         description = "<ConversationalAnalysisAuthoringCreateProjectOptionsDescription>",
-        ///         language = "<ConversationalAnalysisAuthoringCreateProjectOptionsLanguage>",
+        ///         description = "<description>",
+        ///         language = "<language>",
         ///     },
         ///     assets = new {
-        ///         projectKind = "Conversation",
         ///         intents = new[] {
         ///             new {
-        ///                 category = "<ConversationalAnalysisAuthoringConversationExportedIntentCategory>",
+        ///                 category = "<category>",
         ///             }
         ///         },
         ///         entities = new[] {
         ///             new {
-        ///                 category = "<ConversationalAnalysisAuthoringConversationExportedEntityCategory>",
-        ///                 compositionSetting = "<returnLongestOverlap>",
+        ///                 category = "<category>",
+        ///                 compositionSetting = "returnLongestOverlap",
         ///                 list = new {
         ///                     sublists = new[] {
         ///                         new {
-        ///                             listKey = "<ConversationalAnalysisAuthoringExportedEntitySublistListKey>",
+        ///                             listKey = "<listKey>",
         ///                             synonyms = new[] {
         ///                                 new {
-        ///                                     language = "<ConversationalAnalysisAuthoringExportedEntityListSynonymLanguage>",
+        ///                                     language = "<language>",
         ///                                     values = new[] {
-        ///                                         "<ConversationalAnalysisAuthoringExportedEntityListSynonymValuesItem>"
+        ///                                         "<String>"
         ///                                     },
         ///                                 }
         ///                             },
@@ -3944,7 +3935,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///                 },
         ///                 prebuilts = new[] {
         ///                     new {
-        ///                         category = "<ConversationalAnalysisAuthoringExportedPrebuiltEntityCategory>",
+        ///                         category = "<category>",
         ///                     }
         ///                 },
         ///             }
@@ -3953,17 +3944,18 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///             new {
         ///                 entities = new[] {
         ///                     new {
-        ///                         category = "<ConversationalAnalysisAuthoringExportedUtteranceEntityLabelCategory>",
+        ///                         category = "<category>",
         ///                         offset = 1234,
         ///                         length = 1234,
         ///                     }
         ///                 },
-        ///                 text = "<ConversationalAnalysisAuthoringConversationExportedUtteranceText>",
-        ///                 language = "<ConversationalAnalysisAuthoringConversationExportedUtteranceLanguage>",
-        ///                 intent = "<ConversationalAnalysisAuthoringConversationExportedUtteranceIntent>",
-        ///                 dataset = "<ConversationalAnalysisAuthoringConversationExportedUtteranceDataset>",
+        ///                 text = "<text>",
+        ///                 language = "<language>",
+        ///                 intent = "<intent>",
+        ///                 dataset = "<dataset>",
         ///             }
         ///         },
+        ///         projectKind = "Conversation",
         ///     },
         /// };
         /// 
@@ -4090,12 +4082,12 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     projectFileVersion = "<ConversationalAnalysisAuthoringExportedProjectFileVersion>",
-        ///     stringIndexType = "<Utf16CodeUnit>",
+        ///     projectFileVersion = "<projectFileVersion>",
+        ///     stringIndexType = "Utf16CodeUnit",
         ///     metadata = new {
-        ///         projectKind = "<Conversation>",
-        ///         projectName = "<ConversationalAnalysisAuthoringCreateProjectOptionsProjectName>",
-        ///         language = "<ConversationalAnalysisAuthoringCreateProjectOptionsLanguage>",
+        ///         projectKind = "Conversation",
+        ///         projectName = "<projectName>",
+        ///         language = "<language>",
         ///     },
         /// };
         /// 
@@ -4115,38 +4107,37 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     projectFileVersion = "<ConversationalAnalysisAuthoringExportedProjectFileVersion>",
-        ///     stringIndexType = "<Utf16CodeUnit>",
+        ///     projectFileVersion = "<projectFileVersion>",
+        ///     stringIndexType = "Utf16CodeUnit",
         ///     metadata = new {
-        ///         projectKind = "<Conversation>",
+        ///         projectKind = "Conversation",
         ///         settings = new {
-        ///             confidenceThreshold = 1234,
+        ///             confidenceThreshold = 123.45f,
         ///         },
-        ///         projectName = "<ConversationalAnalysisAuthoringCreateProjectOptionsProjectName>",
+        ///         projectName = "<projectName>",
         ///         multilingual = true,
-        ///         description = "<ConversationalAnalysisAuthoringCreateProjectOptionsDescription>",
-        ///         language = "<ConversationalAnalysisAuthoringCreateProjectOptionsLanguage>",
+        ///         description = "<description>",
+        ///         language = "<language>",
         ///     },
         ///     assets = new {
-        ///         projectKind = "Conversation",
         ///         intents = new[] {
         ///             new {
-        ///                 category = "<ConversationalAnalysisAuthoringConversationExportedIntentCategory>",
+        ///                 category = "<category>",
         ///             }
         ///         },
         ///         entities = new[] {
         ///             new {
-        ///                 category = "<ConversationalAnalysisAuthoringConversationExportedEntityCategory>",
-        ///                 compositionSetting = "<returnLongestOverlap>",
+        ///                 category = "<category>",
+        ///                 compositionSetting = "returnLongestOverlap",
         ///                 list = new {
         ///                     sublists = new[] {
         ///                         new {
-        ///                             listKey = "<ConversationalAnalysisAuthoringExportedEntitySublistListKey>",
+        ///                             listKey = "<listKey>",
         ///                             synonyms = new[] {
         ///                                 new {
-        ///                                     language = "<ConversationalAnalysisAuthoringExportedEntityListSynonymLanguage>",
+        ///                                     language = "<language>",
         ///                                     values = new[] {
-        ///                                         "<ConversationalAnalysisAuthoringExportedEntityListSynonymValuesItem>"
+        ///                                         "<String>"
         ///                                     },
         ///                                 }
         ///                             },
@@ -4155,7 +4146,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///                 },
         ///                 prebuilts = new[] {
         ///                     new {
-        ///                         category = "<ConversationalAnalysisAuthoringExportedPrebuiltEntityCategory>",
+        ///                         category = "<category>",
         ///                     }
         ///                 },
         ///             }
@@ -4164,17 +4155,18 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///             new {
         ///                 entities = new[] {
         ///                     new {
-        ///                         category = "<ConversationalAnalysisAuthoringExportedUtteranceEntityLabelCategory>",
+        ///                         category = "<category>",
         ///                         offset = 1234,
         ///                         length = 1234,
         ///                     }
         ///                 },
-        ///                 text = "<ConversationalAnalysisAuthoringConversationExportedUtteranceText>",
-        ///                 language = "<ConversationalAnalysisAuthoringConversationExportedUtteranceLanguage>",
-        ///                 intent = "<ConversationalAnalysisAuthoringConversationExportedUtteranceIntent>",
-        ///                 dataset = "<ConversationalAnalysisAuthoringConversationExportedUtteranceDataset>",
+        ///                 text = "<text>",
+        ///                 language = "<language>",
+        ///                 intent = "<intent>",
+        ///                 dataset = "<dataset>",
         ///             }
         ///         },
+        ///         projectKind = "Conversation",
         ///     },
         /// };
         /// 
@@ -4300,22 +4292,22 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     modelLabel = "<ConversationalAnalysisAuthoringTrainingJobOptionsModelLabel>",
-        ///     trainingMode = "<advanced>",
+        ///     modelLabel = "<modelLabel>",
+        ///     trainingMode = "advanced",
         /// };
         /// 
         /// var operation = await client.TrainAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
         /// 
         /// BinaryData data = await operation.WaitForCompletionAsync();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        /// Console.WriteLine(result.GetProperty("jobId").ToString());
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
         /// Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
         /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
         /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("percentComplete").ToString());
         /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("jobId").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
         /// ]]></code>
         /// This sample shows how to call TrainAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
@@ -4324,11 +4316,11 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     modelLabel = "<ConversationalAnalysisAuthoringTrainingJobOptionsModelLabel>",
-        ///     trainingConfigVersion = "<ConversationalAnalysisAuthoringTrainingJobOptionsTrainingConfigVersion>",
-        ///     trainingMode = "<advanced>",
+        ///     modelLabel = "<modelLabel>",
+        ///     trainingConfigVersion = "<trainingConfigVersion>",
+        ///     trainingMode = "advanced",
         ///     evaluationOptions = new {
-        ///         kind = "<percentage>",
+        ///         kind = "percentage",
         ///         trainingSplitPercentage = 1234,
         ///         testingSplitPercentage = 1234,
         ///     },
@@ -4338,6 +4330,18 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// 
         /// BinaryData data = await operation.WaitForCompletionAsync();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("percentComplete").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("startDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("endDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("percentComplete").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("startDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("endDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("estimatedEndDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
@@ -4359,18 +4363,6 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
         /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingMode").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("percentComplete").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("startDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("endDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("percentComplete").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("startDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("endDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("estimatedEndDateTime").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -4395,6 +4387,19 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// 
         /// Schema for <c>TrainingJobState</c>:
         /// <code>{
+        ///   result: {
+        ///     modelLabel: string, # Required. Represents trained model label.
+        ///     trainingConfigVersion: string, # Required. Represents training config version.
+        ///     trainingMode: &quot;advanced&quot; | &quot;standard&quot;, # Optional. Represents the mode of the training operation.
+        ///     trainingStatus: {
+        ///       percentComplete: number, # Required. Represents progress percentage.
+        ///       startDateTime: string (ISO 8601 Format), # Optional. Represents the start date time.
+        ///       endDateTime: string (ISO 8601 Format), # Optional. Represents the end date time.
+        ///       status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Represents the status of the sub-operation.
+        ///     }, # Required. Represents the model training status.
+        ///     evaluationStatus: SubTrainingJobState, # Optional. Represents model evaluation status.
+        ///     estimatedEndDateTime: string (ISO 8601 Format), # Optional. Represents the estimated end date time for training and evaluation.
+        ///   }, # Required. Represents training tasks detailed result.
         ///   jobId: string, # Required. The job ID.
         ///   createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
         ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
@@ -4421,19 +4426,6 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///       }, # Optional. An object containing more specific information than the current object about the error.
         ///     }
         ///   ], # Optional. The errors encountered while executing the job.
-        ///   result: {
-        ///     modelLabel: string, # Required. Represents trained model label.
-        ///     trainingConfigVersion: string, # Required. Represents training config version.
-        ///     trainingMode: &quot;advanced&quot; | &quot;standard&quot;, # Optional. Represents the mode of the training operation.
-        ///     trainingStatus: {
-        ///       percentComplete: number, # Required. Represents progress percentage.
-        ///       startDateTime: string (ISO 8601 Format), # Optional. Represents the start date time.
-        ///       endDateTime: string (ISO 8601 Format), # Optional. Represents the end date time.
-        ///       status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Represents the status of the sub-operation.
-        ///     }, # Required. Represents the model training status.
-        ///     evaluationStatus: SubTrainingJobState, # Optional. Represents model evaluation status.
-        ///     estimatedEndDateTime: string (ISO 8601 Format), # Optional. Represents the estimated end date time for training and evaluation.
-        ///   }, # Required. Represents training tasks detailed result.
         /// }
         /// </code>
         /// 
@@ -4474,22 +4466,22 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     modelLabel = "<ConversationalAnalysisAuthoringTrainingJobOptionsModelLabel>",
-        ///     trainingMode = "<advanced>",
+        ///     modelLabel = "<modelLabel>",
+        ///     trainingMode = "advanced",
         /// };
         /// 
         /// var operation = client.Train(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
         /// 
         /// BinaryData data = operation.WaitForCompletion();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        /// Console.WriteLine(result.GetProperty("jobId").ToString());
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
         /// Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
         /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
         /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("percentComplete").ToString());
         /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("jobId").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
         /// ]]></code>
         /// This sample shows how to call Train with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
@@ -4498,11 +4490,11 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     modelLabel = "<ConversationalAnalysisAuthoringTrainingJobOptionsModelLabel>",
-        ///     trainingConfigVersion = "<ConversationalAnalysisAuthoringTrainingJobOptionsTrainingConfigVersion>",
-        ///     trainingMode = "<advanced>",
+        ///     modelLabel = "<modelLabel>",
+        ///     trainingConfigVersion = "<trainingConfigVersion>",
+        ///     trainingMode = "advanced",
         ///     evaluationOptions = new {
-        ///         kind = "<percentage>",
+        ///         kind = "percentage",
         ///         trainingSplitPercentage = 1234,
         ///         testingSplitPercentage = 1234,
         ///     },
@@ -4512,6 +4504,18 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// 
         /// BinaryData data = operation.WaitForCompletion();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("percentComplete").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("startDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("endDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("percentComplete").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("startDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("endDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("estimatedEndDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
@@ -4533,18 +4537,6 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
         /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingMode").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("percentComplete").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("startDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("endDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("percentComplete").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("startDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("endDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("estimatedEndDateTime").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -4569,6 +4561,19 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// 
         /// Schema for <c>TrainingJobState</c>:
         /// <code>{
+        ///   result: {
+        ///     modelLabel: string, # Required. Represents trained model label.
+        ///     trainingConfigVersion: string, # Required. Represents training config version.
+        ///     trainingMode: &quot;advanced&quot; | &quot;standard&quot;, # Optional. Represents the mode of the training operation.
+        ///     trainingStatus: {
+        ///       percentComplete: number, # Required. Represents progress percentage.
+        ///       startDateTime: string (ISO 8601 Format), # Optional. Represents the start date time.
+        ///       endDateTime: string (ISO 8601 Format), # Optional. Represents the end date time.
+        ///       status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Represents the status of the sub-operation.
+        ///     }, # Required. Represents the model training status.
+        ///     evaluationStatus: SubTrainingJobState, # Optional. Represents model evaluation status.
+        ///     estimatedEndDateTime: string (ISO 8601 Format), # Optional. Represents the estimated end date time for training and evaluation.
+        ///   }, # Required. Represents training tasks detailed result.
         ///   jobId: string, # Required. The job ID.
         ///   createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
         ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
@@ -4595,19 +4600,6 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///       }, # Optional. An object containing more specific information than the current object about the error.
         ///     }
         ///   ], # Optional. The errors encountered while executing the job.
-        ///   result: {
-        ///     modelLabel: string, # Required. Represents trained model label.
-        ///     trainingConfigVersion: string, # Required. Represents training config version.
-        ///     trainingMode: &quot;advanced&quot; | &quot;standard&quot;, # Optional. Represents the mode of the training operation.
-        ///     trainingStatus: {
-        ///       percentComplete: number, # Required. Represents progress percentage.
-        ///       startDateTime: string (ISO 8601 Format), # Optional. Represents the start date time.
-        ///       endDateTime: string (ISO 8601 Format), # Optional. Represents the end date time.
-        ///       status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Represents the status of the sub-operation.
-        ///     }, # Required. Represents the model training status.
-        ///     evaluationStatus: SubTrainingJobState, # Optional. Represents model evaluation status.
-        ///     estimatedEndDateTime: string (ISO 8601 Format), # Optional. Represents the estimated end date time for training and evaluation.
-        ///   }, # Required. Represents training tasks detailed result.
         /// }
         /// </code>
         /// 
@@ -4648,8 +4640,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     firstDeploymentName = "<ConversationalAnalysisAuthoringSwapDeploymentsOptionsFirstDeploymentName>",
-        ///     secondDeploymentName = "<ConversationalAnalysisAuthoringSwapDeploymentsOptionsSecondDeploymentName>",
+        ///     firstDeploymentName = "<firstDeploymentName>",
+        ///     secondDeploymentName = "<secondDeploymentName>",
         /// };
         /// 
         /// var operation = await client.SwapDeploymentsAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
@@ -4761,8 +4753,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     firstDeploymentName = "<ConversationalAnalysisAuthoringSwapDeploymentsOptionsFirstDeploymentName>",
-        ///     secondDeploymentName = "<ConversationalAnalysisAuthoringSwapDeploymentsOptionsSecondDeploymentName>",
+        ///     firstDeploymentName = "<firstDeploymentName>",
+        ///     secondDeploymentName = "<secondDeploymentName>",
         /// };
         /// 
         /// var operation = client.SwapDeployments(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
@@ -4875,7 +4867,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     trainedModelLabel = "<ConversationalAnalysisAuthoringCreateDeploymentOptionsTrainedModelLabel>",
+        ///     trainedModelLabel = "<trainedModelLabel>",
         /// };
         /// 
         /// var operation = await client.DeployProjectAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>", RequestContent.Create(data));
@@ -4909,7 +4901,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///   modelId: string, # Required. Represents deployment modelId.
         ///   lastTrainedDateTime: string (ISO 8601 Format), # Required. Represents deployment last trained time.
         ///   lastDeployedDateTime: string (ISO 8601 Format), # Required. Represents deployment last deployed time.
-        ///   deploymentExpirationDate: ConversationalAnalysisAuthoringProjectDeploymentExpirationDate, # Required. Represents deployment expiration date in the runtime.
+        ///   deploymentExpirationDate: string (date), # Required. Represents deployment expiration date in the runtime.
         ///   modelTrainingConfigVersion: string, # Required. Represents model training config version.
         /// }
         /// </code>
@@ -4953,7 +4945,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// var client = new ConversationAuthoringClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     trainedModelLabel = "<ConversationalAnalysisAuthoringCreateDeploymentOptionsTrainedModelLabel>",
+        ///     trainedModelLabel = "<trainedModelLabel>",
         /// };
         /// 
         /// var operation = client.DeployProject(WaitUntil.Completed, "<projectName>", "<deploymentName>", RequestContent.Create(data));
@@ -4987,7 +4979,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///   modelId: string, # Required. Represents deployment modelId.
         ///   lastTrainedDateTime: string (ISO 8601 Format), # Required. Represents deployment last trained time.
         ///   lastDeployedDateTime: string (ISO 8601 Format), # Required. Represents deployment last deployed time.
-        ///   deploymentExpirationDate: ConversationalAnalysisAuthoringProjectDeploymentExpirationDate, # Required. Represents deployment expiration date in the runtime.
+        ///   deploymentExpirationDate: string (date), # Required. Represents deployment expiration date in the runtime.
         ///   modelTrainingConfigVersion: string, # Required. Represents model training config version.
         /// }
         /// </code>
@@ -5231,6 +5223,18 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// 
         /// BinaryData data = await operation.WaitForCompletionAsync();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("percentComplete").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("startDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("endDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("percentComplete").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("startDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("endDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("estimatedEndDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
@@ -5252,18 +5256,6 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
         /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingMode").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("percentComplete").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("startDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("endDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("percentComplete").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("startDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("endDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("estimatedEndDateTime").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -5273,6 +5265,19 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// 
         /// Schema for <c>TrainingJobState</c>:
         /// <code>{
+        ///   result: {
+        ///     modelLabel: string, # Required. Represents trained model label.
+        ///     trainingConfigVersion: string, # Required. Represents training config version.
+        ///     trainingMode: &quot;advanced&quot; | &quot;standard&quot;, # Optional. Represents the mode of the training operation.
+        ///     trainingStatus: {
+        ///       percentComplete: number, # Required. Represents progress percentage.
+        ///       startDateTime: string (ISO 8601 Format), # Optional. Represents the start date time.
+        ///       endDateTime: string (ISO 8601 Format), # Optional. Represents the end date time.
+        ///       status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Represents the status of the sub-operation.
+        ///     }, # Required. Represents the model training status.
+        ///     evaluationStatus: SubTrainingJobState, # Optional. Represents model evaluation status.
+        ///     estimatedEndDateTime: string (ISO 8601 Format), # Optional. Represents the estimated end date time for training and evaluation.
+        ///   }, # Required. Represents training tasks detailed result.
         ///   jobId: string, # Required. The job ID.
         ///   createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
         ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
@@ -5299,19 +5304,6 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///       }, # Optional. An object containing more specific information than the current object about the error.
         ///     }
         ///   ], # Optional. The errors encountered while executing the job.
-        ///   result: {
-        ///     modelLabel: string, # Required. Represents trained model label.
-        ///     trainingConfigVersion: string, # Required. Represents training config version.
-        ///     trainingMode: &quot;advanced&quot; | &quot;standard&quot;, # Optional. Represents the mode of the training operation.
-        ///     trainingStatus: {
-        ///       percentComplete: number, # Required. Represents progress percentage.
-        ///       startDateTime: string (ISO 8601 Format), # Optional. Represents the start date time.
-        ///       endDateTime: string (ISO 8601 Format), # Optional. Represents the end date time.
-        ///       status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Represents the status of the sub-operation.
-        ///     }, # Required. Represents the model training status.
-        ///     evaluationStatus: SubTrainingJobState, # Optional. Represents model evaluation status.
-        ///     estimatedEndDateTime: string (ISO 8601 Format), # Optional. Represents the estimated end date time for training and evaluation.
-        ///   }, # Required. Represents training tasks detailed result.
         /// }
         /// </code>
         /// 
@@ -5355,6 +5347,18 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// 
         /// BinaryData data = operation.WaitForCompletion();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingMode").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("percentComplete").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("startDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("endDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("percentComplete").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("startDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("endDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("result").GetProperty("estimatedEndDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
@@ -5376,18 +5380,6 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("message").ToString());
         /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingMode").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("percentComplete").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("startDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("endDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("percentComplete").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("startDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("endDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("result").GetProperty("estimatedEndDateTime").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -5397,6 +5389,19 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// 
         /// Schema for <c>TrainingJobState</c>:
         /// <code>{
+        ///   result: {
+        ///     modelLabel: string, # Required. Represents trained model label.
+        ///     trainingConfigVersion: string, # Required. Represents training config version.
+        ///     trainingMode: &quot;advanced&quot; | &quot;standard&quot;, # Optional. Represents the mode of the training operation.
+        ///     trainingStatus: {
+        ///       percentComplete: number, # Required. Represents progress percentage.
+        ///       startDateTime: string (ISO 8601 Format), # Optional. Represents the start date time.
+        ///       endDateTime: string (ISO 8601 Format), # Optional. Represents the end date time.
+        ///       status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Represents the status of the sub-operation.
+        ///     }, # Required. Represents the model training status.
+        ///     evaluationStatus: SubTrainingJobState, # Optional. Represents model evaluation status.
+        ///     estimatedEndDateTime: string (ISO 8601 Format), # Optional. Represents the estimated end date time for training and evaluation.
+        ///   }, # Required. Represents training tasks detailed result.
         ///   jobId: string, # Required. The job ID.
         ///   createdDateTime: string (ISO 8601 Format), # Required. The creation date time of the job.
         ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required. The last date time the job was updated.
@@ -5423,19 +5428,6 @@ namespace Azure.AI.Language.Conversations.Authoring
         ///       }, # Optional. An object containing more specific information than the current object about the error.
         ///     }
         ///   ], # Optional. The errors encountered while executing the job.
-        ///   result: {
-        ///     modelLabel: string, # Required. Represents trained model label.
-        ///     trainingConfigVersion: string, # Required. Represents training config version.
-        ///     trainingMode: &quot;advanced&quot; | &quot;standard&quot;, # Optional. Represents the mode of the training operation.
-        ///     trainingStatus: {
-        ///       percentComplete: number, # Required. Represents progress percentage.
-        ///       startDateTime: string (ISO 8601 Format), # Optional. Represents the start date time.
-        ///       endDateTime: string (ISO 8601 Format), # Optional. Represents the end date time.
-        ///       status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Represents the status of the sub-operation.
-        ///     }, # Required. Represents the model training status.
-        ///     evaluationStatus: SubTrainingJobState, # Optional. Represents model evaluation status.
-        ///     estimatedEndDateTime: string (ISO 8601 Format), # Optional. Represents the estimated end date time for training and evaluation.
-        ///   }, # Required. Represents training tasks detailed result.
         /// }
         /// </code>
         /// 
