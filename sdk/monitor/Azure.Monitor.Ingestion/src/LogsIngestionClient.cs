@@ -114,9 +114,9 @@ namespace Azure.Monitor.Ingestion
                 if ((stream.Length + memory.Length + 1) >= _singleUploadThreshold) // if adding this entry makes stream > 1 Mb send current stream now
                 {
                     WriteMemory(stream, BinaryData.FromString("]").ToMemory());
-                    stream.Position = 0;
+                    stream.Position = 0; // set Position to 0 to return everything from beginning of stream
                     yield return (BinaryData.FromStream(stream));
-                    stream = new MemoryStream(_singleUploadThreshold);
+                    stream = new MemoryStream(_singleUploadThreshold); // reset stream
                 }
                 else
                 {
