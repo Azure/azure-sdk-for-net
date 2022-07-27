@@ -246,10 +246,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new FieldsClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     farmId = "<FieldFarmId>",
-        ///     status = "<FieldStatus>",
-        ///     name = "<FieldName>",
-        ///     description = "<FieldDescription>",
+        ///     farmId = "<farmId>",
+        ///     status = "<status>",
+        ///     name = "<name>",
+        ///     description = "<description>",
         ///     properties = new {
         ///         key = new {},
         ///     },
@@ -369,10 +369,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new FieldsClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     farmId = "<FieldFarmId>",
-        ///     status = "<FieldStatus>",
-        ///     name = "<FieldName>",
-        ///     description = "<FieldDescription>",
+        ///     farmId = "<farmId>",
+        ///     status = "<status>",
+        ///     name = "<name>",
+        ///     description = "<description>",
         ///     properties = new {
         ///         key = new {},
         ///     },
@@ -1545,6 +1545,7 @@ namespace Azure.Verticals.AgriFood.Farming
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1558,6 +1559,7 @@ namespace Azure.Verticals.AgriFood.Farming
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;

@@ -78,10 +78,10 @@ namespace Azure.Analytics.Purview.Share
         /// Response response = await client.GetSentShareAsync("<sentShareName>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("shareKind").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("shareKind").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -93,10 +93,6 @@ namespace Azure.Analytics.Purview.Share
         /// 
         /// <details><summary>InPlaceSentShare</summary>Schema for <c>InPlaceSentShare</c>:
         /// <code>{
-        ///   shareKind: InPlace, # Required. Defines the supported types for share.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
         ///   properties: {
         ///     collection: {
         ///       referenceName: string, # Required. Gets or sets the reference name.
@@ -109,6 +105,10 @@ namespace Azure.Analytics.Purview.Share
         ///     senderName: string, # Optional. Name of the sender who created the sent share.
         ///     senderTenantName: string, # Optional. Tenant name of the sender who created the sent share.
         ///   }, # Required. Properties of in place sent share.
+        ///   shareKind: InPlace, # Required. Defines the supported types for share.
+        ///   id: string, # Optional. The resource id of the resource.
+        ///   name: string, # Optional. Name of the resource.
+        ///   type: string, # Optional. Type of the resource.
         /// }
         /// </code>
         /// </details>
@@ -148,10 +148,10 @@ namespace Azure.Analytics.Purview.Share
         /// Response response = client.GetSentShare("<sentShareName>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("shareKind").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("shareKind").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -163,10 +163,6 @@ namespace Azure.Analytics.Purview.Share
         /// 
         /// <details><summary>InPlaceSentShare</summary>Schema for <c>InPlaceSentShare</c>:
         /// <code>{
-        ///   shareKind: InPlace, # Required. Defines the supported types for share.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
         ///   properties: {
         ///     collection: {
         ///       referenceName: string, # Required. Gets or sets the reference name.
@@ -179,6 +175,10 @@ namespace Azure.Analytics.Purview.Share
         ///     senderName: string, # Optional. Name of the sender who created the sent share.
         ///     senderTenantName: string, # Optional. Tenant name of the sender who created the sent share.
         ///   }, # Required. Properties of in place sent share.
+        ///   shareKind: InPlace, # Required. Defines the supported types for share.
+        ///   id: string, # Optional. The resource id of the resource.
+        ///   name: string, # Optional. Name of the resource.
+        ///   type: string, # Optional. Type of the resource.
         /// }
         /// </code>
         /// </details>
@@ -217,18 +217,19 @@ namespace Azure.Analytics.Purview.Share
         /// var client = new SentSharesClient("<https://my-service.azure.com>", credential);
         /// 
         /// var data = new {
-        ///     shareKind = "InPlace",
         ///     properties = new {
         ///         collection = new {
-        ///             referenceName = "<CollectionReferenceName>",
-        ///             type = "<CollectionType>",
+        ///             referenceName = "<referenceName>",
+        ///             type = "<type>",
         ///         },
         ///     },
+        ///     shareKind = "InPlace",
         /// };
         /// 
         /// Response response = await client.CreateOrUpdateAsync("<sentShareName>", RequestContent.Create(data));
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("shareKind").ToString());
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
@@ -237,23 +238,23 @@ namespace Azure.Analytics.Purview.Share
         /// var client = new SentSharesClient("<https://my-service.azure.com>", credential);
         /// 
         /// var data = new {
-        ///     shareKind = "InPlace",
         ///     properties = new {
         ///         collection = new {
-        ///             referenceName = "<CollectionReferenceName>",
-        ///             type = "<CollectionType>",
+        ///             referenceName = "<referenceName>",
+        ///             type = "<type>",
         ///         },
-        ///         description = "<InPlaceSentSharePropertiesDescription>",
+        ///         description = "<description>",
         ///     },
+        ///     shareKind = "InPlace",
         /// };
         /// 
         /// Response response = await client.CreateOrUpdateAsync("<sentShareName>", RequestContent.Create(data));
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("shareKind").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("shareKind").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -265,10 +266,6 @@ namespace Azure.Analytics.Purview.Share
         /// 
         /// <details><summary>InPlaceSentShare</summary>Schema for <c>InPlaceSentShare</c>:
         /// <code>{
-        ///   shareKind: InPlace, # Required. Defines the supported types for share.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
         ///   properties: {
         ///     collection: {
         ///       referenceName: string, # Required. Gets or sets the reference name.
@@ -281,6 +278,10 @@ namespace Azure.Analytics.Purview.Share
         ///     senderName: string, # Optional. Name of the sender who created the sent share.
         ///     senderTenantName: string, # Optional. Tenant name of the sender who created the sent share.
         ///   }, # Required. Properties of in place sent share.
+        ///   shareKind: InPlace, # Required. Defines the supported types for share.
+        ///   id: string, # Optional. The resource id of the resource.
+        ///   name: string, # Optional. Name of the resource.
+        ///   type: string, # Optional. Type of the resource.
         /// }
         /// </code>
         /// </details>
@@ -289,10 +290,6 @@ namespace Azure.Analytics.Purview.Share
         /// 
         /// <details><summary>InPlaceSentShare</summary>Schema for <c>InPlaceSentShare</c>:
         /// <code>{
-        ///   shareKind: InPlace, # Required. Defines the supported types for share.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
         ///   properties: {
         ///     collection: {
         ///       referenceName: string, # Required. Gets or sets the reference name.
@@ -305,6 +302,10 @@ namespace Azure.Analytics.Purview.Share
         ///     senderName: string, # Optional. Name of the sender who created the sent share.
         ///     senderTenantName: string, # Optional. Tenant name of the sender who created the sent share.
         ///   }, # Required. Properties of in place sent share.
+        ///   shareKind: InPlace, # Required. Defines the supported types for share.
+        ///   id: string, # Optional. The resource id of the resource.
+        ///   name: string, # Optional. Name of the resource.
+        ///   type: string, # Optional. Type of the resource.
         /// }
         /// </code>
         /// </details>
@@ -344,18 +345,19 @@ namespace Azure.Analytics.Purview.Share
         /// var client = new SentSharesClient("<https://my-service.azure.com>", credential);
         /// 
         /// var data = new {
-        ///     shareKind = "InPlace",
         ///     properties = new {
         ///         collection = new {
-        ///             referenceName = "<CollectionReferenceName>",
-        ///             type = "<CollectionType>",
+        ///             referenceName = "<referenceName>",
+        ///             type = "<type>",
         ///         },
         ///     },
+        ///     shareKind = "InPlace",
         /// };
         /// 
         /// Response response = client.CreateOrUpdate("<sentShareName>", RequestContent.Create(data));
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("shareKind").ToString());
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
@@ -364,23 +366,23 @@ namespace Azure.Analytics.Purview.Share
         /// var client = new SentSharesClient("<https://my-service.azure.com>", credential);
         /// 
         /// var data = new {
-        ///     shareKind = "InPlace",
         ///     properties = new {
         ///         collection = new {
-        ///             referenceName = "<CollectionReferenceName>",
-        ///             type = "<CollectionType>",
+        ///             referenceName = "<referenceName>",
+        ///             type = "<type>",
         ///         },
-        ///         description = "<InPlaceSentSharePropertiesDescription>",
+        ///         description = "<description>",
         ///     },
+        ///     shareKind = "InPlace",
         /// };
         /// 
         /// Response response = client.CreateOrUpdate("<sentShareName>", RequestContent.Create(data));
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("shareKind").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("shareKind").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -392,10 +394,6 @@ namespace Azure.Analytics.Purview.Share
         /// 
         /// <details><summary>InPlaceSentShare</summary>Schema for <c>InPlaceSentShare</c>:
         /// <code>{
-        ///   shareKind: InPlace, # Required. Defines the supported types for share.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
         ///   properties: {
         ///     collection: {
         ///       referenceName: string, # Required. Gets or sets the reference name.
@@ -408,6 +406,10 @@ namespace Azure.Analytics.Purview.Share
         ///     senderName: string, # Optional. Name of the sender who created the sent share.
         ///     senderTenantName: string, # Optional. Tenant name of the sender who created the sent share.
         ///   }, # Required. Properties of in place sent share.
+        ///   shareKind: InPlace, # Required. Defines the supported types for share.
+        ///   id: string, # Optional. The resource id of the resource.
+        ///   name: string, # Optional. Name of the resource.
+        ///   type: string, # Optional. Type of the resource.
         /// }
         /// </code>
         /// </details>
@@ -416,10 +418,6 @@ namespace Azure.Analytics.Purview.Share
         /// 
         /// <details><summary>InPlaceSentShare</summary>Schema for <c>InPlaceSentShare</c>:
         /// <code>{
-        ///   shareKind: InPlace, # Required. Defines the supported types for share.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
         ///   properties: {
         ///     collection: {
         ///       referenceName: string, # Required. Gets or sets the reference name.
@@ -432,6 +430,10 @@ namespace Azure.Analytics.Purview.Share
         ///     senderName: string, # Optional. Name of the sender who created the sent share.
         ///     senderTenantName: string, # Optional. Tenant name of the sender who created the sent share.
         ///   }, # Required. Properties of in place sent share.
+        ///   shareKind: InPlace, # Required. Defines the supported types for share.
+        ///   id: string, # Optional. The resource id of the resource.
+        ///   name: string, # Optional. Name of the resource.
+        ///   type: string, # Optional. Type of the resource.
         /// }
         /// </code>
         /// </details>
@@ -472,6 +474,7 @@ namespace Azure.Analytics.Purview.Share
         /// await foreach (var data in client.GetSentSharesAsync())
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("shareKind").ToString());
         ///     Console.WriteLine(result.ToString());
         /// }
         /// ]]></code>
@@ -483,10 +486,10 @@ namespace Azure.Analytics.Purview.Share
         /// await foreach (var data in client.GetSentSharesAsync("<skipToken>", "<filter>", "<orderby>"))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("shareKind").ToString());
         ///     Console.WriteLine(result.GetProperty("id").ToString());
         ///     Console.WriteLine(result.GetProperty("name").ToString());
         ///     Console.WriteLine(result.GetProperty("type").ToString());
-        ///     Console.WriteLine(result.GetProperty("shareKind").ToString());
         /// }
         /// ]]></code>
         /// </example>
@@ -499,10 +502,10 @@ namespace Azure.Analytics.Purview.Share
         /// 
         /// Schema for <c>SentShareListValue</c>:
         /// <code>{
+        ///   shareKind: &quot;InPlace&quot;, # Required. Defines the supported types for share.
         ///   id: string, # Optional. The resource id of the resource.
         ///   name: string, # Optional. Name of the resource.
         ///   type: string, # Optional. Type of the resource.
-        ///   shareKind: &quot;InPlace&quot;, # Required. Defines the supported types for share.
         /// }
         /// </code>
         /// 
@@ -545,6 +548,7 @@ namespace Azure.Analytics.Purview.Share
         /// foreach (var data in client.GetSentShares())
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("shareKind").ToString());
         ///     Console.WriteLine(result.ToString());
         /// }
         /// ]]></code>
@@ -556,10 +560,10 @@ namespace Azure.Analytics.Purview.Share
         /// foreach (var data in client.GetSentShares("<skipToken>", "<filter>", "<orderby>"))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("shareKind").ToString());
         ///     Console.WriteLine(result.GetProperty("id").ToString());
         ///     Console.WriteLine(result.GetProperty("name").ToString());
         ///     Console.WriteLine(result.GetProperty("type").ToString());
-        ///     Console.WriteLine(result.GetProperty("shareKind").ToString());
         /// }
         /// ]]></code>
         /// </example>
@@ -572,10 +576,10 @@ namespace Azure.Analytics.Purview.Share
         /// 
         /// Schema for <c>SentShareListValue</c>:
         /// <code>{
+        ///   shareKind: &quot;InPlace&quot;, # Required. Defines the supported types for share.
         ///   id: string, # Optional. The resource id of the resource.
         ///   name: string, # Optional. Name of the resource.
         ///   type: string, # Optional. Type of the resource.
-        ///   shareKind: &quot;InPlace&quot;, # Required. Defines the supported types for share.
         /// }
         /// </code>
         /// 
@@ -761,6 +765,7 @@ namespace Azure.Analytics.Purview.Share
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(_endpoint, false);
             uri.AppendRawNextLink(nextLink, false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;

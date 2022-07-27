@@ -501,6 +501,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
+            uri.AppendQuery("api-version", "2020-12-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;

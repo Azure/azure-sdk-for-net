@@ -79,10 +79,10 @@ namespace Azure.Analytics.Purview.Share
         /// Response response = await client.GetAcceptedSentShareAsync("<sentShareName>", "<acceptedSentShareName>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("shareKind").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("shareKind").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -94,10 +94,6 @@ namespace Azure.Analytics.Purview.Share
         /// 
         /// <details><summary>InPlaceAcceptedSentShare</summary>Schema for <c>InPlaceAcceptedSentShare</c>:
         /// <code>{
-        ///   shareKind: InPlace, # Required. Defines the supported types for share.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional. created at
         ///     expirationDate: string (ISO 8601 Format), # Optional. Expiration date of the received share in UTC format
@@ -111,6 +107,10 @@ namespace Azure.Analytics.Purview.Share
         ///     senderTenantName: string, # Optional. Tenant name of the sender who created the sent share invitation
         ///     sharedAt: string (ISO 8601 Format), # Optional. Shared at
         ///   }, # Required. Properties of in place accepted sent share.
+        ///   shareKind: InPlace, # Required. Defines the supported types for share.
+        ///   id: string, # Optional. The resource id of the resource.
+        ///   name: string, # Optional. Name of the resource.
+        ///   type: string, # Optional. Type of the resource.
         /// }
         /// </code>
         /// </details>
@@ -152,10 +152,10 @@ namespace Azure.Analytics.Purview.Share
         /// Response response = client.GetAcceptedSentShare("<sentShareName>", "<acceptedSentShareName>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("shareKind").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("shareKind").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -167,10 +167,6 @@ namespace Azure.Analytics.Purview.Share
         /// 
         /// <details><summary>InPlaceAcceptedSentShare</summary>Schema for <c>InPlaceAcceptedSentShare</c>:
         /// <code>{
-        ///   shareKind: InPlace, # Required. Defines the supported types for share.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional. created at
         ///     expirationDate: string (ISO 8601 Format), # Optional. Expiration date of the received share in UTC format
@@ -184,6 +180,10 @@ namespace Azure.Analytics.Purview.Share
         ///     senderTenantName: string, # Optional. Tenant name of the sender who created the sent share invitation
         ///     sharedAt: string (ISO 8601 Format), # Optional. Shared at
         ///   }, # Required. Properties of in place accepted sent share.
+        ///   shareKind: InPlace, # Required. Defines the supported types for share.
+        ///   id: string, # Optional. The resource id of the resource.
+        ///   name: string, # Optional. Name of the resource.
+        ///   type: string, # Optional. Type of the resource.
         /// }
         /// </code>
         /// </details>
@@ -225,6 +225,7 @@ namespace Azure.Analytics.Purview.Share
         /// await foreach (var data in client.GetAcceptedSentSharesAsync("<sentShareName>"))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("shareKind").ToString());
         ///     Console.WriteLine(result.ToString());
         /// }
         /// ]]></code>
@@ -236,10 +237,10 @@ namespace Azure.Analytics.Purview.Share
         /// await foreach (var data in client.GetAcceptedSentSharesAsync("<sentShareName>", "<skipToken>"))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("shareKind").ToString());
         ///     Console.WriteLine(result.GetProperty("id").ToString());
         ///     Console.WriteLine(result.GetProperty("name").ToString());
         ///     Console.WriteLine(result.GetProperty("type").ToString());
-        ///     Console.WriteLine(result.GetProperty("shareKind").ToString());
         /// }
         /// ]]></code>
         /// </example>
@@ -252,10 +253,10 @@ namespace Azure.Analytics.Purview.Share
         /// 
         /// Schema for <c>AcceptedSentShareListValue</c>:
         /// <code>{
+        ///   shareKind: &quot;InPlace&quot;, # Required. Defines the supported types for share.
         ///   id: string, # Optional. The resource id of the resource.
         ///   name: string, # Optional. Name of the resource.
         ///   type: string, # Optional. Type of the resource.
-        ///   shareKind: &quot;InPlace&quot;, # Required. Defines the supported types for share.
         /// }
         /// </code>
         /// 
@@ -301,6 +302,7 @@ namespace Azure.Analytics.Purview.Share
         /// foreach (var data in client.GetAcceptedSentShares("<sentShareName>"))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("shareKind").ToString());
         ///     Console.WriteLine(result.ToString());
         /// }
         /// ]]></code>
@@ -312,10 +314,10 @@ namespace Azure.Analytics.Purview.Share
         /// foreach (var data in client.GetAcceptedSentShares("<sentShareName>", "<skipToken>"))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("shareKind").ToString());
         ///     Console.WriteLine(result.GetProperty("id").ToString());
         ///     Console.WriteLine(result.GetProperty("name").ToString());
         ///     Console.WriteLine(result.GetProperty("type").ToString());
-        ///     Console.WriteLine(result.GetProperty("shareKind").ToString());
         /// }
         /// ]]></code>
         /// </example>
@@ -328,10 +330,10 @@ namespace Azure.Analytics.Purview.Share
         /// 
         /// Schema for <c>AcceptedSentShareListValue</c>:
         /// <code>{
+        ///   shareKind: &quot;InPlace&quot;, # Required. Defines the supported types for share.
         ///   id: string, # Optional. The resource id of the resource.
         ///   name: string, # Optional. Name of the resource.
         ///   type: string, # Optional. Type of the resource.
-        ///   shareKind: &quot;InPlace&quot;, # Required. Defines the supported types for share.
         /// }
         /// </code>
         /// 
@@ -378,14 +380,15 @@ namespace Azure.Analytics.Purview.Share
         /// var client = new AcceptedSentSharesClient("<https://my-service.azure.com>", credential);
         /// 
         /// var data = new {
-        ///     shareKind = "InPlace",
         ///     properties = new {},
+        ///     shareKind = "InPlace",
         /// };
         /// 
         /// var operation = await client.ReinstateAsync(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", RequestContent.Create(data));
         /// 
         /// BinaryData data = await operation.WaitForCompletionAsync();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        /// Console.WriteLine(result.GetProperty("shareKind").ToString());
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call ReinstateAsync with all parameters and request content, and how to parse the result.
@@ -394,20 +397,20 @@ namespace Azure.Analytics.Purview.Share
         /// var client = new AcceptedSentSharesClient("<https://my-service.azure.com>", credential);
         /// 
         /// var data = new {
-        ///     shareKind = "InPlace",
         ///     properties = new {
-        ///         expirationDate = "<2022-05-10T14:57:31.2311892-04:00>",
+        ///         expirationDate = "2022-05-10T18:57:31.2311892Z",
         ///     },
+        ///     shareKind = "InPlace",
         /// };
         /// 
         /// var operation = await client.ReinstateAsync(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", RequestContent.Create(data), "<repeatabilityRequestId>");
         /// 
         /// BinaryData data = await operation.WaitForCompletionAsync();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        /// Console.WriteLine(result.GetProperty("shareKind").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("shareKind").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -419,10 +422,6 @@ namespace Azure.Analytics.Purview.Share
         /// 
         /// <details><summary>InPlaceAcceptedSentShare</summary>Schema for <c>InPlaceAcceptedSentShare</c>:
         /// <code>{
-        ///   shareKind: InPlace, # Required. Defines the supported types for share.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional. created at
         ///     expirationDate: string (ISO 8601 Format), # Optional. Expiration date of the received share in UTC format
@@ -436,6 +435,10 @@ namespace Azure.Analytics.Purview.Share
         ///     senderTenantName: string, # Optional. Tenant name of the sender who created the sent share invitation
         ///     sharedAt: string (ISO 8601 Format), # Optional. Shared at
         ///   }, # Required. Properties of in place accepted sent share.
+        ///   shareKind: InPlace, # Required. Defines the supported types for share.
+        ///   id: string, # Optional. The resource id of the resource.
+        ///   name: string, # Optional. Name of the resource.
+        ///   type: string, # Optional. Type of the resource.
         /// }
         /// </code>
         /// </details>
@@ -444,10 +447,6 @@ namespace Azure.Analytics.Purview.Share
         /// 
         /// <details><summary>InPlaceAcceptedSentShare</summary>Schema for <c>InPlaceAcceptedSentShare</c>:
         /// <code>{
-        ///   shareKind: InPlace, # Required. Defines the supported types for share.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional. created at
         ///     expirationDate: string (ISO 8601 Format), # Optional. Expiration date of the received share in UTC format
@@ -461,6 +460,10 @@ namespace Azure.Analytics.Purview.Share
         ///     senderTenantName: string, # Optional. Tenant name of the sender who created the sent share invitation
         ///     sharedAt: string (ISO 8601 Format), # Optional. Shared at
         ///   }, # Required. Properties of in place accepted sent share.
+        ///   shareKind: InPlace, # Required. Defines the supported types for share.
+        ///   id: string, # Optional. The resource id of the resource.
+        ///   name: string, # Optional. Name of the resource.
+        ///   type: string, # Optional. Type of the resource.
         /// }
         /// </code>
         /// </details>
@@ -504,14 +507,15 @@ namespace Azure.Analytics.Purview.Share
         /// var client = new AcceptedSentSharesClient("<https://my-service.azure.com>", credential);
         /// 
         /// var data = new {
-        ///     shareKind = "InPlace",
         ///     properties = new {},
+        ///     shareKind = "InPlace",
         /// };
         /// 
         /// var operation = client.Reinstate(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", RequestContent.Create(data));
         /// 
         /// BinaryData data = operation.WaitForCompletion();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        /// Console.WriteLine(result.GetProperty("shareKind").ToString());
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call Reinstate with all parameters and request content, and how to parse the result.
@@ -520,20 +524,20 @@ namespace Azure.Analytics.Purview.Share
         /// var client = new AcceptedSentSharesClient("<https://my-service.azure.com>", credential);
         /// 
         /// var data = new {
-        ///     shareKind = "InPlace",
         ///     properties = new {
-        ///         expirationDate = "<2022-05-10T14:57:31.2311892-04:00>",
+        ///         expirationDate = "2022-05-10T18:57:31.2311892Z",
         ///     },
+        ///     shareKind = "InPlace",
         /// };
         /// 
         /// var operation = client.Reinstate(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", RequestContent.Create(data), "<repeatabilityRequestId>");
         /// 
         /// BinaryData data = operation.WaitForCompletion();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        /// Console.WriteLine(result.GetProperty("shareKind").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("shareKind").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -545,10 +549,6 @@ namespace Azure.Analytics.Purview.Share
         /// 
         /// <details><summary>InPlaceAcceptedSentShare</summary>Schema for <c>InPlaceAcceptedSentShare</c>:
         /// <code>{
-        ///   shareKind: InPlace, # Required. Defines the supported types for share.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional. created at
         ///     expirationDate: string (ISO 8601 Format), # Optional. Expiration date of the received share in UTC format
@@ -562,6 +562,10 @@ namespace Azure.Analytics.Purview.Share
         ///     senderTenantName: string, # Optional. Tenant name of the sender who created the sent share invitation
         ///     sharedAt: string (ISO 8601 Format), # Optional. Shared at
         ///   }, # Required. Properties of in place accepted sent share.
+        ///   shareKind: InPlace, # Required. Defines the supported types for share.
+        ///   id: string, # Optional. The resource id of the resource.
+        ///   name: string, # Optional. Name of the resource.
+        ///   type: string, # Optional. Type of the resource.
         /// }
         /// </code>
         /// </details>
@@ -570,10 +574,6 @@ namespace Azure.Analytics.Purview.Share
         /// 
         /// <details><summary>InPlaceAcceptedSentShare</summary>Schema for <c>InPlaceAcceptedSentShare</c>:
         /// <code>{
-        ///   shareKind: InPlace, # Required. Defines the supported types for share.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional. created at
         ///     expirationDate: string (ISO 8601 Format), # Optional. Expiration date of the received share in UTC format
@@ -587,6 +587,10 @@ namespace Azure.Analytics.Purview.Share
         ///     senderTenantName: string, # Optional. Tenant name of the sender who created the sent share invitation
         ///     sharedAt: string (ISO 8601 Format), # Optional. Shared at
         ///   }, # Required. Properties of in place accepted sent share.
+        ///   shareKind: InPlace, # Required. Defines the supported types for share.
+        ///   id: string, # Optional. The resource id of the resource.
+        ///   name: string, # Optional. Name of the resource.
+        ///   type: string, # Optional. Type of the resource.
         /// }
         /// </code>
         /// </details>
@@ -632,6 +636,7 @@ namespace Azure.Analytics.Purview.Share
         /// 
         /// BinaryData data = await operation.WaitForCompletionAsync();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        /// Console.WriteLine(result.GetProperty("shareKind").ToString());
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call RevokeAsync with all parameters, and how to parse the result.
@@ -643,10 +648,10 @@ namespace Azure.Analytics.Purview.Share
         /// 
         /// BinaryData data = await operation.WaitForCompletionAsync();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        /// Console.WriteLine(result.GetProperty("shareKind").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("shareKind").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -658,10 +663,6 @@ namespace Azure.Analytics.Purview.Share
         /// 
         /// <details><summary>InPlaceAcceptedSentShare</summary>Schema for <c>InPlaceAcceptedSentShare</c>:
         /// <code>{
-        ///   shareKind: InPlace, # Required. Defines the supported types for share.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional. created at
         ///     expirationDate: string (ISO 8601 Format), # Optional. Expiration date of the received share in UTC format
@@ -675,6 +676,10 @@ namespace Azure.Analytics.Purview.Share
         ///     senderTenantName: string, # Optional. Tenant name of the sender who created the sent share invitation
         ///     sharedAt: string (ISO 8601 Format), # Optional. Shared at
         ///   }, # Required. Properties of in place accepted sent share.
+        ///   shareKind: InPlace, # Required. Defines the supported types for share.
+        ///   id: string, # Optional. The resource id of the resource.
+        ///   name: string, # Optional. Name of the resource.
+        ///   type: string, # Optional. Type of the resource.
         /// }
         /// </code>
         /// </details>
@@ -719,6 +724,7 @@ namespace Azure.Analytics.Purview.Share
         /// 
         /// BinaryData data = operation.WaitForCompletion();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        /// Console.WriteLine(result.GetProperty("shareKind").ToString());
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call Revoke with all parameters, and how to parse the result.
@@ -730,10 +736,10 @@ namespace Azure.Analytics.Purview.Share
         /// 
         /// BinaryData data = operation.WaitForCompletion();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        /// Console.WriteLine(result.GetProperty("shareKind").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("shareKind").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -745,10 +751,6 @@ namespace Azure.Analytics.Purview.Share
         /// 
         /// <details><summary>InPlaceAcceptedSentShare</summary>Schema for <c>InPlaceAcceptedSentShare</c>:
         /// <code>{
-        ///   shareKind: InPlace, # Required. Defines the supported types for share.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional. created at
         ///     expirationDate: string (ISO 8601 Format), # Optional. Expiration date of the received share in UTC format
@@ -762,6 +764,10 @@ namespace Azure.Analytics.Purview.Share
         ///     senderTenantName: string, # Optional. Tenant name of the sender who created the sent share invitation
         ///     sharedAt: string (ISO 8601 Format), # Optional. Shared at
         ///   }, # Required. Properties of in place accepted sent share.
+        ///   shareKind: InPlace, # Required. Defines the supported types for share.
+        ///   id: string, # Optional. The resource id of the resource.
+        ///   name: string, # Optional. Name of the resource.
+        ///   type: string, # Optional. Type of the resource.
         /// }
         /// </code>
         /// </details>
@@ -804,14 +810,15 @@ namespace Azure.Analytics.Purview.Share
         /// var client = new AcceptedSentSharesClient("<https://my-service.azure.com>", credential);
         /// 
         /// var data = new {
-        ///     shareKind = "InPlace",
         ///     properties = new {},
+        ///     shareKind = "InPlace",
         /// };
         /// 
         /// var operation = await client.UpdateExpirationAsync(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", RequestContent.Create(data));
         /// 
         /// BinaryData data = await operation.WaitForCompletionAsync();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        /// Console.WriteLine(result.GetProperty("shareKind").ToString());
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call UpdateExpirationAsync with all parameters and request content, and how to parse the result.
@@ -820,20 +827,20 @@ namespace Azure.Analytics.Purview.Share
         /// var client = new AcceptedSentSharesClient("<https://my-service.azure.com>", credential);
         /// 
         /// var data = new {
-        ///     shareKind = "InPlace",
         ///     properties = new {
-        ///         expirationDate = "<2022-05-10T14:57:31.2311892-04:00>",
+        ///         expirationDate = "2022-05-10T18:57:31.2311892Z",
         ///     },
+        ///     shareKind = "InPlace",
         /// };
         /// 
         /// var operation = await client.UpdateExpirationAsync(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", RequestContent.Create(data), "<repeatabilityRequestId>");
         /// 
         /// BinaryData data = await operation.WaitForCompletionAsync();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        /// Console.WriteLine(result.GetProperty("shareKind").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("shareKind").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -845,10 +852,6 @@ namespace Azure.Analytics.Purview.Share
         /// 
         /// <details><summary>InPlaceAcceptedSentShare</summary>Schema for <c>InPlaceAcceptedSentShare</c>:
         /// <code>{
-        ///   shareKind: InPlace, # Required. Defines the supported types for share.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional. created at
         ///     expirationDate: string (ISO 8601 Format), # Optional. Expiration date of the received share in UTC format
@@ -862,6 +865,10 @@ namespace Azure.Analytics.Purview.Share
         ///     senderTenantName: string, # Optional. Tenant name of the sender who created the sent share invitation
         ///     sharedAt: string (ISO 8601 Format), # Optional. Shared at
         ///   }, # Required. Properties of in place accepted sent share.
+        ///   shareKind: InPlace, # Required. Defines the supported types for share.
+        ///   id: string, # Optional. The resource id of the resource.
+        ///   name: string, # Optional. Name of the resource.
+        ///   type: string, # Optional. Type of the resource.
         /// }
         /// </code>
         /// </details>
@@ -870,10 +877,6 @@ namespace Azure.Analytics.Purview.Share
         /// 
         /// <details><summary>InPlaceAcceptedSentShare</summary>Schema for <c>InPlaceAcceptedSentShare</c>:
         /// <code>{
-        ///   shareKind: InPlace, # Required. Defines the supported types for share.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional. created at
         ///     expirationDate: string (ISO 8601 Format), # Optional. Expiration date of the received share in UTC format
@@ -887,6 +890,10 @@ namespace Azure.Analytics.Purview.Share
         ///     senderTenantName: string, # Optional. Tenant name of the sender who created the sent share invitation
         ///     sharedAt: string (ISO 8601 Format), # Optional. Shared at
         ///   }, # Required. Properties of in place accepted sent share.
+        ///   shareKind: InPlace, # Required. Defines the supported types for share.
+        ///   id: string, # Optional. The resource id of the resource.
+        ///   name: string, # Optional. Name of the resource.
+        ///   type: string, # Optional. Type of the resource.
         /// }
         /// </code>
         /// </details>
@@ -930,14 +937,15 @@ namespace Azure.Analytics.Purview.Share
         /// var client = new AcceptedSentSharesClient("<https://my-service.azure.com>", credential);
         /// 
         /// var data = new {
-        ///     shareKind = "InPlace",
         ///     properties = new {},
+        ///     shareKind = "InPlace",
         /// };
         /// 
         /// var operation = client.UpdateExpiration(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", RequestContent.Create(data));
         /// 
         /// BinaryData data = operation.WaitForCompletion();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        /// Console.WriteLine(result.GetProperty("shareKind").ToString());
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call UpdateExpiration with all parameters and request content, and how to parse the result.
@@ -946,20 +954,20 @@ namespace Azure.Analytics.Purview.Share
         /// var client = new AcceptedSentSharesClient("<https://my-service.azure.com>", credential);
         /// 
         /// var data = new {
-        ///     shareKind = "InPlace",
         ///     properties = new {
-        ///         expirationDate = "<2022-05-10T14:57:31.2311892-04:00>",
+        ///         expirationDate = "2022-05-10T18:57:31.2311892Z",
         ///     },
+        ///     shareKind = "InPlace",
         /// };
         /// 
         /// var operation = client.UpdateExpiration(WaitUntil.Completed, "<sentShareName>", "<acceptedSentShareName>", RequestContent.Create(data), "<repeatabilityRequestId>");
         /// 
         /// BinaryData data = operation.WaitForCompletion();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        /// Console.WriteLine(result.GetProperty("shareKind").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("shareKind").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -971,10 +979,6 @@ namespace Azure.Analytics.Purview.Share
         /// 
         /// <details><summary>InPlaceAcceptedSentShare</summary>Schema for <c>InPlaceAcceptedSentShare</c>:
         /// <code>{
-        ///   shareKind: InPlace, # Required. Defines the supported types for share.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional. created at
         ///     expirationDate: string (ISO 8601 Format), # Optional. Expiration date of the received share in UTC format
@@ -988,6 +992,10 @@ namespace Azure.Analytics.Purview.Share
         ///     senderTenantName: string, # Optional. Tenant name of the sender who created the sent share invitation
         ///     sharedAt: string (ISO 8601 Format), # Optional. Shared at
         ///   }, # Required. Properties of in place accepted sent share.
+        ///   shareKind: InPlace, # Required. Defines the supported types for share.
+        ///   id: string, # Optional. The resource id of the resource.
+        ///   name: string, # Optional. Name of the resource.
+        ///   type: string, # Optional. Type of the resource.
         /// }
         /// </code>
         /// </details>
@@ -996,10 +1004,6 @@ namespace Azure.Analytics.Purview.Share
         /// 
         /// <details><summary>InPlaceAcceptedSentShare</summary>Schema for <c>InPlaceAcceptedSentShare</c>:
         /// <code>{
-        ///   shareKind: InPlace, # Required. Defines the supported types for share.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional. created at
         ///     expirationDate: string (ISO 8601 Format), # Optional. Expiration date of the received share in UTC format
@@ -1013,6 +1017,10 @@ namespace Azure.Analytics.Purview.Share
         ///     senderTenantName: string, # Optional. Tenant name of the sender who created the sent share invitation
         ///     sharedAt: string (ISO 8601 Format), # Optional. Shared at
         ///   }, # Required. Properties of in place accepted sent share.
+        ///   shareKind: InPlace, # Required. Defines the supported types for share.
+        ///   id: string, # Optional. The resource id of the resource.
+        ///   name: string, # Optional. Name of the resource.
+        ///   type: string, # Optional. Type of the resource.
         /// }
         /// </code>
         /// </details>
@@ -1153,6 +1161,7 @@ namespace Azure.Analytics.Purview.Share
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(_endpoint, false);
             uri.AppendRawNextLink(nextLink, false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
