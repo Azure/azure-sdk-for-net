@@ -56,6 +56,7 @@ rename-rules:
   AAD: Aad
   GET: Get
   PUT: Put
+  RecordType: DnsRecordType
 
 override-operation-name:
   RecordSets_ListByDnsZone: GetRecordSets
