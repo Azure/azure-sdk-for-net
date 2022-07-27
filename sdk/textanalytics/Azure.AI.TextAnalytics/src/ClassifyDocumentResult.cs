@@ -7,21 +7,20 @@ using System.Collections.Generic;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// The result of the Multi Label Classification operation on a document,
-    /// containing the collection of <see cref="ClassificationCategory"/> objects
-    /// predicted for that document.
+    /// The result of a <see cref="SingleLabelClassifyAction"/> or <see cref="MultiLabelClassifyAction"/> operation on a document,
+    /// containing the collection of <see cref="ClassificationCategory"/> objects predicted for that document.
     /// </summary>
-    public class LabelClassifyResult : TextAnalyticsResult
+    public class ClassifyDocumentResult : TextAnalyticsResult
     {
         private readonly ClassificationCategoryCollection _classifications;
-        internal LabelClassifyResult(string id, TextDocumentStatistics statistics, ClassificationCategoryCollection classifications, IReadOnlyCollection<TextAnalyticsWarning> warnings)
+        internal ClassifyDocumentResult(string id, TextDocumentStatistics statistics, ClassificationCategoryCollection classifications, IReadOnlyCollection<TextAnalyticsWarning> warnings)
             : base(id, statistics)
         {
             _classifications = classifications;
             Warnings = warnings;
         }
 
-        internal LabelClassifyResult(string id, TextAnalyticsError error) : base(id, error) { }
+        internal ClassifyDocumentResult(string id, TextAnalyticsError error) : base(id, error) { }
 
         /// <summary>
         /// Warnings encountered while processing the document.
