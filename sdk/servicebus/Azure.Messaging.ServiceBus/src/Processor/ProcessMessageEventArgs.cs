@@ -32,6 +32,11 @@ namespace Azure.Messaging.ServiceBus
         public string EntityPath => _receiver.EntityPath;
 
         /// <summary>
+        /// The identifier of the Service Bus entity that the message was received from.
+        /// </summary>
+        public string Identifier => _receiver.Identifier;
+
+        /// <summary>
         /// The fully qualified Service Bus namespace that the message was received from.
         /// </summary>
         public string FullyQualifiedNamespace => _receiver.FullyQualifiedNamespace;
