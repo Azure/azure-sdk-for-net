@@ -229,10 +229,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new CropsClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     phenotype = "<CropPhenotype>",
-        ///     status = "<CropStatus>",
-        ///     name = "<CropName>",
-        ///     description = "<CropDescription>",
+        ///     phenotype = "<phenotype>",
+        ///     status = "<status>",
+        ///     name = "<name>",
+        ///     description = "<description>",
         ///     properties = new {
         ///         key = new {},
         ///     },
@@ -341,10 +341,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new CropsClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     phenotype = "<CropPhenotype>",
-        ///     status = "<CropStatus>",
-        ///     name = "<CropName>",
-        ///     description = "<CropDescription>",
+        ///     phenotype = "<phenotype>",
+        ///     status = "<status>",
+        ///     name = "<name>",
+        ///     description = "<description>",
         ///     properties = new {
         ///         key = new {},
         ///     },
@@ -824,6 +824,7 @@ namespace Azure.Verticals.AgriFood.Farming
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;

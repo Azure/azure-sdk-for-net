@@ -78,10 +78,10 @@ namespace Azure.Analytics.Purview.Share
         /// Response response = await client.GetReceivedInvitationAsync("<receivedInvitationName>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("invitationKind").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("invitationKind").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -94,10 +94,6 @@ namespace Azure.Analytics.Purview.Share
         /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
         /// <details><summary>ApplicationReceivedInvitation</summary>Schema for <c>ApplicationReceivedInvitation</c>:
         /// <code>{
-        ///   invitationKind: Application, # Required. The types of invitations.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
         ///   properties: {
         ///     description: string, # Optional. Description shared when the invitation was created
         ///     expirationDate: string (ISO 8601 Format), # Optional. The expiration date for the received share created by accepting the invitation.
@@ -116,15 +112,15 @@ namespace Azure.Analytics.Purview.Share
         ///     targetActiveDirectoryId: string, # Required. The target azure active directory id the invitation is sent to.
         ///     targetObjectId: string, # Required. The target object id in the azure active directory the invitation is sent to.
         ///   }, # Required. Properties for a received invitation of kind application.
+        ///   invitationKind: Application, # Required. The types of invitations.
+        ///   id: string, # Optional. The resource id of the resource.
+        ///   name: string, # Optional. Name of the resource.
+        ///   type: string, # Optional. Type of the resource.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>~+ 1 more JSON objects</summary><details><summary>UserReceivedInvitation</summary>Schema for <c>UserReceivedInvitation</c>:
         /// <code>{
-        ///   invitationKind: User, # Required. The types of invitations.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
         ///   properties: {
         ///     description: string, # Optional. Description shared when the invitation was created
         ///     expirationDate: string (ISO 8601 Format), # Optional. The expiration date for the received share created by accepting the invitation.
@@ -142,6 +138,10 @@ namespace Azure.Analytics.Purview.Share
         ///     shareKind: &quot;InPlace&quot;, # Optional. Defines the supported types for share.
         ///     targetEmail: string, # Required. The receiver email for the invitation is being sent.
         ///   }, # Required. Properties for a received invitation of kind user.
+        ///   invitationKind: User, # Required. The types of invitations.
+        ///   id: string, # Optional. The resource id of the resource.
+        ///   name: string, # Optional. Name of the resource.
+        ///   type: string, # Optional. Type of the resource.
         /// }
         /// </code>
         /// </details>
@@ -182,10 +182,10 @@ namespace Azure.Analytics.Purview.Share
         /// Response response = client.GetReceivedInvitation("<receivedInvitationName>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("invitationKind").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("invitationKind").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -198,10 +198,6 @@ namespace Azure.Analytics.Purview.Share
         /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
         /// <details><summary>ApplicationReceivedInvitation</summary>Schema for <c>ApplicationReceivedInvitation</c>:
         /// <code>{
-        ///   invitationKind: Application, # Required. The types of invitations.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
         ///   properties: {
         ///     description: string, # Optional. Description shared when the invitation was created
         ///     expirationDate: string (ISO 8601 Format), # Optional. The expiration date for the received share created by accepting the invitation.
@@ -220,15 +216,15 @@ namespace Azure.Analytics.Purview.Share
         ///     targetActiveDirectoryId: string, # Required. The target azure active directory id the invitation is sent to.
         ///     targetObjectId: string, # Required. The target object id in the azure active directory the invitation is sent to.
         ///   }, # Required. Properties for a received invitation of kind application.
+        ///   invitationKind: Application, # Required. The types of invitations.
+        ///   id: string, # Optional. The resource id of the resource.
+        ///   name: string, # Optional. Name of the resource.
+        ///   type: string, # Optional. Type of the resource.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>~+ 1 more JSON objects</summary><details><summary>UserReceivedInvitation</summary>Schema for <c>UserReceivedInvitation</c>:
         /// <code>{
-        ///   invitationKind: User, # Required. The types of invitations.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
         ///   properties: {
         ///     description: string, # Optional. Description shared when the invitation was created
         ///     expirationDate: string (ISO 8601 Format), # Optional. The expiration date for the received share created by accepting the invitation.
@@ -246,6 +242,10 @@ namespace Azure.Analytics.Purview.Share
         ///     shareKind: &quot;InPlace&quot;, # Optional. Defines the supported types for share.
         ///     targetEmail: string, # Required. The receiver email for the invitation is being sent.
         ///   }, # Required. Properties for a received invitation of kind user.
+        ///   invitationKind: User, # Required. The types of invitations.
+        ///   id: string, # Optional. The resource id of the resource.
+        ///   name: string, # Optional. Name of the resource.
+        ///   type: string, # Optional. Type of the resource.
         /// }
         /// </code>
         /// </details>
@@ -286,16 +286,17 @@ namespace Azure.Analytics.Purview.Share
         /// var client = new ReceivedInvitationsClient("<https://my-service.azure.com>", credential);
         /// 
         /// var data = new {
-        ///     invitationKind = "Application",
         ///     properties = new {
-        ///         targetActiveDirectoryId = "<ApplicationReceivedInvitationPropertiesTargetActiveDirectoryId>",
-        ///         targetObjectId = "<ApplicationReceivedInvitationPropertiesTargetObjectId>",
+        ///         targetActiveDirectoryId = "<targetActiveDirectoryId>",
+        ///         targetObjectId = "<targetObjectId>",
         ///     },
+        ///     invitationKind = "Application",
         /// };
         /// 
         /// Response response = await client.RejectAsync("<receivedInvitationName>", RequestContent.Create(data));
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("invitationKind").ToString());
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call RejectAsync with all parameters and request content, and how to parse the result.
@@ -304,21 +305,21 @@ namespace Azure.Analytics.Purview.Share
         /// var client = new ReceivedInvitationsClient("<https://my-service.azure.com>", credential);
         /// 
         /// var data = new {
-        ///     invitationKind = "Application",
         ///     properties = new {
-        ///         shareKind = "<InPlace>",
-        ///         targetActiveDirectoryId = "<ApplicationReceivedInvitationPropertiesTargetActiveDirectoryId>",
-        ///         targetObjectId = "<ApplicationReceivedInvitationPropertiesTargetObjectId>",
+        ///         shareKind = "InPlace",
+        ///         targetActiveDirectoryId = "<targetActiveDirectoryId>",
+        ///         targetObjectId = "<targetObjectId>",
         ///     },
+        ///     invitationKind = "Application",
         /// };
         /// 
         /// Response response = await client.RejectAsync("<receivedInvitationName>", RequestContent.Create(data), "<repeatabilityRequestId>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("invitationKind").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("invitationKind").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -331,10 +332,6 @@ namespace Azure.Analytics.Purview.Share
         /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
         /// <details><summary>ApplicationReceivedInvitation</summary>Schema for <c>ApplicationReceivedInvitation</c>:
         /// <code>{
-        ///   invitationKind: Application, # Required. The types of invitations.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
         ///   properties: {
         ///     description: string, # Optional. Description shared when the invitation was created
         ///     expirationDate: string (ISO 8601 Format), # Optional. The expiration date for the received share created by accepting the invitation.
@@ -353,15 +350,15 @@ namespace Azure.Analytics.Purview.Share
         ///     targetActiveDirectoryId: string, # Required. The target azure active directory id the invitation is sent to.
         ///     targetObjectId: string, # Required. The target object id in the azure active directory the invitation is sent to.
         ///   }, # Required. Properties for a received invitation of kind application.
+        ///   invitationKind: Application, # Required. The types of invitations.
+        ///   id: string, # Optional. The resource id of the resource.
+        ///   name: string, # Optional. Name of the resource.
+        ///   type: string, # Optional. Type of the resource.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>~+ 1 more JSON objects</summary><details><summary>UserReceivedInvitation</summary>Schema for <c>UserReceivedInvitation</c>:
         /// <code>{
-        ///   invitationKind: User, # Required. The types of invitations.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
         ///   properties: {
         ///     description: string, # Optional. Description shared when the invitation was created
         ///     expirationDate: string (ISO 8601 Format), # Optional. The expiration date for the received share created by accepting the invitation.
@@ -379,6 +376,10 @@ namespace Azure.Analytics.Purview.Share
         ///     shareKind: &quot;InPlace&quot;, # Optional. Defines the supported types for share.
         ///     targetEmail: string, # Required. The receiver email for the invitation is being sent.
         ///   }, # Required. Properties for a received invitation of kind user.
+        ///   invitationKind: User, # Required. The types of invitations.
+        ///   id: string, # Optional. The resource id of the resource.
+        ///   name: string, # Optional. Name of the resource.
+        ///   type: string, # Optional. Type of the resource.
         /// }
         /// </code>
         /// </details>
@@ -389,10 +390,6 @@ namespace Azure.Analytics.Purview.Share
         /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
         /// <details><summary>ApplicationReceivedInvitation</summary>Schema for <c>ApplicationReceivedInvitation</c>:
         /// <code>{
-        ///   invitationKind: Application, # Required. The types of invitations.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
         ///   properties: {
         ///     description: string, # Optional. Description shared when the invitation was created
         ///     expirationDate: string (ISO 8601 Format), # Optional. The expiration date for the received share created by accepting the invitation.
@@ -411,15 +408,15 @@ namespace Azure.Analytics.Purview.Share
         ///     targetActiveDirectoryId: string, # Required. The target azure active directory id the invitation is sent to.
         ///     targetObjectId: string, # Required. The target object id in the azure active directory the invitation is sent to.
         ///   }, # Required. Properties for a received invitation of kind application.
+        ///   invitationKind: Application, # Required. The types of invitations.
+        ///   id: string, # Optional. The resource id of the resource.
+        ///   name: string, # Optional. Name of the resource.
+        ///   type: string, # Optional. Type of the resource.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>~+ 1 more JSON objects</summary><details><summary>UserReceivedInvitation</summary>Schema for <c>UserReceivedInvitation</c>:
         /// <code>{
-        ///   invitationKind: User, # Required. The types of invitations.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
         ///   properties: {
         ///     description: string, # Optional. Description shared when the invitation was created
         ///     expirationDate: string (ISO 8601 Format), # Optional. The expiration date for the received share created by accepting the invitation.
@@ -437,6 +434,10 @@ namespace Azure.Analytics.Purview.Share
         ///     shareKind: &quot;InPlace&quot;, # Optional. Defines the supported types for share.
         ///     targetEmail: string, # Required. The receiver email for the invitation is being sent.
         ///   }, # Required. Properties for a received invitation of kind user.
+        ///   invitationKind: User, # Required. The types of invitations.
+        ///   id: string, # Optional. The resource id of the resource.
+        ///   name: string, # Optional. Name of the resource.
+        ///   type: string, # Optional. Type of the resource.
         /// }
         /// </code>
         /// </details>
@@ -478,16 +479,17 @@ namespace Azure.Analytics.Purview.Share
         /// var client = new ReceivedInvitationsClient("<https://my-service.azure.com>", credential);
         /// 
         /// var data = new {
-        ///     invitationKind = "Application",
         ///     properties = new {
-        ///         targetActiveDirectoryId = "<ApplicationReceivedInvitationPropertiesTargetActiveDirectoryId>",
-        ///         targetObjectId = "<ApplicationReceivedInvitationPropertiesTargetObjectId>",
+        ///         targetActiveDirectoryId = "<targetActiveDirectoryId>",
+        ///         targetObjectId = "<targetObjectId>",
         ///     },
+        ///     invitationKind = "Application",
         /// };
         /// 
         /// Response response = client.Reject("<receivedInvitationName>", RequestContent.Create(data));
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("invitationKind").ToString());
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call Reject with all parameters and request content, and how to parse the result.
@@ -496,21 +498,21 @@ namespace Azure.Analytics.Purview.Share
         /// var client = new ReceivedInvitationsClient("<https://my-service.azure.com>", credential);
         /// 
         /// var data = new {
-        ///     invitationKind = "Application",
         ///     properties = new {
-        ///         shareKind = "<InPlace>",
-        ///         targetActiveDirectoryId = "<ApplicationReceivedInvitationPropertiesTargetActiveDirectoryId>",
-        ///         targetObjectId = "<ApplicationReceivedInvitationPropertiesTargetObjectId>",
+        ///         shareKind = "InPlace",
+        ///         targetActiveDirectoryId = "<targetActiveDirectoryId>",
+        ///         targetObjectId = "<targetObjectId>",
         ///     },
+        ///     invitationKind = "Application",
         /// };
         /// 
         /// Response response = client.Reject("<receivedInvitationName>", RequestContent.Create(data), "<repeatabilityRequestId>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("invitationKind").ToString());
         /// Console.WriteLine(result.GetProperty("id").ToString());
         /// Console.WriteLine(result.GetProperty("name").ToString());
         /// Console.WriteLine(result.GetProperty("type").ToString());
-        /// Console.WriteLine(result.GetProperty("invitationKind").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -523,10 +525,6 @@ namespace Azure.Analytics.Purview.Share
         /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
         /// <details><summary>ApplicationReceivedInvitation</summary>Schema for <c>ApplicationReceivedInvitation</c>:
         /// <code>{
-        ///   invitationKind: Application, # Required. The types of invitations.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
         ///   properties: {
         ///     description: string, # Optional. Description shared when the invitation was created
         ///     expirationDate: string (ISO 8601 Format), # Optional. The expiration date for the received share created by accepting the invitation.
@@ -545,15 +543,15 @@ namespace Azure.Analytics.Purview.Share
         ///     targetActiveDirectoryId: string, # Required. The target azure active directory id the invitation is sent to.
         ///     targetObjectId: string, # Required. The target object id in the azure active directory the invitation is sent to.
         ///   }, # Required. Properties for a received invitation of kind application.
+        ///   invitationKind: Application, # Required. The types of invitations.
+        ///   id: string, # Optional. The resource id of the resource.
+        ///   name: string, # Optional. Name of the resource.
+        ///   type: string, # Optional. Type of the resource.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>~+ 1 more JSON objects</summary><details><summary>UserReceivedInvitation</summary>Schema for <c>UserReceivedInvitation</c>:
         /// <code>{
-        ///   invitationKind: User, # Required. The types of invitations.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
         ///   properties: {
         ///     description: string, # Optional. Description shared when the invitation was created
         ///     expirationDate: string (ISO 8601 Format), # Optional. The expiration date for the received share created by accepting the invitation.
@@ -571,6 +569,10 @@ namespace Azure.Analytics.Purview.Share
         ///     shareKind: &quot;InPlace&quot;, # Optional. Defines the supported types for share.
         ///     targetEmail: string, # Required. The receiver email for the invitation is being sent.
         ///   }, # Required. Properties for a received invitation of kind user.
+        ///   invitationKind: User, # Required. The types of invitations.
+        ///   id: string, # Optional. The resource id of the resource.
+        ///   name: string, # Optional. Name of the resource.
+        ///   type: string, # Optional. Type of the resource.
         /// }
         /// </code>
         /// </details>
@@ -581,10 +583,6 @@ namespace Azure.Analytics.Purview.Share
         /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
         /// <details><summary>ApplicationReceivedInvitation</summary>Schema for <c>ApplicationReceivedInvitation</c>:
         /// <code>{
-        ///   invitationKind: Application, # Required. The types of invitations.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
         ///   properties: {
         ///     description: string, # Optional. Description shared when the invitation was created
         ///     expirationDate: string (ISO 8601 Format), # Optional. The expiration date for the received share created by accepting the invitation.
@@ -603,15 +601,15 @@ namespace Azure.Analytics.Purview.Share
         ///     targetActiveDirectoryId: string, # Required. The target azure active directory id the invitation is sent to.
         ///     targetObjectId: string, # Required. The target object id in the azure active directory the invitation is sent to.
         ///   }, # Required. Properties for a received invitation of kind application.
+        ///   invitationKind: Application, # Required. The types of invitations.
+        ///   id: string, # Optional. The resource id of the resource.
+        ///   name: string, # Optional. Name of the resource.
+        ///   type: string, # Optional. Type of the resource.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>~+ 1 more JSON objects</summary><details><summary>UserReceivedInvitation</summary>Schema for <c>UserReceivedInvitation</c>:
         /// <code>{
-        ///   invitationKind: User, # Required. The types of invitations.
-        ///   id: string, # Optional. The resource id of the resource.
-        ///   name: string, # Optional. Name of the resource.
-        ///   type: string, # Optional. Type of the resource.
         ///   properties: {
         ///     description: string, # Optional. Description shared when the invitation was created
         ///     expirationDate: string (ISO 8601 Format), # Optional. The expiration date for the received share created by accepting the invitation.
@@ -629,6 +627,10 @@ namespace Azure.Analytics.Purview.Share
         ///     shareKind: &quot;InPlace&quot;, # Optional. Defines the supported types for share.
         ///     targetEmail: string, # Required. The receiver email for the invitation is being sent.
         ///   }, # Required. Properties for a received invitation of kind user.
+        ///   invitationKind: User, # Required. The types of invitations.
+        ///   id: string, # Optional. The resource id of the resource.
+        ///   name: string, # Optional. Name of the resource.
+        ///   type: string, # Optional. Type of the resource.
         /// }
         /// </code>
         /// </details>
@@ -670,6 +672,7 @@ namespace Azure.Analytics.Purview.Share
         /// await foreach (var data in client.GetReceivedInvitationsAsync())
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("invitationKind").ToString());
         ///     Console.WriteLine(result.ToString());
         /// }
         /// ]]></code>
@@ -681,10 +684,10 @@ namespace Azure.Analytics.Purview.Share
         /// await foreach (var data in client.GetReceivedInvitationsAsync("<skipToken>", "<filter>", "<orderby>"))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("invitationKind").ToString());
         ///     Console.WriteLine(result.GetProperty("id").ToString());
         ///     Console.WriteLine(result.GetProperty("name").ToString());
         ///     Console.WriteLine(result.GetProperty("type").ToString());
-        ///     Console.WriteLine(result.GetProperty("invitationKind").ToString());
         /// }
         /// ]]></code>
         /// </example>
@@ -697,10 +700,10 @@ namespace Azure.Analytics.Purview.Share
         /// 
         /// Schema for <c>ReceivedInvitationListValue</c>:
         /// <code>{
+        ///   invitationKind: &quot;User&quot; | &quot;Application&quot;, # Required. The types of invitations.
         ///   id: string, # Optional. The resource id of the resource.
         ///   name: string, # Optional. Name of the resource.
         ///   type: string, # Optional. Type of the resource.
-        ///   invitationKind: &quot;User&quot; | &quot;Application&quot;, # Required. The types of invitations.
         /// }
         /// </code>
         /// 
@@ -743,6 +746,7 @@ namespace Azure.Analytics.Purview.Share
         /// foreach (var data in client.GetReceivedInvitations())
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("invitationKind").ToString());
         ///     Console.WriteLine(result.ToString());
         /// }
         /// ]]></code>
@@ -754,10 +758,10 @@ namespace Azure.Analytics.Purview.Share
         /// foreach (var data in client.GetReceivedInvitations("<skipToken>", "<filter>", "<orderby>"))
         /// {
         ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("invitationKind").ToString());
         ///     Console.WriteLine(result.GetProperty("id").ToString());
         ///     Console.WriteLine(result.GetProperty("name").ToString());
         ///     Console.WriteLine(result.GetProperty("type").ToString());
-        ///     Console.WriteLine(result.GetProperty("invitationKind").ToString());
         /// }
         /// ]]></code>
         /// </example>
@@ -770,10 +774,10 @@ namespace Azure.Analytics.Purview.Share
         /// 
         /// Schema for <c>ReceivedInvitationListValue</c>:
         /// <code>{
+        ///   invitationKind: &quot;User&quot; | &quot;Application&quot;, # Required. The types of invitations.
         ///   id: string, # Optional. The resource id of the resource.
         ///   name: string, # Optional. Name of the resource.
         ///   type: string, # Optional. Type of the resource.
-        ///   invitationKind: &quot;User&quot; | &quot;Application&quot;, # Required. The types of invitations.
         /// }
         /// </code>
         /// 
@@ -871,6 +875,7 @@ namespace Azure.Analytics.Purview.Share
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(_endpoint, false);
             uri.AppendRawNextLink(nextLink, false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;

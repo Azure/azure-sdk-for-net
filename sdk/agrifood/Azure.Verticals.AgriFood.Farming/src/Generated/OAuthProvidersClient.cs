@@ -243,12 +243,12 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new OAuthProvidersClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     appId = "<OAuthProviderAppId>",
-        ///     appSecret = "<OAuthProviderAppSecret>",
-        ///     apiKey = "<OAuthProviderApiKey>",
-        ///     isProductionApp = false,
-        ///     name = "<OAuthProviderName>",
-        ///     description = "<OAuthProviderDescription>",
+        ///     appId = "<appId>",
+        ///     appSecret = "<appSecret>",
+        ///     apiKey = "<apiKey>",
+        ///     isProductionApp = true,
+        ///     name = "<name>",
+        ///     description = "<description>",
         ///     properties = new {
         ///         key = new {},
         ///     },
@@ -369,12 +369,12 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new OAuthProvidersClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     appId = "<OAuthProviderAppId>",
-        ///     appSecret = "<OAuthProviderAppSecret>",
-        ///     apiKey = "<OAuthProviderApiKey>",
-        ///     isProductionApp = false,
-        ///     name = "<OAuthProviderName>",
-        ///     description = "<OAuthProviderDescription>",
+        ///     appId = "<appId>",
+        ///     appSecret = "<appSecret>",
+        ///     apiKey = "<apiKey>",
+        ///     isProductionApp = true,
+        ///     name = "<name>",
+        ///     description = "<description>",
         ///     properties = new {
         ///         key = new {},
         ///     },
@@ -871,6 +871,7 @@ namespace Azure.Verticals.AgriFood.Farming
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;

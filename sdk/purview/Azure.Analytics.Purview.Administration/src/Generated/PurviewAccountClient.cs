@@ -377,7 +377,7 @@ namespace Azure.Analytics.Purview.Administration
         /// var client = new PurviewAccountClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     friendlyName = "<DataPlaneAccountUpdateParametersFriendlyName>",
+        ///     friendlyName = "<friendlyName>",
         /// };
         /// 
         /// Response response = await client.UpdateAccountPropertiesAsync(RequestContent.Create(data));
@@ -551,7 +551,7 @@ namespace Azure.Analytics.Purview.Administration
         /// var client = new PurviewAccountClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     friendlyName = "<DataPlaneAccountUpdateParametersFriendlyName>",
+        ///     friendlyName = "<friendlyName>",
         /// };
         /// 
         /// Response response = client.UpdateAccountProperties(RequestContent.Create(data));
@@ -819,7 +819,7 @@ namespace Azure.Analytics.Purview.Administration
         /// var client = new PurviewAccountClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     keyType = "<PrimaryAtlasKafkaKey>",
+        ///     keyType = "PrimaryAtlasKafkaKey",
         /// };
         /// 
         /// Response response = await client.RegenerateAccessKeyAsync(RequestContent.Create(data));
@@ -895,7 +895,7 @@ namespace Azure.Analytics.Purview.Administration
         /// var client = new PurviewAccountClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     keyType = "<PrimaryAtlasKafkaKey>",
+        ///     keyType = "PrimaryAtlasKafkaKey",
         /// };
         /// 
         /// Response response = client.RegenerateAccessKey(RequestContent.Create(data));
@@ -1725,6 +1725,7 @@ namespace Azure.Analytics.Purview.Administration
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
+            uri.AppendQuery("api-version", "2019-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1738,6 +1739,7 @@ namespace Azure.Analytics.Purview.Administration
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
+            uri.AppendQuery("api-version", "2019-11-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;

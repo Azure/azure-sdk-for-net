@@ -235,7 +235,7 @@ namespace Azure.IoT.DeviceUpdate
         /// var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
         /// 
         /// var data = new {
-        ///     friendlyName = "<PatchBodyFriendlyName>",
+        ///     friendlyName = "<friendlyName>",
         /// };
         /// 
         /// Response response = await client.UpdateDeviceClassAsync("<deviceClassId>", RequestContent.Create(data));
@@ -325,7 +325,7 @@ namespace Azure.IoT.DeviceUpdate
         /// var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
         /// 
         /// var data = new {
-        ///     friendlyName = "<PatchBodyFriendlyName>",
+        ///     friendlyName = "<friendlyName>",
         /// };
         /// 
         /// Response response = client.UpdateDeviceClass("<deviceClassId>", RequestContent.Create(data));
@@ -1522,16 +1522,16 @@ namespace Azure.IoT.DeviceUpdate
         /// var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
         /// 
         /// var data = new {
-        ///     deploymentId = "<DeploymentId>",
-        ///     startDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
+        ///     deploymentId = "<deploymentId>",
+        ///     startDateTime = "2022-05-10T18:57:31.2311892Z",
         ///     update = new {
         ///         updateId = new {
-        ///             provider = "<UpdateIdProvider>",
-        ///             name = "<UpdateIdName>",
-        ///             version = "<UpdateIdVersion>",
+        ///             provider = "<provider>",
+        ///             name = "<name>",
+        ///             version = "<version>",
         ///         },
         ///     },
-        ///     groupId = "<DeploymentGroupId>",
+        ///     groupId = "<groupId>",
         /// };
         /// 
         /// Response response = await client.CreateOrUpdateDeploymentAsync("<groupId>", "<deploymentId>", RequestContent.Create(data));
@@ -1551,27 +1551,27 @@ namespace Azure.IoT.DeviceUpdate
         /// var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
         /// 
         /// var data = new {
-        ///     deploymentId = "<DeploymentId>",
-        ///     startDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
+        ///     deploymentId = "<deploymentId>",
+        ///     startDateTime = "2022-05-10T18:57:31.2311892Z",
         ///     update = new {
         ///         updateId = new {
-        ///             provider = "<UpdateIdProvider>",
-        ///             name = "<UpdateIdName>",
-        ///             version = "<UpdateIdVersion>",
+        ///             provider = "<provider>",
+        ///             name = "<name>",
+        ///             version = "<version>",
         ///         },
         ///     },
-        ///     groupId = "<DeploymentGroupId>",
+        ///     groupId = "<groupId>",
         ///     deviceClassSubgroups = new[] {
-        ///         "<DeploymentDeviceClassSubgroupsItem>"
+        ///         "<String>"
         ///     },
         ///     isCanceled = true,
         ///     isRetried = true,
         ///     rollbackPolicy = new {
         ///         update = new {
         ///             updateId = new {
-        ///                 provider = "<UpdateIdProvider>",
-        ///                 name = "<UpdateIdName>",
-        ///                 version = "<UpdateIdVersion>",
+        ///                 provider = "<provider>",
+        ///                 name = "<name>",
+        ///                 version = "<version>",
         ///             },
         ///         },
         ///         failure = new {
@@ -1707,16 +1707,16 @@ namespace Azure.IoT.DeviceUpdate
         /// var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
         /// 
         /// var data = new {
-        ///     deploymentId = "<DeploymentId>",
-        ///     startDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
+        ///     deploymentId = "<deploymentId>",
+        ///     startDateTime = "2022-05-10T18:57:31.2311892Z",
         ///     update = new {
         ///         updateId = new {
-        ///             provider = "<UpdateIdProvider>",
-        ///             name = "<UpdateIdName>",
-        ///             version = "<UpdateIdVersion>",
+        ///             provider = "<provider>",
+        ///             name = "<name>",
+        ///             version = "<version>",
         ///         },
         ///     },
-        ///     groupId = "<DeploymentGroupId>",
+        ///     groupId = "<groupId>",
         /// };
         /// 
         /// Response response = client.CreateOrUpdateDeployment("<groupId>", "<deploymentId>", RequestContent.Create(data));
@@ -1736,27 +1736,27 @@ namespace Azure.IoT.DeviceUpdate
         /// var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
         /// 
         /// var data = new {
-        ///     deploymentId = "<DeploymentId>",
-        ///     startDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
+        ///     deploymentId = "<deploymentId>",
+        ///     startDateTime = "2022-05-10T18:57:31.2311892Z",
         ///     update = new {
         ///         updateId = new {
-        ///             provider = "<UpdateIdProvider>",
-        ///             name = "<UpdateIdName>",
-        ///             version = "<UpdateIdVersion>",
+        ///             provider = "<provider>",
+        ///             name = "<name>",
+        ///             version = "<version>",
         ///         },
         ///     },
-        ///     groupId = "<DeploymentGroupId>",
+        ///     groupId = "<groupId>",
         ///     deviceClassSubgroups = new[] {
-        ///         "<DeploymentDeviceClassSubgroupsItem>"
+        ///         "<String>"
         ///     },
         ///     isCanceled = true,
         ///     isRetried = true,
         ///     rollbackPolicy = new {
         ///         update = new {
         ///             updateId = new {
-        ///                 provider = "<UpdateIdProvider>",
-        ///                 name = "<UpdateIdName>",
-        ///                 version = "<UpdateIdVersion>",
+        ///                 provider = "<provider>",
+        ///                 name = "<name>",
+        ///                 version = "<version>",
         ///             },
         ///         },
         ///         failure = new {
@@ -3635,7 +3635,7 @@ namespace Azure.IoT.DeviceUpdate
         /// var data = new {
         ///     deviceList = new[] {
         ///         new {
-        ///             deviceId = "<DeviceUpdateAgentIdDeviceId>",
+        ///             deviceId = "<deviceId>",
         ///         }
         ///     },
         /// };
@@ -3652,14 +3652,14 @@ namespace Azure.IoT.DeviceUpdate
         /// var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
         /// 
         /// var data = new {
-        ///     operationId = "<LogCollectionOperationId>",
+        ///     operationId = "<operationId>",
         ///     deviceList = new[] {
         ///         new {
-        ///             deviceId = "<DeviceUpdateAgentIdDeviceId>",
-        ///             moduleId = "<DeviceUpdateAgentIdModuleId>",
+        ///             deviceId = "<deviceId>",
+        ///             moduleId = "<moduleId>",
         ///         }
         ///     },
-        ///     description = "<LogCollectionDescription>",
+        ///     description = "<description>",
         /// };
         /// 
         /// Response response = await client.StartLogCollectionAsync("<logCollectionId>", RequestContent.Create(data));
@@ -3751,7 +3751,7 @@ namespace Azure.IoT.DeviceUpdate
         /// var data = new {
         ///     deviceList = new[] {
         ///         new {
-        ///             deviceId = "<DeviceUpdateAgentIdDeviceId>",
+        ///             deviceId = "<deviceId>",
         ///         }
         ///     },
         /// };
@@ -3768,14 +3768,14 @@ namespace Azure.IoT.DeviceUpdate
         /// var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
         /// 
         /// var data = new {
-        ///     operationId = "<LogCollectionOperationId>",
+        ///     operationId = "<operationId>",
         ///     deviceList = new[] {
         ///         new {
-        ///             deviceId = "<DeviceUpdateAgentIdDeviceId>",
-        ///             moduleId = "<DeviceUpdateAgentIdModuleId>",
+        ///             deviceId = "<deviceId>",
+        ///             moduleId = "<moduleId>",
         ///         }
         ///     },
-        ///     description = "<LogCollectionDescription>",
+        ///     description = "<description>",
         /// };
         /// 
         /// Response response = client.StartLogCollection("<logCollectionId>", RequestContent.Create(data));
@@ -6299,7 +6299,7 @@ namespace Azure.IoT.DeviceUpdate
         /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
         /// 
-        /// var data = "<Devices>";
+        /// var data = "Devices";
         /// 
         /// var operation = await client.ImportDevicesAsync(WaitUntil.Completed, RequestContent.Create(data));
         /// 
@@ -6339,7 +6339,7 @@ namespace Azure.IoT.DeviceUpdate
         /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new DeviceManagementClient(endpoint, "<instanceId>", credential);
         /// 
-        /// var data = "<Devices>";
+        /// var data = "Devices";
         /// 
         /// var operation = client.ImportDevices(WaitUntil.Completed, RequestContent.Create(data));
         /// 
@@ -7175,6 +7175,7 @@ namespace Azure.IoT.DeviceUpdate
             uri.AppendRaw("https://", false);
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -7189,6 +7190,7 @@ namespace Azure.IoT.DeviceUpdate
             uri.AppendRaw("https://", false);
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -7203,6 +7205,7 @@ namespace Azure.IoT.DeviceUpdate
             uri.AppendRaw("https://", false);
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -7217,6 +7220,7 @@ namespace Azure.IoT.DeviceUpdate
             uri.AppendRaw("https://", false);
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -7231,6 +7235,7 @@ namespace Azure.IoT.DeviceUpdate
             uri.AppendRaw("https://", false);
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -7245,6 +7250,7 @@ namespace Azure.IoT.DeviceUpdate
             uri.AppendRaw("https://", false);
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -7259,6 +7265,7 @@ namespace Azure.IoT.DeviceUpdate
             uri.AppendRaw("https://", false);
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -7273,6 +7280,7 @@ namespace Azure.IoT.DeviceUpdate
             uri.AppendRaw("https://", false);
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -7287,6 +7295,7 @@ namespace Azure.IoT.DeviceUpdate
             uri.AppendRaw("https://", false);
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -7301,6 +7310,7 @@ namespace Azure.IoT.DeviceUpdate
             uri.AppendRaw("https://", false);
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -7315,6 +7325,7 @@ namespace Azure.IoT.DeviceUpdate
             uri.AppendRaw("https://", false);
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -7329,6 +7340,7 @@ namespace Azure.IoT.DeviceUpdate
             uri.AppendRaw("https://", false);
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;

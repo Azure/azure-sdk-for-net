@@ -318,39 +318,39 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var data = new {
         ///     applicationProductDetails = new[] {
         ///         new {
-        ///             productName = "<ApplicationProductDetailProductName>",
-        ///             isCarrier = false,
+        ///             productName = "<productName>",
+        ///             isCarrier = true,
         ///             avgMaterial = new {
-        ///                 unit = "<MeasureUnit>",
-        ///                 value = 1234,
+        ///                 unit = "<unit>",
+        ///                 value = 123.45d,
         ///             },
         ///             totalMaterial = new {
-        ///                 unit = "<MeasureUnit>",
-        ///                 value = 1234,
+        ///                 unit = "<unit>",
+        ///                 value = 123.45d,
         ///             },
         ///         }
         ///     },
         ///     avgMaterial = new {
-        ///         unit = "<MeasureUnit>",
-        ///         value = 1234,
+        ///         unit = "<unit>",
+        ///         value = 123.45d,
         ///     },
         ///     totalMaterial = new {
-        ///         unit = "<MeasureUnit>",
-        ///         value = 1234,
+        ///         unit = "<unit>",
+        ///         value = 123.45d,
         ///     },
         ///     area = new {
-        ///         unit = "<MeasureUnit>",
-        ///         value = 1234,
+        ///         unit = "<unit>",
+        ///         value = 123.45d,
         ///     },
-        ///     source = "<ApplicationDataSource>",
-        ///     operationModifiedDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     operationStartDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     operationEndDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     associatedBoundaryId = "<ApplicationDataAssociatedBoundaryId>",
-        ///     operationBoundaryId = "<ApplicationDataOperationBoundaryId>",
-        ///     status = "<ApplicationDataStatus>",
-        ///     name = "<ApplicationDataName>",
-        ///     description = "<ApplicationDataDescription>",
+        ///     source = "<source>",
+        ///     operationModifiedDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     operationStartDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     operationEndDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     associatedBoundaryId = "<associatedBoundaryId>",
+        ///     operationBoundaryId = "<operationBoundaryId>",
+        ///     status = "<status>",
+        ///     name = "<name>",
+        ///     description = "<description>",
         ///     properties = new {
         ///         key = new {},
         ///     },
@@ -526,39 +526,39 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var data = new {
         ///     applicationProductDetails = new[] {
         ///         new {
-        ///             productName = "<ApplicationProductDetailProductName>",
-        ///             isCarrier = false,
+        ///             productName = "<productName>",
+        ///             isCarrier = true,
         ///             avgMaterial = new {
-        ///                 unit = "<MeasureUnit>",
-        ///                 value = 1234,
+        ///                 unit = "<unit>",
+        ///                 value = 123.45d,
         ///             },
         ///             totalMaterial = new {
-        ///                 unit = "<MeasureUnit>",
-        ///                 value = 1234,
+        ///                 unit = "<unit>",
+        ///                 value = 123.45d,
         ///             },
         ///         }
         ///     },
         ///     avgMaterial = new {
-        ///         unit = "<MeasureUnit>",
-        ///         value = 1234,
+        ///         unit = "<unit>",
+        ///         value = 123.45d,
         ///     },
         ///     totalMaterial = new {
-        ///         unit = "<MeasureUnit>",
-        ///         value = 1234,
+        ///         unit = "<unit>",
+        ///         value = 123.45d,
         ///     },
         ///     area = new {
-        ///         unit = "<MeasureUnit>",
-        ///         value = 1234,
+        ///         unit = "<unit>",
+        ///         value = 123.45d,
         ///     },
-        ///     source = "<ApplicationDataSource>",
-        ///     operationModifiedDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     operationStartDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     operationEndDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     associatedBoundaryId = "<ApplicationDataAssociatedBoundaryId>",
-        ///     operationBoundaryId = "<ApplicationDataOperationBoundaryId>",
-        ///     status = "<ApplicationDataStatus>",
-        ///     name = "<ApplicationDataName>",
-        ///     description = "<ApplicationDataDescription>",
+        ///     source = "<source>",
+        ///     operationModifiedDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     operationStartDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     operationEndDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     associatedBoundaryId = "<associatedBoundaryId>",
+        ///     operationBoundaryId = "<operationBoundaryId>",
+        ///     status = "<status>",
+        ///     name = "<name>",
+        ///     description = "<description>",
         ///     properties = new {
         ///         key = new {},
         ///     },
@@ -1741,6 +1741,7 @@ namespace Azure.Verticals.AgriFood.Farming
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1754,6 +1755,7 @@ namespace Azure.Verticals.AgriFood.Farming
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;

@@ -445,14 +445,20 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <example>
-        /// This sample shows how to call DownloadAsync with required parameters.
+        /// This sample shows how to call DownloadAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new AttachmentsClient(endpoint, credential);
         /// 
         /// Response response = await client.DownloadAsync("<farmerId>", "<attachmentId>");
-        /// Console.WriteLine(response.Status);
+        /// if (response.ContentStream != null)
+        /// {
+        ///     using(Stream outFileStream = File.OpenWrite("<filePath>")
+        ///     {
+        ///         response.ContentStream.CopyTo(outFileStream);
+        ///     }
+        /// }
         /// ]]></code>
         /// </example>
         public virtual async Task<Response> DownloadAsync(string farmerId, string attachmentId, RequestContext context = null)
@@ -483,14 +489,20 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <example>
-        /// This sample shows how to call Download with required parameters.
+        /// This sample shows how to call Download with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new AttachmentsClient(endpoint, credential);
         /// 
         /// Response response = client.Download("<farmerId>", "<attachmentId>");
-        /// Console.WriteLine(response.Status);
+        /// if (response.ContentStream != null)
+        /// {
+        ///     using(Stream outFileStream = File.OpenWrite("<filePath>")
+        ///     {
+        ///         response.ContentStream.CopyTo(outFileStream);
+        ///     }
+        /// }
         /// ]]></code>
         /// </example>
         public virtual Response Download(string farmerId, string attachmentId, RequestContext context = null)
@@ -889,6 +901,7 @@ namespace Azure.Verticals.AgriFood.Farming
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;

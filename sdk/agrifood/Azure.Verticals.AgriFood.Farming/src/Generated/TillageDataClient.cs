@@ -289,26 +289,26 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// var data = new {
         ///     tillageDepth = new {
-        ///         unit = "<MeasureUnit>",
-        ///         value = 1234,
+        ///         unit = "<unit>",
+        ///         value = 123.45d,
         ///     },
         ///     tillagePressure = new {
-        ///         unit = "<MeasureUnit>",
-        ///         value = 1234,
+        ///         unit = "<unit>",
+        ///         value = 123.45d,
         ///     },
         ///     area = new {
-        ///         unit = "<MeasureUnit>",
-        ///         value = 1234,
+        ///         unit = "<unit>",
+        ///         value = 123.45d,
         ///     },
-        ///     source = "<TillageDataSource>",
-        ///     operationModifiedDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     operationStartDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     operationEndDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     associatedBoundaryId = "<TillageDataAssociatedBoundaryId>",
-        ///     operationBoundaryId = "<TillageDataOperationBoundaryId>",
-        ///     status = "<TillageDataStatus>",
-        ///     name = "<TillageDataName>",
-        ///     description = "<TillageDataDescription>",
+        ///     source = "<source>",
+        ///     operationModifiedDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     operationStartDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     operationEndDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     associatedBoundaryId = "<associatedBoundaryId>",
+        ///     operationBoundaryId = "<operationBoundaryId>",
+        ///     status = "<status>",
+        ///     name = "<name>",
+        ///     description = "<description>",
         ///     properties = new {
         ///         key = new {},
         ///     },
@@ -461,26 +461,26 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// var data = new {
         ///     tillageDepth = new {
-        ///         unit = "<MeasureUnit>",
-        ///         value = 1234,
+        ///         unit = "<unit>",
+        ///         value = 123.45d,
         ///     },
         ///     tillagePressure = new {
-        ///         unit = "<MeasureUnit>",
-        ///         value = 1234,
+        ///         unit = "<unit>",
+        ///         value = 123.45d,
         ///     },
         ///     area = new {
-        ///         unit = "<MeasureUnit>",
-        ///         value = 1234,
+        ///         unit = "<unit>",
+        ///         value = 123.45d,
         ///     },
-        ///     source = "<TillageDataSource>",
-        ///     operationModifiedDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     operationStartDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     operationEndDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     associatedBoundaryId = "<TillageDataAssociatedBoundaryId>",
-        ///     operationBoundaryId = "<TillageDataOperationBoundaryId>",
-        ///     status = "<TillageDataStatus>",
-        ///     name = "<TillageDataName>",
-        ///     description = "<TillageDataDescription>",
+        ///     source = "<source>",
+        ///     operationModifiedDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     operationStartDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     operationEndDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     associatedBoundaryId = "<associatedBoundaryId>",
+        ///     operationBoundaryId = "<operationBoundaryId>",
+        ///     status = "<status>",
+        ///     name = "<name>",
+        ///     description = "<description>",
         ///     properties = new {
         ///         key = new {},
         ///     },
@@ -1585,6 +1585,7 @@ namespace Azure.Verticals.AgriFood.Farming
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1598,6 +1599,7 @@ namespace Azure.Verticals.AgriFood.Farming
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
