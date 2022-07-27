@@ -134,7 +134,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         /// <param name="entityPath">The entity path to send the message to.</param>
         /// <param name="connection">The connection for the sender.</param>
-        protected ServiceBusSender(
+        internal ServiceBusSender(
             string entityPath,
             ServiceBusConnection connection) :
             this(entityPath, connection, new ServiceBusSenderOptions())
