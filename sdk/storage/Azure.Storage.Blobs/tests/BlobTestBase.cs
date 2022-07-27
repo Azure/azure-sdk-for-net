@@ -52,6 +52,7 @@ namespace Azure.Storage.Test.Shared
         public string GetNewBlobName() => BlobsClientBuilder.GetNewBlobName();
         public string GetNewBlockName() => BlobsClientBuilder.GetNewBlockName();
         public string GetNewNonAsciiBlobName() => BlobsClientBuilder.GetNewNonAsciiBlobName();
+        public Uri GetDefaultPrimaryEndpoint() => new Uri(BlobsClientBuilder.Tenants.TestConfigDefault.BlobServiceEndpoint);
 
         public async Task<DisposingContainer> GetTestContainerAsync(
             BlobServiceClient service = default,
@@ -571,6 +572,37 @@ namespace Azure.Storage.Test.Shared
                 Assert.AreEqual(_expectedBlobQueryError.Description, blobQueryError.Description);
                 Assert.AreEqual(_expectedBlobQueryError.Position, blobQueryError.Position);
             }
+        }
+
+        /// <summary>
+        /// Gets a custom account SAS where the permissions, services and resourceType
+        /// comes back in the string character order that the user inputs it as.
+        /// </summary>
+        /// <param name="permissions"></param>
+        /// <param name="services"></param>
+        /// <param name="resourceType"></param>
+        /// <param name="sharedKeyCredential"></param>
+        /// <returns></returns>
+        public string GetCustomAccountSas(
+            string permissions = default,
+            string services = default,
+            string resourceType = default,
+            StorageSharedKeyCredential sharedKeyCredential = default)
+        {
+            sharedKeyCredential ??= Tenants.GetNewSharedKeyCredentials();
+            permissions ??= "racwdlxyuptfi";
+            services ??= "bqtf";
+            resourceType ??= "sco";
+
+            // Generate a SAS that would set the srt / ResourceTypes in a different order than
+            // the .NET SDK would normally create the SAS
+            TestAccountSasBuilder accountSasBuilder = new TestAccountSasBuilder(
+                permissions: permissions,
+                expiresOn: Recording.UtcNow.AddDays(1),
+                services: services,
+                resourceTypes: resourceType);
+
+            return accountSasBuilder.ToTestSasQueryParameters(sharedKeyCredential).ToString();
         }
     }
 }
