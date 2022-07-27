@@ -56,7 +56,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         public override bool IsSessionLinkClosed => _isSessionReceiver && LinkException != null;
 
         /// <summary>
-        /// The identifier for the sender.
+        /// The identifier for the receiver.
         /// </summary>
         public string Identifier { get; }
 
