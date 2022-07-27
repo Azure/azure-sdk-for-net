@@ -6,7 +6,7 @@ namespace Azure.Storage
     /// <summary>
     /// Algorithm for generating a checksum to be used for verifying REST contents on a transfer.
     /// </summary>
-    public enum ValidationAlgorithm
+    public enum StorageChecksumAlgorithm
     {
         /// <summary>
         /// Recommended. Allow the library to choose an algorithm. Different library versions may
@@ -15,18 +15,18 @@ namespace Azure.Storage
         Auto = 0,
 
         /// <summary>
-        /// No selected algorithm.
+        /// No selected algorithm. Do not calculate or request checksums.
         /// </summary>
         None = 1,
 
         /// <summary>
-        /// Azure Storage custom 64 bit CRC.
-        /// </summary>
-        StorageCrc64 = 2,
-
-        /// <summary>
         /// Standard MD5 hash algorithm.
         /// </summary>
-        MD5 = 3
+        MD5 = 2,
+
+        /// <summary>
+        /// Azure Storage custom 64 bit CRC.
+        /// </summary>
+        StorageCrc64 = 3,
     }
 }

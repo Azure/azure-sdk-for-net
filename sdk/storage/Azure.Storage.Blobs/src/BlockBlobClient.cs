@@ -356,8 +356,7 @@ namespace Azure.Storage.Blobs.Specialized
                     new StorageClientDiagnostics(options),
                     options.Version,
                     options.CustomerProvidedKey,
-                    options.UploadTransferValidationOptions,
-                    options.DownloadTransferValidationOptions,
+                    options.TransferValidation,
                     null));
         }
 
@@ -841,7 +840,7 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            UploadTransferValidationOptions validationOptions = validationOptionsOverride ?? ClientConfiguration.UploadTransferValidationOptions;
+            UploadTransferValidationOptions validationOptions = validationOptionsOverride ?? ClientConfiguration.TransferValidation.Upload;
 
             content = content?.WithNoDispose().WithProgress(progressHandler);
             operationName ??= $"{nameof(BlockBlobClient)}.{nameof(Upload)}";
@@ -900,8 +899,8 @@ namespace Azure.Storage.Blobs.Specialized
                             immutabilityPolicyExpiry: immutabilityPolicy?.ExpiresOn,
                             immutabilityPolicyMode: immutabilityPolicy?.PolicyMode,
                             legalHold: legalHold,
-                            transactionalContentMD5: hashResult?.MD5,
-                            transactionalContentCrc64: hashResult?.StorageCrc64,
+                            transactionalContentMD5: hashResult?.MD5.ToArray(),
+                            transactionalContentCrc64: hashResult?.StorageCrc64.ToArray(),
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -932,8 +931,8 @@ namespace Azure.Storage.Blobs.Specialized
                             immutabilityPolicyExpiry: immutabilityPolicy?.ExpiresOn,
                             immutabilityPolicyMode: immutabilityPolicy?.PolicyMode,
                             legalHold: legalHold,
-                            transactionalContentMD5: hashResult?.MD5,
-                            transactionalContentCrc64: hashResult?.StorageCrc64,
+                            transactionalContentMD5: hashResult?.MD5.ToArray(),
+                            transactionalContentCrc64: hashResult?.StorageCrc64.ToArray(),
                             cancellationToken: cancellationToken);
                     }
 
@@ -1257,7 +1256,7 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            UploadTransferValidationOptions validationOptions = validationOptionsOverride ?? ClientConfiguration.UploadTransferValidationOptions;
+            UploadTransferValidationOptions validationOptions = validationOptionsOverride ?? ClientConfiguration.TransferValidation.Upload;
 
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlockBlobClient)))
             {
@@ -1299,8 +1298,8 @@ namespace Azure.Storage.Blobs.Specialized
                             blockId: base64BlockId,
                             contentLength: (content?.Length - content?.Position) ?? 0,
                             body: content,
-                            transactionalContentCrc64: hashResult?.StorageCrc64,
-                            transactionalContentMD5: hashResult?.MD5,
+                            transactionalContentCrc64: hashResult?.StorageCrc64.ToArray(),
+                            transactionalContentMD5: hashResult?.MD5.ToArray(),
                             leaseId: conditions?.LeaseId,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
@@ -1315,8 +1314,8 @@ namespace Azure.Storage.Blobs.Specialized
                             blockId: base64BlockId,
                             contentLength: (content?.Length - content?.Position) ?? 0,
                             body: content,
-                            transactionalContentCrc64: hashResult?.StorageCrc64,
-                            transactionalContentMD5: hashResult?.MD5,
+                            transactionalContentCrc64: hashResult?.StorageCrc64.ToArray(),
+                            transactionalContentMD5: hashResult?.MD5.ToArray(),
                             leaseId: conditions?.LeaseId,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
