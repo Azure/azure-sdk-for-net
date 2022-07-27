@@ -388,7 +388,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.AppConfiguration/deletedConfigurationStores?api-version=2021-10-01-preview\u0026%24skiptoken=VY3LTsMwEEX%2fxULsHD8atU2kClWIHaxSPsBxJmUUYo88k4Co%2bu%2bEJdurc869qQTf8oppYtXe1Mu5u7x3qlUfIsStMXNI4QozJKnCz1Kgink2vPQcC5JgTmyG3oV%2bP1pdH%2faNrnt%2f0M3OgrYOPIxNdH4XDZW84gCFzRvGkjmPUp2JnnMa8bqU8JcyA3yCwPBv7CQX4KdAqNdN37CTt95pZ7cDTQVWhK%2fHB56QLnmCdBJgCUT6eKzV%2ff4L",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.AppConfiguration/deletedConfigurationStores?api-version=2021-10-01-preview\u0026%24skiptoken=VY3LTsMwEEX%2fxULsHD8atU2kClWIHaxSPsBxJmUUYo88k4Co%2bu%2bEJdurc869qQTf8oppYtXe1Mu5u7x3qlUfIsStMXNI4QozJKnCz1Kgink2vPQcC5JgTmyG3oV%2bP1pdH%2faNrnt%2f0M3OgrYOPIxNdH4XDZW84gCFzRvGkjmPUp2JnnMa8bqU8JcyA3yCwPBv7CQX4KdAqNdN37CTt95pZ7cDTQVWhK%2fHB56QLnmCdBJgCUT6eKzV%2ff4L\u0026api-version=2021-10-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
