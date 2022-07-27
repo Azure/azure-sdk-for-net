@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Tests.Utilities
         public static GuestConfigurationKind DefaultKind = new GuestConfigurationKind("DSC");
         public const string DefaultAssignmentVersion = "1.0.0.3";
         public const string DefaultContext = "Azure policy";
+        public const string Builtin = "Builtin";
 
         public const string HybridRG = "neela-sdk-rg";
         public const string HybridMachineName = "LAPTOP-4B77J53J";

@@ -64,14 +64,12 @@ namespace Azure.ResourceManager.GuestConfiguration.Tests
         }
         protected static GuestConfigurationAssignmentProperties GetDefaultGuestConfigurationAssignmentProperties()
         {
-            //var configurationParameter = new ConfigurationParameter("[InstalledApplication]bwhitelistedapp;Name", "NotePad,sql");
             var configurationParameter = new ConfigurationParameter();
             var configurationParameterList = new List<ConfigurationParameter>() { configurationParameter };
 
-            //var configurationSetting = new ConfigurationSetting(GuestConfigurationManagementUtilities.DefaultConfigurationMode, true, new ActionAfterReboot("ContinueConfiguration"), 25, true, 10);
-            GuestConfigurationNavigation guestConfigurationNavigation = new GuestConfigurationNavigation(GuestConfigurationManagementUtilities.DefaultKind, GuestConfigurationManagementUtilities.DefaultAssignmentName,
+            GuestConfigurationNavigation guestConfigurationNavigation = new(GuestConfigurationManagementUtilities.DefaultKind, GuestConfigurationManagementUtilities.DefaultAssignmentName,
             GuestConfigurationManagementUtilities.DefaultAssignmentVersion, null, null, GuestConfigurationManagementUtilities.DefaultAssignmentType,
-            null, "Builtin", configurationParameterList, configurationParameterList, null);
+            null, GuestConfigurationManagementUtilities.Builtin, configurationParameterList, configurationParameterList, null);
 
             return new GuestConfigurationAssignmentProperties()
             {
