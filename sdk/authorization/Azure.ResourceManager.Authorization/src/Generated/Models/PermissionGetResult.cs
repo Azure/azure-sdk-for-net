@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary> Permissions information. </summary>
+    /// <summary>
+    /// Permissions information.
+    /// Serialized Name: PermissionGetResult
+    /// </summary>
     internal partial class PermissionGetResult
     {
         /// <summary> Initializes a new instance of PermissionGetResult. </summary>
@@ -20,17 +23,29 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> Initializes a new instance of PermissionGetResult. </summary>
-        /// <param name="value"> An array of permissions. </param>
-        /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
+        /// <param name="value">
+        /// An array of permissions.
+        /// Serialized Name: PermissionGetResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The URL to use for getting the next set of results.
+        /// Serialized Name: PermissionGetResult.nextLink
+        /// </param>
         internal PermissionGetResult(IReadOnlyList<AzurePermission> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> An array of permissions. </summary>
+        /// <summary>
+        /// An array of permissions.
+        /// Serialized Name: PermissionGetResult.value
+        /// </summary>
         public IReadOnlyList<AzurePermission> Value { get; }
-        /// <summary> The URL to use for getting the next set of results. </summary>
+        /// <summary>
+        /// The URL to use for getting the next set of results.
+        /// Serialized Name: PermissionGetResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

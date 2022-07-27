@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
                 },
                 RequestType = RequestType.AdminAssign,
                 RoleDefinitionId = Definition.Id,
-                PrincipalId = TestEnvironment.ClientId
+                PrincipalId = Guid.Parse(TestEnvironment.ClientId)
             };
             var roleName = "64caffb6-55c0-4deb-a585-68e948ea1ad6";
             var roleEligibilityScheduleRequest = await collection.CreateOrUpdateAsync(WaitUntil.Completed, roleName, data);

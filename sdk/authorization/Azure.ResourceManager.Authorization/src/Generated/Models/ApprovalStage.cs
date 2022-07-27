@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary> The approval stage. </summary>
+    /// <summary>
+    /// The approval stage.
+    /// Serialized Name: ApprovalStage
+    /// </summary>
     public partial class ApprovalStage
     {
         /// <summary> Initializes a new instance of ApprovalStage. </summary>
@@ -21,12 +24,30 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> Initializes a new instance of ApprovalStage. </summary>
-        /// <param name="approvalStageTimeOutInDays"> The time in days when approval request would be timed out. </param>
-        /// <param name="isApproverJustificationRequired"> Determines whether approver need to provide justification for his decision. </param>
-        /// <param name="escalationTimeInMinutes"> The time in minutes when the approval request would be escalated if the primary approver does not approve. </param>
-        /// <param name="primaryApprovers"> The primary approver of the request. </param>
-        /// <param name="isEscalationEnabled"> The value determine whether escalation feature is enabled. </param>
-        /// <param name="escalationApprovers"> The escalation approver of the request. </param>
+        /// <param name="approvalStageTimeOutInDays">
+        /// The time in days when approval request would be timed out
+        /// Serialized Name: ApprovalStage.approvalStageTimeOutInDays
+        /// </param>
+        /// <param name="isApproverJustificationRequired">
+        /// Determines whether approver need to provide justification for his decision.
+        /// Serialized Name: ApprovalStage.isApproverJustificationRequired
+        /// </param>
+        /// <param name="escalationTimeInMinutes">
+        /// The time in minutes when the approval request would be escalated if the primary approver does not approve
+        /// Serialized Name: ApprovalStage.escalationTimeInMinutes
+        /// </param>
+        /// <param name="primaryApprovers">
+        /// The primary approver of the request.
+        /// Serialized Name: ApprovalStage.primaryApprovers
+        /// </param>
+        /// <param name="isEscalationEnabled">
+        /// The value determine whether escalation feature is enabled.
+        /// Serialized Name: ApprovalStage.isEscalationEnabled
+        /// </param>
+        /// <param name="escalationApprovers">
+        /// The escalation approver of the request.
+        /// Serialized Name: ApprovalStage.escalationApprovers
+        /// </param>
         internal ApprovalStage(int? approvalStageTimeOutInDays, bool? isApproverJustificationRequired, int? escalationTimeInMinutes, IList<UserInfo> primaryApprovers, bool? isEscalationEnabled, IList<UserInfo> escalationApprovers)
         {
             ApprovalStageTimeOutInDays = approvalStageTimeOutInDays;
@@ -37,17 +58,35 @@ namespace Azure.ResourceManager.Authorization.Models
             EscalationApprovers = escalationApprovers;
         }
 
-        /// <summary> The time in days when approval request would be timed out. </summary>
+        /// <summary>
+        /// The time in days when approval request would be timed out
+        /// Serialized Name: ApprovalStage.approvalStageTimeOutInDays
+        /// </summary>
         public int? ApprovalStageTimeOutInDays { get; set; }
-        /// <summary> Determines whether approver need to provide justification for his decision. </summary>
+        /// <summary>
+        /// Determines whether approver need to provide justification for his decision.
+        /// Serialized Name: ApprovalStage.isApproverJustificationRequired
+        /// </summary>
         public bool? IsApproverJustificationRequired { get; set; }
-        /// <summary> The time in minutes when the approval request would be escalated if the primary approver does not approve. </summary>
+        /// <summary>
+        /// The time in minutes when the approval request would be escalated if the primary approver does not approve
+        /// Serialized Name: ApprovalStage.escalationTimeInMinutes
+        /// </summary>
         public int? EscalationTimeInMinutes { get; set; }
-        /// <summary> The primary approver of the request. </summary>
+        /// <summary>
+        /// The primary approver of the request.
+        /// Serialized Name: ApprovalStage.primaryApprovers
+        /// </summary>
         public IList<UserInfo> PrimaryApprovers { get; }
-        /// <summary> The value determine whether escalation feature is enabled. </summary>
+        /// <summary>
+        /// The value determine whether escalation feature is enabled.
+        /// Serialized Name: ApprovalStage.isEscalationEnabled
+        /// </summary>
         public bool? IsEscalationEnabled { get; set; }
-        /// <summary> The escalation approver of the request. </summary>
+        /// <summary>
+        /// The escalation approver of the request.
+        /// Serialized Name: ApprovalStage.escalationApprovers
+        /// </summary>
         public IList<UserInfo> EscalationApprovers { get; }
     }
 }

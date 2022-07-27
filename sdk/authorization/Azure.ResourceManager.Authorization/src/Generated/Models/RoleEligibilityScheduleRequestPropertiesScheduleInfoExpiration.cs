@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary> Expiration of the role eligibility schedule. </summary>
+    /// <summary>
+    /// Expiration of the role eligibility schedule
+    /// Serialized Name: RoleEligibilityScheduleRequestPropertiesScheduleInfoExpiration
+    /// </summary>
     public partial class RoleEligibilityScheduleRequestPropertiesScheduleInfoExpiration
     {
         /// <summary> Initializes a new instance of RoleEligibilityScheduleRequestPropertiesScheduleInfoExpiration. </summary>
@@ -18,9 +21,18 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> Initializes a new instance of RoleEligibilityScheduleRequestPropertiesScheduleInfoExpiration. </summary>
-        /// <param name="roleEligibilityExpirationType"> Type of the role eligibility schedule expiration. </param>
-        /// <param name="endOn"> End DateTime of the role eligibility schedule. </param>
-        /// <param name="duration"> Duration of the role eligibility schedule in TimeSpan. </param>
+        /// <param name="roleEligibilityExpirationType">
+        /// Type of the role eligibility schedule expiration
+        /// Serialized Name: RoleEligibilityScheduleRequestPropertiesScheduleInfoExpiration.type
+        /// </param>
+        /// <param name="endOn">
+        /// End DateTime of the role eligibility schedule.
+        /// Serialized Name: RoleEligibilityScheduleRequestPropertiesScheduleInfoExpiration.endDateTime
+        /// </param>
+        /// <param name="duration">
+        /// Duration of the role eligibility schedule in TimeSpan.
+        /// Serialized Name: RoleEligibilityScheduleRequestPropertiesScheduleInfoExpiration.duration
+        /// </param>
         internal RoleEligibilityScheduleRequestPropertiesScheduleInfoExpiration(RoleEligibilityScheduleType? roleEligibilityExpirationType, DateTimeOffset? endOn, TimeSpan? duration)
         {
             RoleEligibilityExpirationType = roleEligibilityExpirationType;
@@ -28,11 +40,20 @@ namespace Azure.ResourceManager.Authorization.Models
             Duration = duration;
         }
 
-        /// <summary> Type of the role eligibility schedule expiration. </summary>
+        /// <summary>
+        /// Type of the role eligibility schedule expiration
+        /// Serialized Name: RoleEligibilityScheduleRequestPropertiesScheduleInfoExpiration.type
+        /// </summary>
         public RoleEligibilityScheduleType? RoleEligibilityExpirationType { get; set; }
-        /// <summary> End DateTime of the role eligibility schedule. </summary>
+        /// <summary>
+        /// End DateTime of the role eligibility schedule.
+        /// Serialized Name: RoleEligibilityScheduleRequestPropertiesScheduleInfoExpiration.endDateTime
+        /// </summary>
         public DateTimeOffset? EndOn { get; set; }
-        /// <summary> Duration of the role eligibility schedule in TimeSpan. </summary>
+        /// <summary>
+        /// Duration of the role eligibility schedule in TimeSpan.
+        /// Serialized Name: RoleEligibilityScheduleRequestPropertiesScheduleInfoExpiration.duration
+        /// </summary>
         public TimeSpan? Duration { get; set; }
     }
 }

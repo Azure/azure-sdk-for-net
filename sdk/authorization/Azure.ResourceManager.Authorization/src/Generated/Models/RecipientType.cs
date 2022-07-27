@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary> The recipient type. </summary>
+    /// <summary>
+    /// The recipient type.
+    /// Serialized Name: RecipientType
+    /// </summary>
     public readonly partial struct RecipientType : IEquatable<RecipientType>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.Authorization.Models
         private const string ApproverValue = "Approver";
         private const string AdminValue = "Admin";
 
-        /// <summary> Requestor. </summary>
+        /// <summary>
+        /// Requestor
+        /// Serialized Name: RecipientType.Requestor
+        /// </summary>
         public static RecipientType Requestor { get; } = new RecipientType(RequestorValue);
-        /// <summary> Approver. </summary>
+        /// <summary>
+        /// Approver
+        /// Serialized Name: RecipientType.Approver
+        /// </summary>
         public static RecipientType Approver { get; } = new RecipientType(ApproverValue);
-        /// <summary> Admin. </summary>
+        /// <summary>
+        /// Admin
+        /// Serialized Name: RecipientType.Admin
+        /// </summary>
         public static RecipientType Admin { get; } = new RecipientType(AdminValue);
         /// <summary> Determines if two <see cref="RecipientType"/> values are the same. </summary>
         public static bool operator ==(RecipientType left, RecipientType right) => left.Equals(right);

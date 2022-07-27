@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary> ClassicAdministrator list result information. </summary>
+    /// <summary>
+    /// ClassicAdministrator list result information.
+    /// Serialized Name: ClassicAdministratorListResult
+    /// </summary>
     internal partial class ClassicAdministratorListResult
     {
         /// <summary> Initializes a new instance of ClassicAdministratorListResult. </summary>
@@ -20,17 +23,29 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> Initializes a new instance of ClassicAdministratorListResult. </summary>
-        /// <param name="value"> An array of administrators. </param>
-        /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
+        /// <param name="value">
+        /// An array of administrators.
+        /// Serialized Name: ClassicAdministratorListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The URL to use for getting the next set of results.
+        /// Serialized Name: ClassicAdministratorListResult.nextLink
+        /// </param>
         internal ClassicAdministratorListResult(IReadOnlyList<ClassicAdministrator> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> An array of administrators. </summary>
+        /// <summary>
+        /// An array of administrators.
+        /// Serialized Name: ClassicAdministratorListResult.value
+        /// </summary>
         public IReadOnlyList<ClassicAdministrator> Value { get; }
-        /// <summary> The URL to use for getting the next set of results. </summary>
+        /// <summary>
+        /// The URL to use for getting the next set of results.
+        /// Serialized Name: ClassicAdministratorListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

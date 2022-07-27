@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    public partial class ProviderOperation
+    public partial class ProviderOperationInfo
     {
-        internal static ProviderOperation DeserializeProviderOperation(JsonElement element)
+        internal static ProviderOperationInfo DeserializeProviderOperationInfo(JsonElement element)
         {
             Optional<string> name = default;
             Optional<string> displayName = default;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     continue;
                 }
             }
-            return new ProviderOperation(name.Value, displayName.Value, description.Value, origin.Value, properties.Value);
+            return new ProviderOperationInfo(name.Value, displayName.Value, description.Value, origin.Value, properties.Value);
         }
     }
 }

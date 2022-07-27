@@ -9,7 +9,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary> The detail of a user. </summary>
+    /// <summary>
+    /// The detail of a user.
+    /// Serialized Name: UserInfo
+    /// </summary>
     public partial class UserInfo
     {
         /// <summary> Initializes a new instance of UserInfo. </summary>
@@ -18,10 +21,22 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> Initializes a new instance of UserInfo. </summary>
-        /// <param name="userType"> The type of user. </param>
-        /// <param name="isBackup"> The value indicating whether the user is a backup fallback approver. </param>
-        /// <param name="id"> The object id of the user. </param>
-        /// <param name="description"> The description of the user. </param>
+        /// <param name="userType">
+        /// The type of user.
+        /// Serialized Name: UserInfo.userType
+        /// </param>
+        /// <param name="isBackup">
+        /// The value indicating whether the user is a backup fallback approver
+        /// Serialized Name: UserInfo.isBackup
+        /// </param>
+        /// <param name="id">
+        /// The object id of the user.
+        /// Serialized Name: UserInfo.id
+        /// </param>
+        /// <param name="description">
+        /// The description of the user.
+        /// Serialized Name: UserInfo.description
+        /// </param>
         internal UserInfo(UserType? userType, bool? isBackup, ResourceIdentifier id, string description)
         {
             UserType = userType;
@@ -30,13 +45,25 @@ namespace Azure.ResourceManager.Authorization.Models
             Description = description;
         }
 
-        /// <summary> The type of user. </summary>
+        /// <summary>
+        /// The type of user.
+        /// Serialized Name: UserInfo.userType
+        /// </summary>
         public UserType? UserType { get; set; }
-        /// <summary> The value indicating whether the user is a backup fallback approver. </summary>
+        /// <summary>
+        /// The value indicating whether the user is a backup fallback approver
+        /// Serialized Name: UserInfo.isBackup
+        /// </summary>
         public bool? IsBackup { get; set; }
-        /// <summary> The object id of the user. </summary>
+        /// <summary>
+        /// The object id of the user.
+        /// Serialized Name: UserInfo.id
+        /// </summary>
         public ResourceIdentifier Id { get; set; }
-        /// <summary> The description of the user. </summary>
+        /// <summary>
+        /// The description of the user.
+        /// Serialized Name: UserInfo.description
+        /// </summary>
         public string Description { get; set; }
     }
 }

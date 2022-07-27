@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary> The type of rule. </summary>
+    /// <summary>
+    /// The type of rule
+    /// Serialized Name: RoleManagementPolicyRuleType
+    /// </summary>
     internal readonly partial struct RoleManagementPolicyRuleType : IEquatable<RoleManagementPolicyRuleType>
     {
         private readonly string _value;
@@ -28,15 +31,30 @@ namespace Azure.ResourceManager.Authorization.Models
         private const string RoleManagementPolicyExpirationRuleValue = "RoleManagementPolicyExpirationRule";
         private const string RoleManagementPolicyNotificationRuleValue = "RoleManagementPolicyNotificationRule";
 
-        /// <summary> RoleManagementPolicyApprovalRule. </summary>
+        /// <summary>
+        /// RoleManagementPolicyApprovalRule
+        /// Serialized Name: RoleManagementPolicyRuleType.RoleManagementPolicyApprovalRule
+        /// </summary>
         public static RoleManagementPolicyRuleType RoleManagementPolicyApprovalRule { get; } = new RoleManagementPolicyRuleType(RoleManagementPolicyApprovalRuleValue);
-        /// <summary> RoleManagementPolicyAuthenticationContextRule. </summary>
+        /// <summary>
+        /// RoleManagementPolicyAuthenticationContextRule
+        /// Serialized Name: RoleManagementPolicyRuleType.RoleManagementPolicyAuthenticationContextRule
+        /// </summary>
         public static RoleManagementPolicyRuleType RoleManagementPolicyAuthenticationContextRule { get; } = new RoleManagementPolicyRuleType(RoleManagementPolicyAuthenticationContextRuleValue);
-        /// <summary> RoleManagementPolicyEnablementRule. </summary>
+        /// <summary>
+        /// RoleManagementPolicyEnablementRule
+        /// Serialized Name: RoleManagementPolicyRuleType.RoleManagementPolicyEnablementRule
+        /// </summary>
         public static RoleManagementPolicyRuleType RoleManagementPolicyEnablementRule { get; } = new RoleManagementPolicyRuleType(RoleManagementPolicyEnablementRuleValue);
-        /// <summary> RoleManagementPolicyExpirationRule. </summary>
+        /// <summary>
+        /// RoleManagementPolicyExpirationRule
+        /// Serialized Name: RoleManagementPolicyRuleType.RoleManagementPolicyExpirationRule
+        /// </summary>
         public static RoleManagementPolicyRuleType RoleManagementPolicyExpirationRule { get; } = new RoleManagementPolicyRuleType(RoleManagementPolicyExpirationRuleValue);
-        /// <summary> RoleManagementPolicyNotificationRule. </summary>
+        /// <summary>
+        /// RoleManagementPolicyNotificationRule
+        /// Serialized Name: RoleManagementPolicyRuleType.RoleManagementPolicyNotificationRule
+        /// </summary>
         public static RoleManagementPolicyRuleType RoleManagementPolicyNotificationRule { get; } = new RoleManagementPolicyRuleType(RoleManagementPolicyNotificationRuleValue);
         /// <summary> Determines if two <see cref="RoleManagementPolicyRuleType"/> values are the same. </summary>
         public static bool operator ==(RoleManagementPolicyRuleType left, RoleManagementPolicyRuleType right) => left.Equals(right);

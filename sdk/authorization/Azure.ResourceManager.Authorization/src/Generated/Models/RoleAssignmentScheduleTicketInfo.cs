@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary> Ticket Info of the role assignment. </summary>
+    /// <summary>
+    /// Ticket Info of the role assignment
+    /// Serialized Name: RoleAssignmentScheduleTicketInfo
+    /// </summary>
     public partial class RoleAssignmentScheduleTicketInfo
     {
         /// <summary> Initializes a new instance of RoleAssignmentScheduleTicketInfo. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> Initializes a new instance of RoleAssignmentScheduleTicketInfo. </summary>
-        /// <param name="ticketNumber"> Ticket number for the role assignment. </param>
-        /// <param name="ticketSystem"> Ticket system name for the role assignment. </param>
+        /// <param name="ticketNumber">
+        /// Ticket number for the role assignment
+        /// Serialized Name: RoleAssignmentScheduleTicketInfo.ticketNumber
+        /// </param>
+        /// <param name="ticketSystem">
+        /// Ticket system name for the role assignment
+        /// Serialized Name: RoleAssignmentScheduleTicketInfo.ticketSystem
+        /// </param>
         internal RoleAssignmentScheduleTicketInfo(string ticketNumber, string ticketSystem)
         {
             TicketNumber = ticketNumber;
             TicketSystem = ticketSystem;
         }
 
-        /// <summary> Ticket number for the role assignment. </summary>
+        /// <summary>
+        /// Ticket number for the role assignment
+        /// Serialized Name: RoleAssignmentScheduleTicketInfo.ticketNumber
+        /// </summary>
         public string TicketNumber { get; set; }
-        /// <summary> Ticket system name for the role assignment. </summary>
+        /// <summary>
+        /// Ticket system name for the role assignment
+        /// Serialized Name: RoleAssignmentScheduleTicketInfo.ticketSystem
+        /// </summary>
         public string TicketSystem { get; set; }
     }
 }

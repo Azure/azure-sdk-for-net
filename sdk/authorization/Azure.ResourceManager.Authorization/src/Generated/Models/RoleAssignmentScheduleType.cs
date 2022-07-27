@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary> Type of the role assignment schedule expiration. </summary>
+    /// <summary>
+    /// Type of the role assignment schedule expiration
+    /// Serialized Name: RoleAssignmentScheduleType
+    /// </summary>
     public readonly partial struct RoleAssignmentScheduleType : IEquatable<RoleAssignmentScheduleType>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.Authorization.Models
         private const string AfterDateTimeValue = "AfterDateTime";
         private const string NoExpirationValue = "NoExpiration";
 
-        /// <summary> AfterDuration. </summary>
+        /// <summary>
+        /// AfterDuration
+        /// Serialized Name: RoleAssignmentScheduleType.AfterDuration
+        /// </summary>
         public static RoleAssignmentScheduleType AfterDuration { get; } = new RoleAssignmentScheduleType(AfterDurationValue);
-        /// <summary> AfterDateTime. </summary>
+        /// <summary>
+        /// AfterDateTime
+        /// Serialized Name: RoleAssignmentScheduleType.AfterDateTime
+        /// </summary>
         public static RoleAssignmentScheduleType AfterDateTime { get; } = new RoleAssignmentScheduleType(AfterDateTimeValue);
-        /// <summary> NoExpiration. </summary>
+        /// <summary>
+        /// NoExpiration
+        /// Serialized Name: RoleAssignmentScheduleType.NoExpiration
+        /// </summary>
         public static RoleAssignmentScheduleType NoExpiration { get; } = new RoleAssignmentScheduleType(NoExpirationValue);
         /// <summary> Determines if two <see cref="RoleAssignmentScheduleType"/> values are the same. </summary>
         public static bool operator ==(RoleAssignmentScheduleType left, RoleAssignmentScheduleType right) => left.Equals(right);

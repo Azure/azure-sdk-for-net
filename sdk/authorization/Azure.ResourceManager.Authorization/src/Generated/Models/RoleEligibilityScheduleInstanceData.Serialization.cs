@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Authorization
             Optional<SystemData> systemData = default;
             Optional<string> scope = default;
             Optional<ResourceIdentifier> roleDefinitionId = default;
-            Optional<string> principalId = default;
+            Optional<Guid> principalId = default;
             Optional<PrincipalType> principalType = default;
             Optional<ResourceIdentifier> roleEligibilityScheduleId = default;
             Optional<RoleEligibilityScheduleInstanceStatus> status = default;
@@ -87,7 +87,12 @@ namespace Azure.ResourceManager.Authorization
                         }
                         if (property0.NameEquals("principalId"))
                         {
-                            principalId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            principalId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("principalType"))
@@ -184,7 +189,7 @@ namespace Azure.ResourceManager.Authorization
                     continue;
                 }
             }
-            return new RoleEligibilityScheduleInstanceData(id, name, type, systemData.Value, scope.Value, roleDefinitionId.Value, principalId.Value, Optional.ToNullable(principalType), roleEligibilityScheduleId.Value, Optional.ToNullable(status), Optional.ToNullable(startDateTime), Optional.ToNullable(endDateTime), Optional.ToNullable(memberType), condition.Value, conditionVersion.Value, Optional.ToNullable(createdOn), expandedProperties.Value);
+            return new RoleEligibilityScheduleInstanceData(id, name, type, systemData.Value, scope.Value, roleDefinitionId.Value, Optional.ToNullable(principalId), Optional.ToNullable(principalType), roleEligibilityScheduleId.Value, Optional.ToNullable(status), Optional.ToNullable(startDateTime), Optional.ToNullable(endDateTime), Optional.ToNullable(memberType), condition.Value, conditionVersion.Value, Optional.ToNullable(createdOn), expandedProperties.Value);
         }
     }
 }

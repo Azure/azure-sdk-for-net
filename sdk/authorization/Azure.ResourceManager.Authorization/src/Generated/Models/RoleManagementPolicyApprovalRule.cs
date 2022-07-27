@@ -9,7 +9,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary> The role management policy approval rule. </summary>
+    /// <summary>
+    /// The role management policy approval rule.
+    /// Serialized Name: RoleManagementPolicyApprovalRule
+    /// </summary>
     public partial class RoleManagementPolicyApprovalRule : RoleManagementPolicyRule
     {
         /// <summary> Initializes a new instance of RoleManagementPolicyApprovalRule. </summary>
@@ -19,17 +22,32 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> Initializes a new instance of RoleManagementPolicyApprovalRule. </summary>
-        /// <param name="id"> The id of the rule. </param>
-        /// <param name="ruleType"> The type of rule. </param>
-        /// <param name="target"> The target of the current rule. </param>
-        /// <param name="setting"> The approval setting. </param>
+        /// <param name="id">
+        /// The id of the rule.
+        /// Serialized Name: RoleManagementPolicyRule.id
+        /// </param>
+        /// <param name="ruleType">
+        /// The type of rule
+        /// Serialized Name: RoleManagementPolicyRule.ruleType
+        /// </param>
+        /// <param name="target">
+        /// The target of the current rule.
+        /// Serialized Name: RoleManagementPolicyRule.target
+        /// </param>
+        /// <param name="setting">
+        /// The approval setting
+        /// Serialized Name: RoleManagementPolicyApprovalRule.setting
+        /// </param>
         internal RoleManagementPolicyApprovalRule(ResourceIdentifier id, RoleManagementPolicyRuleType ruleType, RoleManagementPolicyRuleTarget target, ApprovalSettings setting) : base(id, ruleType, target)
         {
             Setting = setting;
             RuleType = ruleType;
         }
 
-        /// <summary> The approval setting. </summary>
+        /// <summary>
+        /// The approval setting
+        /// Serialized Name: RoleManagementPolicyApprovalRule.setting
+        /// </summary>
         public ApprovalSettings Setting { get; set; }
     }
 }

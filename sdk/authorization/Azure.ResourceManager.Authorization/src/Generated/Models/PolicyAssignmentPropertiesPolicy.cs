@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary> Details of the policy. </summary>
+    /// <summary>
+    /// Details of the policy
+    /// Serialized Name: PolicyAssignmentPropertiesPolicy
+    /// </summary>
     public partial class PolicyAssignmentPropertiesPolicy
     {
         /// <summary> Initializes a new instance of PolicyAssignmentPropertiesPolicy. </summary>
@@ -19,9 +22,18 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> Initializes a new instance of PolicyAssignmentPropertiesPolicy. </summary>
-        /// <param name="id"> Id of the policy. </param>
-        /// <param name="lastModifiedBy"> The name of the entity last modified it. </param>
-        /// <param name="lastModifiedOn"> The last modified date time. </param>
+        /// <param name="id">
+        /// Id of the policy
+        /// Serialized Name: PolicyAssignmentPropertiesPolicy.id
+        /// </param>
+        /// <param name="lastModifiedBy">
+        /// The name of the entity last modified it
+        /// Serialized Name: PolicyAssignmentPropertiesPolicy.lastModifiedBy
+        /// </param>
+        /// <param name="lastModifiedOn">
+        /// The last modified date time.
+        /// Serialized Name: PolicyAssignmentPropertiesPolicy.lastModifiedDateTime
+        /// </param>
         internal PolicyAssignmentPropertiesPolicy(ResourceIdentifier id, AzurePrincipal lastModifiedBy, DateTimeOffset? lastModifiedOn)
         {
             Id = id;
@@ -29,11 +41,20 @@ namespace Azure.ResourceManager.Authorization.Models
             LastModifiedOn = lastModifiedOn;
         }
 
-        /// <summary> Id of the policy. </summary>
+        /// <summary>
+        /// Id of the policy
+        /// Serialized Name: PolicyAssignmentPropertiesPolicy.id
+        /// </summary>
         public ResourceIdentifier Id { get; }
-        /// <summary> The name of the entity last modified it. </summary>
+        /// <summary>
+        /// The name of the entity last modified it
+        /// Serialized Name: PolicyAssignmentPropertiesPolicy.lastModifiedBy
+        /// </summary>
         public AzurePrincipal LastModifiedBy { get; }
-        /// <summary> The last modified date time. </summary>
+        /// <summary>
+        /// The last modified date time.
+        /// Serialized Name: PolicyAssignmentPropertiesPolicy.lastModifiedDateTime
+        /// </summary>
         public DateTimeOffset? LastModifiedOn { get; }
     }
 }

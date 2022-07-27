@@ -9,7 +9,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary> Details of the resource scope. </summary>
+    /// <summary>
+    /// Details of the resource scope
+    /// Serialized Name: ExpandedPropertiesScope
+    /// </summary>
     public partial class ExpandedPropertiesScope
     {
         /// <summary> Initializes a new instance of ExpandedPropertiesScope. </summary>
@@ -18,9 +21,18 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> Initializes a new instance of ExpandedPropertiesScope. </summary>
-        /// <param name="id"> Scope id of the resource. </param>
-        /// <param name="displayName"> Display name of the resource. </param>
-        /// <param name="expandedPropertiesScopeType"> Type of the resource. </param>
+        /// <param name="id">
+        /// Scope id of the resource
+        /// Serialized Name: ExpandedPropertiesScope.id
+        /// </param>
+        /// <param name="displayName">
+        /// Display name of the resource
+        /// Serialized Name: ExpandedPropertiesScope.displayName
+        /// </param>
+        /// <param name="expandedPropertiesScopeType">
+        /// Type of the resource
+        /// Serialized Name: ExpandedPropertiesScope.type
+        /// </param>
         internal ExpandedPropertiesScope(ResourceIdentifier id, string displayName, string expandedPropertiesScopeType)
         {
             Id = id;
@@ -28,11 +40,20 @@ namespace Azure.ResourceManager.Authorization.Models
             ExpandedPropertiesScopeType = expandedPropertiesScopeType;
         }
 
-        /// <summary> Scope id of the resource. </summary>
+        /// <summary>
+        /// Scope id of the resource
+        /// Serialized Name: ExpandedPropertiesScope.id
+        /// </summary>
         public ResourceIdentifier Id { get; }
-        /// <summary> Display name of the resource. </summary>
+        /// <summary>
+        /// Display name of the resource
+        /// Serialized Name: ExpandedPropertiesScope.displayName
+        /// </summary>
         public string DisplayName { get; }
-        /// <summary> Type of the resource. </summary>
+        /// <summary>
+        /// Type of the resource
+        /// Serialized Name: ExpandedPropertiesScope.type
+        /// </summary>
         public string ExpandedPropertiesScopeType { get; }
     }
 }

@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             var name = "fea7a502-9a96-4806-a26f-eee560e52045";
             var data = new RoleAssignmentScheduleRequestData()
             {
-                PrincipalId = TestEnvironment.ClientId,
+                PrincipalId = Guid.Parse(TestEnvironment.ClientId),
                 RoleDefinitionId = Definition.Id,
                 RequestType = RequestType.SelfActivate,
-                LinkedRoleEligibilityScheduleId = "b1477448-2cc6-4ceb-93b4-54a202a89413",
+                LinkedRoleEligibilityScheduleId = new Guid("b1477448-2cc6-4ceb-93b4-54a202a89413"),
                 ScheduleInfo = new RoleAssignmentScheduleInfo()
                 {
                     StartOn = DateTimeOffset.Parse("2022-07-13T21:35:27.91Z"),

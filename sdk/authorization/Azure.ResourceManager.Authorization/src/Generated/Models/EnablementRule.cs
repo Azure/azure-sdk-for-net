@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary> The type of enablement rule. </summary>
+    /// <summary>
+    /// The type of enablement rule
+    /// Serialized Name: EnablementRules
+    /// </summary>
     public readonly partial struct EnablementRule : IEquatable<EnablementRule>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.Authorization.Models
         private const string JustificationValue = "Justification";
         private const string TicketingValue = "Ticketing";
 
-        /// <summary> MultiFactorAuthentication. </summary>
+        /// <summary>
+        /// MultiFactorAuthentication
+        /// Serialized Name: EnablementRules.MultiFactorAuthentication
+        /// </summary>
         public static EnablementRule MultiFactorAuthentication { get; } = new EnablementRule(MultiFactorAuthenticationValue);
-        /// <summary> Justification. </summary>
+        /// <summary>
+        /// Justification
+        /// Serialized Name: EnablementRules.Justification
+        /// </summary>
         public static EnablementRule Justification { get; } = new EnablementRule(JustificationValue);
-        /// <summary> Ticketing. </summary>
+        /// <summary>
+        /// Ticketing
+        /// Serialized Name: EnablementRules.Ticketing
+        /// </summary>
         public static EnablementRule Ticketing { get; } = new EnablementRule(TicketingValue);
         /// <summary> Determines if two <see cref="EnablementRule"/> values are the same. </summary>
         public static bool operator ==(EnablementRule left, EnablementRule right) => left.Equals(right);

@@ -14,6 +14,31 @@ output-folder: Generated/
 clear-output-folder: true
 skip-csproj: true
 
+mgmt-debug: 
+  show-serialized-names: true
+
+rename-mapping:
+  ProviderOperation: ProviderOperationInfo
+
+format-by-name-rules:
+  'tenantId': 'uuid'
+  'applicationId': 'uuid'
+  'etag': 'etag'
+  'location': 'azure-location'
+  'principalId': 'uuid'
+  'requestorId': 'uuid'
+  'targetRoleAssignmentScheduleId': 'uuid'
+  'targetRoleAssignmentScheduleInstanceId': 'uuid'
+  'linkedRoleEligibilityScheduleId': 'uuid'
+  'linkedRoleEligibilityScheduleInstanceId': 'uuid'
+  'roleAssignmentScheduleRequestId': 'arm-id'
+  'originRoleAssignmentId': 'arm-id'
+  'roleAssignmentScheduleId': 'arm-id'
+  'roleDefinitionId': 'arm-id'
+  'policyId': 'arm-id'
+  '*Uri': 'Uri'
+  '*Uris': 'Uri'
+
 rename-rules:
   CPU: Cpu
   CPUs: Cpus
@@ -126,68 +151,11 @@ directive:
     transform: $.operationId = "AzurePermissionsForResource_List" 
 
   # change type to ResourceIdentifier
-  - from: authorization-RoleAssignmentsCalls.json
-    where: $.definitions.RoleAssignmentPropertiesWithScope.properties.roleDefinitionId
-    transform: $['x-ms-format'] = 'arm-id'
-  - from: RoleAssignmentSchedule.json
-    where: $.definitions.RoleAssignmentScheduleProperties.properties.roleAssignmentScheduleRequestId
-    transform: $['x-ms-format'] = 'arm-id'
-  - from: RoleAssignmentScheduleInstance.json
-    where: $.definitions.RoleAssignmentScheduleInstanceProperties.properties.originRoleAssignmentId
-    transform: $['x-ms-format'] = 'arm-id'
-  - from: RoleAssignmentScheduleInstance.json
-    where: $.definitions.RoleAssignmentScheduleInstanceFilter.properties.roleAssignmentScheduleId
-    transform: $['x-ms-format'] = 'arm-id'
-  - from: RoleAssignmentScheduleInstance.json
-    where: $.definitions.RoleAssignmentScheduleInstanceProperties.properties.roleAssignmentScheduleId
-    transform: $['x-ms-format'] = 'arm-id'
-  - from: swagger-document
-    where: $.definitions.RoleAssignmentScheduleFilter.properties.roleDefinitionId
-    transform: $['x-ms-format'] = 'arm-id'
-  - from: swagger-document
-    where: $.definitions.RoleAssignmentScheduleProperties.properties.roleDefinitionId
-    transform: $['x-ms-format'] = 'arm-id'
-  - from: swagger-document
-    where: $.definitions.RoleAssignmentScheduleInstanceFilter.properties.roleDefinitionId
-    transform: $['x-ms-format'] = 'arm-id'
-  - from: swagger-document
-    where: $.definitions.RoleAssignmentScheduleInstanceProperties.properties.roleDefinitionId
-    transform: $['x-ms-format'] = 'arm-id'
-  - from: swagger-document
-    where: $.definitions.RoleAssignmentScheduleRequestFilter.properties.roleDefinitionId
-    transform: $['x-ms-format'] = 'arm-id'
-  - from: swagger-document
-    where: $.definitions.RoleAssignmentScheduleRequestProperties.properties.roleDefinitionId
-    transform: $['x-ms-format'] = 'arm-id'
-  - from: swagger-document
-    where: $.definitions.RoleEligibilityScheduleFilter.properties.roleDefinitionId
-    transform: $['x-ms-format'] = 'arm-id'
-  - from: swagger-document
-    where: $.definitions.RoleEligibilityScheduleProperties.properties.roleDefinitionId
-    transform: $['x-ms-format'] = 'arm-id'
-  - from: swagger-document
-    where: $.definitions.RoleEligibilityScheduleInstanceFilter.properties.roleDefinitionId
-    transform: $['x-ms-format'] = 'arm-id'
-  - from: swagger-document
-    where: $.definitions.RoleEligibilityScheduleInstanceProperties.properties.roleDefinitionId
-    transform: $['x-ms-format'] = 'arm-id'
-  - from: swagger-document
-    where: $.definitions.RoleEligibilityScheduleRequestFilter.properties.roleDefinitionId
-    transform: $['x-ms-format'] = 'arm-id'
-  - from: swagger-document
-    where: $.definitions.RoleEligibilityScheduleRequestProperties.properties.roleDefinitionId
-    transform: $['x-ms-format'] = 'arm-id'
-  - from: swagger-document
-    where: $.definitions.RoleManagementPolicyAssignmentProperties.properties.roleDefinitionId
-    transform: $['x-ms-format'] = 'arm-id'
   - from: swagger-document
     where: $.definitions.RoleEligibilityScheduleInstanceFilter.properties.roleEligibilityScheduleId
     transform: $['x-ms-format'] = 'arm-id'
   - from: swagger-document
     where: $.definitions.RoleEligibilityScheduleInstanceProperties.properties.roleEligibilityScheduleId
-    transform: $['x-ms-format'] = 'arm-id'
-  - from: swagger-document
-    where: $.definitions.RoleManagementPolicyAssignmentProperties.properties.policyId
     transform: $['x-ms-format'] = 'arm-id'
   - from: swagger-document
     where: $.definitions.RoleEligibilityScheduleProperties.properties.roleEligibilityScheduleRequestId

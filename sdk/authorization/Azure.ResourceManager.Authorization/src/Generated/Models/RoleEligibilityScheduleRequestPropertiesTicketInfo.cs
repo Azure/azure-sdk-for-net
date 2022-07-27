@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary> Ticket Info of the role eligibility. </summary>
+    /// <summary>
+    /// Ticket Info of the role eligibility
+    /// Serialized Name: RoleEligibilityScheduleRequestPropertiesTicketInfo
+    /// </summary>
     public partial class RoleEligibilityScheduleRequestPropertiesTicketInfo
     {
         /// <summary> Initializes a new instance of RoleEligibilityScheduleRequestPropertiesTicketInfo. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> Initializes a new instance of RoleEligibilityScheduleRequestPropertiesTicketInfo. </summary>
-        /// <param name="ticketNumber"> Ticket number for the role eligibility. </param>
-        /// <param name="ticketSystem"> Ticket system name for the role eligibility. </param>
+        /// <param name="ticketNumber">
+        /// Ticket number for the role eligibility
+        /// Serialized Name: RoleEligibilityScheduleRequestPropertiesTicketInfo.ticketNumber
+        /// </param>
+        /// <param name="ticketSystem">
+        /// Ticket system name for the role eligibility
+        /// Serialized Name: RoleEligibilityScheduleRequestPropertiesTicketInfo.ticketSystem
+        /// </param>
         internal RoleEligibilityScheduleRequestPropertiesTicketInfo(string ticketNumber, string ticketSystem)
         {
             TicketNumber = ticketNumber;
             TicketSystem = ticketSystem;
         }
 
-        /// <summary> Ticket number for the role eligibility. </summary>
+        /// <summary>
+        /// Ticket number for the role eligibility
+        /// Serialized Name: RoleEligibilityScheduleRequestPropertiesTicketInfo.ticketNumber
+        /// </summary>
         public string TicketNumber { get; set; }
-        /// <summary> Ticket system name for the role eligibility. </summary>
+        /// <summary>
+        /// Ticket system name for the role eligibility
+        /// Serialized Name: RoleEligibilityScheduleRequestPropertiesTicketInfo.ticketSystem
+        /// </summary>
         public string TicketSystem { get; set; }
     }
 }

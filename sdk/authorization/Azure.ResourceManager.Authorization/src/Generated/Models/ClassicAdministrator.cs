@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary> Classic Administrators. </summary>
+    /// <summary>
+    /// Classic Administrators
+    /// Serialized Name: ClassicAdministrator
+    /// </summary>
     public partial class ClassicAdministrator : ResourceData
     {
         /// <summary> Initializes a new instance of ClassicAdministrator. </summary>
@@ -23,17 +26,29 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="emailAddress"> The email address of the administrator. </param>
-        /// <param name="role"> The role of the administrator. </param>
+        /// <param name="emailAddress">
+        /// The email address of the administrator.
+        /// Serialized Name: ClassicAdministrator.properties.emailAddress
+        /// </param>
+        /// <param name="role">
+        /// The role of the administrator.
+        /// Serialized Name: ClassicAdministrator.properties.role
+        /// </param>
         internal ClassicAdministrator(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string emailAddress, string role) : base(id, name, resourceType, systemData)
         {
             EmailAddress = emailAddress;
             Role = role;
         }
 
-        /// <summary> The email address of the administrator. </summary>
+        /// <summary>
+        /// The email address of the administrator.
+        /// Serialized Name: ClassicAdministrator.properties.emailAddress
+        /// </summary>
         public string EmailAddress { get; }
-        /// <summary> The role of the administrator. </summary>
+        /// <summary>
+        /// The role of the administrator.
+        /// Serialized Name: ClassicAdministrator.properties.role
+        /// </summary>
         public string Role { get; }
     }
 }

@@ -5,11 +5,15 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary> Role assignment properties with scope. </summary>
+    /// <summary>
+    /// Role assignment properties with scope.
+    /// Serialized Name: RoleAssignmentPropertiesWithScope
+    /// </summary>
     public partial class RoleAssignmentPropertiesWithScope
     {
         /// <summary> Initializes a new instance of RoleAssignmentPropertiesWithScope. </summary>
@@ -18,21 +22,39 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> Initializes a new instance of RoleAssignmentPropertiesWithScope. </summary>
-        /// <param name="scope"> The role assignment scope. </param>
-        /// <param name="roleDefinitionId"> The role definition ID. </param>
-        /// <param name="principalId"> The principal ID. </param>
-        internal RoleAssignmentPropertiesWithScope(string scope, ResourceIdentifier roleDefinitionId, string principalId)
+        /// <param name="scope">
+        /// The role assignment scope.
+        /// Serialized Name: RoleAssignmentPropertiesWithScope.scope
+        /// </param>
+        /// <param name="roleDefinitionId">
+        /// The role definition ID.
+        /// Serialized Name: RoleAssignmentPropertiesWithScope.roleDefinitionId
+        /// </param>
+        /// <param name="principalId">
+        /// The principal ID.
+        /// Serialized Name: RoleAssignmentPropertiesWithScope.principalId
+        /// </param>
+        internal RoleAssignmentPropertiesWithScope(string scope, ResourceIdentifier roleDefinitionId, Guid? principalId)
         {
             Scope = scope;
             RoleDefinitionId = roleDefinitionId;
             PrincipalId = principalId;
         }
 
-        /// <summary> The role assignment scope. </summary>
+        /// <summary>
+        /// The role assignment scope.
+        /// Serialized Name: RoleAssignmentPropertiesWithScope.scope
+        /// </summary>
         public string Scope { get; }
-        /// <summary> The role definition ID. </summary>
+        /// <summary>
+        /// The role definition ID.
+        /// Serialized Name: RoleAssignmentPropertiesWithScope.roleDefinitionId
+        /// </summary>
         public ResourceIdentifier RoleDefinitionId { get; }
-        /// <summary> The principal ID. </summary>
-        public string PrincipalId { get; }
+        /// <summary>
+        /// The principal ID.
+        /// Serialized Name: RoleAssignmentPropertiesWithScope.principalId
+        /// </summary>
+        public Guid? PrincipalId { get; }
     }
 }

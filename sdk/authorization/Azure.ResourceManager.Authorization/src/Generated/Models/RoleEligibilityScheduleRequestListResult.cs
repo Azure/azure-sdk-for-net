@@ -11,7 +11,10 @@ using Azure.ResourceManager.Authorization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary> Role eligibility schedule request list operation result. </summary>
+    /// <summary>
+    /// Role eligibility schedule request list operation result.
+    /// Serialized Name: RoleEligibilityScheduleRequestListResult
+    /// </summary>
     internal partial class RoleEligibilityScheduleRequestListResult
     {
         /// <summary> Initializes a new instance of RoleEligibilityScheduleRequestListResult. </summary>
@@ -21,17 +24,29 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> Initializes a new instance of RoleEligibilityScheduleRequestListResult. </summary>
-        /// <param name="value"> Role eligibility schedule request list. </param>
-        /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
+        /// <param name="value">
+        /// Role eligibility schedule request list.
+        /// Serialized Name: RoleEligibilityScheduleRequestListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The URL to use for getting the next set of results.
+        /// Serialized Name: RoleEligibilityScheduleRequestListResult.nextLink
+        /// </param>
         internal RoleEligibilityScheduleRequestListResult(IReadOnlyList<RoleEligibilityScheduleRequestData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Role eligibility schedule request list. </summary>
+        /// <summary>
+        /// Role eligibility schedule request list.
+        /// Serialized Name: RoleEligibilityScheduleRequestListResult.value
+        /// </summary>
         public IReadOnlyList<RoleEligibilityScheduleRequestData> Value { get; }
-        /// <summary> The URL to use for getting the next set of results. </summary>
+        /// <summary>
+        /// The URL to use for getting the next set of results.
+        /// Serialized Name: RoleEligibilityScheduleRequestListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

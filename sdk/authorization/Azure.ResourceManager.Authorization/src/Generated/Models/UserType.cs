@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary> The type of user. </summary>
+    /// <summary>
+    /// The type of user.
+    /// Serialized Name: UserType
+    /// </summary>
     public readonly partial struct UserType : IEquatable<UserType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.Authorization.Models
         private const string UserValue = "User";
         private const string GroupValue = "Group";
 
-        /// <summary> User. </summary>
+        /// <summary>
+        /// User
+        /// Serialized Name: UserType.User
+        /// </summary>
         public static UserType User { get; } = new UserType(UserValue);
-        /// <summary> Group. </summary>
+        /// <summary>
+        /// Group
+        /// Serialized Name: UserType.Group
+        /// </summary>
         public static UserType Group { get; } = new UserType(GroupValue);
         /// <summary> Determines if two <see cref="UserType"/> values are the same. </summary>
         public static bool operator ==(UserType left, UserType right) => left.Equals(right);

@@ -25,24 +25,75 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="scope"> The role eligibility schedule request scope. </param>
-        /// <param name="roleDefinitionId"> The role definition ID. </param>
-        /// <param name="principalId"> The principal ID. </param>
-        /// <param name="principalType"> The principal type of the assigned principal ID. </param>
-        /// <param name="requestType"> The type of the role assignment schedule request. Eg: SelfActivate, AdminAssign etc. </param>
-        /// <param name="status"> The status of the role eligibility schedule request. </param>
-        /// <param name="approvalId"> The approvalId of the role eligibility schedule request. </param>
-        /// <param name="scheduleInfo"> Schedule info of the role eligibility schedule. </param>
-        /// <param name="targetRoleEligibilityScheduleId"> The resultant role eligibility schedule id or the role eligibility schedule id being updated. </param>
-        /// <param name="targetRoleEligibilityScheduleInstanceId"> The role eligibility schedule instance id being updated. </param>
-        /// <param name="justification"> Justification for the role eligibility. </param>
-        /// <param name="ticketInfo"> Ticket Info of the role eligibility. </param>
-        /// <param name="condition"> The conditions on the role assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase &apos;foo_storage_container&apos;. </param>
-        /// <param name="conditionVersion"> Version of the condition. Currently accepted value is &apos;2.0&apos;. </param>
-        /// <param name="createdOn"> DateTime when role eligibility schedule request was created. </param>
-        /// <param name="requestorId"> Id of the user who created this request. </param>
-        /// <param name="expandedProperties"> Additional properties of principal, scope and role definition. </param>
-        internal RoleEligibilityScheduleRequestData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string scope, ResourceIdentifier roleDefinitionId, string principalId, PrincipalType? principalType, RequestType? requestType, RoleEligibilityScheduleRequestStatus? status, string approvalId, RoleEligibilityScheduleRequestPropertiesScheduleInfo scheduleInfo, string targetRoleEligibilityScheduleId, string targetRoleEligibilityScheduleInstanceId, string justification, RoleEligibilityScheduleRequestPropertiesTicketInfo ticketInfo, string condition, string conditionVersion, DateTimeOffset? createdOn, string requestorId, ExpandedProperties expandedProperties) : base(id, name, resourceType, systemData)
+        /// <param name="scope">
+        /// The role eligibility schedule request scope.
+        /// Serialized Name: RoleEligibilityScheduleRequest.properties.scope
+        /// </param>
+        /// <param name="roleDefinitionId">
+        /// The role definition ID.
+        /// Serialized Name: RoleEligibilityScheduleRequest.properties.roleDefinitionId
+        /// </param>
+        /// <param name="principalId">
+        /// The principal ID.
+        /// Serialized Name: RoleEligibilityScheduleRequest.properties.principalId
+        /// </param>
+        /// <param name="principalType">
+        /// The principal type of the assigned principal ID.
+        /// Serialized Name: RoleEligibilityScheduleRequest.properties.principalType
+        /// </param>
+        /// <param name="requestType">
+        /// The type of the role assignment schedule request. Eg: SelfActivate, AdminAssign etc
+        /// Serialized Name: RoleEligibilityScheduleRequest.properties.requestType
+        /// </param>
+        /// <param name="status">
+        /// The status of the role eligibility schedule request.
+        /// Serialized Name: RoleEligibilityScheduleRequest.properties.status
+        /// </param>
+        /// <param name="approvalId">
+        /// The approvalId of the role eligibility schedule request.
+        /// Serialized Name: RoleEligibilityScheduleRequest.properties.approvalId
+        /// </param>
+        /// <param name="scheduleInfo">
+        /// Schedule info of the role eligibility schedule
+        /// Serialized Name: RoleEligibilityScheduleRequest.properties.scheduleInfo
+        /// </param>
+        /// <param name="targetRoleEligibilityScheduleId">
+        /// The resultant role eligibility schedule id or the role eligibility schedule id being updated
+        /// Serialized Name: RoleEligibilityScheduleRequest.properties.targetRoleEligibilityScheduleId
+        /// </param>
+        /// <param name="targetRoleEligibilityScheduleInstanceId">
+        /// The role eligibility schedule instance id being updated
+        /// Serialized Name: RoleEligibilityScheduleRequest.properties.targetRoleEligibilityScheduleInstanceId
+        /// </param>
+        /// <param name="justification">
+        /// Justification for the role eligibility
+        /// Serialized Name: RoleEligibilityScheduleRequest.properties.justification
+        /// </param>
+        /// <param name="ticketInfo">
+        /// Ticket Info of the role eligibility
+        /// Serialized Name: RoleEligibilityScheduleRequest.properties.ticketInfo
+        /// </param>
+        /// <param name="condition">
+        /// The conditions on the role assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase &apos;foo_storage_container&apos;
+        /// Serialized Name: RoleEligibilityScheduleRequest.properties.condition
+        /// </param>
+        /// <param name="conditionVersion">
+        /// Version of the condition. Currently accepted value is &apos;2.0&apos;
+        /// Serialized Name: RoleEligibilityScheduleRequest.properties.conditionVersion
+        /// </param>
+        /// <param name="createdOn">
+        /// DateTime when role eligibility schedule request was created
+        /// Serialized Name: RoleEligibilityScheduleRequest.properties.createdOn
+        /// </param>
+        /// <param name="requestorId">
+        /// Id of the user who created this request
+        /// Serialized Name: RoleEligibilityScheduleRequest.properties.requestorId
+        /// </param>
+        /// <param name="expandedProperties">
+        /// Additional properties of principal, scope and role definition
+        /// Serialized Name: RoleEligibilityScheduleRequest.properties.expandedProperties
+        /// </param>
+        internal RoleEligibilityScheduleRequestData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string scope, ResourceIdentifier roleDefinitionId, Guid? principalId, PrincipalType? principalType, RequestType? requestType, RoleEligibilityScheduleRequestStatus? status, string approvalId, RoleEligibilityScheduleRequestPropertiesScheduleInfo scheduleInfo, string targetRoleEligibilityScheduleId, string targetRoleEligibilityScheduleInstanceId, string justification, RoleEligibilityScheduleRequestPropertiesTicketInfo ticketInfo, string condition, string conditionVersion, DateTimeOffset? createdOn, Guid? requestorId, ExpandedProperties expandedProperties) : base(id, name, resourceType, systemData)
         {
             Scope = scope;
             RoleDefinitionId = roleDefinitionId;
@@ -63,39 +114,90 @@ namespace Azure.ResourceManager.Authorization
             ExpandedProperties = expandedProperties;
         }
 
-        /// <summary> The role eligibility schedule request scope. </summary>
+        /// <summary>
+        /// The role eligibility schedule request scope.
+        /// Serialized Name: RoleEligibilityScheduleRequest.properties.scope
+        /// </summary>
         public string Scope { get; }
-        /// <summary> The role definition ID. </summary>
+        /// <summary>
+        /// The role definition ID.
+        /// Serialized Name: RoleEligibilityScheduleRequest.properties.roleDefinitionId
+        /// </summary>
         public ResourceIdentifier RoleDefinitionId { get; set; }
-        /// <summary> The principal ID. </summary>
-        public string PrincipalId { get; set; }
-        /// <summary> The principal type of the assigned principal ID. </summary>
+        /// <summary>
+        /// The principal ID.
+        /// Serialized Name: RoleEligibilityScheduleRequest.properties.principalId
+        /// </summary>
+        public Guid? PrincipalId { get; set; }
+        /// <summary>
+        /// The principal type of the assigned principal ID.
+        /// Serialized Name: RoleEligibilityScheduleRequest.properties.principalType
+        /// </summary>
         public PrincipalType? PrincipalType { get; }
-        /// <summary> The type of the role assignment schedule request. Eg: SelfActivate, AdminAssign etc. </summary>
+        /// <summary>
+        /// The type of the role assignment schedule request. Eg: SelfActivate, AdminAssign etc
+        /// Serialized Name: RoleEligibilityScheduleRequest.properties.requestType
+        /// </summary>
         public RequestType? RequestType { get; set; }
-        /// <summary> The status of the role eligibility schedule request. </summary>
+        /// <summary>
+        /// The status of the role eligibility schedule request.
+        /// Serialized Name: RoleEligibilityScheduleRequest.properties.status
+        /// </summary>
         public RoleEligibilityScheduleRequestStatus? Status { get; }
-        /// <summary> The approvalId of the role eligibility schedule request. </summary>
+        /// <summary>
+        /// The approvalId of the role eligibility schedule request.
+        /// Serialized Name: RoleEligibilityScheduleRequest.properties.approvalId
+        /// </summary>
         public string ApprovalId { get; }
-        /// <summary> Schedule info of the role eligibility schedule. </summary>
+        /// <summary>
+        /// Schedule info of the role eligibility schedule
+        /// Serialized Name: RoleEligibilityScheduleRequest.properties.scheduleInfo
+        /// </summary>
         public RoleEligibilityScheduleRequestPropertiesScheduleInfo ScheduleInfo { get; set; }
-        /// <summary> The resultant role eligibility schedule id or the role eligibility schedule id being updated. </summary>
+        /// <summary>
+        /// The resultant role eligibility schedule id or the role eligibility schedule id being updated
+        /// Serialized Name: RoleEligibilityScheduleRequest.properties.targetRoleEligibilityScheduleId
+        /// </summary>
         public string TargetRoleEligibilityScheduleId { get; set; }
-        /// <summary> The role eligibility schedule instance id being updated. </summary>
+        /// <summary>
+        /// The role eligibility schedule instance id being updated
+        /// Serialized Name: RoleEligibilityScheduleRequest.properties.targetRoleEligibilityScheduleInstanceId
+        /// </summary>
         public string TargetRoleEligibilityScheduleInstanceId { get; set; }
-        /// <summary> Justification for the role eligibility. </summary>
+        /// <summary>
+        /// Justification for the role eligibility
+        /// Serialized Name: RoleEligibilityScheduleRequest.properties.justification
+        /// </summary>
         public string Justification { get; set; }
-        /// <summary> Ticket Info of the role eligibility. </summary>
+        /// <summary>
+        /// Ticket Info of the role eligibility
+        /// Serialized Name: RoleEligibilityScheduleRequest.properties.ticketInfo
+        /// </summary>
         public RoleEligibilityScheduleRequestPropertiesTicketInfo TicketInfo { get; set; }
-        /// <summary> The conditions on the role assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase &apos;foo_storage_container&apos;. </summary>
+        /// <summary>
+        /// The conditions on the role assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase &apos;foo_storage_container&apos;
+        /// Serialized Name: RoleEligibilityScheduleRequest.properties.condition
+        /// </summary>
         public string Condition { get; set; }
-        /// <summary> Version of the condition. Currently accepted value is &apos;2.0&apos;. </summary>
+        /// <summary>
+        /// Version of the condition. Currently accepted value is &apos;2.0&apos;
+        /// Serialized Name: RoleEligibilityScheduleRequest.properties.conditionVersion
+        /// </summary>
         public string ConditionVersion { get; set; }
-        /// <summary> DateTime when role eligibility schedule request was created. </summary>
+        /// <summary>
+        /// DateTime when role eligibility schedule request was created
+        /// Serialized Name: RoleEligibilityScheduleRequest.properties.createdOn
+        /// </summary>
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary> Id of the user who created this request. </summary>
-        public string RequestorId { get; }
-        /// <summary> Additional properties of principal, scope and role definition. </summary>
+        /// <summary>
+        /// Id of the user who created this request
+        /// Serialized Name: RoleEligibilityScheduleRequest.properties.requestorId
+        /// </summary>
+        public Guid? RequestorId { get; }
+        /// <summary>
+        /// Additional properties of principal, scope and role definition
+        /// Serialized Name: RoleEligibilityScheduleRequest.properties.expandedProperties
+        /// </summary>
         public ExpandedProperties ExpandedProperties { get; }
     }
 }

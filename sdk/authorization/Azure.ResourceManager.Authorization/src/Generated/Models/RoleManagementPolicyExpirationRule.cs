@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary> The role management policy expiration rule. </summary>
+    /// <summary>
+    /// The role management policy expiration rule.
+    /// Serialized Name: RoleManagementPolicyExpirationRule
+    /// </summary>
     public partial class RoleManagementPolicyExpirationRule : RoleManagementPolicyRule
     {
         /// <summary> Initializes a new instance of RoleManagementPolicyExpirationRule. </summary>
@@ -20,11 +23,26 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> Initializes a new instance of RoleManagementPolicyExpirationRule. </summary>
-        /// <param name="id"> The id of the rule. </param>
-        /// <param name="ruleType"> The type of rule. </param>
-        /// <param name="target"> The target of the current rule. </param>
-        /// <param name="isExpirationRequired"> The value indicating whether expiration is required. </param>
-        /// <param name="maximumDuration"> The maximum duration of expiration in timespan. </param>
+        /// <param name="id">
+        /// The id of the rule.
+        /// Serialized Name: RoleManagementPolicyRule.id
+        /// </param>
+        /// <param name="ruleType">
+        /// The type of rule
+        /// Serialized Name: RoleManagementPolicyRule.ruleType
+        /// </param>
+        /// <param name="target">
+        /// The target of the current rule.
+        /// Serialized Name: RoleManagementPolicyRule.target
+        /// </param>
+        /// <param name="isExpirationRequired">
+        /// The value indicating whether expiration is required.
+        /// Serialized Name: RoleManagementPolicyExpirationRule.isExpirationRequired
+        /// </param>
+        /// <param name="maximumDuration">
+        /// The maximum duration of expiration in timespan.
+        /// Serialized Name: RoleManagementPolicyExpirationRule.maximumDuration
+        /// </param>
         internal RoleManagementPolicyExpirationRule(ResourceIdentifier id, RoleManagementPolicyRuleType ruleType, RoleManagementPolicyRuleTarget target, bool? isExpirationRequired, TimeSpan? maximumDuration) : base(id, ruleType, target)
         {
             IsExpirationRequired = isExpirationRequired;
@@ -32,9 +50,15 @@ namespace Azure.ResourceManager.Authorization.Models
             RuleType = ruleType;
         }
 
-        /// <summary> The value indicating whether expiration is required. </summary>
+        /// <summary>
+        /// The value indicating whether expiration is required.
+        /// Serialized Name: RoleManagementPolicyExpirationRule.isExpirationRequired
+        /// </summary>
         public bool? IsExpirationRequired { get; set; }
-        /// <summary> The maximum duration of expiration in timespan. </summary>
+        /// <summary>
+        /// The maximum duration of expiration in timespan.
+        /// Serialized Name: RoleManagementPolicyExpirationRule.maximumDuration
+        /// </summary>
         public TimeSpan? MaximumDuration { get; set; }
     }
 }

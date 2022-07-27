@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary> Schedule info of the role assignment schedule. </summary>
+    /// <summary>
+    /// Schedule info of the role assignment schedule
+    /// Serialized Name: RoleAssignmentScheduleInfo
+    /// </summary>
     public partial class RoleAssignmentScheduleInfo
     {
         /// <summary> Initializes a new instance of RoleAssignmentScheduleInfo. </summary>
@@ -18,17 +21,29 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> Initializes a new instance of RoleAssignmentScheduleInfo. </summary>
-        /// <param name="startOn"> Start DateTime of the role assignment schedule. </param>
-        /// <param name="expiration"> Expiration of the role assignment schedule. </param>
+        /// <param name="startOn">
+        /// Start DateTime of the role assignment schedule.
+        /// Serialized Name: RoleAssignmentScheduleInfo.startDateTime
+        /// </param>
+        /// <param name="expiration">
+        /// Expiration of the role assignment schedule
+        /// Serialized Name: RoleAssignmentScheduleInfo.expiration
+        /// </param>
         internal RoleAssignmentScheduleInfo(DateTimeOffset? startOn, RoleAssignmentScheduleInfoExpiration expiration)
         {
             StartOn = startOn;
             Expiration = expiration;
         }
 
-        /// <summary> Start DateTime of the role assignment schedule. </summary>
+        /// <summary>
+        /// Start DateTime of the role assignment schedule.
+        /// Serialized Name: RoleAssignmentScheduleInfo.startDateTime
+        /// </summary>
         public DateTimeOffset? StartOn { get; set; }
-        /// <summary> Expiration of the role assignment schedule. </summary>
+        /// <summary>
+        /// Expiration of the role assignment schedule
+        /// Serialized Name: RoleAssignmentScheduleInfo.expiration
+        /// </summary>
         public RoleAssignmentScheduleInfoExpiration Expiration { get; set; }
     }
 }

@@ -9,11 +9,17 @@ using System;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary> Role assignment create parameters. </summary>
+    /// <summary>
+    /// Role assignment create parameters.
+    /// Serialized Name: RoleAssignmentCreateParameters
+    /// </summary>
     public partial class RoleAssignmentCreateOrUpdateContent
     {
         /// <summary> Initializes a new instance of RoleAssignmentCreateOrUpdateContent. </summary>
-        /// <param name="properties"> Role assignment properties. </param>
+        /// <param name="properties">
+        /// Role assignment properties.
+        /// Serialized Name: RoleAssignmentCreateParameters.properties
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public RoleAssignmentCreateOrUpdateContent(RoleAssignmentProperties properties)
         {
@@ -25,7 +31,10 @@ namespace Azure.ResourceManager.Authorization.Models
             Properties = properties;
         }
 
-        /// <summary> Role assignment properties. </summary>
+        /// <summary>
+        /// Role assignment properties.
+        /// Serialized Name: RoleAssignmentCreateParameters.properties
+        /// </summary>
         public RoleAssignmentProperties Properties { get; }
     }
 }

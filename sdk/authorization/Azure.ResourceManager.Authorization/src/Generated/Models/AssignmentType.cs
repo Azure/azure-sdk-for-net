@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary> Assignment type of the role assignment schedule. </summary>
+    /// <summary>
+    /// Assignment type of the role assignment schedule
+    /// Serialized Name: AssignmentType
+    /// </summary>
     public readonly partial struct AssignmentType : IEquatable<AssignmentType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.Authorization.Models
         private const string ActivatedValue = "Activated";
         private const string AssignedValue = "Assigned";
 
-        /// <summary> Activated. </summary>
+        /// <summary>
+        /// Activated
+        /// Serialized Name: AssignmentType.Activated
+        /// </summary>
         public static AssignmentType Activated { get; } = new AssignmentType(ActivatedValue);
-        /// <summary> Assigned. </summary>
+        /// <summary>
+        /// Assigned
+        /// Serialized Name: AssignmentType.Assigned
+        /// </summary>
         public static AssignmentType Assigned { get; } = new AssignmentType(AssignedValue);
         /// <summary> Determines if two <see cref="AssignmentType"/> values are the same. </summary>
         public static bool operator ==(AssignmentType left, AssignmentType right) => left.Equals(right);

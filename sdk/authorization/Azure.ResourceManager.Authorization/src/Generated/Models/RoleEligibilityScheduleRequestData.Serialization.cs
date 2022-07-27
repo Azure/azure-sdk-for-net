@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Authorization
             if (Optional.IsDefined(PrincipalId))
             {
                 writer.WritePropertyName("principalId");
-                writer.WriteStringValue(PrincipalId);
+                writer.WriteStringValue(PrincipalId.Value);
             }
             if (Optional.IsDefined(RequestType))
             {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Authorization
             Optional<SystemData> systemData = default;
             Optional<string> scope = default;
             Optional<ResourceIdentifier> roleDefinitionId = default;
-            Optional<string> principalId = default;
+            Optional<Guid> principalId = default;
             Optional<PrincipalType> principalType = default;
             Optional<RequestType> requestType = default;
             Optional<RoleEligibilityScheduleRequestStatus> status = default;
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Authorization
             Optional<string> condition = default;
             Optional<string> conditionVersion = default;
             Optional<DateTimeOffset> createdOn = default;
-            Optional<string> requestorId = default;
+            Optional<Guid> requestorId = default;
             Optional<ExpandedProperties> expandedProperties = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -150,7 +150,12 @@ namespace Azure.ResourceManager.Authorization
                         }
                         if (property0.NameEquals("principalId"))
                         {
-                            principalId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            principalId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("principalType"))
@@ -245,7 +250,12 @@ namespace Azure.ResourceManager.Authorization
                         }
                         if (property0.NameEquals("requestorId"))
                         {
-                            requestorId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            requestorId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("expandedProperties"))
@@ -262,7 +272,7 @@ namespace Azure.ResourceManager.Authorization
                     continue;
                 }
             }
-            return new RoleEligibilityScheduleRequestData(id, name, type, systemData.Value, scope.Value, roleDefinitionId.Value, principalId.Value, Optional.ToNullable(principalType), Optional.ToNullable(requestType), Optional.ToNullable(status), approvalId.Value, scheduleInfo.Value, targetRoleEligibilityScheduleId.Value, targetRoleEligibilityScheduleInstanceId.Value, justification.Value, ticketInfo.Value, condition.Value, conditionVersion.Value, Optional.ToNullable(createdOn), requestorId.Value, expandedProperties.Value);
+            return new RoleEligibilityScheduleRequestData(id, name, type, systemData.Value, scope.Value, roleDefinitionId.Value, Optional.ToNullable(principalId), Optional.ToNullable(principalType), Optional.ToNullable(requestType), Optional.ToNullable(status), approvalId.Value, scheduleInfo.Value, targetRoleEligibilityScheduleId.Value, targetRoleEligibilityScheduleInstanceId.Value, justification.Value, ticketInfo.Value, condition.Value, conditionVersion.Value, Optional.ToNullable(createdOn), Optional.ToNullable(requestorId), expandedProperties.Value);
         }
     }
 }

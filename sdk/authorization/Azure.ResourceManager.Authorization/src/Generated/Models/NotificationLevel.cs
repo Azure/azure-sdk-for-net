@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary> The notification level. </summary>
+    /// <summary>
+    /// The notification level.
+    /// Serialized Name: NotificationLevel
+    /// </summary>
     public readonly partial struct NotificationLevel : IEquatable<NotificationLevel>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.Authorization.Models
         private const string CriticalValue = "Critical";
         private const string AllValue = "All";
 
-        /// <summary> None. </summary>
+        /// <summary>
+        /// None
+        /// Serialized Name: NotificationLevel.None
+        /// </summary>
         public static NotificationLevel None { get; } = new NotificationLevel(NoneValue);
-        /// <summary> Critical. </summary>
+        /// <summary>
+        /// Critical
+        /// Serialized Name: NotificationLevel.Critical
+        /// </summary>
         public static NotificationLevel Critical { get; } = new NotificationLevel(CriticalValue);
-        /// <summary> All. </summary>
+        /// <summary>
+        /// All
+        /// Serialized Name: NotificationLevel.All
+        /// </summary>
         public static NotificationLevel All { get; } = new NotificationLevel(AllValue);
         /// <summary> Determines if two <see cref="NotificationLevel"/> values are the same. </summary>
         public static bool operator ==(NotificationLevel left, NotificationLevel right) => left.Equals(right);

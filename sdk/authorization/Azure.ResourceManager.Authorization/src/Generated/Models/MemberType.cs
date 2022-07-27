@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary> Membership type of the role assignment schedule. </summary>
+    /// <summary>
+    /// Membership type of the role assignment schedule
+    /// Serialized Name: MemberType
+    /// </summary>
     public readonly partial struct MemberType : IEquatable<MemberType>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.Authorization.Models
         private const string DirectValue = "Direct";
         private const string GroupValue = "Group";
 
-        /// <summary> Inherited. </summary>
+        /// <summary>
+        /// Inherited
+        /// Serialized Name: MemberType.Inherited
+        /// </summary>
         public static MemberType Inherited { get; } = new MemberType(InheritedValue);
-        /// <summary> Direct. </summary>
+        /// <summary>
+        /// Direct
+        /// Serialized Name: MemberType.Direct
+        /// </summary>
         public static MemberType Direct { get; } = new MemberType(DirectValue);
-        /// <summary> Group. </summary>
+        /// <summary>
+        /// Group
+        /// Serialized Name: MemberType.Group
+        /// </summary>
         public static MemberType Group { get; } = new MemberType(GroupValue);
         /// <summary> Determines if two <see cref="MemberType"/> values are the same. </summary>
         public static bool operator ==(MemberType left, MemberType right) => left.Equals(right);

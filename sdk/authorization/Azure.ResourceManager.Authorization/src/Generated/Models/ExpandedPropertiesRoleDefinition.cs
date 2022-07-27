@@ -9,7 +9,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary> Details of role definition. </summary>
+    /// <summary>
+    /// Details of role definition
+    /// Serialized Name: ExpandedPropertiesRoleDefinition
+    /// </summary>
     public partial class ExpandedPropertiesRoleDefinition
     {
         /// <summary> Initializes a new instance of ExpandedPropertiesRoleDefinition. </summary>
@@ -18,9 +21,18 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> Initializes a new instance of ExpandedPropertiesRoleDefinition. </summary>
-        /// <param name="id"> Id of the role definition. </param>
-        /// <param name="displayName"> Display name of the role definition. </param>
-        /// <param name="expandedPropertiesRoleDefinitionType"> Type of the role definition. </param>
+        /// <param name="id">
+        /// Id of the role definition
+        /// Serialized Name: ExpandedPropertiesRoleDefinition.id
+        /// </param>
+        /// <param name="displayName">
+        /// Display name of the role definition
+        /// Serialized Name: ExpandedPropertiesRoleDefinition.displayName
+        /// </param>
+        /// <param name="expandedPropertiesRoleDefinitionType">
+        /// Type of the role definition
+        /// Serialized Name: ExpandedPropertiesRoleDefinition.type
+        /// </param>
         internal ExpandedPropertiesRoleDefinition(ResourceIdentifier id, string displayName, string expandedPropertiesRoleDefinitionType)
         {
             Id = id;
@@ -28,11 +40,20 @@ namespace Azure.ResourceManager.Authorization.Models
             ExpandedPropertiesRoleDefinitionType = expandedPropertiesRoleDefinitionType;
         }
 
-        /// <summary> Id of the role definition. </summary>
+        /// <summary>
+        /// Id of the role definition
+        /// Serialized Name: ExpandedPropertiesRoleDefinition.id
+        /// </summary>
         public ResourceIdentifier Id { get; }
-        /// <summary> Display name of the role definition. </summary>
+        /// <summary>
+        /// Display name of the role definition
+        /// Serialized Name: ExpandedPropertiesRoleDefinition.displayName
+        /// </summary>
         public string DisplayName { get; }
-        /// <summary> Type of the role definition. </summary>
+        /// <summary>
+        /// Type of the role definition
+        /// Serialized Name: ExpandedPropertiesRoleDefinition.type
+        /// </summary>
         public string ExpandedPropertiesRoleDefinitionType { get; }
     }
 }

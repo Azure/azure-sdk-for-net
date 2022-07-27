@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary> The type of the role assignment schedule request. Eg: SelfActivate, AdminAssign etc. </summary>
+    /// <summary>
+    /// The type of the role assignment schedule request. Eg: SelfActivate, AdminAssign etc
+    /// Serialized Name: RequestType
+    /// </summary>
     public readonly partial struct RequestType : IEquatable<RequestType>
     {
         private readonly string _value;
@@ -32,23 +35,50 @@ namespace Azure.ResourceManager.Authorization.Models
         private const string SelfExtendValue = "SelfExtend";
         private const string SelfRenewValue = "SelfRenew";
 
-        /// <summary> AdminAssign. </summary>
+        /// <summary>
+        /// AdminAssign
+        /// Serialized Name: RequestType.AdminAssign
+        /// </summary>
         public static RequestType AdminAssign { get; } = new RequestType(AdminAssignValue);
-        /// <summary> AdminRemove. </summary>
+        /// <summary>
+        /// AdminRemove
+        /// Serialized Name: RequestType.AdminRemove
+        /// </summary>
         public static RequestType AdminRemove { get; } = new RequestType(AdminRemoveValue);
-        /// <summary> AdminUpdate. </summary>
+        /// <summary>
+        /// AdminUpdate
+        /// Serialized Name: RequestType.AdminUpdate
+        /// </summary>
         public static RequestType AdminUpdate { get; } = new RequestType(AdminUpdateValue);
-        /// <summary> AdminExtend. </summary>
+        /// <summary>
+        /// AdminExtend
+        /// Serialized Name: RequestType.AdminExtend
+        /// </summary>
         public static RequestType AdminExtend { get; } = new RequestType(AdminExtendValue);
-        /// <summary> AdminRenew. </summary>
+        /// <summary>
+        /// AdminRenew
+        /// Serialized Name: RequestType.AdminRenew
+        /// </summary>
         public static RequestType AdminRenew { get; } = new RequestType(AdminRenewValue);
-        /// <summary> SelfActivate. </summary>
+        /// <summary>
+        /// SelfActivate
+        /// Serialized Name: RequestType.SelfActivate
+        /// </summary>
         public static RequestType SelfActivate { get; } = new RequestType(SelfActivateValue);
-        /// <summary> SelfDeactivate. </summary>
+        /// <summary>
+        /// SelfDeactivate
+        /// Serialized Name: RequestType.SelfDeactivate
+        /// </summary>
         public static RequestType SelfDeactivate { get; } = new RequestType(SelfDeactivateValue);
-        /// <summary> SelfExtend. </summary>
+        /// <summary>
+        /// SelfExtend
+        /// Serialized Name: RequestType.SelfExtend
+        /// </summary>
         public static RequestType SelfExtend { get; } = new RequestType(SelfExtendValue);
-        /// <summary> SelfRenew. </summary>
+        /// <summary>
+        /// SelfRenew
+        /// Serialized Name: RequestType.SelfRenew
+        /// </summary>
         public static RequestType SelfRenew { get; } = new RequestType(SelfRenewValue);
         /// <summary> Determines if two <see cref="RequestType"/> values are the same. </summary>
         public static bool operator ==(RequestType left, RequestType right) => left.Equals(right);

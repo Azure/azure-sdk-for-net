@@ -9,7 +9,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary> The role management policy authentication context rule. </summary>
+    /// <summary>
+    /// The role management policy authentication context rule.
+    /// Serialized Name: RoleManagementPolicyAuthenticationContextRule
+    /// </summary>
     public partial class RoleManagementPolicyAuthenticationContextRule : RoleManagementPolicyRule
     {
         /// <summary> Initializes a new instance of RoleManagementPolicyAuthenticationContextRule. </summary>
@@ -19,11 +22,26 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> Initializes a new instance of RoleManagementPolicyAuthenticationContextRule. </summary>
-        /// <param name="id"> The id of the rule. </param>
-        /// <param name="ruleType"> The type of rule. </param>
-        /// <param name="target"> The target of the current rule. </param>
-        /// <param name="isEnabled"> The value indicating if rule is enabled. </param>
-        /// <param name="claimValue"> The claim value. </param>
+        /// <param name="id">
+        /// The id of the rule.
+        /// Serialized Name: RoleManagementPolicyRule.id
+        /// </param>
+        /// <param name="ruleType">
+        /// The type of rule
+        /// Serialized Name: RoleManagementPolicyRule.ruleType
+        /// </param>
+        /// <param name="target">
+        /// The target of the current rule.
+        /// Serialized Name: RoleManagementPolicyRule.target
+        /// </param>
+        /// <param name="isEnabled">
+        /// The value indicating if rule is enabled.
+        /// Serialized Name: RoleManagementPolicyAuthenticationContextRule.isEnabled
+        /// </param>
+        /// <param name="claimValue">
+        /// The claim value.
+        /// Serialized Name: RoleManagementPolicyAuthenticationContextRule.claimValue
+        /// </param>
         internal RoleManagementPolicyAuthenticationContextRule(ResourceIdentifier id, RoleManagementPolicyRuleType ruleType, RoleManagementPolicyRuleTarget target, bool? isEnabled, string claimValue) : base(id, ruleType, target)
         {
             IsEnabled = isEnabled;
@@ -31,9 +49,15 @@ namespace Azure.ResourceManager.Authorization.Models
             RuleType = ruleType;
         }
 
-        /// <summary> The value indicating if rule is enabled. </summary>
+        /// <summary>
+        /// The value indicating if rule is enabled.
+        /// Serialized Name: RoleManagementPolicyAuthenticationContextRule.isEnabled
+        /// </summary>
         public bool? IsEnabled { get; set; }
-        /// <summary> The claim value. </summary>
+        /// <summary>
+        /// The claim value.
+        /// Serialized Name: RoleManagementPolicyAuthenticationContextRule.claimValue
+        /// </summary>
         public string ClaimValue { get; set; }
     }
 }

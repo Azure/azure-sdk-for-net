@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary> Expanded info of resource scope, role definition and policy. </summary>
+    /// <summary>
+    /// Expanded info of resource scope, role definition and policy
+    /// Serialized Name: PolicyAssignmentProperties
+    /// </summary>
     public partial class PolicyAssignmentProperties
     {
         /// <summary> Initializes a new instance of PolicyAssignmentProperties. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> Initializes a new instance of PolicyAssignmentProperties. </summary>
-        /// <param name="scope"> Details of the resource scope. </param>
-        /// <param name="roleDefinition"> Details of role definition. </param>
-        /// <param name="policy"> Details of the policy. </param>
+        /// <param name="scope">
+        /// Details of the resource scope
+        /// Serialized Name: PolicyAssignmentProperties.scope
+        /// </param>
+        /// <param name="roleDefinition">
+        /// Details of role definition
+        /// Serialized Name: PolicyAssignmentProperties.roleDefinition
+        /// </param>
+        /// <param name="policy">
+        /// Details of the policy
+        /// Serialized Name: PolicyAssignmentProperties.policy
+        /// </param>
         internal PolicyAssignmentProperties(PolicyAssignmentPropertiesScope scope, PolicyAssignmentPropertiesRoleDefinition roleDefinition, PolicyAssignmentPropertiesPolicy policy)
         {
             Scope = scope;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.Authorization.Models
             Policy = policy;
         }
 
-        /// <summary> Details of the resource scope. </summary>
+        /// <summary>
+        /// Details of the resource scope
+        /// Serialized Name: PolicyAssignmentProperties.scope
+        /// </summary>
         public PolicyAssignmentPropertiesScope Scope { get; }
-        /// <summary> Details of role definition. </summary>
+        /// <summary>
+        /// Details of role definition
+        /// Serialized Name: PolicyAssignmentProperties.roleDefinition
+        /// </summary>
         public PolicyAssignmentPropertiesRoleDefinition RoleDefinition { get; }
-        /// <summary> Details of the policy. </summary>
+        /// <summary>
+        /// Details of the policy
+        /// Serialized Name: PolicyAssignmentProperties.policy
+        /// </summary>
         public PolicyAssignmentPropertiesPolicy Policy { get; }
     }
 }

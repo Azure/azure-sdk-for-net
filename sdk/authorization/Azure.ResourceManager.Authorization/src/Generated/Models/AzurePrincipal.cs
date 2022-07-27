@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary> The name of the entity last modified it. </summary>
+    /// <summary>
+    /// The name of the entity last modified it
+    /// Serialized Name: AzurePrincipal
+    /// </summary>
     public partial class AzurePrincipal
     {
         /// <summary> Initializes a new instance of AzurePrincipal. </summary>
@@ -16,10 +19,22 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> Initializes a new instance of AzurePrincipal. </summary>
-        /// <param name="id"> The id of the principal made changes. </param>
-        /// <param name="displayName"> The name of the principal made changes. </param>
-        /// <param name="principalType"> Type of principal such as user , group etc. </param>
-        /// <param name="email"> Email of principal. </param>
+        /// <param name="id">
+        /// The id of the principal made changes
+        /// Serialized Name: AzurePrincipal.id
+        /// </param>
+        /// <param name="displayName">
+        /// The name of the principal made changes
+        /// Serialized Name: AzurePrincipal.displayName
+        /// </param>
+        /// <param name="principalType">
+        /// Type of principal such as user , group etc
+        /// Serialized Name: AzurePrincipal.type
+        /// </param>
+        /// <param name="email">
+        /// Email of principal
+        /// Serialized Name: AzurePrincipal.email
+        /// </param>
         internal AzurePrincipal(string id, string displayName, string principalType, string email)
         {
             Id = id;
@@ -28,13 +43,25 @@ namespace Azure.ResourceManager.Authorization.Models
             Email = email;
         }
 
-        /// <summary> The id of the principal made changes. </summary>
+        /// <summary>
+        /// The id of the principal made changes
+        /// Serialized Name: AzurePrincipal.id
+        /// </summary>
         public string Id { get; }
-        /// <summary> The name of the principal made changes. </summary>
+        /// <summary>
+        /// The name of the principal made changes
+        /// Serialized Name: AzurePrincipal.displayName
+        /// </summary>
         public string DisplayName { get; }
-        /// <summary> Type of principal such as user , group etc. </summary>
+        /// <summary>
+        /// Type of principal such as user , group etc
+        /// Serialized Name: AzurePrincipal.type
+        /// </summary>
         public string PrincipalType { get; }
-        /// <summary> Email of principal. </summary>
+        /// <summary>
+        /// Email of principal
+        /// Serialized Name: AzurePrincipal.email
+        /// </summary>
         public string Email { get; }
     }
 }

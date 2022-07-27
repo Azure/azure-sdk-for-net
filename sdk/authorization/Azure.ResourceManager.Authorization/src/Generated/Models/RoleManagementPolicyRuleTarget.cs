@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary> The role management policy rule target. </summary>
+    /// <summary>
+    /// The role management policy rule target.
+    /// Serialized Name: RoleManagementPolicyRuleTarget
+    /// </summary>
     public partial class RoleManagementPolicyRuleTarget
     {
         /// <summary> Initializes a new instance of RoleManagementPolicyRuleTarget. </summary>
@@ -23,12 +26,30 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> Initializes a new instance of RoleManagementPolicyRuleTarget. </summary>
-        /// <param name="caller"> The caller of the setting. </param>
-        /// <param name="operations"> The type of operation. </param>
-        /// <param name="level"> The assignment level to which rule is applied. </param>
-        /// <param name="targetObjects"> The list of target objects. </param>
-        /// <param name="inheritableSettings"> The list of inheritable settings. </param>
-        /// <param name="enforcedSettings"> The list of enforced settings. </param>
+        /// <param name="caller">
+        /// The caller of the setting.
+        /// Serialized Name: RoleManagementPolicyRuleTarget.caller
+        /// </param>
+        /// <param name="operations">
+        /// The type of operation.
+        /// Serialized Name: RoleManagementPolicyRuleTarget.operations
+        /// </param>
+        /// <param name="level">
+        /// The assignment level to which rule is applied.
+        /// Serialized Name: RoleManagementPolicyRuleTarget.level
+        /// </param>
+        /// <param name="targetObjects">
+        /// The list of target objects.
+        /// Serialized Name: RoleManagementPolicyRuleTarget.targetObjects
+        /// </param>
+        /// <param name="inheritableSettings">
+        /// The list of inheritable settings.
+        /// Serialized Name: RoleManagementPolicyRuleTarget.inheritableSettings
+        /// </param>
+        /// <param name="enforcedSettings">
+        /// The list of enforced settings.
+        /// Serialized Name: RoleManagementPolicyRuleTarget.enforcedSettings
+        /// </param>
         internal RoleManagementPolicyRuleTarget(string caller, IList<string> operations, string level, IList<string> targetObjects, IList<string> inheritableSettings, IList<string> enforcedSettings)
         {
             Caller = caller;
@@ -39,17 +60,35 @@ namespace Azure.ResourceManager.Authorization.Models
             EnforcedSettings = enforcedSettings;
         }
 
-        /// <summary> The caller of the setting. </summary>
+        /// <summary>
+        /// The caller of the setting.
+        /// Serialized Name: RoleManagementPolicyRuleTarget.caller
+        /// </summary>
         public string Caller { get; set; }
-        /// <summary> The type of operation. </summary>
+        /// <summary>
+        /// The type of operation.
+        /// Serialized Name: RoleManagementPolicyRuleTarget.operations
+        /// </summary>
         public IList<string> Operations { get; }
-        /// <summary> The assignment level to which rule is applied. </summary>
+        /// <summary>
+        /// The assignment level to which rule is applied.
+        /// Serialized Name: RoleManagementPolicyRuleTarget.level
+        /// </summary>
         public string Level { get; set; }
-        /// <summary> The list of target objects. </summary>
+        /// <summary>
+        /// The list of target objects.
+        /// Serialized Name: RoleManagementPolicyRuleTarget.targetObjects
+        /// </summary>
         public IList<string> TargetObjects { get; }
-        /// <summary> The list of inheritable settings. </summary>
+        /// <summary>
+        /// The list of inheritable settings.
+        /// Serialized Name: RoleManagementPolicyRuleTarget.inheritableSettings
+        /// </summary>
         public IList<string> InheritableSettings { get; }
-        /// <summary> The list of enforced settings. </summary>
+        /// <summary>
+        /// The list of enforced settings.
+        /// Serialized Name: RoleManagementPolicyRuleTarget.enforcedSettings
+        /// </summary>
         public IList<string> EnforcedSettings { get; }
     }
 }

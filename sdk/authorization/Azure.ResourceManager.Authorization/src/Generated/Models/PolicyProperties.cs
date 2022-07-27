@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary> Expanded info of resource scope. </summary>
+    /// <summary>
+    /// Expanded info of resource scope
+    /// Serialized Name: PolicyProperties
+    /// </summary>
     internal partial class PolicyProperties
     {
         /// <summary> Initializes a new instance of PolicyProperties. </summary>
@@ -16,13 +19,19 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> Initializes a new instance of PolicyProperties. </summary>
-        /// <param name="scope"> Details of the resource scope. </param>
+        /// <param name="scope">
+        /// Details of the resource scope
+        /// Serialized Name: PolicyProperties.scope
+        /// </param>
         internal PolicyProperties(PolicyPropertiesScope scope)
         {
             Scope = scope;
         }
 
-        /// <summary> Details of the resource scope. </summary>
+        /// <summary>
+        /// Details of the resource scope
+        /// Serialized Name: PolicyProperties.scope
+        /// </summary>
         public PolicyPropertiesScope Scope { get; }
     }
 }

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary> The principal type of the assigned principal ID. </summary>
+    /// <summary>
+    /// The principal type of the assigned principal ID.
+    /// Serialized Name: PrincipalType
+    /// </summary>
     public readonly partial struct PrincipalType : IEquatable<PrincipalType>
     {
         private readonly string _value;
@@ -28,15 +31,30 @@ namespace Azure.ResourceManager.Authorization.Models
         private const string ForeignGroupValue = "ForeignGroup";
         private const string DeviceValue = "Device";
 
-        /// <summary> User. </summary>
+        /// <summary>
+        /// User
+        /// Serialized Name: PrincipalType.User
+        /// </summary>
         public static PrincipalType User { get; } = new PrincipalType(UserValue);
-        /// <summary> Group. </summary>
+        /// <summary>
+        /// Group
+        /// Serialized Name: PrincipalType.Group
+        /// </summary>
         public static PrincipalType Group { get; } = new PrincipalType(GroupValue);
-        /// <summary> ServicePrincipal. </summary>
+        /// <summary>
+        /// ServicePrincipal
+        /// Serialized Name: PrincipalType.ServicePrincipal
+        /// </summary>
         public static PrincipalType ServicePrincipal { get; } = new PrincipalType(ServicePrincipalValue);
-        /// <summary> ForeignGroup. </summary>
+        /// <summary>
+        /// ForeignGroup
+        /// Serialized Name: PrincipalType.ForeignGroup
+        /// </summary>
         public static PrincipalType ForeignGroup { get; } = new PrincipalType(ForeignGroupValue);
-        /// <summary> Device. </summary>
+        /// <summary>
+        /// Device
+        /// Serialized Name: PrincipalType.Device
+        /// </summary>
         public static PrincipalType Device { get; } = new PrincipalType(DeviceValue);
         /// <summary> Determines if two <see cref="PrincipalType"/> values are the same. </summary>
         public static bool operator ==(PrincipalType left, PrincipalType right) => left.Equals(right);

@@ -11,7 +11,10 @@ using Azure.ResourceManager.Authorization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary> role eligibility schedule list operation result. </summary>
+    /// <summary>
+    /// role eligibility schedule list operation result.
+    /// Serialized Name: RoleEligibilityScheduleListResult
+    /// </summary>
     internal partial class RoleEligibilityScheduleListResult
     {
         /// <summary> Initializes a new instance of RoleEligibilityScheduleListResult. </summary>
@@ -21,17 +24,29 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> Initializes a new instance of RoleEligibilityScheduleListResult. </summary>
-        /// <param name="value"> role eligibility schedule list. </param>
-        /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
+        /// <param name="value">
+        /// role eligibility schedule list.
+        /// Serialized Name: RoleEligibilityScheduleListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The URL to use for getting the next set of results.
+        /// Serialized Name: RoleEligibilityScheduleListResult.nextLink
+        /// </param>
         internal RoleEligibilityScheduleListResult(IReadOnlyList<RoleEligibilityScheduleData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> role eligibility schedule list. </summary>
+        /// <summary>
+        /// role eligibility schedule list.
+        /// Serialized Name: RoleEligibilityScheduleListResult.value
+        /// </summary>
         public IReadOnlyList<RoleEligibilityScheduleData> Value { get; }
-        /// <summary> The URL to use for getting the next set of results. </summary>
+        /// <summary>
+        /// The URL to use for getting the next set of results.
+        /// Serialized Name: RoleEligibilityScheduleListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary> Expiration of the role assignment schedule. </summary>
+    /// <summary>
+    /// Expiration of the role assignment schedule
+    /// Serialized Name: RoleAssignmentScheduleInfoExpiration
+    /// </summary>
     public partial class RoleAssignmentScheduleInfoExpiration
     {
         /// <summary> Initializes a new instance of RoleAssignmentScheduleInfoExpiration. </summary>
@@ -18,9 +21,18 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> Initializes a new instance of RoleAssignmentScheduleInfoExpiration. </summary>
-        /// <param name="roleAssignmentExpirationType"> Type of the role assignment schedule expiration. </param>
-        /// <param name="endOn"> End DateTime of the role assignment schedule. </param>
-        /// <param name="duration"> Duration of the role assignment schedule in TimeSpan. </param>
+        /// <param name="roleAssignmentExpirationType">
+        /// Type of the role assignment schedule expiration
+        /// Serialized Name: RoleAssignmentScheduleInfoExpiration.type
+        /// </param>
+        /// <param name="endOn">
+        /// End DateTime of the role assignment schedule.
+        /// Serialized Name: RoleAssignmentScheduleInfoExpiration.endDateTime
+        /// </param>
+        /// <param name="duration">
+        /// Duration of the role assignment schedule in TimeSpan.
+        /// Serialized Name: RoleAssignmentScheduleInfoExpiration.duration
+        /// </param>
         internal RoleAssignmentScheduleInfoExpiration(RoleAssignmentScheduleType? roleAssignmentExpirationType, DateTimeOffset? endOn, TimeSpan? duration)
         {
             RoleAssignmentExpirationType = roleAssignmentExpirationType;
@@ -28,11 +40,20 @@ namespace Azure.ResourceManager.Authorization.Models
             Duration = duration;
         }
 
-        /// <summary> Type of the role assignment schedule expiration. </summary>
+        /// <summary>
+        /// Type of the role assignment schedule expiration
+        /// Serialized Name: RoleAssignmentScheduleInfoExpiration.type
+        /// </summary>
         public RoleAssignmentScheduleType? RoleAssignmentExpirationType { get; set; }
-        /// <summary> End DateTime of the role assignment schedule. </summary>
+        /// <summary>
+        /// End DateTime of the role assignment schedule.
+        /// Serialized Name: RoleAssignmentScheduleInfoExpiration.endDateTime
+        /// </summary>
         public DateTimeOffset? EndOn { get; set; }
-        /// <summary> Duration of the role assignment schedule in TimeSpan. </summary>
+        /// <summary>
+        /// Duration of the role assignment schedule in TimeSpan.
+        /// Serialized Name: RoleAssignmentScheduleInfoExpiration.duration
+        /// </summary>
         public TimeSpan? Duration { get; set; }
     }
 }

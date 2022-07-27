@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary> Details of the principal. </summary>
+    /// <summary>
+    /// Details of the principal
+    /// Serialized Name: ExpandedPropertiesPrincipal
+    /// </summary>
     public partial class ExpandedPropertiesPrincipal
     {
         /// <summary> Initializes a new instance of ExpandedPropertiesPrincipal. </summary>
@@ -16,10 +19,22 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> Initializes a new instance of ExpandedPropertiesPrincipal. </summary>
-        /// <param name="id"> Id of the principal. </param>
-        /// <param name="displayName"> Display name of the principal. </param>
-        /// <param name="email"> Email id of the principal. </param>
-        /// <param name="expandedPropertiesPrincipalType"> Type of the principal. </param>
+        /// <param name="id">
+        /// Id of the principal
+        /// Serialized Name: ExpandedPropertiesPrincipal.id
+        /// </param>
+        /// <param name="displayName">
+        /// Display name of the principal
+        /// Serialized Name: ExpandedPropertiesPrincipal.displayName
+        /// </param>
+        /// <param name="email">
+        /// Email id of the principal
+        /// Serialized Name: ExpandedPropertiesPrincipal.email
+        /// </param>
+        /// <param name="expandedPropertiesPrincipalType">
+        /// Type of the principal
+        /// Serialized Name: ExpandedPropertiesPrincipal.type
+        /// </param>
         internal ExpandedPropertiesPrincipal(string id, string displayName, string email, string expandedPropertiesPrincipalType)
         {
             Id = id;
@@ -28,13 +43,25 @@ namespace Azure.ResourceManager.Authorization.Models
             ExpandedPropertiesPrincipalType = expandedPropertiesPrincipalType;
         }
 
-        /// <summary> Id of the principal. </summary>
+        /// <summary>
+        /// Id of the principal
+        /// Serialized Name: ExpandedPropertiesPrincipal.id
+        /// </summary>
         public string Id { get; }
-        /// <summary> Display name of the principal. </summary>
+        /// <summary>
+        /// Display name of the principal
+        /// Serialized Name: ExpandedPropertiesPrincipal.displayName
+        /// </summary>
         public string DisplayName { get; }
-        /// <summary> Email id of the principal. </summary>
+        /// <summary>
+        /// Email id of the principal
+        /// Serialized Name: ExpandedPropertiesPrincipal.email
+        /// </summary>
         public string Email { get; }
-        /// <summary> Type of the principal. </summary>
+        /// <summary>
+        /// Type of the principal
+        /// Serialized Name: ExpandedPropertiesPrincipal.type
+        /// </summary>
         public string ExpandedPropertiesPrincipalType { get; }
     }
 }

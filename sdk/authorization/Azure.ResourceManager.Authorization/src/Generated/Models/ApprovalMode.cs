@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary> The type of rule. </summary>
+    /// <summary>
+    /// The type of rule
+    /// Serialized Name: ApprovalMode
+    /// </summary>
     public readonly partial struct ApprovalMode : IEquatable<ApprovalMode>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.Authorization.Models
         private const string ParallelValue = "Parallel";
         private const string NoApprovalValue = "NoApproval";
 
-        /// <summary> SingleStage. </summary>
+        /// <summary>
+        /// SingleStage
+        /// Serialized Name: ApprovalMode.SingleStage
+        /// </summary>
         public static ApprovalMode SingleStage { get; } = new ApprovalMode(SingleStageValue);
-        /// <summary> Serial. </summary>
+        /// <summary>
+        /// Serial
+        /// Serialized Name: ApprovalMode.Serial
+        /// </summary>
         public static ApprovalMode Serial { get; } = new ApprovalMode(SerialValue);
-        /// <summary> Parallel. </summary>
+        /// <summary>
+        /// Parallel
+        /// Serialized Name: ApprovalMode.Parallel
+        /// </summary>
         public static ApprovalMode Parallel { get; } = new ApprovalMode(ParallelValue);
-        /// <summary> NoApproval. </summary>
+        /// <summary>
+        /// NoApproval
+        /// Serialized Name: ApprovalMode.NoApproval
+        /// </summary>
         public static ApprovalMode NoApproval { get; } = new ApprovalMode(NoApprovalValue);
         /// <summary> Determines if two <see cref="ApprovalMode"/> values are the same. </summary>
         public static bool operator ==(ApprovalMode left, ApprovalMode right) => left.Equals(right);

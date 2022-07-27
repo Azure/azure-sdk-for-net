@@ -9,7 +9,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary> Details of role definition. </summary>
+    /// <summary>
+    /// Details of role definition
+    /// Serialized Name: PolicyAssignmentPropertiesRoleDefinition
+    /// </summary>
     public partial class PolicyAssignmentPropertiesRoleDefinition
     {
         /// <summary> Initializes a new instance of PolicyAssignmentPropertiesRoleDefinition. </summary>
@@ -18,9 +21,18 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> Initializes a new instance of PolicyAssignmentPropertiesRoleDefinition. </summary>
-        /// <param name="id"> Id of the role definition. </param>
-        /// <param name="displayName"> Display name of the role definition. </param>
-        /// <param name="policyAssignmentPropertiesRoleDefinitionType"> Type of the role definition. </param>
+        /// <param name="id">
+        /// Id of the role definition
+        /// Serialized Name: PolicyAssignmentPropertiesRoleDefinition.id
+        /// </param>
+        /// <param name="displayName">
+        /// Display name of the role definition
+        /// Serialized Name: PolicyAssignmentPropertiesRoleDefinition.displayName
+        /// </param>
+        /// <param name="policyAssignmentPropertiesRoleDefinitionType">
+        /// Type of the role definition
+        /// Serialized Name: PolicyAssignmentPropertiesRoleDefinition.type
+        /// </param>
         internal PolicyAssignmentPropertiesRoleDefinition(ResourceIdentifier id, string displayName, string policyAssignmentPropertiesRoleDefinitionType)
         {
             Id = id;
@@ -28,11 +40,20 @@ namespace Azure.ResourceManager.Authorization.Models
             PolicyAssignmentPropertiesRoleDefinitionType = policyAssignmentPropertiesRoleDefinitionType;
         }
 
-        /// <summary> Id of the role definition. </summary>
+        /// <summary>
+        /// Id of the role definition
+        /// Serialized Name: PolicyAssignmentPropertiesRoleDefinition.id
+        /// </summary>
         public ResourceIdentifier Id { get; }
-        /// <summary> Display name of the role definition. </summary>
+        /// <summary>
+        /// Display name of the role definition
+        /// Serialized Name: PolicyAssignmentPropertiesRoleDefinition.displayName
+        /// </summary>
         public string DisplayName { get; }
-        /// <summary> Type of the role definition. </summary>
+        /// <summary>
+        /// Type of the role definition
+        /// Serialized Name: PolicyAssignmentPropertiesRoleDefinition.type
+        /// </summary>
         public string PolicyAssignmentPropertiesRoleDefinitionType { get; }
     }
 }

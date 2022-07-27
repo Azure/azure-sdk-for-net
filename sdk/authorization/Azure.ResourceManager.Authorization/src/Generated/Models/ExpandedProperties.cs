@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary> The ExpandedProperties. </summary>
+    /// <summary>
+    /// The ExpandedProperties.
+    /// Serialized Name: ExpandedProperties
+    /// </summary>
     public partial class ExpandedProperties
     {
         /// <summary> Initializes a new instance of ExpandedProperties. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> Initializes a new instance of ExpandedProperties. </summary>
-        /// <param name="scope"> Details of the resource scope. </param>
-        /// <param name="roleDefinition"> Details of role definition. </param>
-        /// <param name="principal"> Details of the principal. </param>
+        /// <param name="scope">
+        /// Details of the resource scope
+        /// Serialized Name: ExpandedProperties.scope
+        /// </param>
+        /// <param name="roleDefinition">
+        /// Details of role definition
+        /// Serialized Name: ExpandedProperties.roleDefinition
+        /// </param>
+        /// <param name="principal">
+        /// Details of the principal
+        /// Serialized Name: ExpandedProperties.principal
+        /// </param>
         internal ExpandedProperties(ExpandedPropertiesScope scope, ExpandedPropertiesRoleDefinition roleDefinition, ExpandedPropertiesPrincipal principal)
         {
             Scope = scope;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.Authorization.Models
             Principal = principal;
         }
 
-        /// <summary> Details of the resource scope. </summary>
+        /// <summary>
+        /// Details of the resource scope
+        /// Serialized Name: ExpandedProperties.scope
+        /// </summary>
         public ExpandedPropertiesScope Scope { get; }
-        /// <summary> Details of role definition. </summary>
+        /// <summary>
+        /// Details of role definition
+        /// Serialized Name: ExpandedProperties.roleDefinition
+        /// </summary>
         public ExpandedPropertiesRoleDefinition RoleDefinition { get; }
-        /// <summary> Details of the principal. </summary>
+        /// <summary>
+        /// Details of the principal
+        /// Serialized Name: ExpandedProperties.principal
+        /// </summary>
         public ExpandedPropertiesPrincipal Principal { get; }
     }
 }
