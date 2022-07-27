@@ -19,8 +19,15 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("kind");
-                writer.WriteStringValue(Kind.Value.ToString());
+                if (Kind != null)
+                {
+                    writer.WritePropertyName("kind");
+                    writer.WriteStringValue(Kind.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("kind");
+                }
             }
             if (Optional.IsDefined(Name))
             {
@@ -72,7 +79,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
 
         internal static GuestConfigurationNavigation DeserializeGuestConfigurationNavigation(JsonElement element)
         {
-            Optional<GuestConfigurationKind> kind = default;
+            Optional<GuestConfigurationKind?> kind = default;
             Optional<string> name = default;
             Optional<string> version = default;
             Optional<Uri> contentUri = default;
@@ -89,7 +96,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        kind = null;
                         continue;
                     }
                     kind = new GuestConfigurationKind(property.Value.GetString());
@@ -184,7 +191,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        configurationSetting = null;
                         continue;
                     }
                     configurationSetting = ConfigurationSetting.DeserializeConfigurationSetting(property.Value);

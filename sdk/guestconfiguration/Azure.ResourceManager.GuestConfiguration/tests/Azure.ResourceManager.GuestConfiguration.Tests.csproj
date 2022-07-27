@@ -6,5 +6,6 @@
     <Folder Include="SessionRecords\">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Folder>
+    <Folder Include="SessionRecords\GuestConfigurationAssignmentCollectionTests\" />
   </ItemGroup>
 </Project>

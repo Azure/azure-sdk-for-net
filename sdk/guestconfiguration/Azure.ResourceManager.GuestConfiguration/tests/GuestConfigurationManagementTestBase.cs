@@ -64,19 +64,19 @@ namespace Azure.ResourceManager.GuestConfiguration.Tests
         }
         protected static GuestConfigurationAssignmentProperties GetDefaultGuestConfigurationAssignmentProperties()
         {
-            var configurationParameter = new ConfigurationParameter("[InstalledApplication]bwhitelistedapp;Name", "NotePad,sql");
+            //var configurationParameter = new ConfigurationParameter("[InstalledApplication]bwhitelistedapp;Name", "NotePad,sql");
+            var configurationParameter = new ConfigurationParameter();
             var configurationParameterList = new List<ConfigurationParameter>() { configurationParameter };
 
-            var configurationSetting = new ConfigurationSetting(GuestConfigurationManagementUtilities.DefaultAssignmentType, true, "ContinueConfiguration", 25, true, 10);
-
-            GuestConfigurationNavigation guestConfigurationNavigation = new GuestConfigurationNavigation("DSC", GuestConfigurationManagementUtilities.DefaultAssignmentName,
-           GuestConfigurationManagementUtilities.DefaultAssignmentVersion, null, null, GuestConfigurationManagementUtilities.DefaultAssignmentType,
-           "Manual assignment", "Built-in", configurationParameterList, configurationParameterList, configurationSetting);
+            //var configurationSetting = new ConfigurationSetting(GuestConfigurationManagementUtilities.DefaultConfigurationMode, true, new ActionAfterReboot("ContinueConfiguration"), 25, true, 10);
+            GuestConfigurationNavigation guestConfigurationNavigation = new GuestConfigurationNavigation(GuestConfigurationManagementUtilities.DefaultKind, GuestConfigurationManagementUtilities.DefaultAssignmentName,
+            GuestConfigurationManagementUtilities.DefaultAssignmentVersion, null, null, GuestConfigurationManagementUtilities.DefaultAssignmentType,
+            null, "Builtin", configurationParameterList, configurationParameterList, null);
 
             return new GuestConfigurationAssignmentProperties()
             {
                 Context = GuestConfigurationManagementUtilities.DefaultContext,
-                GuestConfiguration = guestConfigurationNavigation
+                GuestConfiguration = guestConfigurationNavigation,
             };
           }
 
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Tests
                 id,
                 GuestConfigurationManagementUtilities.DefaultAssignmentName,
                 GuestConfigurationManagementUtilities.DefaultResourceLocation,
-                GuestConfigurationManagementUtilities.DefaultAssignmentType,
+                GuestConfigurationManagementUtilities.DefaultResourceType,
                 properties,
                 new SystemData()
                 );

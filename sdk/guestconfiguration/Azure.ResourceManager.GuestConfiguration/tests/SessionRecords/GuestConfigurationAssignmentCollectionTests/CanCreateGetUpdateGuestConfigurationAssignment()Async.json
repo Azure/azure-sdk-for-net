@@ -6,9 +6,10 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-7ab8b895e286a845a5592ee968c48abc-de49399eaf15894b-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.2.0 (.NET Core 3.1.27; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "39ca3fdb8a0c9b0a1d21295dd272f37b",
+        "Connection": "keep-alive",
+        "traceparent": "00-46b6109e7594044a82dcb2b483e061d2-a95982b94874a447-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "2addbd62da1863a5df89dcc22e007ddd",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -17,15 +18,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "456",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 Jul 2022 19:40:49 GMT",
+        "Date": "Wed, 27 Jul 2022 22:32:59 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "e2b48dfd-0a96-4d04-b67d-44f869cb6b62",
+        "x-ms-correlation-request-id": "d68ae9bf-14fa-4f43-bbec-a235d1cee2ee",
         "x-ms-ratelimit-remaining-subscription-reads": "11999",
-        "x-ms-request-id": "e2b48dfd-0a96-4d04-b67d-44f869cb6b62",
-        "x-ms-routing-request-id": "WESTUS2:20220725T194050Z:e2b48dfd-0a96-4d04-b67d-44f869cb6b62"
+        "x-ms-request-id": "d68ae9bf-14fa-4f43-bbec-a235d1cee2ee",
+        "x-ms-routing-request-id": "WESTUS2:20220727T223300Z:d68ae9bf-14fa-4f43-bbec-a235d1cee2ee"
       },
       "ResponseBody": {
         "id": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071",
@@ -52,9 +53,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-cbd2623c44e6aa4b9fcea91dc4f59cb8-7475bdd86984504f-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.2.0 (.NET Core 3.1.27; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "6ec3e9735200fd603fb1a8837e99f619",
+        "traceparent": "00-993d84631dd7354aa537ce5006a8d5e3-2a6b55a1ba0c064c-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "587544fd634c3bd9f25119b2e00f10fa",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -63,15 +64,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "276",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 Jul 2022 19:40:49 GMT",
+        "Date": "Wed, 27 Jul 2022 22:33:00 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "37723bf4-33fe-4fd9-b35d-748541993d22",
+        "x-ms-correlation-request-id": "cd2c5a6a-3d1a-4b8a-8b83-b82d13f8bca7",
         "x-ms-ratelimit-remaining-subscription-reads": "11998",
-        "x-ms-request-id": "37723bf4-33fe-4fd9-b35d-748541993d22",
-        "x-ms-routing-request-id": "WESTUS2:20220725T194050Z:37723bf4-33fe-4fd9-b35d-748541993d22"
+        "x-ms-request-id": "cd2c5a6a-3d1a-4b8a-8b83-b82d13f8bca7",
+        "x-ms-routing-request-id": "WESTUS2:20220727T223300Z:cd2c5a6a-3d1a-4b8a-8b83-b82d13f8bca7"
       },
       "ResponseBody": {
         "id": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GuestConfigurationSDKTestRecord",
@@ -90,11 +91,11 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "438",
+        "Content-Length": "290",
         "Content-Type": "application/json",
-        "traceparent": "00-0359829493930d4080ffaa447d561834-c5c85ea18412e24e-00",
-        "User-Agent": "azsdk-net-ResourceManager.GuestConfiguration/1.0.0-alpha.20220725.1 (.NET Core 3.1.27; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "1fc95768be861765a059ace118c62663",
+        "traceparent": "00-6d1143520adcee4cb7adb8cb78c9c657-e32b2ac1135fed41-00",
+        "User-Agent": "azsdk-net-ResourceManager.GuestConfiguration/1.0.0-alpha.20220727.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "9494d4e88146ea6a5e4ef4edb52fbdd0",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -105,42 +106,36 @@
             "version": "1.0.0.3",
             "assignmentType": "ApplyAndAutoCorrect",
             "configurationParameter": [
-              {
-                "name": "[InstalledApplication]bwhitelistedapp;Name",
-                "value": "NotePad,sql"
-              }
+              {}
             ],
             "configurationProtectedParameter": [
-              {
-                "name": "[InstalledApplication]bwhitelistedapp;Name",
-                "value": "NotePad,sql"
-              }
+              {}
             ]
           },
-          "context": "Azure policy A"
+          "context": "Azure policy"
         },
         "name": "AuditSecureProtocol",
-        "location": "centraluseuap"
+        "location": "westcentralus"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "1008",
+        "Content-Length": "908",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 Jul 2022 19:40:50 GMT",
+        "Date": "Wed, 27 Jul 2022 22:33:01 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Microsoft-IIS/10.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "02958c48-b1e8-4d82-b9c6-5a6357911391",
+        "x-ms-correlation-request-id": "d034740c-58b5-4b52-a716-79c86623e927",
         "x-ms-ratelimit-remaining-subscription-writes": "1199",
-        "x-ms-request-id": "02958c48-b1e8-4d82-b9c6-5a6357911391",
-        "x-ms-routing-request-id": "WESTUS2:20220725T194051Z:02958c48-b1e8-4d82-b9c6-5a6357911391",
+        "x-ms-request-id": "d034740c-58b5-4b52-a716-79c86623e927",
+        "x-ms-routing-request-id": "WESTUS2:20220727T223301Z:d034740c-58b5-4b52-a716-79c86623e927",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
-        "location": "centraluseuap",
+        "location": "westcentralus",
         "id": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GuestConfigurationSDKTestRecord/providers/Microsoft.Compute/virtualMachines/SDKTestRecordVM002/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AuditSecureProtocol",
         "name": "AuditSecureProtocol",
         "properties": {
@@ -149,7 +144,7 @@
           "parameterHash": null,
           "latestReportId": null,
           "lastComplianceStatusChecked": null,
-          "context": "Azure policy A",
+          "context": "Azure policy",
           "guestConfiguration": {
             "kind": "DSC",
             "name": "AuditSecureProtocol",
@@ -161,14 +156,174 @@
             "assignmentSource": null,
             "configurationParameter": [
               {
-                "name": "[InstalledApplication]bwhitelistedapp;Name",
-                "value": "NotePad,sql"
+                "name": null,
+                "value": null
               }
             ],
             "configurationProtectedParameter": [
               {
-                "name": "[InstalledApplication]bwhitelistedapp;Name",
-                "value": "NotePad,sql"
+                "name": null,
+                "value": null
+              }
+            ],
+            "configurationSetting": null
+          },
+          "provisioningState": "Succeeded",
+          "resourceType": null,
+          "vmssVMList": null
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GuestConfigurationSDKTestRecord/providers/Microsoft.Compute/virtualMachines/SDKTestRecordVM002/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AuditSecureProtocol?api-version=2022-01-25",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-f449b1023afae648bf702fc9e0c74874-7cc2ccaf354e5647-00",
+        "User-Agent": "azsdk-net-ResourceManager.GuestConfiguration/1.0.0-alpha.20220727.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "1295b4fb4408fffae3a138c6c0f282cf",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1358",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 27 Jul 2022 22:33:02 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "ffa0a0ad-7e09-488f-b1b6-1ab6b5b21a2d",
+        "x-ms-ratelimit-remaining-subscription-reads": "11997",
+        "x-ms-request-id": "ffa0a0ad-7e09-488f-b1b6-1ab6b5b21a2d",
+        "x-ms-routing-request-id": "WESTUS2:20220727T223302Z:ffa0a0ad-7e09-488f-b1b6-1ab6b5b21a2d",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "location": "westcentralus",
+        "id": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GuestConfigurationSDKTestRecord/providers/Microsoft.Compute/virtualMachines/SDKTestRecordVM002/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AuditSecureProtocol",
+        "name": "AuditSecureProtocol",
+        "properties": {
+          "complianceStatus": "Pending",
+          "assignmentHash": "",
+          "parameterHash": "PQ==",
+          "latestReportId": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GuestConfigurationSDKTestRecord/providers/Microsoft.Compute/virtualMachines/SDKTestRecordVM002/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AuditSecureProtocol/reports/103b0bd7-9156-45c8-bdfe-44e2a2dfc4c5",
+          "lastComplianceStatusChecked": "2022-07-27T22:30:21Z",
+          "context": null,
+          "guestConfiguration": {
+            "kind": null,
+            "name": "AuditSecureProtocol",
+            "version": "1.0.0.3",
+            "contentUri": null,
+            "contentHash": null,
+            "contentType": null,
+            "assignmentType": "ApplyAndAutoCorrect",
+            "assignmentSource": "Manual assignment",
+            "configurationParameter": [
+              {
+                "name": null,
+                "value": null
+              }
+            ],
+            "configurationProtectedParameter": [],
+            "configurationSetting": {
+              "configurationMode": "MonitorOnly",
+              "allowModuleOverwrite": false,
+              "actionAfterReboot": "",
+              "refreshFrequencyMins": 5,
+              "rebootIfNeeded": true,
+              "configurationModeFrequencyMins": 15
+            }
+          },
+          "provisioningState": "Succeeded",
+          "resourceType": null,
+          "vmssVMList": null
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GuestConfigurationSDKTestRecord/providers/Microsoft.Compute/virtualMachines/SDKTestRecordVM002/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AuditSecureProtocol?api-version=2022-01-25",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "298",
+        "Content-Type": "application/json",
+        "traceparent": "00-72444bd8d627ed428f62c7872e52b866-242e8f4218d14e4c-00",
+        "User-Agent": "azsdk-net-ResourceManager.GuestConfiguration/1.0.0-alpha.20220727.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "5ad9e179e96c7b97d98af9fd6eec86c3",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {
+          "guestConfiguration": {
+            "kind": "DSC",
+            "name": "AuditSecureProtocol",
+            "version": "1.0.0.3",
+            "assignmentType": "ApplyAndAutoCorrect",
+            "configurationParameter": [
+              {}
+            ],
+            "configurationProtectedParameter": [
+              {}
+            ]
+          },
+          "context": "Azure Policy Updated"
+        },
+        "name": "AuditSecureProtocol",
+        "location": "westcentralus"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "916",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 27 Jul 2022 22:33:02 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "914ad230-e9df-41d9-8b71-e6fc4767a1a1",
+        "x-ms-ratelimit-remaining-subscription-writes": "1198",
+        "x-ms-request-id": "914ad230-e9df-41d9-8b71-e6fc4767a1a1",
+        "x-ms-routing-request-id": "WESTUS2:20220727T223302Z:914ad230-e9df-41d9-8b71-e6fc4767a1a1",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "location": "westcentralus",
+        "id": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GuestConfigurationSDKTestRecord/providers/Microsoft.Compute/virtualMachines/SDKTestRecordVM002/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AuditSecureProtocol",
+        "name": "AuditSecureProtocol",
+        "properties": {
+          "complianceStatus": "Pending",
+          "assignmentHash": null,
+          "parameterHash": null,
+          "latestReportId": null,
+          "lastComplianceStatusChecked": null,
+          "context": "Azure Policy Updated",
+          "guestConfiguration": {
+            "kind": "DSC",
+            "name": "AuditSecureProtocol",
+            "version": "1.0.0.3",
+            "contentUri": null,
+            "contentHash": null,
+            "contentType": "Builtin",
+            "assignmentType": "ApplyAndAutoCorrect",
+            "assignmentSource": null,
+            "configurationParameter": [
+              {
+                "name": null,
+                "value": null
+              }
+            ],
+            "configurationProtectedParameter": [
+              {
+                "name": null,
+                "value": null
               }
             ],
             "configurationSetting": null
@@ -182,7 +337,7 @@
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
-    "RandomSeed": "959578146",
+    "RandomSeed": "1344108955",
     "RESOURCE_MANAGER_URL": null,
     "SUBSCRIPTION_ID": "f66367e1-cf7d-407b-ba39-53230cc79071"
   }

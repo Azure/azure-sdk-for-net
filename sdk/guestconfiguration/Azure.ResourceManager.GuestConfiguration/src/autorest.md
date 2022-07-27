@@ -54,4 +54,11 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
+directive:
+  - from: guestconfiguration.json
+    where: $.definitions
+    transform: >
+      $.GuestConfigurationNavigation.properties.configurationSetting['x-nullable'] = true;
+      $.GuestConfigurationNavigation.properties.kind['x-nullable'] = true;
+      $.GuestConfigurationAssignmentProperties.properties.vmssVMList['x-nullable'] = true;
 ```
