@@ -25,8 +25,8 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
 {
     internal static class StorageConfiguration
     {
-        private const string AccountNameEnvironmentVariable = "MABOM_BatchAccountName";
-        private const string AccountKeyEnvironmentVariable = "MABOM_BatchAccountKey";
+        private const string AccountNameEnvironmentVariable = "MABOM_StorageAccount";
+        private const string AccountKeyEnvironmentVariable = "MABOM_StorageKey";
         private const string StorageAccountBlobEndpointVariable = "MABOM_BlobEndpoint";
 
         internal static BlobServiceClient GetAccount(ITestOutputHelper output)

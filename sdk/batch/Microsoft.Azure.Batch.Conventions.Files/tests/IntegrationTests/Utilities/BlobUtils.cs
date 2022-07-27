@@ -31,5 +31,22 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests.Utilities
             Array.Copy(buffer, blobContent, byteCount);
             return blobContent;
         }
+
+        /*
+         * Blob clients within the Storage.Blobs sdk return Uris with encoded paths
+         * Check the list of OutputFileRefernces and see if the decoded URI matches the target
+         */
+        internal static bool CheckOutputFileRefListContainsDenotedUri(List<OutputFileReference> blobs, string uriTargetPathDenotation)
+        {
+            foreach (OutputFileReference blob in blobs)
+            {
+                string decodedAbsoluteUri = System.Web.HttpUtility.UrlDecode(blob.Uri.AbsoluteUri, Encoding.ASCII);
+                if (decodedAbsoluteUri.EndsWith(uriTargetPathDenotation))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }

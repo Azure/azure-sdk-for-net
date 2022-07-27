@@ -23,9 +23,10 @@ using Xunit;
 using Xunit.Abstractions;
 using System.Threading;
 using Microsoft.Azure.Batch.Conventions.Files.IntegrationTests.Xunit;
-using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.RetryPolicies;
+using Azure;
 using Microsoft.Azure.Batch.FileConventions.Integration.Tests.Infrastructure;
+using Microsoft.Azure.Batch.Conventions.Files.Utilities;
+using BlobTestUtils = Microsoft.Azure.Batch.Conventions.Files.IntegrationTests.Utilities.BlobUtils;
 
 namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
 {
@@ -54,7 +55,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
 
             var blobs = taskOutputStorage.ListOutputs(TaskOutputKind.TaskPreview).ToList();
             Assert.NotEmpty(blobs);
-            Assert.Contains(blobs, b => b.Uri.AbsoluteUri.EndsWith($"{_jobId}/{_taskId}/$TaskPreview/TestText1.txt"));
+            Assert.True(BlobTestUtils.CheckOutputFileRefListContainsDenotedUri(blobs, $"{_jobId}/{_taskId}/$TaskPreview/TestText1.txt"));
         }
 
         [LiveTest]
@@ -72,7 +73,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
 
             var blobs = taskOutputStorage.ListOutputs(TaskOutputKind.TaskPreview).ToList();
             Assert.NotEmpty(blobs);
-            Assert.Contains(blobs, b => b.Uri.AbsoluteUri.EndsWith($"{_jobId}/{_taskId}/$TaskPreview/{FileBase.Name}/TestText1.txt"));
+            Assert.True(BlobTestUtils.CheckOutputFileRefListContainsDenotedUri(blobs, $"{_jobId}/{_taskId}/$TaskPreview/{FileBase.Name}/TestText1.txt"));
         }
 
         [LiveTest]
@@ -84,7 +85,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
 
             var blobs = taskOutputStorage.ListOutputs(TaskOutputKind.TaskPreview).ToList();
             Assert.NotEmpty(blobs);
-            Assert.Contains(blobs, b => b.Uri.AbsoluteUri.EndsWith($"{_jobId}/{_taskId}/$TaskPreview/RenamedTestText1.txt"));
+            Assert.True(BlobTestUtils.CheckOutputFileRefListContainsDenotedUri(blobs, $"{_jobId}/{_taskId}/$TaskPreview/RenamedTestText1.txt"));
         }
 
         [LiveTest]
@@ -96,7 +97,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
 
             var blobs = taskOutputStorage.ListOutputs(TaskOutputKind.TaskPreview).ToList();
             Assert.NotEmpty(blobs);
-            Assert.Contains(blobs, b => b.Uri.AbsoluteUri.EndsWith($"{_jobId}/{_taskId}/$TaskPreview/File/Under/TestText2.txt"));
+            Assert.True(BlobTestUtils.CheckOutputFileRefListContainsDenotedUri(blobs, $"{_jobId}/{_taskId}/$TaskPreview/File/Under/TestText2.txt"));
         }
         
         [LiveTest]
@@ -108,7 +109,20 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
 
             var blobs = taskOutputStorage.ListOutputs(TaskOutputKind.TaskPreview).ToList();
             Assert.NotEmpty(blobs);
-            Assert.Contains(blobs, b => b.Uri.AbsoluteUri.EndsWith($"{_jobId}/{_taskId}/$TaskPreview/File/In/The/Depths/TestText3.txt"));
+            Assert.True(BlobTestUtils.CheckOutputFileRefListContainsDenotedUri(blobs, $"{_jobId}/{_taskId}/$TaskPreview/File/In/The/Depths/TestText3.txt"));
+        }
+
+        [LiveTest]
+        [Fact]
+        public async Task IfAFileIsSaved_ThenItAppearsInTheListByHierachy()
+        {
+            var taskOutputStorage = new TaskOutputStorage(blobClient, _jobId, _taskId);
+            await taskOutputStorage.SaveAsync(TaskOutputKind.TaskPreview, FilePath("TestText1.txt"), "File/In/The/Depths/TestText3.txt");
+
+            var jobOutputContainerName = ContainerNameUtils.GetSafeContainerName(_jobId);
+            var blobs = blobClient.GetBlobContainerClient(jobOutputContainerName).ListBlobsByHierachy().ToList();
+            Assert.NotEmpty(blobs);
+            Assert.Contains(blobs, b => b.Blob.Name.Equals($"{_taskId}/$TaskPreview/File/In/The/Depths/TestText3.txt"));
         }
 
         [LiveTest]
@@ -118,7 +132,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
             var taskOutputStorage = new TaskOutputStorage(blobClient, _jobId, _taskId);
             await taskOutputStorage.SaveAsync(TaskOutputKind.TaskPreview, FilePath("TestText1.txt"), "Gettable.txt");
 
-            var blob = taskOutputStorage.GetOutputAsync(TaskOutputKind.TaskPreview, "Gettable.txt");
+            var blob = taskOutputStorage.GetOutput(TaskOutputKind.TaskPreview, "Gettable.txt");
 
             var blobContent = await blob.ReadAsByteArrayAsync();
             var originalContent = File.ReadAllBytes(FilePath("TestText1.txt"));
@@ -133,7 +147,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
             var taskOutputStorage = new TaskOutputStorage(blobClient, _jobId, _taskId);
             await taskOutputStorage.SaveAsync(TaskOutputKind.TaskPreview, FilePath("TestText1.txt"), "This/File/Is/Gettable.txt");
 
-            var blob = taskOutputStorage.GetOutputAsync(TaskOutputKind.TaskPreview, "This/File/Is/Gettable.txt");
+            var blob = taskOutputStorage.GetOutput(TaskOutputKind.TaskPreview, "This/File/Is/Gettable.txt");
 
             var blobContent = await blob.ReadAsByteArrayAsync();
             var originalContent = File.ReadAllBytes(FilePath("TestText1.txt"));
@@ -150,7 +164,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
             var taskOutputStorage = new TaskOutputStorage(blobClient, _jobId, _taskId);
             await taskOutputStorage.SaveTextAsync(TaskOutputKind.TaskOutput, sampleXml, "TextNotFromFile.xml");
 
-            var blob = taskOutputStorage.GetOutputAsync(TaskOutputKind.TaskOutput, "TextNotFromFile.xml");
+            var blob = taskOutputStorage.GetOutput(TaskOutputKind.TaskOutput, "TextNotFromFile.xml");
 
             var blobContent = Encoding.UTF8.GetString(await blob.ReadAsByteArrayAsync());
 
@@ -164,7 +178,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
             var taskOutputStorage = new TaskOutputStorage(blobClient, _jobId, _taskId);
             await taskOutputStorage.SaveAsyncImpl(TaskOutputKind.TaskIntermediate, FileSubfolder("File"), @"..\TestTextForOutsideWorkingDirectory.txt");
 
-            var blob = taskOutputStorage.GetOutputAsync(TaskOutputKind.TaskIntermediate, "TestTextForOutsideWorkingDirectory.txt");
+            var blob = taskOutputStorage.GetOutput(TaskOutputKind.TaskIntermediate, "TestTextForOutsideWorkingDirectory.txt");
 
             var blobContent = await blob.ReadAsByteArrayAsync();
             var originalContent = File.ReadAllBytes(FilePath("TestTextForOutsideWorkingDirectory.txt"));
@@ -177,11 +191,12 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
         public async Task IfAUserAttemptsToWriteOutsideTheContainerByBypassingTheUpChecker_ThenTheWriteFails()
         {
             var taskOutputStorage = new TaskOutputStorage(blobClient, _jobId, _taskId);
-            var ex = await Assert.ThrowsAsync<StorageException>(async () =>
+            var ex = await Assert.ThrowsAsync<RequestFailedException>(async () =>
                 await taskOutputStorage.SaveAsyncImpl(TaskOutputKind.TaskIntermediate, FileSubfolder("File\\Under\\Further"), @"Under\..\..\..\..\TestTextForFarOutsideWorkingDirectory.txt")
             );
 
-            Assert.Equal(404, ex.RequestInformation.HttpStatusCode);
+            Assert.Equal(404, ex.Status);
+            Assert.Equal("ContainerNotFound", ex.ErrorCode);
         }
 
         [LiveTest]
@@ -203,7 +218,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
                     File.AppendAllLines(file, new[] { "Line 3" });
                 }
 
-                var blob = taskOutputStorage.GetOutputAsync(TaskOutputKind.TaskLog, "Tracked1.txt");
+                var blob = taskOutputStorage.GetOutput(TaskOutputKind.TaskLog, "Tracked1.txt");
 
                 var blobContent = await blob.ReadAsByteArrayAsync();
                 var originalContent = File.ReadAllBytes(file);
@@ -246,7 +261,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
                     }
                 }
 
-                var blob = taskOutputStorage.GetOutputAsync(TaskOutputKind.TaskLog, "Tracked2.txt");
+                var blob = taskOutputStorage.GetOutput(TaskOutputKind.TaskLog, "Tracked2.txt");
 
                 var blobContent = await blob.ReadAsByteArrayAsync();
                 var originalContent = File.ReadAllBytes(file);
@@ -256,38 +271,6 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
             finally
             {
                 File.Delete(file);
-            }
-        }
-
-        [LiveTest]
-        [Fact]
-        public async Task IfARetryPolicyIsSpecifiedInTheStorageAccountConstructor_ThenItIsUsed()
-        {
-            var taskOutputStorage = new TaskOutputStorage(blobClient, _jobId, _taskId, new LinearRetry(TimeSpan.FromSeconds(5), 4));
-            await taskOutputStorage.SaveAsync(TaskOutputKind.TaskOutput, FilePath("TestText1.txt"), "SavedWithLinearRetry1.txt");
-
-            var output = taskOutputStorage.GetOutputAsync(TaskOutputKind.TaskOutput, "SavedWithLinearRetry1.txt");
-            var blob = output.CloudBlob;
-            var storageClient = blob.ServiceClient;
-            Assert.IsType<LinearRetry>(storageClient.DefaultRequestOptions.RetryPolicy);
-        }
-
-        [LiveTest]
-        [Fact]
-        public async Task IfARetryPolicyIsSpecifiedInTheContainerUrlConstructor_ThenItIsUsed()
-        {
-            using (var batchClient = BatchClient.Open(new FakeBatchServiceClient()))
-            {
-                var job = batchClient.JobOperations.CreateJob(_jobId, null);
-                var container = job.GetOutputStorageContainerUrl(blobClient, TimeSpan.FromMinutes(2));
-
-                var taskOutputStorage = new TaskOutputStorage(new Uri(container), _taskId, new LinearRetry(TimeSpan.FromSeconds(5), 4));
-                await taskOutputStorage.SaveAsync(TaskOutputKind.TaskOutput, FilePath("TestText1.txt"), "SavedWithLinearRetry2.txt");
-
-                var output = await taskOutputStorage.GetOutputAsync(TaskOutputKind.TaskOutput, "SavedWithLinearRetry2.txt");
-                var blob = output.CloudBlob;
-                var storageClient = blob.ServiceClient;
-                Assert.IsType<LinearRetry>(storageClient.DefaultRequestOptions.RetryPolicy);
             }
         }
     }
