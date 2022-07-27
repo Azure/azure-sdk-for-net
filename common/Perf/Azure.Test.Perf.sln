@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30621.155
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.32726.576
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Test.Perf", "Azure.Test.Perf\Azure.Test.Perf.csproj", "{B868679E-AD3C-4367-935A-D290F163DA20}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Template.Perf", "..\..\sdk\template\Azure.Template\perf\Azure.Template.Perf.csproj", "{4A3CADC3-8B42-462B-8135-AEBA5487BE18}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Template", "..\..\sdk\template\Azure.Template\src\Azure.Template.csproj", "{02BFED5E-F4AE-471F-8B02-764E3D5FF5DC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Test.Perf.Tests", "Azure.Test.Perf.Tests\Azure.Test.Perf.Tests.csproj", "{8556E49D-6D1C-4B56-9D70-AE4264969200}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,6 +71,18 @@ Global
 		{02BFED5E-F4AE-471F-8B02-764E3D5FF5DC}.Release|x64.Build.0 = Release|Any CPU
 		{02BFED5E-F4AE-471F-8B02-764E3D5FF5DC}.Release|x86.ActiveCfg = Release|Any CPU
 		{02BFED5E-F4AE-471F-8B02-764E3D5FF5DC}.Release|x86.Build.0 = Release|Any CPU
+		{8556E49D-6D1C-4B56-9D70-AE4264969200}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8556E49D-6D1C-4B56-9D70-AE4264969200}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8556E49D-6D1C-4B56-9D70-AE4264969200}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{8556E49D-6D1C-4B56-9D70-AE4264969200}.Debug|x64.Build.0 = Debug|Any CPU
+		{8556E49D-6D1C-4B56-9D70-AE4264969200}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8556E49D-6D1C-4B56-9D70-AE4264969200}.Debug|x86.Build.0 = Debug|Any CPU
+		{8556E49D-6D1C-4B56-9D70-AE4264969200}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8556E49D-6D1C-4B56-9D70-AE4264969200}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8556E49D-6D1C-4B56-9D70-AE4264969200}.Release|x64.ActiveCfg = Release|Any CPU
+		{8556E49D-6D1C-4B56-9D70-AE4264969200}.Release|x64.Build.0 = Release|Any CPU
+		{8556E49D-6D1C-4B56-9D70-AE4264969200}.Release|x86.ActiveCfg = Release|Any CPU
+		{8556E49D-6D1C-4B56-9D70-AE4264969200}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
