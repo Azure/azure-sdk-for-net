@@ -87,6 +87,13 @@ directive:
     where: $.definitions.MxRecord
     transform: $["x-ms-client-name"] = "MXRecord";
   - from: swagger-document
+    where: $.definitions.RecordSetProperties.properties.MXRecords
+    transform: $["x-ms-client-name"] = "MXRecords";
+  - from: swagger-document
     where: $.definitions.NsRecord
     transform: $["x-ms-client-name"] = "NSRecord";
+  - from: swagger-document
+    where: $.definitions.RecordSetProperties.properties.NSRecords
+    transform: $["x-ms-client-name"] = "NSRecords";
+
 ```

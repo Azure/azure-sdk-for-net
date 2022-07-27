@@ -68,21 +68,21 @@ namespace Azure.ResourceManager.Dns
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(MxRecords))
+            if (Optional.IsCollectionDefined(MXRecords))
             {
                 writer.WritePropertyName("MXRecords");
                 writer.WriteStartArray();
-                foreach (var item in MxRecords)
+                foreach (var item in MXRecords)
                 {
                     writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(NsRecords))
+            if (Optional.IsCollectionDefined(NSRecords))
             {
                 writer.WritePropertyName("NSRecords");
                 writer.WriteStartArray();
-                foreach (var item in NsRecords)
+                foreach (var item in NSRecords)
                 {
                     writer.WriteObjectValue(item);
                 }

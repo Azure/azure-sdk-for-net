@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Dns
             Metadata = new ChangeTrackingDictionary<string, string>();
             ARecords = new ChangeTrackingList<ARecord>();
             AaaaRecords = new ChangeTrackingList<AaaaRecord>();
-            MxRecords = new ChangeTrackingList<MXRecord>();
-            NsRecords = new ChangeTrackingList<NSRecord>();
+            MXRecords = new ChangeTrackingList<MXRecord>();
+            NSRecords = new ChangeTrackingList<NSRecord>();
             PtrRecords = new ChangeTrackingList<PtrRecord>();
             SrvRecords = new ChangeTrackingList<SrvRecord>();
             TxtRecords = new ChangeTrackingList<TxtRecord>();
@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.Dns
             TargetResource = targetResource;
             ARecords = aRecords;
             AaaaRecords = aaaaRecords;
-            MxRecords = mxRecords;
-            NsRecords = nsRecords;
+            MXRecords = mxRecords;
+            NSRecords = nsRecords;
             PtrRecords = ptrRecords;
             SrvRecords = srvRecords;
             TxtRecords = txtRecords;
@@ -101,9 +101,9 @@ namespace Azure.ResourceManager.Dns
         /// <summary> The list of AAAA records in the record set. </summary>
         public IList<AaaaRecord> AaaaRecords { get; }
         /// <summary> The list of MX records in the record set. </summary>
-        public IList<MXRecord> MxRecords { get; }
+        public IList<MXRecord> MXRecords { get; }
         /// <summary> The list of NS records in the record set. </summary>
-        public IList<NSRecord> NsRecords { get; }
+        public IList<NSRecord> NSRecords { get; }
         /// <summary> The list of PTR records in the record set. </summary>
         public IList<PtrRecord> PtrRecords { get; }
         /// <summary> The list of SRV records in the record set. </summary>
