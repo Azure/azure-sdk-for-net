@@ -16,25 +16,25 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of IntegrationAccountKeyVaultKey. </summary>
-        /// <param name="kid"> The key id. </param>
+        /// <param name="keyId"> The key id. </param>
         /// <param name="isEnabled"> Whether the key is enabled or not. </param>
-        /// <param name="createdOn"> When the key was created. </param>
-        /// <param name="updated"> When the key was updated. </param>
-        internal IntegrationAccountKeyVaultKey(string kid, bool? isEnabled, long? createdOn, long? updated)
+        /// <param name="createdOnInTicks"> When the key was created. </param>
+        /// <param name="updatedOnInTicks"> When the key was updated. </param>
+        internal IntegrationAccountKeyVaultKey(string keyId, bool? isEnabled, long? createdOnInTicks, long? updatedOnInTicks)
         {
-            Kid = kid;
+            KeyId = keyId;
             IsEnabled = isEnabled;
-            CreatedOn = createdOn;
-            Updated = updated;
+            CreatedOnInTicks = createdOnInTicks;
+            UpdatedOnInTicks = updatedOnInTicks;
         }
 
         /// <summary> The key id. </summary>
-        public string Kid { get; }
+        public string KeyId { get; }
         /// <summary> Whether the key is enabled or not. </summary>
         public bool? IsEnabled { get; }
         /// <summary> When the key was created. </summary>
-        public long? CreatedOn { get; }
+        public long? CreatedOnInTicks { get; }
         /// <summary> When the key was updated. </summary>
-        public long? Updated { get; }
+        public long? UpdatedOnInTicks { get; }
     }
 }

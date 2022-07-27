@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Logic
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity");
-                writer.WriteObjectValue(Identity);
+                JsonSerializer.Serialize(writer, Identity);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Logic
 
         internal static LogicWorkflowData DeserializeLogicWorkflowData(JsonElement element)
         {
-            Optional<Models.ManagedServiceIdentity> identity = default;
+            Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Logic
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = Models.ManagedServiceIdentity.DeserializeManagedServiceIdentity(property.Value);
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.Logic
                     continue;
                 }
             }
-            return new LogicWorkflowData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(createdTime), Optional.ToNullable(changedTime), Optional.ToNullable(state), version.Value, accessEndpoint.Value, endpointsConfiguration.Value, accessControl.Value, sku.Value, integrationAccount.Value, integrationServiceEnvironment.Value, definition.Value, Optional.ToDictionary(parameters));
+            return new LogicWorkflowData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(provisioningState), Optional.ToNullable(createdTime), Optional.ToNullable(changedTime), Optional.ToNullable(state), version.Value, accessEndpoint.Value, endpointsConfiguration.Value, accessControl.Value, sku.Value, integrationAccount.Value, integrationServiceEnvironment.Value, definition.Value, Optional.ToDictionary(parameters));
         }
     }
 }

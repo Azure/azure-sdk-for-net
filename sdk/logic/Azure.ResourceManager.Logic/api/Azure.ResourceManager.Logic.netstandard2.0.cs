@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Logic
     {
         public IntegrationAccountMapData(Azure.Core.AzureLocation location, Azure.ResourceManager.Logic.Models.IntegrationAccountMapType mapType) : base (default(Azure.Core.AzureLocation)) { }
         public System.DateTimeOffset? ChangedOn { get { throw null; } }
-        public string Content { get { throw null; } set { } }
+        public System.BinaryData Content { get { throw null; } set { } }
         public Azure.ResourceManager.Logic.Models.LogicContentLink ContentLink { get { throw null; } }
         public string ContentType { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
@@ -362,16 +362,16 @@ namespace Azure.ResourceManager.Logic
     }
     public partial class IntegrationAccountSchemaData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public IntegrationAccountSchemaData(Azure.Core.AzureLocation location, Azure.ResourceManager.Logic.Models.SchemaType schemaType) : base (default(Azure.Core.AzureLocation)) { }
+        public IntegrationAccountSchemaData(Azure.Core.AzureLocation location, Azure.ResourceManager.Logic.Models.IntegrationAccountSchemaType schemaType) : base (default(Azure.Core.AzureLocation)) { }
         public System.DateTimeOffset? ChangedOn { get { throw null; } }
-        public string Content { get { throw null; } set { } }
+        public System.BinaryData Content { get { throw null; } set { } }
         public Azure.ResourceManager.Logic.Models.LogicContentLink ContentLink { get { throw null; } }
         public string ContentType { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string DocumentName { get { throw null; } set { } }
         public string FileName { get { throw null; } set { } }
         public System.BinaryData Metadata { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.SchemaType SchemaType { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.IntegrationAccountSchemaType SchemaType { get { throw null; } set { } }
         public string TargetNamespace { get { throw null; } set { } }
     }
     public partial class IntegrationAccountSchemaResource : Azure.ResourceManager.ArmResource
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.Logic
     public partial class IntegrationServiceEnvironmentData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public IntegrationServiceEnvironmentData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public Azure.ResourceManager.Logic.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.Logic.Models.IntegrationServiceEnvironmentProperties Properties { get { throw null; } set { } }
         public Azure.ResourceManager.Logic.Models.IntegrationServiceEnvironmentSku Sku { get { throw null; } set { } }
     }
@@ -610,7 +610,7 @@ namespace Azure.ResourceManager.Logic
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public System.BinaryData Definition { get { throw null; } set { } }
         public Azure.ResourceManager.Logic.Models.FlowEndpointsConfiguration EndpointsConfiguration { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.Logic.Models.LogicResourceReference IntegrationAccount { get { throw null; } set { } }
         public Azure.ResourceManager.Logic.Models.LogicResourceReference IntegrationServiceEnvironment { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Logic.Models.LogicWorkflowParameterInfo> Parameters { get { throw null; } }
@@ -1091,6 +1091,29 @@ namespace Azure.ResourceManager.Logic.Models
         public Azure.ResourceManager.Logic.Models.AS2OneWayAgreement ReceiveAgreement { get { throw null; } set { } }
         public Azure.ResourceManager.Logic.Models.AS2OneWayAgreement SendAgreement { get { throw null; } set { } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AS2EncryptionAlgorithm : System.IEquatable<Azure.ResourceManager.Logic.Models.AS2EncryptionAlgorithm>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AS2EncryptionAlgorithm(string value) { throw null; }
+        public static Azure.ResourceManager.Logic.Models.AS2EncryptionAlgorithm Aes128 { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.AS2EncryptionAlgorithm Aes192 { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.AS2EncryptionAlgorithm Aes256 { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.AS2EncryptionAlgorithm Des3 { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.AS2EncryptionAlgorithm None { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.AS2EncryptionAlgorithm NotSpecified { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.AS2EncryptionAlgorithm RC2 { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Logic.Models.AS2EncryptionAlgorithm other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Logic.Models.AS2EncryptionAlgorithm left, Azure.ResourceManager.Logic.Models.AS2EncryptionAlgorithm right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Logic.Models.AS2EncryptionAlgorithm (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Logic.Models.AS2EncryptionAlgorithm left, Azure.ResourceManager.Logic.Models.AS2EncryptionAlgorithm right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class AS2EnvelopeSettings
     {
         public AS2EnvelopeSettings(string messageContentType, bool transmitFileNameInMimeHeader, string fileNameTemplate, bool suspendMessageOnFileNameGenerationError, bool autogenerateFileName) { }
@@ -1107,34 +1130,34 @@ namespace Azure.ResourceManager.Logic.Models
         public bool SuspendDuplicateMessage { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AS2MdnHashingAlgorithm : System.IEquatable<Azure.ResourceManager.Logic.Models.AS2MdnHashingAlgorithm>
+    public readonly partial struct AS2HashingAlgorithm : System.IEquatable<Azure.ResourceManager.Logic.Models.AS2HashingAlgorithm>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public AS2MdnHashingAlgorithm(string value) { throw null; }
-        public static Azure.ResourceManager.Logic.Models.AS2MdnHashingAlgorithm MD5 { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.AS2MdnHashingAlgorithm None { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.AS2MdnHashingAlgorithm NotSpecified { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.AS2MdnHashingAlgorithm Sha1 { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.AS2MdnHashingAlgorithm Sha2256 { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.AS2MdnHashingAlgorithm Sha2384 { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.AS2MdnHashingAlgorithm Sha2512 { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Logic.Models.AS2MdnHashingAlgorithm other) { throw null; }
+        public AS2HashingAlgorithm(string value) { throw null; }
+        public static Azure.ResourceManager.Logic.Models.AS2HashingAlgorithm MD5 { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.AS2HashingAlgorithm None { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.AS2HashingAlgorithm NotSpecified { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.AS2HashingAlgorithm Sha1 { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.AS2HashingAlgorithm Sha2256 { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.AS2HashingAlgorithm Sha2384 { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.AS2HashingAlgorithm Sha2512 { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Logic.Models.AS2HashingAlgorithm other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Logic.Models.AS2MdnHashingAlgorithm left, Azure.ResourceManager.Logic.Models.AS2MdnHashingAlgorithm right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Logic.Models.AS2MdnHashingAlgorithm (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Logic.Models.AS2MdnHashingAlgorithm left, Azure.ResourceManager.Logic.Models.AS2MdnHashingAlgorithm right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Logic.Models.AS2HashingAlgorithm left, Azure.ResourceManager.Logic.Models.AS2HashingAlgorithm right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Logic.Models.AS2HashingAlgorithm (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Logic.Models.AS2HashingAlgorithm left, Azure.ResourceManager.Logic.Models.AS2HashingAlgorithm right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class AS2MdnSettings
     {
-        public AS2MdnSettings(bool needMdn, bool signMdn, bool sendMdnAsynchronously, bool signOutboundMdnIfOptional, bool sendInboundMdnToMessageBox, Azure.ResourceManager.Logic.Models.AS2MdnHashingAlgorithm micHashingAlgorithm) { }
+        public AS2MdnSettings(bool needMdn, bool signMdn, bool sendMdnAsynchronously, bool signOutboundMdnIfOptional, bool sendInboundMdnToMessageBox, Azure.ResourceManager.Logic.Models.AS2HashingAlgorithm micHashingAlgorithm) { }
         public string DispositionNotificationTo { get { throw null; } set { } }
         public string MdnText { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.AS2MdnHashingAlgorithm MicHashingAlgorithm { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.AS2HashingAlgorithm MicHashingAlgorithm { get { throw null; } set { } }
         public bool NeedMdn { get { throw null; } set { } }
         public System.Uri ReceiptDeliveryUri { get { throw null; } set { } }
         public bool SendInboundMdnToMessageBox { get { throw null; } set { } }
@@ -1182,18 +1205,40 @@ namespace Azure.ResourceManager.Logic.Models
         public string Sha2AlgorithmFormat { get { throw null; } set { } }
         public string SigningCertificateName { get { throw null; } set { } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AS2SigningAlgorithm : System.IEquatable<Azure.ResourceManager.Logic.Models.AS2SigningAlgorithm>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AS2SigningAlgorithm(string value) { throw null; }
+        public static Azure.ResourceManager.Logic.Models.AS2SigningAlgorithm Default { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.AS2SigningAlgorithm NotSpecified { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.AS2SigningAlgorithm Sha1 { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.AS2SigningAlgorithm Sha2256 { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.AS2SigningAlgorithm Sha2384 { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.AS2SigningAlgorithm Sha2512 { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Logic.Models.AS2SigningAlgorithm other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Logic.Models.AS2SigningAlgorithm left, Azure.ResourceManager.Logic.Models.AS2SigningAlgorithm right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Logic.Models.AS2SigningAlgorithm (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Logic.Models.AS2SigningAlgorithm left, Azure.ResourceManager.Logic.Models.AS2SigningAlgorithm right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class AS2ValidationSettings
     {
-        public AS2ValidationSettings(bool overrideMessageProperties, bool encryptMessage, bool signMessage, bool compressMessage, bool checkDuplicateMessage, int interchangeDuplicatesValidityDays, bool checkCertificateRevocationListOnSend, bool checkCertificateRevocationListOnReceive, Azure.ResourceManager.Logic.Models.EncryptionAlgorithm encryptionAlgorithm) { }
+        public AS2ValidationSettings(bool overrideMessageProperties, bool encryptMessage, bool signMessage, bool compressMessage, bool checkDuplicateMessage, int interchangeDuplicatesValidityDays, bool checkCertificateRevocationListOnSend, bool checkCertificateRevocationListOnReceive, Azure.ResourceManager.Logic.Models.AS2EncryptionAlgorithm encryptionAlgorithm) { }
         public bool CheckCertificateRevocationListOnReceive { get { throw null; } set { } }
         public bool CheckCertificateRevocationListOnSend { get { throw null; } set { } }
         public bool CheckDuplicateMessage { get { throw null; } set { } }
         public bool CompressMessage { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.EncryptionAlgorithm EncryptionAlgorithm { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.AS2EncryptionAlgorithm EncryptionAlgorithm { get { throw null; } set { } }
         public bool EncryptMessage { get { throw null; } set { } }
         public int InterchangeDuplicatesValidityDays { get { throw null; } set { } }
         public bool OverrideMessageProperties { get { throw null; } set { } }
-        public Azure.ResourceManager.Logic.Models.SigningAlgorithm? SigningAlgorithm { get { throw null; } set { } }
+        public Azure.ResourceManager.Logic.Models.AS2SigningAlgorithm? SigningAlgorithm { get { throw null; } set { } }
         public bool SignMessage { get { throw null; } set { } }
     }
     public partial class EdifactAcknowledgementSettings
@@ -1426,29 +1471,6 @@ namespace Azure.ResourceManager.Logic.Models
         public bool ValidateEdiTypes { get { throw null; } set { } }
         public bool ValidateXsdTypes { get { throw null; } set { } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct EncryptionAlgorithm : System.IEquatable<Azure.ResourceManager.Logic.Models.EncryptionAlgorithm>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public EncryptionAlgorithm(string value) { throw null; }
-        public static Azure.ResourceManager.Logic.Models.EncryptionAlgorithm Aes128 { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.EncryptionAlgorithm Aes192 { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.EncryptionAlgorithm Aes256 { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.EncryptionAlgorithm Des3 { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.EncryptionAlgorithm None { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.EncryptionAlgorithm NotSpecified { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.EncryptionAlgorithm RC2 { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Logic.Models.EncryptionAlgorithm other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Logic.Models.EncryptionAlgorithm left, Azure.ResourceManager.Logic.Models.EncryptionAlgorithm right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Logic.Models.EncryptionAlgorithm (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Logic.Models.EncryptionAlgorithm left, Azure.ResourceManager.Logic.Models.EncryptionAlgorithm right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class FlowAccessControlConfiguration
     {
         public FlowAccessControlConfiguration() { }
@@ -1543,10 +1565,10 @@ namespace Azure.ResourceManager.Logic.Models
     public partial class IntegrationAccountKeyVaultKey
     {
         internal IntegrationAccountKeyVaultKey() { }
-        public long? CreatedOn { get { throw null; } }
+        public long? CreatedOnInTicks { get { throw null; } }
         public bool? IsEnabled { get { throw null; } }
-        public string Kid { get { throw null; } }
-        public long? Updated { get { throw null; } }
+        public string KeyId { get { throw null; } }
+        public long? UpdatedOnInTicks { get { throw null; } }
     }
     public partial class IntegrationAccountKeyVaultKeyReference
     {
@@ -1609,6 +1631,24 @@ namespace Azure.ResourceManager.Logic.Models
         public static bool operator ==(Azure.ResourceManager.Logic.Models.IntegrationAccountPartnerType left, Azure.ResourceManager.Logic.Models.IntegrationAccountPartnerType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Logic.Models.IntegrationAccountPartnerType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Logic.Models.IntegrationAccountPartnerType left, Azure.ResourceManager.Logic.Models.IntegrationAccountPartnerType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct IntegrationAccountSchemaType : System.IEquatable<Azure.ResourceManager.Logic.Models.IntegrationAccountSchemaType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public IntegrationAccountSchemaType(string value) { throw null; }
+        public static Azure.ResourceManager.Logic.Models.IntegrationAccountSchemaType NotSpecified { get { throw null; } }
+        public static Azure.ResourceManager.Logic.Models.IntegrationAccountSchemaType Xml { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Logic.Models.IntegrationAccountSchemaType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Logic.Models.IntegrationAccountSchemaType left, Azure.ResourceManager.Logic.Models.IntegrationAccountSchemaType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Logic.Models.IntegrationAccountSchemaType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Logic.Models.IntegrationAccountSchemaType left, Azure.ResourceManager.Logic.Models.IntegrationAccountSchemaType right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -2070,7 +2110,7 @@ namespace Azure.ResourceManager.Logic.Models
     public partial class LogicApiResourcePolicies
     {
         internal LogicApiResourcePolicies() { }
-        public string Content { get { throw null; } }
+        public System.BinaryData Content { get { throw null; } }
         public string ContentLink { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -2160,7 +2200,7 @@ namespace Azure.ResourceManager.Logic.Models
     public partial class LogicJsonSchema
     {
         internal LogicJsonSchema() { }
-        public string Content { get { throw null; } }
+        public System.BinaryData Content { get { throw null; } }
         public string Title { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -2568,33 +2608,6 @@ namespace Azure.ResourceManager.Logic.Models
         public System.Collections.Generic.IReadOnlyList<string> EndpointQualifiedNames { get { throw null; } }
         public string QualifiedName { get { throw null; } }
     }
-    public partial class ManagedServiceIdentity
-    {
-        public ManagedServiceIdentity(Azure.ResourceManager.Logic.Models.ManagedServiceIdentityType identityType) { }
-        public Azure.ResourceManager.Logic.Models.ManagedServiceIdentityType IdentityType { get { throw null; } set { } }
-        public System.Guid? PrincipalId { get { throw null; } }
-        public System.Guid? TenantId { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Models.UserAssignedIdentity> UserAssignedIdentities { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ManagedServiceIdentityType : System.IEquatable<Azure.ResourceManager.Logic.Models.ManagedServiceIdentityType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ManagedServiceIdentityType(string value) { throw null; }
-        public static Azure.ResourceManager.Logic.Models.ManagedServiceIdentityType None { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.ManagedServiceIdentityType SystemAssigned { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.ManagedServiceIdentityType UserAssigned { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Logic.Models.ManagedServiceIdentityType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Logic.Models.ManagedServiceIdentityType left, Azure.ResourceManager.Logic.Models.ManagedServiceIdentityType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Logic.Models.ManagedServiceIdentityType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Logic.Models.ManagedServiceIdentityType left, Azure.ResourceManager.Logic.Models.ManagedServiceIdentityType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MessageFilterType : System.IEquatable<Azure.ResourceManager.Logic.Models.MessageFilterType>
     {
@@ -2643,24 +2656,6 @@ namespace Azure.ResourceManager.Logic.Models
         public static bool operator !=(Azure.ResourceManager.Logic.Models.OpenAuthenticationProviderType left, Azure.ResourceManager.Logic.Models.OpenAuthenticationProviderType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SchemaType : System.IEquatable<Azure.ResourceManager.Logic.Models.SchemaType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public SchemaType(string value) { throw null; }
-        public static Azure.ResourceManager.Logic.Models.SchemaType NotSpecified { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.SchemaType Xml { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Logic.Models.SchemaType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Logic.Models.SchemaType left, Azure.ResourceManager.Logic.Models.SchemaType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Logic.Models.SchemaType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Logic.Models.SchemaType left, Azure.ResourceManager.Logic.Models.SchemaType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public enum SegmentTerminatorSuffix
     {
         None = 0,
@@ -2668,28 +2663,6 @@ namespace Azure.ResourceManager.Logic.Models
         CR = 2,
         LF = 3,
         Crlf = 4,
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SigningAlgorithm : System.IEquatable<Azure.ResourceManager.Logic.Models.SigningAlgorithm>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public SigningAlgorithm(string value) { throw null; }
-        public static Azure.ResourceManager.Logic.Models.SigningAlgorithm Default { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.SigningAlgorithm NotSpecified { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.SigningAlgorithm Sha1 { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.SigningAlgorithm Sha2256 { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.SigningAlgorithm Sha2384 { get { throw null; } }
-        public static Azure.ResourceManager.Logic.Models.SigningAlgorithm Sha2512 { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Logic.Models.SigningAlgorithm other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Logic.Models.SigningAlgorithm left, Azure.ResourceManager.Logic.Models.SigningAlgorithm right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Logic.Models.SigningAlgorithm (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Logic.Models.SigningAlgorithm left, Azure.ResourceManager.Logic.Models.SigningAlgorithm right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class SwaggerCustomDynamicList
     {

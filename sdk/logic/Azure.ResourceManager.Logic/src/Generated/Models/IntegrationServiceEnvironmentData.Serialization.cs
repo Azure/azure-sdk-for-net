@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Logic
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity");
-                writer.WriteObjectValue(Identity);
+                JsonSerializer.Serialize(writer, Identity);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Logic
         {
             Optional<IntegrationServiceEnvironmentProperties> properties = default;
             Optional<IntegrationServiceEnvironmentSku> sku = default;
-            Optional<Models.ManagedServiceIdentity> identity = default;
+            Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Logic
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = Models.ManagedServiceIdentity.DeserializeManagedServiceIdentity(property.Value);
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Logic
                     continue;
                 }
             }
-            return new IntegrationServiceEnvironmentData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties.Value, sku.Value, identity.Value);
+            return new IntegrationServiceEnvironmentData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties.Value, sku.Value, identity);
         }
     }
 }

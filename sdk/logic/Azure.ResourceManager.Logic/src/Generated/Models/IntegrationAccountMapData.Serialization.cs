@@ -44,7 +44,11 @@ namespace Azure.ResourceManager.Logic
             if (Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content");
-                writer.WriteStringValue(Content);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Content);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Content.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(ContentType))
             {
@@ -76,7 +80,7 @@ namespace Azure.ResourceManager.Logic
             Optional<IntegrationAccountMapPropertiesParametersSchema> parametersSchema = default;
             Optional<DateTimeOffset> createdTime = default;
             Optional<DateTimeOffset> changedTime = default;
-            Optional<string> content = default;
+            Optional<BinaryData> content = default;
             Optional<string> contentType = default;
             Optional<LogicContentLink> contentLink = default;
             Optional<BinaryData> metadata = default;
@@ -173,7 +177,12 @@ namespace Azure.ResourceManager.Logic
                         }
                         if (property0.NameEquals("content"))
                         {
-                            content = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            content = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("contentType"))

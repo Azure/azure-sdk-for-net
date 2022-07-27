@@ -63,7 +63,11 @@ namespace Azure.ResourceManager.Logic
             if (Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content");
-                writer.WriteStringValue(Content);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Content);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Content.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(ContentType))
             {
@@ -82,14 +86,14 @@ namespace Azure.ResourceManager.Logic
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            SchemaType schemaType = default;
+            IntegrationAccountSchemaType schemaType = default;
             Optional<string> targetNamespace = default;
             Optional<string> documentName = default;
             Optional<string> fileName = default;
             Optional<DateTimeOffset> createdTime = default;
             Optional<DateTimeOffset> changedTime = default;
             Optional<BinaryData> metadata = default;
-            Optional<string> content = default;
+            Optional<BinaryData> content = default;
             Optional<string> contentType = default;
             Optional<LogicContentLink> contentLink = default;
             foreach (var property in element.EnumerateObject())
@@ -150,7 +154,7 @@ namespace Azure.ResourceManager.Logic
                     {
                         if (property0.NameEquals("schemaType"))
                         {
-                            schemaType = new SchemaType(property0.Value.GetString());
+                            schemaType = new IntegrationAccountSchemaType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("targetNamespace"))
@@ -200,7 +204,12 @@ namespace Azure.ResourceManager.Logic
                         }
                         if (property0.NameEquals("content"))
                         {
-                            content = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            content = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("contentType"))

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="contentType"> The content type. </param>
         /// <param name="contentLink"> The content link. </param>
         /// <param name="metadata"> The metadata. </param>
-        internal IntegrationAccountMapData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IntegrationAccountMapType mapType, IntegrationAccountMapPropertiesParametersSchema parametersSchema, DateTimeOffset? createdOn, DateTimeOffset? changedOn, string content, string contentType, LogicContentLink contentLink, BinaryData metadata) : base(id, name, resourceType, systemData, tags, location)
+        internal IntegrationAccountMapData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IntegrationAccountMapType mapType, IntegrationAccountMapPropertiesParametersSchema parametersSchema, DateTimeOffset? createdOn, DateTimeOffset? changedOn, BinaryData content, string contentType, LogicContentLink contentLink, BinaryData metadata) : base(id, name, resourceType, systemData, tags, location)
         {
             MapType = mapType;
             ParametersSchema = parametersSchema;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Logic
         /// <summary> The changed time. </summary>
         public DateTimeOffset? ChangedOn { get; }
         /// <summary> The content. </summary>
-        public string Content { get; set; }
+        public BinaryData Content { get; set; }
         /// <summary> The content type. </summary>
         public string ContentType { get; set; }
         /// <summary> The content link. </summary>
