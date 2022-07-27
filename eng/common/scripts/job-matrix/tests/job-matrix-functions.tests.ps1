@@ -348,7 +348,7 @@ Describe "Platform Matrix Generation" -Tag "generate" {
     It "Should initialize a sparse matrix from an N-dimensional matrix" -TestCases @(
         @{ i = 0; name = "windows2019_net461"; operatingSystem = "windows-2019"; framework = "net461"; additionalArguments = ""; }
         @{ i = 1; name = "ubuntu1804_netcoreapp21_withfoo"; operatingSystem = "ubuntu-18.04"; framework = "netcoreapp2.1"; additionalArguments = "--enableFoo"; }
-        @{ i = 2; name = "macOS1015_net461"; operatingSystem = "macos-11"; framework = "net461"; additionalArguments = ""; }
+        @{ i = 2; name = "macOS11_net461"; operatingSystem = "macos-11"; framework = "net461"; additionalArguments = ""; }
     ) {
         $sparseMatrix = GenerateSparseMatrix $generateConfig.matrixParameters $generateConfig.displayNamesLookup
         $dimensions = GetMatrixDimensions $generateConfig.matrixParameters
