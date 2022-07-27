@@ -1,7 +1,7 @@
 # Release History
 
 ## 12.13.0-beta.1 (Unreleased)
-- This release contains bug fixes to improve quality.
+- Fixed bug where Account SAS with the resources type in any order but "sco" would get reordered to "sco", which would invalidate the Account SAS signature from the string to sign 
 
 ## 12.12.0 (2022-07-07)
 - Includes all features from 12.12.0-beta.1.
