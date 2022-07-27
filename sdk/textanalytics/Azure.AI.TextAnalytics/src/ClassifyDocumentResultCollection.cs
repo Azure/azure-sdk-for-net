@@ -9,13 +9,13 @@ using System.Linq;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// Collection of <see cref="LabelClassifyResult"/> objects corresponding
+    /// Collection of <see cref="ClassifyDocumentResult"/> objects corresponding
     /// to a batch of documents, and information about the batch operation.
     /// </summary>
-    [DebuggerTypeProxy(typeof(MultiLabelClassifyResultCollectionDebugView))]
-    public class MultiLabelClassifyResultCollection : ReadOnlyCollection<LabelClassifyResult>
+    [DebuggerTypeProxy(typeof(ClassifyDocumentResultCollectionDebugView))]
+    public class ClassifyDocumentResultCollection : ReadOnlyCollection<ClassifyDocumentResult>
     {
-        internal MultiLabelClassifyResultCollection(IList<LabelClassifyResult> list, TextDocumentBatchStatistics statistics,
+        internal ClassifyDocumentResultCollection(IList<ClassifyDocumentResult> list, TextDocumentBatchStatistics statistics,
             string projectName, string deploymentName) : base(list)
         {
             Statistics = statistics;
@@ -47,19 +47,19 @@ namespace Azure.AI.TextAnalytics
         public string DeploymentName { get; }
 
         /// <summary>
-        /// Debugger Proxy class for <see cref="MultiLabelClassifyResultCollection"/>.
+        /// Debugger Proxy class for <see cref="ClassifyDocumentResultCollection"/>.
         /// </summary>
-        internal class MultiLabelClassifyResultCollectionDebugView
+        internal class ClassifyDocumentResultCollectionDebugView
         {
-            private MultiLabelClassifyResultCollection BaseCollection { get; }
+            private ClassifyDocumentResultCollection BaseCollection { get; }
 
-            public MultiLabelClassifyResultCollectionDebugView(MultiLabelClassifyResultCollection collection)
+            public ClassifyDocumentResultCollectionDebugView(ClassifyDocumentResultCollection collection)
             {
                 BaseCollection = collection;
             }
 
             [DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
-            public List<LabelClassifyResult> Items
+            public List<ClassifyDocumentResult> Items
             {
                 get
                 {

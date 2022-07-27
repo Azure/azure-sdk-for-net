@@ -454,90 +454,41 @@ namespace Azure.AI.TextAnalytics
 
         #endregion Extract KeyPhrase
 
-        #region Multi Label Classify
+        #region Label Classify
         /// <summary>
-        /// Initializes a new instance of <see cref="TextAnalytics.LabelClassifyResult"/> for mocking purposes.
+        /// Initializes a new instance of <see cref="TextAnalytics.ClassifyDocumentResult"/> for mocking purposes.
         /// </summary>
         /// <param name="id">Sets the <see cref="TextAnalyticsResult.Id"/> property.</param>
         /// <param name="statistics">Sets the <see cref="TextAnalyticsResult.Statistics"/> property.</param>
-        /// <param name="documentClassificationCollection">Sets the of <see cref="LabelClassifyResult.ClassificationCategories"/>.</param>
-        /// <param name="warnings">Sets the collection of <see cref="LabelClassifyResult.Warnings"/>.</param>
-        /// <returns>A new instance of <see cref="TextAnalytics.LabelClassifyResult"/> for mocking purposes.</returns>
-        public static LabelClassifyResult MultiLabelClassifyResult(string id, TextDocumentStatistics statistics, ClassificationCategoryCollection documentClassificationCollection, IEnumerable<TextAnalyticsWarning> warnings = default)
+        /// <param name="documentClassificationCollection">Sets the of <see cref="ClassifyDocumentResult.ClassificationCategories"/>.</param>
+        /// <param name="warnings">Sets the collection of <see cref="ClassifyDocumentResult.Warnings"/>.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.ClassifyDocumentResult"/> for mocking purposes.</returns>
+        public static ClassifyDocumentResult ClassifyDocumentResult(string id, TextDocumentStatistics statistics, ClassificationCategoryCollection documentClassificationCollection, IEnumerable<TextAnalyticsWarning> warnings = default)
         {
-            return new LabelClassifyResult(id, statistics, documentClassificationCollection, warnings.ToList());
+            return new ClassifyDocumentResult(id, statistics, documentClassificationCollection, warnings.ToList());
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="TextAnalytics.LabelClassifyResult"/> for mocking purposes.
+        /// Initializes a new instance of <see cref="TextAnalytics.ClassifyDocumentResult"/> for mocking purposes.
         /// </summary>
         /// <param name="id">Sets the <see cref="TextAnalyticsResult.Id"/> property.</param>
         /// <param name="error">Sets the <see cref="TextAnalyticsResult.Error"/> property.</param>
-        /// <returns>A new instance of <see cref="TextAnalytics.LabelClassifyResult"/> for mocking purposes.</returns>
-        public static LabelClassifyResult MultiLabelClassifyResult(string id, TextAnalyticsError error)
+        /// <returns>A new instance of <see cref="TextAnalytics.ClassifyDocumentResult"/> for mocking purposes.</returns>
+        public static ClassifyDocumentResult ClassifyDocumentResult(string id, TextAnalyticsError error)
         {
-            return new LabelClassifyResult(id, error);
+            return new ClassifyDocumentResult(id, error);
         }
         /// <summary>
-        /// Initializes a new instance of <see cref="TextAnalytics.MultiLabelClassifyResultCollection"/> for mocking purposes.
+        /// Initializes a new instance of <see cref="TextAnalytics.ClassifyDocumentResultCollection"/> for mocking purposes.
         /// </summary>
-        /// <param name="classificationResultList">Sets the collection of <see cref="TextAnalytics.MultiLabelClassifyResultCollection"/>.</param>
-        /// <param name="statistics">Sets the <see cref="MultiLabelClassifyResultCollection.Statistics"/> property.</param>
-        /// <param name="projectName">Sets the <see cref="MultiLabelClassifyResultCollection.ProjectName"/> property.</param>
-        /// <param name="deploymentName">Sets the <see cref="MultiLabelClassifyResultCollection.DeploymentName"/> property.</param>
-        /// <returns>A new instance of <see cref="TextAnalytics.MultiLabelClassifyResultCollection"/> for mocking purposes.</returns>
-        public static MultiLabelClassifyResultCollection MultiLabelClassifyResultCollection(IEnumerable<LabelClassifyResult> classificationResultList, TextDocumentBatchStatistics statistics, string projectName, string deploymentName)
+        /// <param name="classificationResultList">Sets the collection of <see cref="TextAnalytics.ClassifyDocumentResultCollection"/>.</param>
+        /// <param name="statistics">Sets the <see cref="ClassifyDocumentResultCollection.Statistics"/> property.</param>
+        /// <param name="projectName">Sets the <see cref="ClassifyDocumentResultCollection.ProjectName"/> property.</param>
+        /// <param name="deploymentName">Sets the <see cref="ClassifyDocumentResultCollection.DeploymentName"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.ClassifyDocumentResultCollection"/> for mocking purposes.</returns>
+        public static ClassifyDocumentResultCollection ClassifyDocumentResultCollection(IEnumerable<ClassifyDocumentResult> classificationResultList, TextDocumentBatchStatistics statistics, string projectName, string deploymentName)
         {
-            return new MultiLabelClassifyResultCollection(classificationResultList.ToList(), statistics, projectName, deploymentName);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of <see cref="TextAnalytics.ClassificationCategoryCollection"/> for mocking purposes.
-        /// </summary>
-        /// <param name="classificationList">Sets the collection of <see cref="TextAnalytics.ClassificationCategory"/>.</param>
-        /// <param name="warnings">Sets the <see cref="ClassificationCategoryCollection.Warnings"/> property.</param>
-        /// <returns>A new instance of <see cref="TextAnalytics.ClassificationCategoryCollection"/> for mocking purposes.</returns>
-        public static ClassificationCategoryCollection ClassificationCategoryCollection(IEnumerable<ClassificationCategory> classificationList, IEnumerable<TextAnalyticsWarning> warnings)
-        {
-            return new ClassificationCategoryCollection(classificationList.ToList(), warnings.ToList());
-        }
-        #endregion
-
-        #region Single Label Classify
-        /// <summary>
-        /// Initializes a new instance of <see cref="TextAnalytics.SingleLabelClassifyResult"/> for mocking purposes.
-        /// </summary>
-        /// <param name="id">Sets the <see cref="TextAnalyticsResult.Id"/> property.</param>
-        /// <param name="statistics">Sets the <see cref="TextAnalyticsResult.Statistics"/> property.</param>
-        /// <param name="classification">Sets the of <see cref="SingleLabelClassifyResult.Classification"/>.</param>
-        /// <param name="warnings">Sets the collection of <see cref="SingleLabelClassifyResult.Warnings"/>.</param>
-        /// <returns>A new instance of <see cref="TextAnalytics.SingleLabelClassifyResult"/> for mocking purposes.</returns>
-        public static SingleLabelClassifyResult SingleLabelClassifyResult(string id, TextDocumentStatistics statistics, ClassificationCategory classification, IEnumerable<TextAnalyticsWarning> warnings = default)
-        {
-            return new SingleLabelClassifyResult(id, statistics, classification, warnings.ToList());
-        }
-
-        /// <summary>
-        /// Initializes a new instance of <see cref="TextAnalytics.SingleLabelClassifyResult"/> for mocking purposes.
-        /// </summary>
-        /// <param name="id">Sets the <see cref="TextAnalyticsResult.Id"/> property.</param>
-        /// <param name="error">Sets the <see cref="TextAnalyticsResult.Error"/> property.</param>
-        /// <returns>A new instance of <see cref="TextAnalytics.SingleLabelClassifyResult"/> for mocking purposes.</returns>
-        public static SingleLabelClassifyResult SingleLabelClassifyResult(string id, TextAnalyticsError error)
-        {
-            return new SingleLabelClassifyResult(id, error);
-        }
-        /// <summary>
-        /// Initializes a new instance of <see cref="TextAnalytics.SingleLabelClassifyResultCollection"/> for mocking purposes.
-        /// </summary>
-        /// <param name="classificationResultList">Sets the collection of <see cref="TextAnalytics.SingleLabelClassifyResult"/>.</param>
-        /// <param name="statistics">Sets the <see cref="SingleLabelClassifyResultCollection.Statistics"/> property.</param>
-        /// <param name="projectName">Sets the <see cref="SingleLabelClassifyResultCollection.ProjectName"/> property.</param>
-        /// <param name="deploymentName">Sets the <see cref="SingleLabelClassifyResultCollection.DeploymentName"/> property.</param>
-        /// <returns>A new instance of <see cref="TextAnalytics.SingleLabelClassifyResultCollection"/> for mocking purposes.</returns>
-        public static SingleLabelClassifyResultCollection SingleLabelClassifyResultCollection(IEnumerable<SingleLabelClassifyResult> classificationResultList, TextDocumentBatchStatistics statistics, string projectName, string deploymentName)
-        {
-            return new SingleLabelClassifyResultCollection(classificationResultList.ToList(), statistics, projectName, deploymentName);
+            return new ClassifyDocumentResultCollection(classificationResultList.ToList(), statistics, projectName, deploymentName);
         }
 
         /// <summary>
@@ -549,6 +500,17 @@ namespace Azure.AI.TextAnalytics
         public static ClassificationCategory ClassificationCategory(string category, double confidenceScore)
         {
             return new ClassificationCategory(new ClassificationResult(category, confidenceScore));
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.ClassificationCategoryCollection"/> for mocking purposes.
+        /// </summary>
+        /// <param name="classificationList">Sets the collection of <see cref="TextAnalytics.ClassificationCategory"/>.</param>
+        /// <param name="warnings">Sets the <see cref="ClassificationCategoryCollection.Warnings"/> property.</param>
+        /// <returns>A new instance of <see cref="TextAnalytics.ClassificationCategoryCollection"/> for mocking purposes.</returns>
+        public static ClassificationCategoryCollection ClassificationCategoryCollection(IEnumerable<ClassificationCategory> classificationList, IEnumerable<TextAnalyticsWarning> warnings)
+        {
+            return new ClassificationCategoryCollection(classificationList.ToList(), warnings.ToList());
         }
         #endregion
 
@@ -882,7 +844,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="completedOn">Sets the <see cref="TextAnalyticsActionResult.CompletedOn"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.MultiLabelClassifyActionResult"/> for mocking purposes.</returns>
         public static MultiLabelClassifyActionResult MultiLabelClassifyActionResult(
-            MultiLabelClassifyResultCollection result,
+            ClassifyDocumentResultCollection result,
             string actionName,
             DateTimeOffset completedOn)
         {
@@ -897,7 +859,7 @@ namespace Azure.AI.TextAnalytics
         /// <returns>A new instance of <see cref="TextAnalytics.MultiLabelClassifyActionResult"/> for mocking purposes.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static MultiLabelClassifyActionResult MultiLabelClassifyActionResult(
-            MultiLabelClassifyResultCollection result,
+            ClassifyDocumentResultCollection result,
             DateTimeOffset completedOn)
         {
             return new MultiLabelClassifyActionResult(result, default, completedOn);
@@ -944,7 +906,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="completedOn">Sets the <see cref="TextAnalyticsActionResult.CompletedOn"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.SingleLabelClassifyActionResult"/> for mocking purposes.</returns>
         public static SingleLabelClassifyActionResult SingleLabelClassifyActionResult(
-            SingleLabelClassifyResultCollection result,
+            ClassifyDocumentResultCollection result,
             string actionName,
             DateTimeOffset completedOn)
         {
@@ -959,7 +921,7 @@ namespace Azure.AI.TextAnalytics
         /// <returns>A new instance of <see cref="TextAnalytics.SingleLabelClassifyActionResult"/> for mocking purposes.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SingleLabelClassifyActionResult SingleLabelClassifyActionResult(
-            SingleLabelClassifyResultCollection result,
+            ClassifyDocumentResultCollection result,
             DateTimeOffset completedOn)
         {
             return new SingleLabelClassifyActionResult(result, default, completedOn);
