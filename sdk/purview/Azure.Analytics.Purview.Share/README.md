@@ -13,7 +13,7 @@ Microsoft Purview Share is a fully managed cloud service.
 Install the Microsoft Purview Share client library for .NET with [NuGet][client_nuget_package]:
 
 ```dotnetcli
-dotnet add package Azure.Analysis.Purview.Share --prerelease
+dotnet add package Azure.Analytics.Purview.Share --prerelease
 ```
 
 ### Prerequisites
