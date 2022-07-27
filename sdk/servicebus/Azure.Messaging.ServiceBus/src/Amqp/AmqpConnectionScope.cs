@@ -687,7 +687,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 };
 
                 link = new ReceivingAmqpLink(linkSettings);
-                linkSettings.LinkName = $"{connection.Settings.ContainerId};{connection.Identifier}:{session.Identifier}:{link.Identifier}:{linkSettings.Source.ToString()}";
+                linkSettings.LinkName = Id;
 
                 link.AttachTo(session);
 
@@ -828,7 +828,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 linkSettings.AddProperty(AmqpClientConstants.TimeoutName, (uint)timeout.CalculateRemaining(stopWatch.GetElapsedTime()).TotalMilliseconds);
 
                 link = new SendingAmqpLink(linkSettings);
-                linkSettings.LinkName = $"{ Id };{ connection.Identifier }:{ session.Identifier }:{ link.Identifier }";
+                linkSettings.LinkName = Id;
                 link.AttachTo(session);
 
                 // Configure refresh for authorization of the link.
