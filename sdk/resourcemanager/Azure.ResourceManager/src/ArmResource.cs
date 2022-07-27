@@ -130,11 +130,11 @@ namespace Azure.ResourceManager
         /// <summary>
         /// Checks to see if the TagResource API is deployed in the current environment.
         /// </summary>
-        protected virtual bool IsTagResourcePresent(CancellationToken cancellationToken = default) => Client.IsTagResourcePresent(cancellationToken);
+        protected virtual bool CanUseTagResource(CancellationToken cancellationToken = default) => Client.CanUseTagResource(cancellationToken);
 
         /// <summary>
         /// Checks to see if the TagResource API is deployed in the current environment.
         /// </summary>
-        protected virtual Task<bool> IsTagResourcePresentAsync(CancellationToken cancellationToken = default) => Client.IsTagResourcePresentAsync(cancellationToken);
+        protected virtual Task<bool> CanUseTagResourceAsync(CancellationToken cancellationToken = default) => Client.CanUseTagResourceAsync(cancellationToken);
     }
 }
