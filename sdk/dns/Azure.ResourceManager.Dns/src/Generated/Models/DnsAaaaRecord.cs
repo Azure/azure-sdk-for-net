@@ -8,16 +8,16 @@
 namespace Azure.ResourceManager.Dns.Models
 {
     /// <summary> An AAAA record. </summary>
-    public partial class AaaaRecord
+    public partial class DnsAaaaRecord
     {
-        /// <summary> Initializes a new instance of AaaaRecord. </summary>
-        public AaaaRecord()
+        /// <summary> Initializes a new instance of DnsAaaaRecord. </summary>
+        public DnsAaaaRecord()
         {
         }
 
-        /// <summary> Initializes a new instance of AaaaRecord. </summary>
+        /// <summary> Initializes a new instance of DnsAaaaRecord. </summary>
         /// <param name="ipv6Address"> The IPv6 address of this AAAA record. </param>
-        internal AaaaRecord(string ipv6Address)
+        internal DnsAaaaRecord(string ipv6Address)
         {
             IPv6Address = ipv6Address;
         }

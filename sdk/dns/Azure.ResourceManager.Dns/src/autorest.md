@@ -102,16 +102,44 @@ directive:
     where: $.definitions.ZoneListResult
     transform: $["x-ms-client-name"] = "DnsZoneListResult";
 
-# Mx Ns => MX NS
+# Add prepend name
+  - from: swagger-document
+    where: $.definitions.ARecord
+    transform: $["x-ms-client-name"] = "DnsARecord";
+  - from: swagger-document
+    where: $.definitions.AaaaRecord
+    transform: $["x-ms-client-name"] = "DnsAaaaRecord";
   - from: swagger-document
     where: $.definitions.MxRecord
-    transform: $["x-ms-client-name"] = "MXRecord";
+    transform: $["x-ms-client-name"] = "DnsMXRecord";
+  - from: swagger-document
+    where: $.definitions.NsRecord
+    transform: $["x-ms-client-name"] = "DnsNSRecord";
+  - from: swagger-document
+    where: $.definitions.PtrRecord
+    transform: $["x-ms-client-name"] = "DnsPtrRecord";
+  - from: swagger-document
+    where: $.definitions.SrvRecord
+    transform: $["x-ms-client-name"] = "DnsSrvRecord";
+  - from: swagger-document
+    where: $.definitions.TxtRecord
+    transform: $["x-ms-client-name"] = "DnsTxtRecord";
+  - from: swagger-document
+    where: $.definitions.CnameRecord
+    transform: $["x-ms-client-name"] = "DnsCnameRecord";
+  - from: swagger-document
+    where: $.definitions.SoaRecord
+    transform: $["x-ms-client-name"] = "DnsSoaRecord";
+  - from: swagger-document
+    where: $.definitions.CaaRecord
+    transform: $["x-ms-client-name"] = "DnsCaaRecord";
+
+
+
+# Mx Ns => MX NS
   - from: swagger-document
     where: $.definitions.RecordSetProperties.properties.MXRecords
     transform: $["x-ms-client-name"] = "MXRecords";
-  - from: swagger-document
-    where: $.definitions.NsRecord
-    transform: $["x-ms-client-name"] = "NSRecord";
   - from: swagger-document
     where: $.definitions.RecordSetProperties.properties.NSRecords
     transform: $["x-ms-client-name"] = "NSRecords";

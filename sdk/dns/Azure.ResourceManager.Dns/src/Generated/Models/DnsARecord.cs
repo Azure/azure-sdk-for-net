@@ -8,16 +8,16 @@
 namespace Azure.ResourceManager.Dns.Models
 {
     /// <summary> An A record. </summary>
-    public partial class ARecord
+    public partial class DnsARecord
     {
-        /// <summary> Initializes a new instance of ARecord. </summary>
-        public ARecord()
+        /// <summary> Initializes a new instance of DnsARecord. </summary>
+        public DnsARecord()
         {
         }
 
-        /// <summary> Initializes a new instance of ARecord. </summary>
+        /// <summary> Initializes a new instance of DnsARecord. </summary>
         /// <param name="ipv4Address"> The IPv4 address of this A record. </param>
-        internal ARecord(string ipv4Address)
+        internal DnsARecord(string ipv4Address)
         {
             IPv4Address = ipv4Address;
         }

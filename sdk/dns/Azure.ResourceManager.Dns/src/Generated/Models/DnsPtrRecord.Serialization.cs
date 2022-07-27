@@ -10,31 +10,31 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Dns.Models
 {
-    public partial class ARecord : IUtf8JsonSerializable
+    public partial class DnsPtrRecord : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IPv4Address))
+            if (Optional.IsDefined(PtrdName))
             {
-                writer.WritePropertyName("ipv4Address");
-                writer.WriteStringValue(IPv4Address);
+                writer.WritePropertyName("ptrdname");
+                writer.WriteStringValue(PtrdName);
             }
             writer.WriteEndObject();
         }
 
-        internal static ARecord DeserializeARecord(JsonElement element)
+        internal static DnsPtrRecord DeserializeDnsPtrRecord(JsonElement element)
         {
-            Optional<string> ipv4Address = default;
+            Optional<string> ptrdname = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ipv4Address"))
+                if (property.NameEquals("ptrdname"))
                 {
-                    ipv4Address = property.Value.GetString();
+                    ptrdname = property.Value.GetString();
                     continue;
                 }
             }
-            return new ARecord(ipv4Address.Value);
+            return new DnsPtrRecord(ptrdname.Value);
         }
     }
 }

@@ -11,17 +11,17 @@ using Azure.Core;
 namespace Azure.ResourceManager.Dns.Models
 {
     /// <summary> A TXT record. </summary>
-    public partial class TxtRecord
+    public partial class DnsTxtRecord
     {
-        /// <summary> Initializes a new instance of TxtRecord. </summary>
-        public TxtRecord()
+        /// <summary> Initializes a new instance of DnsTxtRecord. </summary>
+        public DnsTxtRecord()
         {
             Value = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of TxtRecord. </summary>
+        /// <summary> Initializes a new instance of DnsTxtRecord. </summary>
         /// <param name="value"> The text value of this TXT record. </param>
-        internal TxtRecord(IList<string> value)
+        internal DnsTxtRecord(IList<string> value)
         {
             Value = value;
         }

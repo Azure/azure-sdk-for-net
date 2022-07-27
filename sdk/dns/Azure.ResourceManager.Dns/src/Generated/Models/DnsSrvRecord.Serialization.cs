@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Dns.Models
 {
-    public partial class SrvRecord : IUtf8JsonSerializable
+    public partial class DnsSrvRecord : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Dns.Models
             writer.WriteEndObject();
         }
 
-        internal static SrvRecord DeserializeSrvRecord(JsonElement element)
+        internal static DnsSrvRecord DeserializeDnsSrvRecord(JsonElement element)
         {
             Optional<int> priority = default;
             Optional<int> weight = default;
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Dns.Models
                     continue;
                 }
             }
-            return new SrvRecord(Optional.ToNullable(priority), Optional.ToNullable(weight), Optional.ToNullable(port), target.Value);
+            return new DnsSrvRecord(Optional.ToNullable(priority), Optional.ToNullable(weight), Optional.ToNullable(port), target.Value);
         }
     }
 }

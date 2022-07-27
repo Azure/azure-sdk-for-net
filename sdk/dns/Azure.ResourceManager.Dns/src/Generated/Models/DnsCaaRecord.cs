@@ -8,18 +8,18 @@
 namespace Azure.ResourceManager.Dns.Models
 {
     /// <summary> A CAA record. </summary>
-    public partial class CaaRecord
+    public partial class DnsCaaRecord
     {
-        /// <summary> Initializes a new instance of CaaRecord. </summary>
-        public CaaRecord()
+        /// <summary> Initializes a new instance of DnsCaaRecord. </summary>
+        public DnsCaaRecord()
         {
         }
 
-        /// <summary> Initializes a new instance of CaaRecord. </summary>
+        /// <summary> Initializes a new instance of DnsCaaRecord. </summary>
         /// <param name="flags"> The flags for this CAA record as an integer between 0 and 255. </param>
         /// <param name="tag"> The tag for this CAA record. </param>
         /// <param name="value"> The value for this CAA record. </param>
-        internal CaaRecord(int? flags, string tag, string value)
+        internal DnsCaaRecord(int? flags, string tag, string value)
         {
             Flags = flags;
             Tag = tag;
