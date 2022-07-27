@@ -47,7 +47,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         public override bool IsClosed => _closed;
 
         /// <summary>
-        /// The identifier for the sender.
+        /// The identifier of the sender.
         /// </summary>
         public string Identifier { get; }
 
