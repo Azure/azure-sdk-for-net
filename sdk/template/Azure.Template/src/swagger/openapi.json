@@ -147,7 +147,7 @@
         "requiredBodyDateTime": {
           "type": "string",
           "format": "date-time",
-          "description": "Illustrate a zonedDateTime body parameter, serialized as 'YYYY-MM-DDTHH:mm:ss.sssZ' (https://datatracker.ietf.org/doc/html/rfc3339)"
+          "description": "Illustrate a zonedDateTime body parameter, serialized as (https://datatracker.ietf.org/doc/html/rfc3339)"
         },
         "requiredDuration": {
           "type": "string",

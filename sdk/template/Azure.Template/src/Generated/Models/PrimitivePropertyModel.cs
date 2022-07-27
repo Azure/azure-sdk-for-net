@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Template.Models
 {
@@ -20,21 +21,15 @@ namespace Azure.Template.Models
         /// <param name="requiredSafeInt"></param>
         /// <param name="requiredFloat"></param>
         /// <param name="requiredDouble"></param>
-        /// <param name="requiredBodyDateTime"> Illustrate a zonedDateTime body parameter, serialized as &apos;YYYY-MM-DDTHH:mm:ss.sssZ&apos; (https://datatracker.ietf.org/doc/html/rfc3339). </param>
+        /// <param name="requiredBodyDateTime"> Illustrate a zonedDateTime body parameter, serialized as (https://datatracker.ietf.org/doc/html/rfc3339). </param>
         /// <param name="requiredDuration"></param>
         /// <param name="requiredBoolean"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="requiredString"/> or <paramref name="requiredBytes"/> is null. </exception>
         public PrimitivePropertyModel(string requiredString, byte[] requiredBytes, int requiredInt, long requiredLong, long requiredSafeInt, float requiredFloat, double requiredDouble, DateTimeOffset requiredBodyDateTime, TimeSpan requiredDuration, bool requiredBoolean)
         {
-            if (requiredString == null)
-            {
-                throw new ArgumentNullException(nameof(requiredString));
-            }
-            if (requiredBytes == null)
-            {
-                throw new ArgumentNullException(nameof(requiredBytes));
-            }
-
+            Argument.AssertNotNull(requiredString, nameof(requiredString));
+            Argument.AssertNotNull(requiredBytes, nameof(requiredBytes));
+            
             RequiredString = requiredString;
             RequiredBytes = requiredBytes;
             RequiredInt = requiredInt;
@@ -61,7 +56,7 @@ namespace Azure.Template.Models
         public float RequiredFloat { get; set; }
         /// <summary> Gets or sets the required double. </summary>
         public double RequiredDouble { get; set; }
-        /// <summary> Illustrate a zonedDateTime body parameter, serialized as &apos;YYYY-MM-DDTHH:mm:ss.sssZ&apos; (https://datatracker.ietf.org/doc/html/rfc3339). </summary>
+        /// <summary> Illustrate a zonedDateTime body parameter, serialized as (https://datatracker.ietf.org/doc/html/rfc3339). </summary>
         public DateTimeOffset RequiredBodyDateTime { get; set; }
         /// <summary> Gets or sets the required duration. </summary>
         public TimeSpan RequiredDuration { get; set; }
