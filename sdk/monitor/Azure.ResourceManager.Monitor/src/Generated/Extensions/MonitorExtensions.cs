@@ -886,11 +886,11 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="notificationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="notificationId"/> is null. </exception>
-        public static async Task<Response<NotificationStatus>> GetTestNotificationsAtResourceGroupLevelActionGroupAsync(this ResourceGroupResource resourceGroupResource, string notificationId, CancellationToken cancellationToken = default)
+        public static async Task<Response<NotificationStatus>> GetNotificationStatusAsync(this ResourceGroupResource resourceGroupResource, string notificationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(notificationId, nameof(notificationId));
 
-            return await GetExtensionClient(resourceGroupResource).GetTestNotificationsAtResourceGroupLevelActionGroupAsync(notificationId, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(resourceGroupResource).GetNotificationStatusAsync(notificationId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -903,11 +903,11 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="notificationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="notificationId"/> is null. </exception>
-        public static Response<NotificationStatus> GetTestNotificationsAtResourceGroupLevelActionGroup(this ResourceGroupResource resourceGroupResource, string notificationId, CancellationToken cancellationToken = default)
+        public static Response<NotificationStatus> GetNotificationStatus(this ResourceGroupResource resourceGroupResource, string notificationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(notificationId, nameof(notificationId));
 
-            return GetExtensionClient(resourceGroupResource).GetTestNotificationsAtResourceGroupLevelActionGroup(notificationId, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetNotificationStatus(notificationId, cancellationToken);
         }
 
         /// <summary>

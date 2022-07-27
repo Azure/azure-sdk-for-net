@@ -171,9 +171,9 @@ namespace Azure.ResourceManager.Monitor
         /// </summary>
         /// <param name="notificationId"> The notification id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<NotificationStatus>> GetTestNotificationsAtResourceGroupLevelActionGroupAsync(string notificationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NotificationStatus>> GetNotificationStatusAsync(string notificationId, CancellationToken cancellationToken = default)
         {
-            using var scope = ActionGroupClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetTestNotificationsAtResourceGroupLevelActionGroup");
+            using var scope = ActionGroupClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetNotificationStatus");
             scope.Start();
             try
             {
@@ -194,9 +194,9 @@ namespace Azure.ResourceManager.Monitor
         /// </summary>
         /// <param name="notificationId"> The notification id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<NotificationStatus> GetTestNotificationsAtResourceGroupLevelActionGroup(string notificationId, CancellationToken cancellationToken = default)
+        public virtual Response<NotificationStatus> GetNotificationStatus(string notificationId, CancellationToken cancellationToken = default)
         {
-            using var scope = ActionGroupClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetTestNotificationsAtResourceGroupLevelActionGroup");
+            using var scope = ActionGroupClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetNotificationStatus");
             scope.Start();
             try
             {

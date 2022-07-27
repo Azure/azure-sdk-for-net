@@ -79,6 +79,8 @@ prepend-rp-prefix:
 
 override-operation-name:
   ActionGroups_GetTestNotifications: GetNotificationStatus
+  ActionGroups_GetTestNotificationsAtResourceGroupLevel: GetNotificationStatus
+  ActionGroups_GetTestNotificationsAtActionGroupResourceLevel: GetNotificationStatus
   ActionGroups_PostTestNotifications: CreateNotifications
   ActionGroups_CreateNotificationsAtResourceGroupLevel: CreateNotifications
   ActionGroups_CreateNotificationsAtActionGroupResourceLevel: CreateNotifications

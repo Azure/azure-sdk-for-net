@@ -310,11 +310,11 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="notificationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="notificationId"/> is null. </exception>
-        public virtual async Task<Response<NotificationStatus>> GetTestNotificationsAtActionGroupResourceLevelAsync(string notificationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NotificationStatus>> GetNotificationStatusAsync(string notificationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(notificationId, nameof(notificationId));
 
-            using var scope = _actionGroupClientDiagnostics.CreateScope("ActionGroupResource.GetTestNotificationsAtActionGroupResourceLevel");
+            using var scope = _actionGroupClientDiagnostics.CreateScope("ActionGroupResource.GetNotificationStatus");
             scope.Start();
             try
             {
@@ -337,11 +337,11 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="notificationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="notificationId"/> is null. </exception>
-        public virtual Response<NotificationStatus> GetTestNotificationsAtActionGroupResourceLevel(string notificationId, CancellationToken cancellationToken = default)
+        public virtual Response<NotificationStatus> GetNotificationStatus(string notificationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(notificationId, nameof(notificationId));
 
-            using var scope = _actionGroupClientDiagnostics.CreateScope("ActionGroupResource.GetTestNotificationsAtActionGroupResourceLevel");
+            using var scope = _actionGroupClientDiagnostics.CreateScope("ActionGroupResource.GetNotificationStatus");
             scope.Start();
             try
             {
