@@ -756,6 +756,7 @@ namespace Azure.Analytics.Purview.Administration
             uri.Reset(_endpoint);
             uri.AppendRaw("/policyStore", false);
             uri.AppendRawNextLink(nextLink, false);
+            uri.AppendQuery("api-version", "2021-07-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;

@@ -874,6 +874,7 @@ namespace Azure.ResourceManager.Network
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -946,6 +947,7 @@ namespace Azure.ResourceManager.Network
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request0.Uri = uri;
             request0.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
