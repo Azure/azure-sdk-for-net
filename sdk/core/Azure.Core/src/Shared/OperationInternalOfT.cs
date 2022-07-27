@@ -53,7 +53,6 @@ namespace Azure.Core
     {
         private readonly IOperation<T> _operation;
         private readonly AsyncLockWithValue<OperationState<T>> _stateLock;
-        private readonly InterimValue<T>? _interimValue;
         private Response _rawResponse;
 
         /// <summary>
@@ -93,21 +92,18 @@ namespace Azure.Core
         /// </param>
         /// <param name="scopeAttributes">The attributes to use during diagnostic scope creation.</param>
         /// <param name="fallbackStrategy">The fallback delay strategy when Retry-After header is not present.  When it is present, the longer of the two delays will be used. Default is <see cref="ConstantDelayStrategy"/>.</param>
-        /// <param name="interimValue">The interim result of the long-running operation.</param>
         public OperationInternal(
             ClientDiagnostics clientDiagnostics,
             IOperation<T> operation,
             Response rawResponse,
             string? operationTypeName = null,
             IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null,
-            DelayStrategy? fallbackStrategy = null,
-            InterimValue<T>? interimValue = null)
+            DelayStrategy? fallbackStrategy = null)
             : base(clientDiagnostics, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy)
         {
             _operation = operation;
             _rawResponse = rawResponse;
-            _stateLock = new AsyncLockWithValue<OperationState<T>>();
-            _interimValue = interimValue;
+            _stateLock = operation.TryGetInterimState(out var state) ? new AsyncLockWithValue<OperationState<T>>(true, (OperationState<T>)state!) : new AsyncLockWithValue<OperationState<T>>();
         }
 
         private OperationInternal(OperationState<T> finalState)
@@ -120,19 +116,20 @@ namespace Azure.Core
             _stateLock = new AsyncLockWithValue<OperationState<T>>(finalState);
         }
 
-        public override Response RawResponse => _stateLock.TryGetValue(out var state) ? state.RawResponse : _rawResponse;
+        public override Response RawResponse => _stateLock.TryGetValue(out var state) && state.HasCompleted ? state.RawResponse : _rawResponse;
 
-        public override bool HasCompleted => _stateLock.HasValue;
+        public override bool HasCompleted => _stateLock.TryGetValue(out var state) ? state.HasCompleted : false;
 
         /// <summary>
-        /// Returns <c>true</c> if the long-running operation completed successfully and has produced a final result.
+        /// Returns <c>true</c> if the long-running operation completed successfully and has produced a final result
+        /// or the interim result is available.
         /// <example>Usage example:
         /// <code>
         ///   public bool HasValue => _operationInternal.HasValue;
         /// </code>
         /// </example>
         /// </summary>
-        public bool HasValue => _stateLock.TryGetValue(out var state) && state.HasSucceeded;
+        public bool HasValue => _stateLock.TryGetValue(out var state) && (state.HasSucceeded || state.HasInterimEnabled);
 
         /// <summary>
         /// Returns the final result if the long-running operation completed successfully.
@@ -151,17 +148,12 @@ namespace Azure.Core
             {
                 if (_stateLock.TryGetValue(out var state))
                 {
-                    if (state.HasSucceeded)
+                    if (state.HasSucceeded || state.HasInterimEnabled)
                     {
                         return state.Value!;
                     }
 
                     throw state.OperationFailedException!;
-                }
-
-                if (_interimValue is not null && _interimValue.HasValue)
-                {
-                    return _interimValue.Value;
                 }
 
                 throw new InvalidOperationException("The operation has not completed yet.");
@@ -259,7 +251,7 @@ namespace Azure.Core
             // If _stateLock doesn't have the state, GetLockOrValueAsync will acquire the lock that will be released when lockOrValue is disposed
             // While _responseLock is used for the whole WaitForCompletionResponseAsync, _stateLock is used for individual calls of UpdateStatusAsync
             using var asyncLock = await _stateLock.GetLockOrValueAsync(async, cancellationToken).ConfigureAwait(false);
-            if (asyncLock.HasValue)
+            if (asyncLock.HasValue && !asyncLock.Value.HasInterimEnabled)
             {
                 return GetResponseFromState(asyncLock.Value);
             }
@@ -303,6 +295,12 @@ namespace Azure.Core
         {
             public ValueTask<OperationState<T>> UpdateStateAsync(bool async, CancellationToken cancellationToken)
                 => throw new NotSupportedException("The operation has already completed");
+
+            public bool TryGetInterimState(out OperationState<T>? value)
+            {
+                value = default;
+                return false;
+            }
         }
     }
 
@@ -343,6 +341,18 @@ namespace Azure.Core
         /// </list>
         /// </returns>
         ValueTask<OperationState<T>> UpdateStateAsync(bool async, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Gets the interim state of the long-running operation.
+        /// </summary>
+        /// <param name="value">
+        /// A <see cref="OperationState{T}.Interim"/> containing the interim state if we support getting the interim state;
+        /// otherwise, the default value for the type of the value parameter.
+        /// </param>
+        /// <returns>
+        /// true if the interim state is available; otherwise, false.
+        /// </returns>
+        bool TryGetInterimState(out OperationState<T>? value);
     }
 
     /// <summary>
@@ -352,18 +362,20 @@ namespace Azure.Core
     ///   <item>Use <see cref="OperationState{T}.Success"/> when the operation has completed successfully.</item>
     ///   <item>Use <see cref="OperationState{T}.Failure"/> when the operation has completed with failures.</item>
     ///   <item>Use <see cref="OperationState{T}.Pending"/> when the operation has not completed yet.</item>
+    ///   <item>Use <see cref="OperationState{T}.Interim"/> when the operation has not completed yet but the interim state is available.</item>
     /// </list>
     /// </summary>
     /// <typeparam name="T">The final result of the long-running operation. Must match the type used in <see cref="Operation{T}"/>.</typeparam>
     internal readonly struct OperationState<T>
     {
-        private OperationState(Response rawResponse, bool hasCompleted, bool hasSucceeded, T? value, RequestFailedException? operationFailedException)
+        private OperationState(Response rawResponse, bool hasCompleted, bool hasSucceeded, T? value, RequestFailedException? operationFailedException, bool hasInterimEnabled)
         {
             RawResponse = rawResponse;
             HasCompleted = hasCompleted;
             HasSucceeded = hasSucceeded;
             Value = value;
             OperationFailedException = operationFailedException;
+            HasInterimEnabled = hasInterimEnabled;
         }
 
         public Response RawResponse { get; }
@@ -375,6 +387,8 @@ namespace Azure.Core
         public T? Value { get; }
 
         public RequestFailedException? OperationFailedException { get; }
+
+        public bool HasInterimEnabled { get; }
 
         /// <summary>
         /// Instantiates an <see cref="OperationState{T}"/> indicating the operation has completed successfully.
@@ -392,7 +406,7 @@ namespace Azure.Core
                 throw new ArgumentNullException(nameof(value));
             }
 
-            return new OperationState<T>(rawResponse, true, true, value, default);
+            return new OperationState<T>(rawResponse, true, true, value, default, false);
         }
 
         /// <summary>
@@ -409,7 +423,7 @@ namespace Azure.Core
         public static OperationState<T> Failure(Response rawResponse, RequestFailedException? operationFailedException = null)
         {
             Argument.AssertNotNull(rawResponse, nameof(rawResponse));
-            return new OperationState<T>(rawResponse, true, false, default, operationFailedException);
+            return new OperationState<T>(rawResponse, true, false, default, operationFailedException, false);
         }
 
         /// <summary>
@@ -421,41 +435,20 @@ namespace Azure.Core
         public static OperationState<T> Pending(Response rawResponse)
         {
             Argument.AssertNotNull(rawResponse, nameof(rawResponse));
-            return new OperationState<T>(rawResponse, false, default, default, default);
+            return new OperationState<T>(rawResponse, false, default, default, default, false);
         }
-    }
 
-    /// <summary>
-    /// A helper class used pass to <see cref="OperationInternal{T}"/> to indicate if the return of interim result of the long-running operation is enabled.
-    /// </summary>
-    /// <typeparam name="T">The interim result of the long-running operation. Must match the type used in <see cref="Operation{T}"/>.</typeparam>
-#pragma warning disable SA1402 // File may only contain a single type
-    internal class InterimValue<T>
-#pragma warning restore SA1402
-    {
-        private bool _hasValue;
-        private T _value;
-
-        internal InterimValue(T value)
+        /// <summary>
+        /// Instantiates an <see cref="OperationState{T}"/> indicating the operation has not completed yet but the interim state is available.
+        /// </summary>
+        /// <param name="rawResponse">The HTTP response obtained during the status update.</param>
+        /// <param name="value">The interim result of the long-running operation.</param>
+        /// <returns>A new <see cref="OperationState{T}"/> instance.</returns>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="rawResponse"/> is <c>null</c>.</exception>
+        public static OperationState<T> Interim(Response rawResponse, T value)
         {
-            _hasValue = true;
-            _value = value;
-        }
-
-        public bool HasValue {
-            get
-            {
-                return _hasValue;
-            }
-        }
-        public T Value {
-            get
-            {
-                if (!_hasValue) {
-                    throw new InvalidOperationException("The operation doesn't support returning interim result.");
-                }
-                return _value;
-            }
+            Argument.AssertNotNull(rawResponse, nameof(rawResponse));
+            return new OperationState<T>(rawResponse, false, default, value, default, true);
         }
     }
 }

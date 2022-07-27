@@ -22,6 +22,7 @@ namespace Azure.Core
         private Queue<TaskCompletionSource<LockOrValue>>? _waiters;
         private bool _isLocked;
         private bool _hasValue;
+        private bool _hasInterimValue;
         private long _index;
         private T? _value;
 
@@ -31,7 +32,7 @@ namespace Azure.Core
             {
                 lock (_syncObj)
                 {
-                    return _hasValue;
+                    return _hasValue || _hasInterimValue;
                 }
             }
         }
@@ -44,11 +45,17 @@ namespace Azure.Core
             _value = value;
         }
 
+        public AsyncLockWithValue(bool hasInterimValue, T value)
+        {
+            _hasInterimValue = hasInterimValue;
+            _value = value;
+        }
+
         public bool TryGetValue(out T? value)
         {
             lock (_syncObj)
             {
-                if (_hasValue)
+                if (_hasValue || _hasInterimValue)
                 {
                     value = _value;
                     return true;

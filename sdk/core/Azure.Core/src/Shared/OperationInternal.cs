@@ -135,6 +135,12 @@ namespace Azure.Core
 
                 return OperationState<VoidValue>.Failure(state.RawResponse, state.OperationFailedException);
             }
+
+            public bool TryGetInterimState(out OperationState<VoidValue>? value)
+            {
+                value = default;
+                return false;
+            }
         }
     }
 

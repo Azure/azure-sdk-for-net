@@ -129,6 +129,12 @@ namespace Azure.Core.Tests
             return new ValueTask<OperationState<T>>(OnUpdateState(cancellationToken));
         }
 
+        public bool TryGetInterimState(out OperationState<T>? value)
+        {
+            value = default;
+            return false;
+        }
+
         public MockOperationInternal<T> MockOperationInternal { get; }
 
         public Func<CancellationToken, OperationState<T>> OnUpdateState { get; set; }
