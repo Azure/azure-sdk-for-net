@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Automation
                 new Tuple<string, string, string>("Automation", "DscNode", "2020-01-13-preview"),
                 new Tuple<string, string, string>("Automation", "DscNodeConfiguration", "2020-01-13-preview"),
                 new Tuple<string, string, string>("Automation", "Fields", "2020-01-13-preview"),
-                new Tuple<string, string, string>("Automation", "HybridRunbookWorkerGroup", "2021-06-22"),
+                new Tuple<string, string, string>("Automation", "HybridRunbookWorkerGroup", "2022-02-22"),
                 new Tuple<string, string, string>("Automation", "HybridRunbookWorkers", "2021-06-22"),
                 new Tuple<string, string, string>("Automation", "Job", "2019-06-01"),
                 new Tuple<string, string, string>("Automation", "JobSchedule", "2020-01-13-preview"),
@@ -64,8 +64,22 @@ namespace Microsoft.Azure.Management.Automation
                 new Tuple<string, string, string>("Automation", "Watcher", "2020-01-13-preview"),
                 new Tuple<string, string, string>("Automation", "Webhook", "2015-10-31"),
                 new Tuple<string, string, string>("Automation", "convertGraphRunbookContent", "2021-06-22"),
+                new Tuple<string, string, string>("Automation", "deletedAutomationAccounts", "2022-01-31"),
               }.AsEnumerable();
           }
       }
+      // BEGIN: Code Generation Metadata Section
+      public static readonly String AutoRestVersion = "2.0.4421";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/automation/resource-manager/readme.md --csharp --version=2.0.4421 --reflect-api-versions --csharp-sdks-folder=C:\\dev\\azure-sdk-for-net\\sdk";
+      public static readonly String GithubForkName = "Azure";
+      public static readonly String GithubBranchName = "main";
+      public static readonly String GithubCommidId = "d8bad7cbba37e83cf0c5d2026360d0fd4971b2fe";
+      public static readonly String CodeGenerationErrors = "npm WARN config global `--global`, `--local` are deprecated. Use `--location=global` instead.
+npm WARN config global `--global`, `--local` are deprecated. Use `--location=global` instead."
+      public static readonly String GithubRepoName = "azure-rest-api-specs";
+      // END: Code Generation Metadata Section
   }
 }
+
+

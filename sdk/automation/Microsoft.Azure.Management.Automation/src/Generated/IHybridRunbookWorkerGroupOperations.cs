@@ -124,7 +124,7 @@ namespace Microsoft.Azure.Management.Automation
         /// <param name='hybridRunbookWorkerGroupName'>
         /// The hybrid runbook worker group name
         /// </param>
-        /// <param name='parameters'>
+        /// <param name='hybridRunbookWorkerGroupUpdationParameters'>
         /// The hybrid runbook worker group
         /// </param>
         /// <param name='customHeaders'>
@@ -142,7 +142,7 @@ namespace Microsoft.Azure.Management.Automation
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<HybridRunbookWorkerGroup>> UpdateWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, string hybridRunbookWorkerGroupName, HybridRunbookWorkerGroupCreateOrUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<HybridRunbookWorkerGroup>> UpdateWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, string hybridRunbookWorkerGroupName, HybridRunbookWorkerGroupCreateOrUpdateParameters hybridRunbookWorkerGroupUpdationParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieve a list of hybrid runbook worker groups.
         /// <see href="http://aka.ms/azureautomationsdk/hybridrunbookworkergroupoperations" />
