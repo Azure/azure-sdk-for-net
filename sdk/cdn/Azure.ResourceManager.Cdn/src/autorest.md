@@ -92,7 +92,7 @@ rename-mapping:
   SslProtocolMatchCondition: DeliveryRuleSslProtocolMatchCondition
   
 enable-lro-interim-state:
-  Microsoft.Cdn/profiles/endpoints/customDomains: Put
+  CdnCustomDomains_Create
  
 directive:
   - from: swagger-document

@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Cdn
             try
             {
                 var response = await _frontDoorRuleRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation<FrontDoorRuleResource>(new FrontDoorRuleOperationSource(Client), _frontDoorRuleClientDiagnostics, Pipeline, _frontDoorRuleRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new CdnArmOperation<FrontDoorRuleResource>(new FrontDoorRuleOperationSource(Client), _frontDoorRuleClientDiagnostics, Pipeline, _frontDoorRuleRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation, false);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Cdn
             try
             {
                 var response = _frontDoorRuleRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleName, data, cancellationToken);
-                var operation = new CdnArmOperation<FrontDoorRuleResource>(new FrontDoorRuleOperationSource(Client), _frontDoorRuleClientDiagnostics, Pipeline, _frontDoorRuleRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new CdnArmOperation<FrontDoorRuleResource>(new FrontDoorRuleOperationSource(Client), _frontDoorRuleClientDiagnostics, Pipeline, _frontDoorRuleRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation, false);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

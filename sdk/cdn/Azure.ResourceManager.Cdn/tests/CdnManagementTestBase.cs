@@ -129,9 +129,13 @@ namespace Azure.ResourceManager.Cdn.Tests
         {
             CdnCustomDomainCreateOrUpdateContent input = ResourceDataHelper.CreateCdnCustomDomainData(hostName);
             var lro = await endpoint.GetCdnCustomDomains().CreateOrUpdateAsync(WaitUntil.Started, customDomainName, input);
+            Assert.True(lro.HasValue);
+            Assert.False(lro.HasCompleted);
             var interimValue = lro.Value;
             Assert.AreEqual(interimValue.Data.ResourceState, CustomDomainResourceState.Creating);
-            await lro.WaitForCompletionAsync(default).ConfigureAwait(false);
+            await lro.WaitForCompletionAsync().ConfigureAwait(false);
+            Assert.True(lro.HasValue);
+            Assert.True(lro.HasCompleted);
             return lro.Value;
         }
 

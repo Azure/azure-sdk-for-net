@@ -162,7 +162,7 @@ rename-mapping:
   ActiveDirectoryPropertiesAccountType: ActiveDirectoryAccountType
 
 enable-lro-interim-state:
-  Microsoft.Storage/storageAccounts/restoreBlobRanges: Post
+  StorageAccounts_RestoreBlobRanges
 
 directive:
   - from: swagger-document

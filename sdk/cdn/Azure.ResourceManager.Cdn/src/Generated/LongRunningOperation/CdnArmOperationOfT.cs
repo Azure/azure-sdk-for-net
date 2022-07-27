@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -20,10 +19,6 @@ namespace Azure.ResourceManager.Cdn
     internal class CdnArmOperation<T> : ArmOperation<T>
 #pragma warning restore SA1649 // File name should match first type name
     {
-        private readonly Dictionary<string, string> _operationMappings = new Dictionary<string, string>()
-        {
-            { "Microsoft.Cdn/profiles/endpoints/customDomains", "Put" },
-        };
         private readonly OperationInternal<T> _operation;
 
         /// <summary> Initializes a new instance of CdnArmOperation for mocking. </summary>
@@ -36,13 +31,10 @@ namespace Azure.ResourceManager.Cdn
             _operation = OperationInternal<T>.Succeeded(response.GetRawResponse(), response.Value);
         }
 
-        internal CdnArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
+        internal CdnArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia, bool isInterimStateEnabled)
         {
-            var nextLinkOperation = NextLinkOperationImplementation.Create(source, pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia);
-            InterimValue<T> intermediateValue = null;
-            if (_operationMappings.TryGetValue(new ResourceIdentifier(request.Uri.ToUri().AbsolutePath).ResourceType, out var method) && request.Method == RequestMethod.Parse(method))
-                intermediateValue = new InterimValue<T>(source.CreateResult(response, default));
-            _operation = new OperationInternal<T>(clientDiagnostics, nextLinkOperation, response, "CdnArmOperation", fallbackStrategy: new ExponentialDelayStrategy(), interimValue: intermediateValue);
+            var nextLinkOperation = NextLinkOperationImplementation.Create(source, pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia, isInterimStateEnabled);
+            _operation = new OperationInternal<T>(clientDiagnostics, nextLinkOperation, response, "CdnArmOperation", fallbackStrategy: new ExponentialDelayStrategy());
         }
 
         /// <inheritdoc />
