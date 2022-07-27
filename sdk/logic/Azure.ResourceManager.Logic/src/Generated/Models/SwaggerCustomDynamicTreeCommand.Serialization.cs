@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<string> itemFullTitlePath = default;
             Optional<string> itemIsParent = default;
             Optional<string> selectableFilter = default;
-            Optional<IDictionary<string, SwaggerCustomDynamicTreeParameter>> parameters = default;
+            Optional<IDictionary<string, SwaggerCustomDynamicTreeParameterInfo>> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("operationId"))
@@ -119,10 +119,10 @@ namespace Azure.ResourceManager.Logic.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    Dictionary<string, SwaggerCustomDynamicTreeParameter> dictionary = new Dictionary<string, SwaggerCustomDynamicTreeParameter>();
+                    Dictionary<string, SwaggerCustomDynamicTreeParameterInfo> dictionary = new Dictionary<string, SwaggerCustomDynamicTreeParameterInfo>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, SwaggerCustomDynamicTreeParameter.DeserializeSwaggerCustomDynamicTreeParameter(property0.Value));
+                        dictionary.Add(property0.Name, SwaggerCustomDynamicTreeParameterInfo.DeserializeSwaggerCustomDynamicTreeParameterInfo(property0.Value));
                     }
                     parameters = dictionary;
                     continue;

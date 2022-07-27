@@ -32,6 +32,7 @@
     "cloudeventTopicName": "[concat(parameters('baseName'), 'cloudevent-topic')]",
     "customeventTopicName": "[concat(parameters('baseName'), 'customevent-topic')]",
     "partnerRegistrationName": "[concat(parameters('baseName'), 'partner-registration')]",
+    "partnerConfigurationName": "default",
     "partnerNamespaceName": "[concat(parameters('baseName'), 'partner-namespace')]",
     "partnerChannelName": "[concat(parameters('baseName'), 'partner-channel')]",
     "partnerTopicName": "[concat(parameters('baseName'), 'partner-topic')]",
@@ -111,11 +112,29 @@
       "location": "global"
     },
     {
+      "type": "Microsoft.EventGrid/partnerConfigurations",
+      "apiVersion": "[variables('apiVersion')]",
+      "name": "[variables('partnerConfigurationName')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.EventGrid/partnerRegistrations', variables('partnerRegistrationName'))]"
+      ],
+      "location": "global",
+      "properties": {
+        "partnerAuthorization": {
+          "authorizedPartnersList": [
+            {
+              "partnerRegistrationImmutableId": "[reference(variables('partnerRegistrationName')).partnerRegistrationImmutableId]"
+            }
+          ]
+        }
+      }
+    },
+    {
       "type": "Microsoft.EventGrid/partnerNamespaces",
       "apiVersion": "[variables('apiVersion')]",
       "name": "[variables('partnerNamespaceName')]",
       "dependsOn": [
-        "[resourceId('Microsoft.EventGrid/partnerRegistrations', variables('partnerRegistrationName'))]"
+        "[resourceId('Microsoft.EventGrid/partnerConfigurations', variables('partnerConfigurationName'))]"
       ],
       "location": "[resourceGroup().location]",
       "properties": {

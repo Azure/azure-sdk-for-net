@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.AppService.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(RequireHttps))
+            if (Optional.IsDefined(IsRequireHttps))
             {
                 writer.WritePropertyName("requireHttps");
-                writer.WriteBooleanValue(RequireHttps.Value);
+                writer.WriteBooleanValue(IsRequireHttps.Value);
             }
             if (Optional.IsDefined(Routes))
             {

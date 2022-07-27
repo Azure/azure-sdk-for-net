@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="bladeName"> Deep link to a blade on the portal. </param>
         /// <param name="forwardLink"> Forward link to an external document associated with the rule. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal AppServiceRecommendation(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? creationOn, Guid? recommendationId, string resourceId, ResourceScopeType? resourceScope, string ruleName, string displayName, string message, NotificationLevel? level, Channel? channels, IReadOnlyList<string> categoryTags, string actionName, int? enabled, IList<string> states, DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? nextNotificationOn, DateTimeOffset? notificationExpirationOn, DateTimeOffset? notifiedOn, double? score, bool? isDynamic, string extensionName, string bladeName, string forwardLink, string kind) : base(id, name, resourceType, systemData)
+        internal AppServiceRecommendation(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? creationOn, Guid? recommendationId, ResourceIdentifier resourceId, ResourceScopeType? resourceScope, string ruleName, string displayName, string message, NotificationLevel? level, Channel? channels, IReadOnlyList<string> categoryTags, string actionName, int? enabled, IList<string> states, DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? nextNotificationOn, DateTimeOffset? notificationExpirationOn, DateTimeOffset? notifiedOn, double? score, bool? isDynamic, string extensionName, string bladeName, string forwardLink, string kind) : base(id, name, resourceType, systemData)
         {
             CreationOn = creationOn;
             RecommendationId = recommendationId;
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> A GUID value that each recommendation object is associated with. </summary>
         public Guid? RecommendationId { get; set; }
         /// <summary> Full ARM resource ID string that this recommendation object is associated with. </summary>
-        public string ResourceId { get; set; }
+        public ResourceIdentifier ResourceId { get; set; }
         /// <summary> Name of a resource type this recommendation applies, e.g. Subscription, ServerFarm, Site. </summary>
         public ResourceScopeType? ResourceScope { get; set; }
         /// <summary> Unique name of the rule. </summary>

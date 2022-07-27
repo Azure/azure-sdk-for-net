@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.AppService.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ValidateNonce))
+            if (Optional.IsDefined(IsValiddateNonce))
             {
                 writer.WritePropertyName("validateNonce");
-                writer.WriteBooleanValue(ValidateNonce.Value);
+                writer.WriteBooleanValue(IsValiddateNonce.Value);
             }
             if (Optional.IsDefined(NonceExpirationInterval))
             {

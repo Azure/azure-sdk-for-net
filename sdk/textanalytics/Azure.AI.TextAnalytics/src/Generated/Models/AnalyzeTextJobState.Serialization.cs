@@ -22,8 +22,8 @@ namespace Azure.AI.TextAnalytics.Models
             Optional<string> displayName = default;
             DateTimeOffset createdDateTime = default;
             Optional<DateTimeOffset> expirationDateTime = default;
-            Guid jobId = default;
-            DateTimeOffset lastUpdateDateTime = default;
+            string jobId = default;
+            DateTimeOffset lastUpdatedDateTime = default;
             TextAnalyticsOperationStatus status = default;
             Optional<IReadOnlyList<Error>> errors = default;
             Optional<string> nextLink = default;
@@ -66,12 +66,12 @@ namespace Azure.AI.TextAnalytics.Models
                 }
                 if (property.NameEquals("jobId"))
                 {
-                    jobId = property.Value.GetGuid();
+                    jobId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastUpdateDateTime"))
+                if (property.NameEquals("lastUpdatedDateTime"))
                 {
-                    lastUpdateDateTime = property.Value.GetDateTimeOffset("O");
+                    lastUpdatedDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("status"))
@@ -100,7 +100,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new AnalyzeTextJobState(displayName.Value, createdDateTime, Optional.ToNullable(expirationDateTime), jobId, lastUpdateDateTime, status, Optional.ToList(errors), nextLink.Value, tasks, statistics.Value);
+            return new AnalyzeTextJobState(displayName.Value, createdDateTime, Optional.ToNullable(expirationDateTime), jobId, lastUpdatedDateTime, status, Optional.ToList(errors), nextLink.Value, tasks, statistics.Value);
         }
     }
 }

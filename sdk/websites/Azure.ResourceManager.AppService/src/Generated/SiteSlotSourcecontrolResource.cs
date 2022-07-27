@@ -17,46 +17,46 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A Class representing a SiteSlotSourcecontrol along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SiteSlotSourcecontrolResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSiteSlotSourcecontrolResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SiteSlotResource" /> using the GetSiteSlotSourcecontrol method.
+    /// A Class representing a SiteSlotSourceControl along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SiteSlotSourceControlResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetSiteSlotSourceControlResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SiteSlotResource" /> using the GetSiteSlotSourceControl method.
     /// </summary>
-    public partial class SiteSlotSourcecontrolResource : ArmResource
+    public partial class SiteSlotSourceControlResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="SiteSlotSourcecontrolResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="SiteSlotSourceControlResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sourcecontrols/web";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _siteSlotSourcecontrolWebAppsClientDiagnostics;
-        private readonly WebAppsRestOperations _siteSlotSourcecontrolWebAppsRestClient;
+        private readonly ClientDiagnostics _siteSlotSourceControlWebAppsClientDiagnostics;
+        private readonly WebAppsRestOperations _siteSlotSourceControlWebAppsRestClient;
         private readonly SiteSourceControlData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="SiteSlotSourcecontrolResource"/> class for mocking. </summary>
-        protected SiteSlotSourcecontrolResource()
+        /// <summary> Initializes a new instance of the <see cref="SiteSlotSourceControlResource"/> class for mocking. </summary>
+        protected SiteSlotSourceControlResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SiteSlotSourcecontrolResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "SiteSlotSourceControlResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SiteSlotSourcecontrolResource(ArmClient client, SiteSourceControlData data) : this(client, data.Id)
+        internal SiteSlotSourceControlResource(ArmClient client, SiteSourceControlData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SiteSlotSourcecontrolResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteSlotSourceControlResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SiteSlotSourcecontrolResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal SiteSlotSourceControlResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _siteSlotSourcecontrolWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string siteSlotSourcecontrolWebAppsApiVersion);
-            _siteSlotSourcecontrolWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, siteSlotSourcecontrolWebAppsApiVersion);
+            _siteSlotSourceControlWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string siteSlotSourceControlWebAppsApiVersion);
+            _siteSlotSourceControlWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, siteSlotSourceControlWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -92,16 +92,16 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetSourceControlSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SiteSlotSourcecontrolResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteSlotSourceControlResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _siteSlotSourcecontrolWebAppsClientDiagnostics.CreateScope("SiteSlotSourcecontrolResource.Get");
+            using var scope = _siteSlotSourceControlWebAppsClientDiagnostics.CreateScope("SiteSlotSourceControlResource.Get");
             scope.Start();
             try
             {
-                var response = await _siteSlotSourcecontrolWebAppsRestClient.GetSourceControlSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _siteSlotSourceControlWebAppsRestClient.GetSourceControlSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteSlotSourcecontrolResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotSourceControlResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -116,16 +116,16 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetSourceControlSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SiteSlotSourcecontrolResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<SiteSlotSourceControlResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _siteSlotSourcecontrolWebAppsClientDiagnostics.CreateScope("SiteSlotSourcecontrolResource.Get");
+            using var scope = _siteSlotSourceControlWebAppsClientDiagnostics.CreateScope("SiteSlotSourceControlResource.Get");
             scope.Start();
             try
             {
-                var response = _siteSlotSourcecontrolWebAppsRestClient.GetSourceControlSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
+                var response = _siteSlotSourceControlWebAppsRestClient.GetSourceControlSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteSlotSourcecontrolResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotSourceControlResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -144,11 +144,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, string additionalFlags = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _siteSlotSourcecontrolWebAppsClientDiagnostics.CreateScope("SiteSlotSourcecontrolResource.Delete");
+            using var scope = _siteSlotSourceControlWebAppsClientDiagnostics.CreateScope("SiteSlotSourceControlResource.Delete");
             scope.Start();
             try
             {
-                var response = await _siteSlotSourcecontrolWebAppsRestClient.DeleteSourceControlSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, additionalFlags, cancellationToken).ConfigureAwait(false);
+                var response = await _siteSlotSourceControlWebAppsRestClient.DeleteSourceControlSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, additionalFlags, cancellationToken).ConfigureAwait(false);
                 var operation = new AppServiceArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -171,11 +171,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, string additionalFlags = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _siteSlotSourcecontrolWebAppsClientDiagnostics.CreateScope("SiteSlotSourcecontrolResource.Delete");
+            using var scope = _siteSlotSourceControlWebAppsClientDiagnostics.CreateScope("SiteSlotSourceControlResource.Delete");
             scope.Start();
             try
             {
-                var response = _siteSlotSourcecontrolWebAppsRestClient.DeleteSourceControlSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, additionalFlags, cancellationToken);
+                var response = _siteSlotSourceControlWebAppsRestClient.DeleteSourceControlSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, additionalFlags, cancellationToken);
                 var operation = new AppServiceArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -196,16 +196,16 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> JSON representation of a SiteSourceControl object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<SiteSlotSourcecontrolResource>> UpdateAsync(SiteSourceControlData data, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteSlotSourceControlResource>> UpdateAsync(SiteSourceControlData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _siteSlotSourcecontrolWebAppsClientDiagnostics.CreateScope("SiteSlotSourcecontrolResource.Update");
+            using var scope = _siteSlotSourceControlWebAppsClientDiagnostics.CreateScope("SiteSlotSourceControlResource.Update");
             scope.Start();
             try
             {
-                var response = await _siteSlotSourcecontrolWebAppsRestClient.UpdateSourceControlSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new SiteSlotSourcecontrolResource(Client, response.Value), response.GetRawResponse());
+                var response = await _siteSlotSourceControlWebAppsRestClient.UpdateSourceControlSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new SiteSlotSourceControlResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -222,16 +222,16 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> JSON representation of a SiteSourceControl object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<SiteSlotSourcecontrolResource> Update(SiteSourceControlData data, CancellationToken cancellationToken = default)
+        public virtual Response<SiteSlotSourceControlResource> Update(SiteSourceControlData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _siteSlotSourcecontrolWebAppsClientDiagnostics.CreateScope("SiteSlotSourcecontrolResource.Update");
+            using var scope = _siteSlotSourceControlWebAppsClientDiagnostics.CreateScope("SiteSlotSourceControlResource.Update");
             scope.Start();
             try
             {
-                var response = _siteSlotSourcecontrolWebAppsRestClient.UpdateSourceControlSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, data, cancellationToken);
-                return Response.FromValue(new SiteSlotSourcecontrolResource(Client, response.Value), response.GetRawResponse());
+                var response = _siteSlotSourceControlWebAppsRestClient.UpdateSourceControlSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, data, cancellationToken);
+                return Response.FromValue(new SiteSlotSourceControlResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -249,16 +249,16 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> JSON representation of a SiteSourceControl object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<SiteSlotSourcecontrolResource>> CreateOrUpdateAsync(WaitUntil waitUntil, SiteSourceControlData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SiteSlotSourceControlResource>> CreateOrUpdateAsync(WaitUntil waitUntil, SiteSourceControlData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _siteSlotSourcecontrolWebAppsClientDiagnostics.CreateScope("SiteSlotSourcecontrolResource.CreateOrUpdate");
+            using var scope = _siteSlotSourceControlWebAppsClientDiagnostics.CreateScope("SiteSlotSourceControlResource.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _siteSlotSourcecontrolWebAppsRestClient.CreateOrUpdateSourceControlSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<SiteSlotSourcecontrolResource>(new SiteSlotSourcecontrolOperationSource(Client), _siteSlotSourcecontrolWebAppsClientDiagnostics, Pipeline, _siteSlotSourcecontrolWebAppsRestClient.CreateCreateOrUpdateSourceControlSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, data).Request, response, OperationFinalStateVia.Location);
+                var response = await _siteSlotSourceControlWebAppsRestClient.CreateOrUpdateSourceControlSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new AppServiceArmOperation<SiteSlotSourceControlResource>(new SiteSlotSourceControlOperationSource(Client), _siteSlotSourceControlWebAppsClientDiagnostics, Pipeline, _siteSlotSourceControlWebAppsRestClient.CreateCreateOrUpdateSourceControlSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -279,16 +279,16 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> JSON representation of a SiteSourceControl object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<SiteSlotSourcecontrolResource> CreateOrUpdate(WaitUntil waitUntil, SiteSourceControlData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SiteSlotSourceControlResource> CreateOrUpdate(WaitUntil waitUntil, SiteSourceControlData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _siteSlotSourcecontrolWebAppsClientDiagnostics.CreateScope("SiteSlotSourcecontrolResource.CreateOrUpdate");
+            using var scope = _siteSlotSourceControlWebAppsClientDiagnostics.CreateScope("SiteSlotSourceControlResource.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _siteSlotSourcecontrolWebAppsRestClient.CreateOrUpdateSourceControlSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, data, cancellationToken);
-                var operation = new AppServiceArmOperation<SiteSlotSourcecontrolResource>(new SiteSlotSourcecontrolOperationSource(Client), _siteSlotSourcecontrolWebAppsClientDiagnostics, Pipeline, _siteSlotSourcecontrolWebAppsRestClient.CreateCreateOrUpdateSourceControlSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, data).Request, response, OperationFinalStateVia.Location);
+                var response = _siteSlotSourceControlWebAppsRestClient.CreateOrUpdateSourceControlSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, data, cancellationToken);
+                var operation = new AppServiceArmOperation<SiteSlotSourceControlResource>(new SiteSlotSourceControlOperationSource(Client), _siteSlotSourceControlWebAppsClientDiagnostics, Pipeline, _siteSlotSourceControlWebAppsRestClient.CreateCreateOrUpdateSourceControlSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -17,10 +17,8 @@ namespace Azure.Communication.CallingServer
         /// <summary>
         /// Remove Participants Options
         /// </summary>
-        /// <param name="operationContext">The operationContext.</param>
-        public RemoveParticipantsOptions(string operationContext)
+        public RemoveParticipantsOptions()
         {
-            OperationContext = operationContext;
         }
     }
 }

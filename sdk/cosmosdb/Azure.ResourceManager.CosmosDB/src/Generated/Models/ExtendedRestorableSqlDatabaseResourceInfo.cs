@@ -19,16 +19,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="rid"> A system generated property. A unique identifier. </param>
         /// <param name="operationType"> The operation type of this database event. </param>
         /// <param name="eventTimestamp"> The time when this database event happened. </param>
-        /// <param name="ownerId"> The name of the SQL database. </param>
-        /// <param name="ownerResourceId"> The resource ID of the SQL database. </param>
+        /// <param name="databaseName"> The name of the SQL database. </param>
+        /// <param name="databaseId"> The resource ID of the SQL database. </param>
         /// <param name="database"> Cosmos DB SQL database resource object. </param>
-        internal ExtendedRestorableSqlDatabaseResourceInfo(string rid, CosmosDBOperationType? operationType, string eventTimestamp, string ownerId, string ownerResourceId, RestorableSqlDatabasePropertiesResourceDatabase database)
+        internal ExtendedRestorableSqlDatabaseResourceInfo(string rid, CosmosDBOperationType? operationType, string eventTimestamp, string databaseName, string databaseId, RestorableSqlDatabasePropertiesResourceDatabase database)
         {
             Rid = rid;
             OperationType = operationType;
             EventTimestamp = eventTimestamp;
-            OwnerId = ownerId;
-            OwnerResourceId = ownerResourceId;
+            DatabaseName = databaseName;
+            DatabaseId = databaseId;
             Database = database;
         }
 
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> The time when this database event happened. </summary>
         public string EventTimestamp { get; }
         /// <summary> The name of the SQL database. </summary>
-        public string OwnerId { get; }
+        public string DatabaseName { get; }
         /// <summary> The resource ID of the SQL database. </summary>
-        public string OwnerResourceId { get; }
+        public string DatabaseId { get; }
         /// <summary> Cosmos DB SQL database resource object. </summary>
         public RestorableSqlDatabasePropertiesResourceDatabase Database { get; }
     }

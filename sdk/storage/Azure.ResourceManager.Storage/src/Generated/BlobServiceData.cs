@@ -30,19 +30,19 @@ namespace Azure.ResourceManager.Storage
         /// <param name="defaultServiceVersion"> DefaultServiceVersion indicates the default version to use for requests to the Blob service if an incoming request’s version is not specified. Possible values include version 2008-10-27 and all more recent versions. </param>
         /// <param name="deleteRetentionPolicy"> The blob service properties for blob soft delete. </param>
         /// <param name="isVersioningEnabled"> Versioning is enabled if set to true. </param>
-        /// <param name="automaticSnapshotPolicyEnabled"> Deprecated in favor of isVersioningEnabled property. </param>
+        /// <param name="isAutomaticSnapshotPolicyEnabled"> Deprecated in favor of isVersioningEnabled property. </param>
         /// <param name="changeFeed"> The blob service properties for change feed events. </param>
         /// <param name="restorePolicy"> The blob service properties for blob restore policy. </param>
         /// <param name="containerDeleteRetentionPolicy"> The blob service properties for container soft delete. </param>
         /// <param name="lastAccessTimeTrackingPolicy"> The blob service property to configure last access time based tracking policy. </param>
-        internal BlobServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, StorageSku sku, StorageCorsRules cors, string defaultServiceVersion, DeleteRetentionPolicy deleteRetentionPolicy, bool? isVersioningEnabled, bool? automaticSnapshotPolicyEnabled, ChangeFeed changeFeed, RestorePolicyProperties restorePolicy, DeleteRetentionPolicy containerDeleteRetentionPolicy, LastAccessTimeTrackingPolicy lastAccessTimeTrackingPolicy) : base(id, name, resourceType, systemData)
+        internal BlobServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, StorageSku sku, StorageCorsRules cors, string defaultServiceVersion, DeleteRetentionPolicy deleteRetentionPolicy, bool? isVersioningEnabled, bool? isAutomaticSnapshotPolicyEnabled, BlobServiceChangeFeed changeFeed, RestorePolicy restorePolicy, DeleteRetentionPolicy containerDeleteRetentionPolicy, LastAccessTimeTrackingPolicy lastAccessTimeTrackingPolicy) : base(id, name, resourceType, systemData)
         {
             Sku = sku;
             Cors = cors;
             DefaultServiceVersion = defaultServiceVersion;
             DeleteRetentionPolicy = deleteRetentionPolicy;
             IsVersioningEnabled = isVersioningEnabled;
-            AutomaticSnapshotPolicyEnabled = automaticSnapshotPolicyEnabled;
+            IsAutomaticSnapshotPolicyEnabled = isAutomaticSnapshotPolicyEnabled;
             ChangeFeed = changeFeed;
             RestorePolicy = restorePolicy;
             ContainerDeleteRetentionPolicy = containerDeleteRetentionPolicy;
@@ -71,11 +71,11 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Versioning is enabled if set to true. </summary>
         public bool? IsVersioningEnabled { get; set; }
         /// <summary> Deprecated in favor of isVersioningEnabled property. </summary>
-        public bool? AutomaticSnapshotPolicyEnabled { get; set; }
+        public bool? IsAutomaticSnapshotPolicyEnabled { get; set; }
         /// <summary> The blob service properties for change feed events. </summary>
-        public ChangeFeed ChangeFeed { get; set; }
+        public BlobServiceChangeFeed ChangeFeed { get; set; }
         /// <summary> The blob service properties for blob restore policy. </summary>
-        public RestorePolicyProperties RestorePolicy { get; set; }
+        public RestorePolicy RestorePolicy { get; set; }
         /// <summary> The blob service properties for container soft delete. </summary>
         public DeleteRetentionPolicy ContainerDeleteRetentionPolicy { get; set; }
         /// <summary> The blob service property to configure last access time based tracking policy. </summary>

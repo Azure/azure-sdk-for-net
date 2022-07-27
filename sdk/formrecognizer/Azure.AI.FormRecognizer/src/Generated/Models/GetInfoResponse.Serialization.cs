@@ -14,12 +14,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     {
         internal static GetInfoResponse DeserializeGetInfoResponse(JsonElement element)
         {
-            AccountProperties customDocumentModels = default;
+            ResourceDetails customDocumentModels = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("customDocumentModels"))
                 {
-                    customDocumentModels = AccountProperties.DeserializeAccountProperties(property.Value);
+                    customDocumentModels = ResourceDetails.DeserializeResourceDetails(property.Value);
                     continue;
                 }
             }

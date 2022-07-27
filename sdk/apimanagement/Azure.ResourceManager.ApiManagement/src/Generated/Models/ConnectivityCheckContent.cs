@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Protocol-specific configuration. </summary>
         internal ConnectivityCheckRequestProtocolConfiguration ProtocolConfiguration { get; set; }
         /// <summary> Configuration for HTTP or HTTPS requests. </summary>
-        public ConnectivityCheckRequestProtocolConfigurationHttpConfiguration ProtocolHttpConfiguration
+        public ConnectivityCheckRequestHttpConfiguration ProtocolHttpConfiguration
         {
             get => ProtocolConfiguration is null ? default : ProtocolConfiguration.HttpConfiguration;
             set

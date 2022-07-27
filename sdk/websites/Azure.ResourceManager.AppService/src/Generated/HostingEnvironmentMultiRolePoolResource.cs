@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppService
 
         private readonly ClientDiagnostics _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics;
         private readonly AppServiceEnvironmentsRestOperations _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsRestClient;
-        private readonly WorkerPoolResourceData _data;
+        private readonly WorkerPoolData _data;
 
         /// <summary> Initializes a new instance of the <see cref="HostingEnvironmentMultiRolePoolResource"/> class for mocking. </summary>
         protected HostingEnvironmentMultiRolePoolResource()
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of the <see cref = "HostingEnvironmentMultiRolePoolResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal HostingEnvironmentMultiRolePoolResource(ArmClient client, WorkerPoolResourceData data) : this(client, data.Id)
+        internal HostingEnvironmentMultiRolePoolResource(ArmClient client, WorkerPoolData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual WorkerPoolResourceData Data
+        public virtual WorkerPoolData Data
         {
             get
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> Properties of the multi-role pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<HostingEnvironmentMultiRolePoolResource>> UpdateAsync(WorkerPoolResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HostingEnvironmentMultiRolePoolResource>> UpdateAsync(WorkerPoolData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> Properties of the multi-role pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<HostingEnvironmentMultiRolePoolResource> Update(WorkerPoolResourceData data, CancellationToken cancellationToken = default)
+        public virtual Response<HostingEnvironmentMultiRolePoolResource> Update(WorkerPoolData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> Properties of the multi-role pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<HostingEnvironmentMultiRolePoolResource>> CreateOrUpdateAsync(WaitUntil waitUntil, WorkerPoolResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<HostingEnvironmentMultiRolePoolResource>> CreateOrUpdateAsync(WaitUntil waitUntil, WorkerPoolData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> Properties of the multi-role pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<HostingEnvironmentMultiRolePoolResource> CreateOrUpdate(WaitUntil waitUntil, WorkerPoolResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<HostingEnvironmentMultiRolePoolResource> CreateOrUpdate(WaitUntil waitUntil, WorkerPoolData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 

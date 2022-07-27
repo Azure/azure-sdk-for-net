@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Logic
         /// <summary> Initializes a new instance of IntegrationAccountMapData. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="mapType"> The map type. </param>
-        public IntegrationAccountMapData(AzureLocation location, MapType mapType) : base(location)
+        public IntegrationAccountMapData(AzureLocation location, IntegrationAccountMapType mapType) : base(location)
         {
             MapType = mapType;
         }
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="contentType"> The content type. </param>
         /// <param name="contentLink"> The content link. </param>
         /// <param name="metadata"> The metadata. </param>
-        internal IntegrationAccountMapData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MapType mapType, IntegrationAccountMapPropertiesParametersSchema parametersSchema, DateTimeOffset? createdOn, DateTimeOffset? changedOn, string content, string contentType, ContentLink contentLink, BinaryData metadata) : base(id, name, resourceType, systemData, tags, location)
+        internal IntegrationAccountMapData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IntegrationAccountMapType mapType, IntegrationAccountMapPropertiesParametersSchema parametersSchema, DateTimeOffset? createdOn, DateTimeOffset? changedOn, string content, string contentType, LogicContentLink contentLink, BinaryData metadata) : base(id, name, resourceType, systemData, tags, location)
         {
             MapType = mapType;
             ParametersSchema = parametersSchema;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Logic
         }
 
         /// <summary> The map type. </summary>
-        public MapType MapType { get; set; }
+        public IntegrationAccountMapType MapType { get; set; }
         /// <summary> The parameters schema of integration account map. </summary>
         internal IntegrationAccountMapPropertiesParametersSchema ParametersSchema { get; set; }
         /// <summary> The reference name. </summary>
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Logic
         /// <summary> The content type. </summary>
         public string ContentType { get; set; }
         /// <summary> The content link. </summary>
-        public ContentLink ContentLink { get; }
+        public LogicContentLink ContentLink { get; }
         /// <summary> The metadata. </summary>
         public BinaryData Metadata { get; set; }
     }

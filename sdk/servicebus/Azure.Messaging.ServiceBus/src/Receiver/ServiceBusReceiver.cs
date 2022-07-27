@@ -22,6 +22,15 @@ namespace Azure.Messaging.ServiceBus
     /// <see cref="ServiceBusReceivedMessage" /> and settling messages from Queues and Subscriptions.
     /// It is constructed by calling <see cref="ServiceBusClient.CreateReceiver(string, ServiceBusReceiverOptions)"/>.
     /// </summary>
+    /// <remarks>
+    /// The <see cref="ServiceBusReceiver" /> is safe to cache and use for the lifetime of an
+    /// application or until the <see cref="ServiceBusClient" /> that it was created by is disposed.
+    /// Caching the receiver is recommended when the application is consuming messages
+    /// regularly or semi-regularly.  The receiver is responsible for ensuring efficient network, CPU,
+    /// and memory use.  Calling <see cref="DisposeAsync" /> on the associated <see cref="ServiceBusClient" />
+    /// as the application is shutting down will ensure that network resources and other unmanaged objects used
+    /// by the receiver are properly cleaned up.
+    ///</remarks>
     public class ServiceBusReceiver : IAsyncDisposable
     {
         /// <summary>

@@ -1509,11 +1509,11 @@ namespace Azure.ResourceManager.DataFactory
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DataFactoryPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DataFactoryPrivateLinkResource> GetprivateLinkResourcesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DataFactoryPrivateLinkResource> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<DataFactoryPrivateLinkResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _privateLinkResourcesClientDiagnostics.CreateScope("DataFactoryResource.GetprivateLinkResources");
+                using var scope = _privateLinkResourcesClientDiagnostics.CreateScope("DataFactoryResource.GetPrivateLinkResources");
                 scope.Start();
                 try
                 {
@@ -1536,11 +1536,11 @@ namespace Azure.ResourceManager.DataFactory
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DataFactoryPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DataFactoryPrivateLinkResource> GetprivateLinkResources(CancellationToken cancellationToken = default)
+        public virtual Pageable<DataFactoryPrivateLinkResource> GetPrivateLinkResources(CancellationToken cancellationToken = default)
         {
             Page<DataFactoryPrivateLinkResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _privateLinkResourcesClientDiagnostics.CreateScope("DataFactoryResource.GetprivateLinkResources");
+                using var scope = _privateLinkResourcesClientDiagnostics.CreateScope("DataFactoryResource.GetPrivateLinkResources");
                 scope.Start();
                 try
                 {

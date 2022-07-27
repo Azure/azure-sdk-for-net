@@ -16,15 +16,15 @@ namespace Azure.ResourceManager.AppService.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(CurrentTimeStamp))
+            if (Optional.IsDefined(CurrentTimeStampOn))
             {
                 writer.WritePropertyName("currentTimeStamp");
-                writer.WriteStringValue(CurrentTimeStamp.Value, "O");
+                writer.WriteStringValue(CurrentTimeStampOn.Value, "O");
             }
-            if (Optional.IsDefined(PreviousTimeStamp))
+            if (Optional.IsDefined(PreviousTimeStampOn))
             {
                 writer.WritePropertyName("previousTimeStamp");
-                writer.WriteStringValue(PreviousTimeStamp.Value, "O");
+                writer.WriteStringValue(PreviousTimeStampOn.Value, "O");
             }
             if (Optional.IsDefined(CurrentCpuStats))
             {

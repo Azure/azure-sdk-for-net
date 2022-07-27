@@ -8,7 +8,7 @@
     <PackageTags>Azure Device Update</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <!-- These supressions should be removed in a production library -->
-    <NoWarn>$(NoWarn);CS0169;AZC0016;AZC0012</NoWarn>
+    <NoWarn>$(NoWarn);CS0169;AZC0012</NoWarn>
     <DefineConstants>$(DefineConstants);EXPERIMENTAL</DefineConstants>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
