@@ -99,7 +99,7 @@ namespace Azure.Messaging.ServiceBus
         internal ServiceBusSender(
             string entityPath,
             ServiceBusConnection connection,
-            ServiceBusSenderOptions options)
+            ServiceBusSenderOptions options = default)
         {
             Logger.ClientCreateStart(typeof(ServiceBusSender), connection?.FullyQualifiedNamespace, entityPath);
             try
@@ -127,18 +127,6 @@ namespace Azure.Messaging.ServiceBus
                 throw;
             }
             Logger.ClientCreateComplete(typeof(ServiceBusSender), Identifier);
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="ServiceBusSender"/> class.
-        /// </summary>
-        /// <param name="entityPath">The entity path to send the message to.</param>
-        /// <param name="connection">The connection for the sender.</param>
-        internal ServiceBusSender(
-            string entityPath,
-            ServiceBusConnection connection) :
-            this(entityPath, connection, new ServiceBusSenderOptions())
-        {
         }
 
         /// <summary>
