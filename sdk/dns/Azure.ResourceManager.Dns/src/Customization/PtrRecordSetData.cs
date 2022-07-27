@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Dns
         public PtrRecordSetData()
         {
             Metadata = new ChangeTrackingDictionary<string, string>();
-            PtrRecords = new ChangeTrackingList<PtrRecord>();
+            PtrRecords = new ChangeTrackingList<DnsPtrRecord>();
         }
 
         /// <summary> Initializes a new instance of PtrRecordSetData. </summary>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="provisioningState"> provisioning State of the record set. </param>
         /// <param name="targetResource"> A reference to an azure resource from where the dns resource value is taken. </param>
         /// <param name="ptrRecords"> The list of PTR records in the record set. </param>
-        internal PtrRecordSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, string provisioningState, WritableSubResource targetResource, IList<PtrRecord> ptrRecords) : base(id, name, resourceType, systemData)
+        internal PtrRecordSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, string provisioningState, WritableSubResource targetResource, IList<DnsPtrRecord> ptrRecords) : base(id, name, resourceType, systemData)
         {
             ETag = etag;
             Metadata = metadata;
@@ -72,6 +72,6 @@ namespace Azure.ResourceManager.Dns
         }
 
         /// <summary> The list of PTR records in the record set. </summary>
-        public IList<PtrRecord> PtrRecords { get; }
+        public IList<DnsPtrRecord> PtrRecords { get; }
     }
 }

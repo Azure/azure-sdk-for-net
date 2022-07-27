@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="provisioningState"> provisioning State of the record set. </param>
         /// <param name="targetResource"> A reference to an azure resource from where the dns resource value is taken. </param>
         /// <param name="soaRecord"> The SOA record in the record set. </param>
-        internal SoaRecordSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string etag, IDictionary<string, string> metadata, long? ttl, string fqdn, string provisioningState, WritableSubResource targetResource,SoaRecord soaRecord) : base(id, name, resourceType, systemData)
+        internal SoaRecordSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string etag, IDictionary<string, string> metadata, long? ttl, string fqdn, string provisioningState, WritableSubResource targetResource,DnsSoaRecord soaRecord) : base(id, name, resourceType, systemData)
         {
             Etag = etag;
             Metadata = metadata;
@@ -70,6 +70,6 @@ namespace Azure.ResourceManager.Dns
         }
 
         /// <summary> The SOA record in the record set. </summary>
-        public SoaRecord SoaRecord { get; set; }
+        public DnsSoaRecord SoaRecord { get; set; }
     }
 }

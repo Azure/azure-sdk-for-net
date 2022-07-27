@@ -102,7 +102,7 @@ directive:
     where: $.definitions.ZoneListResult
     transform: $["x-ms-client-name"] = "DnsZoneListResult";
 
-# Add prepend name
+# Add prepend name to 10 RecordSet
   - from: swagger-document
     where: $.definitions.ARecord
     transform: $["x-ms-client-name"] = "DnsARecord";
@@ -133,8 +133,6 @@ directive:
   - from: swagger-document
     where: $.definitions.CaaRecord
     transform: $["x-ms-client-name"] = "DnsCaaRecord";
-
-
 
 # Mx Ns => MX NS
   - from: swagger-document

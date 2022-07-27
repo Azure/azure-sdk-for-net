@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Dns
         public SrvRecordSetData()
         {
             Metadata = new ChangeTrackingDictionary<string, string>();
-            SrvRecords = new ChangeTrackingList<SrvRecord>();
+            SrvRecords = new ChangeTrackingList<DnsSrvRecord>();
         }
 
         /// <summary> Initializes a new instance of SrvRecordSetData. </summary>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="provisioningState"> provisioning State of the record set. </param>
         /// <param name="targetResource"> A reference to an azure resource from where the dns resource value is taken. </param>
         /// <param name="srvRecords"> The list of SRV records in the record set. </param>
-        internal SrvRecordSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, string provisioningState, WritableSubResource targetResource ,IList<SrvRecord> srvRecords) : base(id, name, resourceType, systemData)
+        internal SrvRecordSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, string provisioningState, WritableSubResource targetResource ,IList<DnsSrvRecord> srvRecords) : base(id, name, resourceType, systemData)
         {
             ETag = etag;
             Metadata = metadata;
@@ -72,6 +72,6 @@ namespace Azure.ResourceManager.Dns
         }
 
         /// <summary> The list of SRV records in the record set. </summary>
-        public IList<SrvRecord> SrvRecords { get; }
+        public IList<DnsSrvRecord> SrvRecords { get; }
     }
 }

@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Dns
             Optional<string> fqdn = default;
             Optional<string> provisioningState = default;
             Optional<WritableSubResource> targetResource = default;
-            Optional<CnameRecord> cnameRecord = default;
+            Optional<DnsCnameRecord> cnameRecord = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Dns
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            cnameRecord = CnameRecord.DeserializeCnameRecord(property0.Value);
+                            cnameRecord = DnsCnameRecord.DeserializeDnsCnameRecord(property0.Value);
                             continue;
                         }
                     }

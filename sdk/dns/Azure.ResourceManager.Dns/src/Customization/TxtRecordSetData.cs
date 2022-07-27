@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Dns
         public TxtRecordSetData()
         {
             Metadata = new ChangeTrackingDictionary<string, string>();
-            TxtRecords = new ChangeTrackingList<TxtRecord>();
+            TxtRecords = new ChangeTrackingList<DnsTxtRecord>();
         }
 
         /// <summary> Initializes a new instance of TxtRecordSetData. </summary>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="provisioningState"> provisioning State of the record set. </param>
         /// <param name="targetResource"> A reference to an azure resource from where the dns resource value is taken. </param>
         /// <param name="txtRecords"> The list of TXT records in the record set. </param>
-        internal TxtRecordSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, string provisioningState, WritableSubResource targetResource, IList<TxtRecord> txtRecords) : base(id, name, resourceType, systemData)
+        internal TxtRecordSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, string provisioningState, WritableSubResource targetResource, IList<DnsTxtRecord> txtRecords) : base(id, name, resourceType, systemData)
         {
             ETag = etag;
             Metadata = metadata;
@@ -72,6 +72,6 @@ namespace Azure.ResourceManager.Dns
         }
 
         /// <summary> The list of TXT records in the record set. </summary>
-        public IList<TxtRecord> TxtRecords { get; }
+        public IList<DnsTxtRecord> TxtRecords { get; }
     }
 }

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Dns
         public MXRecordSetData()
         {
             Metadata = new ChangeTrackingDictionary<string, string>();
-            MXRecords = new ChangeTrackingList<MXRecord>();
+            MXRecords = new ChangeTrackingList<DnsMXRecord>();
         }
 
         /// <summary> Initializes a new instance of MXRecordSetData. </summary>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="provisioningState"> provisioning State of the record set. </param>
         /// <param name="targetResource"> A reference to an azure resource from where the dns resource value is taken. </param>
         /// <param name="mxRecords"> The list of MX records in the record set. </param>
-        internal MXRecordSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, string provisioningState, WritableSubResource targetResource, IList<MXRecord> mxRecords) : base(id, name, resourceType, systemData)
+        internal MXRecordSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, string provisioningState, WritableSubResource targetResource, IList<DnsMXRecord> mxRecords) : base(id, name, resourceType, systemData)
         {
             ETag = etag;
             Metadata = metadata;
@@ -72,6 +72,6 @@ namespace Azure.ResourceManager.Dns
         }
 
         /// <summary> The list of MX records in the record set. </summary>
-        public IList<MXRecord> MXRecords { get; }
+        public IList<DnsMXRecord> MXRecords { get; }
     }
 }

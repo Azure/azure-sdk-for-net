@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Dns
         public AaaaRecordSetData()
         {
             Metadata = new ChangeTrackingDictionary<string, string>();
-            AaaaRecords = new ChangeTrackingList<AaaaRecord>();
+            AaaaRecords = new ChangeTrackingList<DnsAaaaRecord>();
         }
 
         /// <summary> Initializes a new instance of AaaaRecordSetData. </summary>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="provisioningState"> provisioning State of the record set. </param>
         /// <param name="targetResource"> A reference to an azure resource from where the dns resource value is taken. </param>
         /// <param name="aaaaRecords"> The list of AAAA records in the record set. </param>
-        internal AaaaRecordSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, string provisioningState, WritableSubResource targetResource, IList<AaaaRecord> aaaaRecords) : base(id, name, resourceType, systemData)
+        internal AaaaRecordSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, string provisioningState, WritableSubResource targetResource, IList<DnsAaaaRecord> aaaaRecords) : base(id, name, resourceType, systemData)
         {
             ETag = etag;
             Metadata = metadata;
@@ -72,6 +72,6 @@ namespace Azure.ResourceManager.Dns
         }
 
         /// <summary> The list of AAAA records in the record set. </summary>
-        public IList<AaaaRecord> AaaaRecords { get; }
+        public IList<DnsAaaaRecord> AaaaRecords { get; }
     }
 }

@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="provisioningState"> provisioning State of the record set. </param>
         /// <param name="targetResource"> A reference to an azure resource from where the dns resource value is taken. </param>
         /// <param name="cnameRecord"> The CNAME record in the  record set. </param>
-        internal CnameRecordSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, string provisioningState, WritableSubResource targetResource, CnameRecord cnameRecord) : base(id, name, resourceType, systemData)
+        internal CnameRecordSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, string provisioningState, WritableSubResource targetResource, DnsCnameRecord cnameRecord) : base(id, name, resourceType, systemData)
         {
             ETag = etag;
             Metadata = metadata;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Dns
         }
 
         /// <summary> The CNAME record in the  record set. </summary>
-        internal CnameRecord CnameRecord { get; set; }
+        internal DnsCnameRecord CnameRecord { get; set; }
         /// <summary> The canonical name for this CNAME record. </summary>
         public string Cname
         {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Dns
             set
             {
                 if (CnameRecord is null)
-                    CnameRecord = new CnameRecord();
+                    CnameRecord = new DnsCnameRecord();
                 CnameRecord.Cname = value;
             }
         }
