@@ -1,9 +1,9 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "OptionalPropertiesClient",
+    "title": "PrimitivePropertyClient",
     "version": "1.0.0",
-    "description": "Illustrates models with optional properties.",
+    "description": "Illustrates model generation, as well as serialization and deserialization.",
     "x-cadl-generated": [
       {
         "emitter": "@azure-tools/cadl-autorest"
@@ -23,57 +23,15 @@
   "tags": [],
   "paths": {
     "/models": {
-      "post": {
-        "operationId": "OptionalProperties_SendOptionalPropertyModel",
-        "parameters": [
-          {
-            "name": "input",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/InputModel"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Http response with status code"
-          },
-          "default": {
-            "description": "A response containing error details.",
-            "schema": {
-              "$ref": "#/definitions/Azure.Core.Operations.ErrorResponse"
-            }
-          }
-        }
-      },
       "get": {
-        "operationId": "OptionalProperties_GetOptionalPropertyModel",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "The request has succeeded.",
-            "schema": {
-              "$ref": "#/definitions/OutputModel"
-            }
-          },
-          "default": {
-            "description": "A response containing error details.",
-            "schema": {
-              "$ref": "#/definitions/Azure.Core.Operations.ErrorResponse"
-            }
-          }
-        }
-      },
-      "put": {
-        "operationId": "OptionalProperties_SetOptionalPropertyModel",
+        "operationId": "PrimitiveProperties_GetModel",
         "parameters": [
           {
             "name": "input",
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/RoundTripModel"
+              "$ref": "#/definitions/PrimitivePropertyModel"
             }
           }
         ],
@@ -81,7 +39,7 @@
           "200": {
             "description": "The request has succeeded.",
             "schema": {
-              "$ref": "#/definitions/RoundTripModel"
+              "$ref": "#/definitions/PrimitivePropertyModel"
             }
           },
           "default": {
@@ -156,101 +114,62 @@
         "code"
       ]
     },
-    "InputModel": {
+    "PrimitivePropertyModel": {
       "type": "object",
       "properties": {
-        "optionalString": {
+        "requiredString": {
+          "type": "string"
+        },
+        "requiredBytes": {
           "type": "string",
-          "description": "Optional string, illustrating an optional reference type property."
+          "format": "byte"
         },
-        "optionalInt": {
+        "requiredInt": {
           "type": "integer",
-          "format": "int32",
-          "description": "Optional int, illustrating an optional value type property."
+          "format": "int32"
         },
-        "optionalStringList": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "x-cadl-name": "string[]",
-          "description": "Optional string collection."
+        "requiredLong": {
+          "type": "integer",
+          "format": "int64"
         },
-        "optionalIntList": {
-          "type": "array",
-          "items": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "x-cadl-name": "int32[]",
-          "description": "Optional int collection."
+        "requiredSafeInt": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "requiredFloat": {
+          "type": "number",
+          "format": "float"
+        },
+        "requiredDouble": {
+          "type": "number",
+          "format": "double"
+        },
+        "requiredBodyDateTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Illustrate a zonedDateTime body parameter, serialized as 'YYYY-MM-DDTHH:mm:ss.sssZ' (https://datatracker.ietf.org/doc/html/rfc3339)"
+        },
+        "requiredDuration": {
+          "type": "string",
+          "format": "duration"
+        },
+        "requiredBoolean": {
+          "type": "boolean"
         }
       },
-      "description": "Input model with optional properties."
-    },
-    "OutputModel": {
-      "type": "object",
-      "properties": {
-        "optionalString": {
-          "type": "string",
-          "description": "Optional string, illustrating an optional reference type property."
-        },
-        "optionalInt": {
-          "type": "integer",
-          "format": "int32",
-          "description": "Optional int, illustrating an optional value type property."
-        },
-        "optionalStringList": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "x-cadl-name": "string[]",
-          "description": "Optional string collection."
-        },
-        "optionalIntList": {
-          "type": "array",
-          "items": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "x-cadl-name": "int32[]",
-          "description": "Optional int collection."
-        }
-      },
-      "description": "Output model with optional properties."
-    },
-    "RoundTripModel": {
-      "type": "object",
-      "properties": {
-        "optionalString": {
-          "type": "string",
-          "description": "Optional string, illustrating an optional reference type property."
-        },
-        "optionalInt": {
-          "type": "integer",
-          "format": "int32",
-          "description": "Optional int, illustrating an optional value type property."
-        },
-        "optionalStringList": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "x-cadl-name": "string[]",
-          "description": "Optional string collection."
-        },
-        "optionalIntList": {
-          "type": "array",
-          "items": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "x-cadl-name": "int32[]",
-          "description": "Optional int collection."
-        }
-      },
-      "description": "Round-trip model with optional properties."
+      "description": "Round-trip model with primitive properties to show serialization and deserialization of each.",
+      "required": [
+        "requiredString",
+        "requiredBytes",
+        "requiredInt",
+        "requiredLong",
+        "requiredSafeInt",
+        "requiredFloat",
+        "requiredDouble",
+        "requiredBodyDateTime",
+        "requiredDuration",
+        "requiredBoolean"
+      ]
     }
   },
   "parameters": {}
