@@ -68,17 +68,6 @@ namespace Microsoft.Azure.Management.Automation
               }.AsEnumerable();
           }
       }
-      // BEGIN: Code Generation Metadata Section
-      public static readonly String AutoRestVersion = "2.0.4421";
-      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/automation/resource-manager/readme.md --csharp --version=2.0.4421 --reflect-api-versions --csharp-sdks-folder=C:\\dev\\azure-sdk-for-net\\sdk";
-      public static readonly String GithubForkName = "Azure";
-      public static readonly String GithubBranchName = "main";
-      public static readonly String GithubCommidId = "d8bad7cbba37e83cf0c5d2026360d0fd4971b2fe";
-      public static readonly String CodeGenerationErrors = "npm WARN config global `--global`, `--local` are deprecated. Use `--location=global` instead.
-npm WARN config global `--global`, `--local` are deprecated. Use `--location=global` instead."
-      public static readonly String GithubRepoName = "azure-rest-api-specs";
-      // END: Code Generation Metadata Section
   }
 }
 
