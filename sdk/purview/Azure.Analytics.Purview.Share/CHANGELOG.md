@@ -13,9 +13,3 @@ Microsoft Purview Share is a fully managed cloud service.
 [Source code](https://azure.microsoft.com/services/purview/) | [Package (NuGet)](https://www.nuget.org/packages?q=Azure.Analytics.Purview.Share) | [Product documentation](https://docs.microsoft.com/azure/purview/concept-data-share)
 
 This is a Public Preview version, so expect incompatible changes in subsequent releases as we improve the product. To provide feedback, please submit an issue in our [Azure SDK for .NET GitHub repo](https://github.com/Azure/azure-sdk-for-net/issues).
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
