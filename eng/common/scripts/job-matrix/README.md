@@ -39,13 +39,13 @@ jobs:
     parameters:
       MatrixConfigs:
         - Name: base_product_matrix
-          Path: eng/scripts/job-matrix/samples/matrix.json
+          Path: eng/common/scripts/job-matrix/samples/matrix.json
           Selection: all
           NonSparseParameters:
             - framework
           GenerateVMJobs: true
         - Name: sparse_product_matrix
-          Path: eng/scripts/job-matrix/samples/matrix.json
+          Path: eng/common/scripts/job-matrix/samples/matrix.json
           Selection: sparse
           GenerateVMJobs: true
       JobTemplatePath: /eng/common/scripts/job-matrix/samples/matrix-job-sample.yml
