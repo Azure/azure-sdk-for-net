@@ -16,7 +16,10 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
- 
+request-path-to-resource-name:
+  /subscriptions/{subscriptionId}/providers/Microsoft.Media/locations/{locationName}/mediaServicesOperationResults/{operationId}: MediaServicesOperationResult
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/privateLinkResources/{name}: MediaPrivateLink
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}: MediaService
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -52,6 +55,24 @@ list-exception:
 - /subscriptions/{subscriptionId}/providers/Microsoft.Media/locations/{locationName}/mediaServicesOperationResults/{operationId}
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/tracks/{trackName}/operationResults/{operationId}
 
+rename-mapping:
+  Asset: MediaServiceAsset
+  Asset.properties.created: CreatedOn
+  Asset.properties.lastModified: LastModifiedOn
+  ProvisioningState: AssetTrackProvisioningState
+  ContentKeyPolicy.properties.created: CreatedOn
+  ContentKeyPolicy.properties.lastModified: LastModifiedOn
+  ContentKeyPolicy.properties.options: Preferences
+  ContentKeyPolicyOption: ContentKeyPolicyPreference
+  Job: MediaServiceTransformJob
+  Job.properties.created: CreatedOn
+  Job.properties.lastModified: LastModifiedOn
+  Priority: TransformOutputsPriority
+  LiveEvent.properties.created: CreatedOn
+  LiveEvent.properties.lastModified: LastModifiedOn
+  LiveOutput.properties.created: CreatedOn
+  LiveOutput.properties.lastModified: LastModifiedOn
+  
 directive:
   - from: Accounts.json
     where: $.definitions
@@ -66,4 +87,15 @@ directive:
     transform: >
       $.Overlay.properties.fadeInDuration['format'] = 'duration';
       $.Overlay.properties.fadeOutDuration['format'] = 'duration';
+  - from: AssetsAndAssetFilters.json
+    where: $.paths
+    transform: >
+      $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/listContainerSas'].post["x-ms-pageable"] = {
+          "itemName": "assetContainerSasUrls",
+          "nextLinkName": null
+        };
+      $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/listStreamingLocators'].post["x-ms-pageable"] = {
+          "itemName": "streamingLocators",
+          "nextLinkName": null
+        };
 ```
