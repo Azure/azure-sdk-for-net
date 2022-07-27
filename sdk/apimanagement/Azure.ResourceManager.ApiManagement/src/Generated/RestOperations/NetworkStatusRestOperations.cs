@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IReadOnlyList<NetworkStatusContractByLocation>>> ListByServiceAsync(string subscriptionId, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<NetworkStatusContractWithLocation>>> ListByServiceAsync(string subscriptionId, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        IReadOnlyList<NetworkStatusContractByLocation> value = default;
+                        IReadOnlyList<NetworkStatusContractWithLocation> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        List<NetworkStatusContractByLocation> array = new List<NetworkStatusContractByLocation>();
+                        List<NetworkStatusContractWithLocation> array = new List<NetworkStatusContractWithLocation>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(NetworkStatusContractByLocation.DeserializeNetworkStatusContractByLocation(item));
+                            array.Add(NetworkStatusContractWithLocation.DeserializeNetworkStatusContractWithLocation(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IReadOnlyList<NetworkStatusContractByLocation>> ListByService(string subscriptionId, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyList<NetworkStatusContractWithLocation>> ListByService(string subscriptionId, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -112,12 +112,12 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        IReadOnlyList<NetworkStatusContractByLocation> value = default;
+                        IReadOnlyList<NetworkStatusContractWithLocation> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        List<NetworkStatusContractByLocation> array = new List<NetworkStatusContractByLocation>();
+                        List<NetworkStatusContractWithLocation> array = new List<NetworkStatusContractWithLocation>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(NetworkStatusContractByLocation.DeserializeNetworkStatusContractByLocation(item));
+                            array.Add(NetworkStatusContractWithLocation.DeserializeNetworkStatusContractWithLocation(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);

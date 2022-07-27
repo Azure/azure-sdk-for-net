@@ -258,10 +258,10 @@ namespace Azure.ResourceManager.Logic
         /// Operation Id: IntegrationServiceEnvironmentManagedApiOperations_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApiOperation" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApiOperation> GetIntegrationServiceEnvironmentManagedApiOperationsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="LogicApiOperationInfo" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<LogicApiOperationInfo> GetIntegrationServiceEnvironmentManagedApiOperationsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ApiOperation>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<LogicApiOperationInfo>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _integrationServiceEnvironmentManagedApiOperationsClientDiagnostics.CreateScope("IntegrationServiceEnvironmentManagedApiResource.GetIntegrationServiceEnvironmentManagedApiOperations");
                 scope.Start();
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Logic
                     throw;
                 }
             }
-            async Task<Page<ApiOperation>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<LogicApiOperationInfo>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _integrationServiceEnvironmentManagedApiOperationsClientDiagnostics.CreateScope("IntegrationServiceEnvironmentManagedApiResource.GetIntegrationServiceEnvironmentManagedApiOperations");
                 scope.Start();
@@ -300,10 +300,10 @@ namespace Azure.ResourceManager.Logic
         /// Operation Id: IntegrationServiceEnvironmentManagedApiOperations_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApiOperation" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApiOperation> GetIntegrationServiceEnvironmentManagedApiOperations(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="LogicApiOperationInfo" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<LogicApiOperationInfo> GetIntegrationServiceEnvironmentManagedApiOperations(CancellationToken cancellationToken = default)
         {
-            Page<ApiOperation> FirstPageFunc(int? pageSizeHint)
+            Page<LogicApiOperationInfo> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _integrationServiceEnvironmentManagedApiOperationsClientDiagnostics.CreateScope("IntegrationServiceEnvironmentManagedApiResource.GetIntegrationServiceEnvironmentManagedApiOperations");
                 scope.Start();
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.Logic
                     throw;
                 }
             }
-            Page<ApiOperation> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<LogicApiOperationInfo> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _integrationServiceEnvironmentManagedApiOperationsClientDiagnostics.CreateScope("IntegrationServiceEnvironmentManagedApiResource.GetIntegrationServiceEnvironmentManagedApiOperations");
                 scope.Start();

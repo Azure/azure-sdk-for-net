@@ -16,7 +16,10 @@ namespace Azure.ResourceManager.IotHub.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties");
-            writer.WriteObjectValue(Properties);
+            writer.WriteStartObject();
+            writer.WritePropertyName("name");
+            writer.WriteStringValue(Name);
+            writer.WriteEndObject();
             writer.WriteEndObject();
         }
     }

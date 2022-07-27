@@ -24,26 +24,26 @@ namespace Azure.ResourceManager.Logic.Models
 
         private const string NotSpecifiedValue = "NotSpecified";
         private const string NoneValue = "None";
-        private const string DES3Value = "DES3";
+        private const string Des3Value = "DES3";
         private const string RC2Value = "RC2";
-        private const string AES128Value = "AES128";
-        private const string AES192Value = "AES192";
-        private const string AES256Value = "AES256";
+        private const string Aes128Value = "AES128";
+        private const string Aes192Value = "AES192";
+        private const string Aes256Value = "AES256";
 
         /// <summary> NotSpecified. </summary>
         public static EncryptionAlgorithm NotSpecified { get; } = new EncryptionAlgorithm(NotSpecifiedValue);
         /// <summary> None. </summary>
         public static EncryptionAlgorithm None { get; } = new EncryptionAlgorithm(NoneValue);
         /// <summary> DES3. </summary>
-        public static EncryptionAlgorithm DES3 { get; } = new EncryptionAlgorithm(DES3Value);
+        public static EncryptionAlgorithm Des3 { get; } = new EncryptionAlgorithm(Des3Value);
         /// <summary> RC2. </summary>
         public static EncryptionAlgorithm RC2 { get; } = new EncryptionAlgorithm(RC2Value);
         /// <summary> AES128. </summary>
-        public static EncryptionAlgorithm AES128 { get; } = new EncryptionAlgorithm(AES128Value);
+        public static EncryptionAlgorithm Aes128 { get; } = new EncryptionAlgorithm(Aes128Value);
         /// <summary> AES192. </summary>
-        public static EncryptionAlgorithm AES192 { get; } = new EncryptionAlgorithm(AES192Value);
+        public static EncryptionAlgorithm Aes192 { get; } = new EncryptionAlgorithm(Aes192Value);
         /// <summary> AES256. </summary>
-        public static EncryptionAlgorithm AES256 { get; } = new EncryptionAlgorithm(AES256Value);
+        public static EncryptionAlgorithm Aes256 { get; } = new EncryptionAlgorithm(Aes256Value);
         /// <summary> Determines if two <see cref="EncryptionAlgorithm"/> values are the same. </summary>
         public static bool operator ==(EncryptionAlgorithm left, EncryptionAlgorithm right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EncryptionAlgorithm"/> values are not the same. </summary>

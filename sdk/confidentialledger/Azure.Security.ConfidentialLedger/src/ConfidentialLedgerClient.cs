@@ -60,7 +60,7 @@ namespace Azure.Security.ConfidentialLedger
                     throw new ArgumentNullException(nameof(credential));
             }
             var actualOptions = ledgerOptions ?? new ConfidentialLedgerClientOptions();
-            X509Certificate2 serviceCert = identityServiceCert ?? GetIdentityServerTlsCert(ledgerEndpoint, certificateClientOptions ?? new ConfidentialLedgerCertificateClientOptions());
+            X509Certificate2 serviceCert = identityServiceCert ?? GetIdentityServerTlsCert(ledgerEndpoint, certificateClientOptions ?? new ConfidentialLedgerCertificateClientOptions()).Cert;
 
             var transportOptions = GetIdentityServerTlsCertAndTrust(serviceCert);
             if (clientCertificate != null)
@@ -173,7 +173,7 @@ namespace Azure.Security.ConfidentialLedger
             }
         }
 
-        internal static X509Certificate2 GetIdentityServerTlsCert(Uri ledgerUri, ConfidentialLedgerCertificateClientOptions options, ConfidentialLedgerCertificateClient client = null)
+        internal static (X509Certificate2 Cert, string PEM) GetIdentityServerTlsCert(Uri ledgerUri, ConfidentialLedgerCertificateClientOptions options, ConfidentialLedgerCertificateClient client = null)
         {
             var identityClient = client ?? new ConfidentialLedgerCertificateClient(new Uri("https://identity.confidential-ledger.core.azure.com"), options);
 
@@ -188,7 +188,7 @@ namespace Azure.Security.ConfidentialLedger
                 .GetString();
 
             // construct an X509Certificate2 with the ECC PEM value.
-            return GetCertFromPEM(eccPem);
+            return (GetCertFromPEM(eccPem), eccPem);
         }
 
         private static HttpPipelineTransportOptions GetIdentityServerTlsCertAndTrust(X509Certificate2 identityServiceCert = null)

@@ -413,7 +413,7 @@ Because the structure of the visualization payload varies by query, a `BinaryDat
 
 ### Metrics query
 
-You can query metrics using the `MetricsQueryClient.QueryResourceAsync` method. For every requested metric, a set of aggregated values is returned inside the `TimeSeries` collection.
+You can query metrics on an Azure resource using the `MetricsQueryClient.QueryResourceAsync` method. For each requested metric, a set of aggregated values is returned inside the `TimeSeries` collection.
 
 A resource ID is required to query metrics. To find the resource ID:
 
@@ -473,11 +473,11 @@ MetricsQueryResult
 
 #### Query metrics with options
 
-A `MetricsQueryOptions` object may be used to support more granular metrics queries. Consider the following Azure Key Vault example. The resource's "Vault requests availability" metric is requested, and the "Avg" aggregation type is included.
+A `MetricsQueryOptions` object may be used to support more granular metrics queries. Consider the following example, which queries an Azure Key Vault resource named *TestVault*. The resource's "Vault requests availability" metric is requested, as indicated by metric ID "Availability". Additionally, the "Avg" aggregation type is included.
 
 ```C# Snippet:QueryMetricsWithAggregations
 string resourceId =
-    "/subscriptions/<subscription_id>/resourceGroups/<resource_group_name>/providers/<resource_provider>/<resource>";
+    "/subscriptions/<subscription_id>/resourceGroups/<resource_group_name>/providers/Microsoft.KeyVault/vaults/TestVault";
 var client = new MetricsQueryClient(new DefaultAzureCredential());
 
 Response<MetricsQueryResult> result = await client.QueryResourceAsync(

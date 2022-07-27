@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// 1 - Medium
         /// 2 - Large
         /// </param>
-        /// <param name="excludeFromCapacityAllocation">
+        /// <param name="isExcludeFromCapacityAllocation">
         /// If &lt;code&gt;true&lt;/code&gt;, it includes basic apps.
         /// Basic apps are not used for capacity allocation.
         /// </param>
         /// <param name="isApplicableForAllComputeModes"> &lt;code&gt;true&lt;/code&gt; if capacity is applicable for all apps; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="siteMode"> Shared or Dedicated. </param>
         /// <param name="isLinux"> Is this a linux stamp capacity. </param>
-        internal StampCapacity(string name, long? availableCapacity, long? totalCapacity, string unit, ComputeModeOption? computeMode, WorkerSizeOption? workerSize, int? workerSizeId, bool? excludeFromCapacityAllocation, bool? isApplicableForAllComputeModes, string siteMode, bool? isLinux)
+        internal StampCapacity(string name, long? availableCapacity, long? totalCapacity, string unit, ComputeModeOption? computeMode, WorkerSizeOption? workerSize, int? workerSizeId, bool? isExcludeFromCapacityAllocation, bool? isApplicableForAllComputeModes, string siteMode, bool? isLinux)
         {
             Name = name;
             AvailableCapacity = availableCapacity;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppService.Models
             ComputeMode = computeMode;
             WorkerSize = workerSize;
             WorkerSizeId = workerSizeId;
-            ExcludeFromCapacityAllocation = excludeFromCapacityAllocation;
+            IsExcludeFromCapacityAllocation = isExcludeFromCapacityAllocation;
             IsApplicableForAllComputeModes = isApplicableForAllComputeModes;
             SiteMode = siteMode;
             IsLinux = isLinux;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// If &lt;code&gt;true&lt;/code&gt;, it includes basic apps.
         /// Basic apps are not used for capacity allocation.
         /// </summary>
-        public bool? ExcludeFromCapacityAllocation { get; }
+        public bool? IsExcludeFromCapacityAllocation { get; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if capacity is applicable for all apps; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         public bool? IsApplicableForAllComputeModes { get; }
         /// <summary> Shared or Dedicated. </summary>

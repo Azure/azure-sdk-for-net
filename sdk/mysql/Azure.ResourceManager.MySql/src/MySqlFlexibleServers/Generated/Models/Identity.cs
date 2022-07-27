@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <param name="tenantId"> TenantId from the KeyVault. </param>
         /// <param name="managedServiceIdentityType"> Type of managed service identity. </param>
         /// <param name="userAssignedIdentities"> Metadata of user assigned identity. </param>
-        internal Identity(string principalId, Guid? tenantId, ManagedServiceIdentityType? managedServiceIdentityType, IDictionary<string, BinaryData> userAssignedIdentities)
+        internal Identity(Guid? principalId, Guid? tenantId, ManagedServiceIdentityType? managedServiceIdentityType, IDictionary<string, BinaryData> userAssignedIdentities)
         {
             PrincipalId = principalId;
             TenantId = tenantId;
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         }
 
         /// <summary> ObjectId from the KeyVault. </summary>
-        public string PrincipalId { get; }
+        public Guid? PrincipalId { get; }
         /// <summary> TenantId from the KeyVault. </summary>
         public Guid? TenantId { get; }
         /// <summary> Type of managed service identity. </summary>

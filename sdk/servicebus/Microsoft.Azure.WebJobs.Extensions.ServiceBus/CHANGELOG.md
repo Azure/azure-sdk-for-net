@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added ability to register a callback for ` SessionInitializingAsync` and `SessionClosingAsync` to the `ServiceBusOptions`. _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
+
 ### Breaking Changes
 
 ### Bugs Fixed

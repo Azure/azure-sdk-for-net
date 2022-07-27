@@ -112,10 +112,10 @@ namespace Azure.ResourceManager.AppService
             Optional<byte[]> cerBlob = default;
             Optional<string> publicKeyHash = default;
             Optional<HostingEnvironmentProfile> hostingEnvironmentProfile = default;
-            Optional<string> keyVaultId = default;
+            Optional<ResourceIdentifier> keyVaultId = default;
             Optional<string> keyVaultSecretName = default;
             Optional<KeyVaultSecretStatus> keyVaultSecretStatus = default;
-            Optional<string> serverFarmId = default;
+            Optional<ResourceIdentifier> serverFarmId = default;
             Optional<string> canonicalName = default;
             Optional<string> domainValidationMethod = default;
             foreach (var property in element.EnumerateObject())
@@ -296,7 +296,12 @@ namespace Azure.ResourceManager.AppService
                         }
                         if (property0.NameEquals("keyVaultId"))
                         {
-                            keyVaultId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            keyVaultId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("keyVaultSecretName"))
@@ -316,7 +321,12 @@ namespace Azure.ResourceManager.AppService
                         }
                         if (property0.NameEquals("serverFarmId"))
                         {
-                            serverFarmId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            serverFarmId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("canonicalName"))

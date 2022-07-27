@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -23,39 +24,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteObjectValue(MigrationState);
             }
             writer.WriteEndObject();
-        }
-
-        internal static CosmosDBAccountBackupPolicy DeserializeCosmosDBAccountBackupPolicy(JsonElement element)
-        {
-            if (element.TryGetProperty("type", out JsonElement discriminator))
-            {
-                switch (discriminator.GetString())
-                {
-                    case "Continuous": return ContinuousModeBackupPolicy.DeserializeContinuousModeBackupPolicy(element);
-                    case "Periodic": return PeriodicModeBackupPolicy.DeserializePeriodicModeBackupPolicy(element);
-                }
-            }
-            BackupPolicyType type = default;
-            Optional<BackupPolicyMigrationState> migrationState = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("type"))
-                {
-                    type = new BackupPolicyType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("migrationState"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    migrationState = BackupPolicyMigrationState.DeserializeBackupPolicyMigrationState(property.Value);
-                    continue;
-                }
-            }
-            return new CosmosDBAccountBackupPolicy(type, migrationState.Value);
         }
     }
 }

@@ -25,12 +25,17 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static CreationData DeserializeCreationData(JsonElement element)
         {
-            Optional<string> sourceResourceId = default;
+            Optional<ResourceIdentifier> sourceResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceResourceId"))
                 {
-                    sourceResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    sourceResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }

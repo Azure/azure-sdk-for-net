@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="description"> User-defined description of the job. </param>
         /// <param name="version"> The job version number. </param>
         /// <param name="schedule"> Schedule properties of the job. </param>
-        internal SqlServerJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, int? version, JobSchedule schedule) : base(id, name, resourceType, systemData)
+        internal SqlServerJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, int? version, SqlServerJobSchedule schedule) : base(id, name, resourceType, systemData)
         {
             Description = description;
             Version = version;
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.Sql
         /// <summary> The job version number. </summary>
         public int? Version { get; }
         /// <summary> Schedule properties of the job. </summary>
-        public JobSchedule Schedule { get; set; }
+        public SqlServerJobSchedule Schedule { get; set; }
     }
 }

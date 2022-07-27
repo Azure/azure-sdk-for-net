@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Sql
             Optional<SampleSchemaName> sampleName = default;
             Optional<ResourceIdentifier> elasticPoolId = default;
             Optional<ResourceIdentifier> sourceDatabaseId = default;
-            Optional<DatabaseStatus> status = default;
+            Optional<SqlDatabaseStatus> status = default;
             Optional<Guid> databaseId = default;
             Optional<DateTimeOffset> creationDate = default;
             Optional<string> currentServiceObjectiveName = default;
@@ -214,8 +214,8 @@ namespace Azure.ResourceManager.Sql
             Optional<SecondaryType> secondaryType = default;
             Optional<SqlSku> currentSku = default;
             Optional<int> autoPauseDelay = default;
-            Optional<BackupStorageRedundancy> currentBackupStorageRedundancy = default;
-            Optional<BackupStorageRedundancy> requestedBackupStorageRedundancy = default;
+            Optional<SqlBackupStorageRedundancy> currentBackupStorageRedundancy = default;
+            Optional<SqlBackupStorageRedundancy> requestedBackupStorageRedundancy = default;
             Optional<double> minCapacity = default;
             Optional<DateTimeOffset> pausedDate = default;
             Optional<DateTimeOffset> resumedDate = default;
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.Sql
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            status = new DatabaseStatus(property0.Value.GetString());
+                            status = new SqlDatabaseStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("databaseId"))
@@ -592,7 +592,7 @@ namespace Azure.ResourceManager.Sql
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            currentBackupStorageRedundancy = new BackupStorageRedundancy(property0.Value.GetString());
+                            currentBackupStorageRedundancy = new SqlBackupStorageRedundancy(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("requestedBackupStorageRedundancy"))
@@ -602,7 +602,7 @@ namespace Azure.ResourceManager.Sql
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            requestedBackupStorageRedundancy = new BackupStorageRedundancy(property0.Value.GetString());
+                            requestedBackupStorageRedundancy = new SqlBackupStorageRedundancy(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("minCapacity"))

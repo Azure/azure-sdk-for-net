@@ -36,11 +36,18 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
+request-path-to-resource-type:
+  /{scope}/providers/Microsoft.Authorization/roleManagementPolicyAssignments/{roleManagementPolicyAssignmentName}: Microsoft.Authorization/roleManagementPolicyAssignment
+
 list-exception: 
 - /{roleDefinitionId}
 - /{roleAssignmentId}
 
 directive:
+  # The requested resource does not support http method 'DELETE'
+  - remove-operation: 'RoleManagementPolicies_Delete'
+  - remove-operation: 'RoleManagementPolicyAssignments_Delete'
+
   # Duplicate Schema name
   - from: RoleAssignmentScheduleRequest.json
     where: $.definitions.RoleAssignmentScheduleRequestProperties
@@ -51,16 +58,16 @@ directive:
     transform: $['x-ms-client-name'] = 'RoleAssignmentExpirationType' 
   - from: RoleAssignmentScheduleRequest.json
     where: $.definitions.RoleAssignmentScheduleRequestProperties.properties.scheduleInfo.properties.expiration.properties.duration
-    transform: $['x-ms-format'] = 'constant'
+    transform: $["format"] = "duration"
   - from: RoleEligibilityScheduleRequest.json
     where: $.definitions.RoleEligibilityScheduleRequestProperties.properties.scheduleInfo.properties.expiration.properties.type
     transform: $['x-ms-client-name'] = 'RoleEligibilityExpirationType' 
   - from: RoleEligibilityScheduleRequest.json
     where: $.definitions.RoleEligibilityScheduleRequestProperties.properties.scheduleInfo.properties.expiration.properties.duration
-    transform: $['x-ms-format'] = 'constant'
+    transform: $["format"] = "duration"
   - from: common-types.json
     where: $.definitions.RoleManagementPolicyExpirationRule.properties.maximumDuration
-    transform: $['x-ms-format'] = 'constant'
+    transform: $["format"] = "duration"
 
   # change single class name
   - from: authorization-RoleDefinitionsCalls.json
@@ -98,6 +105,10 @@ directive:
   - from: authorization-ProviderOperationsCalls.json
     where: $.definitions.ResourceType
     transform:  $['x-ms-client-name'] = "ProviderOperationsResourceType"
+
+  - from: authorization-ProviderOperationsCalls.json
+    where: $.definitions.ProviderOperation.properties.properties
+    transform:  $['x-nullable'] = true
 
   # remove all ById Path
   - from: authorization-RoleAssignmentsCalls.json
@@ -211,9 +222,6 @@ directive:
   - rename-model:
       from: RoleAssignmentScheduleRequestProperties
       to: RoleAssignmentSchedule
-  - rename-model:
-      from: ProviderOperationsMetadata
-      to: ProviderOperations
   - rename-model:
       from: UserSet
       to: UserInfo
