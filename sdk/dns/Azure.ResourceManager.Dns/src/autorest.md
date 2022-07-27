@@ -20,7 +20,8 @@ format-by-name-rules:
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
-  'PurviewResourceId': 'arm-id'
+  '*Guid': 'uuid'
+  'ifMatch': 'etag'
 
 rename-rules:
   CPU: Cpu
@@ -32,6 +33,7 @@ rename-rules:
   IDs: Ids
   VM: Vm
   VMs: Vms
+  Vmos: VmOS
   VMScaleSet: VmScaleSet
   DNS: Dns
   VPN: Vpn
@@ -42,8 +44,18 @@ rename-rules:
   Ipsec: IPsec|ipsec
   SSO: Sso
   URI: Uri
-  MWS: Mws
   Etag: ETag|etag
+  SAS: Sas
+  SKU: Sku
+  SMB: Smb
+  NFS: Nfs
+  LRS: Lrs
+  ZRS: Zrs
+  GRS: Grs
+  TLS: Tls
+  AAD: Aad
+  GET: Get
+  PUT: Put
 
 override-operation-name:
   RecordSets_ListByDnsZone: GetRecordSets
