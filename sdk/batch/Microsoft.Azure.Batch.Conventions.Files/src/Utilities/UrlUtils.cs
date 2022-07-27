@@ -54,5 +54,18 @@ namespace Microsoft.Azure.Batch.Conventions.Files.Utilities
 
             return segments[valueSegmentIndex];
         }
+
+        internal static bool CheckOutputFileRefListContainsUri(List<OutputFileReference> blobs, string uriTargetPathDenotation)
+        {
+            foreach(OutputFileReference blob in blobs)
+            {
+                string decodedAbsoluteUri = System.Web.HttpUtility.UrlDecode(blob.Uri.AbsoluteUri, Encoding.ASCII);
+                if (decodedAbsoluteUri.EndsWith(uriTargetPathDenotation))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }

@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
 
                 var blobs = job.OutputStorage(blobClient).ListOutputs(JobOutputKind.JobOutput).ToList();
                 Assert.NotEmpty(blobs);
-                Assert.Contains(blobs, b => b.Uri.AbsoluteUri.EndsWith($"{_jobId}/$JobOutput/Files/TestText1.txt"));
+                Assert.True(UrlUtils.CheckOutputFileRefListContainsUri(blobs, $"{_jobId}/$JobOutput/Files/TestText1.txt"));
             }
         }
 
@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
 
                 var blobs = jobOutputStorageFromAccount.ListOutputs(JobOutputKind.JobPreview).ToList();
                 Assert.NotEmpty(blobs);
-                Assert.Contains(blobs, b => b.Uri.AbsoluteUri.EndsWith($"{_jobId}/$JobPreview/SavedViaSas.txt"));
+                Assert.True(UrlUtils.CheckOutputFileRefListContainsUri(blobs, $"{_jobId}/$JobPreview/SavedViaSas.txt"));
             }
         }
     }
@@ -109,19 +109,20 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
             {
                 var job = batchClient.JobOperations.CreateJob(_jobId, null);
 
-                var blobClient = base.blobClient.CreateCloudBlobClient();
+                var blobClient = base.blobClient;
 
                 var expectedContainer = ContainerNameUtils.GetSafeContainerName(_jobId);
 
-                var expectedContainerExists = await blobClient.GetContainerReference(expectedContainer).ExistsAsync();
+                var expectedContainerExists = await base.blobClient.GetBlobContainerClient(expectedContainer).ExistsAsync();
 
                 Assert.False(expectedContainerExists, $"Output storage container for {_jobId} should not have existed before test ran");
 
                 await job.PrepareOutputStorageAsync(base.blobClient);
 
-                expectedContainerExists = await blobClient.GetContainerReference(expectedContainer).ExistsAsync();
+                expectedContainerExists = await base.blobClient.GetBlobContainerClient(expectedContainer).ExistsAsync();
 
                 Assert.True(expectedContainerExists, $"Output storage container for {_jobId} should have existed after test ran");
+
             }
         }
     }
