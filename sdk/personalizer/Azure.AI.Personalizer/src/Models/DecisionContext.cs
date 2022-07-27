@@ -21,11 +21,11 @@ namespace Azure.AI.Personalizer
         /// <param name="rankableActions"> Rankable actions </param>
         public DecisionContext(IEnumerable<object> contextFeatures, List<PersonalizerRankableAction> rankableActions)
         {
-            this.ContextFeatures = contextFeatures.Select(f => JsonSerializer.Serialize(f)).ToList();
+            this.ContextFeatures = contextFeatures.ToList();
             this.Documents = rankableActions
                 .Select(action =>
                 {
-                    List<string> actionFeatures = action.Features.Select(f => JsonSerializer.Serialize(f)).ToList();
+                    IList<object> actionFeatures = action.Features.ToList();
 
                     return new DecisionContextDocument(action.Id, actionFeatures, null, null);
                 }).ToArray();
@@ -36,12 +36,12 @@ namespace Azure.AI.Personalizer
         /// <param name="slotIdToFeatures"> A map from slot id to its features </param>
         public DecisionContext(PersonalizerRankMultiSlotOptions rankRequest, Dictionary<string, IList<object>> slotIdToFeatures)
         {
-            this.ContextFeatures = rankRequest.ContextFeatures.Select(f => JsonSerializer.Serialize(f)).ToList();
+            this.ContextFeatures = rankRequest.ContextFeatures.ToList();
 
             this.Documents = rankRequest.Actions
                 .Select(action =>
                 {
-                    List<string> actionFeatures = action.Features.Select(f => JsonSerializer.Serialize(f)).ToList();
+                    IList<object> actionFeatures = action.Features.ToList();
 
                     return new DecisionContextDocument(action.Id, actionFeatures, null, null);
                 }).ToList();
@@ -53,9 +53,7 @@ namespace Azure.AI.Personalizer
 
         /// <summary> Properties from url </summary>
         [JsonPropertyName("FromUrl")]
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        [JsonConverter(typeof(JsonRawStringListConverter))]
-        public List<string> ContextFeatures { get; }
+        public IList<object> ContextFeatures { get; }
 
         /// <summary> Properties of documents </summary>
         [JsonPropertyName("_multi")]
@@ -63,15 +61,14 @@ namespace Azure.AI.Personalizer
 
         /// <summary> Properties of slots </summary>
         [JsonPropertyName("_slots")]
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public IList<DecisionContextDocument> Slots { get; }
 
-        private static List<string> serializeFeatures(IList<object> features)
+        private static IList<object> serializeFeatures(IList<object> features)
         {
-            List<string> result = new List<string>();
+            IList<object> result = new List<object>();
             foreach (object feature in features)
             {
-                result.Add(JsonSerializer.Serialize(feature));
+                result.Add(feature);
             }
 
             return result;

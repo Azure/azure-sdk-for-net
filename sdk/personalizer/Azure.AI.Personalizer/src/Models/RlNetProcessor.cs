@@ -88,7 +88,11 @@ namespace Azure.AI.Personalizer
 
             // Convert options to the compatible parameter for ChooseRank
             DecisionContext decisionContext = new DecisionContext(options, slotIdToFeatures);
-            var contextJson = JsonSerializer.Serialize(decisionContext);
+            var jsonSerializerOptions = new JsonSerializerOptions
+            {
+                IgnoreNullValues = true
+            };
+            var contextJson = JsonSerializer.Serialize(decisionContext, jsonSerializerOptions);
             ActionFlags flags = options.DeferActivation == true ? ActionFlags.Deferred : ActionFlags.Default;
             int[] baselineActions = RlObjectConverter.ExtractBaselineActionsFromRankRequest(options);
 

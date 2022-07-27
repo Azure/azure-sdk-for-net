@@ -18,7 +18,11 @@ namespace Azure.AI.Personalizer
         public static string ConvertToContextJson(IEnumerable<object> contextFeatures, List<PersonalizerRankableAction> rankableActions)
         {
             DecisionContext decisionContext = new DecisionContext(contextFeatures, rankableActions);
-            return JsonSerializer.Serialize(decisionContext);
+            var jsonSerializerOptions = new JsonSerializerOptions
+            {
+                IgnoreNullValues = true
+            };
+            return JsonSerializer.Serialize(decisionContext, jsonSerializerOptions);
         }
 
         /// <summary>
