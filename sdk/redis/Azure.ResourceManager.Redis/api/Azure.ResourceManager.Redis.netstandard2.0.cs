@@ -298,9 +298,9 @@ namespace Azure.ResourceManager.Redis.Models
         public System.Collections.Generic.IList<string> Files { get { throw null; } }
         public string Format { get { throw null; } set { } }
     }
-    public partial class OperationStatus
+    public partial class OperationStatus : Azure.ResourceManager.Models.OperationStatusResult
     {
-        internal OperationStatus() { }
+        internal OperationStatus() : base (default(string)) { }
         public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> Properties { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
