@@ -24,6 +24,9 @@ namespace Azure.Storage
 
             public ReadOnlyMemory<byte> MD5 { get; }
             public ReadOnlyMemory<byte> StorageCrc64 { get; }
+
+            public byte[] MD5AsArray => MD5.IsEmpty ? null : MD5.ToArray();
+            public byte[] StorageCrc64AsArray => StorageCrc64.IsEmpty ? null : StorageCrc64.ToArray();
         }
 
         /// <summary>

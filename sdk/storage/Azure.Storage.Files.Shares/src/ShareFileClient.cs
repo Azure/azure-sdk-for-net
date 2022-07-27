@@ -4344,7 +4344,7 @@ namespace Azure.Storage.Files.Shares
                             contentLength: (content?.Length - content?.Position) ?? 0,
                             fileLastWrittenMode: fileLastWrittenMode,
                             optionalbody: content,
-                            contentMD5: hashResult?.MD5.ToArray(),
+                            contentMD5: hashResult?.MD5AsArray,
                             leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -4357,7 +4357,7 @@ namespace Azure.Storage.Files.Shares
                             contentLength: (content?.Length - content?.Position) ?? 0,
                             fileLastWrittenMode: fileLastWrittenMode,
                             optionalbody: content,
-                            contentMD5: hashResult?.MD5.ToArray(),
+                            contentMD5: hashResult?.MD5AsArray,
                             leaseAccessConditions: conditions,
                             cancellationToken: cancellationToken);
                     }

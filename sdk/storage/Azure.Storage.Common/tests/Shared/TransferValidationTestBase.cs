@@ -1703,11 +1703,11 @@ namespace Azure.Storage.Test.Shared
         public void TestDefaults()
         {
             var uploadOptions = new UploadTransferValidationOptions();
-            Assert.AreEqual(StorageChecksumAlgorithm.Auto, uploadOptions.ChecksumAlgorithm);
-            Assert.IsNull(uploadOptions.PrecalculatedChecksum);
+            Assert.AreEqual(StorageChecksumAlgorithm.None, uploadOptions.ChecksumAlgorithm);
+            Assert.IsTrue(uploadOptions.PrecalculatedChecksum.IsEmpty);
 
             var downloadOptions = new DownloadTransferValidationOptions();
-            Assert.AreEqual(StorageChecksumAlgorithm.Auto, downloadOptions.ChecksumAlgorithm);
+            Assert.AreEqual(StorageChecksumAlgorithm.None, downloadOptions.ChecksumAlgorithm);
             Assert.IsTrue(downloadOptions.AutoValidateChecksum);
         }
 
@@ -1723,8 +1723,8 @@ namespace Azure.Storage.Test.Shared
             StorageChecksumAlgorithm expectedAlgorithm = TransferValidationOptionsExtensions.ResolveAuto(StorageChecksumAlgorithm.Auto);
             const int dataLength = Constants.KB;
             var data = GetRandomBuffer(dataLength);
-            var uploadvalidationOptions = new UploadTransferValidationOptions();
-            var downloadvalidationOptions = new DownloadTransferValidationOptions();
+            var uploadvalidationOptions = new UploadTransferValidationOptions() { ChecksumAlgorithm = StorageChecksumAlgorithm.Auto };
+            var downloadvalidationOptions = new DownloadTransferValidationOptions() { ChecksumAlgorithm = StorageChecksumAlgorithm.Auto };
             var clientOptions = ClientBuilder.GetOptions();
             StorageTransferOptions transferOptions = new StorageTransferOptions
             {
