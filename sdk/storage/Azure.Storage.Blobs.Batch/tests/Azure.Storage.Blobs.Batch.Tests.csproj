@@ -13,12 +13,16 @@
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\src\Azure.Storage.Blobs.Batch.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="$(AzureStorageSharedSources)SasExtensions.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)SasQueryParametersInternals.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)StorageSharedKeyCredentialInternals.cs" LinkBase="Shared" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="$(AzureStorageSharedTestSources)\**\*.cs" LinkBase="Shared" />
     <Compile Remove="$(AzureStorageSharedTestSources)\AzuriteFixture.cs" />
     <Compile Remove="$(AzureStorageSharedTestSources)\AzuriteNUnitFixture.cs" />
     <Compile Remove="$(AzureStorageSharedTestSources)\TransferValidationTestBase.cs" />
     <Compile Remove="$(AzureStorageSharedTestSources)\ClientSideEncryptionTestExtensions.cs" />
-    <Compile Remove="$(AzureStorageSharedTestSources)\Sas\*.cs" />
     <None Include="$(AzureStorageSharedTestSources)\*.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

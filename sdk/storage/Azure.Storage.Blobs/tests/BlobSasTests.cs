@@ -499,34 +499,29 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        [TestCase("soc")]
-        [TestCase("ocs")]
-        [TestCase("cs")]
-        public async Task AccountSasResources_ServiceToFileSystem(string resourceType)
+        public async Task AccountSasResources_ServiceToFileSystem()
         {
+            string resourceType = "soc";
             await InvokeAccountSasServiceToFileSystemTest(resourceType: resourceType);
         }
 
         [RecordedTest]
-        [TestCase("tqfb")]
-        [TestCase("fqb")]
-        [TestCase("qb")]
-        public async Task AccountSasServices_ServiceToFileSystem(string services)
+        public async Task AccountSasServices_ServiceToFileSystem()
         {
+            string services = "fqb";
             await InvokeAccountSasServiceToFileSystemTest(services: services);
         }
 
         [RecordedTest]
-        [TestCase("racwdlxyuptfi")]
-        [TestCase("cuprwdyla")]
-        public async Task AccountSasPermissions_ServiceToFileSystem(string permissions)
+        public async Task AccountSasPermissions_ServiceToFileSystem()
         {
+            string permissions = "cuprwdyla";
             await InvokeAccountSasServiceToFileSystemTest(permissions: permissions);
         }
         #endregion
 
         #region BlobContainerClient
-        private async Task InvokeAccountSasFileSystemToServiceTest(
+        private async Task InvokeAccountSasContainerToServiceTest(
             string permissions = default,
             string services = default,
             string resourceType = default)
@@ -548,29 +543,24 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        [TestCase("soc")]
-        [TestCase("ocs")]
-        [TestCase("cs")]
-        public async Task AccountSasResources_FileSystemToService(string resourceType)
+        public async Task AccountSasResources_ContainerToService()
         {
-            await InvokeAccountSasFileSystemToServiceTest(resourceType: resourceType);
+            string resourceType = "soc";
+            await InvokeAccountSasContainerToServiceTest(resourceType: resourceType);
         }
 
         [RecordedTest]
-        [TestCase("tqfb")]
-        [TestCase("fqb")]
-        [TestCase("qb")]
-        public async Task AccountSasServices_FileSystemToService(string services)
+        public async Task AccountSasServices_ContainerToService()
         {
-            await InvokeAccountSasFileSystemToServiceTest(services: services);
+            string services = "fqb";
+            await InvokeAccountSasContainerToServiceTest(services: services);
         }
 
         [RecordedTest]
-        [TestCase("racwdlxyuptfi")]
-        [TestCase("cuprwdyla")]
-        public async Task AccountSasPermissions_FileSystemToService(string permissions)
+        public async Task AccountSasPermissions_ContainerToService()
         {
-            await InvokeAccountSasFileSystemToServiceTest(permissions: permissions);
+            string permissions = "cuprwdyla";
+            await InvokeAccountSasContainerToServiceTest(permissions: permissions);
         }
 
         private async Task InvokeAccountSasContainerToBlobBaseTest(
@@ -597,28 +587,23 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        [TestCase("soc")]
-        [TestCase("ocs")]
-        [TestCase("oc")]
-        public async Task AccountSasResources_ContainerToBlobBase(string resourceType)
+        public async Task AccountSasResources_ContainerToBlobBase()
         {
+            string resourceType = "soc";
             await InvokeAccountSasContainerToBlobBaseTest(resourceType: resourceType);
         }
 
         [RecordedTest]
-        [TestCase("tqfb")]
-        [TestCase("fqb")]
-        [TestCase("qb")]
-        public async Task AccountSasServices_ContainerToBlobBase(string services)
+        public async Task AccountSasServices_ContainerToBlobBase()
         {
+            string services = "fqb";
             await InvokeAccountSasContainerToBlobBaseTest(services: services);
         }
 
         [RecordedTest]
-        [TestCase("racwdlxyuptfi")]
-        [TestCase("cuprwdyla")]
-        public async Task AccountSasPermissions_ContainerToBlobBase(string permissions)
+        public async Task AccountSasPermissions_ContainerToBlobBase()
         {
+            string permissions = "cuprwdyla";
             await InvokeAccountSasContainerToBlobBaseTest(permissions: permissions);
         }
 
@@ -646,28 +631,23 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        [TestCase("soc")]
-        [TestCase("ocs")]
-        [TestCase("oc")]
-        public async Task AccountSasResources_ContainerToBlob(string resourceType)
+        public async Task AccountSasResources_ContainerToBlob()
         {
+            string resourceType = "soc";
             await InvokeAccountSasContainerToBlobTest(resourceType: resourceType);
         }
 
         [RecordedTest]
-        [TestCase("tqfb")]
-        [TestCase("fqb")]
-        [TestCase("qb")]
-        public async Task AccountSasServices_ContainerToBlob(string services)
+        public async Task AccountSasServices_ContainerToBlob()
         {
+            string services = "fqb";
             await InvokeAccountSasContainerToBlobTest(services: services);
         }
 
         [RecordedTest]
-        [TestCase("racwdlxyuptfi")]
-        [TestCase("cuprwdyla")]
-        public async Task AccountSasPermissions_ContainerToBlob(string permissions)
+        public async Task AccountSasPermissions_ContainerToBlob()
         {
+            string permissions = "cuprwdyla";
             await InvokeAccountSasContainerToBlobTest(permissions: permissions);
         }
 
@@ -695,28 +675,23 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        [TestCase("soc")]
-        [TestCase("ocs")]
-        [TestCase("oc")]
-        public async Task AccountSasResources_ContainerToBlockBlob(string resourceType)
+        public async Task AccountSasResources_ContainerToBlockBlob()
         {
+            string resourceType = "soc";
             await InvokeAccountSasContainerToBlockBlobTest(resourceType: resourceType);
         }
 
         [RecordedTest]
-        [TestCase("tqfb")]
-        [TestCase("fqb")]
-        [TestCase("qb")]
-        public async Task AccountSasServices_ContainerToBlockBlob(string services)
+        public async Task AccountSasServices_ContainerToBlockBlob()
         {
+            string services = "fqb";
             await InvokeAccountSasContainerToBlockBlobTest(services: services);
         }
 
         [RecordedTest]
-        [TestCase("racwdlxyuptfi")]
-        [TestCase("cuprwdyla")]
-        public async Task AccountSasPermissions_ContainerToBlockBlob(string permissions)
+        public async Task AccountSasPermissions_ContainerToBlockBlob()
         {
+            string permissions = "cuprwdyla";
             await InvokeAccountSasContainerToBlockBlobTest(permissions: permissions);
         }
 
@@ -744,28 +719,23 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        [TestCase("soc")]
-        [TestCase("ocs")]
-        [TestCase("oc")]
-        public async Task AccountSasResources_ContainerToAppendBlob(string resourceType)
+        public async Task AccountSasResources_ContainerToAppendBlob()
         {
+            string resourceType = "soc";
             await InvokeAccountSasContainerToAppendBlobTest(resourceType: resourceType);
         }
 
         [RecordedTest]
-        [TestCase("tqfb")]
-        [TestCase("fqb")]
-        [TestCase("qb")]
-        public async Task AccountSasServices_ContainerToAppendBlob(string services)
+        public async Task AccountSasServices_ContainerToAppendBlob()
         {
+            string services = "fqb";
             await InvokeAccountSasContainerToAppendBlobTest(services: services);
         }
 
         [RecordedTest]
-        [TestCase("racwdlxyuptfi")]
-        [TestCase("cuprwdyla")]
-        public async Task AccountSasPermissions_ContainerToAppendBlob(string permissions)
+        public async Task AccountSasPermissions_ContainerToAppendBlob()
         {
+            string permissions = "cuprwdyla";
             await InvokeAccountSasContainerToAppendBlobTest(permissions: permissions);
         }
 
@@ -793,28 +763,23 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        [TestCase("soc")]
-        [TestCase("ocs")]
-        [TestCase("oc")]
-        public async Task AccountSasResources_ContainerToPageBlob(string resourceType)
+        public async Task AccountSasResources_ContainerToPageBlob()
         {
+            string resourceType = "soc";
             await InvokeAccountSasContainerToPageBlobTest(resourceType: resourceType);
         }
 
         [RecordedTest]
-        [TestCase("tqfb")]
-        [TestCase("fqb")]
-        [TestCase("qb")]
-        public async Task AccountSasServices_ContainerToPageBlob(string services)
+        public async Task AccountSasServices_ContainerToPageBlob()
         {
+            string services = "fqb";
             await InvokeAccountSasContainerToPageBlobTest(services: services);
         }
 
         [RecordedTest]
-        [TestCase("racwdlxyuptfi")]
-        [TestCase("cuprwdyla")]
-        public async Task AccountSasPermissions_ContainerToPageBlob(string permissions)
+        public async Task AccountSasPermissions_ContainerToPageBlob()
         {
+            string permissions = "cuprwdyla";
             await InvokeAccountSasContainerToPageBlobTest(permissions: permissions);
         }
 
@@ -834,7 +799,7 @@ namespace Azure.Storage.Blobs.Test
                 resourceType: resourceType);
 
             // Act
-            BlobLeaseClient blobClient = containerClient.GetBlobLeaseClient();
+            BlobLeaseClient blobClient = containerClient.GetBlobLeaseClient(Recording.Random.NewGuid().ToString());
 
             // Assert
             Assert.AreEqual(containerClient.Uri.Query, blobClient.Uri.Query);
@@ -843,28 +808,23 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        [TestCase("soc")]
-        [TestCase("ocs")]
-        [TestCase("oc")]
-        public async Task AccountSasResources_ContainerToLease(string resourceType)
+        public async Task AccountSasResources_ContainerToLease()
         {
+            string resourceType = "soc";
             await InvokeAccountSasContainerToLeaseTest(resourceType: resourceType);
         }
 
         [RecordedTest]
-        [TestCase("tqfb")]
-        [TestCase("fqb")]
-        [TestCase("qb")]
-        public async Task AccountSasServices_ContainerToLease(string services)
+        public async Task AccountSasServices_ContainerToLease()
         {
+            string services = "fqb";
             await InvokeAccountSasContainerToLeaseTest(services: services);
         }
 
         [RecordedTest]
-        [TestCase("racwdlxyuptfi")]
-        [TestCase("cuprwdyla")]
-        public async Task AccountSasPermissions_ContainerToLease(string permissions)
+        public async Task AccountSasPermissions_ContainerToLease()
         {
+            string permissions = "cuprwdyla";
             await InvokeAccountSasContainerToLeaseTest(permissions: permissions);
         }
         #endregion BlobContainerClient
@@ -895,28 +855,23 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        [TestCase("soc")]
-        [TestCase("ocs")]
-        [TestCase("oc")]
-        public async Task AccountSasResources_BlobBaseToContainer(string resourceType)
+        public async Task AccountSasResources_BlobBaseToContainer()
         {
+            string resourceType = "soc";
             await InvokeAccountSasBlobBaseToContainerTest(resourceType: resourceType);
         }
 
         [RecordedTest]
-        [TestCase("tqfb")]
-        [TestCase("fqb")]
-        [TestCase("qb")]
-        public async Task AccountSasServices_BlobBaseToContainer(string services)
+        public async Task AccountSasServices_BlobBaseToContainer()
         {
+            string services = "fqb";
             await InvokeAccountSasBlobBaseToContainerTest(services: services);
         }
 
         [RecordedTest]
-        [TestCase("racwdlxyuptfi")]
-        [TestCase("cuprwdyla")]
-        public async Task AccountSasPermissions_BlobBaseToContainer(string permissions)
+        public async Task AccountSasPermissions_BlobBaseToContainer()
         {
+            string permissions = "cuprwdyla";
             await InvokeAccountSasBlobBaseToContainerTest(permissions: permissions);
         }
 
@@ -935,7 +890,7 @@ namespace Azure.Storage.Blobs.Test
                 resourceType: resourceType);
 
             // Act
-            BlobLeaseClient leaseClient = blobClient.GetBlobLeaseClient();
+            BlobLeaseClient leaseClient = blobClient.GetBlobLeaseClient(Recording.Random.NewGuid().ToString());
 
             // Assert
             Assert.AreEqual(leaseClient.Uri.Query, blobClient.Uri.Query);
@@ -944,28 +899,23 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        [TestCase("soc")]
-        [TestCase("ocs")]
-        [TestCase("oc")]
-        public async Task AccountSasResources_BlobBaseToLease(string resourceType)
+        public async Task AccountSasResources_BlobBaseToLease()
         {
+            string resourceType = "soc";
             await InvokeAccountSasBlobBaseToLeaseTest(resourceType: resourceType);
         }
 
         [RecordedTest]
-        [TestCase("tqfb")]
-        [TestCase("fqb")]
-        [TestCase("qb")]
-        public async Task AccountSasServices_BlobBaseToLease(string services)
+        public async Task AccountSasServices_BlobBaseToLease()
         {
+            string services = "fqb";
             await InvokeAccountSasBlobBaseToLeaseTest(services: services);
         }
 
         [RecordedTest]
-        [TestCase("racwdlxyuptfi")]
-        [TestCase("cuprwdyla")]
-        public async Task AccountSasPermissions_BlobBaseToLease(string permissions)
+        public async Task AccountSasPermissions_BlobBaseToLease()
         {
+            string permissions = "cuprwdyla";
             await InvokeAccountSasBlobBaseToLeaseTest(permissions: permissions);
         }
 
@@ -1001,28 +951,23 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        [TestCase("soc")]
-        [TestCase("ocs")]
-        [TestCase("oc")]
-        public async Task AccountSasResources_BlobBaseToCpk(string resourceType)
+        public async Task AccountSasResources_BlobBaseToCpk()
         {
+            string resourceType = "soc";
             await InvokeAccountSasBlobBaseToCpkTest(resourceType: resourceType);
         }
 
         [RecordedTest]
-        [TestCase("tqfb")]
-        [TestCase("fqb")]
-        [TestCase("qb")]
-        public async Task AccountSasServices_BlobBaseToCpk(string services)
+        public async Task AccountSasServices_BlobBaseToCpk()
         {
+            string services = "fqb";
             await InvokeAccountSasBlobBaseToCpkTest(services: services);
         }
 
         [RecordedTest]
-        [TestCase("racuptwdf")]
-        [TestCase("cuprwdyla")]
-        public async Task AccountSasPermissions_BlobBaseToCpk(string permissions)
+        public async Task AccountSasPermissions_BlobBaseToCpk()
         {
+            string permissions = "cuprwdyla";
             await InvokeAccountSasBlobBaseToCpkTest(permissions: permissions);
         }
 
@@ -1051,28 +996,23 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        [TestCase("soc")]
-        [TestCase("ocs")]
-        [TestCase("oc")]
-        public void AccountSasResources_BlobBaseToEncryptionScope(string resourceType)
+        public void AccountSasResources_BlobBaseToEncryptionScope()
         {
+            string resourceType = "soc";
             InvokeAccountSasBlobBaseToEncryptionScopeTest(resourceType: resourceType);
         }
 
         [RecordedTest]
-        [TestCase("tqfb")]
-        [TestCase("fqb")]
-        [TestCase("qb")]
-        public void AccountSasServices_BlobBaseToEncryptionScope(string services)
+        public void AccountSasServices_BlobBaseToEncryptionScope()
         {
+            string services = "fqb";
             InvokeAccountSasBlobBaseToEncryptionScopeTest(services: services);
         }
 
         [RecordedTest]
-        [TestCase("racuptwdf")]
-        [TestCase("cuprwdyla")]
-        public void AccountSasPermissions_BlobBaseToEncryptionScope(string permissions)
+        public void AccountSasPermissions_BlobBaseToEncryptionScope()
         {
+            string permissions = "cuprwdyla";
             InvokeAccountSasBlobBaseToEncryptionScopeTest(permissions: permissions);
         }
 
@@ -1107,29 +1047,23 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        [TestCase("soc")]
-        [TestCase("ocs")]
-        [TestCase("os")]
-        public async Task AccountSasResources_BlobBaseToSnapshot(string resourceType)
+        public async Task AccountSasResources_BlobBaseToSnapshot()
         {
+            string resourceType = "soc";
             await InvokeAccountSasBlobBaseToSnapshotTest(resourceType: resourceType);
         }
 
         [RecordedTest]
-        [TestCase("tqfb")]
-        [TestCase("fbt")]
-        [TestCase("fb")]
-        public async Task AccountSasServices_BlobBaseToSnapshot(string services)
+        public async Task AccountSasServices_BlobBaseToSnapshot()
         {
+            string services = "fqb";
             await InvokeAccountSasBlobBaseToSnapshotTest(services: services);
         }
 
         [RecordedTest]
-        [TestCase("cuprwdylatfi")]
-        [TestCase("cudypafitrwl")]
-        [TestCase("cuprwdyla")]
-        public async Task AccountSasPermissions_BlobBaseToSnapshot(string permissions)
+        public async Task AccountSasPermissions_BlobBaseToSnapshot()
         {
+            string permissions = "cuprwdyla";
             await InvokeAccountSasBlobBaseToSnapshotTest(permissions: permissions);
         }
 
@@ -1163,29 +1097,23 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        [TestCase("soc")]
-        [TestCase("ocs")]
-        [TestCase("os")]
-        public async Task AccountSasResources_BlobBaseToVersion(string resourceType)
+        public async Task AccountSasResources_BlobBaseToVersion()
         {
+            string resourceType = "soc";
             await InvokeAccountSasBlobBaseToVersionTest(resourceType: resourceType);
         }
 
         [RecordedTest]
-        [TestCase("tqfb")]
-        [TestCase("fbt")]
-        [TestCase("fb")]
-        public async Task AccountSasServices_BlobBaseToVersion(string services)
+        public async Task AccountSasServices_BlobBaseToVersion()
         {
+            string services = "fqb";
             await InvokeAccountSasBlobBaseToVersionTest(services: services);
         }
 
         [RecordedTest]
-        [TestCase("cuprwdylatfi")]
-        [TestCase("cudypafitrwl")]
-        [TestCase("cuprwdyla")]
-        public async Task AccountSasPermissions_BlobBaseToVersion(string permissions)
+        public async Task AccountSasPermissions_BlobBaseToVersion()
         {
+            string permissions = "cuprwdyla";
             await InvokeAccountSasBlobBaseToVersionTest(permissions: permissions);
         }
         #endregion BlobBaseClient
@@ -1223,28 +1151,23 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        [TestCase("soc")]
-        [TestCase("ocs")]
-        [TestCase("oc")]
-        public async Task AccountSasResources_BlobToCpk(string resourceType)
+        public async Task AccountSasResources_BlobToCpk()
         {
+            string resourceType = "soc";
             await InvokeAccountSasBlobToCpkTest(resourceType: resourceType);
         }
 
         [RecordedTest]
-        [TestCase("tqfb")]
-        [TestCase("fqb")]
-        [TestCase("qb")]
-        public async Task AccountSasServices_BlobToCpk(string services)
+        public async Task AccountSasServices_BlobToCpk()
         {
+            string services = "fqb";
             await InvokeAccountSasBlobToCpkTest(services: services);
         }
 
         [RecordedTest]
-        [TestCase("racuptwdf")]
-        [TestCase("cuprwdyla")]
-        public async Task AccountSasPermissions_BlobToCpk(string permissions)
+        public async Task AccountSasPermissions_BlobToCpk()
         {
+            string permissions = "cuprwdyla";
             await InvokeAccountSasBlobToCpkTest(permissions: permissions);
         }
 
@@ -1275,28 +1198,23 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        [TestCase("soc")]
-        [TestCase("ocs")]
-        [TestCase("oc")]
-        public async Task AccountSasResources_BlobToClientSideEncryptionOptions(string resourceType)
+        public async Task AccountSasResources_BlobToClientSideEncryptionOptions()
         {
+            string resourceType = "soc";
             await InvokeAccountSasBlobToCpkTest(resourceType: resourceType);
         }
 
         [RecordedTest]
-        [TestCase("tqfb")]
-        [TestCase("fqb")]
-        [TestCase("qb")]
-        public async Task AccountSasServices_BlobToClientSideEncryptionOptions(string services)
+        public async Task AccountSasServices_BlobToClientSideEncryptionOptions()
         {
+            string services = "fqb";
             await InvokeAccountSasBlobToCpkTest(services: services);
         }
 
         [RecordedTest]
-        [TestCase("racuptwdf")]
-        [TestCase("cuprwdyla")]
-        public async Task AccountSasPermissions_BlobToClientSideEncryptionOptions(string permissions)
+        public async Task AccountSasPermissions_BlobToClientSideEncryptionOptions()
         {
+            string permissions = "cuprwdyla";
             await InvokeAccountSasBlobToCpkTest(permissions: permissions);
         }
 
@@ -1325,28 +1243,23 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        [TestCase("soc")]
-        [TestCase("ocs")]
-        [TestCase("oc")]
-        public void AccountSasResources_BlobToEncryptionScope(string resourceType)
+        public void AccountSasResources_BlobToEncryptionScope()
         {
+            string resourceType = "soc";
             InvokeAccountSasBlobToEncryptionScopeTest(resourceType: resourceType);
         }
 
         [RecordedTest]
-        [TestCase("tqfb")]
-        [TestCase("fqb")]
-        [TestCase("qb")]
-        public void AccountSasServices_BlobToEncryptionScope(string services)
+        public void AccountSasServices_BlobToEncryptionScope()
         {
+            string services = "fqb";
             InvokeAccountSasBlobToEncryptionScopeTest(services: services);
         }
 
         [RecordedTest]
-        [TestCase("racuptwdf")]
-        [TestCase("cuprwdyla")]
-        public void AccountSasPermissions_BlobToEncryptionScope(string permissions)
+        public void AccountSasPermissions_BlobToEncryptionScope()
         {
+            string permissions = "cuprwdyla";
             InvokeAccountSasBlobToEncryptionScopeTest(permissions: permissions);
         }
 
@@ -1381,29 +1294,23 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        [TestCase("soc")]
-        [TestCase("ocs")]
-        [TestCase("os")]
-        public async Task AccountSasResources_BlobToSnapshot(string resourceType)
+        public async Task AccountSasResources_BlobToSnapshot()
         {
+            string resourceType = "soc";
             await InvokeAccountSasBlobToSnapshotTest(resourceType: resourceType);
         }
 
         [RecordedTest]
-        [TestCase("tqfb")]
-        [TestCase("fbt")]
-        [TestCase("fb")]
-        public async Task AccountSasServices_BlobToSnapshot(string services)
+        public async Task AccountSasServices_BlobToSnapshot()
         {
+            string services = "fqb";
             await InvokeAccountSasBlobToSnapshotTest(services: services);
         }
 
         [RecordedTest]
-        [TestCase("cuprwdylatfi")]
-        [TestCase("cudypafitrwl")]
-        [TestCase("cuprwdyla")]
-        public async Task AccountSasPermissions_BlobToSnapshot(string permissions)
+        public async Task AccountSasPermissions_BlobToSnapshot()
         {
+            string permissions = "cuprwdyla";
             await InvokeAccountSasBlobToSnapshotTest(permissions: permissions);
         }
 
@@ -1437,29 +1344,23 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        [TestCase("soc")]
-        [TestCase("ocs")]
-        [TestCase("os")]
-        public async Task AccountSasResources_BlobToVersion(string resourceType)
+        public async Task AccountSasResources_BlobToVersion()
         {
+            string resourceType = "soc";
             await InvokeAccountSasBlobToVersionTest(resourceType: resourceType);
         }
 
         [RecordedTest]
-        [TestCase("tqfb")]
-        [TestCase("fbt")]
-        [TestCase("fb")]
-        public async Task AccountSasServices_BlobToVersion(string services)
+        public async Task AccountSasServices_BlobToVersion()
         {
+            string services = "fqb";
             await InvokeAccountSasBlobToVersionTest(services: services);
         }
 
         [RecordedTest]
-        [TestCase("cuprwdylatfi")]
-        [TestCase("cudypafitrwl")]
-        [TestCase("cuprwdyla")]
-        public async Task AccountSasPermissions_BlobToVersion(string permissions)
+        public async Task AccountSasPermissions_BlobToVersion()
         {
+            string permissions = "cuprwdyla";
             await InvokeAccountSasBlobToVersionTest(permissions: permissions);
         }
         #endregion BlobClient
@@ -1493,28 +1394,23 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        [TestCase("soc")]
-        [TestCase("ocs")]
-        [TestCase("oc")]
-        public async Task AccountSasResources_AppendBlobToCpk(string resourceType)
+        public async Task AccountSasResources_AppendBlobToCpk()
         {
+            string resourceType = "soc";
             await InvokeAccountSasAppendBlobCpkTest(resourceType: resourceType);
         }
 
         [RecordedTest]
-        [TestCase("tqfb")]
-        [TestCase("fqb")]
-        [TestCase("qb")]
-        public async Task AccountSasServices_AppendBlobToCpk(string services)
+        public async Task AccountSasServices_AppendBlobToCpk()
         {
+            string services = "fqb";
             await InvokeAccountSasAppendBlobCpkTest(services: services);
         }
 
         [RecordedTest]
-        [TestCase("racuptwdf")]
-        [TestCase("cuprwdyla")]
-        public async Task AccountSasPermissions_AppendBlobToCpk(string permissions)
+        public async Task AccountSasPermissions_AppendBlobToCpk()
         {
+            string permissions = "cuprwdyla";
             await InvokeAccountSasAppendBlobCpkTest(permissions: permissions);
         }
 
@@ -1543,28 +1439,23 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        [TestCase("soc")]
-        [TestCase("ocs")]
-        [TestCase("oc")]
-        public void AccountSasResources_AppendBlobToEncryptionScope(string resourceType)
+        public void AccountSasResources_AppendBlobToEncryptionScope()
         {
+            string resourceType = "soc";
             InvokeAccountSasAppendBlobToEncryptionScopeTest(resourceType: resourceType);
         }
 
         [RecordedTest]
-        [TestCase("tqfb")]
-        [TestCase("fqb")]
-        [TestCase("qb")]
-        public void AccountSasServices_AppendBlobToEncryptionScope(string services)
+        public void AccountSasServices_AppendBlobToEncryptionScope()
         {
+            string services = "fqb";
             InvokeAccountSasAppendBlobToEncryptionScopeTest(services: services);
         }
 
         [RecordedTest]
-        [TestCase("racuptwdf")]
-        [TestCase("cuprwdyla")]
-        public void AccountSasPermissions_AppendBlobToEncryptionScope(string permissions)
+        public void AccountSasPermissions_AppendBlobToEncryptionScope()
         {
+            string permissions = "cuprwdyla";
             InvokeAccountSasAppendBlobToEncryptionScopeTest(permissions: permissions);
         }
 
@@ -1600,29 +1491,23 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        [TestCase("soc")]
-        [TestCase("ocs")]
-        [TestCase("os")]
-        public async Task AccountSasResources_AppendBlobToSnapshot(string resourceType)
+        public async Task AccountSasResources_AppendBlobToSnapshot()
         {
+            string resourceType = "soc";
             await InvokeAccountSasAppendBlobSnapshotTest(resourceType: resourceType);
         }
 
         [RecordedTest]
-        [TestCase("tqfb")]
-        [TestCase("fbt")]
-        [TestCase("fb")]
-        public async Task AccountSasServices_AppendBlobToSnapshot(string services)
+        public async Task AccountSasServices_AppendBlobToSnapshot()
         {
+            string services = "fqb";
             await InvokeAccountSasAppendBlobSnapshotTest(services: services);
         }
 
         [RecordedTest]
-        [TestCase("cuprwdylatfi")]
-        [TestCase("cudypafitrwl")]
-        [TestCase("cuprwdyla")]
-        public async Task AccountSasPermissions_AppendBlobToSnapshot(string permissions)
+        public async Task AccountSasPermissions_AppendBlobToSnapshot()
         {
+            string permissions = "cuprwdyla";
             await InvokeAccountSasAppendBlobSnapshotTest(permissions: permissions);
         }
 
@@ -1657,29 +1542,23 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        [TestCase("soc")]
-        [TestCase("ocs")]
-        [TestCase("os")]
-        public async Task AccountSasResources_AppendBlobToVersion(string resourceType)
+        public async Task AccountSasResources_AppendBlobToVersion()
         {
+            string resourceType = "soc";
             await InvokeAccountSasAppendBlobVersionTest(resourceType: resourceType);
         }
 
         [RecordedTest]
-        [TestCase("tqfb")]
-        [TestCase("fbt")]
-        [TestCase("fb")]
-        public async Task AccountSasServices_AppendBlobToVersion(string services)
+        public async Task AccountSasServices_AppendBlobToVersion()
         {
+            string services = "fqb";
             await InvokeAccountSasAppendBlobVersionTest(services: services);
         }
 
         [RecordedTest]
-        [TestCase("cuprwdylatfi")]
-        [TestCase("cudypafitrwl")]
-        [TestCase("cuprwdyla")]
-        public async Task AccountSasPermissions_AppendBlobToVersion(string permissions)
+        public async Task AccountSasPermissions_AppendBlobToVersion()
         {
+            string permissions = "cuprwdyla";
             await InvokeAccountSasAppendBlobVersionTest(permissions: permissions);
         }
         #endregion AppendBlobClient
@@ -1713,28 +1592,23 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        [TestCase("soc")]
-        [TestCase("ocs")]
-        [TestCase("oc")]
-        public async Task AccountSasResources_PageBlobToCpk(string resourceType)
+        public async Task AccountSasResources_PageBlobToCpk()
         {
+            string resourceType = "soc";
             await InvokeAccountSasPageBlobCpkTest(resourceType: resourceType);
         }
 
         [RecordedTest]
-        [TestCase("tqfb")]
-        [TestCase("fqb")]
-        [TestCase("qb")]
-        public async Task AccountSasServices_PageBlobToCpk(string services)
+        public async Task AccountSasServices_PageBlobToCpk()
         {
+            string services = "fqb";
             await InvokeAccountSasPageBlobCpkTest(services: services);
         }
 
         [RecordedTest]
-        [TestCase("racuptwdf")]
-        [TestCase("cuprwdyla")]
-        public async Task AccountSasPermissions_PageBlobToCpk(string permissions)
+        public async Task AccountSasPermissions_PageBlobToCpk()
         {
+            string permissions = "cuprwdyla";
             await InvokeAccountSasPageBlobCpkTest(permissions: permissions);
         }
 
@@ -1763,28 +1637,23 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        [TestCase("soc")]
-        [TestCase("ocs")]
-        [TestCase("oc")]
-        public void AccountSasResources_PageBlobToEncryptionScope(string resourceType)
+        public void AccountSasResources_PageBlobToEncryptionScope()
         {
+            string resourceType = "soc";
             InvokeAccountSasPageBlobToEncryptionScopeTest(resourceType: resourceType);
         }
 
         [RecordedTest]
-        [TestCase("tqfb")]
-        [TestCase("fqb")]
-        [TestCase("qb")]
-        public void AccountSasServices_PageBlobToEncryptionScope(string services)
+        public void AccountSasServices_PageBlobToEncryptionScope()
         {
+            string services = "fqb";
             InvokeAccountSasPageBlobToEncryptionScopeTest(services: services);
         }
 
         [RecordedTest]
-        [TestCase("racuptwdf")]
-        [TestCase("cuprwdyla")]
-        public void AccountSasPermissions_PageBlobToEncryptionScope(string permissions)
+        public void AccountSasPermissions_PageBlobToEncryptionScope()
         {
+            string permissions = "cuprwdyla";
             InvokeAccountSasPageBlobToEncryptionScopeTest(permissions: permissions);
         }
 
@@ -1820,29 +1689,23 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        [TestCase("soc")]
-        [TestCase("ocs")]
-        [TestCase("os")]
-        public async Task AccountSasResources_PageBlobToSnapshot(string resourceType)
+        public async Task AccountSasResources_PageBlobToSnapshot()
         {
+            string resourceType = "soc";
             await InvokeAccountSasPageBlobSnapshotTest(resourceType: resourceType);
         }
 
         [RecordedTest]
-        [TestCase("tqfb")]
-        [TestCase("fbt")]
-        [TestCase("fb")]
-        public async Task AccountSasServices_PageBlobToSnapshot(string services)
+        public async Task AccountSasServices_PageBlobToSnapshot()
         {
+            string services = "fqb";
             await InvokeAccountSasPageBlobSnapshotTest(services: services);
         }
 
         [RecordedTest]
-        [TestCase("cuprwdylatfi")]
-        [TestCase("cudypafitrwl")]
-        [TestCase("cuprwdyla")]
-        public async Task AccountSasPermissions_PageBlobToSnapshot(string permissions)
+        public async Task AccountSasPermissions_PageBlobToSnapshot()
         {
+            string permissions = "cuprwdyla";
             await InvokeAccountSasPageBlobSnapshotTest(permissions: permissions);
         }
 
@@ -1877,29 +1740,23 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        [TestCase("soc")]
-        [TestCase("ocs")]
-        [TestCase("os")]
-        public async Task AccountSasResources_PageBlobToVersion(string resourceType)
+        public async Task AccountSasResources_PageBlobToVersion()
         {
+            string resourceType = "soc";
             await InvokeAccountSasPageBlobVersionTest(resourceType: resourceType);
         }
 
         [RecordedTest]
-        [TestCase("tqfb")]
-        [TestCase("fbt")]
-        [TestCase("fb")]
-        public async Task AccountSasServices_PageBlobToVersion(string services)
+        public async Task AccountSasServices_PageBlobToVersion()
         {
+            string services = "fqb";
             await InvokeAccountSasPageBlobVersionTest(services: services);
         }
 
         [RecordedTest]
-        [TestCase("cuprwdylatfi")]
-        [TestCase("cudypafitrwl")]
-        [TestCase("cuprwdyla")]
-        public async Task AccountSasPermissions_PageBlobToVersion(string permissions)
+        public async Task AccountSasPermissions_PageBlobToVersion()
         {
+            string permissions = "cuprwdyla";
             await InvokeAccountSasPageBlobVersionTest(permissions: permissions);
         }
         #endregion PageBlobClient

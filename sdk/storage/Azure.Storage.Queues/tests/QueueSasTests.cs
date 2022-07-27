@@ -154,29 +154,23 @@ namespace Azure.Storage.Queues.Test
         }
 
         [RecordedTest]
-        [TestCase("soc")]
-        [TestCase("ocs")]
-        [TestCase("cs")]
-        public async Task AccountSasResources_ServiceToQueue(string resourceType)
+        public async Task AccountSasResources_ServiceToQueue()
         {
+            string resourceType = "soc";
             await InvokeAccountServiceToQueueSasTest(resourceType: resourceType);
         }
 
         [RecordedTest]
-        [TestCase("tqfb")]
-        [TestCase("fqt")]
-        [TestCase("qf")]
-        public async Task AccountSasServices_ServiceToQueue(string services)
+        public async Task AccountSasServices_ServiceToQueue()
         {
+            string services = "fqt";
             await InvokeAccountServiceToQueueSasTest(services: services);
         }
 
         [RecordedTest]
-        [TestCase("cuprwdylatfi")]
-        [TestCase("cudypafitrwl")]
-        [TestCase("cuprwdyla")]
-        public async Task AccountSasPermissions_ServiceToQueue(string permissions)
+        public async Task AccountSasPermissions_ServiceToQueue()
         {
+            string permissions = "cudypafitrwl";
             await InvokeAccountServiceToQueueSasTest(permissions: permissions);
         }
         #endregion
@@ -208,29 +202,23 @@ namespace Azure.Storage.Queues.Test
         }
 
         [RecordedTest]
-        [TestCase("soc")]
-        [TestCase("ocs")]
-        [TestCase("cs")]
-        public async Task AccountSasResources_QueueToService(string resourceType)
+        public async Task AccountSasResources_QueueToService()
         {
+            string resourceType = "soc";
             await InvokeAccountQueueToServiceSasTest(resourceType: resourceType);
         }
 
         [RecordedTest]
-        [TestCase("tqfb")]
-        [TestCase("fqt")]
-        [TestCase("qf")]
-        public async Task AccountSasServices_QueueToService(string services)
+        public async Task AccountSasServices_QueueToService()
         {
+            string services = "fqt";
             await InvokeAccountQueueToServiceSasTest(services: services);
         }
 
         [RecordedTest]
-        [TestCase("cuprwdylatfi")]
-        [TestCase("cudypafitrwl")]
-        [TestCase("cuprwdyla")]
-        public async Task AccountSasPermissions_QueueToService(string permissions)
+        public async Task AccountSasPermissions_QueueToService()
         {
+            string permissions = "cudypafitrwl";
             await InvokeAccountQueueToServiceSasTest(permissions: permissions);
         }
         #endregion

@@ -211,29 +211,23 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
-        [TestCase("soc")]
-        [TestCase("ocs")]
-        [TestCase("cs")]
-        public async Task AccountSasResources_ServiceToShare(string resourceType)
+        public async Task AccountSasResources_ServiceToShare()
         {
+            string resourceType = "soc";
             await InvokeAccountSasServiceToShareTest(resourceType: resourceType);
         }
 
         [RecordedTest]
-        [TestCase("tqfb")]
-        [TestCase("fqt")]
-        [TestCase("qf")]
-        public async Task AccountSasServices_ServiceToShare(string services)
+        public async Task AccountSasServices_ServiceToShare()
         {
+            string services = "tfb";
             await InvokeAccountSasServiceToShareTest(services: services);
         }
 
         [RecordedTest]
-        [TestCase("cuprwdylatfi")]
-        [TestCase("cudypafitrwl")]
-        [TestCase("cuprwdyla")]
-        public async Task AccountSasPermissions_ServiceToShare(string permissions)
+        public async Task AccountSasPermissions_ServiceToShare()
         {
+            string permissions = "cudypafitrwl";
             await InvokeAccountSasServiceToShareTest(permissions: permissions);
         }
         #endregion
@@ -261,29 +255,23 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
-        [TestCase("soc")]
-        [TestCase("ocs")]
-        [TestCase("cs")]
-        public async Task AccountSasResources_ShareToService(string resourceType)
+        public async Task AccountSasResources_ShareToService()
         {
+            string resourceType = "soc";
             await InvokeAccountSasShareToServiceTest(resourceType: resourceType);
         }
 
         [RecordedTest]
-        [TestCase("tqfb")]
-        [TestCase("fqt")]
-        [TestCase("qf")]
-        public async Task AccountSasServices_ShareToService(string services)
+        public async Task AccountSasServices_ShareToService()
         {
+            string services = "tfb";
             await InvokeAccountSasShareToServiceTest(services: services);
         }
 
         [RecordedTest]
-        [TestCase("cuprwdylatfi")]
-        [TestCase("cudypafitrwl")]
-        [TestCase("cuprwdyla")]
-        public async Task AccountSasPermissions_ShareToService(string permissions)
+        public async Task AccountSasPermissions_ShareToService()
         {
+            string permissions = "cudypafitrwl";
             await InvokeAccountSasShareToServiceTest(permissions: permissions);
         }
 
@@ -301,7 +289,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 resourceType: resourceType);
 
             // Act
-            ShareLeaseClient leaseClient = shareClient.GetShareLeaseClient();
+            ShareLeaseClient leaseClient = shareClient.GetShareLeaseClient(Recording.Random.NewGuid().ToString());
 
             // Assert
             Assert.AreEqual(shareClient.Uri.Query, leaseClient.Uri.Query);
@@ -310,29 +298,23 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
-        [TestCase("soc")]
-        [TestCase("ocs")]
-        [TestCase("sc")]
-        public async Task AccountSasResources_ShareToLease(string resourceType)
+        public async Task AccountSasResources_ShareToLease()
         {
+            string resourceType = "soc";
             await InvokeAccountSasShareToLeaseTest(resourceType: resourceType);
         }
 
         [RecordedTest]
-        [TestCase("tqfb")]
-        [TestCase("fqt")]
-        [TestCase("qf")]
-        public async Task AccountSasServices_ShareToLease(string services)
+        public async Task AccountSasServices_ShareToLease()
         {
+            string services = "tfb";
             await InvokeAccountSasShareToLeaseTest(services: services);
         }
 
         [RecordedTest]
-        [TestCase("cuprwdylatfi")]
-        [TestCase("cudypafitrwl")]
-        [TestCase("cuprwdyla")]
-        public async Task AccountSasPermissions_ShareToLease(string permissions)
+        public async Task AccountSasPermissions_ShareToLease()
         {
+            string permissions = "cudypafitrwl";
             await InvokeAccountSasShareToLeaseTest(permissions: permissions);
         }
 
@@ -363,29 +345,23 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
-        [TestCase("soc")]
-        [TestCase("ocs")]
-        [TestCase("cs")]
-        public async Task AccountSasResources_ShareToSnapshot(string resourceType)
+        public async Task AccountSasResources_ShareToSnapshot()
         {
+            string resourceType = "soc";
             await InvokeAccountSasShareToSnapshotTest(resourceType: resourceType);
         }
 
         [RecordedTest]
-        [TestCase("tqfb")]
-        [TestCase("fqt")]
-        [TestCase("qf")]
-        public async Task AccountSasServices_ShareToSnapshot(string services)
+        public async Task AccountSasServices_ShareToSnapshot()
         {
+            string services = "tfb";
             await InvokeAccountSasShareToSnapshotTest(services: services);
         }
 
         [RecordedTest]
-        [TestCase("cuprwdylatfi")]
-        [TestCase("cudypafitrwl")]
-        [TestCase("cuprwdyla")]
-        public async Task AccountSasPermissions_ShareToSnapshot(string permissions)
+        public async Task AccountSasPermissions_ShareToSnapshot()
         {
+            string permissions = "cudypafitrwl";
             await InvokeAccountSasShareToSnapshotTest(permissions: permissions);
         }
 
@@ -411,29 +387,23 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
-        [TestCase("soc")]
-        [TestCase("ocs")]
-        [TestCase("oc")]
-        public async Task AccountSasResources_ShareToRootDirectory(string resourceType)
+        public async Task AccountSasResources_ShareToRootDirectory()
         {
+            string resourceType = "soc";
             await InvokeAccountSasShareToRootDirectoryTest(resourceType: resourceType);
         }
 
         [RecordedTest]
-        [TestCase("tqfb")]
-        [TestCase("fqt")]
-        [TestCase("qf")]
-        public async Task AccountSasServices_ShareToRootDirectory(string services)
+        public async Task AccountSasServices_ShareToRootDirectory()
         {
+            string services = "tfb";
             await InvokeAccountSasShareToRootDirectoryTest(services: services);
         }
 
         [RecordedTest]
-        [TestCase("cuprwdylatfi")]
-        [TestCase("cudypafitrwl")]
-        [TestCase("cuprwdyla")]
-        public async Task AccountSasPermissions_ShareToRootDirectory(string permissions)
+        public async Task AccountSasPermissions_ShareToRootDirectory()
         {
+            string permissions = "cudypafitrwl";
             await InvokeAccountSasShareToRootDirectoryTest(permissions: permissions);
         }
 
@@ -459,29 +429,23 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
-        [TestCase("soc")]
-        [TestCase("ocs")]
-        [TestCase("oc")]
-        public async Task AccountSasResources_ShareToDirectory(string resourceType)
+        public async Task AccountSasResources_ShareToDirectory()
         {
+            string resourceType = "soc";
             await InvokeAccountSasShareToDirectoryTest(resourceType: resourceType);
         }
 
         [RecordedTest]
-        [TestCase("tqfb")]
-        [TestCase("fqt")]
-        [TestCase("qf")]
-        public async Task AccountSasServices_ShareToDirectory(string services)
+        public async Task AccountSasServices_ShareToDirectory()
         {
+            string services = "tfb";
             await InvokeAccountSasShareToDirectoryTest(services: services);
         }
 
         [RecordedTest]
-        [TestCase("cuprwdylatfi")]
-        [TestCase("cudypafitrwl")]
-        [TestCase("cuprwdyla")]
-        public async Task AccountSasPermissions_ShareToDirectory(string permissions)
+        public async Task AccountSasPermissions_ShareToDirectory()
         {
+            string permissions = "cudypafitrwl";
             await InvokeAccountSasShareToDirectoryTest(permissions: permissions);
         }
 
@@ -518,29 +482,23 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
-        [TestCase("soc")]
-        [TestCase("ocs")]
-        [TestCase("os")]
-        public async Task AccountSasResources_DirectoryToSnapshot(string resourceType)
+        public async Task AccountSasResources_DirectoryToSnapshot()
         {
+            string resourceType = "soc";
             await InvokeAccountSasDirectoryToSnapshotTest(resourceType: resourceType);
         }
 
         [RecordedTest]
-        [TestCase("tqfb")]
-        [TestCase("fqt")]
-        [TestCase("qf")]
-        public async Task AccountSasServices_DirectoryToSnapshot(string services)
+        public async Task AccountSasServices_DirectoryToSnapshot()
         {
+            string services = "tfb";
             await InvokeAccountSasDirectoryToSnapshotTest(services: services);
         }
 
         [RecordedTest]
-        [TestCase("cuprwdylatfi")]
-        [TestCase("cudypafitrwl")]
-        [TestCase("cuprwdyla")]
-        public async Task AccountSasPermissions_DirectoryToSnapshot(string permissions)
+        public async Task AccountSasPermissions_DirectoryToSnapshot()
         {
+            string permissions = "cudypafitrwl";
             await InvokeAccountSasDirectoryToSnapshotTest(permissions: permissions);
         }
 
@@ -566,29 +524,23 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
-        [TestCase("soc")]
-        [TestCase("ocs")]
-        [TestCase("os")]
-        public async Task AccountSasResources_DirectoryToFile(string resourceType)
+        public async Task AccountSasResources_DirectoryToFile()
         {
+            string resourceType = "soc";
             await InvokeAccountSasDirectoryToFileTest(resourceType: resourceType);
         }
 
         [RecordedTest]
-        [TestCase("tqfb")]
-        [TestCase("fqt")]
-        [TestCase("qf")]
-        public async Task AccountSasServices_DirectoryToFile(string services)
+        public async Task AccountSasServices_DirectoryToFile()
         {
+            string services = "tfb";
             await InvokeAccountSasDirectoryToFileTest(services: services);
         }
 
         [RecordedTest]
-        [TestCase("cuprwdylatfi")]
-        [TestCase("cudypafitrwl")]
-        [TestCase("cuprwdyla")]
-        public async Task AccountSasPermissions_DirectoryToFile(string permissions)
+        public async Task AccountSasPermissions_DirectoryToFile()
         {
+            string permissions = "cudypafitrwl";
             await InvokeAccountSasDirectoryToFileTest(permissions: permissions);
         }
 
@@ -614,29 +566,23 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
-        [TestCase("soc")]
-        [TestCase("ocs")]
-        [TestCase("os")]
-        public async Task AccountSasResources_DirectoryToSubDirectory(string resourceType)
+        public async Task AccountSasResources_DirectoryToSubDirectory()
         {
+            string resourceType = "soc";
             await InvokeAccountSasDirectoryToSubDirectoryTest(resourceType: resourceType);
         }
 
         [RecordedTest]
-        [TestCase("tqfb")]
-        [TestCase("fqt")]
-        [TestCase("qf")]
-        public async Task AccountSasServices_DirectoryToSubDirectory(string services)
+        public async Task AccountSasServices_DirectoryToSubDirectory()
         {
+            string services = "tfb";
             await InvokeAccountSasDirectoryToSubDirectoryTest(services: services);
         }
 
         [RecordedTest]
-        [TestCase("cuprwdylatfi")]
-        [TestCase("cudypafitrwl")]
-        [TestCase("cuprwdyla")]
-        public async Task AccountSasPermissions_DirectoryToSubDirectory(string permissions)
+        public async Task AccountSasPermissions_DirectoryToSubDirectory()
         {
+            string permissions = "cudypafitrwl";
             await InvokeAccountSasDirectoryToSubDirectoryTest(permissions: permissions);
         }
 
@@ -668,29 +614,23 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
-        [TestCase("soc")]
-        [TestCase("ocs")]
-        [TestCase("os")]
-        public async Task AccountSasResources_DirectoryToParentDirectory(string resourceType)
+        public async Task AccountSasResources_DirectoryToParentDirectory()
         {
+            string resourceType = "soc";
             await InvokeAccountSasDirectoryToParentDirectoryTest(resourceType: resourceType);
         }
 
         [RecordedTest]
-        [TestCase("tqfb")]
-        [TestCase("fqt")]
-        [TestCase("qf")]
-        public async Task AccountSasServices_DirectoryToParentDirectory(string services)
+        public async Task AccountSasServices_DirectoryToParentDirectory()
         {
+            string services = "tfb";
             await InvokeAccountSasDirectoryToParentDirectoryTest(services: services);
         }
 
         [RecordedTest]
-        [TestCase("cuprwdylatfi")]
-        [TestCase("cudypafitrwl")]
-        [TestCase("cuprwdyla")]
-        public async Task AccountSasPermissions_DirectoryToParentDirectory(string permissions)
+        public async Task AccountSasPermissions_DirectoryToParentDirectory()
         {
+            string permissions = "cudypafitrwl";
             await InvokeAccountSasDirectoryToParentDirectoryTest(permissions: permissions);
         }
 
@@ -716,29 +656,23 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
-        [TestCase("soc")]
-        [TestCase("ocs")]
-        [TestCase("oc")]
-        public async Task AccountSasResources_DirectoryToShare(string resourceType)
+        public async Task AccountSasResources_DirectoryToShare()
         {
+            string resourceType = "soc";
             await InvokeAccountSasDirectoryToShareTest(resourceType: resourceType);
         }
 
         [RecordedTest]
-        [TestCase("tqfb")]
-        [TestCase("fqt")]
-        [TestCase("qf")]
-        public async Task AccountSasServices_DirectoryToShare(string services)
+        public async Task AccountSasServices_DirectoryToShare()
         {
+            string services = "tfb";
             await InvokeAccountSasDirectoryToShareTest(services: services);
         }
 
         [RecordedTest]
-        [TestCase("cuprwdylatfi")]
-        [TestCase("cudypafitrwl")]
-        [TestCase("cuprwdyla")]
-        public async Task AccountSasPermissions_DirectoryToShare(string permissions)
+        public async Task AccountSasPermissions_DirectoryToShare()
         {
+            string permissions = "cudypafitrwl";
             await InvokeAccountSasDirectoryToShareTest(permissions: permissions);
         }
 
@@ -773,29 +707,23 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
-        [TestCase("soc")]
-        [TestCase("ocs")]
-        [TestCase("os")]
-        public async Task AccountSasResources_FileToSnapshot(string resourceType)
+        public async Task AccountSasResources_FileToSnapshot()
         {
+            string resourceType = "soc";
             await InvokeAccountSasFileToSnapshotTest(resourceType: resourceType);
         }
 
         [RecordedTest]
-        [TestCase("tqfb")]
-        [TestCase("fqt")]
-        [TestCase("qf")]
-        public async Task AccountSasServices_FileToSnapshot(string services)
+        public async Task AccountSasServices_FileToSnapshot()
         {
+            string services = "tfb";
             await InvokeAccountSasFileToSnapshotTest(services: services);
         }
 
         [RecordedTest]
-        [TestCase("cuprwdylatfi")]
-        [TestCase("cudypafitrwl")]
-        [TestCase("cuprwdyla")]
-        public async Task AccountSasPermissions_FileToSnapshot(string permissions)
+        public async Task AccountSasPermissions_FileToSnapshot()
         {
+            string permissions = "cudypafitrwl";
             await InvokeAccountSasFileToSnapshotTest(permissions: permissions);
         }
 
@@ -821,29 +749,23 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
-        [TestCase("soc")]
-        [TestCase("ocs")]
-        [TestCase("oc")]
-        public async Task AccountSasResources_FileToShare(string resourceType)
+        public async Task AccountSasResources_FileToShare()
         {
+            string resourceType = "soc";
             await InvokeAccountSasFileToShareTest(resourceType: resourceType);
         }
 
         [RecordedTest]
-        [TestCase("tqfb")]
-        [TestCase("fqt")]
-        [TestCase("qf")]
-        public async Task AccountSasServices_FileToShare(string services)
+        public async Task AccountSasServices_FileToShare()
         {
+            string services = "tfb";
             await InvokeAccountSasFileToShareTest(services: services);
         }
 
         [RecordedTest]
-        [TestCase("cuprwdylatfi")]
-        [TestCase("cudypafitrwl")]
-        [TestCase("cuprwdyla")]
-        public async Task AccountSasPermissions_FileToShare(string permissions)
+        public async Task AccountSasPermissions_FileToShare()
         {
+            string permissions = "cudypafitrwl";
             await InvokeAccountSasFileToShareTest(permissions: permissions);
         }
 
@@ -869,29 +791,23 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
-        [TestCase("soc")]
-        [TestCase("ocs")]
-        [TestCase("os")]
-        public async Task AccountSasResources_FileToDirectory(string resourceType)
+        public async Task AccountSasResources_FileToDirectory()
         {
+            string resourceType = "soc";
             await InvokeAccountSasFileToDirectoryTest(resourceType: resourceType);
         }
 
         [RecordedTest]
-        [TestCase("tqfb")]
-        [TestCase("fqt")]
-        [TestCase("qf")]
-        public async Task AccountSasServices_FileToDirectory(string services)
+        public async Task AccountSasServices_FileToDirectory()
         {
+            string services = "tfb";
             await InvokeAccountSasFileToDirectoryTest(services: services);
         }
 
         [RecordedTest]
-        [TestCase("cuprwdylatfi")]
-        [TestCase("cudypafitrwl")]
-        [TestCase("cuprwdyla")]
-        public async Task AccountSasPermissions_FileToDirectory(string permissions)
+        public async Task AccountSasPermissions_FileToDirectory()
         {
+            string permissions = "cudypafitrwl";
             await InvokeAccountSasFileToDirectoryTest(permissions: permissions);
         }
 
@@ -909,7 +825,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 resourceType: resourceType);
 
             // Act
-            ShareLeaseClient leaseClient = shareFileClient.GetShareLeaseClient();
+            ShareLeaseClient leaseClient = shareFileClient.GetShareLeaseClient(Recording.Random.NewGuid().ToString());
 
             // Assert
             Assert.AreEqual(shareFileClient.Uri.Query, leaseClient.Uri.Query);
@@ -918,29 +834,23 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
-        [TestCase("soc")]
-        [TestCase("ocs")]
-        [TestCase("os")]
-        public async Task AccountSasResources_FileToLease(string resourceType)
+        public async Task AccountSasResources_FileToLease()
         {
+            string resourceType = "soc";
             await InvokeAccountSasFileToLeaseTest(resourceType: resourceType);
         }
 
         [RecordedTest]
-        [TestCase("tqfb")]
-        [TestCase("fqt")]
-        [TestCase("qf")]
-        public async Task AccountSasServices_FileToLease(string services)
+        public async Task AccountSasServices_FileToLease()
         {
+            string services = "tfb";
             await InvokeAccountSasFileToLeaseTest(services: services);
         }
 
         [RecordedTest]
-        [TestCase("cuprwdylatfi")]
-        [TestCase("cudypafitrwl")]
-        [TestCase("cuprwdyla")]
-        public async Task AccountSasPermissions_FileToLease(string permissions)
+        public async Task AccountSasPermissions_FileToLease()
         {
+            string permissions = "cudypafitrwl";
             await InvokeAccountSasFileToLeaseTest(permissions: permissions);
         }
         #endregion

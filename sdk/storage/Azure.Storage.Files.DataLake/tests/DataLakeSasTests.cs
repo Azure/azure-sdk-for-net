@@ -243,28 +243,23 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        [TestCase("soc")]
-        [TestCase("ocs")]
-        [TestCase("cs")]
-        public async Task AccountSasResources_ServiceToFileSystem(string resourceType)
+        public async Task AccountSasResources_ServiceToFileSystem()
         {
+            string resourceType = "soc";
             await InvokeAccountSasServiceToFileSystemTest(resourceType: resourceType);
         }
 
         [RecordedTest]
-        [TestCase("tqfb")]
-        [TestCase("fqb")]
-        [TestCase("qb")]
-        public async Task AccountSasServices_ServiceToFileSystem(string services)
+        public async Task AccountSasServices_ServiceToFileSystem()
         {
+            string services = "fqb";
             await InvokeAccountSasServiceToFileSystemTest(services: services);
         }
 
         [RecordedTest]
-        [TestCase("racuptwdf")]
-        [TestCase("cuprwdyla")]
-        public async Task AccountSasPermissions_ServiceToFileSystem(string permissions)
+        public async Task AccountSasPermissions_ServiceToFileSystem()
         {
+            string permissions = "cuprwdyla";
             await InvokeAccountSasServiceToFileSystemTest(permissions: permissions);
         }
         #endregion
@@ -292,28 +287,23 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        [TestCase("soc")]
-        [TestCase("ocs")]
-        [TestCase("cs")]
-        public async Task AccountSasResources_FileSystemToService(string resourceType)
+        public async Task AccountSasResources_FileSystemToService()
         {
+            string resourceType = "soc";
             await InvokeAccountSasFileSystemToServiceTest(resourceType: resourceType);
         }
 
         [RecordedTest]
-        [TestCase("tqfb")]
-        [TestCase("fqb")]
-        [TestCase("qb")]
-        public async Task AccountSasServices_FileSystemToService(string services)
+        public async Task AccountSasServices_FileSystemToService()
         {
+            string services = "fqb";
             await InvokeAccountSasFileSystemToServiceTest(services: services);
         }
 
         [RecordedTest]
-        [TestCase("racuptwdf")]
-        [TestCase("cuprwdyla")]
-        public async Task AccountSasPermissions_FileSystemToService(string permissions)
+        public async Task AccountSasPermissions_FileSystemToService()
         {
+            string permissions = "cuprwdyla";
             await InvokeAccountSasFileSystemToServiceTest(permissions: permissions);
         }
 
@@ -339,28 +329,23 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        [TestCase("soc")]
-        [TestCase("ocs")]
-        [TestCase("oc")]
-        public async Task AccountSasResources_FileSystemToDirectory(string resourceType)
+        public async Task AccountSasResources_FileSystemToDirectory()
         {
+            string resourceType = "soc";
             await InvokeAccountSasFileSystemToDirectoryTest(resourceType: resourceType);
         }
 
         [RecordedTest]
-        [TestCase("tqfb")]
-        [TestCase("fqb")]
-        [TestCase("qb")]
-        public async Task AccountSasServices_FileSystemToDirectory(string services)
+        public async Task AccountSasServices_FileSystemToDirectory()
         {
+            string services = "fqb";
             await InvokeAccountSasFileSystemToDirectoryTest(services: services);
         }
 
         [RecordedTest]
-        [TestCase("racuptwdf")]
-        [TestCase("cuprwdyla")]
-        public async Task AccountSasPermissions_FileSystemToDirectory(string permissions)
+        public async Task AccountSasPermissions_FileSystemToDirectory()
         {
+            string permissions = "cuprwdyla";
             await InvokeAccountSasFileSystemToDirectoryTest(permissions: permissions);
         }
 
@@ -386,28 +371,23 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        [TestCase("soc")]
-        [TestCase("ocs")]
-        [TestCase("oc")]
-        public async Task AccountSasResources_FileSystemToFile(string resourceType)
+        public async Task AccountSasResources_FileSystemToFile()
         {
+            string resourceType = "soc";
             await InvokeAccountSasFileSystemToFileTest(resourceType: resourceType);
         }
 
         [RecordedTest]
-        [TestCase("tqfb")]
-        [TestCase("fqb")]
-        [TestCase("qb")]
-        public async Task AccountSasServices_FileSystemToFile(string services)
+        public async Task AccountSasServices_FileSystemToFile()
         {
+            string services = "fqb";
             await InvokeAccountSasFileSystemToFileTest(services: services);
         }
 
         [RecordedTest]
-        [TestCase("racuptwdf")]
-        [TestCase("cuprwdyla")]
-        public async Task AccountSasPermissions_FileSystemToFile(string permissions)
+        public async Task AccountSasPermissions_FileSystemToFile()
         {
+            string permissions = "cuprwdyla";
             await InvokeAccountSasFileSystemToFileTest(permissions: permissions);
         }
         #endregion DataLakeFileSystemClient
@@ -435,28 +415,23 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        [TestCase("soc")]
-        [TestCase("ocs")]
-        [TestCase("os")]
-        public async Task AccountSasResources_DirectoryToFile(string resourceType)
+        public async Task AccountSasResources_DirectoryToFile()
         {
+            string resourceType = "soc";
             await InvokeAccountSasDirectoryToFileTest(resourceType: resourceType);
         }
 
         [RecordedTest]
-        [TestCase("tqfb")]
-        [TestCase("fqb")]
-        [TestCase("qb")]
-        public async Task AccountSasServices_DirectoryToFile(string services)
+        public async Task AccountSasServices_DirectoryToFile()
         {
+            string services = "fqb";
             await InvokeAccountSasDirectoryToFileTest(services: services);
         }
 
         [RecordedTest]
-        [TestCase("racuptwdf")]
-        [TestCase("cuprwdyla")]
-        public async Task AccountSasPermissions_DirectoryToFile(string permissions)
+        public async Task AccountSasPermissions_DirectoryToFile()
         {
+            string permissions = "cuprwdyla";
             await InvokeAccountSasDirectoryToFileTest(permissions: permissions);
         }
 
@@ -482,28 +457,23 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        [TestCase("soc")]
-        [TestCase("ocs")]
-        [TestCase("os")]
-        public async Task AccountSasResources_DirectoryToSubdirectory(string resourceType)
+        public async Task AccountSasResources_DirectoryToSubdirectory()
         {
+            string resourceType = "soc";
             await InvokeAccountSasDirectoryToSubDirectoryTest(resourceType: resourceType);
         }
 
         [RecordedTest]
-        [TestCase("tqfb")]
-        [TestCase("fqb")]
-        [TestCase("qb")]
-        public async Task AccountSasServicesDirectoryToSubdirectory(string services)
+        public async Task AccountSasServicesDirectoryToSubdirectory()
         {
+            string services = "fqb";
             await InvokeAccountSasDirectoryToSubDirectoryTest(services: services);
         }
 
         [RecordedTest]
-        [TestCase("racuptwdf")]
-        [TestCase("cuprwdyla")]
-        public async Task AccountSasPermissions_DirectoryToSubdirectory(string permissions)
+        public async Task AccountSasPermissions_DirectoryToSubdirectory()
         {
+            string permissions = "cuprwdyla";
             await InvokeAccountSasDirectoryToSubDirectoryTest(permissions: permissions);
         }
 
@@ -529,28 +499,23 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        [TestCase("soc")]
-        [TestCase("ocs")]
-        [TestCase("oc")]
-        public async Task AccountSasResources_DirectoryToFileSystem(string resourceType)
+        public async Task AccountSasResources_DirectoryToFileSystem()
         {
+            string resourceType = "soc";
             await InvokeAccountSasDirectoryToFileSystemTest(resourceType: resourceType);
         }
 
         [RecordedTest]
-        [TestCase("tqfb")]
-        [TestCase("fqb")]
-        [TestCase("qb")]
-        public async Task AccountSasServices_DirectoryToFileSystem(string services)
+        public async Task AccountSasServices_DirectoryToFileSystem()
         {
+            string services = "fqb";
             await InvokeAccountSasDirectoryToFileSystemTest(services: services);
         }
 
         [RecordedTest]
-        [TestCase("racuptwdf")]
-        [TestCase("cuprwdyla")]
-        public async Task AccountSasPermissions_DirectoryToFileSystem(string permissions)
+        public async Task AccountSasPermissions_DirectoryToFileSystem()
         {
+            string permissions = "cuprwdyla";
             await InvokeAccountSasDirectoryToFileSystemTest(permissions: permissions);
         }
 
@@ -582,28 +547,23 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        [TestCase("soc")]
-        [TestCase("ocs")]
-        [TestCase("oc")]
-        public async Task AccountSasResources_DirectoryToCpk(string resourceType)
+        public async Task AccountSasResources_DirectoryToCpk()
         {
+            string resourceType = "soc";
             await InvokeAccountSasDirectoryToCpkTest(resourceType: resourceType);
         }
 
         [RecordedTest]
-        [TestCase("tqfb")]
-        [TestCase("fqb")]
-        [TestCase("qb")]
-        public async Task AccountSasServices_DirectoryToCpk(string services)
+        public async Task AccountSasServices_DirectoryToCpk()
         {
+            string services = "fqb";
             await InvokeAccountSasDirectoryToCpkTest(services: services);
         }
 
         [RecordedTest]
-        [TestCase("racuptwdf")]
-        [TestCase("cuprwdyla")]
-        public async Task AccountSasPermissions_DirectoryToCpk(string permissions)
+        public async Task AccountSasPermissions_DirectoryToCpk()
         {
+            string permissions = "cuprwdyla";
             await InvokeAccountSasDirectoryToCpkTest(permissions: permissions);
         }
         #endregion DataLakeDirectoryClient
@@ -631,28 +591,23 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        [TestCase("soc")]
-        [TestCase("ocs")]
-        [TestCase("oc")]
-        public async Task AccountSasResources_FileToFileSystem(string resourceType)
+        public async Task AccountSasResources_FileToFileSystem()
         {
+            string resourceType = "soc";
             await InvokeAccountSasFileToFileSystemTest(resourceType: resourceType);
         }
 
         [RecordedTest]
-        [TestCase("tqfb")]
-        [TestCase("fqb")]
-        [TestCase("qb")]
-        public async Task AccountSasServices_FileToFileSystem(string services)
+        public async Task AccountSasServices_FileToFileSystem()
         {
+            string services = "fqb";
             await InvokeAccountSasFileToFileSystemTest(services: services);
         }
 
         [RecordedTest]
-        [TestCase("racuptwdf")]
-        [TestCase("cuprwdyla")]
-        public async Task AccountSasPermissions_FileToFileSystem(string permissions)
+        public async Task AccountSasPermissions_FileToFileSystem()
         {
+            string permissions = "cuprwdyla";
             await InvokeAccountSasFileToFileSystemTest(permissions: permissions);
         }
 
@@ -678,28 +633,23 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        [TestCase("soc")]
-        [TestCase("ocs")]
-        [TestCase("os")]
-        public async Task AccountSasResources_FileToDirectory(string resourceType)
+        public async Task AccountSasResources_FileToDirectory()
         {
+            string resourceType = "soc";
             await InvokeAccountFileToDirectorySasTest(resourceType: resourceType);
         }
 
         [RecordedTest]
-        [TestCase("tqfb")]
-        [TestCase("fqb")]
-        [TestCase("qb")]
-        public async Task AccountSasServices_FileToDirectory(string services)
+        public async Task AccountSasServices_FileToDirectory()
         {
+            string services = "fqb";
             await InvokeAccountFileToDirectorySasTest(services: services);
         }
 
         [RecordedTest]
-        [TestCase("racuptwdf")]
-        [TestCase("cuprwdyla")]
-        public async Task AccountSasPermissions_FileToDirectory(string permissions)
+        public async Task AccountSasPermissions_FileToDirectory()
         {
+            string permissions = "cuprwdyla";
             await InvokeAccountFileToDirectorySasTest(permissions: permissions);
         }
 
@@ -731,28 +681,23 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        [TestCase("soc")]
-        [TestCase("ocs")]
-        [TestCase("oc")]
-        public async Task AccountSasResources_FileToCpk(string resourceType)
+        public async Task AccountSasResources_FileToCpk()
         {
+            string resourceType = "soc";
             await InvokeAccountSasFileToCpkTest(resourceType: resourceType);
         }
 
         [RecordedTest]
-        [TestCase("tqfb")]
-        [TestCase("fqb")]
-        [TestCase("qb")]
-        public async Task AccountSasServices_FileToCpk(string services)
+        public async Task AccountSasServices_FileToCpk()
         {
+            string services = "fqb";
             await InvokeAccountSasFileToCpkTest(services: services);
         }
 
         [RecordedTest]
-        [TestCase("racuptwdf")]
-        [TestCase("cuprwdyla")]
-        public async Task AccountSasPermissions_FileToCpk(string permissions)
+        public async Task AccountSasPermissions_FileToCpk()
         {
+            string permissions = "cuprwdyla";
             await InvokeAccountSasFileToCpkTest(permissions: permissions);
         }
         #endregion DataLakeFileClient
@@ -780,28 +725,23 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        [TestCase("soc")]
-        [TestCase("ocs")]
-        [TestCase("oc")]
-        public async Task AccountSasResources_PathToFileSystem(string resourceType)
+        public async Task AccountSasResources_PathToFileSystem()
         {
+            string resourceType = "soc";
             await InvokeAccountSasPathToFileSystemTest(resourceType: resourceType);
         }
 
         [RecordedTest]
-        [TestCase("tqfb")]
-        [TestCase("fqb")]
-        [TestCase("qb")]
-        public async Task AccountSasServices_PathToFileSystem(string services)
+        public async Task AccountSasServices_PathToFileSystem()
         {
+            string services = "fqb";
             await InvokeAccountSasPathToFileSystemTest(services: services);
         }
 
         [RecordedTest]
-        [TestCase("racuptwdf")]
-        [TestCase("cuprwdyla")]
-        public async Task AccountSasPermissions_PathToFileSystem(string permissions)
+        public async Task AccountSasPermissions_PathToFileSystem()
         {
+            string permissions = "cuprwdyla";
             await InvokeAccountSasPathToFileSystemTest(permissions: permissions);
         }
 
@@ -831,28 +771,23 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        [TestCase("soc")]
-        [TestCase("ocs")]
-        [TestCase("os")]
-        public async Task AccountSasResources_PathToDirectory(string resourceType)
+        public async Task AccountSasResources_PathToDirectory()
         {
+            string resourceType = "soc";
             await InvokeAccountPathToDirectorySasTest(resourceType: resourceType);
         }
 
         [RecordedTest]
-        [TestCase("tqfb")]
-        [TestCase("fqb")]
-        [TestCase("qb")]
-        public async Task AccountSasServices_PathToDirectory(string services)
+        public async Task AccountSasServices_PathToDirectory()
         {
+            string services = "fqb";
             await InvokeAccountPathToDirectorySasTest(services: services);
         }
 
         [RecordedTest]
-        [TestCase("racuptwdf")]
-        [TestCase("cuprwdyla")]
-        public async Task AccountSasPermissions_PathToDirectory(string permissions)
+        public async Task AccountSasPermissions_PathToDirectory()
         {
+            string permissions = "cuprwdyla";
             await InvokeAccountPathToDirectorySasTest(permissions: permissions);
         }
 
@@ -884,28 +819,23 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        [TestCase("soc")]
-        [TestCase("ocs")]
-        [TestCase("oc")]
-        public async Task AccountSasResources_PathToCpk(string resourceType)
+        public async Task AccountSasResources_PathToCpk()
         {
+            string resourceType = "soc";
             await InvokeAccountSasPathToCpkTest(resourceType: resourceType);
         }
 
         [RecordedTest]
-        [TestCase("tqfb")]
-        [TestCase("fqb")]
-        [TestCase("qb")]
-        public async Task AccountSasServices_PathToCpk(string services)
+        public async Task AccountSasServices_PathToCpk()
         {
+            string services = "fqb";
             await InvokeAccountSasPathToCpkTest(services: services);
         }
 
         [RecordedTest]
-        [TestCase("racuptwdf")]
-        [TestCase("cuprwdyla")]
-        public async Task AccountSasPermissions_PathToCpk(string permissions)
+        public async Task AccountSasPermissions_PathToCpk()
         {
+            string permissions = "cuprwdyla";
             await InvokeAccountSasPathToCpkTest(permissions: permissions);
         }
         #endregion DataLakePathClient
