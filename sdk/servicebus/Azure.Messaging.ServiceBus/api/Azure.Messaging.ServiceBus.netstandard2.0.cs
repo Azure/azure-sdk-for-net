@@ -455,6 +455,7 @@ namespace Azure.Messaging.ServiceBus
         public virtual bool AutoCompleteMessages { get { throw null; } }
         public virtual string EntityPath { get { throw null; } }
         public virtual string FullyQualifiedNamespace { get { throw null; } }
+        public string Identifier { get { throw null; } }
         protected internal virtual Azure.Messaging.ServiceBus.ServiceBusProcessor InnerProcessor { get { throw null; } }
         public virtual bool IsClosed { get { throw null; } }
         public virtual bool IsProcessing { get { throw null; } }
@@ -488,6 +489,7 @@ namespace Azure.Messaging.ServiceBus
     {
         public ServiceBusSessionProcessorOptions() { }
         public bool AutoCompleteMessages { get { throw null; } set { } }
+        public string Identifier { get { throw null; } set { } }
         public System.TimeSpan MaxAutoLockRenewalDuration { get { throw null; } set { } }
         public int MaxConcurrentCallsPerSession { get { throw null; } set { } }
         public int MaxConcurrentSessions { get { throw null; } set { } }

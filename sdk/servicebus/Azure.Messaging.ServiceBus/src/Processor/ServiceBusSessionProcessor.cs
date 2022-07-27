@@ -30,10 +30,9 @@ namespace Azure.Messaging.ServiceBus
         public virtual string EntityPath => InnerProcessor.EntityPath;
 
         /// <summary>
-        /// Gets the ID to identify this processor. This can be used to correlate logs and exceptions.
+        /// A unique name used to identify the processor.  If <c>null</c> or empty, a random unique value will be will be used.
         /// </summary>
-        /// <remarks>Every new processor has a unique ID.</remarks>
-        internal string Identifier => InnerProcessor.Identifier;
+        public string Identifier => InnerProcessor.Identifier;
 
         /// <inheritdoc cref="ServiceBusProcessor.ReceiveMode"/>
         public virtual ServiceBusReceiveMode ReceiveMode => InnerProcessor.ReceiveMode;

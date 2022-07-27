@@ -822,7 +822,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     InitialDeliveryCount = 0,
                     Source = new Source { Address = identifier },
                     Target = new Target { Address = destinationEndpoint.AbsolutePath },
-                    OperationTimeout = _operationTimeout
+                    OperationTimeout = _operationTimeout,
                 };
 
                 linkSettings.AddProperty(AmqpClientConstants.TimeoutName, (uint)timeout.CalculateRemaining(stopWatch.GetElapsedTime()).TotalMilliseconds);
