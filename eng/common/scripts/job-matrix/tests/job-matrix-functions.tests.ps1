@@ -440,7 +440,7 @@ Describe "Platform Matrix Post Transformation" -Tag "transform" {
         $matrix[2].parameters.operatingSystem | Should -Be "ubuntu-18.04"
         $matrix[2].parameters.additionalArguments | Should -Be ""
 
-        $matrix[4].name | Should -Be "macOS1015_net461"
+        $matrix[4].name | Should -Be "macOS11_net461"
         $matrix[4].parameters.framework | Should -Be "net461"
         $matrix[4].parameters.operatingSystem | Should -Be "macos-11"
         $matrix[4].parameters.additionalArguments | Should -Be ""
