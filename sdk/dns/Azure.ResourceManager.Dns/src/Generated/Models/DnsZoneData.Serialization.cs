@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Dns
             Optional<long?> maxNumberOfRecordsPerRecordSet = default;
             Optional<long> numberOfRecordSets = default;
             Optional<IReadOnlyList<string>> nameServers = default;
-            Optional<ZoneType> zoneType = default;
+            Optional<DnsZoneType> zoneType = default;
             Optional<IList<WritableSubResource>> registrationVirtualNetworks = default;
             Optional<IList<WritableSubResource>> resolutionVirtualNetworks = default;
             foreach (var property in element.EnumerateObject())
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Dns
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            zoneType = property0.Value.GetString().ToZoneType();
+                            zoneType = property0.Value.GetString().ToDnsZoneType();
                             continue;
                         }
                         if (property0.NameEquals("registrationVirtualNetworks"))

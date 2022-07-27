@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Dns.Models
 {
     /// <summary> The type of this DNS zone (Public or Private). </summary>
-    public enum ZoneType
+    public enum DnsZoneType
     {
         /// <summary> Public. </summary>
         Public,

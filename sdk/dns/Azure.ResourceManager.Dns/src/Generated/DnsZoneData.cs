@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="zoneType"> The type of this DNS zone (Public or Private). </param>
         /// <param name="registrationVirtualNetworks"> A list of references to virtual networks that register hostnames in this DNS zone. This is a only when ZoneType is Private. </param>
         /// <param name="resolutionVirtualNetworks"> A list of references to virtual networks that resolve records in this DNS zone. This is a only when ZoneType is Private. </param>
-        internal DnsZoneData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, long? maxNumberOfRecordSets, long? maxNumberOfRecordsPerRecordSet, long? numberOfRecordSets, IReadOnlyList<string> nameServers, ZoneType? zoneType, IList<WritableSubResource> registrationVirtualNetworks, IList<WritableSubResource> resolutionVirtualNetworks) : base(id, name, resourceType, systemData, tags, location)
+        internal DnsZoneData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, long? maxNumberOfRecordSets, long? maxNumberOfRecordsPerRecordSet, long? numberOfRecordSets, IReadOnlyList<string> nameServers, DnsZoneType? zoneType, IList<WritableSubResource> registrationVirtualNetworks, IList<WritableSubResource> resolutionVirtualNetworks) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             MaxNumberOfRecordSets = maxNumberOfRecordSets;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Dns
         /// <summary> The name servers for this DNS zone. This is a read-only property and any attempt to set this value will be ignored. </summary>
         public IReadOnlyList<string> NameServers { get; }
         /// <summary> The type of this DNS zone (Public or Private). </summary>
-        public ZoneType? ZoneType { get; set; }
+        public DnsZoneType? ZoneType { get; set; }
         /// <summary> A list of references to virtual networks that register hostnames in this DNS zone. This is a only when ZoneType is Private. </summary>
         public IList<WritableSubResource> RegistrationVirtualNetworks { get; }
         /// <summary> A list of references to virtual networks that resolve records in this DNS zone. This is a only when ZoneType is Private. </summary>

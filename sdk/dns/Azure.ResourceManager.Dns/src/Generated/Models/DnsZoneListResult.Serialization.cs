@@ -12,9 +12,9 @@ using Azure.ResourceManager.Dns;
 
 namespace Azure.ResourceManager.Dns.Models
 {
-    internal partial class ZoneListResult
+    internal partial class DnsZoneListResult
     {
-        internal static ZoneListResult DeserializeZoneListResult(JsonElement element)
+        internal static DnsZoneListResult DeserializeDnsZoneListResult(JsonElement element)
         {
             Optional<IReadOnlyList<DnsZoneData>> value = default;
             Optional<string> nextLink = default;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Dns.Models
                     continue;
                 }
             }
-            return new ZoneListResult(Optional.ToList(value), nextLink.Value);
+            return new DnsZoneListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

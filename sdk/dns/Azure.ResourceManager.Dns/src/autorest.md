@@ -88,12 +88,19 @@ directive:
     transform: >
       $["x-ms-client-name"] = "ZoneUpdateOptions";
 
+# Add Prepend Name
   - from: swagger-document
     where: $.definitions.NsRecord.properties.nsdname
-    transform: $["x-ms-client-name"] = "nsdName";
+    transform: $["x-ms-client-name"] = "DnsNsdName";
   - from: swagger-document
     where: $.definitions.PtrRecord.properties.ptrdname
-    transform: $["x-ms-client-name"] = "ptrdName";
+    transform: $["x-ms-client-name"] = "DnsPtrdName";
+  - from: swagger-document
+    where: $.definitions.ZoneProperties.properties.zoneType
+    transform: $["x-ms-enum"].name = "DnsZoneType";
+  - from: swagger-document
+    where: $.definitions.ZoneListResult
+    transform: $["x-ms-client-name"] = "DnsZoneListResult";
 
   - from: swagger-document
     where: $.definitions.MxRecord

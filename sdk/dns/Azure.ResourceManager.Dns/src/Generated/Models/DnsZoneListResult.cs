@@ -12,18 +12,18 @@ using Azure.ResourceManager.Dns;
 namespace Azure.ResourceManager.Dns.Models
 {
     /// <summary> The response to a Zone List or ListAll operation. </summary>
-    internal partial class ZoneListResult
+    internal partial class DnsZoneListResult
     {
-        /// <summary> Initializes a new instance of ZoneListResult. </summary>
-        internal ZoneListResult()
+        /// <summary> Initializes a new instance of DnsZoneListResult. </summary>
+        internal DnsZoneListResult()
         {
             Value = new ChangeTrackingList<DnsZoneData>();
         }
 
-        /// <summary> Initializes a new instance of ZoneListResult. </summary>
+        /// <summary> Initializes a new instance of DnsZoneListResult. </summary>
         /// <param name="value"> Information about the DNS zones. </param>
         /// <param name="nextLink"> The continuation token for the next page of results. </param>
-        internal ZoneListResult(IReadOnlyList<DnsZoneData> value, string nextLink)
+        internal DnsZoneListResult(IReadOnlyList<DnsZoneData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
