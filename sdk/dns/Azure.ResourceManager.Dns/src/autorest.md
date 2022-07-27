@@ -80,21 +80,21 @@ directive:
       $.properties.maxNumberOfRecordsPerRecordSet["x-nullable"] = true;
 # Rename models
   - from: swagger-document
-    where: $.definitions.Zone
-    transform: >
-      $["x-ms-client-name"] = "DnsZone";
-  - from: swagger-document
     where: $.definitions.ZoneUpdate
     transform: >
       $["x-ms-client-name"] = "ZoneUpdateOptions";
 
-# Add Prepend Name
   - from: swagger-document
     where: $.definitions.NsRecord.properties.nsdname
-    transform: $["x-ms-client-name"] = "DnsNsdName";
+    transform: $["x-ms-client-name"] = "NsdName";
   - from: swagger-document
     where: $.definitions.PtrRecord.properties.ptrdname
-    transform: $["x-ms-client-name"] = "DnsPtrdName";
+    transform: $["x-ms-client-name"] = "PtrdName";
+
+# Add Prepend Name
+  - from: swagger-document
+    where: $.definitions.Zone
+    transform: $["x-ms-client-name"] = "DnsZone";
   - from: swagger-document
     where: $.definitions.ZoneProperties.properties.zoneType
     transform: $["x-ms-enum"].name = "DnsZoneType";
@@ -102,6 +102,7 @@ directive:
     where: $.definitions.ZoneListResult
     transform: $["x-ms-client-name"] = "DnsZoneListResult";
 
+# Mx Ns => MX NS
   - from: swagger-document
     where: $.definitions.MxRecord
     transform: $["x-ms-client-name"] = "MXRecord";
@@ -114,5 +115,4 @@ directive:
   - from: swagger-document
     where: $.definitions.RecordSetProperties.properties.NSRecords
     transform: $["x-ms-client-name"] = "NSRecords";
-
 ```

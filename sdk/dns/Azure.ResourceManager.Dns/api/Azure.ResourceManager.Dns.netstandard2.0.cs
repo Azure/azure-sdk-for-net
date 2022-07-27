@@ -575,12 +575,12 @@ namespace Azure.ResourceManager.Dns.Models
     public partial class NSRecord
     {
         public NSRecord() { }
-        public string DnsNsdName { get { throw null; } set { } }
+        public string NsdName { get { throw null; } set { } }
     }
     public partial class PtrRecord
     {
         public PtrRecord() { }
-        public string DnsPtrdName { get { throw null; } set { } }
+        public string PtrdName { get { throw null; } set { } }
     }
     public partial class SoaRecord
     {

@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.Dns.Models
         }
 
         /// <summary> Initializes a new instance of NSRecord. </summary>
-        /// <param name="dnsNsdName"> The name server name for this NS record. </param>
-        internal NSRecord(string dnsNsdName)
+        /// <param name="nsdName"> The name server name for this NS record. </param>
+        internal NSRecord(string nsdName)
         {
-            DnsNsdName = dnsNsdName;
+            NsdName = nsdName;
         }
 
         /// <summary> The name server name for this NS record. </summary>
-        public string DnsNsdName { get; set; }
+        public string NsdName { get; set; }
     }
 }
