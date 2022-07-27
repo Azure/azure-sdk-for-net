@@ -1,18 +1,18 @@
 # The Certificate Service Client 
 
-By default, the `ConfidentialLedgerClient` will automatically configure itself to trust the root TLS certificate advertised by the `ConfidentialLedgerCertificateClient` `GetLedgerIdentity` operation.
+By default, the `ConfidentialLedgerClient` will automatically configure itself to trust the root TLS certificate advertised by the `ConfidentialLedgerIdentityServiceClient` `GetLedgerIdentity` operation.
 However, if specific customizations are needed to the client option's `Transport`, this automatic configuration needs to be done manually.
 
 Because Confidential Ledgers use self-signed certificates securely generated and stored in an SGX enclave, the certificate for each Confidential Ledger must first be retrieved from the Confidential Ledger Identity Service.
 
 ```C# Snippet:GetIdentity
 Uri identityServiceEndpoint = new("https://identity.confidential-ledger.core.azure.com") // The hostname from the identityServiceUri
-var identityClient = new ConfidentialLedgerCertificateClient(identityServiceEndpoint);
+var identityClient = new ConfidentialLedgerIdentityServiceClient(identityServiceEndpoint);
 
 // Get the ledger's  TLS certificate for our ledger.
 string ledgerId = "<the ledger id>"; // ex. "my-ledger" from "https://my-ledger.eastus.cloudapp.azure.com"
 Response response = identityClient.GetLedgerIdentity(ledgerId);
-X509Certificate2 ledgerTlsCert = ConfidentialLedgerCertificateClient.ParseCertificate(response);
+X509Certificate2 ledgerTlsCert = ConfidentialLedgerIdentityServiceClient.ParseCertificate(response);
 
 X509Chain certificateChain = new();
 // Revocation is not required by CCF. Hence revocation checks must be skipped to avoid validation failing unnecessarily.
