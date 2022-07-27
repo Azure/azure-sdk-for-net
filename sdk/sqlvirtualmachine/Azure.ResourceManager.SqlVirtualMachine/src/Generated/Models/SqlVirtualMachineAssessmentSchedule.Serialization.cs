@@ -10,15 +10,15 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
-    public partial class Schedule : IUtf8JsonSerializable
+    public partial class SqlVirtualMachineAssessmentSchedule : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Enable))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enable");
-                writer.WriteBooleanValue(Enable.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsDefined(WeeklyInterval))
             {
@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             writer.WriteEndObject();
         }
 
-        internal static Schedule DeserializeSchedule(JsonElement element)
+        internal static SqlVirtualMachineAssessmentSchedule DeserializeSqlVirtualMachineAssessmentSchedule(JsonElement element)
         {
             Optional<bool> enable = default;
             Optional<int> weeklyInterval = default;
             Optional<int> monthlyOccurrence = default;
-            Optional<AssessmentDayOfWeek> dayOfWeek = default;
+            Optional<SqlVirtualMachineAssessmentDayOfWeek> dayOfWeek = default;
             Optional<string> startTime = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    dayOfWeek = property.Value.GetString().ToAssessmentDayOfWeek();
+                    dayOfWeek = property.Value.GetString().ToSqlVirtualMachineAssessmentDayOfWeek();
                     continue;
                 }
                 if (property.NameEquals("startTime"))
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     continue;
                 }
             }
-            return new Schedule(Optional.ToNullable(enable), Optional.ToNullable(weeklyInterval), Optional.ToNullable(monthlyOccurrence), Optional.ToNullable(dayOfWeek), startTime.Value);
+            return new SqlVirtualMachineAssessmentSchedule(Optional.ToNullable(enable), Optional.ToNullable(weeklyInterval), Optional.ToNullable(monthlyOccurrence), Optional.ToNullable(dayOfWeek), startTime.Value);
         }
     }
 }

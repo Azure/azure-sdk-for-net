@@ -11,21 +11,21 @@ using Azure.Core;
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
     /// <summary> A load balancer configuration for an availability group listener. </summary>
-    public partial class LoadBalancerConfiguration
+    public partial class AvailabilityGroupListenerLoadBalancerConfiguration
     {
-        /// <summary> Initializes a new instance of LoadBalancerConfiguration. </summary>
-        public LoadBalancerConfiguration()
+        /// <summary> Initializes a new instance of AvailabilityGroupListenerLoadBalancerConfiguration. </summary>
+        public AvailabilityGroupListenerLoadBalancerConfiguration()
         {
             SqlVirtualMachineInstances = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of LoadBalancerConfiguration. </summary>
+        /// <summary> Initializes a new instance of AvailabilityGroupListenerLoadBalancerConfiguration. </summary>
         /// <param name="privateIPAddress"> Private IP address. </param>
         /// <param name="publicIPAddressResourceId"> Resource id of the public IP. </param>
         /// <param name="loadBalancerResourceId"> Resource id of the load balancer. </param>
         /// <param name="probePort"> Probe port. </param>
         /// <param name="sqlVirtualMachineInstances"> List of the SQL virtual machine instance resource id&apos;s that are enrolled into the availability group listener. </param>
-        internal LoadBalancerConfiguration(PrivateIPAddress privateIPAddress, string publicIPAddressResourceId, string loadBalancerResourceId, int? probePort, IList<string> sqlVirtualMachineInstances)
+        internal AvailabilityGroupListenerLoadBalancerConfiguration(AvailabilityGroupListenerPrivateIPAddress privateIPAddress, ResourceIdentifier publicIPAddressResourceId, ResourceIdentifier loadBalancerResourceId, int? probePort, IList<string> sqlVirtualMachineInstances)
         {
             PrivateIPAddress = privateIPAddress;
             PublicIPAddressResourceId = publicIPAddressResourceId;
@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         }
 
         /// <summary> Private IP address. </summary>
-        public PrivateIPAddress PrivateIPAddress { get; set; }
+        public AvailabilityGroupListenerPrivateIPAddress PrivateIPAddress { get; set; }
         /// <summary> Resource id of the public IP. </summary>
-        public string PublicIPAddressResourceId { get; set; }
+        public ResourceIdentifier PublicIPAddressResourceId { get; set; }
         /// <summary> Resource id of the load balancer. </summary>
-        public string LoadBalancerResourceId { get; set; }
+        public ResourceIdentifier LoadBalancerResourceId { get; set; }
         /// <summary> Probe port. </summary>
         public int? ProbePort { get; set; }
         /// <summary> List of the SQL virtual machine instance resource id&apos;s that are enrolled into the availability group listener. </summary>

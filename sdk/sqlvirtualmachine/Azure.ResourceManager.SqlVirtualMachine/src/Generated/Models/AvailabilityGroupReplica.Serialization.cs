@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
-    public partial class AgReplica : IUtf8JsonSerializable
+    public partial class AvailabilityGroupReplica : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             writer.WriteEndObject();
         }
 
-        internal static AgReplica DeserializeAgReplica(JsonElement element)
+        internal static AvailabilityGroupReplica DeserializeAvailabilityGroupReplica(JsonElement element)
         {
             Optional<string> sqlVirtualMachineInstanceId = default;
-            Optional<Role> role = default;
-            Optional<Commit> commit = default;
-            Optional<Failover> failover = default;
+            Optional<AvailabilityGroupReplicaRole> role = default;
+            Optional<AvailabilityGroupReplicaCommitMode> commit = default;
+            Optional<AvailabilityGroupReplicaFailoverMode> failover = default;
             Optional<ReadableSecondary> readableSecondary = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    role = new Role(property.Value.GetString());
+                    role = new AvailabilityGroupReplicaRole(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("commit"))
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    commit = new Commit(property.Value.GetString());
+                    commit = new AvailabilityGroupReplicaCommitMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("failover"))
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    failover = new Failover(property.Value.GetString());
+                    failover = new AvailabilityGroupReplicaFailoverMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("readableSecondary"))
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     continue;
                 }
             }
-            return new AgReplica(sqlVirtualMachineInstanceId.Value, Optional.ToNullable(role), Optional.ToNullable(commit), Optional.ToNullable(failover), Optional.ToNullable(readableSecondary));
+            return new AvailabilityGroupReplica(sqlVirtualMachineInstanceId.Value, Optional.ToNullable(role), Optional.ToNullable(commit), Optional.ToNullable(failover), Optional.ToNullable(readableSecondary));
         }
     }
 }

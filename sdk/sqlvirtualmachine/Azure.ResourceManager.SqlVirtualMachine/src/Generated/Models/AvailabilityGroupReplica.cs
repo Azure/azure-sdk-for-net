@@ -8,20 +8,20 @@
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
     /// <summary> Availability group replica configuration. </summary>
-    public partial class AgReplica
+    public partial class AvailabilityGroupReplica
     {
-        /// <summary> Initializes a new instance of AgReplica. </summary>
-        public AgReplica()
+        /// <summary> Initializes a new instance of AvailabilityGroupReplica. </summary>
+        public AvailabilityGroupReplica()
         {
         }
 
-        /// <summary> Initializes a new instance of AgReplica. </summary>
+        /// <summary> Initializes a new instance of AvailabilityGroupReplica. </summary>
         /// <param name="sqlVirtualMachineInstanceId"> Sql VirtualMachine Instance Id. </param>
         /// <param name="role"> Replica Role in availability group. </param>
         /// <param name="commit"> Replica commit mode in availability group. </param>
         /// <param name="failover"> Replica failover mode in availability group. </param>
         /// <param name="readableSecondary"> Replica readable secondary mode in availability group. </param>
-        internal AgReplica(string sqlVirtualMachineInstanceId, Role? role, Commit? commit, Failover? failover, ReadableSecondary? readableSecondary)
+        internal AvailabilityGroupReplica(string sqlVirtualMachineInstanceId, AvailabilityGroupReplicaRole? role, AvailabilityGroupReplicaCommitMode? commit, AvailabilityGroupReplicaFailoverMode? failover, ReadableSecondary? readableSecondary)
         {
             SqlVirtualMachineInstanceId = sqlVirtualMachineInstanceId;
             Role = role;
@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         /// <summary> Sql VirtualMachine Instance Id. </summary>
         public string SqlVirtualMachineInstanceId { get; set; }
         /// <summary> Replica Role in availability group. </summary>
-        public Role? Role { get; set; }
+        public AvailabilityGroupReplicaRole? Role { get; set; }
         /// <summary> Replica commit mode in availability group. </summary>
-        public Commit? Commit { get; set; }
+        public AvailabilityGroupReplicaCommitMode? Commit { get; set; }
         /// <summary> Replica failover mode in availability group. </summary>
-        public Failover? Failover { get; set; }
+        public AvailabilityGroupReplicaFailoverMode? Failover { get; set; }
         /// <summary> Replica readable secondary mode in availability group. </summary>
         public ReadableSecondary? ReadableSecondary { get; set; }
     }
