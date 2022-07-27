@@ -89,39 +89,26 @@ function CreateOrUpdateAutorestConfigFile() {
 
     $fileContent = ""
     if (Test-Path -Path $autorestFilePath) {
-        $fileContent = Get-Content -Path $autorestFilePath
+        $fileContent = Get-Content -Path $autorestFilePath -Raw
     }
     if (![String]::IsNullOrWhiteSpace($fileContent)) {
         if (($readme -ne "") -or ($inputfile -ne "")) {
-            $requirRex = "require *:.*";
-            $inputfileRex = "input-file *:.*"
-
-            # clear
-            $fileContent = $fileContent -notmatch $requirRex
-            $fileContent = $fileContent -notmatch "- .*.md"
-            $fileContent = $fileContent -notmatch "csharp: true"
-            $fileContent = $fileContent -notmatch $inputfileRex
-            $fileContent = $fileContent -notmatch "- .*.json"
-
-            $startNum = ($fileContent | Select-String -Pattern '```').LineNumber[0]
             $configline = ""
             if ($readme) {
                 Write-Host "Updating autorest.md file to config required readme file."
-                $configline = "require:`n- ${readme}`ncsharp: true"
+                $configline = "require:`n- ${readme}`n"
             } elseif ($inputfile) {
                 Write-Host "Updating autorest.md file to update input-file."
                 if ($inputfile.StartsWith('-')) {
-                    $configline = "input-file:`n$inputfile"
+                    $configline = "input-file:`n$inputfile`n"
                 } else {
-                    $configline = "input-file:"  + "$inputfile"
+                    $configline = "input-file:"  + "$inputfile`n"
                 }
             }
 
-            $fileContent[$startNum - 1] += ([Environment]::NewLine + $configline)
-            $fileContent | Set-Content $autorestFilePath
-            if ( !$? ) {
-                Throw "Failed to update autorest.md. exit code: $?"
-            }
+            $inputRegex = "(?:(?:input-file|require)\s*:\s*\r?\n(?:\s*-\s+.*\r?\n)+|(?:input-file|require):\s+.*)"
+            $fileContent = $fileContent -replace $inputRegex, $configline
+            $fileContent | Set-Content $autorestFilePath    
         }
         
         # update autorest.md with configuration
