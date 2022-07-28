@@ -260,28 +260,5 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
                 File.Delete(file);
             }
         }
-        /*
-         * No viable way of testing retry options with BlobServiceClient - Can be specified in constructor but no way to access property or check retry logging info
-         *
-         */
-
-        //[LiveTest]
-        //[Fact]
-        //public async Task IfARetryPolicyIsSpecifiedInTheContainerUrlConstructor_ThenItIsUsed()
-        //{
-        //    using (var batchClient = BatchClient.Open(new FakeBatchServiceClient()))
-        //    {
-        //        var job = batchClient.JobOperations.CreateJob(_jobId, null);
-        //        var container = job.GetOutputStorageContainerUrl(blobClient, TimeSpan.FromMinutes(2));
-
-        //        var taskOutputStorage = new TaskOutputStorage(new Uri(container), _taskId);
-        //        await taskOutputStorage.SaveAsync(TaskOutputKind.TaskOutput, FilePath("TestText1.txt"), "SavedWithLinearRetry2.txt");
-
-        //        var output = taskOutputStorage.GetOutputAsync(TaskOutputKind.TaskOutput, "SavedWithLinearRetry2.txt");
-        //        var blob = output.BlobClient;
-        //        var storageClient = blob.GetParentBlobContainerClient().GetParentBlobServiceClient();
-        //        Assert.IsType<LinearRetry>(storageClient.DefaultRequestOptions.RetryPolicy);
-        //    }
-        //}
     }
 }
