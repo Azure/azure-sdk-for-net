@@ -106,7 +106,7 @@ You can query logs using the `LogsQueryClient.QueryWorkspaceAsync` method. The r
 
 ```C# Snippet:QueryLogsAsTable
 string workspaceId = "<workspace_id>";
-var client = new LogsQueryClient(new DefaultAzureCredential());
+var logsClient = new LogsQueryClient(new DefaultAzureCredential());
 Response<LogsQueryResult> response = await client.QueryWorkspaceAsync(
     workspaceId,
     "AzureActivity | top 10 by TimeGenerated",
@@ -135,7 +135,7 @@ LogsQueryResult
         |---Type
     |---Rows (list of `LogsTableRows` objects)
         |---Count
-|---AllTables (list of `LogsTable` objects)    
+|---AllTables (list of `LogsTable` objects)
 ```
 
 #### Map logs query results to a model
