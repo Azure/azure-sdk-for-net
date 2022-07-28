@@ -220,10 +220,10 @@ namespace Azure.Analytics.Purview.Administration
         /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
         /// 
         /// var data = new {
-        ///     description = "<CollectionDescription>",
-        ///     friendlyName = "<CollectionFriendlyName>",
+        ///     description = "<description>",
+        ///     friendlyName = "<friendlyName>",
         ///     parentCollection = new {
-        ///         referenceName = "<CollectionReferenceName>",
+        ///         referenceName = "<referenceName>",
         ///     },
         /// };
         /// 
@@ -339,10 +339,10 @@ namespace Azure.Analytics.Purview.Administration
         /// var client = new PurviewAccountClient(endpoint, credential).GetPurviewCollectionClient("<collectionName>");
         /// 
         /// var data = new {
-        ///     description = "<CollectionDescription>",
-        ///     friendlyName = "<CollectionFriendlyName>",
+        ///     description = "<description>",
+        ///     friendlyName = "<friendlyName>",
         ///     parentCollection = new {
-        ///         referenceName = "<CollectionReferenceName>",
+        ///         referenceName = "<referenceName>",
         ///     },
         /// };
         /// 

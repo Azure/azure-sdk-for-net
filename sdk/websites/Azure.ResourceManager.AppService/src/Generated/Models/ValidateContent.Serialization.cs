@@ -33,10 +33,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("skuName");
                 writer.WriteStringValue(SkuName);
             }
-            if (Optional.IsDefined(IsNeedLinuxWorkers))
+            if (Optional.IsDefined(NeedLinuxWorkers))
             {
                 writer.WritePropertyName("needLinuxWorkers");
-                writer.WriteBooleanValue(IsNeedLinuxWorkers.Value);
+                writer.WriteBooleanValue(NeedLinuxWorkers.Value);
             }
             if (Optional.IsDefined(IsSpot))
             {

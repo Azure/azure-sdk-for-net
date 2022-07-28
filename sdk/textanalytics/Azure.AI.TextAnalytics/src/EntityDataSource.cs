@@ -12,13 +12,13 @@ namespace Azure.AI.TextAnalytics
     [CodeGenModel("HealthcareEntityLink")]
     public partial class EntityDataSource
     {
-        /// Make constructor internal
         /// <summary> Initializes a new instance of EntityDataSource. </summary>
         /// <param name="name"> Entity Catalog. Examples include: UMLS, CHV, MSH, etc. </param>
         /// <param name="entityId"> Entity id in the given source catalog. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="entityId"/> is null. </exception>
         internal EntityDataSource(string name, string entityId)
         {
+            // See https://github.com/Azure/azure-sdk-for-net/issues/28323 for why this constructor was redefined.
             if (name == null)
             {
                 throw new ArgumentNullException(nameof(name));

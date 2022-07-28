@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The API resource policies. </summary>
@@ -18,14 +20,14 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> Initializes a new instance of LogicApiResourcePolicies. </summary>
         /// <param name="content"> The API level only policies XML as embedded content. </param>
         /// <param name="contentLink"> The content link to the policies. </param>
-        internal LogicApiResourcePolicies(string content, string contentLink)
+        internal LogicApiResourcePolicies(BinaryData content, string contentLink)
         {
             Content = content;
             ContentLink = contentLink;
         }
 
         /// <summary> The API level only policies XML as embedded content. </summary>
-        public string Content { get; }
+        public BinaryData Content { get; }
         /// <summary> The content link to the policies. </summary>
         public string ContentLink { get; }
     }

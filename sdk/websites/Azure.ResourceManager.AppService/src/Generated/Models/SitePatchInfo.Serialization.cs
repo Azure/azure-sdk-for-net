@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("clientCertExclusionPaths");
                 writer.WriteStringValue(ClientCertExclusionPaths);
             }
-            if (Optional.IsDefined(IsHostNamesDisabled))
+            if (Optional.IsDefined(IsHostNameDisabled))
             {
                 writer.WritePropertyName("hostNamesDisabled");
-                writer.WriteBooleanValue(IsHostNamesDisabled.Value);
+                writer.WriteBooleanValue(IsHostNameDisabled.Value);
             }
             if (Optional.IsDefined(CustomDomainVerificationId))
             {
@@ -125,10 +125,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("cloningInfo");
                 writer.WriteObjectValue(CloningInfo);
             }
-            if (Optional.IsDefined(IsHttpOnly))
+            if (Optional.IsDefined(IsHttpsOnly))
             {
                 writer.WritePropertyName("httpsOnly");
-                writer.WriteBooleanValue(IsHttpOnly.Value);
+                writer.WriteBooleanValue(IsHttpsOnly.Value);
             }
             if (Optional.IsDefined(RedundancyMode))
             {

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity"> Managed service identity properties. </param>
+        /// <param name="identity"> Managed service identity properties. Current supported identity types: SystemAssigned, UserAssigned, None. </param>
         /// <param name="provisioningState"> Gets the provisioning state. </param>
         /// <param name="createdOn"> Gets the created time. </param>
         /// <param name="changedOn"> Gets the changed time. </param>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="integrationServiceEnvironment"> The integration service environment. </param>
         /// <param name="definition"> The definition. </param>
         /// <param name="parameters"> The parameters. </param>
-        internal LogicWorkflowData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Models.ManagedServiceIdentity identity, LogicWorkflowProvisioningState? provisioningState, DateTimeOffset? createdOn, DateTimeOffset? changedOn, LogicWorkflowState? state, string version, string accessEndpoint, FlowEndpointsConfiguration endpointsConfiguration, FlowAccessControlConfiguration accessControl, LogicSku sku, LogicResourceReference integrationAccount, LogicResourceReference integrationServiceEnvironment, BinaryData definition, IDictionary<string, LogicWorkflowParameterInfo> parameters) : base(id, name, resourceType, systemData, tags, location)
+        internal LogicWorkflowData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, LogicWorkflowProvisioningState? provisioningState, DateTimeOffset? createdOn, DateTimeOffset? changedOn, LogicWorkflowState? state, string version, string accessEndpoint, FlowEndpointsConfiguration endpointsConfiguration, FlowAccessControlConfiguration accessControl, LogicSku sku, LogicResourceReference integrationAccount, LogicResourceReference integrationServiceEnvironment, BinaryData definition, IDictionary<string, LogicWorkflowParameterInfo> parameters) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             ProvisioningState = provisioningState;
@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.Logic
             Parameters = parameters;
         }
 
-        /// <summary> Managed service identity properties. </summary>
-        public Models.ManagedServiceIdentity Identity { get; set; }
+        /// <summary> Managed service identity properties. Current supported identity types: SystemAssigned, UserAssigned, None. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Gets the provisioning state. </summary>
         public LogicWorkflowProvisioningState? ProvisioningState { get; }
         /// <summary> Gets the created time. </summary>

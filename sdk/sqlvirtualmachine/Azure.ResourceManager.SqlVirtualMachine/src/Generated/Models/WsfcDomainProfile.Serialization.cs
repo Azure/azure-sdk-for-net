@@ -21,10 +21,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 writer.WritePropertyName("domainFqdn");
                 writer.WriteStringValue(DomainFqdn);
             }
-            if (Optional.IsDefined(OuPath))
+            if (Optional.IsDefined(OUPath))
             {
                 writer.WritePropertyName("ouPath");
-                writer.WriteStringValue(OuPath);
+                writer.WriteStringValue(OUPath);
             }
             if (Optional.IsDefined(ClusterBootstrapAccount))
             {

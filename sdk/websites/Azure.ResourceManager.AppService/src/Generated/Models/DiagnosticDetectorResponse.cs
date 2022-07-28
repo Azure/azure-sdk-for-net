@@ -30,18 +30,18 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="startOn"> Start time of the period. </param>
         /// <param name="endOn"> End time of the period. </param>
-        /// <param name="isIssueDetected"> Flag representing Issue was detected. </param>
+        /// <param name="issueDetected"> Flag representing Issue was detected. </param>
         /// <param name="detectorDefinition"> Detector&apos;s definition. </param>
         /// <param name="metrics"> Metrics provided by the detector. </param>
         /// <param name="abnormalTimePeriods"> List of Correlated events found by the detector. </param>
         /// <param name="data"> Additional Data that detector wants to send. </param>
         /// <param name="responseMetaData"> Meta Data. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal DiagnosticDetectorResponse(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? startOn, DateTimeOffset? endOn, bool? isIssueDetected, DetectorDefinition detectorDefinition, IList<DiagnosticMetricSet> metrics, IList<DetectorAbnormalTimePeriod> abnormalTimePeriods, IList<IList<NameValuePair>> data, ResponseMetaData responseMetaData, string kind) : base(id, name, resourceType, systemData)
+        internal DiagnosticDetectorResponse(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? startOn, DateTimeOffset? endOn, bool? issueDetected, DetectorDefinition detectorDefinition, IList<DiagnosticMetricSet> metrics, IList<DetectorAbnormalTimePeriod> abnormalTimePeriods, IList<IList<NameValuePair>> data, ResponseMetaData responseMetaData, string kind) : base(id, name, resourceType, systemData)
         {
             StartOn = startOn;
             EndOn = endOn;
-            IsIssueDetected = isIssueDetected;
+            IssueDetected = issueDetected;
             DetectorDefinition = detectorDefinition;
             Metrics = metrics;
             AbnormalTimePeriods = abnormalTimePeriods;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> End time of the period. </summary>
         public DateTimeOffset? EndOn { get; set; }
         /// <summary> Flag representing Issue was detected. </summary>
-        public bool? IsIssueDetected { get; set; }
+        public bool? IssueDetected { get; set; }
         /// <summary> Detector&apos;s definition. </summary>
         public DetectorDefinition DetectorDefinition { get; set; }
         /// <summary> Metrics provided by the detector. </summary>
