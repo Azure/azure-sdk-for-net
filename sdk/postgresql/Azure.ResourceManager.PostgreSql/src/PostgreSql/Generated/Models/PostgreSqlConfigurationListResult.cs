@@ -15,19 +15,19 @@ namespace Azure.ResourceManager.PostgreSql.Models
     public partial class PostgreSqlConfigurationListResult
     {
         /// <summary> Initializes a new instance of PostgreSqlConfigurationListResult. </summary>
-        internal PostgreSqlConfigurationListResult()
+        public PostgreSqlConfigurationListResult()
         {
             Value = new ChangeTrackingList<PostgreSqlConfigurationData>();
         }
 
         /// <summary> Initializes a new instance of PostgreSqlConfigurationListResult. </summary>
         /// <param name="value"> The list of server configurations. </param>
-        internal PostgreSqlConfigurationListResult(IReadOnlyList<PostgreSqlConfigurationData> value)
+        internal PostgreSqlConfigurationListResult(IList<PostgreSqlConfigurationData> value)
         {
             Value = value;
         }
 
         /// <summary> The list of server configurations. </summary>
-        public IReadOnlyList<PostgreSqlConfigurationData> Value { get; }
+        public IList<PostgreSqlConfigurationData> Value { get; }
     }
 }

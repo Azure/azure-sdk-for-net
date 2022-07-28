@@ -68,6 +68,9 @@ rename-rules:
 
 prompted-enum-values: Default
 
+rename-mapping:
+  DeletedManagedHsmProperties.deletionDate: DeletionOn
+
 directive:
   - from: swagger-document
     where: $.paths
@@ -142,6 +145,7 @@ directive:
       $.Sku.properties.name['x-ms-enum']['name'] = 'KeyVaultSkuName';
       $.Sku['x-ms-client-name'] = 'KeyVaultSku';
       $.DeletedVaultProperties['x-ms-client-name'] = 'DeletedKeyVaultProperties';
+      $.DeletedVaultProperties.properties.deletionDate['x-ms-client-name'] = 'DeletionOn';
       $.DeletedVault['x-ms-client-name'] = 'DeletedKeyVault';
       $.DeletedVaultListResult['x-ms-client-name'] = 'DeletedKeyVaultListResult';
 ```

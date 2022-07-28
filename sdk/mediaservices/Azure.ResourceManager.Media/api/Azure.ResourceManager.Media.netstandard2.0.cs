@@ -1239,7 +1239,7 @@ namespace Azure.ResourceManager.Media.Models
         public System.DateTimeOffset? BeginOn { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyContentKeyLocation ContentKeyLocation { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyContentType ContentType { get { throw null; } set { } }
-        public System.DateTimeOffset? ExpirationOn { get { throw null; } set { } }
+        public System.DateTimeOffset? ExpireOn { get { throw null; } set { } }
         public System.TimeSpan? GracePeriod { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyLicenseType LicenseType { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyPlayRight PlayRight { get { throw null; } set { } }

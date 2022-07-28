@@ -582,7 +582,7 @@ namespace Azure.ResourceManager.AppContainers.Models
     public partial class CertificateProperties
     {
         public CertificateProperties() { }
-        public System.DateTimeOffset? ExpirationOn { get { throw null; } }
+        public System.DateTimeOffset? ExpireOn { get { throw null; } }
         public System.DateTimeOffset? IssueOn { get { throw null; } }
         public string Issuer { get { throw null; } }
         public string Password { get { throw null; } set { } }

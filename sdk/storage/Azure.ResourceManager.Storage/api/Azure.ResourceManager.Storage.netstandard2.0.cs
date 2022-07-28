@@ -1694,7 +1694,7 @@ namespace Azure.ResourceManager.Storage.Models
     public partial class StorageAccountKey
     {
         internal StorageAccountKey() { }
-        public System.DateTimeOffset? CreationOn { get { throw null; } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string KeyName { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.StorageAccountKeyPermission? Permissions { get { throw null; } }
         public string Value { get { throw null; } }
