@@ -24,17 +24,16 @@ namespace Azure.Communication.CallingServer
         public static bool operator !=(Azure.Communication.CallingServer.AcsEventType left, Azure.Communication.CallingServer.AcsEventType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class AddParticipantsFailedEvent : Azure.Communication.CallingServer.CallingServerEventBase
+    public partial class AddParticipantsFailed : Azure.Communication.CallingServer.CallingServerEventBase
     {
-        internal AddParticipantsFailedEvent() { }
+        internal AddParticipantsFailed() { }
         public string CallConnectionId { get { throw null; } }
         public string CorrelationId { get { throw null; } }
         public string OperationContext { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Communication.CommunicationIdentifier> Participants { get { throw null; } }
         public Azure.Communication.CallingServer.ResultInformation ResultInfo { get { throw null; } }
         public string ServerCallId { get { throw null; } }
-        public Azure.Communication.CallingServer.AcsEventType? Type { get { throw null; } }
-        public static Azure.Communication.CallingServer.AddParticipantsFailedEvent Deserialize(string content) { throw null; }
+        public static Azure.Communication.CallingServer.AddParticipantsFailed Deserialize(string content) { throw null; }
     }
     public partial class AddParticipantsOptions
     {
@@ -50,17 +49,16 @@ namespace Azure.Communication.CallingServer
         public string OperationContext { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Communication.CallingServer.CallParticipant> Participants { get { throw null; } }
     }
-    public partial class AddParticipantsSucceededEvent : Azure.Communication.CallingServer.CallingServerEventBase
+    public partial class AddParticipantsSucceeded : Azure.Communication.CallingServer.CallingServerEventBase
     {
-        internal AddParticipantsSucceededEvent() { }
+        internal AddParticipantsSucceeded() { }
         public string CallConnectionId { get { throw null; } }
         public string CorrelationId { get { throw null; } }
         public string OperationContext { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Communication.CommunicationIdentifier> Participants { get { throw null; } }
         public Azure.Communication.CallingServer.ResultInformation ResultInfo { get { throw null; } }
         public string ServerCallId { get { throw null; } }
-        public Azure.Communication.CallingServer.AcsEventType? Type { get { throw null; } }
-        public static Azure.Communication.CallingServer.AddParticipantsSucceededEvent Deserialize(string content) { throw null; }
+        public static Azure.Communication.CallingServer.AddParticipantsSucceeded Deserialize(string content) { throw null; }
     }
     public partial class AnswerCallResult
     {
@@ -68,13 +66,13 @@ namespace Azure.Communication.CallingServer
         public Azure.Communication.CallingServer.CallConnection CallConnection { get { throw null; } }
         public Azure.Communication.CallingServer.CallConnectionProperties CallProperties { get { throw null; } }
     }
-    public partial class CallConnectedEvent : Azure.Communication.CallingServer.CallingServerEventBase
+    public partial class CallConnected : Azure.Communication.CallingServer.CallingServerEventBase
     {
-        internal CallConnectedEvent() { }
+        internal CallConnected() { }
         public string CallConnectionId { get { throw null; } }
         public string CorrelationId { get { throw null; } }
         public string ServerCallId { get { throw null; } }
-        public static Azure.Communication.CallingServer.CallConnectedEvent Deserialize(string content) { throw null; }
+        public static Azure.Communication.CallingServer.CallConnected Deserialize(string content) { throw null; }
     }
     public partial class CallConnection
     {
@@ -130,13 +128,13 @@ namespace Azure.Communication.CallingServer
         public static bool operator !=(Azure.Communication.CallingServer.CallConnectionState left, Azure.Communication.CallingServer.CallConnectionState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class CallDisconnectedEvent : Azure.Communication.CallingServer.CallingServerEventBase
+    public partial class CallDisconnected : Azure.Communication.CallingServer.CallingServerEventBase
     {
-        internal CallDisconnectedEvent() { }
+        internal CallDisconnected() { }
         public string CallConnectionId { get { throw null; } }
         public string CorrelationId { get { throw null; } }
         public string ServerCallId { get { throw null; } }
-        public static Azure.Communication.CallingServer.CallDisconnectedEvent Deserialize(string content) { throw null; }
+        public static Azure.Communication.CallingServer.CallDisconnected Deserialize(string content) { throw null; }
     }
     public partial class CallingServerClient
     {
@@ -241,25 +239,25 @@ namespace Azure.Communication.CallingServer
         public Azure.Communication.PhoneNumberIdentifier CallerId { get { throw null; } set { } }
         public Azure.Communication.CommunicationIdentifier Identifier { get { throw null; } set { } }
     }
-    public partial class CallTransferAcceptedEvent : Azure.Communication.CallingServer.CallingServerEventBase
+    public partial class CallTransferAccepted : Azure.Communication.CallingServer.CallingServerEventBase
     {
-        internal CallTransferAcceptedEvent() { }
+        internal CallTransferAccepted() { }
         public string CallConnectionId { get { throw null; } }
         public string CorrelationId { get { throw null; } }
         public string OperationContext { get { throw null; } }
         public Azure.Communication.CallingServer.ResultInformation ResultInfo { get { throw null; } }
         public string ServerCallId { get { throw null; } }
-        public static Azure.Communication.CallingServer.CallTransferAcceptedEvent Deserialize(string content) { throw null; }
+        public static Azure.Communication.CallingServer.CallTransferAccepted Deserialize(string content) { throw null; }
     }
-    public partial class CallTransferFailedEvent : Azure.Communication.CallingServer.CallingServerEventBase
+    public partial class CallTransferFailed : Azure.Communication.CallingServer.CallingServerEventBase
     {
-        internal CallTransferFailedEvent() { }
+        internal CallTransferFailed() { }
         public string CallConnectionId { get { throw null; } }
         public string CorrelationId { get { throw null; } }
         public string OperationContext { get { throw null; } }
         public Azure.Communication.CallingServer.ResultInformation ResultInfo { get { throw null; } }
         public string ServerCallId { get { throw null; } }
-        public static Azure.Communication.CallingServer.CallTransferFailedEvent Deserialize(string content) { throw null; }
+        public static Azure.Communication.CallingServer.CallTransferFailed Deserialize(string content) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public partial struct ContentTransferOptions : System.IEquatable<Azure.Communication.CallingServer.ContentTransferOptions>
@@ -300,15 +298,14 @@ namespace Azure.Communication.CallingServer
         public override int GetHashCode() { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ParticipantsUpdatedEvent : Azure.Communication.CallingServer.CallingServerEventBase
+    public partial class ParticipantsUpdated : Azure.Communication.CallingServer.CallingServerEventBase
     {
-        internal ParticipantsUpdatedEvent() { }
+        internal ParticipantsUpdated() { }
         public string CallConnectionId { get { throw null; } }
         public string CorrelationId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Communication.CommunicationIdentifier> Participants { get { throw null; } }
         public string ServerCallId { get { throw null; } }
-        public Azure.Communication.CallingServer.AcsEventType? Type { get { throw null; } }
-        public static Azure.Communication.CallingServer.ParticipantsUpdatedEvent Deserialize(string content) { throw null; }
+        public static Azure.Communication.CallingServer.ParticipantsUpdated Deserialize(string content) { throw null; }
     }
     public partial class PlayOptions
     {
@@ -421,12 +418,12 @@ namespace Azure.Communication.CallingServer
     {
         public static Azure.Communication.CallingServer.AddParticipantsResult AddParticipantsResult(System.Collections.Generic.IEnumerable<Azure.Communication.CallingServer.CallParticipant> participants, string operationContext) { throw null; }
         public static Azure.Communication.CallingServer.AnswerCallResult AnswerCallResult(Azure.Communication.CallingServer.CallConnection callConnection, Azure.Communication.CallingServer.CallConnectionProperties callProperties) { throw null; }
-        public static Azure.Communication.CallingServer.CallConnectedEvent CallConnectedEvent(Azure.Communication.CallingServer.AcsEventType eventType = default(Azure.Communication.CallingServer.AcsEventType), string callConnectionId = null, string serverCallId = null, string correlationId = null) { throw null; }
+        public static Azure.Communication.CallingServer.CallConnected CallConnected(Azure.Communication.CallingServer.AcsEventType eventType = default(Azure.Communication.CallingServer.AcsEventType), string callConnectionId = null, string serverCallId = null, string correlationId = null) { throw null; }
         public static Azure.Communication.CallingServer.CallConnectionProperties CallConnectionProperties(string callConnectionId, string serverCallId, Azure.Communication.CallingServer.CallSource callSource, System.Collections.Generic.IEnumerable<Azure.Communication.CommunicationIdentifier> targets, Azure.Communication.CallingServer.CallConnectionState callConnectionState, string subject, System.Uri callbackUri) { throw null; }
-        public static Azure.Communication.CallingServer.CallDisconnectedEvent CallDisconnectedEvent(Azure.Communication.CallingServer.AcsEventType eventType = default(Azure.Communication.CallingServer.AcsEventType), string callConnectionId = null, string serverCallId = null, string correlationId = null) { throw null; }
+        public static Azure.Communication.CallingServer.CallDisconnected CallDisconnected(Azure.Communication.CallingServer.AcsEventType eventType = default(Azure.Communication.CallingServer.AcsEventType), string callConnectionId = null, string serverCallId = null, string correlationId = null) { throw null; }
         public static Azure.Communication.CallingServer.CallParticipant CallParticipant(Azure.Communication.CommunicationIdentifier identifier, bool isMuted) { throw null; }
-        public static Azure.Communication.CallingServer.CallTransferAcceptedEvent CallTransferAcceptedEvent(string operationContext = null, Azure.Communication.CallingServer.ResultInformation resultInfo = null, Azure.Communication.CallingServer.AcsEventType eventType = default(Azure.Communication.CallingServer.AcsEventType), string callConnectionId = null, string serverCallId = null, string correlationId = null) { throw null; }
-        public static Azure.Communication.CallingServer.CallTransferFailedEvent CallTransferFailedEvent(string operationContext = null, Azure.Communication.CallingServer.ResultInformation resultInfo = null, Azure.Communication.CallingServer.AcsEventType eventType = default(Azure.Communication.CallingServer.AcsEventType), string callConnectionId = null, string serverCallId = null, string correlationId = null) { throw null; }
+        public static Azure.Communication.CallingServer.CallTransferAccepted CallTransferAccepted(string operationContext = null, Azure.Communication.CallingServer.ResultInformation resultInfo = null, Azure.Communication.CallingServer.AcsEventType eventType = default(Azure.Communication.CallingServer.AcsEventType), string callConnectionId = null, string serverCallId = null, string correlationId = null) { throw null; }
+        public static Azure.Communication.CallingServer.CallTransferFailed CallTransferFailed(string operationContext = null, Azure.Communication.CallingServer.ResultInformation resultInfo = null, Azure.Communication.CallingServer.AcsEventType eventType = default(Azure.Communication.CallingServer.AcsEventType), string callConnectionId = null, string serverCallId = null, string correlationId = null) { throw null; }
         public static Azure.Communication.CallingServer.CreateCallResult CreateCallResult(Azure.Communication.CallingServer.CallConnection callConnection, Azure.Communication.CallingServer.CallConnectionProperties callProperties) { throw null; }
         public static Azure.Communication.CallingServer.RecordingStatusResult RecordingStatusResult(string recordingId = null, Azure.Communication.CallingServer.RecordingStatus? recordingStatus = default(Azure.Communication.CallingServer.RecordingStatus?)) { throw null; }
         public static Azure.Communication.CallingServer.RemoveParticipantsResult RemoveParticipantsResult(string operationContext = null) { throw null; }

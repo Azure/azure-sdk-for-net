@@ -11,34 +11,40 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    /// <summary> The ParticipantsUpdatedEvent. </summary>
-    internal partial class ParticipantsUpdatedEventInternal
+    /// <summary> The AddParticipantsSucceededEvent. </summary>
+    internal partial class AddParticipantsSucceededInternal
     {
-        /// <summary> Initializes a new instance of ParticipantsUpdatedEventInternal. </summary>
-        internal ParticipantsUpdatedEventInternal()
+        /// <summary> Initializes a new instance of AddParticipantsSucceededInternal. </summary>
+        internal AddParticipantsSucceededInternal()
         {
             Participants = new ChangeTrackingList<CommunicationIdentifierModel>();
         }
 
-        /// <summary> Initializes a new instance of ParticipantsUpdatedEventInternal. </summary>
-        /// <param name="participants"> List of current participants in the call. </param>
-        /// <param name="type"></param>
+        /// <summary> Initializes a new instance of AddParticipantsSucceededInternal. </summary>
+        /// <param name="operationContext"> Operation context. </param>
+        /// <param name="resultInfo"></param>
+        /// <param name="participants"> Participants added. </param>
+        /// <param name="eventType"></param>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
-        internal ParticipantsUpdatedEventInternal(IReadOnlyList<CommunicationIdentifierModel> participants, AcsEventType? type, string callConnectionId, string serverCallId, string correlationId)
+        internal AddParticipantsSucceededInternal(string operationContext, ResultInformation resultInfo, IReadOnlyList<CommunicationIdentifierModel> participants, AcsEventType eventType, string callConnectionId, string serverCallId, string correlationId)
         {
+            OperationContext = operationContext;
+            ResultInfo = resultInfo;
             Participants = participants;
-            Type = type;
+            EventType = eventType;
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
             CorrelationId = correlationId;
         }
 
-        /// <summary> List of current participants in the call. </summary>
+        /// <summary> Operation context. </summary>
+        public string OperationContext { get; }
+        /// <summary> Gets the result info. </summary>
+        public ResultInformation ResultInfo { get; }
+        /// <summary> Participants added. </summary>
         public IReadOnlyList<CommunicationIdentifierModel> Participants { get; }
-        /// <summary> Gets the type. </summary>
-        public AcsEventType? Type { get; }
         /// <summary> Call connection ID. </summary>
         public string CallConnectionId { get; }
         /// <summary> Server call ID. </summary>

@@ -8,19 +8,19 @@
 namespace Azure.Communication.CallingServer
 {
     /// <summary> The CallConnectedEvent. </summary>
-    public partial class CallConnectedEvent
+    public partial class CallConnected
     {
-        /// <summary> Initializes a new instance of CallConnectedEvent. </summary>
-        internal CallConnectedEvent()
+        /// <summary> Initializes a new instance of CallConnected. </summary>
+        internal CallConnected()
         {
         }
 
-        /// <summary> Initializes a new instance of CallConnectedEvent. </summary>
+        /// <summary> Initializes a new instance of CallConnected. </summary>
         /// <param name="eventType"></param>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
-        internal CallConnectedEvent(AcsEventType eventType, string callConnectionId, string serverCallId, string correlationId)
+        internal CallConnected(AcsEventType eventType, string callConnectionId, string serverCallId, string correlationId)
         {
             EventType = eventType;
             CallConnectionId = callConnectionId;

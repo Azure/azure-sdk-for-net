@@ -5,20 +5,17 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Communication;
 using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    internal partial class AddParticipantsFailedEventInternal
+    public partial class CallTransferFailed
     {
-        internal static AddParticipantsFailedEventInternal DeserializeAddParticipantsFailedEventInternal(JsonElement element)
+        internal static CallTransferFailed DeserializeCallTransferFailed(JsonElement element)
         {
             Optional<string> operationContext = default;
             Optional<ResultInformation> resultInfo = default;
-            Optional<IReadOnlyList<CommunicationIdentifierModel>> participants = default;
             Optional<AcsEventType> type = default;
             Optional<string> callConnectionId = default;
             Optional<string> serverCallId = default;
@@ -38,21 +35,6 @@ namespace Azure.Communication.CallingServer
                         continue;
                     }
                     resultInfo = ResultInformation.DeserializeResultInformation(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("participants"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    List<CommunicationIdentifierModel> array = new List<CommunicationIdentifierModel>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(item));
-                    }
-                    participants = array;
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -81,7 +63,7 @@ namespace Azure.Communication.CallingServer
                     continue;
                 }
             }
-            return new AddParticipantsFailedEventInternal(operationContext.Value, resultInfo.Value, Optional.ToList(participants), Optional.ToNullable(type), callConnectionId.Value, serverCallId.Value, correlationId.Value);
+            return new CallTransferFailed(operationContext.Value, resultInfo.Value, type, callConnectionId.Value, serverCallId.Value, correlationId.Value);
         }
     }
 }

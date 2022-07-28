@@ -10,19 +10,19 @@ namespace Azure.Communication.CallingServer
     /// The call disconnected event.
     /// </summary>
     [CodeGenModel("CallDisconnectedEvent", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
-    public partial class CallDisconnectedEvent : CallingServerEventBase
+    public partial class CallDisconnected : CallingServerEventBase
     {
         /// <summary>
-        /// Deserialize <see cref="CallDisconnectedEvent"/> event.
+        /// Deserialize <see cref="CallDisconnected"/> event.
         /// </summary>
         /// <param name="content">The json content.</param>
-        /// <returns>The new <see cref="CallDisconnectedEvent"/> object.</returns>
-        public static CallDisconnectedEvent Deserialize(string content)
+        /// <returns>The new <see cref="CallDisconnected"/> object.</returns>
+        public static CallDisconnected Deserialize(string content)
         {
             using var document = JsonDocument.Parse(content);
             JsonElement element = document.RootElement;
 
-            return DeserializeCallDisconnectedEvent(element);
+            return DeserializeCallDisconnected(element);
         }
     }
 }

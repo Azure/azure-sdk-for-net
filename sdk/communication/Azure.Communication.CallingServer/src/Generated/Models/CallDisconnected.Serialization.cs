@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    public partial class CallConnectedEvent
+    public partial class CallDisconnected
     {
-        internal static CallConnectedEvent DeserializeCallConnectedEvent(JsonElement element)
+        internal static CallDisconnected DeserializeCallDisconnected(JsonElement element)
         {
             Optional<AcsEventType> type = default;
             Optional<string> callConnectionId = default;
@@ -46,7 +46,7 @@ namespace Azure.Communication.CallingServer
                     continue;
                 }
             }
-            return new CallConnectedEvent(type, callConnectionId.Value, serverCallId.Value, correlationId.Value);
+            return new CallDisconnected(type, callConnectionId.Value, serverCallId.Value, correlationId.Value);
         }
     }
 }

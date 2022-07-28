@@ -10,33 +10,16 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    public partial class CallTransferAcceptedEvent
+    public partial class CallConnected
     {
-        internal static CallTransferAcceptedEvent DeserializeCallTransferAcceptedEvent(JsonElement element)
+        internal static CallConnected DeserializeCallConnected(JsonElement element)
         {
-            Optional<string> operationContext = default;
-            Optional<ResultInformation> resultInfo = default;
             Optional<AcsEventType> type = default;
             Optional<string> callConnectionId = default;
             Optional<string> serverCallId = default;
             Optional<string> correlationId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("operationContext"))
-                {
-                    operationContext = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("resultInfo"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    resultInfo = ResultInformation.DeserializeResultInformation(property.Value);
-                    continue;
-                }
                 if (property.NameEquals("type"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -63,7 +46,7 @@ namespace Azure.Communication.CallingServer
                     continue;
                 }
             }
-            return new CallTransferAcceptedEvent(operationContext.Value, resultInfo.Value, type, callConnectionId.Value, serverCallId.Value, correlationId.Value);
+            return new CallConnected(type, callConnectionId.Value, serverCallId.Value, correlationId.Value);
         }
     }
 }

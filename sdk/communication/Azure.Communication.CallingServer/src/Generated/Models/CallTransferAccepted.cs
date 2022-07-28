@@ -5,35 +5,28 @@
 
 #nullable disable
 
-using System.Collections.Generic;
-using Azure.Communication;
-using Azure.Core;
-
 namespace Azure.Communication.CallingServer
 {
-    /// <summary> The AddParticipantsFailedEvent. </summary>
-    internal partial class AddParticipantsFailedEventInternal
+    /// <summary> The CallTransferAcceptedEvent. </summary>
+    public partial class CallTransferAccepted
     {
-        /// <summary> Initializes a new instance of AddParticipantsFailedEventInternal. </summary>
-        internal AddParticipantsFailedEventInternal()
+        /// <summary> Initializes a new instance of CallTransferAccepted. </summary>
+        internal CallTransferAccepted()
         {
-            Participants = new ChangeTrackingList<CommunicationIdentifierModel>();
         }
 
-        /// <summary> Initializes a new instance of AddParticipantsFailedEventInternal. </summary>
+        /// <summary> Initializes a new instance of CallTransferAccepted. </summary>
         /// <param name="operationContext"> Operation context. </param>
         /// <param name="resultInfo"></param>
-        /// <param name="participants"> Participants failed to be added. </param>
-        /// <param name="type"></param>
+        /// <param name="eventType"></param>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
-        internal AddParticipantsFailedEventInternal(string operationContext, ResultInformation resultInfo, IReadOnlyList<CommunicationIdentifierModel> participants, AcsEventType? type, string callConnectionId, string serverCallId, string correlationId)
+        internal CallTransferAccepted(string operationContext, ResultInformation resultInfo, AcsEventType eventType, string callConnectionId, string serverCallId, string correlationId)
         {
             OperationContext = operationContext;
             ResultInfo = resultInfo;
-            Participants = participants;
-            Type = type;
+            EventType = eventType;
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
             CorrelationId = correlationId;
@@ -43,10 +36,6 @@ namespace Azure.Communication.CallingServer
         public string OperationContext { get; }
         /// <summary> Gets the result info. </summary>
         public ResultInformation ResultInfo { get; }
-        /// <summary> Participants failed to be added. </summary>
-        public IReadOnlyList<CommunicationIdentifierModel> Participants { get; }
-        /// <summary> Gets the type. </summary>
-        public AcsEventType? Type { get; }
         /// <summary> Call connection ID. </summary>
         public string CallConnectionId { get; }
         /// <summary> Server call ID. </summary>

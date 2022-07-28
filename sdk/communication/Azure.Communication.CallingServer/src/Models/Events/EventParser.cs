@@ -11,72 +11,41 @@ namespace Azure.Communication.CallingServer
     /// </summary>
     public static class EventParser
     {
-        #region event types
-        private struct EventTypes
-        {
-            internal const string CallConnectedEventType = "Microsoft.Communication.CallConnected";
-
-            internal const string CallDisconnectedEventType = "Microsoft.Communication.CallDisconnected";
-
-            internal const string ToneReceivedEventType = "Microsoft.Communication.ToneReceived";
-
-            internal const string CallRecordingStateChangedEventType = "Microsoft.Communication.CallRecordingStateChanged";
-
-            internal const string PlayAudioResultEventType = "Microsoft.Communication.PlayAudioResult";
-
-            internal const string ParticipantsUpdatedEventType = "Microsoft.Communication.ParticipantsUpdated";
-
-            internal const string AddParticipantsSucceededEventType = "Microsoft.Communication.AddParticipantsSucceeded";
-
-            internal const string AddParticipantsFailedEventType = "Microsoft.Communication.AddParticipantsFailed";
-
-            internal const string CallTransferAcceptedEventType = "Microsoft.Communication.CallTransferAccepted";
-
-            internal const string CallTransferFailedEventType = "Microsoft.Communication.CallTransferFailed";
-        }
-        #endregion
+        private const string EventPrefix = "Microsoft.Communication.";
 
         /// <summary>
         /// Parsing an event from json.
         /// </summary>
         /// <param name="content"></param>
         /// <returns></returns>
-        public static CallingServerEventBase Parse(string content) {
+        public static CallingServerEventBase Parse(string content)
+        {
             CloudEvent cloudEvent = CloudEvent.Parse(BinaryData.FromString(content));
+            var eventType = cloudEvent.Type.Replace(EventPrefix, "");
 
             if (cloudEvent != null && cloudEvent.Data != null)
             {
-                if (cloudEvent.Type.Equals(EventTypes.AddParticipantsFailedEventType))
+                switch (eventType)
                 {
-                    return AddParticipantsFailedEvent.Deserialize(cloudEvent.Data.ToString());
-                }
-                else if (cloudEvent.Type.Equals(EventTypes.AddParticipantsSucceededEventType))
-                {
-                    return AddParticipantsSucceededEvent.Deserialize(cloudEvent.Data.ToString());
-                }
-                else if (cloudEvent.Type.Equals(EventTypes.CallConnectedEventType))
-                {
-                    return CallConnectedEvent.Deserialize(cloudEvent.Data.ToString());
-                }
-                else if (cloudEvent.Type.Equals(EventTypes.CallDisconnectedEventType))
-                {
-                    return CallDisconnectedEvent.Deserialize(cloudEvent.Data.ToString());
-                }
-                else if (cloudEvent.Type.Equals(EventTypes.CallTransferAcceptedEventType))
-                {
-                    return CallTransferAcceptedEvent.Deserialize(cloudEvent.Data.ToString());
-                }
-                else if (cloudEvent.Type.Equals(EventTypes.CallTransferFailedEventType))
-                {
-                    return CallTransferFailedEvent.Deserialize(cloudEvent.Data.ToString());
-                }
-                else if (cloudEvent.Type.Equals(EventTypes.ParticipantsUpdatedEventType))
-                {
-                    return ParticipantsUpdatedEvent.Deserialize(cloudEvent.Data.ToString());
+                    case nameof(AddParticipantsFailed):
+                        return AddParticipantsFailed.Deserialize(cloudEvent.Data.ToString());
+                    case nameof(AddParticipantsSucceeded):
+                        return AddParticipantsSucceeded.Deserialize(cloudEvent.Data.ToString());
+                    case nameof(CallConnected):
+                        return CallConnected.Deserialize(cloudEvent.Data.ToString());
+                    case nameof(CallDisconnected):
+                        return CallDisconnected.Deserialize(cloudEvent.Data.ToString());
+                    case nameof(CallTransferAccepted):
+                        return CallTransferAccepted.Deserialize(cloudEvent.Data.ToString());
+                    case nameof(CallTransferFailed):
+                        return CallTransferFailed.Deserialize(cloudEvent.Data.ToString());
+                    case nameof(ParticipantsUpdated):
+                        return ParticipantsUpdated.Deserialize(cloudEvent.Data.ToString());
+                    default:
+                        return null;
                 }
             }
-
             return null;
         }
-    }
+     }
 }

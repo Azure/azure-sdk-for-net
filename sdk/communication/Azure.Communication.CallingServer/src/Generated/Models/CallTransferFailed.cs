@@ -7,22 +7,22 @@
 
 namespace Azure.Communication.CallingServer
 {
-    /// <summary> The CallTransferAcceptedEvent. </summary>
-    public partial class CallTransferAcceptedEvent
+    /// <summary> The CallTransferFailedEvent. </summary>
+    public partial class CallTransferFailed
     {
-        /// <summary> Initializes a new instance of CallTransferAcceptedEvent. </summary>
-        internal CallTransferAcceptedEvent()
+        /// <summary> Initializes a new instance of CallTransferFailed. </summary>
+        internal CallTransferFailed()
         {
         }
 
-        /// <summary> Initializes a new instance of CallTransferAcceptedEvent. </summary>
+        /// <summary> Initializes a new instance of CallTransferFailed. </summary>
         /// <param name="operationContext"> Operation context. </param>
         /// <param name="resultInfo"></param>
         /// <param name="eventType"></param>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
-        internal CallTransferAcceptedEvent(string operationContext, ResultInformation resultInfo, AcsEventType eventType, string callConnectionId, string serverCallId, string correlationId)
+        internal CallTransferFailed(string operationContext, ResultInformation resultInfo, AcsEventType eventType, string callConnectionId, string serverCallId, string correlationId)
         {
             OperationContext = operationContext;
             ResultInfo = resultInfo;

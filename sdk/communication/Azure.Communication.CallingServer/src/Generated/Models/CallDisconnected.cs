@@ -7,35 +7,26 @@
 
 namespace Azure.Communication.CallingServer
 {
-    /// <summary> The CallTransferFailedEvent. </summary>
-    public partial class CallTransferFailedEvent
+    /// <summary> The CallDisconnectedEvent. </summary>
+    public partial class CallDisconnected
     {
-        /// <summary> Initializes a new instance of CallTransferFailedEvent. </summary>
-        internal CallTransferFailedEvent()
+        /// <summary> Initializes a new instance of CallDisconnected. </summary>
+        internal CallDisconnected()
         {
         }
 
-        /// <summary> Initializes a new instance of CallTransferFailedEvent. </summary>
-        /// <param name="operationContext"> Operation context. </param>
-        /// <param name="resultInfo"></param>
+        /// <summary> Initializes a new instance of CallDisconnected. </summary>
         /// <param name="eventType"></param>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
-        internal CallTransferFailedEvent(string operationContext, ResultInformation resultInfo, AcsEventType eventType, string callConnectionId, string serverCallId, string correlationId)
+        internal CallDisconnected(AcsEventType eventType, string callConnectionId, string serverCallId, string correlationId)
         {
-            OperationContext = operationContext;
-            ResultInfo = resultInfo;
             EventType = eventType;
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
             CorrelationId = correlationId;
         }
-
-        /// <summary> Operation context. </summary>
-        public string OperationContext { get; }
-        /// <summary> Gets the result info. </summary>
-        public ResultInformation ResultInfo { get; }
         /// <summary> Call connection ID. </summary>
         public string CallConnectionId { get; }
         /// <summary> Server call ID. </summary>

@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    public partial class CallTransferFailedEvent
+    public partial class CallTransferAccepted
     {
-        internal static CallTransferFailedEvent DeserializeCallTransferFailedEvent(JsonElement element)
+        internal static CallTransferAccepted DeserializeCallTransferAccepted(JsonElement element)
         {
             Optional<string> operationContext = default;
             Optional<ResultInformation> resultInfo = default;
@@ -63,7 +63,7 @@ namespace Azure.Communication.CallingServer
                     continue;
                 }
             }
-            return new CallTransferFailedEvent(operationContext.Value, resultInfo.Value, type, callConnectionId.Value, serverCallId.Value, correlationId.Value);
+            return new CallTransferAccepted(operationContext.Value, resultInfo.Value, type, callConnectionId.Value, serverCallId.Value, correlationId.Value);
         }
     }
 }

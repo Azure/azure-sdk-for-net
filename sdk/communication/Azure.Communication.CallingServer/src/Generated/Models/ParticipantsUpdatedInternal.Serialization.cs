@@ -5,21 +5,39 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Communication;
 using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    public partial class CallDisconnectedEvent
+    internal partial class ParticipantsUpdatedInternal
     {
-        internal static CallDisconnectedEvent DeserializeCallDisconnectedEvent(JsonElement element)
+        internal static ParticipantsUpdatedInternal DeserializeParticipantsUpdatedInternal(JsonElement element)
         {
+            Optional<IReadOnlyList<CommunicationIdentifierModel>> participants = default;
             Optional<AcsEventType> type = default;
             Optional<string> callConnectionId = default;
             Optional<string> serverCallId = default;
             Optional<string> correlationId = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("participants"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<CommunicationIdentifierModel> array = new List<CommunicationIdentifierModel>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(item));
+                    }
+                    participants = array;
+                    continue;
+                }
                 if (property.NameEquals("type"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -46,7 +64,7 @@ namespace Azure.Communication.CallingServer
                     continue;
                 }
             }
-            return new CallDisconnectedEvent(type, callConnectionId.Value, serverCallId.Value, correlationId.Value);
+            return new ParticipantsUpdatedInternal(Optional.ToList(participants), type, callConnectionId.Value, serverCallId.Value, correlationId.Value);
         }
     }
 }

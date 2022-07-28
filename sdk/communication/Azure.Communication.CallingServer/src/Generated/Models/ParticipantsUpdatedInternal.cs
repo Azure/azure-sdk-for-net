@@ -5,28 +5,38 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+using Azure.Communication;
+using Azure.Core;
+
 namespace Azure.Communication.CallingServer
 {
-    /// <summary> The CallDisconnectedEvent. </summary>
-    public partial class CallDisconnectedEvent
+    /// <summary> The ParticipantsUpdatedEvent. </summary>
+    internal partial class ParticipantsUpdatedInternal
     {
-        /// <summary> Initializes a new instance of CallDisconnectedEvent. </summary>
-        internal CallDisconnectedEvent()
+        /// <summary> Initializes a new instance of ParticipantsUpdatedInternal. </summary>
+        internal ParticipantsUpdatedInternal()
         {
+            Participants = new ChangeTrackingList<CommunicationIdentifierModel>();
         }
 
-        /// <summary> Initializes a new instance of CallDisconnectedEvent. </summary>
+        /// <summary> Initializes a new instance of ParticipantsUpdatedInternal. </summary>
+        /// <param name="participants"> List of current participants in the call. </param>
         /// <param name="eventType"></param>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
-        internal CallDisconnectedEvent(AcsEventType eventType, string callConnectionId, string serverCallId, string correlationId)
+        internal ParticipantsUpdatedInternal(IReadOnlyList<CommunicationIdentifierModel> participants, AcsEventType eventType, string callConnectionId, string serverCallId, string correlationId)
         {
+            Participants = participants;
             EventType = eventType;
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
             CorrelationId = correlationId;
         }
+
+        /// <summary> List of current participants in the call. </summary>
+        public IReadOnlyList<CommunicationIdentifierModel> Participants { get; }
         /// <summary> Call connection ID. </summary>
         public string CallConnectionId { get; }
         /// <summary> Server call ID. </summary>

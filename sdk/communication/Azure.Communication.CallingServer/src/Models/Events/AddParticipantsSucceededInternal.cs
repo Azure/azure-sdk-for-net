@@ -10,7 +10,10 @@ namespace Azure.Communication.CallingServer
     /// The add participants succeeded event internal.
     /// </summary>
     [CodeGenModel("AddParticipantsSucceededEvent", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
-    internal partial class AddParticipantsSucceededEventInternal
+    internal partial class AddParticipantsSucceededInternal
     {
+        /// <summary> Gets the Event type. </summary>
+        [CodeGenMember("Type")]
+        public AcsEventType EventType { get; }
     }
 }

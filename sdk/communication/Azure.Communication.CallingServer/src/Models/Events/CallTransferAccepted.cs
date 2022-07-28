@@ -10,19 +10,19 @@ namespace Azure.Communication.CallingServer
     /// The call transfer accepted event.
     /// </summary>
     [CodeGenModel("CallTransferAcceptedEvent", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
-    public partial class CallTransferAcceptedEvent : CallingServerEventBase
+    public partial class CallTransferAccepted : CallingServerEventBase
     {
         /// <summary>
-        /// Deserialize <see cref="CallTransferAcceptedEvent"/> event.
+        /// Deserialize <see cref="CallTransferAccepted"/> event.
         /// </summary>
         /// <param name="content">The json content.</param>
-        /// <returns>The new <see cref="CallTransferAcceptedEvent"/> object.</returns>
-        public static CallTransferAcceptedEvent Deserialize(string content)
+        /// <returns>The new <see cref="CallTransferAccepted"/> object.</returns>
+        public static CallTransferAccepted Deserialize(string content)
         {
             using var document = JsonDocument.Parse(content);
             JsonElement element = document.RootElement;
 
-            return DeserializeCallTransferAcceptedEvent(element);
+            return DeserializeCallTransferAccepted(element);
         }
     }
 }
