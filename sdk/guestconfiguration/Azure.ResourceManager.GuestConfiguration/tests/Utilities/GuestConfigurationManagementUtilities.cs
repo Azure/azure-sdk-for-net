@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.GuestConfiguration.Tests.Utilities
         public const string DefaultAssignmentName = "AuditSecureProtocol";
 
         public const string VMSSRG = "aashishDeleteRG";
-        public const string VMSSName = "vmss6";
-        public const string VMSSAssignmentName = "EnforcePasswordHistory$pid23q5eseudwr5y";
-        public const string VMSSReportID = "21a601c0-f39e-48a0-82f2-7eb17e2c899c";
+        public const string VMSSName = "vmss1";
+        public const string VMSSAssignmentName = "EnforcePasswordHistory$pidrt3t6jlihetr2";
+        public const string VMSSReportID = "521eacf2-fbc8-4bb9-8ca3-05e336803416";
     }
 }

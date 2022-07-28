@@ -20,9 +20,9 @@ namespace GuestConfiguration.Tests.ScenarioTests
         private const string AssignmentName = "AuditSecureProtocol";
 
         private const string VMSSRG = "aashishDeleteRG";
-        private const string VMSSName = "vmss6";
-        private const string VMSSAssignmentName = "EnforcePasswordHistory$pid23q5eseudwr5y";
-        private const string VMSSReportID = "21a601c0-f39e-48a0-82f2-7eb17e2c899c";
+        private const string VMSSName = "vmss1";
+        private const string VMSSAssignmentName = "EnforcePasswordHistory$pidrt3t6jlihetr2";
+        private const string VMSSReportID = "521eacf2-fbc8-4bb9-8ca3-05e336803416";
 
         [Fact]
         public void CanCreateGetUpdateGuestConfigurationAssignment()

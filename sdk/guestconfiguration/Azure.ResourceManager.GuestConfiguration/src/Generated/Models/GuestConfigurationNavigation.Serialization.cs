@@ -51,8 +51,15 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             }
             if (Optional.IsDefined(AssignmentType))
             {
-                writer.WritePropertyName("assignmentType");
-                writer.WriteStringValue(AssignmentType.Value.ToString());
+                if (AssignmentType != null)
+                {
+                    writer.WritePropertyName("assignmentType");
+                    writer.WriteStringValue(AssignmentType.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("assignmentType");
+                }
             }
             if (Optional.IsCollectionDefined(ConfigurationParameter))
             {
@@ -84,7 +91,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             Optional<string> version = default;
             Optional<Uri> contentUri = default;
             Optional<string> contentHash = default;
-            Optional<AssignmentType> assignmentType = default;
+            Optional<AssignmentType?> assignmentType = default;
             Optional<string> assignmentSource = default;
             Optional<string> contentType = default;
             Optional<IList<ConfigurationParameter>> configurationParameter = default;
@@ -131,7 +138,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        assignmentType = null;
                         continue;
                     }
                     assignmentType = new AssignmentType(property.Value.GetString());

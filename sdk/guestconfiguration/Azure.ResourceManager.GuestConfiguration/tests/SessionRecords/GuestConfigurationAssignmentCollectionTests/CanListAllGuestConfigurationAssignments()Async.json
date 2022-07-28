@@ -1,0 +1,277 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-093e64aa70ceff4fb42b824c432e2d9a-b6f8ce0fd7774d40-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "e98139c93c53f06754a73d79a8ff92cb",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "456",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 28 Jul 2022 21:24:39 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "16ef88d1-29df-4cda-a1ac-5332748c81fd",
+        "x-ms-ratelimit-remaining-subscription-reads": "11984",
+        "x-ms-request-id": "16ef88d1-29df-4cda-a1ac-5332748c81fd",
+        "x-ms-routing-request-id": "WESTUS2:20220728T212439Z:16ef88d1-29df-4cda-a1ac-5332748c81fd"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071",
+        "authorizationSource": "Bypassed",
+        "managedByTenants": [
+          {
+            "tenantId": "2f4a9838-26b7-47ee-be60-ccc1fdec5953"
+          }
+        ],
+        "subscriptionId": "f66367e1-cf7d-407b-ba39-53230cc79071",
+        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+        "displayName": "MGMT GCRP Package Test 001",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourcegroups/GuestConfigurationSDKTestRecord?api-version=2021-04-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-a1fc8bc45b4dce46b88b7810cf2a3438-fef05e500efe004e-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.0 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "d5ee34f92a96cc5d18ecc7ef2ba2da7a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "276",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 28 Jul 2022 21:24:39 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "a1d16965-8773-4188-84b1-7d0a4ff74ef0",
+        "x-ms-ratelimit-remaining-subscription-reads": "11983",
+        "x-ms-request-id": "a1d16965-8773-4188-84b1-7d0a4ff74ef0",
+        "x-ms-routing-request-id": "WESTUS2:20220728T212440Z:a1d16965-8773-4188-84b1-7d0a4ff74ef0"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GuestConfigurationSDKTestRecord",
+        "name": "GuestConfigurationSDKTestRecord",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "centraluseuap",
+        "tags": {},
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GuestConfigurationSDKTestRecord/providers/Microsoft.Compute/virtualMachines/SDKTestRecordVM002/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments?api-version=2022-01-25",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-2ff645ee8c27c148970a20f59757319e-3476fcf6427ed14e-00",
+        "User-Agent": "azsdk-net-ResourceManager.GuestConfiguration/1.0.0-alpha.20220728.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "4796c86fcd0e8659095cbbc8135e6638",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "6189",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 28 Jul 2022 21:24:39 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "37c8039a-4ca3-40f0-abf1-5bcdfcc6aa4f",
+        "x-ms-ratelimit-remaining-subscription-reads": "11982",
+        "x-ms-request-id": "37c8039a-4ca3-40f0-abf1-5bcdfcc6aa4f",
+        "x-ms-routing-request-id": "WESTUS2:20220728T212440Z:37c8039a-4ca3-40f0-abf1-5bcdfcc6aa4f",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "location": "westcentralus",
+            "id": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GuestConfigurationSDKTestRecord/providers/Microsoft.Compute/virtualMachines/SDKTestRecordVM002/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AuditSecureProtocol",
+            "name": "AuditSecureProtocol",
+            "properties": {
+              "complianceStatus": "NonCompliant",
+              "assignmentHash": "",
+              "parameterHash": "PQ==",
+              "latestReportId": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GuestConfigurationSDKTestRecord/providers/Microsoft.Compute/virtualMachines/SDKTestRecordVM002/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/AuditSecureProtocol/reports/262bb468-e919-4b5e-9167-c0979deb8c46",
+              "lastComplianceStatusChecked": "2022-07-28T21:21:31Z",
+              "context": null,
+              "guestConfiguration": {
+                "kind": null,
+                "name": "AuditSecureProtocol",
+                "version": "1.0.0.3",
+                "contentUri": null,
+                "contentHash": null,
+                "contentType": null,
+                "assignmentType": "ApplyAndAutoCorrect",
+                "assignmentSource": null,
+                "configurationParameter": [
+                  {
+                    "name": null,
+                    "value": null
+                  }
+                ],
+                "configurationProtectedParameter": [],
+                "configurationSetting": {
+                  "configurationMode": "MonitorOnly",
+                  "allowModuleOverwrite": false,
+                  "actionAfterReboot": "",
+                  "refreshFrequencyMins": 5,
+                  "rebootIfNeeded": true,
+                  "configurationModeFrequencyMins": 15
+                }
+              },
+              "provisioningState": null,
+              "resourceType": null,
+              "vmssVMList": null
+            }
+          },
+          {
+            "location": "centraluseuap",
+            "id": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GUESTCONFIGURATIONSDKTESTRECORD/providers/Microsoft.Compute/virtualMachines/SDKTestRecordVM002/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/PasswordPolicy_msid110",
+            "name": "PasswordPolicy_msid110",
+            "properties": {
+              "complianceStatus": "Compliant",
+              "assignmentHash": "50EB9FA91B3EB884E66FA07799A8BAB6962E6702FD11BC1097E0051EA9732F6F.E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+              "parameterHash": "",
+              "latestReportId": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GuestConfigurationSDKTestRecord/providers/Microsoft.Compute/virtualMachines/SDKTestRecordVM002/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/PasswordPolicy_msid110/reports/8cc397c2-7478-405b-b946-efa123db8007",
+              "lastComplianceStatusChecked": "2022-07-28T21:06:24Z",
+              "context": null,
+              "guestConfiguration": {
+                "kind": null,
+                "name": "PasswordPolicy_msid110",
+                "version": "1.*",
+                "contentUri": "https://oaasguestconfigeaps1.blob.core.windows.net/builtinconfig/PasswordPolicy_msid110/PasswordPolicy_msid110_1.15.0.0.zip",
+                "contentHash": "50EB9FA91B3EB884E66FA07799A8BAB6962E6702FD11BC1097E0051EA9732F6F",
+                "contentType": null,
+                "assignmentType": null,
+                "assignmentSource": null,
+                "configurationParameter": [],
+                "configurationProtectedParameter": [],
+                "configurationSetting": {
+                  "configurationMode": "MonitorOnly",
+                  "allowModuleOverwrite": false,
+                  "actionAfterReboot": "",
+                  "refreshFrequencyMins": 5,
+                  "rebootIfNeeded": true,
+                  "configurationModeFrequencyMins": 15
+                }
+              },
+              "provisioningState": null,
+              "resourceType": null,
+              "vmssVMList": null
+            }
+          },
+          {
+            "location": "centraluseuap",
+            "id": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GUESTCONFIGURATIONSDKTESTRECORD/providers/Microsoft.Compute/virtualMachines/SDKTestRecordVM002/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/PasswordPolicy_msid121",
+            "name": "PasswordPolicy_msid121",
+            "properties": {
+              "complianceStatus": "Compliant",
+              "assignmentHash": "49A89A70A8B059AEE8A0EF55DA8629E392C4A0443BBB430E33BEFDA1BD150B15.E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+              "parameterHash": "",
+              "latestReportId": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GuestConfigurationSDKTestRecord/providers/Microsoft.Compute/virtualMachines/SDKTestRecordVM002/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/PasswordPolicy_msid121/reports/74c1bbd0-b090-4744-ad6c-f48fb16f2344",
+              "lastComplianceStatusChecked": "2022-07-28T21:04:39Z",
+              "context": null,
+              "guestConfiguration": {
+                "kind": null,
+                "name": "PasswordPolicy_msid121",
+                "version": "1.*",
+                "contentUri": "https://oaasguestconfigeaps1.blob.core.windows.net/builtinconfig/PasswordPolicy_msid121/PasswordPolicy_msid121_1.14.0.0.zip",
+                "contentHash": "49A89A70A8B059AEE8A0EF55DA8629E392C4A0443BBB430E33BEFDA1BD150B15",
+                "contentType": null,
+                "assignmentType": null,
+                "assignmentSource": null,
+                "configurationParameter": [],
+                "configurationProtectedParameter": [],
+                "configurationSetting": {
+                  "configurationMode": "MonitorOnly",
+                  "allowModuleOverwrite": false,
+                  "actionAfterReboot": "",
+                  "refreshFrequencyMins": 5,
+                  "rebootIfNeeded": true,
+                  "configurationModeFrequencyMins": 15
+                }
+              },
+              "provisioningState": null,
+              "resourceType": null,
+              "vmssVMList": null
+            }
+          },
+          {
+            "location": "centraluseuap",
+            "id": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GUESTCONFIGURATIONSDKTESTRECORD/providers/Microsoft.Compute/virtualMachines/SDKTestRecordVM002/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/PasswordPolicy_msid232",
+            "name": "PasswordPolicy_msid232",
+            "properties": {
+              "complianceStatus": "Compliant",
+              "assignmentHash": "9352627F164F7DB2927FC62AF965CF4A12F81D4D1BFD3B51FA6625DB4F058B52.E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+              "parameterHash": "",
+              "latestReportId": "/subscriptions/f66367e1-cf7d-407b-ba39-53230cc79071/resourceGroups/GuestConfigurationSDKTestRecord/providers/Microsoft.Compute/virtualMachines/SDKTestRecordVM002/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/PasswordPolicy_msid232/reports/dc4e26b2-cb02-4392-a56c-1acac59dfa7b",
+              "lastComplianceStatusChecked": "2022-07-28T21:01:30Z",
+              "context": null,
+              "guestConfiguration": {
+                "kind": null,
+                "name": "PasswordPolicy_msid232",
+                "version": "1.*",
+                "contentUri": "https://oaasguestconfigeaps1.blob.core.windows.net/builtinconfig/PasswordPolicy_msid232/PasswordPolicy_msid232_1.16.0.0.zip",
+                "contentHash": "9352627F164F7DB2927FC62AF965CF4A12F81D4D1BFD3B51FA6625DB4F058B52",
+                "contentType": null,
+                "assignmentType": null,
+                "assignmentSource": null,
+                "configurationParameter": [],
+                "configurationProtectedParameter": [],
+                "configurationSetting": {
+                  "configurationMode": "MonitorOnly",
+                  "allowModuleOverwrite": false,
+                  "actionAfterReboot": "",
+                  "refreshFrequencyMins": 5,
+                  "rebootIfNeeded": true,
+                  "configurationModeFrequencyMins": 15
+                }
+              },
+              "provisioningState": null,
+              "resourceType": null,
+              "vmssVMList": null
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "1058625367",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "f66367e1-cf7d-407b-ba39-53230cc79071"
+  }
+}

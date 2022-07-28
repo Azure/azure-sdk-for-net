@@ -59,6 +59,7 @@ directive:
     where: $.definitions
     transform: >
       $.GuestConfigurationNavigation.properties.configurationSetting['x-nullable'] = true;
+      $.GuestConfigurationNavigation.properties.assignmentType['x-nullable'] = true;
       $.GuestConfigurationNavigation.properties.kind['x-nullable'] = true;
       $.GuestConfigurationAssignmentProperties.properties.vmssVMList['x-nullable'] = true;
 ```
