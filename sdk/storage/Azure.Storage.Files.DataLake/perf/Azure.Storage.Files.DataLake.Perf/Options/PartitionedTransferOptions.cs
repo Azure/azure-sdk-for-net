@@ -45,9 +45,6 @@ namespace Azure.Storage.Files.DataLake.Perf.Options
             }
         }
 
-        [Option("transfer-validation")]
-        public ValidationAlgorithm? TransferValidationAlgorithm { get; set; }
-
         public StorageTransferOptions StorageTransferOptions { get; private set; }
 
         DataLakeClientOptions IDataLakeClientOptionsProvider.ClientOptions
@@ -56,18 +53,6 @@ namespace Azure.Storage.Files.DataLake.Perf.Options
             {
                 return new DataLakeClientOptions
                 {
-                    UploadTransferValidationOptions = TransferValidationAlgorithm.HasValue
-                        ? new UploadTransferValidationOptions
-                        {
-                            Algorithm = TransferValidationAlgorithm.Value
-                        }
-                        : default,
-                    DownloadTransferValidationOptions = TransferValidationAlgorithm.HasValue
-                        ? new DownloadTransferValidationOptions
-                        {
-                            Algorithm = TransferValidationAlgorithm.Value
-                        }
-                        : default,
                 };
             }
         }
