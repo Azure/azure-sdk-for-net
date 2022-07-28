@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files
                     {
                         stm.Seek(_flushPointer, SeekOrigin.Begin);
                         stm.CopyTo(appendBlobStream);
-                        _flushPointer = uploadPointer;
+                        _flushPointer = stm.Length;
                     }
                 }
             }
