@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
     /// <summary> Day of week to apply the patch on. </summary>
-    public enum DayOfWeek
+    public enum AutoPatchingDayOfWeek
     {
         /// <summary> Everyday. </summary>
         Everyday,

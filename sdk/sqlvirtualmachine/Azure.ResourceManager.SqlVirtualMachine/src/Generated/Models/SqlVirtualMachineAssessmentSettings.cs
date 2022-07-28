@@ -8,29 +8,29 @@
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
     /// <summary> Configure assessment for databases in your SQL virtual machine. </summary>
-    public partial class AssessmentSettings
+    public partial class SqlVirtualMachineAssessmentSettings
     {
-        /// <summary> Initializes a new instance of AssessmentSettings. </summary>
-        public AssessmentSettings()
+        /// <summary> Initializes a new instance of SqlVirtualMachineAssessmentSettings. </summary>
+        public SqlVirtualMachineAssessmentSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of AssessmentSettings. </summary>
-        /// <param name="enable"> Enable or disable assessment feature on SQL virtual machine. </param>
+        /// <summary> Initializes a new instance of SqlVirtualMachineAssessmentSettings. </summary>
+        /// <param name="isEnabled"> Enable or disable assessment feature on SQL virtual machine. </param>
         /// <param name="runImmediately"> Run assessment immediately on SQL virtual machine. </param>
         /// <param name="schedule"> Schedule for Assessment. </param>
-        internal AssessmentSettings(bool? enable, bool? runImmediately, Schedule schedule)
+        internal SqlVirtualMachineAssessmentSettings(bool? isEnabled, bool? runImmediately, SqlVirtualMachineAssessmentSchedule schedule)
         {
-            Enable = enable;
+            IsEnabled = isEnabled;
             RunImmediately = runImmediately;
             Schedule = schedule;
         }
 
         /// <summary> Enable or disable assessment feature on SQL virtual machine. </summary>
-        public bool? Enable { get; set; }
+        public bool? IsEnabled { get; set; }
         /// <summary> Run assessment immediately on SQL virtual machine. </summary>
         public bool? RunImmediately { get; set; }
         /// <summary> Schedule for Assessment. </summary>
-        public Schedule Schedule { get; set; }
+        public SqlVirtualMachineAssessmentSchedule Schedule { get; set; }
     }
 }

@@ -10,15 +10,15 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
-    public partial class AssessmentSettings : IUtf8JsonSerializable
+    public partial class SqlVirtualMachineAssessmentSettings : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Enable))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enable");
-                writer.WriteBooleanValue(Enable.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsDefined(RunImmediately))
             {
@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             writer.WriteEndObject();
         }
 
-        internal static AssessmentSettings DeserializeAssessmentSettings(JsonElement element)
+        internal static SqlVirtualMachineAssessmentSettings DeserializeSqlVirtualMachineAssessmentSettings(JsonElement element)
         {
             Optional<bool> enable = default;
             Optional<bool> runImmediately = default;
-            Optional<Schedule> schedule = default;
+            Optional<SqlVirtualMachineAssessmentSchedule> schedule = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enable"))
@@ -67,11 +67,11 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    schedule = Schedule.DeserializeSchedule(property.Value);
+                    schedule = SqlVirtualMachineAssessmentSchedule.DeserializeSqlVirtualMachineAssessmentSchedule(property.Value);
                     continue;
                 }
             }
-            return new AssessmentSettings(Optional.ToNullable(enable), Optional.ToNullable(runImmediately), schedule.Value);
+            return new SqlVirtualMachineAssessmentSettings(Optional.ToNullable(enable), Optional.ToNullable(runImmediately), schedule.Value);
         }
     }
 }

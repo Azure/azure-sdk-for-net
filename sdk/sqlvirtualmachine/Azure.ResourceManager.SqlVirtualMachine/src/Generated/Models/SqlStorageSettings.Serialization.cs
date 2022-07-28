@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
-    public partial class SQLStorageSettings : IUtf8JsonSerializable
+    public partial class SqlStorageSettings : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             writer.WriteEndObject();
         }
 
-        internal static SQLStorageSettings DeserializeSQLStorageSettings(JsonElement element)
+        internal static SqlStorageSettings DeserializeSqlStorageSettings(JsonElement element)
         {
             Optional<IList<int>> luns = default;
             Optional<string> defaultFilePath = default;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     continue;
                 }
             }
-            return new SQLStorageSettings(Optional.ToList(luns), defaultFilePath.Value);
+            return new SqlStorageSettings(Optional.ToList(luns), defaultFilePath.Value);
         }
     }
 }

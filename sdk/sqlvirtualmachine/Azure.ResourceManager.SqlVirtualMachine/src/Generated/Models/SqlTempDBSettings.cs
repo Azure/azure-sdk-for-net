@@ -10,16 +10,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
-    /// <summary> The SQLTempDbSettings. </summary>
-    public partial class SQLTempDbSettings
+    /// <summary> The SqlTempDBSettings. </summary>
+    public partial class SqlTempDBSettings
     {
-        /// <summary> Initializes a new instance of SQLTempDbSettings. </summary>
-        public SQLTempDbSettings()
+        /// <summary> Initializes a new instance of SqlTempDBSettings. </summary>
+        public SqlTempDBSettings()
         {
             Luns = new ChangeTrackingList<int>();
         }
 
-        /// <summary> Initializes a new instance of SQLTempDbSettings. </summary>
+        /// <summary> Initializes a new instance of SqlTempDBSettings. </summary>
         /// <param name="dataFileSize"> SQL Server tempdb data file size. </param>
         /// <param name="dataGrowth"> SQL Server tempdb data file autoGrowth size. </param>
         /// <param name="logFileSize"> SQL Server tempdb log file size. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         /// <param name="persistFolderPath"> SQL Server tempdb persist folder location. </param>
         /// <param name="luns"> Logical Unit Numbers for the disks. </param>
         /// <param name="defaultFilePath"> SQL Server default file path. </param>
-        internal SQLTempDbSettings(int? dataFileSize, int? dataGrowth, int? logFileSize, int? logGrowth, int? dataFileCount, bool? persistFolder, string persistFolderPath, IList<int> luns, string defaultFilePath)
+        internal SqlTempDBSettings(int? dataFileSize, int? dataGrowth, int? logFileSize, int? logGrowth, int? dataFileCount, bool? persistFolder, string persistFolderPath, IList<int> luns, string defaultFilePath)
         {
             DataFileSize = dataFileSize;
             DataGrowth = dataGrowth;

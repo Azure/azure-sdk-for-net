@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string NOValue = "NO";
-        private const string ALLValue = "ALL";
+        private const string NoValue = "NO";
+        private const string AllValue = "ALL";
         private const string ReadOnlyValue = "READ_ONLY";
 
         /// <summary> NO. </summary>
-        public static ReadableSecondary NO { get; } = new ReadableSecondary(NOValue);
+        public static ReadableSecondary No { get; } = new ReadableSecondary(NoValue);
         /// <summary> ALL. </summary>
-        public static ReadableSecondary ALL { get; } = new ReadableSecondary(ALLValue);
+        public static ReadableSecondary All { get; } = new ReadableSecondary(AllValue);
         /// <summary> READ_ONLY. </summary>
         public static ReadableSecondary ReadOnly { get; } = new ReadableSecondary(ReadOnlyValue);
         /// <summary> Determines if two <see cref="ReadableSecondary"/> values are the same. </summary>

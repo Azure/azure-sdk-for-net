@@ -11,22 +11,22 @@ using Azure.Core;
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
     /// <summary> Availability group configuration. </summary>
-    internal partial class AgConfiguration
+    internal partial class AvailabilityGroupConfiguration
     {
-        /// <summary> Initializes a new instance of AgConfiguration. </summary>
-        public AgConfiguration()
+        /// <summary> Initializes a new instance of AvailabilityGroupConfiguration. </summary>
+        public AvailabilityGroupConfiguration()
         {
-            Replicas = new ChangeTrackingList<AgReplica>();
+            Replicas = new ChangeTrackingList<AvailabilityGroupReplica>();
         }
 
-        /// <summary> Initializes a new instance of AgConfiguration. </summary>
+        /// <summary> Initializes a new instance of AvailabilityGroupConfiguration. </summary>
         /// <param name="replicas"> Replica configurations. </param>
-        internal AgConfiguration(IList<AgReplica> replicas)
+        internal AvailabilityGroupConfiguration(IList<AvailabilityGroupReplica> replicas)
         {
             Replicas = replicas;
         }
 
         /// <summary> Replica configurations. </summary>
-        public IList<AgReplica> Replicas { get; }
+        public IList<AvailabilityGroupReplica> Replicas { get; }
     }
 }

@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
     /// <summary> Day of the week to run assessment. </summary>
-    public enum AssessmentDayOfWeek
+    public enum SqlVirtualMachineAssessmentDayOfWeek
     {
         /// <summary> Monday. </summary>
         Monday,

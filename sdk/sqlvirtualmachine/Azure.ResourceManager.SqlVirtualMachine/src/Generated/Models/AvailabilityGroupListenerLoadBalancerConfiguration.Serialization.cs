@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
-    public partial class LoadBalancerConfiguration : IUtf8JsonSerializable
+    public partial class AvailabilityGroupListenerLoadBalancerConfiguration : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             writer.WriteEndObject();
         }
 
-        internal static LoadBalancerConfiguration DeserializeLoadBalancerConfiguration(JsonElement element)
+        internal static AvailabilityGroupListenerLoadBalancerConfiguration DeserializeAvailabilityGroupListenerLoadBalancerConfiguration(JsonElement element)
         {
-            Optional<PrivateIPAddress> privateIPAddress = default;
-            Optional<string> publicIPAddressResourceId = default;
-            Optional<string> loadBalancerResourceId = default;
+            Optional<AvailabilityGroupListenerPrivateIPAddress> privateIPAddress = default;
+            Optional<ResourceIdentifier> publicIPAddressResourceId = default;
+            Optional<ResourceIdentifier> loadBalancerResourceId = default;
             Optional<int> probePort = default;
             Optional<IList<string>> sqlVirtualMachineInstances = default;
             foreach (var property in element.EnumerateObject())
@@ -65,17 +65,27 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    privateIPAddress = PrivateIPAddress.DeserializePrivateIPAddress(property.Value);
+                    privateIPAddress = AvailabilityGroupListenerPrivateIPAddress.DeserializeAvailabilityGroupListenerPrivateIPAddress(property.Value);
                     continue;
                 }
                 if (property.NameEquals("publicIpAddressResourceId"))
                 {
-                    publicIPAddressResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    publicIPAddressResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("loadBalancerResourceId"))
                 {
-                    loadBalancerResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    loadBalancerResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("probePort"))
@@ -104,7 +114,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     continue;
                 }
             }
-            return new LoadBalancerConfiguration(privateIPAddress.Value, publicIPAddressResourceId.Value, loadBalancerResourceId.Value, Optional.ToNullable(probePort), Optional.ToList(sqlVirtualMachineInstances));
+            return new AvailabilityGroupListenerLoadBalancerConfiguration(privateIPAddress.Value, publicIPAddressResourceId.Value, loadBalancerResourceId.Value, Optional.ToNullable(probePort), Optional.ToList(sqlVirtualMachineInstances));
         }
     }
 }

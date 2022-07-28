@@ -11,18 +11,18 @@ using Azure.Core;
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
     /// <summary> Set disk storage settings for SQL Server. </summary>
-    public partial class SQLStorageSettings
+    public partial class SqlStorageSettings
     {
-        /// <summary> Initializes a new instance of SQLStorageSettings. </summary>
-        public SQLStorageSettings()
+        /// <summary> Initializes a new instance of SqlStorageSettings. </summary>
+        public SqlStorageSettings()
         {
             Luns = new ChangeTrackingList<int>();
         }
 
-        /// <summary> Initializes a new instance of SQLStorageSettings. </summary>
+        /// <summary> Initializes a new instance of SqlStorageSettings. </summary>
         /// <param name="luns"> Logical Unit Numbers for the disks. </param>
         /// <param name="defaultFilePath"> SQL Server default file path. </param>
-        internal SQLStorageSettings(IList<int> luns, string defaultFilePath)
+        internal SqlStorageSettings(IList<int> luns, string defaultFilePath)
         {
             Luns = luns;
             DefaultFilePath = defaultFilePath;

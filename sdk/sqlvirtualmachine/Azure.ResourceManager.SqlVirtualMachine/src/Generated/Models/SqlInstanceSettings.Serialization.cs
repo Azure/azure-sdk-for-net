@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
-    public partial class SQLInstanceSettings : IUtf8JsonSerializable
+    public partial class SqlInstanceSettings : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -30,15 +30,15 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 writer.WritePropertyName("isOptimizeForAdHocWorkloadsEnabled");
                 writer.WriteBooleanValue(IsOptimizeForAdHocWorkloadsEnabled.Value);
             }
-            if (Optional.IsDefined(MinServerMemoryMB))
+            if (Optional.IsDefined(MinServerMemoryInMB))
             {
                 writer.WritePropertyName("minServerMemoryMB");
-                writer.WriteNumberValue(MinServerMemoryMB.Value);
+                writer.WriteNumberValue(MinServerMemoryInMB.Value);
             }
-            if (Optional.IsDefined(MaxServerMemoryMB))
+            if (Optional.IsDefined(MaxServerMemoryInMB))
             {
                 writer.WritePropertyName("maxServerMemoryMB");
-                writer.WriteNumberValue(MaxServerMemoryMB.Value);
+                writer.WriteNumberValue(MaxServerMemoryInMB.Value);
             }
             if (Optional.IsDefined(IsLpimEnabled))
             {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             writer.WriteEndObject();
         }
 
-        internal static SQLInstanceSettings DeserializeSQLInstanceSettings(JsonElement element)
+        internal static SqlInstanceSettings DeserializeSqlInstanceSettings(JsonElement element)
         {
             Optional<string> collation = default;
             Optional<int> maxDop = default;
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     continue;
                 }
             }
-            return new SQLInstanceSettings(collation.Value, Optional.ToNullable(maxDop), Optional.ToNullable(isOptimizeForAdHocWorkloadsEnabled), Optional.ToNullable(minServerMemoryMB), Optional.ToNullable(maxServerMemoryMB), Optional.ToNullable(isLpimEnabled), Optional.ToNullable(isIfiEnabled));
+            return new SqlInstanceSettings(collation.Value, Optional.ToNullable(maxDop), Optional.ToNullable(isOptimizeForAdHocWorkloadsEnabled), Optional.ToNullable(minServerMemoryMB), Optional.ToNullable(maxServerMemoryMB), Optional.ToNullable(isLpimEnabled), Optional.ToNullable(isIfiEnabled));
         }
     }
 }

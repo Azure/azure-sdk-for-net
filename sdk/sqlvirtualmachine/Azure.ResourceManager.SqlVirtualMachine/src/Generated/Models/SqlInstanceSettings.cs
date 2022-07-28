@@ -8,28 +8,28 @@
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
     /// <summary> Set the server/instance-level settings for SQL Server. </summary>
-    public partial class SQLInstanceSettings
+    public partial class SqlInstanceSettings
     {
-        /// <summary> Initializes a new instance of SQLInstanceSettings. </summary>
-        public SQLInstanceSettings()
+        /// <summary> Initializes a new instance of SqlInstanceSettings. </summary>
+        public SqlInstanceSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of SQLInstanceSettings. </summary>
+        /// <summary> Initializes a new instance of SqlInstanceSettings. </summary>
         /// <param name="collation"> SQL Server Collation. </param>
         /// <param name="maxDop"> SQL Server MAXDOP. </param>
         /// <param name="isOptimizeForAdHocWorkloadsEnabled"> SQL Server Optimize for Adhoc workloads. </param>
-        /// <param name="minServerMemoryMB"> SQL Server minimum memory. </param>
-        /// <param name="maxServerMemoryMB"> SQL Server maximum memory. </param>
+        /// <param name="minServerMemoryInMB"> SQL Server minimum memory. </param>
+        /// <param name="maxServerMemoryInMB"> SQL Server maximum memory. </param>
         /// <param name="isLpimEnabled"> SQL Server LPIM. </param>
         /// <param name="isIfiEnabled"> SQL Server IFI. </param>
-        internal SQLInstanceSettings(string collation, int? maxDop, bool? isOptimizeForAdHocWorkloadsEnabled, int? minServerMemoryMB, int? maxServerMemoryMB, bool? isLpimEnabled, bool? isIfiEnabled)
+        internal SqlInstanceSettings(string collation, int? maxDop, bool? isOptimizeForAdHocWorkloadsEnabled, int? minServerMemoryInMB, int? maxServerMemoryInMB, bool? isLpimEnabled, bool? isIfiEnabled)
         {
             Collation = collation;
             MaxDop = maxDop;
             IsOptimizeForAdHocWorkloadsEnabled = isOptimizeForAdHocWorkloadsEnabled;
-            MinServerMemoryMB = minServerMemoryMB;
-            MaxServerMemoryMB = maxServerMemoryMB;
+            MinServerMemoryInMB = minServerMemoryInMB;
+            MaxServerMemoryInMB = maxServerMemoryInMB;
             IsLpimEnabled = isLpimEnabled;
             IsIfiEnabled = isIfiEnabled;
         }
@@ -41,9 +41,9 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         /// <summary> SQL Server Optimize for Adhoc workloads. </summary>
         public bool? IsOptimizeForAdHocWorkloadsEnabled { get; set; }
         /// <summary> SQL Server minimum memory. </summary>
-        public int? MinServerMemoryMB { get; set; }
+        public int? MinServerMemoryInMB { get; set; }
         /// <summary> SQL Server maximum memory. </summary>
-        public int? MaxServerMemoryMB { get; set; }
+        public int? MaxServerMemoryInMB { get; set; }
         /// <summary> SQL Server LPIM. </summary>
         public bool? IsLpimEnabled { get; set; }
         /// <summary> SQL Server IFI. </summary>

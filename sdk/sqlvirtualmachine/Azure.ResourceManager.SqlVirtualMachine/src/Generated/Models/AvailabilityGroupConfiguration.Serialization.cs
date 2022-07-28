@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
-    internal partial class AgConfiguration : IUtf8JsonSerializable
+    internal partial class AvailabilityGroupConfiguration : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -29,9 +29,9 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             writer.WriteEndObject();
         }
 
-        internal static AgConfiguration DeserializeAgConfiguration(JsonElement element)
+        internal static AvailabilityGroupConfiguration DeserializeAvailabilityGroupConfiguration(JsonElement element)
         {
-            Optional<IList<AgReplica>> replicas = default;
+            Optional<IList<AvailabilityGroupReplica>> replicas = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("replicas"))
@@ -41,16 +41,16 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AgReplica> array = new List<AgReplica>();
+                    List<AvailabilityGroupReplica> array = new List<AvailabilityGroupReplica>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AgReplica.DeserializeAgReplica(item));
+                        array.Add(AvailabilityGroupReplica.DeserializeAvailabilityGroupReplica(item));
                     }
                     replicas = array;
                     continue;
                 }
             }
-            return new AgConfiguration(Optional.ToList(replicas));
+            return new AvailabilityGroupConfiguration(Optional.ToList(replicas));
         }
     }
 }

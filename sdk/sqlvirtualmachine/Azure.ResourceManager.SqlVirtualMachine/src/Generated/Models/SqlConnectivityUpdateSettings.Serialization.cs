@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
         internal static SqlConnectivityUpdateSettings DeserializeSqlConnectivityUpdateSettings(JsonElement element)
         {
-            Optional<ConnectivityType> connectivityType = default;
+            Optional<SqlServerConnectivityType> connectivityType = default;
             Optional<int> port = default;
             Optional<string> sqlAuthUpdateUserName = default;
             Optional<string> sqlAuthUpdatePassword = default;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    connectivityType = new ConnectivityType(property.Value.GetString());
+                    connectivityType = new SqlServerConnectivityType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("port"))

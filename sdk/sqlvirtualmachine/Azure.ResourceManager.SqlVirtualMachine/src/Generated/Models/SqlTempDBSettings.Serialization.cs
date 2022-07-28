@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
-    public partial class SQLTempDbSettings : IUtf8JsonSerializable
+    public partial class SqlTempDBSettings : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             writer.WriteEndObject();
         }
 
-        internal static SQLTempDbSettings DeserializeSQLTempDbSettings(JsonElement element)
+        internal static SqlTempDBSettings DeserializeSqlTempDBSettings(JsonElement element)
         {
             Optional<int> dataFileSize = default;
             Optional<int> dataGrowth = default;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     continue;
                 }
             }
-            return new SQLTempDbSettings(Optional.ToNullable(dataFileSize), Optional.ToNullable(dataGrowth), Optional.ToNullable(logFileSize), Optional.ToNullable(logGrowth), Optional.ToNullable(dataFileCount), Optional.ToNullable(persistFolder), persistFolderPath.Value, Optional.ToList(luns), defaultFilePath.Value);
+            return new SqlTempDBSettings(Optional.ToNullable(dataFileSize), Optional.ToNullable(dataGrowth), Optional.ToNullable(logFileSize), Optional.ToNullable(logGrowth), Optional.ToNullable(dataFileCount), Optional.ToNullable(persistFolder), persistFolderPath.Value, Optional.ToList(luns), defaultFilePath.Value);
         }
     }
 }
