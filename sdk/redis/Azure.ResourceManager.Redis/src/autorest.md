@@ -51,6 +51,8 @@ format-by-name-rules:
   'location': 'azure-location'
   'staticIP': 'ip-address'
   'subnetId': 'arm-id'
+  'linkedRedisCacheId': 'arm-id'
+  'linkedRedisCacheLocation': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
