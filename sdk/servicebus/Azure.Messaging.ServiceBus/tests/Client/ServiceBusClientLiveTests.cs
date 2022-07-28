@@ -113,7 +113,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
         }
 
         /// <summary>
-        ///   Verifies that the <see cref="EventHubConnection" /> is able to
+        ///   Verifies that the <see cref="ServiceBusClient" /> is able to
         ///   connect to the Service Bus service.
         /// </summary>
         ///
