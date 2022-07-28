@@ -6,25 +6,22 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Redis.Models
 {
     /// <summary> Parameters body to pass for resource name availability check. </summary>
-    public partial class CheckNameAvailabilityContent
+    public partial class RedisNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of CheckNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of RedisNameAvailabilityContent. </summary>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. The only legal value of this property for checking redis cache name availability is &apos;Microsoft.Cache/redis&apos;. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="resourceType"/> is null. </exception>
-        public CheckNameAvailabilityContent(string name, string resourceType)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public RedisNameAvailabilityContent(string name, ResourceType resourceType)
         {
             if (name == null)
             {
                 throw new ArgumentNullException(nameof(name));
-            }
-            if (resourceType == null)
-            {
-                throw new ArgumentNullException(nameof(resourceType));
             }
 
             Name = name;
@@ -34,6 +31,6 @@ namespace Azure.ResourceManager.Redis.Models
         /// <summary> Resource name. </summary>
         public string Name { get; }
         /// <summary> Resource type. The only legal value of this property for checking redis cache name availability is &apos;Microsoft.Cache/redis&apos;. </summary>
-        public string ResourceType { get; }
+        public ResourceType ResourceType { get; }
     }
 }

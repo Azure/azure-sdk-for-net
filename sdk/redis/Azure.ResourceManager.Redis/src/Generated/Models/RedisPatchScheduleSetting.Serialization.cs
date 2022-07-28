@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Redis.Models
 {
-    public partial class ScheduleEntry : IUtf8JsonSerializable
+    public partial class RedisPatchScheduleSetting : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,16 +28,16 @@ namespace Azure.ResourceManager.Redis.Models
             writer.WriteEndObject();
         }
 
-        internal static ScheduleEntry DeserializeScheduleEntry(JsonElement element)
+        internal static RedisPatchScheduleSetting DeserializeRedisPatchScheduleSetting(JsonElement element)
         {
-            DayOfWeek dayOfWeek = default;
+            RedisDayOfWeek dayOfWeek = default;
             int startHourUtc = default;
             Optional<TimeSpan> maintenanceWindow = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dayOfWeek"))
                 {
-                    dayOfWeek = property.Value.GetString().ToDayOfWeek();
+                    dayOfWeek = property.Value.GetString().ToRedisDayOfWeek();
                     continue;
                 }
                 if (property.NameEquals("startHourUtc"))
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Redis.Models
                     continue;
                 }
             }
-            return new ScheduleEntry(dayOfWeek, startHourUtc, Optional.ToNullable(maintenanceWindow));
+            return new RedisPatchScheduleSetting(dayOfWeek, startHourUtc, Optional.ToNullable(maintenanceWindow));
         }
     }
 }

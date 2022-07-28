@@ -14,9 +14,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Redis.Models
 {
-    public partial class OperationStatus
+    public partial class RedisOperationStatus
     {
-        internal static OperationStatus DeserializeOperationStatus(JsonElement element)
+        internal static RedisOperationStatus DeserializeRedisOperationStatus(JsonElement element)
         {
             Optional<IReadOnlyDictionary<string, BinaryData>> properties = default;
             Optional<ResourceIdentifier> id = default;
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Redis.Models
                     continue;
                 }
             }
-            return new OperationStatus(id.Value, name.Value, status, Optional.ToNullable(percentComplete), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToList(operations), error.Value, Optional.ToDictionary(properties));
+            return new RedisOperationStatus(id.Value, name.Value, status, Optional.ToNullable(percentComplete), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToList(operations), error.Value, Optional.ToDictionary(properties));
         }
     }
 }

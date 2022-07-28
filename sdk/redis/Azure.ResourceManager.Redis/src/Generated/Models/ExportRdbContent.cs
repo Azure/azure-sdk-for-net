@@ -10,13 +10,13 @@ using System;
 namespace Azure.ResourceManager.Redis.Models
 {
     /// <summary> Parameters for Redis export operation. </summary>
-    public partial class ExportRDBContent
+    public partial class ExportRdbContent
     {
-        /// <summary> Initializes a new instance of ExportRDBContent. </summary>
+        /// <summary> Initializes a new instance of ExportRdbContent. </summary>
         /// <param name="prefix"> Prefix to use for exported files. </param>
         /// <param name="container"> Container name to export to. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="prefix"/> or <paramref name="container"/> is null. </exception>
-        public ExportRDBContent(string prefix, string container)
+        public ExportRdbContent(string prefix, string container)
         {
             if (prefix == null)
             {

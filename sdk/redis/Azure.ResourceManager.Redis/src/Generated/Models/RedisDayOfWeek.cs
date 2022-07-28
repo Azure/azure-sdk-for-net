@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Redis.Models
 {
     /// <summary> Day of the week when a cache can be patched. </summary>
-    public enum DayOfWeek
+    public enum RedisDayOfWeek
     {
         /// <summary> Monday. </summary>
         Monday,

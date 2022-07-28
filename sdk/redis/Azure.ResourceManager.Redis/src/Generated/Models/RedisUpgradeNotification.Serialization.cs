@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Redis.Models
 {
-    public partial class UpgradeNotification
+    public partial class RedisUpgradeNotification
     {
-        internal static UpgradeNotification DeserializeUpgradeNotification(JsonElement element)
+        internal static RedisUpgradeNotification DeserializeRedisUpgradeNotification(JsonElement element)
         {
             Optional<string> name = default;
             Optional<DateTimeOffset> timestamp = default;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Redis.Models
                     continue;
                 }
             }
-            return new UpgradeNotification(name.Value, Optional.ToNullable(timestamp), Optional.ToDictionary(upsellNotification));
+            return new RedisUpgradeNotification(name.Value, Optional.ToNullable(timestamp), Optional.ToDictionary(upsellNotification));
         }
     }
 }

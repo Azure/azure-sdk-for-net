@@ -11,25 +11,25 @@ using Azure.Core;
 namespace Azure.ResourceManager.Redis.Models
 {
     /// <summary> The response of listUpgradeNotifications. </summary>
-    internal partial class NotificationListResponse
+    internal partial class RedisUpgradeNotificationListResponse
     {
-        /// <summary> Initializes a new instance of NotificationListResponse. </summary>
-        internal NotificationListResponse()
+        /// <summary> Initializes a new instance of RedisUpgradeNotificationListResponse. </summary>
+        internal RedisUpgradeNotificationListResponse()
         {
-            Value = new ChangeTrackingList<UpgradeNotification>();
+            Value = new ChangeTrackingList<RedisUpgradeNotification>();
         }
 
-        /// <summary> Initializes a new instance of NotificationListResponse. </summary>
+        /// <summary> Initializes a new instance of RedisUpgradeNotificationListResponse. </summary>
         /// <param name="value"> List of all notifications. </param>
         /// <param name="nextLink"> Link for next set of notifications. </param>
-        internal NotificationListResponse(IReadOnlyList<UpgradeNotification> value, string nextLink)
+        internal RedisUpgradeNotificationListResponse(IReadOnlyList<RedisUpgradeNotification> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of all notifications. </summary>
-        public IReadOnlyList<UpgradeNotification> Value { get; }
+        public IReadOnlyList<RedisUpgradeNotification> Value { get; }
         /// <summary> Link for next set of notifications. </summary>
         public string NextLink { get; }
     }

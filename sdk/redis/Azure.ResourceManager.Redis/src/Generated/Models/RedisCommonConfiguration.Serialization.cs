@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Redis.Models
 {
-    public partial class RedisCommonPropertiesRedisConfiguration : IUtf8JsonSerializable
+    public partial class RedisCommonConfiguration : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -52,30 +52,30 @@ namespace Azure.ResourceManager.Redis.Models
                 writer.WritePropertyName("aof-storage-connection-string-1");
                 writer.WriteStringValue(AofStorageConnectionString1);
             }
-            if (Optional.IsDefined(MaxfragmentationmemoryReserved))
+            if (Optional.IsDefined(MaxFragmentationMemoryReserved))
             {
                 writer.WritePropertyName("maxfragmentationmemory-reserved");
-                writer.WriteStringValue(MaxfragmentationmemoryReserved);
+                writer.WriteStringValue(MaxFragmentationMemoryReserved);
             }
-            if (Optional.IsDefined(MaxmemoryPolicy))
+            if (Optional.IsDefined(MaxMemoryPolicy))
             {
                 writer.WritePropertyName("maxmemory-policy");
-                writer.WriteStringValue(MaxmemoryPolicy);
+                writer.WriteStringValue(MaxMemoryPolicy);
             }
-            if (Optional.IsDefined(MaxmemoryReserved))
+            if (Optional.IsDefined(MaxMemoryReserved))
             {
                 writer.WritePropertyName("maxmemory-reserved");
-                writer.WriteStringValue(MaxmemoryReserved);
+                writer.WriteStringValue(MaxMemoryReserved);
             }
-            if (Optional.IsDefined(MaxmemoryDelta))
+            if (Optional.IsDefined(MaxMemoryDelta))
             {
                 writer.WritePropertyName("maxmemory-delta");
-                writer.WriteStringValue(MaxmemoryDelta);
+                writer.WriteStringValue(MaxMemoryDelta);
             }
-            if (Optional.IsDefined(Authnotrequired))
+            if (Optional.IsDefined(AuthNotRequired))
             {
                 writer.WritePropertyName("authnotrequired");
-                writer.WriteStringValue(Authnotrequired);
+                writer.WriteStringValue(AuthNotRequired);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Redis.Models
             writer.WriteEndObject();
         }
 
-        internal static RedisCommonPropertiesRedisConfiguration DeserializeRedisCommonPropertiesRedisConfiguration(JsonElement element)
+        internal static RedisCommonConfiguration DeserializeRedisCommonConfiguration(JsonElement element)
         {
             Optional<string> rdbBackupEnabled = default;
             Optional<string> rdbBackupFrequency = default;
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Redis.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new RedisCommonPropertiesRedisConfiguration(rdbBackupEnabled.Value, rdbBackupFrequency.Value, rdbBackupMaxSnapshotCount.Value, rdbStorageConnectionString.Value, aofBackupEnabled.Value, aofStorageConnectionString0.Value, aofStorageConnectionString1.Value, maxfragmentationmemoryReserved.Value, maxmemoryPolicy.Value, maxmemoryReserved.Value, maxmemoryDelta.Value, maxclients.Value, preferredDataArchiveAuthMethod.Value, preferredDataPersistenceAuthMethod.Value, zonalConfiguration.Value, authnotrequired.Value, additionalProperties);
+            return new RedisCommonConfiguration(rdbBackupEnabled.Value, rdbBackupFrequency.Value, rdbBackupMaxSnapshotCount.Value, rdbStorageConnectionString.Value, aofBackupEnabled.Value, aofStorageConnectionString0.Value, aofStorageConnectionString1.Value, maxfragmentationmemoryReserved.Value, maxmemoryPolicy.Value, maxmemoryReserved.Value, maxmemoryDelta.Value, maxclients.Value, preferredDataArchiveAuthMethod.Value, preferredDataPersistenceAuthMethod.Value, zonalConfiguration.Value, authnotrequired.Value, additionalProperties);
         }
     }
 }

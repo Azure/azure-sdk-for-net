@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Redis.Models
 {
-    public partial class ImportRDBContent : IUtf8JsonSerializable
+    public partial class ImportRdbContent : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

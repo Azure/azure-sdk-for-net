@@ -12,19 +12,19 @@ using Azure.Core;
 namespace Azure.ResourceManager.Redis.Models
 {
     /// <summary> Properties of upgrade notification. </summary>
-    public partial class UpgradeNotification
+    public partial class RedisUpgradeNotification
     {
-        /// <summary> Initializes a new instance of UpgradeNotification. </summary>
-        internal UpgradeNotification()
+        /// <summary> Initializes a new instance of RedisUpgradeNotification. </summary>
+        internal RedisUpgradeNotification()
         {
             UpsellNotification = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of UpgradeNotification. </summary>
+        /// <summary> Initializes a new instance of RedisUpgradeNotification. </summary>
         /// <param name="name"> Name of upgrade notification. </param>
         /// <param name="timestamp"> Timestamp when upgrade notification occurred. </param>
         /// <param name="upsellNotification"> Details about this upgrade notification. </param>
-        internal UpgradeNotification(string name, DateTimeOffset? timestamp, IReadOnlyDictionary<string, string> upsellNotification)
+        internal RedisUpgradeNotification(string name, DateTimeOffset? timestamp, IReadOnlyDictionary<string, string> upsellNotification)
         {
             Name = name;
             Timestamp = timestamp;

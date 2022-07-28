@@ -12,12 +12,12 @@ using System.Linq;
 namespace Azure.ResourceManager.Redis.Models
 {
     /// <summary> Parameters for Redis import operation. </summary>
-    public partial class ImportRDBContent
+    public partial class ImportRdbContent
     {
-        /// <summary> Initializes a new instance of ImportRDBContent. </summary>
+        /// <summary> Initializes a new instance of ImportRdbContent. </summary>
         /// <param name="files"> files to import. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="files"/> is null. </exception>
-        public ImportRDBContent(IEnumerable<string> files)
+        public ImportRdbContent(IEnumerable<string> files)
         {
             if (files == null)
             {

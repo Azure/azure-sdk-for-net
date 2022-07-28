@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Logic
         public System.DateTimeOffset? ChangedOn { get { throw null; } }
         public System.BinaryData Content { get { throw null; } set { } }
         public Azure.ResourceManager.Logic.Models.LogicContentLink ContentLink { get { throw null; } }
-        public string ContentType { get { throw null; } set { } }
+        public Azure.Core.ContentType? ContentType { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public Azure.ResourceManager.Logic.Models.IntegrationAccountMapType MapType { get { throw null; } set { } }
         public System.BinaryData Metadata { get { throw null; } set { } }
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.Logic
         public System.DateTimeOffset? ChangedOn { get { throw null; } }
         public System.BinaryData Content { get { throw null; } set { } }
         public Azure.ResourceManager.Logic.Models.LogicContentLink ContentLink { get { throw null; } }
-        public string ContentType { get { throw null; } set { } }
+        public Azure.Core.ContentType? ContentType { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string DocumentName { get { throw null; } set { } }
         public string FileName { get { throw null; } set { } }
@@ -1068,7 +1068,7 @@ namespace Azure.ResourceManager.Logic.Models
         public ArtifactContentProperties() { }
         public System.BinaryData Content { get { throw null; } set { } }
         public Azure.ResourceManager.Logic.Models.LogicContentLink ContentLink { get { throw null; } set { } }
-        public string ContentType { get { throw null; } set { } }
+        public Azure.Core.ContentType? ContentType { get { throw null; } set { } }
     }
     public partial class ArtifactProperties
     {
@@ -1116,10 +1116,10 @@ namespace Azure.ResourceManager.Logic.Models
     }
     public partial class AS2EnvelopeSettings
     {
-        public AS2EnvelopeSettings(string messageContentType, bool transmitFileNameInMimeHeader, string fileNameTemplate, bool suspendMessageOnFileNameGenerationError, bool autogenerateFileName) { }
+        public AS2EnvelopeSettings(Azure.Core.ContentType messageContentType, bool transmitFileNameInMimeHeader, string fileNameTemplate, bool suspendMessageOnFileNameGenerationError, bool autogenerateFileName) { }
         public bool AutogenerateFileName { get { throw null; } set { } }
         public string FileNameTemplate { get { throw null; } set { } }
-        public string MessageContentType { get { throw null; } set { } }
+        public Azure.Core.ContentType MessageContentType { get { throw null; } set { } }
         public bool SuspendMessageOnFileNameGenerationError { get { throw null; } set { } }
         public bool TransmitFileNameInMimeHeader { get { throw null; } set { } }
     }
@@ -2740,14 +2740,14 @@ namespace Azure.ResourceManager.Logic.Models
         public Azure.ResourceManager.Logic.Models.SwaggerCustomDynamicTree DynamicTree { get { throw null; } set { } }
         public System.BinaryData Example { get { throw null; } set { } }
         public Azure.ResourceManager.Logic.Models.SwaggerExternalDocumentation ExternalDocs { get { throw null; } set { } }
+        public bool? IsNotificationUrlExtension { get { throw null; } set { } }
+        public bool? IsReadOnly { get { throw null; } set { } }
         public Azure.ResourceManager.Logic.Models.SwaggerSchema Items { get { throw null; } set { } }
         public int? MaxProperties { get { throw null; } set { } }
         public int? MinProperties { get { throw null; } set { } }
-        public bool? NotificationUrlExtension { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Logic.Models.SwaggerSchema> Properties { get { throw null; } }
-        public bool? ReadOnly { get { throw null; } set { } }
-        public string Ref { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> Required { get { throw null; } }
+        public string Reference { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> RequiredProperties { get { throw null; } }
         public Azure.ResourceManager.Logic.Models.SwaggerSchemaType? SchemaType { get { throw null; } set { } }
         public string Title { get { throw null; } set { } }
         public Azure.ResourceManager.Logic.Models.SwaggerXml Xml { get { throw null; } set { } }

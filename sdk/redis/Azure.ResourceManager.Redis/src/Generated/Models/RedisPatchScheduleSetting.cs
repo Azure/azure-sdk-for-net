@@ -10,22 +10,22 @@ using System;
 namespace Azure.ResourceManager.Redis.Models
 {
     /// <summary> Patch schedule entry for a Premium Redis Cache. </summary>
-    public partial class ScheduleEntry
+    public partial class RedisPatchScheduleSetting
     {
-        /// <summary> Initializes a new instance of ScheduleEntry. </summary>
+        /// <summary> Initializes a new instance of RedisPatchScheduleSetting. </summary>
         /// <param name="dayOfWeek"> Day of the week when a cache can be patched. </param>
         /// <param name="startHourUtc"> Start hour after which cache patching can start. </param>
-        public ScheduleEntry(DayOfWeek dayOfWeek, int startHourUtc)
+        public RedisPatchScheduleSetting(RedisDayOfWeek dayOfWeek, int startHourUtc)
         {
             DayOfWeek = dayOfWeek;
             StartHourUtc = startHourUtc;
         }
 
-        /// <summary> Initializes a new instance of ScheduleEntry. </summary>
+        /// <summary> Initializes a new instance of RedisPatchScheduleSetting. </summary>
         /// <param name="dayOfWeek"> Day of the week when a cache can be patched. </param>
         /// <param name="startHourUtc"> Start hour after which cache patching can start. </param>
         /// <param name="maintenanceWindow"> ISO8601 timespan specifying how much time cache patching can take. </param>
-        internal ScheduleEntry(DayOfWeek dayOfWeek, int startHourUtc, TimeSpan? maintenanceWindow)
+        internal RedisPatchScheduleSetting(RedisDayOfWeek dayOfWeek, int startHourUtc, TimeSpan? maintenanceWindow)
         {
             DayOfWeek = dayOfWeek;
             StartHourUtc = startHourUtc;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Redis.Models
         }
 
         /// <summary> Day of the week when a cache can be patched. </summary>
-        public DayOfWeek DayOfWeek { get; set; }
+        public RedisDayOfWeek DayOfWeek { get; set; }
         /// <summary> Start hour after which cache patching can start. </summary>
         public int StartHourUtc { get; set; }
         /// <summary> ISO8601 timespan specifying how much time cache patching can take. </summary>

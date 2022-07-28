@@ -11,11 +11,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Redis.Models
 {
-    internal partial class NotificationListResponse
+    internal partial class RedisUpgradeNotificationListResponse
     {
-        internal static NotificationListResponse DeserializeNotificationListResponse(JsonElement element)
+        internal static RedisUpgradeNotificationListResponse DeserializeRedisUpgradeNotificationListResponse(JsonElement element)
         {
-            Optional<IReadOnlyList<UpgradeNotification>> value = default;
+            Optional<IReadOnlyList<RedisUpgradeNotification>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Redis.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<UpgradeNotification> array = new List<UpgradeNotification>();
+                    List<RedisUpgradeNotification> array = new List<RedisUpgradeNotification>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UpgradeNotification.DeserializeUpgradeNotification(item));
+                        array.Add(RedisUpgradeNotification.DeserializeRedisUpgradeNotification(item));
                     }
                     value = array;
                     continue;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Redis.Models
                     continue;
                 }
             }
-            return new NotificationListResponse(Optional.ToList(value), nextLink.Value);
+            return new RedisUpgradeNotificationListResponse(Optional.ToList(value), nextLink.Value);
         }
     }
 }
