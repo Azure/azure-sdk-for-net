@@ -49,18 +49,18 @@ namespace Azure.AI.Language.Conversations
         /// var client = new ConversationAnalysisClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     kind = "Conversation",
         ///     analysisInput = new {
         ///         conversationItem = new {
-        ///             id = "<ConversationItemBaseId>",
-        ///             participantId = "<ConversationItemBaseParticipantId>",
-        ///             text = "<TextConversationItemText>",
+        ///             text = "<text>",
+        ///             id = "<id>",
+        ///             participantId = "<participantId>",
         ///         },
         ///     },
         ///     parameters = new {
-        ///         projectName = "<ConversationTaskParametersProjectName>",
-        ///         deploymentName = "<ConversationTaskParametersDeploymentName>",
+        ///         projectName = "<projectName>",
+        ///         deploymentName = "<deploymentName>",
         ///     },
+        ///     kind = "Conversation",
         /// };
         /// 
         /// Response response = await client.AnalyzeConversationAsync(RequestContent.Create(data));
@@ -75,40 +75,40 @@ namespace Azure.AI.Language.Conversations
         /// var client = new ConversationAnalysisClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     kind = "Conversation",
         ///     analysisInput = new {
         ///         conversationItem = new {
-        ///             id = "<ConversationItemBaseId>",
-        ///             participantId = "<ConversationItemBaseParticipantId>",
-        ///             language = "<ConversationItemBaseLanguage>",
-        ///             modality = "<transcript>",
-        ///             role = "<agent>",
-        ///             text = "<TextConversationItemText>",
+        ///             text = "<text>",
+        ///             id = "<id>",
+        ///             participantId = "<participantId>",
+        ///             language = "<language>",
+        ///             modality = "transcript",
+        ///             role = "agent",
         ///         },
         ///     },
         ///     parameters = new {
-        ///         projectName = "<ConversationTaskParametersProjectName>",
-        ///         deploymentName = "<ConversationTaskParametersDeploymentName>",
+        ///         projectName = "<projectName>",
+        ///         deploymentName = "<deploymentName>",
         ///         verbose = true,
         ///         isLoggingEnabled = true,
-        ///         stringIndexType = "<Utf16CodeUnit>",
-        ///         directTarget = "<ConversationTaskParametersDirectTarget>",
+        ///         stringIndexType = "Utf16CodeUnit",
+        ///         directTarget = "<directTarget>",
         ///         targetProjectParameters = new {
         ///             key = new {
-        ///                 targetProjectKind = "Luis",
-        ///                 apiVersion = "<AnalysisParametersApiVersion>",
-        ///                 query = "<LuisParametersQuery>",
+        ///                 query = "<query>",
         ///                 callingOptions = new {
         ///                     verbose = true,
         ///                     log = true,
         ///                     show-all-intents = true,
-        ///                     timezoneOffset = 1234,
+        ///                     timezoneOffset = 123.45f,
         ///                     spellCheck = true,
-        ///                     bing-spell-check-subscription-key = "<LuisCallingOptionsBingSpellCheckSubscriptionKey>",
+        ///                     bing-spell-check-subscription-key = "<bing-spell-check-subscription-key>",
         ///                 },
+        ///                 targetProjectKind = "Luis",
+        ///                 apiVersion = "<apiVersion>",
         ///             },
         ///         },
         ///     },
+        ///     kind = "Conversation",
         /// };
         /// 
         /// Response response = await client.AnalyzeConversationAsync(RequestContent.Create(data));
@@ -124,7 +124,6 @@ namespace Azure.AI.Language.Conversations
         /// 
         /// <details><summary>ConversationalTask</summary>Schema for <c>ConversationalTask</c>:
         /// <code>{
-        ///   kind: Conversation, # Required. Enumeration of supported Conversation tasks.
         ///   analysisInput: {
         ///     conversationItem: {
         ///       id: string, # Required. The ID of a conversation item.
@@ -143,6 +142,7 @@ namespace Azure.AI.Language.Conversations
         ///     directTarget: string, # Optional. The name of a target project to forward the request to.
         ///     targetProjectParameters: Dictionary&lt;string, AnalysisParameters&gt;, # Optional. A dictionary representing the parameters for each target project.
         ///   }, # Required. Input parameters necessary for a Conversation task.
+        ///   kind: Conversation, # Required. Enumeration of supported Conversation tasks.
         /// }
         /// </code>
         /// </details>
@@ -151,7 +151,6 @@ namespace Azure.AI.Language.Conversations
         /// 
         /// <details><summary>ConversationalTaskResult</summary>Schema for <c>ConversationalTaskResult</c>:
         /// <code>{
-        ///   kind: ConversationResult, # Required. Enumeration of supported conversational task results
         ///   result: {
         ///     query: string, # Required. The conversation utterance given by the caller.
         ///     detectedLanguage: string, # Optional. The system detected language for the query in BCP 47 language representation..
@@ -160,6 +159,7 @@ namespace Azure.AI.Language.Conversations
         ///       topIntent: string, # Optional. The intent with the highest score.
         ///     }, # Required. The prediction result of a conversation project.
         ///   }, # Required. Represents a conversation analysis response.
+        ///   kind: ConversationResult, # Required. Enumeration of supported conversational task results
         /// }
         /// </code>
         /// </details>
@@ -197,18 +197,18 @@ namespace Azure.AI.Language.Conversations
         /// var client = new ConversationAnalysisClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     kind = "Conversation",
         ///     analysisInput = new {
         ///         conversationItem = new {
-        ///             id = "<ConversationItemBaseId>",
-        ///             participantId = "<ConversationItemBaseParticipantId>",
-        ///             text = "<TextConversationItemText>",
+        ///             text = "<text>",
+        ///             id = "<id>",
+        ///             participantId = "<participantId>",
         ///         },
         ///     },
         ///     parameters = new {
-        ///         projectName = "<ConversationTaskParametersProjectName>",
-        ///         deploymentName = "<ConversationTaskParametersDeploymentName>",
+        ///         projectName = "<projectName>",
+        ///         deploymentName = "<deploymentName>",
         ///     },
+        ///     kind = "Conversation",
         /// };
         /// 
         /// Response response = client.AnalyzeConversation(RequestContent.Create(data));
@@ -223,40 +223,40 @@ namespace Azure.AI.Language.Conversations
         /// var client = new ConversationAnalysisClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     kind = "Conversation",
         ///     analysisInput = new {
         ///         conversationItem = new {
-        ///             id = "<ConversationItemBaseId>",
-        ///             participantId = "<ConversationItemBaseParticipantId>",
-        ///             language = "<ConversationItemBaseLanguage>",
-        ///             modality = "<transcript>",
-        ///             role = "<agent>",
-        ///             text = "<TextConversationItemText>",
+        ///             text = "<text>",
+        ///             id = "<id>",
+        ///             participantId = "<participantId>",
+        ///             language = "<language>",
+        ///             modality = "transcript",
+        ///             role = "agent",
         ///         },
         ///     },
         ///     parameters = new {
-        ///         projectName = "<ConversationTaskParametersProjectName>",
-        ///         deploymentName = "<ConversationTaskParametersDeploymentName>",
+        ///         projectName = "<projectName>",
+        ///         deploymentName = "<deploymentName>",
         ///         verbose = true,
         ///         isLoggingEnabled = true,
-        ///         stringIndexType = "<Utf16CodeUnit>",
-        ///         directTarget = "<ConversationTaskParametersDirectTarget>",
+        ///         stringIndexType = "Utf16CodeUnit",
+        ///         directTarget = "<directTarget>",
         ///         targetProjectParameters = new {
         ///             key = new {
-        ///                 targetProjectKind = "Luis",
-        ///                 apiVersion = "<AnalysisParametersApiVersion>",
-        ///                 query = "<LuisParametersQuery>",
+        ///                 query = "<query>",
         ///                 callingOptions = new {
         ///                     verbose = true,
         ///                     log = true,
         ///                     show-all-intents = true,
-        ///                     timezoneOffset = 1234,
+        ///                     timezoneOffset = 123.45f,
         ///                     spellCheck = true,
-        ///                     bing-spell-check-subscription-key = "<LuisCallingOptionsBingSpellCheckSubscriptionKey>",
+        ///                     bing-spell-check-subscription-key = "<bing-spell-check-subscription-key>",
         ///                 },
+        ///                 targetProjectKind = "Luis",
+        ///                 apiVersion = "<apiVersion>",
         ///             },
         ///         },
         ///     },
+        ///     kind = "Conversation",
         /// };
         /// 
         /// Response response = client.AnalyzeConversation(RequestContent.Create(data));
@@ -272,7 +272,6 @@ namespace Azure.AI.Language.Conversations
         /// 
         /// <details><summary>ConversationalTask</summary>Schema for <c>ConversationalTask</c>:
         /// <code>{
-        ///   kind: Conversation, # Required. Enumeration of supported Conversation tasks.
         ///   analysisInput: {
         ///     conversationItem: {
         ///       id: string, # Required. The ID of a conversation item.
@@ -291,6 +290,7 @@ namespace Azure.AI.Language.Conversations
         ///     directTarget: string, # Optional. The name of a target project to forward the request to.
         ///     targetProjectParameters: Dictionary&lt;string, AnalysisParameters&gt;, # Optional. A dictionary representing the parameters for each target project.
         ///   }, # Required. Input parameters necessary for a Conversation task.
+        ///   kind: Conversation, # Required. Enumeration of supported Conversation tasks.
         /// }
         /// </code>
         /// </details>
@@ -299,7 +299,6 @@ namespace Azure.AI.Language.Conversations
         /// 
         /// <details><summary>ConversationalTaskResult</summary>Schema for <c>ConversationalTaskResult</c>:
         /// <code>{
-        ///   kind: ConversationResult, # Required. Enumeration of supported conversational task results
         ///   result: {
         ///     query: string, # Required. The conversation utterance given by the caller.
         ///     detectedLanguage: string, # Optional. The system detected language for the query in BCP 47 language representation..
@@ -308,6 +307,7 @@ namespace Azure.AI.Language.Conversations
         ///       topIntent: string, # Optional. The intent with the highest score.
         ///     }, # Required. The prediction result of a conversation project.
         ///   }, # Required. Represents a conversation analysis response.
+        ///   kind: ConversationResult, # Required. Enumeration of supported conversational task results
         /// }
         /// </code>
         /// </details>
@@ -351,11 +351,6 @@ namespace Azure.AI.Language.Conversations
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
         /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
-        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
-        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
-        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
-        /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call GetAnalyzeConversationJobStatusAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
@@ -387,18 +382,6 @@ namespace Azure.AI.Language.Conversations
         /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
         /// Console.WriteLine(result.GetProperty("nextLink").ToString());
-        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
-        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
-        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
-        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
-        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("lastUpdateDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("taskName").ToString());
-        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("kind").ToString());
-        /// Console.WriteLine(result.GetProperty("statistics").GetProperty("transactionsCount").ToString());
-        /// Console.WriteLine(result.GetProperty("statistics").GetProperty("conversationsCount").ToString());
-        /// Console.WriteLine(result.GetProperty("statistics").GetProperty("validConversationsCount").ToString());
-        /// Console.WriteLine(result.GetProperty("statistics").GetProperty("erroneousConversationsCount").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -432,26 +415,6 @@ namespace Azure.AI.Language.Conversations
         ///     }
         ///   ], # Optional.
         ///   nextLink: string, # Optional.
-        ///   tasks: {
-        ///     completed: number, # Required. Count of tasks completed successfully.
-        ///     failed: number, # Required. Count of tasks that failed.
-        ///     inProgress: number, # Required. Count of tasks in progress currently.
-        ///     total: number, # Required. Total count of tasks submitted as part of the job.
-        ///     items: [
-        ///       {
-        ///         lastUpdateDateTime: string (ISO 8601 Format), # Required. The last updated time in UTC for the task.
-        ///         status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot;, # Required. The status of the task at the mentioned last update time.
-        ///         taskName: string, # Optional.
-        ///         kind: &quot;ConversationalPIIResults&quot; | &quot;ConversationalSummarizationResults&quot;, # Required. Enumeration of supported Conversation Analysis task results.
-        ///       }
-        ///     ], # Optional. List of results from tasks (if available).
-        ///   }, # Required.
-        ///   statistics: {
-        ///     transactionsCount: number, # Required. Number of transactions for the request.
-        ///     conversationsCount: number, # Required. Number of conversations submitted in the request.
-        ///     validConversationsCount: number, # Required. Number of conversations documents. This excludes empty, over-size limit or non-supported languages documents.
-        ///     erroneousConversationsCount: number, # Required. Number of invalid documents. This includes empty, over-size limit or non-supported languages documents.
-        ///   }, # Optional. if showStats=true was specified in the request this field will contain information about the request payload.
         /// }
         /// </code>
         /// 
@@ -492,11 +455,6 @@ namespace Azure.AI.Language.Conversations
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
         /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
-        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
-        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
-        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
-        /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call GetAnalyzeConversationJobStatus with all parameters, and how to parse the result.
         /// <code><![CDATA[
@@ -528,18 +486,6 @@ namespace Azure.AI.Language.Conversations
         /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
         /// Console.WriteLine(result.GetProperty("nextLink").ToString());
-        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
-        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
-        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
-        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
-        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("lastUpdateDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("taskName").ToString());
-        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("kind").ToString());
-        /// Console.WriteLine(result.GetProperty("statistics").GetProperty("transactionsCount").ToString());
-        /// Console.WriteLine(result.GetProperty("statistics").GetProperty("conversationsCount").ToString());
-        /// Console.WriteLine(result.GetProperty("statistics").GetProperty("validConversationsCount").ToString());
-        /// Console.WriteLine(result.GetProperty("statistics").GetProperty("erroneousConversationsCount").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -573,26 +519,6 @@ namespace Azure.AI.Language.Conversations
         ///     }
         ///   ], # Optional.
         ///   nextLink: string, # Optional.
-        ///   tasks: {
-        ///     completed: number, # Required. Count of tasks completed successfully.
-        ///     failed: number, # Required. Count of tasks that failed.
-        ///     inProgress: number, # Required. Count of tasks in progress currently.
-        ///     total: number, # Required. Total count of tasks submitted as part of the job.
-        ///     items: [
-        ///       {
-        ///         lastUpdateDateTime: string (ISO 8601 Format), # Required. The last updated time in UTC for the task.
-        ///         status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot;, # Required. The status of the task at the mentioned last update time.
-        ///         taskName: string, # Optional.
-        ///         kind: &quot;ConversationalPIIResults&quot; | &quot;ConversationalSummarizationResults&quot;, # Required. Enumeration of supported Conversation Analysis task results.
-        ///       }
-        ///     ], # Optional. List of results from tasks (if available).
-        ///   }, # Required.
-        ///   statistics: {
-        ///     transactionsCount: number, # Required. Number of transactions for the request.
-        ///     conversationsCount: number, # Required. Number of conversations submitted in the request.
-        ///     validConversationsCount: number, # Required. Number of conversations documents. This excludes empty, over-size limit or non-supported languages documents.
-        ///     erroneousConversationsCount: number, # Required. Number of invalid documents. This includes empty, over-size limit or non-supported languages documents.
-        ///   }, # Optional. if showStats=true was specified in the request this field will contain information about the request payload.
         /// }
         /// </code>
         /// 
@@ -631,16 +557,16 @@ namespace Azure.AI.Language.Conversations
         ///     analysisInput = new {
         ///         conversations = new[] {
         ///             new {
-        ///                 id = "<ConversationId>",
-        ///                 language = "<ConversationLanguage>",
-        ///                 modality = "text",
         ///                 conversationItems = new[] {
         ///                     new {
-        ///                         id = "<ConversationItemBaseId>",
-        ///                         participantId = "<ConversationItemBaseParticipantId>",
-        ///                         text = "<TextConversationItemText>",
+        ///                         text = "<text>",
+        ///                         id = "<id>",
+        ///                         participantId = "<participantId>",
         ///                     }
         ///                 },
+        ///                 id = "<id>",
+        ///                 language = "<language>",
+        ///                 modality = "text",
         ///             }
         ///         },
         ///     },
@@ -659,11 +585,6 @@ namespace Azure.AI.Language.Conversations
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
         /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
-        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
-        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
-        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
-        /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call StartAnalyzeConversationAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
@@ -672,40 +593,40 @@ namespace Azure.AI.Language.Conversations
         /// var client = new ConversationAnalysisClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     displayName = "<AnalyzeConversationJobsInputDisplayName>",
+        ///     displayName = "<displayName>",
         ///     analysisInput = new {
         ///         conversations = new[] {
         ///             new {
-        ///                 id = "<ConversationId>",
-        ///                 language = "<ConversationLanguage>",
-        ///                 modality = "text",
-        ///                 domain = "<finance>",
         ///                 conversationItems = new[] {
         ///                     new {
-        ///                         id = "<ConversationItemBaseId>",
-        ///                         participantId = "<ConversationItemBaseParticipantId>",
-        ///                         language = "<ConversationItemBaseLanguage>",
-        ///                         modality = "<transcript>",
-        ///                         role = "<agent>",
-        ///                         text = "<TextConversationItemText>",
+        ///                         text = "<text>",
+        ///                         id = "<id>",
+        ///                         participantId = "<participantId>",
+        ///                         language = "<language>",
+        ///                         modality = "transcript",
+        ///                         role = "agent",
         ///                     }
         ///                 },
+        ///                 id = "<id>",
+        ///                 language = "<language>",
+        ///                 modality = "text",
+        ///                 domain = "finance",
         ///             }
         ///         },
         ///     },
         ///     tasks = new[] {
         ///         new {
-        ///             kind = "ConversationalPIITask",
-        ///             taskName = "<TaskIdentifierTaskName>",
         ///             parameters = new {
-        ///                 modelVersion = "<latest>",
-        ///                 loggingOptOut = false,
         ///                 piiCategories = new[] {
-        ///                     "<Address>"
+        ///                     "Address"
         ///                 },
-        ///                 includeAudioRedaction = false,
-        ///                 redactionSource = "<lexical>",
+        ///                 includeAudioRedaction = true,
+        ///                 redactionSource = "lexical",
+        ///                 modelVersion = "<modelVersion>",
+        ///                 loggingOptOut = true,
         ///             },
+        ///             kind = "ConversationalPIITask",
+        ///             taskName = "<taskName>",
         ///         }
         ///     },
         /// };
@@ -735,18 +656,6 @@ namespace Azure.AI.Language.Conversations
         /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
         /// Console.WriteLine(result.GetProperty("nextLink").ToString());
-        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
-        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
-        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
-        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
-        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("lastUpdateDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("taskName").ToString());
-        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("kind").ToString());
-        /// Console.WriteLine(result.GetProperty("statistics").GetProperty("transactionsCount").ToString());
-        /// Console.WriteLine(result.GetProperty("statistics").GetProperty("conversationsCount").ToString());
-        /// Console.WriteLine(result.GetProperty("statistics").GetProperty("validConversationsCount").ToString());
-        /// Console.WriteLine(result.GetProperty("statistics").GetProperty("erroneousConversationsCount").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -771,8 +680,8 @@ namespace Azure.AI.Language.Conversations
         ///   }, # Required.
         ///   tasks: [
         ///     {
-        ///       taskName: string, # Optional.
         ///       kind: &quot;ConversationalPIITask&quot; | &quot;ConversationalSummarizationTask&quot;, # Required. Enumeration of supported analysis tasks on a collection of conversations.
+        ///       taskName: string, # Optional.
         ///     }
         ///   ], # Required. The set of tasks to execute on the input conversation.
         /// }
@@ -804,26 +713,6 @@ namespace Azure.AI.Language.Conversations
         ///     }
         ///   ], # Optional.
         ///   nextLink: string, # Optional.
-        ///   tasks: {
-        ///     completed: number, # Required. Count of tasks completed successfully.
-        ///     failed: number, # Required. Count of tasks that failed.
-        ///     inProgress: number, # Required. Count of tasks in progress currently.
-        ///     total: number, # Required. Total count of tasks submitted as part of the job.
-        ///     items: [
-        ///       {
-        ///         lastUpdateDateTime: string (ISO 8601 Format), # Required. The last updated time in UTC for the task.
-        ///         status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot;, # Required. The status of the task at the mentioned last update time.
-        ///         taskName: string, # Optional.
-        ///         kind: &quot;ConversationalPIIResults&quot; | &quot;ConversationalSummarizationResults&quot;, # Required. Enumeration of supported Conversation Analysis task results.
-        ///       }
-        ///     ], # Optional. List of results from tasks (if available).
-        ///   }, # Required.
-        ///   statistics: {
-        ///     transactionsCount: number, # Required. Number of transactions for the request.
-        ///     conversationsCount: number, # Required. Number of conversations submitted in the request.
-        ///     validConversationsCount: number, # Required. Number of conversations documents. This excludes empty, over-size limit or non-supported languages documents.
-        ///     erroneousConversationsCount: number, # Required. Number of invalid documents. This includes empty, over-size limit or non-supported languages documents.
-        ///   }, # Optional. if showStats=true was specified in the request this field will contain information about the request payload.
         /// }
         /// </code>
         /// 
@@ -864,16 +753,16 @@ namespace Azure.AI.Language.Conversations
         ///     analysisInput = new {
         ///         conversations = new[] {
         ///             new {
-        ///                 id = "<ConversationId>",
-        ///                 language = "<ConversationLanguage>",
-        ///                 modality = "text",
         ///                 conversationItems = new[] {
         ///                     new {
-        ///                         id = "<ConversationItemBaseId>",
-        ///                         participantId = "<ConversationItemBaseParticipantId>",
-        ///                         text = "<TextConversationItemText>",
+        ///                         text = "<text>",
+        ///                         id = "<id>",
+        ///                         participantId = "<participantId>",
         ///                     }
         ///                 },
+        ///                 id = "<id>",
+        ///                 language = "<language>",
+        ///                 modality = "text",
         ///             }
         ///         },
         ///     },
@@ -892,11 +781,6 @@ namespace Azure.AI.Language.Conversations
         /// Console.WriteLine(result.GetProperty("jobId").ToString());
         /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
-        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
-        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
-        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
-        /// Console.WriteLine(result.ToString());
         /// ]]></code>
         /// This sample shows how to call StartAnalyzeConversation with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
@@ -905,40 +789,40 @@ namespace Azure.AI.Language.Conversations
         /// var client = new ConversationAnalysisClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     displayName = "<AnalyzeConversationJobsInputDisplayName>",
+        ///     displayName = "<displayName>",
         ///     analysisInput = new {
         ///         conversations = new[] {
         ///             new {
-        ///                 id = "<ConversationId>",
-        ///                 language = "<ConversationLanguage>",
-        ///                 modality = "text",
-        ///                 domain = "<finance>",
         ///                 conversationItems = new[] {
         ///                     new {
-        ///                         id = "<ConversationItemBaseId>",
-        ///                         participantId = "<ConversationItemBaseParticipantId>",
-        ///                         language = "<ConversationItemBaseLanguage>",
-        ///                         modality = "<transcript>",
-        ///                         role = "<agent>",
-        ///                         text = "<TextConversationItemText>",
+        ///                         text = "<text>",
+        ///                         id = "<id>",
+        ///                         participantId = "<participantId>",
+        ///                         language = "<language>",
+        ///                         modality = "transcript",
+        ///                         role = "agent",
         ///                     }
         ///                 },
+        ///                 id = "<id>",
+        ///                 language = "<language>",
+        ///                 modality = "text",
+        ///                 domain = "finance",
         ///             }
         ///         },
         ///     },
         ///     tasks = new[] {
         ///         new {
-        ///             kind = "ConversationalPIITask",
-        ///             taskName = "<TaskIdentifierTaskName>",
         ///             parameters = new {
-        ///                 modelVersion = "<latest>",
-        ///                 loggingOptOut = false,
         ///                 piiCategories = new[] {
-        ///                     "<Address>"
+        ///                     "Address"
         ///                 },
-        ///                 includeAudioRedaction = false,
-        ///                 redactionSource = "<lexical>",
+        ///                 includeAudioRedaction = true,
+        ///                 redactionSource = "lexical",
+        ///                 modelVersion = "<modelVersion>",
+        ///                 loggingOptOut = true,
         ///             },
+        ///             kind = "ConversationalPIITask",
+        ///             taskName = "<taskName>",
         ///         }
         ///     },
         /// };
@@ -968,18 +852,6 @@ namespace Azure.AI.Language.Conversations
         /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("details").GetProperty("<test>").ToString());
         /// Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("target").ToString());
         /// Console.WriteLine(result.GetProperty("nextLink").ToString());
-        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
-        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
-        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
-        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
-        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("lastUpdateDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("status").ToString());
-        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("taskName").ToString());
-        /// Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("kind").ToString());
-        /// Console.WriteLine(result.GetProperty("statistics").GetProperty("transactionsCount").ToString());
-        /// Console.WriteLine(result.GetProperty("statistics").GetProperty("conversationsCount").ToString());
-        /// Console.WriteLine(result.GetProperty("statistics").GetProperty("validConversationsCount").ToString());
-        /// Console.WriteLine(result.GetProperty("statistics").GetProperty("erroneousConversationsCount").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -1004,8 +876,8 @@ namespace Azure.AI.Language.Conversations
         ///   }, # Required.
         ///   tasks: [
         ///     {
-        ///       taskName: string, # Optional.
         ///       kind: &quot;ConversationalPIITask&quot; | &quot;ConversationalSummarizationTask&quot;, # Required. Enumeration of supported analysis tasks on a collection of conversations.
+        ///       taskName: string, # Optional.
         ///     }
         ///   ], # Required. The set of tasks to execute on the input conversation.
         /// }
@@ -1037,26 +909,6 @@ namespace Azure.AI.Language.Conversations
         ///     }
         ///   ], # Optional.
         ///   nextLink: string, # Optional.
-        ///   tasks: {
-        ///     completed: number, # Required. Count of tasks completed successfully.
-        ///     failed: number, # Required. Count of tasks that failed.
-        ///     inProgress: number, # Required. Count of tasks in progress currently.
-        ///     total: number, # Required. Total count of tasks submitted as part of the job.
-        ///     items: [
-        ///       {
-        ///         lastUpdateDateTime: string (ISO 8601 Format), # Required. The last updated time in UTC for the task.
-        ///         status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot;, # Required. The status of the task at the mentioned last update time.
-        ///         taskName: string, # Optional.
-        ///         kind: &quot;ConversationalPIIResults&quot; | &quot;ConversationalSummarizationResults&quot;, # Required. Enumeration of supported Conversation Analysis task results.
-        ///       }
-        ///     ], # Optional. List of results from tasks (if available).
-        ///   }, # Required.
-        ///   statistics: {
-        ///     transactionsCount: number, # Required. Number of transactions for the request.
-        ///     conversationsCount: number, # Required. Number of conversations submitted in the request.
-        ///     validConversationsCount: number, # Required. Number of conversations documents. This excludes empty, over-size limit or non-supported languages documents.
-        ///     erroneousConversationsCount: number, # Required. Number of invalid documents. This includes empty, over-size limit or non-supported languages documents.
-        ///   }, # Optional. if showStats=true was specified in the request this field will contain information about the request payload.
         /// }
         /// </code>
         /// 

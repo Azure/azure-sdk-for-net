@@ -418,23 +418,14 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new BoundariesClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     parentId = "<BoundaryParentId>",
+        ///     parentId = "<parentId>",
         ///     geometry = new {
         ///         type = "MultiPolygon",
-        ///         coordinates = new[] {
-        ///             new[] {
-        ///                 new[] {
-        ///                     new[] {
-        ///                         1234
-        ///                     }
-        ///                 }
-        ///             }
-        ///         },
         ///     },
         ///     isPrimary = true,
-        ///     status = "<BoundaryStatus>",
-        ///     name = "<BoundaryName>",
-        ///     description = "<BoundaryDescription>",
+        ///     status = "<status>",
+        ///     name = "<name>",
+        ///     description = "<description>",
         ///     properties = new {
         ///         key = new {},
         ///     },
@@ -564,23 +555,14 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new BoundariesClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     parentId = "<BoundaryParentId>",
+        ///     parentId = "<parentId>",
         ///     geometry = new {
         ///         type = "MultiPolygon",
-        ///         coordinates = new[] {
-        ///             new[] {
-        ///                 new[] {
-        ///                     new[] {
-        ///                         1234
-        ///                     }
-        ///                 }
-        ///             }
-        ///         },
         ///     },
         ///     isPrimary = true,
-        ///     status = "<BoundaryStatus>",
-        ///     name = "<BoundaryName>",
-        ///     description = "<BoundaryDescription>",
+        ///     status = "<status>",
+        ///     name = "<name>",
+        ///     description = "<description>",
         ///     properties = new {
         ///         key = new {},
         ///     },
@@ -1149,41 +1131,32 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// var data = new {
         ///     ids = new[] {
-        ///         "<SearchBoundaryQueryIdsItem>"
+        ///         "<String>"
         ///     },
         ///     names = new[] {
-        ///         "<SearchBoundaryQueryNamesItem>"
+        ///         "<String>"
         ///     },
         ///     propertyFilters = new[] {
-        ///         "<SearchBoundaryQueryPropertyFiltersItem>"
+        ///         "<String>"
         ///     },
         ///     statuses = new[] {
-        ///         "<SearchBoundaryQueryStatusesItem>"
+        ///         "<String>"
         ///     },
-        ///     minCreatedDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     maxCreatedDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     minLastModifiedDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     maxLastModifiedDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     $maxPageSize = 50,
-        ///     $skipToken = "<SearchBoundaryQuerySkipToken>",
+        ///     minCreatedDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     maxCreatedDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     minLastModifiedDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     maxLastModifiedDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     $maxPageSize = 1234,
+        ///     $skipToken = "<$skipToken>",
         ///     isPrimary = true,
-        ///     parentType = "<SearchBoundaryQueryParentType>",
+        ///     parentType = "<parentType>",
         ///     parentIds = new[] {
-        ///         "<SearchBoundaryQueryParentIdsItem>"
+        ///         "<String>"
         ///     },
-        ///     minAcreage = 1234,
-        ///     maxAcreage = 1234,
+        ///     minAcreage = 123.45d,
+        ///     maxAcreage = 123.45d,
         ///     intersectsWithGeometry = new {
         ///         type = "MultiPolygon",
-        ///         coordinates = new[] {
-        ///             new[] {
-        ///                 new[] {
-        ///                     new[] {
-        ///                         1234
-        ///                     }
-        ///                 }
-        ///             }
-        ///         },
         ///     },
         /// };
         /// 
@@ -1319,41 +1292,32 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// var data = new {
         ///     ids = new[] {
-        ///         "<SearchBoundaryQueryIdsItem>"
+        ///         "<String>"
         ///     },
         ///     names = new[] {
-        ///         "<SearchBoundaryQueryNamesItem>"
+        ///         "<String>"
         ///     },
         ///     propertyFilters = new[] {
-        ///         "<SearchBoundaryQueryPropertyFiltersItem>"
+        ///         "<String>"
         ///     },
         ///     statuses = new[] {
-        ///         "<SearchBoundaryQueryStatusesItem>"
+        ///         "<String>"
         ///     },
-        ///     minCreatedDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     maxCreatedDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     minLastModifiedDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     maxLastModifiedDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     $maxPageSize = 50,
-        ///     $skipToken = "<SearchBoundaryQuerySkipToken>",
+        ///     minCreatedDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     maxCreatedDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     minLastModifiedDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     maxLastModifiedDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     $maxPageSize = 1234,
+        ///     $skipToken = "<$skipToken>",
         ///     isPrimary = true,
-        ///     parentType = "<SearchBoundaryQueryParentType>",
+        ///     parentType = "<parentType>",
         ///     parentIds = new[] {
-        ///         "<SearchBoundaryQueryParentIdsItem>"
+        ///         "<String>"
         ///     },
-        ///     minAcreage = 1234,
-        ///     maxAcreage = 1234,
+        ///     minAcreage = 123.45d,
+        ///     maxAcreage = 123.45d,
         ///     intersectsWithGeometry = new {
         ///         type = "MultiPolygon",
-        ///         coordinates = new[] {
-        ///             new[] {
-        ///                 new[] {
-        ///                     new[] {
-        ///                         1234
-        ///                     }
-        ///                 }
-        ///             }
-        ///         },
         ///     },
         /// };
         /// 
@@ -1718,41 +1682,32 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// var data = new {
         ///     ids = new[] {
-        ///         "<SearchBoundaryQueryIdsItem>"
+        ///         "<String>"
         ///     },
         ///     names = new[] {
-        ///         "<SearchBoundaryQueryNamesItem>"
+        ///         "<String>"
         ///     },
         ///     propertyFilters = new[] {
-        ///         "<SearchBoundaryQueryPropertyFiltersItem>"
+        ///         "<String>"
         ///     },
         ///     statuses = new[] {
-        ///         "<SearchBoundaryQueryStatusesItem>"
+        ///         "<String>"
         ///     },
-        ///     minCreatedDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     maxCreatedDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     minLastModifiedDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     maxLastModifiedDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     $maxPageSize = 50,
-        ///     $skipToken = "<SearchBoundaryQuerySkipToken>",
+        ///     minCreatedDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     maxCreatedDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     minLastModifiedDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     maxLastModifiedDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     $maxPageSize = 1234,
+        ///     $skipToken = "<$skipToken>",
         ///     isPrimary = true,
-        ///     parentType = "<SearchBoundaryQueryParentType>",
+        ///     parentType = "<parentType>",
         ///     parentIds = new[] {
-        ///         "<SearchBoundaryQueryParentIdsItem>"
+        ///         "<String>"
         ///     },
-        ///     minAcreage = 1234,
-        ///     maxAcreage = 1234,
+        ///     minAcreage = 123.45d,
+        ///     maxAcreage = 123.45d,
         ///     intersectsWithGeometry = new {
         ///         type = "MultiPolygon",
-        ///         coordinates = new[] {
-        ///             new[] {
-        ///                 new[] {
-        ///                     new[] {
-        ///                         1234
-        ///                     }
-        ///                 }
-        ///             }
-        ///         },
         ///     },
         /// };
         /// 
@@ -1883,41 +1838,32 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// var data = new {
         ///     ids = new[] {
-        ///         "<SearchBoundaryQueryIdsItem>"
+        ///         "<String>"
         ///     },
         ///     names = new[] {
-        ///         "<SearchBoundaryQueryNamesItem>"
+        ///         "<String>"
         ///     },
         ///     propertyFilters = new[] {
-        ///         "<SearchBoundaryQueryPropertyFiltersItem>"
+        ///         "<String>"
         ///     },
         ///     statuses = new[] {
-        ///         "<SearchBoundaryQueryStatusesItem>"
+        ///         "<String>"
         ///     },
-        ///     minCreatedDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     maxCreatedDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     minLastModifiedDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     maxLastModifiedDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     $maxPageSize = 50,
-        ///     $skipToken = "<SearchBoundaryQuerySkipToken>",
+        ///     minCreatedDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     maxCreatedDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     minLastModifiedDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     maxLastModifiedDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     $maxPageSize = 1234,
+        ///     $skipToken = "<$skipToken>",
         ///     isPrimary = true,
-        ///     parentType = "<SearchBoundaryQueryParentType>",
+        ///     parentType = "<parentType>",
         ///     parentIds = new[] {
-        ///         "<SearchBoundaryQueryParentIdsItem>"
+        ///         "<String>"
         ///     },
-        ///     minAcreage = 1234,
-        ///     maxAcreage = 1234,
+        ///     minAcreage = 123.45d,
+        ///     maxAcreage = 123.45d,
         ///     intersectsWithGeometry = new {
         ///         type = "MultiPolygon",
-        ///         coordinates = new[] {
-        ///             new[] {
-        ///                 new[] {
-        ///                     new[] {
-        ///                         1234
-        ///                     }
-        ///                 }
-        ///             }
-        ///         },
         ///     },
         /// };
         /// 
