@@ -50,16 +50,11 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             {
                 Condition = "@Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase 'foo_storage_container'",
                 ConditionVersion = "1.0",
-                ScheduleInfo = new RoleEligibilityScheduleRequestPropertiesScheduleInfo()
-                {
-                    StartOn = DateTimeOffset.Parse("2020-09-09T21:31:27.91Z"),
-                    Expiration = new RoleEligibilityScheduleRequestPropertiesScheduleInfoExpiration() {
-                        Duration = TypeFormatters.ParseTimeSpan("P365D", "P"),
-                        EndOn = null,
-                        RoleEligibilityExpirationType = RoleEligibilityScheduleType.AfterDuration
-                    }
-                },
-                RequestType = RequestType.AdminAssign,
+                StartOn = DateTimeOffset.Parse("2020-09-09T21:31:27.91Z"),
+                Duration = TypeFormatters.ParseTimeSpan("P365D", "P"),
+                EndOn = null,
+                ExpirationType = RoleEligibilityScheduleExpirationType.AfterDuration,
+                RequestType = RoleEligibilityScheduleRequestType.AdminAssign,
                 RoleDefinitionId = Definition.Id,
                 PrincipalId = Guid.Parse(TestEnvironment.ClientId)
             };

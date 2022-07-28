@@ -5,53 +5,125 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Models;
+
 namespace Azure.ResourceManager.Authorization.Models
 {
     /// <summary>
     /// Expanded info of resource scope, role definition and policy
     /// Serialized Name: PolicyAssignmentProperties
     /// </summary>
-    public partial class PolicyAssignmentProperties
+    public partial class PolicyAssignmentProperties : TrackedResourceData
     {
         /// <summary> Initializes a new instance of PolicyAssignmentProperties. </summary>
-        internal PolicyAssignmentProperties()
+        /// <param name="location"> The location. </param>
+        internal PolicyAssignmentProperties(AzureLocation location) : base(location)
         {
         }
 
         /// <summary> Initializes a new instance of PolicyAssignmentProperties. </summary>
-        /// <param name="scope">
-        /// Details of the resource scope
-        /// Serialized Name: PolicyAssignmentProperties.scope
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="policyId">
+        /// Id of the policy
+        /// Serialized Name: PolicyAssignmentProperties.policy.id
         /// </param>
-        /// <param name="roleDefinition">
-        /// Details of role definition
-        /// Serialized Name: PolicyAssignmentProperties.roleDefinition
+        /// <param name="lastModifiedBy">
+        /// The name of the entity last modified it
+        /// Serialized Name: PolicyAssignmentProperties.policy.lastModifiedBy
         /// </param>
-        /// <param name="policy">
-        /// Details of the policy
-        /// Serialized Name: PolicyAssignmentProperties.policy
+        /// <param name="lastModifiedOn">
+        /// The last modified date time.
+        /// Serialized Name: PolicyAssignmentProperties.policy.lastModifiedDateTime
         /// </param>
-        internal PolicyAssignmentProperties(PolicyAssignmentPropertiesScope scope, PolicyAssignmentPropertiesRoleDefinition roleDefinition, PolicyAssignmentPropertiesPolicy policy)
+        /// <param name="roleDefinitionId">
+        /// Id of the role definition
+        /// Serialized Name: PolicyAssignmentProperties.roleDefinition.id
+        /// </param>
+        /// <param name="roleDefinitionDisplayName">
+        /// Display name of the role definition
+        /// Serialized Name: PolicyAssignmentProperties.roleDefinition.displayName
+        /// </param>
+        /// <param name="roleDefinitionType">
+        /// Type of the role definition
+        /// Serialized Name: PolicyAssignmentProperties.roleDefinition.type
+        /// </param>
+        /// <param name="scopeId">
+        /// Scope id of the resource
+        /// Serialized Name: PolicyAssignmentProperties.scope.id
+        /// </param>
+        /// <param name="scopeDisplayName">
+        /// Display name of the resource
+        /// Serialized Name: PolicyAssignmentProperties.scope.displayName
+        /// </param>
+        /// <param name="scopeType">
+        /// Type of the resource
+        /// Serialized Name: PolicyAssignmentProperties.scope.type
+        /// </param>
+        internal PolicyAssignmentProperties(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier policyId, RoleManagementPrincipal lastModifiedBy, DateTimeOffset? lastModifiedOn, ResourceIdentifier roleDefinitionId, string roleDefinitionDisplayName, string roleDefinitionType, ResourceIdentifier scopeId, string scopeDisplayName, string scopeType) : base(id, name, resourceType, systemData, tags, location)
         {
-            Scope = scope;
-            RoleDefinition = roleDefinition;
-            Policy = policy;
+            PolicyId = policyId;
+            LastModifiedBy = lastModifiedBy;
+            LastModifiedOn = lastModifiedOn;
+            RoleDefinitionId = roleDefinitionId;
+            RoleDefinitionDisplayName = roleDefinitionDisplayName;
+            RoleDefinitionType = roleDefinitionType;
+            ScopeId = scopeId;
+            ScopeDisplayName = scopeDisplayName;
+            ScopeType = scopeType;
         }
 
         /// <summary>
-        /// Details of the resource scope
-        /// Serialized Name: PolicyAssignmentProperties.scope
+        /// Id of the policy
+        /// Serialized Name: PolicyAssignmentProperties.policy.id
         /// </summary>
-        public PolicyAssignmentPropertiesScope Scope { get; }
+        public ResourceIdentifier PolicyId { get; }
         /// <summary>
-        /// Details of role definition
-        /// Serialized Name: PolicyAssignmentProperties.roleDefinition
+        /// The name of the entity last modified it
+        /// Serialized Name: PolicyAssignmentProperties.policy.lastModifiedBy
         /// </summary>
-        public PolicyAssignmentPropertiesRoleDefinition RoleDefinition { get; }
+        public RoleManagementPrincipal LastModifiedBy { get; }
         /// <summary>
-        /// Details of the policy
-        /// Serialized Name: PolicyAssignmentProperties.policy
+        /// The last modified date time.
+        /// Serialized Name: PolicyAssignmentProperties.policy.lastModifiedDateTime
         /// </summary>
-        public PolicyAssignmentPropertiesPolicy Policy { get; }
+        public DateTimeOffset? LastModifiedOn { get; }
+        /// <summary>
+        /// Id of the role definition
+        /// Serialized Name: PolicyAssignmentProperties.roleDefinition.id
+        /// </summary>
+        public ResourceIdentifier RoleDefinitionId { get; }
+        /// <summary>
+        /// Display name of the role definition
+        /// Serialized Name: PolicyAssignmentProperties.roleDefinition.displayName
+        /// </summary>
+        public string RoleDefinitionDisplayName { get; }
+        /// <summary>
+        /// Type of the role definition
+        /// Serialized Name: PolicyAssignmentProperties.roleDefinition.type
+        /// </summary>
+        public string RoleDefinitionType { get; }
+        /// <summary>
+        /// Scope id of the resource
+        /// Serialized Name: PolicyAssignmentProperties.scope.id
+        /// </summary>
+        public ResourceIdentifier ScopeId { get; }
+        /// <summary>
+        /// Display name of the resource
+        /// Serialized Name: PolicyAssignmentProperties.scope.displayName
+        /// </summary>
+        public string ScopeDisplayName { get; }
+        /// <summary>
+        /// Type of the resource
+        /// Serialized Name: PolicyAssignmentProperties.scope.type
+        /// </summary>
+        public string ScopeType { get; }
     }
 }

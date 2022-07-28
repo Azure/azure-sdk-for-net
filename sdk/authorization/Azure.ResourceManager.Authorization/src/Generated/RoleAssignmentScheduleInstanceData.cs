@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Authorization
         /// Additional properties of principal, scope and role definition
         /// Serialized Name: RoleAssignmentScheduleInstance.properties.expandedProperties
         /// </param>
-        internal RoleAssignmentScheduleInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string scope, ResourceIdentifier roleDefinitionId, Guid? principalId, PrincipalType? principalType, ResourceIdentifier roleAssignmentScheduleId, ResourceIdentifier originRoleAssignmentId, RoleAssignmentScheduleInstanceStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, Guid? linkedRoleEligibilityScheduleId, Guid? linkedRoleEligibilityScheduleInstanceId, AssignmentType? assignmentType, MemberType? memberType, string condition, string conditionVersion, DateTimeOffset? createdOn, ExpandedProperties expandedProperties) : base(id, name, resourceType, systemData)
+        internal RoleAssignmentScheduleInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string scope, ResourceIdentifier roleDefinitionId, Guid? principalId, RoleAssignmentSchedulePrincipalType? principalType, ResourceIdentifier roleAssignmentScheduleId, ResourceIdentifier originRoleAssignmentId, RoleAssignmentScheduleStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, Guid? linkedRoleEligibilityScheduleId, Guid? linkedRoleEligibilityScheduleInstanceId, RoleAssignmentScheduleAssignmentType? assignmentType, RoleAssignmentScheduleMemberType? memberType, string condition, string conditionVersion, DateTimeOffset? createdOn, ExpandedProperties expandedProperties) : base(id, name, resourceType, systemData)
         {
             Scope = scope;
             RoleDefinitionId = roleDefinitionId;
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Authorization
         /// The principal type of the assigned principal ID.
         /// Serialized Name: RoleAssignmentScheduleInstance.properties.principalType
         /// </summary>
-        public PrincipalType? PrincipalType { get; }
+        public RoleAssignmentSchedulePrincipalType? PrincipalType { get; }
         /// <summary>
         /// Id of the master role assignment schedule
         /// Serialized Name: RoleAssignmentScheduleInstance.properties.roleAssignmentScheduleId
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Authorization
         /// The status of the role assignment schedule instance.
         /// Serialized Name: RoleAssignmentScheduleInstance.properties.status
         /// </summary>
-        public RoleAssignmentScheduleInstanceStatus? Status { get; }
+        public RoleAssignmentScheduleStatus? Status { get; }
         /// <summary>
         /// The startDateTime of the role assignment schedule instance
         /// Serialized Name: RoleAssignmentScheduleInstance.properties.startDateTime
@@ -173,12 +173,12 @@ namespace Azure.ResourceManager.Authorization
         /// Assignment type of the role assignment schedule
         /// Serialized Name: RoleAssignmentScheduleInstance.properties.assignmentType
         /// </summary>
-        public AssignmentType? AssignmentType { get; }
+        public RoleAssignmentScheduleAssignmentType? AssignmentType { get; }
         /// <summary>
         /// Membership type of the role assignment schedule
         /// Serialized Name: RoleAssignmentScheduleInstance.properties.memberType
         /// </summary>
-        public MemberType? MemberType { get; }
+        public RoleAssignmentScheduleMemberType? MemberType { get; }
         /// <summary>
         /// The conditions on the role assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase &apos;foo_storage_container&apos;
         /// Serialized Name: RoleAssignmentScheduleInstance.properties.condition

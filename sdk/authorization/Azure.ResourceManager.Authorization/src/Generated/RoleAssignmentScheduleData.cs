@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Authorization
         /// Additional properties of principal, scope and role definition
         /// Serialized Name: RoleAssignmentSchedule.properties.expandedProperties
         /// </param>
-        internal RoleAssignmentScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string scope, ResourceIdentifier roleDefinitionId, Guid? principalId, PrincipalType? principalType, ResourceIdentifier roleAssignmentScheduleRequestId, Guid? linkedRoleEligibilityScheduleId, AssignmentType? assignmentType, MemberType? memberType, RoleAssignmentScheduleStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, string condition, string conditionVersion, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, ExpandedProperties expandedProperties) : base(id, name, resourceType, systemData)
+        internal RoleAssignmentScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string scope, ResourceIdentifier roleDefinitionId, Guid? principalId, RoleAssignmentSchedulePrincipalType? principalType, ResourceIdentifier roleAssignmentScheduleRequestId, Guid? linkedRoleEligibilityScheduleId, RoleAssignmentScheduleAssignmentType? assignmentType, RoleAssignmentScheduleMemberType? memberType, RoleAssignmentScheduleStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, string condition, string conditionVersion, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, ExpandedProperties expandedProperties) : base(id, name, resourceType, systemData)
         {
             Scope = scope;
             RoleDefinitionId = roleDefinitionId;
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Authorization
         /// The principal type of the assigned principal ID.
         /// Serialized Name: RoleAssignmentSchedule.properties.principalType
         /// </summary>
-        public PrincipalType? PrincipalType { get; }
+        public RoleAssignmentSchedulePrincipalType? PrincipalType { get; }
         /// <summary>
         /// The id of roleAssignmentScheduleRequest used to create this roleAssignmentSchedule
         /// Serialized Name: RoleAssignmentSchedule.properties.roleAssignmentScheduleRequestId
@@ -143,12 +143,12 @@ namespace Azure.ResourceManager.Authorization
         /// Assignment type of the role assignment schedule
         /// Serialized Name: RoleAssignmentSchedule.properties.assignmentType
         /// </summary>
-        public AssignmentType? AssignmentType { get; }
+        public RoleAssignmentScheduleAssignmentType? AssignmentType { get; }
         /// <summary>
         /// Membership type of the role assignment schedule
         /// Serialized Name: RoleAssignmentSchedule.properties.memberType
         /// </summary>
-        public MemberType? MemberType { get; }
+        public RoleAssignmentScheduleMemberType? MemberType { get; }
         /// <summary>
         /// The status of the role assignment schedule.
         /// Serialized Name: RoleAssignmentSchedule.properties.status

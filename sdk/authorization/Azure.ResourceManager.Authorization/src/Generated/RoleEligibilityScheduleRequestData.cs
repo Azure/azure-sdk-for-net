@@ -53,10 +53,6 @@ namespace Azure.ResourceManager.Authorization
         /// The approvalId of the role eligibility schedule request.
         /// Serialized Name: RoleEligibilityScheduleRequest.properties.approvalId
         /// </param>
-        /// <param name="scheduleInfo">
-        /// Schedule info of the role eligibility schedule
-        /// Serialized Name: RoleEligibilityScheduleRequest.properties.scheduleInfo
-        /// </param>
         /// <param name="targetRoleEligibilityScheduleId">
         /// The resultant role eligibility schedule id or the role eligibility schedule id being updated
         /// Serialized Name: RoleEligibilityScheduleRequest.properties.targetRoleEligibilityScheduleId
@@ -93,7 +89,23 @@ namespace Azure.ResourceManager.Authorization
         /// Additional properties of principal, scope and role definition
         /// Serialized Name: RoleEligibilityScheduleRequest.properties.expandedProperties
         /// </param>
-        internal RoleEligibilityScheduleRequestData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string scope, ResourceIdentifier roleDefinitionId, Guid? principalId, PrincipalType? principalType, RequestType? requestType, RoleEligibilityScheduleRequestStatus? status, string approvalId, RoleEligibilityScheduleRequestPropertiesScheduleInfo scheduleInfo, string targetRoleEligibilityScheduleId, string targetRoleEligibilityScheduleInstanceId, string justification, RoleEligibilityScheduleRequestPropertiesTicketInfo ticketInfo, string condition, string conditionVersion, DateTimeOffset? createdOn, Guid? requestorId, ExpandedProperties expandedProperties) : base(id, name, resourceType, systemData)
+        /// <param name="startOn">
+        /// Start DateTime of the role eligibility schedule.
+        /// Serialized Name: RoleEligibilityScheduleRequest.properties.scheduleInfo.startDateTime
+        /// </param>
+        /// <param name="expirationType">
+        /// Type of the role eligibility schedule expiration
+        /// Serialized Name: RoleEligibilityScheduleRequest.properties.scheduleInfo.expiration.type
+        /// </param>
+        /// <param name="endOn">
+        /// End DateTime of the role eligibility schedule.
+        /// Serialized Name: RoleEligibilityScheduleRequest.properties.scheduleInfo.expiration.endDateTime
+        /// </param>
+        /// <param name="duration">
+        /// Duration of the role eligibility schedule in TimeSpan.
+        /// Serialized Name: RoleEligibilityScheduleRequest.properties.scheduleInfo.expiration.duration
+        /// </param>
+        internal RoleEligibilityScheduleRequestData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string scope, ResourceIdentifier roleDefinitionId, Guid? principalId, RoleEligibilitySchedulePrincipalType? principalType, RoleEligibilityScheduleRequestType? requestType, RoleEligibilityScheduleStatus? status, string approvalId, string targetRoleEligibilityScheduleId, string targetRoleEligibilityScheduleInstanceId, string justification, RoleEligibilityScheduleRequestPropertiesTicketInfo ticketInfo, string condition, string conditionVersion, DateTimeOffset? createdOn, Guid? requestorId, ExpandedProperties expandedProperties, DateTimeOffset? startOn, RoleEligibilityScheduleExpirationType? expirationType, DateTimeOffset? endOn, TimeSpan? duration) : base(id, name, resourceType, systemData)
         {
             Scope = scope;
             RoleDefinitionId = roleDefinitionId;
@@ -102,7 +114,6 @@ namespace Azure.ResourceManager.Authorization
             RequestType = requestType;
             Status = status;
             ApprovalId = approvalId;
-            ScheduleInfo = scheduleInfo;
             TargetRoleEligibilityScheduleId = targetRoleEligibilityScheduleId;
             TargetRoleEligibilityScheduleInstanceId = targetRoleEligibilityScheduleInstanceId;
             Justification = justification;
@@ -112,6 +123,10 @@ namespace Azure.ResourceManager.Authorization
             CreatedOn = createdOn;
             RequestorId = requestorId;
             ExpandedProperties = expandedProperties;
+            StartOn = startOn;
+            ExpirationType = expirationType;
+            EndOn = endOn;
+            Duration = duration;
         }
 
         /// <summary>
@@ -133,27 +148,22 @@ namespace Azure.ResourceManager.Authorization
         /// The principal type of the assigned principal ID.
         /// Serialized Name: RoleEligibilityScheduleRequest.properties.principalType
         /// </summary>
-        public PrincipalType? PrincipalType { get; }
+        public RoleEligibilitySchedulePrincipalType? PrincipalType { get; }
         /// <summary>
         /// The type of the role assignment schedule request. Eg: SelfActivate, AdminAssign etc
         /// Serialized Name: RoleEligibilityScheduleRequest.properties.requestType
         /// </summary>
-        public RequestType? RequestType { get; set; }
+        public RoleEligibilityScheduleRequestType? RequestType { get; set; }
         /// <summary>
         /// The status of the role eligibility schedule request.
         /// Serialized Name: RoleEligibilityScheduleRequest.properties.status
         /// </summary>
-        public RoleEligibilityScheduleRequestStatus? Status { get; }
+        public RoleEligibilityScheduleStatus? Status { get; }
         /// <summary>
         /// The approvalId of the role eligibility schedule request.
         /// Serialized Name: RoleEligibilityScheduleRequest.properties.approvalId
         /// </summary>
         public string ApprovalId { get; }
-        /// <summary>
-        /// Schedule info of the role eligibility schedule
-        /// Serialized Name: RoleEligibilityScheduleRequest.properties.scheduleInfo
-        /// </summary>
-        public RoleEligibilityScheduleRequestPropertiesScheduleInfo ScheduleInfo { get; set; }
         /// <summary>
         /// The resultant role eligibility schedule id or the role eligibility schedule id being updated
         /// Serialized Name: RoleEligibilityScheduleRequest.properties.targetRoleEligibilityScheduleId
@@ -199,5 +209,25 @@ namespace Azure.ResourceManager.Authorization
         /// Serialized Name: RoleEligibilityScheduleRequest.properties.expandedProperties
         /// </summary>
         public ExpandedProperties ExpandedProperties { get; }
+        /// <summary>
+        /// Start DateTime of the role eligibility schedule.
+        /// Serialized Name: RoleEligibilityScheduleRequest.properties.scheduleInfo.startDateTime
+        /// </summary>
+        public DateTimeOffset? StartOn { get; set; }
+        /// <summary>
+        /// Type of the role eligibility schedule expiration
+        /// Serialized Name: RoleEligibilityScheduleRequest.properties.scheduleInfo.expiration.type
+        /// </summary>
+        public RoleEligibilityScheduleExpirationType? ExpirationType { get; set; }
+        /// <summary>
+        /// End DateTime of the role eligibility schedule.
+        /// Serialized Name: RoleEligibilityScheduleRequest.properties.scheduleInfo.expiration.endDateTime
+        /// </summary>
+        public DateTimeOffset? EndOn { get; set; }
+        /// <summary>
+        /// Duration of the role eligibility schedule in TimeSpan.
+        /// Serialized Name: RoleEligibilityScheduleRequest.properties.scheduleInfo.expiration.duration
+        /// </summary>
+        public TimeSpan? Duration { get; set; }
     }
 }

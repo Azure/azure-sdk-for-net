@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Authorization
         /// Additional properties of principal, scope and role definition
         /// Serialized Name: RoleEligibilityScheduleInstance.properties.expandedProperties
         /// </param>
-        internal RoleEligibilityScheduleInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string scope, ResourceIdentifier roleDefinitionId, Guid? principalId, PrincipalType? principalType, ResourceIdentifier roleEligibilityScheduleId, RoleEligibilityScheduleInstanceStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, MemberType? memberType, string condition, string conditionVersion, DateTimeOffset? createdOn, ExpandedProperties expandedProperties) : base(id, name, resourceType, systemData)
+        internal RoleEligibilityScheduleInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string scope, ResourceIdentifier roleDefinitionId, Guid? principalId, RoleEligibilitySchedulePrincipalType? principalType, ResourceIdentifier roleEligibilityScheduleId, RoleEligibilityScheduleStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, RoleEligibilityScheduleMemberType? memberType, string condition, string conditionVersion, DateTimeOffset? createdOn, ExpandedProperties expandedProperties) : base(id, name, resourceType, systemData)
         {
             Scope = scope;
             RoleDefinitionId = roleDefinitionId;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Authorization
         /// The principal type of the assigned principal ID.
         /// Serialized Name: RoleEligibilityScheduleInstance.properties.principalType
         /// </summary>
-        public PrincipalType? PrincipalType { get; }
+        public RoleEligibilitySchedulePrincipalType? PrincipalType { get; }
         /// <summary>
         /// Id of the master role eligibility schedule
         /// Serialized Name: RoleEligibilityScheduleInstance.properties.roleEligibilityScheduleId
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Authorization
         /// The status of the role eligibility schedule instance
         /// Serialized Name: RoleEligibilityScheduleInstance.properties.status
         /// </summary>
-        public RoleEligibilityScheduleInstanceStatus? Status { get; }
+        public RoleEligibilityScheduleStatus? Status { get; }
         /// <summary>
         /// The startDateTime of the role eligibility schedule instance
         /// Serialized Name: RoleEligibilityScheduleInstance.properties.startDateTime
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Authorization
         /// Membership type of the role eligibility schedule
         /// Serialized Name: RoleEligibilityScheduleInstance.properties.memberType
         /// </summary>
-        public MemberType? MemberType { get; }
+        public RoleEligibilityScheduleMemberType? MemberType { get; }
         /// <summary>
         /// The conditions on the role assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase &apos;foo_storage_container&apos;
         /// Serialized Name: RoleEligibilityScheduleInstance.properties.condition

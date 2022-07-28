@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <summary> Initializes a new instance of RoleManagementPolicyEnablementRule. </summary>
         public RoleManagementPolicyEnablementRule()
         {
-            EnabledRules = new ChangeTrackingList<EnablementRule>();
+            EnabledRules = new ChangeTrackingList<RoleAssignmentEnablementRuleType>();
             RuleType = RoleManagementPolicyRuleType.RoleManagementPolicyEnablementRule;
         }
 
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// The list of enabled rules.
         /// Serialized Name: RoleManagementPolicyEnablementRule.enabledRules
         /// </param>
-        internal RoleManagementPolicyEnablementRule(ResourceIdentifier id, RoleManagementPolicyRuleType ruleType, RoleManagementPolicyRuleTarget target, IList<EnablementRule> enabledRules) : base(id, ruleType, target)
+        internal RoleManagementPolicyEnablementRule(string id, RoleManagementPolicyRuleType ruleType, RoleManagementPolicyRuleTarget target, IList<RoleAssignmentEnablementRuleType> enabledRules) : base(id, ruleType, target)
         {
             EnabledRules = enabledRules;
             RuleType = ruleType;
@@ -50,6 +50,6 @@ namespace Azure.ResourceManager.Authorization.Models
         /// The list of enabled rules.
         /// Serialized Name: RoleManagementPolicyEnablementRule.enabledRules
         /// </summary>
-        public IList<EnablementRule> EnabledRules { get; }
+        public IList<RoleAssignmentEnablementRuleType> EnabledRules { get; }
     }
 }

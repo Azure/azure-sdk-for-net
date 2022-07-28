@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using Azure.Core;
-
 namespace Azure.ResourceManager.Authorization.Models
 {
     /// <summary>
@@ -38,7 +36,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// The approval setting
         /// Serialized Name: RoleManagementPolicyApprovalRule.setting
         /// </param>
-        internal RoleManagementPolicyApprovalRule(ResourceIdentifier id, RoleManagementPolicyRuleType ruleType, RoleManagementPolicyRuleTarget target, ApprovalSettings setting) : base(id, ruleType, target)
+        internal RoleManagementPolicyApprovalRule(string id, RoleManagementPolicyRuleType ruleType, RoleManagementPolicyRuleTarget target, RoleManagementApprovalSettings setting) : base(id, ruleType, target)
         {
             Setting = setting;
             RuleType = ruleType;
@@ -48,6 +46,6 @@ namespace Azure.ResourceManager.Authorization.Models
         /// The approval setting
         /// Serialized Name: RoleManagementPolicyApprovalRule.setting
         /// </summary>
-        public ApprovalSettings Setting { get; set; }
+        public RoleManagementApprovalSettings Setting { get; set; }
     }
 }

@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Authorization
         /// Additional properties of scope
         /// Serialized Name: RoleManagementPolicy.properties.policyProperties
         /// </param>
-        internal RoleManagementPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string scope, string displayName, string description, bool? isOrganizationDefault, AzurePrincipal lastModifiedBy, DateTimeOffset? lastModifiedOn, IList<RoleManagementPolicyRule> rules, IReadOnlyList<RoleManagementPolicyRule> effectiveRules, PolicyProperties policyProperties) : base(id, name, resourceType, systemData)
+        internal RoleManagementPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string scope, string displayName, string description, bool? isOrganizationDefault, RoleManagementPrincipal lastModifiedBy, DateTimeOffset? lastModifiedOn, IList<RoleManagementPolicyRule> rules, IReadOnlyList<RoleManagementPolicyRule> effectiveRules, RoleManagementPolicyProperties policyProperties) : base(id, name, resourceType, systemData)
         {
             Scope = scope;
             DisplayName = displayName;
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Authorization
         /// The name of the entity last modified it
         /// Serialized Name: RoleManagementPolicy.properties.lastModifiedBy
         /// </summary>
-        public AzurePrincipal LastModifiedBy { get; }
+        public RoleManagementPrincipal LastModifiedBy { get; }
         /// <summary>
         /// The last modified date time.
         /// Serialized Name: RoleManagementPolicy.properties.lastModifiedDateTime
@@ -129,14 +129,6 @@ namespace Azure.ResourceManager.Authorization
         /// Additional properties of scope
         /// Serialized Name: RoleManagementPolicy.properties.policyProperties
         /// </summary>
-        internal PolicyProperties PolicyProperties { get; }
-        /// <summary>
-        /// Details of the resource scope
-        /// Serialized Name: PolicyProperties.scope
-        /// </summary>
-        public PolicyPropertiesScope PolicyScope
-        {
-            get => PolicyProperties?.Scope;
-        }
+        public RoleManagementPolicyProperties PolicyProperties { get; }
     }
 }

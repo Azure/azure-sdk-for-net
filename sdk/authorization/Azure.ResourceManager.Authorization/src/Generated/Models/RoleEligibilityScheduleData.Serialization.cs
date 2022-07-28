@@ -24,9 +24,9 @@ namespace Azure.ResourceManager.Authorization
             Optional<string> scope = default;
             Optional<ResourceIdentifier> roleDefinitionId = default;
             Optional<Guid> principalId = default;
-            Optional<PrincipalType> principalType = default;
+            Optional<RoleEligibilitySchedulePrincipalType> principalType = default;
             Optional<ResourceIdentifier> roleEligibilityScheduleRequestId = default;
-            Optional<MemberType> memberType = default;
+            Optional<RoleEligibilityScheduleMemberType> memberType = default;
             Optional<RoleEligibilityScheduleStatus> status = default;
             Optional<DateTimeOffset> startDateTime = default;
             Optional<DateTimeOffset> endDateTime = default;
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Authorization
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            principalType = new PrincipalType(property0.Value.GetString());
+                            principalType = new RoleEligibilitySchedulePrincipalType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("roleEligibilityScheduleRequestId"))
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Authorization
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            memberType = new MemberType(property0.Value.GetString());
+                            memberType = new RoleEligibilityScheduleMemberType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("status"))

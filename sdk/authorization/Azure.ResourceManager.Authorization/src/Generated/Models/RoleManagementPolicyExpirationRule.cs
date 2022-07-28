@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
@@ -43,7 +42,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// The maximum duration of expiration in timespan.
         /// Serialized Name: RoleManagementPolicyExpirationRule.maximumDuration
         /// </param>
-        internal RoleManagementPolicyExpirationRule(ResourceIdentifier id, RoleManagementPolicyRuleType ruleType, RoleManagementPolicyRuleTarget target, bool? isExpirationRequired, TimeSpan? maximumDuration) : base(id, ruleType, target)
+        internal RoleManagementPolicyExpirationRule(string id, RoleManagementPolicyRuleType ruleType, RoleManagementPolicyRuleTarget target, bool? isExpirationRequired, TimeSpan? maximumDuration) : base(id, ruleType, target)
         {
             IsExpirationRequired = isExpirationRequired;
             MaximumDuration = maximumDuration;

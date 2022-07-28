@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using Azure.Core;
-
 namespace Azure.ResourceManager.Authorization.Models
 {
     /// <summary>
@@ -42,7 +40,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// The claim value.
         /// Serialized Name: RoleManagementPolicyAuthenticationContextRule.claimValue
         /// </param>
-        internal RoleManagementPolicyAuthenticationContextRule(ResourceIdentifier id, RoleManagementPolicyRuleType ruleType, RoleManagementPolicyRuleTarget target, bool? isEnabled, string claimValue) : base(id, ruleType, target)
+        internal RoleManagementPolicyAuthenticationContextRule(string id, RoleManagementPolicyRuleType ruleType, RoleManagementPolicyRuleTarget target, bool? isEnabled, string claimValue) : base(id, ruleType, target)
         {
             IsEnabled = isEnabled;
             ClaimValue = claimValue;

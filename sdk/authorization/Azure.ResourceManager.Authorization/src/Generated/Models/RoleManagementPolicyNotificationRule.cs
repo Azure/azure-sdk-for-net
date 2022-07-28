@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// Determines if the notification will be sent to the recipient type specified in the policy rule.
         /// Serialized Name: RoleManagementPolicyNotificationRule.isDefaultRecipientsEnabled
         /// </param>
-        internal RoleManagementPolicyNotificationRule(ResourceIdentifier id, RoleManagementPolicyRuleType ruleType, RoleManagementPolicyRuleTarget target, NotificationDeliveryMechanism? notificationType, NotificationLevel? notificationLevel, RecipientType? recipientType, IList<string> notificationRecipients, bool? isDefaultRecipientsEnabled) : base(id, ruleType, target)
+        internal RoleManagementPolicyNotificationRule(string id, RoleManagementPolicyRuleType ruleType, RoleManagementPolicyRuleTarget target, NotificationDeliveryMechanism? notificationType, RoleManagementPolicyNotificationLevel? notificationLevel, RoleManagementPolicyRecipientType? recipientType, IList<string> notificationRecipients, bool? isDefaultRecipientsEnabled) : base(id, ruleType, target)
         {
             NotificationType = notificationType;
             NotificationLevel = notificationLevel;
@@ -75,12 +75,12 @@ namespace Azure.ResourceManager.Authorization.Models
         /// The notification level.
         /// Serialized Name: RoleManagementPolicyNotificationRule.notificationLevel
         /// </summary>
-        public NotificationLevel? NotificationLevel { get; set; }
+        public RoleManagementPolicyNotificationLevel? NotificationLevel { get; set; }
         /// <summary>
         /// The recipient type.
         /// Serialized Name: RoleManagementPolicyNotificationRule.recipientType
         /// </summary>
-        public RecipientType? RecipientType { get; set; }
+        public RoleManagementPolicyRecipientType? RecipientType { get; set; }
         /// <summary>
         /// The list of notification recipients.
         /// Serialized Name: RoleManagementPolicyNotificationRule.notificationRecipients

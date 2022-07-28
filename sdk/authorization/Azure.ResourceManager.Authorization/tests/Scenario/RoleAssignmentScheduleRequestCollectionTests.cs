@@ -39,18 +39,12 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             {
                 PrincipalId = Guid.Parse(TestEnvironment.ClientId),
                 RoleDefinitionId = Definition.Id,
-                RequestType = RequestType.SelfActivate,
+                RequestType = RoleAssignmentScheduleRequestType.SelfActivate,
                 LinkedRoleEligibilityScheduleId = new Guid("b1477448-2cc6-4ceb-93b4-54a202a89413"),
-                ScheduleInfo = new RoleAssignmentScheduleInfo()
-                {
-                    StartOn = DateTimeOffset.Parse("2022-07-13T21:35:27.91Z"),
-                    Expiration = new RoleAssignmentScheduleInfoExpiration()
-                    {
-                        RoleAssignmentExpirationType = RoleAssignmentScheduleType.AfterDuration,
-                        EndOn = null,
-                        Duration = TypeFormatters.ParseTimeSpan("PT8H", "P")
-                    }
-                },
+                StartOn = DateTimeOffset.Parse("2022-07-13T21:35:27.91Z"),
+                ExpirationType = RoleAssignmentScheduleExpirationType.AfterDuration,
+                EndOn = null,
+                Duration = TypeFormatters.ParseTimeSpan("PT8H", "P"),
                 Condition = "@Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase 'foo_storage_container'",
                 ConditionVersion = "1.0"
             };

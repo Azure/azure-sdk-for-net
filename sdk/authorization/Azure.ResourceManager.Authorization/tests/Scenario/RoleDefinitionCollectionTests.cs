@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
                 Description = "SDKTestDescription",
                 RoleType = "CustomRole",
                 Permissions = {
-                    new AzurePermission() {
+                    new RoleDefinitionPermission() {
                         Actions = { "Microsoft.Authorization/*/read" }
                         }
                 },

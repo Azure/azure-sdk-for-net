@@ -61,10 +61,6 @@ namespace Azure.ResourceManager.Authorization
         /// The role assignment schedule instance id being updated
         /// Serialized Name: RoleAssignmentScheduleRequest.properties.targetRoleAssignmentScheduleInstanceId
         /// </param>
-        /// <param name="scheduleInfo">
-        /// Schedule info of the role assignment schedule
-        /// Serialized Name: RoleAssignmentScheduleRequest.properties.scheduleInfo
-        /// </param>
         /// <param name="linkedRoleEligibilityScheduleId">
         /// The linked role eligibility schedule id - to activate an eligibility.
         /// Serialized Name: RoleAssignmentScheduleRequest.properties.linkedRoleEligibilityScheduleId
@@ -97,7 +93,23 @@ namespace Azure.ResourceManager.Authorization
         /// Additional properties of principal, scope and role definition
         /// Serialized Name: RoleAssignmentScheduleRequest.properties.expandedProperties
         /// </param>
-        internal RoleAssignmentScheduleRequestData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string scope, ResourceIdentifier roleDefinitionId, Guid? principalId, PrincipalType? principalType, RequestType? requestType, RoleAssignmentScheduleRequestStatus? status, string approvalId, Guid? targetRoleAssignmentScheduleId, Guid? targetRoleAssignmentScheduleInstanceId, RoleAssignmentScheduleInfo scheduleInfo, Guid? linkedRoleEligibilityScheduleId, string justification, RoleAssignmentScheduleTicketInfo ticketInfo, string condition, string conditionVersion, DateTimeOffset? createdOn, Guid? requestorId, ExpandedProperties expandedProperties) : base(id, name, resourceType, systemData)
+        /// <param name="startOn">
+        /// Start DateTime of the role assignment schedule.
+        /// Serialized Name: RoleAssignmentScheduleRequest.properties.scheduleInfo.startDateTime
+        /// </param>
+        /// <param name="expirationType">
+        /// Type of the role assignment schedule expiration
+        /// Serialized Name: RoleAssignmentScheduleRequest.properties.scheduleInfo.expiration.type
+        /// </param>
+        /// <param name="endOn">
+        /// End DateTime of the role assignment schedule.
+        /// Serialized Name: RoleAssignmentScheduleRequest.properties.scheduleInfo.expiration.endDateTime
+        /// </param>
+        /// <param name="duration">
+        /// Duration of the role assignment schedule in TimeSpan.
+        /// Serialized Name: RoleAssignmentScheduleRequest.properties.scheduleInfo.expiration.duration
+        /// </param>
+        internal RoleAssignmentScheduleRequestData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string scope, ResourceIdentifier roleDefinitionId, Guid? principalId, RoleAssignmentSchedulePrincipalType? principalType, RoleAssignmentScheduleRequestType? requestType, RoleAssignmentScheduleStatus? status, string approvalId, Guid? targetRoleAssignmentScheduleId, Guid? targetRoleAssignmentScheduleInstanceId, Guid? linkedRoleEligibilityScheduleId, string justification, RoleAssignmentScheduleRequestPropertiesTicketInfo ticketInfo, string condition, string conditionVersion, DateTimeOffset? createdOn, Guid? requestorId, ExpandedProperties expandedProperties, DateTimeOffset? startOn, RoleAssignmentScheduleExpirationType? expirationType, DateTimeOffset? endOn, TimeSpan? duration) : base(id, name, resourceType, systemData)
         {
             Scope = scope;
             RoleDefinitionId = roleDefinitionId;
@@ -108,7 +120,6 @@ namespace Azure.ResourceManager.Authorization
             ApprovalId = approvalId;
             TargetRoleAssignmentScheduleId = targetRoleAssignmentScheduleId;
             TargetRoleAssignmentScheduleInstanceId = targetRoleAssignmentScheduleInstanceId;
-            ScheduleInfo = scheduleInfo;
             LinkedRoleEligibilityScheduleId = linkedRoleEligibilityScheduleId;
             Justification = justification;
             TicketInfo = ticketInfo;
@@ -117,6 +128,10 @@ namespace Azure.ResourceManager.Authorization
             CreatedOn = createdOn;
             RequestorId = requestorId;
             ExpandedProperties = expandedProperties;
+            StartOn = startOn;
+            ExpirationType = expirationType;
+            EndOn = endOn;
+            Duration = duration;
         }
 
         /// <summary>
@@ -138,17 +153,17 @@ namespace Azure.ResourceManager.Authorization
         /// The principal type of the assigned principal ID.
         /// Serialized Name: RoleAssignmentScheduleRequest.properties.principalType
         /// </summary>
-        public PrincipalType? PrincipalType { get; }
+        public RoleAssignmentSchedulePrincipalType? PrincipalType { get; }
         /// <summary>
         /// The type of the role assignment schedule request. Eg: SelfActivate, AdminAssign etc
         /// Serialized Name: RoleAssignmentScheduleRequest.properties.requestType
         /// </summary>
-        public RequestType? RequestType { get; set; }
+        public RoleAssignmentScheduleRequestType? RequestType { get; set; }
         /// <summary>
         /// The status of the role assignment schedule request.
         /// Serialized Name: RoleAssignmentScheduleRequest.properties.status
         /// </summary>
-        public RoleAssignmentScheduleRequestStatus? Status { get; }
+        public RoleAssignmentScheduleStatus? Status { get; }
         /// <summary>
         /// The approvalId of the role assignment schedule request.
         /// Serialized Name: RoleAssignmentScheduleRequest.properties.approvalId
@@ -165,11 +180,6 @@ namespace Azure.ResourceManager.Authorization
         /// </summary>
         public Guid? TargetRoleAssignmentScheduleInstanceId { get; set; }
         /// <summary>
-        /// Schedule info of the role assignment schedule
-        /// Serialized Name: RoleAssignmentScheduleRequest.properties.scheduleInfo
-        /// </summary>
-        public RoleAssignmentScheduleInfo ScheduleInfo { get; set; }
-        /// <summary>
         /// The linked role eligibility schedule id - to activate an eligibility.
         /// Serialized Name: RoleAssignmentScheduleRequest.properties.linkedRoleEligibilityScheduleId
         /// </summary>
@@ -183,7 +193,7 @@ namespace Azure.ResourceManager.Authorization
         /// Ticket Info of the role assignment
         /// Serialized Name: RoleAssignmentScheduleRequest.properties.ticketInfo
         /// </summary>
-        public RoleAssignmentScheduleTicketInfo TicketInfo { get; set; }
+        public RoleAssignmentScheduleRequestPropertiesTicketInfo TicketInfo { get; set; }
         /// <summary>
         /// The conditions on the role assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase &apos;foo_storage_container&apos;
         /// Serialized Name: RoleAssignmentScheduleRequest.properties.condition
@@ -209,5 +219,25 @@ namespace Azure.ResourceManager.Authorization
         /// Serialized Name: RoleAssignmentScheduleRequest.properties.expandedProperties
         /// </summary>
         public ExpandedProperties ExpandedProperties { get; }
+        /// <summary>
+        /// Start DateTime of the role assignment schedule.
+        /// Serialized Name: RoleAssignmentScheduleRequest.properties.scheduleInfo.startDateTime
+        /// </summary>
+        public DateTimeOffset? StartOn { get; set; }
+        /// <summary>
+        /// Type of the role assignment schedule expiration
+        /// Serialized Name: RoleAssignmentScheduleRequest.properties.scheduleInfo.expiration.type
+        /// </summary>
+        public RoleAssignmentScheduleExpirationType? ExpirationType { get; set; }
+        /// <summary>
+        /// End DateTime of the role assignment schedule.
+        /// Serialized Name: RoleAssignmentScheduleRequest.properties.scheduleInfo.expiration.endDateTime
+        /// </summary>
+        public DateTimeOffset? EndOn { get; set; }
+        /// <summary>
+        /// Duration of the role assignment schedule in TimeSpan.
+        /// Serialized Name: RoleAssignmentScheduleRequest.properties.scheduleInfo.expiration.duration
+        /// </summary>
+        public TimeSpan? Duration { get; set; }
     }
 }

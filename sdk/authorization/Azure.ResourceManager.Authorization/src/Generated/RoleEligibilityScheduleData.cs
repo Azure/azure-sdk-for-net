@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Authorization
         /// Additional properties of principal, scope and role definition
         /// Serialized Name: RoleEligibilitySchedule.properties.expandedProperties
         /// </param>
-        internal RoleEligibilityScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string scope, ResourceIdentifier roleDefinitionId, Guid? principalId, PrincipalType? principalType, ResourceIdentifier roleEligibilityScheduleRequestId, MemberType? memberType, RoleEligibilityScheduleStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, string condition, string conditionVersion, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, ExpandedProperties expandedProperties) : base(id, name, resourceType, systemData)
+        internal RoleEligibilityScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string scope, ResourceIdentifier roleDefinitionId, Guid? principalId, RoleEligibilitySchedulePrincipalType? principalType, ResourceIdentifier roleEligibilityScheduleRequestId, RoleEligibilityScheduleMemberType? memberType, RoleEligibilityScheduleStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, string condition, string conditionVersion, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, ExpandedProperties expandedProperties) : base(id, name, resourceType, systemData)
         {
             Scope = scope;
             RoleDefinitionId = roleDefinitionId;
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Authorization
         /// The principal type of the assigned principal ID.
         /// Serialized Name: RoleEligibilitySchedule.properties.principalType
         /// </summary>
-        public PrincipalType? PrincipalType { get; }
+        public RoleEligibilitySchedulePrincipalType? PrincipalType { get; }
         /// <summary>
         /// The id of roleEligibilityScheduleRequest used to create this roleAssignmentSchedule
         /// Serialized Name: RoleEligibilitySchedule.properties.roleEligibilityScheduleRequestId
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Authorization
         /// Membership type of the role eligibility schedule
         /// Serialized Name: RoleEligibilitySchedule.properties.memberType
         /// </summary>
-        public MemberType? MemberType { get; }
+        public RoleEligibilityScheduleMemberType? MemberType { get; }
         /// <summary>
         /// The status of the role eligibility schedule.
         /// Serialized Name: RoleEligibilitySchedule.properties.status
