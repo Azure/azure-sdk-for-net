@@ -576,7 +576,7 @@ namespace Azure.ResourceManager.Dns.Models
     {
         public DnsSoaRecord() { }
         public string Email { get { throw null; } set { } }
-        public long? ExpireTime { get { throw null; } set { } }
+        public long? ExpireTimeInSeconds { get { throw null; } set { } }
         public string Host { get { throw null; } set { } }
         public long? MinimumTtl { get { throw null; } set { } }
         public long? RefreshTime { get { throw null; } set { } }

@@ -94,6 +94,11 @@ directive:
     where: $.definitions.PtrRecord.properties.ptrdname
     transform: $["x-ms-client-name"] = "PtrdName";
 
+# expireTime => expireTimeInSeconds
+  - from: swagger-document
+    where: $.definitions.SoaRecord.properties.expireTime
+    transform: $["x-ms-client-name"] = "expireTimeInSeconds";
+
 # Add Prepend Name
   - from: swagger-document
     where: $.definitions.Zone

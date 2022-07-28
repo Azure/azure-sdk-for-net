@@ -40,10 +40,10 @@ namespace Azure.ResourceManager.Dns.Models
                 writer.WritePropertyName("retryTime");
                 writer.WriteNumberValue(RetryTime.Value);
             }
-            if (Optional.IsDefined(ExpireTime))
+            if (Optional.IsDefined(ExpireTimeInSeconds))
             {
                 writer.WritePropertyName("expireTime");
-                writer.WriteNumberValue(ExpireTime.Value);
+                writer.WriteNumberValue(ExpireTimeInSeconds.Value);
             }
             if (Optional.IsDefined(MinimumTtl))
             {

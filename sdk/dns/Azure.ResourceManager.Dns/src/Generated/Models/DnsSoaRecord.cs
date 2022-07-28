@@ -21,16 +21,16 @@ namespace Azure.ResourceManager.Dns.Models
         /// <param name="serialNumber"> The serial number for this SOA record. </param>
         /// <param name="refreshTime"> The refresh value for this SOA record. </param>
         /// <param name="retryTime"> The retry time for this SOA record. </param>
-        /// <param name="expireTime"> The expire time for this SOA record. </param>
+        /// <param name="expireTimeInSeconds"> The expire time for this SOA record. </param>
         /// <param name="minimumTtl"> The minimum value for this SOA record. By convention this is used to determine the negative caching duration. </param>
-        internal DnsSoaRecord(string host, string email, long? serialNumber, long? refreshTime, long? retryTime, long? expireTime, long? minimumTtl)
+        internal DnsSoaRecord(string host, string email, long? serialNumber, long? refreshTime, long? retryTime, long? expireTimeInSeconds, long? minimumTtl)
         {
             Host = host;
             Email = email;
             SerialNumber = serialNumber;
             RefreshTime = refreshTime;
             RetryTime = retryTime;
-            ExpireTime = expireTime;
+            ExpireTimeInSeconds = expireTimeInSeconds;
             MinimumTtl = minimumTtl;
         }
 
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Dns.Models
         /// <summary> The retry time for this SOA record. </summary>
         public long? RetryTime { get; set; }
         /// <summary> The expire time for this SOA record. </summary>
-        public long? ExpireTime { get; set; }
+        public long? ExpireTimeInSeconds { get; set; }
         /// <summary> The minimum value for this SOA record. By convention this is used to determine the negative caching duration. </summary>
         public long? MinimumTtl { get; set; }
     }
