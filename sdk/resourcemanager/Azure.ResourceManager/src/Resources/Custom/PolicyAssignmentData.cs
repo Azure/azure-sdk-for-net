@@ -58,8 +58,10 @@ namespace Azure.ResourceManager.Resources
         /// <summary> The location of the policy assignment. Only required when utilizing managed identity. </summary>
         public AzureLocation? Location { get; set; }
 
+#pragma warning disable CS0618 // This type is obsolete and will be removed in a future release.
         private SystemAssignedServiceIdentity _identity;
         /// <summary> The managed identity associated with the policy assignment. </summary>
+        [Obsolete("This property is obsolete and will be removed in a future release. Please use ManagedIdentity.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public SystemAssignedServiceIdentity Identity
         {
@@ -89,6 +91,7 @@ namespace Azure.ResourceManager.Resources
                 }
             }
         }
+#pragma warning restore CS0618 // This type is obsolete and will be removed in a future release.
 
         /// <summary> The display name of the policy assignment. </summary>
         public string DisplayName { get; set; }

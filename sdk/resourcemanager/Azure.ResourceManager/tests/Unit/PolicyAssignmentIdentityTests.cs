@@ -6,6 +6,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Tests
 {
+#pragma warning disable CS0618 // This type is obsolete and will be removed in a future release.
     [Parallelizable]
     public class PolicyAssignmentIdentityTests
     {
@@ -273,4 +274,5 @@ namespace Azure.ResourceManager.Tests
             JsonAsserts.AssertSerialization(expectedNone, data);
         }
     }
+#pragma warning restore CS0618 // This type is obsolete and will be removed in a future release.
 }
