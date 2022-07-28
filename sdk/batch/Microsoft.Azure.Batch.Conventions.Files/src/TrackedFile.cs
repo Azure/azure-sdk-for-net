@@ -68,9 +68,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files
                     return;
                 }
 
-                var uploadPointer = file.Length;
-
-                if (uploadPointer <= _flushPointer)
+                if (file.Length <= _flushPointer)
                 {
                     return;
                 }
@@ -82,7 +80,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files
                     {
                         stm.Seek(_flushPointer, SeekOrigin.Begin);
                         stm.CopyTo(appendBlobStream);
-                        _flushPointer = stm.Length;
+                        _flushPointer = stm.Length;     //the file stream can only copy the entire content from the flushpointer to the end of the file, so set the pointer to the length of file
                     }
                 }
             }
