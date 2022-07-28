@@ -74,7 +74,6 @@ namespace Azure.ResourceManager.TestFramework
         protected ArmClient GetArmClient(ArmClientOptions clientOptions = default, string subscriptionId = default)
         {
             var options = InstrumentClientOptions(clientOptions ?? new ArmClientOptions());
-
             options.Environment = GetEnvironment(TestEnvironment.ResourceManagerUrl);
             options.AddPolicy(ResourceGroupCleanupPolicy, HttpPipelinePosition.PerCall);
             options.AddPolicy(ManagementGroupCleanupPolicy, HttpPipelinePosition.PerCall);
