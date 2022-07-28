@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="reserved"> &lt;code&gt;true&lt;/code&gt; if reserved; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="isXenon"> Obsolete: Hyper-V sandbox. </param>
         /// <param name="isHyperV"> Hyper-V sandbox. </param>
-        /// <param name="lastModifiedTimeOn"> Last time the app was modified, in UTC. Read-only. </param>
+        /// <param name="lastModifiedOn"> Last time the app was modified, in UTC. Read-only. </param>
         /// <param name="siteConfig"> Configuration of the app. </param>
         /// <param name="trafficManagerHostNames"> Azure Traffic Manager hostnames associated with the app. Read-only. </param>
         /// <param name="isScmSiteAlsoStopped"> &lt;code&gt;true&lt;/code&gt; to stop SCM (KUDU) site when the app is stopped; otherwise, &lt;code&gt;false&lt;/code&gt;. The default is &lt;code&gt;false&lt;/code&gt;. </param>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// - ClientCertEnabled: true and ClientCertMode: Optional means ClientCert is optional or accepted.
         /// </param>
         /// <param name="clientCertExclusionPaths"> client certificate authentication comma-separated exclusion paths. </param>
-        /// <param name="isHostNamesDisabled">
+        /// <param name="isHostNameDisabled">
         /// &lt;code&gt;true&lt;/code&gt; to disable the public hostnames of the app; otherwise, &lt;code&gt;false&lt;/code&gt;.
         ///  If &lt;code&gt;true&lt;/code&gt;, the app is only accessible via API management process.
         /// </param>
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="possibleOutboundIPAddresses"> List of IP addresses that the app uses for outbound connections (e.g. database access). Includes VIPs from all tenants except dataComponent. Read-only. </param>
         /// <param name="containerSize"> Size of the function container. </param>
         /// <param name="dailyMemoryTimeQuota"> Maximum allowed daily memory-time quota (applicable on dynamic apps only). </param>
-        /// <param name="suspendTillOn"> App suspended till in case memory-time quota is exceeded. </param>
+        /// <param name="suspendOn"> App suspended till in case memory-time quota is exceeded. </param>
         /// <param name="maxNumberOfWorkers">
         /// Maximum number of workers.
         /// This only applies to Functions container.
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="isDefaultContainer"> &lt;code&gt;true&lt;/code&gt; if the app is a default container; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="defaultHostName"> Default hostname of the app. Read-only. </param>
         /// <param name="slotSwapStatus"> Status of the last deployment slot swap operation. </param>
-        /// <param name="isHttpOnly">
+        /// <param name="isHttpsOnly">
         /// HttpsOnly: configures a web site to accept only https requests. Issues redirect for
         /// http requests
         /// </param>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// This must be of the form /subscriptions/{subscriptionName}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{subnetName}
         /// </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal SitePatchInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, string state, IReadOnlyList<string> hostNames, string repositorySiteName, UsageState? usageState, bool? isEnabled, IReadOnlyList<string> enabledHostNames, SiteAvailabilityState? availabilityState, IList<HostNameSslState> hostNameSslStates, string serverFarmId, bool? reserved, bool? isXenon, bool? isHyperV, DateTimeOffset? lastModifiedTimeOn, SiteConfigProperties siteConfig, IReadOnlyList<string> trafficManagerHostNames, bool? isScmSiteAlsoStopped, string targetSwapSlot, HostingEnvironmentProfile hostingEnvironmentProfile, bool? isClientAffinityEnabled, bool? isClientCertEnabled, ClientCertMode? clientCertMode, string clientCertExclusionPaths, bool? isHostNamesDisabled, string customDomainVerificationId, string outboundIPAddresses, string possibleOutboundIPAddresses, int? containerSize, int? dailyMemoryTimeQuota, DateTimeOffset? suspendTillOn, int? maxNumberOfWorkers, CloningInfo cloningInfo, string resourceGroup, bool? isDefaultContainer, string defaultHostName, SlotSwapStatus slotSwapStatus, bool? isHttpOnly, RedundancyMode? redundancyMode, Guid? inProgressOperationId, bool? isStorageAccountRequired, string keyVaultReferenceIdentity, string virtualNetworkSubnetId, string kind) : base(id, name, resourceType, systemData)
+        internal SitePatchInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, string state, IReadOnlyList<string> hostNames, string repositorySiteName, UsageState? usageState, bool? isEnabled, IReadOnlyList<string> enabledHostNames, SiteAvailabilityState? availabilityState, IList<HostNameSslState> hostNameSslStates, string serverFarmId, bool? reserved, bool? isXenon, bool? isHyperV, DateTimeOffset? lastModifiedOn, SiteConfigProperties siteConfig, IReadOnlyList<string> trafficManagerHostNames, bool? isScmSiteAlsoStopped, string targetSwapSlot, HostingEnvironmentProfile hostingEnvironmentProfile, bool? isClientAffinityEnabled, bool? isClientCertEnabled, ClientCertMode? clientCertMode, string clientCertExclusionPaths, bool? isHostNameDisabled, string customDomainVerificationId, string outboundIPAddresses, string possibleOutboundIPAddresses, int? containerSize, int? dailyMemoryTimeQuota, DateTimeOffset? suspendOn, int? maxNumberOfWorkers, CloningInfo cloningInfo, string resourceGroup, bool? isDefaultContainer, string defaultHostName, SlotSwapStatus slotSwapStatus, bool? isHttpsOnly, RedundancyMode? redundancyMode, Guid? inProgressOperationId, bool? isStorageAccountRequired, string keyVaultReferenceIdentity, string virtualNetworkSubnetId, string kind) : base(id, name, resourceType, systemData)
         {
             Identity = identity;
             State = state;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.AppService.Models
             Reserved = reserved;
             IsXenon = isXenon;
             IsHyperV = isHyperV;
-            LastModifiedTimeOn = lastModifiedTimeOn;
+            LastModifiedOn = lastModifiedOn;
             SiteConfig = siteConfig;
             TrafficManagerHostNames = trafficManagerHostNames;
             IsScmSiteAlsoStopped = isScmSiteAlsoStopped;
@@ -117,20 +117,20 @@ namespace Azure.ResourceManager.AppService.Models
             IsClientCertEnabled = isClientCertEnabled;
             ClientCertMode = clientCertMode;
             ClientCertExclusionPaths = clientCertExclusionPaths;
-            IsHostNamesDisabled = isHostNamesDisabled;
+            IsHostNameDisabled = isHostNameDisabled;
             CustomDomainVerificationId = customDomainVerificationId;
             OutboundIPAddresses = outboundIPAddresses;
             PossibleOutboundIPAddresses = possibleOutboundIPAddresses;
             ContainerSize = containerSize;
             DailyMemoryTimeQuota = dailyMemoryTimeQuota;
-            SuspendTillOn = suspendTillOn;
+            SuspendOn = suspendOn;
             MaxNumberOfWorkers = maxNumberOfWorkers;
             CloningInfo = cloningInfo;
             ResourceGroup = resourceGroup;
             IsDefaultContainer = isDefaultContainer;
             DefaultHostName = defaultHostName;
             SlotSwapStatus = slotSwapStatus;
-            IsHttpOnly = isHttpOnly;
+            IsHttpsOnly = isHttpsOnly;
             RedundancyMode = redundancyMode;
             InProgressOperationId = inProgressOperationId;
             IsStorageAccountRequired = isStorageAccountRequired;
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Hyper-V sandbox. </summary>
         public bool? IsHyperV { get; set; }
         /// <summary> Last time the app was modified, in UTC. Read-only. </summary>
-        public DateTimeOffset? LastModifiedTimeOn { get; }
+        public DateTimeOffset? LastModifiedOn { get; }
         /// <summary> Configuration of the app. </summary>
         public SiteConfigProperties SiteConfig { get; set; }
         /// <summary> Azure Traffic Manager hostnames associated with the app. Read-only. </summary>
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// &lt;code&gt;true&lt;/code&gt; to disable the public hostnames of the app; otherwise, &lt;code&gt;false&lt;/code&gt;.
         ///  If &lt;code&gt;true&lt;/code&gt;, the app is only accessible via API management process.
         /// </summary>
-        public bool? IsHostNamesDisabled { get; set; }
+        public bool? IsHostNameDisabled { get; set; }
         /// <summary> Unique identifier that verifies the custom domains assigned to the app. Customer will add this id to a txt record for verification. </summary>
         public string CustomDomainVerificationId { get; set; }
         /// <summary> List of IP addresses that the app uses for outbound connections (e.g. database access). Includes VIPs from tenants that site can be hosted with current settings. Read-only. </summary>
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Maximum allowed daily memory-time quota (applicable on dynamic apps only). </summary>
         public int? DailyMemoryTimeQuota { get; set; }
         /// <summary> App suspended till in case memory-time quota is exceeded. </summary>
-        public DateTimeOffset? SuspendTillOn { get; }
+        public DateTimeOffset? SuspendOn { get; }
         /// <summary>
         /// Maximum number of workers.
         /// This only applies to Functions container.
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// HttpsOnly: configures a web site to accept only https requests. Issues redirect for
         /// http requests
         /// </summary>
-        public bool? IsHttpOnly { get; set; }
+        public bool? IsHttpsOnly { get; set; }
         /// <summary> Site redundancy mode. </summary>
         public RedundancyMode? RedundancyMode { get; set; }
         /// <summary> Specifies an operation id if this site has a pending operation. </summary>

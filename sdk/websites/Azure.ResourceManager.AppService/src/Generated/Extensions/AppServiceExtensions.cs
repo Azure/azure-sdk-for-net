@@ -1194,10 +1194,10 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StaticSiteARMResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<StaticSiteARMResource> GetStaticSiteARMsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="StaticSiteResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<StaticSiteResource> GetStaticSitesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetStaticSiteARMsAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetStaticSitesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1207,10 +1207,10 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StaticSiteARMResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<StaticSiteARMResource> GetStaticSiteARMs(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="StaticSiteResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<StaticSiteResource> GetStaticSites(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetStaticSiteARMs(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetStaticSites(cancellationToken);
         }
 
         /// <summary>
@@ -1488,12 +1488,12 @@ namespace Azure.ResourceManager.AppService
             return resourceGroupResource.GetKubeEnvironments().Get(name, cancellationToken);
         }
 
-        /// <summary> Gets a collection of StaticSiteARMResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of StaticSiteResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of StaticSiteARMResources and their operations over a StaticSiteARMResource. </returns>
-        public static StaticSiteARMCollection GetStaticSiteARMs(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of StaticSiteResources and their operations over a StaticSiteResource. </returns>
+        public static StaticSiteCollection GetStaticSites(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetStaticSiteARMs();
+            return GetExtensionClient(resourceGroupResource).GetStaticSites();
         }
 
         /// <summary>
@@ -1507,9 +1507,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<StaticSiteARMResource>> GetStaticSiteARMAsync(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
+        public static async Task<Response<StaticSiteResource>> GetStaticSiteAsync(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetStaticSiteARMs().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetStaticSites().GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1523,9 +1523,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<StaticSiteARMResource> GetStaticSiteARM(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
+        public static Response<StaticSiteResource> GetStaticSite(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetStaticSiteARMs().Get(name, cancellationToken);
+            return resourceGroupResource.GetStaticSites().Get(name, cancellationToken);
         }
 
         /// <summary> Gets a collection of WebSiteResources in the ResourceGroupResource. </summary>
@@ -1709,20 +1709,20 @@ namespace Azure.ResourceManager.AppService
         }
         #endregion
 
-        #region AppServicCertificateResource
+        #region AppServiceCertificateResource
         /// <summary>
-        /// Gets an object representing an <see cref="AppServicCertificateResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AppServicCertificateResource.CreateResourceIdentifier" /> to create an <see cref="AppServicCertificateResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AppServiceCertificateResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AppServiceCertificateResource.CreateResourceIdentifier" /> to create an <see cref="AppServiceCertificateResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AppServicCertificateResource" /> object. </returns>
-        public static AppServicCertificateResource GetAppServicCertificateResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AppServiceCertificateResource" /> object. </returns>
+        public static AppServiceCertificateResource GetAppServiceCertificateResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                AppServicCertificateResource.ValidateResourceId(id);
-                return new AppServicCertificateResource(client, id);
+                AppServiceCertificateResource.ValidateResourceId(id);
+                return new AppServiceCertificateResource(client, id);
             }
             );
         }
@@ -2507,39 +2507,39 @@ namespace Azure.ResourceManager.AppService
         }
         #endregion
 
-        #region StaticSiteARMResource
+        #region StaticSiteResource
         /// <summary>
-        /// Gets an object representing a <see cref="StaticSiteARMResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StaticSiteARMResource.CreateResourceIdentifier" /> to create a <see cref="StaticSiteARMResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="StaticSiteResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StaticSiteResource.CreateResourceIdentifier" /> to create a <see cref="StaticSiteResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StaticSiteARMResource" /> object. </returns>
-        public static StaticSiteARMResource GetStaticSiteARMResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="StaticSiteResource" /> object. </returns>
+        public static StaticSiteResource GetStaticSiteResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                StaticSiteARMResource.ValidateResourceId(id);
-                return new StaticSiteARMResource(client, id);
+                StaticSiteResource.ValidateResourceId(id);
+                return new StaticSiteResource(client, id);
             }
             );
         }
         #endregion
 
-        #region StaticSiteBuildARMResource
+        #region StaticSiteBuildResource
         /// <summary>
-        /// Gets an object representing a <see cref="StaticSiteBuildARMResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StaticSiteBuildARMResource.CreateResourceIdentifier" /> to create a <see cref="StaticSiteBuildARMResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="StaticSiteBuildResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StaticSiteBuildResource.CreateResourceIdentifier" /> to create a <see cref="StaticSiteBuildResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StaticSiteBuildARMResource" /> object. </returns>
-        public static StaticSiteBuildARMResource GetStaticSiteBuildARMResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="StaticSiteBuildResource" /> object. </returns>
+        public static StaticSiteBuildResource GetStaticSiteBuildResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                StaticSiteBuildARMResource.ValidateResourceId(id);
-                return new StaticSiteBuildARMResource(client, id);
+                StaticSiteBuildResource.ValidateResourceId(id);
+                return new StaticSiteBuildResource(client, id);
             }
             );
         }
@@ -2583,20 +2583,20 @@ namespace Azure.ResourceManager.AppService
         }
         #endregion
 
-        #region StaticSiteCustomDomainOverviewARMResource
+        #region StaticSiteCustomDomainOverviewResource
         /// <summary>
-        /// Gets an object representing a <see cref="StaticSiteCustomDomainOverviewARMResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StaticSiteCustomDomainOverviewARMResource.CreateResourceIdentifier" /> to create a <see cref="StaticSiteCustomDomainOverviewARMResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="StaticSiteCustomDomainOverviewResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StaticSiteCustomDomainOverviewResource.CreateResourceIdentifier" /> to create a <see cref="StaticSiteCustomDomainOverviewResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StaticSiteCustomDomainOverviewARMResource" /> object. </returns>
-        public static StaticSiteCustomDomainOverviewARMResource GetStaticSiteCustomDomainOverviewARMResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="StaticSiteCustomDomainOverviewResource" /> object. </returns>
+        public static StaticSiteCustomDomainOverviewResource GetStaticSiteCustomDomainOverviewResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                StaticSiteCustomDomainOverviewARMResource.ValidateResourceId(id);
-                return new StaticSiteCustomDomainOverviewARMResource(client, id);
+                StaticSiteCustomDomainOverviewResource.ValidateResourceId(id);
+                return new StaticSiteCustomDomainOverviewResource(client, id);
             }
             );
         }

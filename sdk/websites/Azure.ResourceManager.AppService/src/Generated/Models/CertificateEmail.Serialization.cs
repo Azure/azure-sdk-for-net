@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("emailId");
                 writer.WriteStringValue(EmailId);
             }
-            if (Optional.IsDefined(TimeStampOn))
+            if (Optional.IsDefined(TimeStamp))
             {
                 writer.WritePropertyName("timeStamp");
-                writer.WriteStringValue(TimeStampOn.Value, "O");
+                writer.WriteStringValue(TimeStamp.Value, "O");
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
