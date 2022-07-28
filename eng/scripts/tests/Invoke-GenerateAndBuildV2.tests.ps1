@@ -1,4 +1,18 @@
 #Requires -Version 7.0
+<#
+.How-To-Run
+You can run the test by pester.
+And make sure you have the azure-rest-api-specs cloned local at the same directory of azure-sdk-for-net repo.
+
+First, ensure you have `pester` installed:
+
+`Install-Module Pester -Force`
+
+Then invoke tests with:
+
+`Invoke-Pester ./Invoke-GenerateAndBuildV2.tests.ps1`
+
+#>
 . (Join-Path $PSScriptRoot ".." ".." "common" "scripts" "Helpers" PSModule-Helpers.ps1)
 
 Install-ModuleIfNotInstalled "Pester" "5.3.3" | Import-Module
@@ -8,6 +22,7 @@ Describe "Generate And Build SDK" -Tag "pipeline" {
         # . $PSScriptRoot/../Invoke-GenerateAndBuildV2.ps1
         # clean
         $sdkRootPath =  (Join-Path $PSScriptRoot .. .. ..)
+        $sdkRootPath = Resolve-Path $sdkRootPath
         $sdkFolder = (Join-Path $sdkRootPath "sdk" "deviceupdate" "Azure.IoT.DeviceUpdate")
         if (Test-Path $sdkFolder) {
             Remove-Item $sdkFolder -Recurse
@@ -16,6 +31,8 @@ Describe "Generate And Build SDK" -Tag "pipeline" {
         if (Test-Path $artifactFolder) {
             Remove-Item $artifactFolder -Recurse
         }
+        
+        Push-Location $sdkRootPath
     }
 
     It "scenaro 1: first onboard" {
@@ -48,5 +65,8 @@ Describe "Generate And Build SDK" -Tag "pipeline" {
         $autorestConfigFile = (Join-Path $PSScriptRoot .. .. .. "sdk" "deviceupdate" "Azure.IoT.DeviceUpdate" "src" "autorest.md")
         $autorestConfig = Get-Content $autorestConfigFile -Raw
         $autorestConfig -match "title: AzureDeviceUpdate" | Should -Be True
+    }
+    AfterAll {
+        Pop-Location
     }
 }
