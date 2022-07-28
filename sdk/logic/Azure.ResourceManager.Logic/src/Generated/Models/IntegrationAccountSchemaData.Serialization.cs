@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Logic
             if (Optional.IsDefined(ContentType))
             {
                 writer.WritePropertyName("contentType");
-                writer.WriteStringValue(ContentType);
+                writer.WriteStringValue(ContentType.Value.ToString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Logic
             Optional<DateTimeOffset> changedTime = default;
             Optional<BinaryData> metadata = default;
             Optional<BinaryData> content = default;
-            Optional<string> contentType = default;
+            Optional<ContentType> contentType = default;
             Optional<LogicContentLink> contentLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -214,7 +214,12 @@ namespace Azure.ResourceManager.Logic
                         }
                         if (property0.NameEquals("contentType"))
                         {
-                            contentType = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            contentType = new ContentType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("contentLink"))
@@ -231,7 +236,7 @@ namespace Azure.ResourceManager.Logic
                     continue;
                 }
             }
-            return new IntegrationAccountSchemaData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, schemaType, targetNamespace.Value, documentName.Value, fileName.Value, Optional.ToNullable(createdTime), Optional.ToNullable(changedTime), metadata.Value, content.Value, contentType.Value, contentLink.Value);
+            return new IntegrationAccountSchemaData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, schemaType, targetNamespace.Value, documentName.Value, fileName.Value, Optional.ToNullable(createdTime), Optional.ToNullable(changedTime), metadata.Value, content.Value, Optional.ToNullable(contentType), contentLink.Value);
         }
     }
 }

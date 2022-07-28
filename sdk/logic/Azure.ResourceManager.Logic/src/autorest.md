@@ -114,6 +114,10 @@ rename-mapping:
   SigningAlgorithm: AS2SigningAlgorithm
   StatusAnnotation: LogicApiOperationAnnotationStatus
   SwaggerCustomDynamicTreeParameter: SwaggerCustomDynamicTreeParameterInfo
+  SwaggerSchema.required: requiredProperties
+  SwaggerSchema.ref: Reference
+  SwaggerSchema.readOnly: IsReadOnly
+  SwaggerSchema.notificationUrlExtension: IsNotificationUrlExtension
   TrackingEventsDefinition: IntegrationAccountTrackingEventsContent
   TrackingEvent: IntegrationAccountTrackingEvent
   TrackingRecordType: IntegrationAccountTrackingRecordType
@@ -160,6 +164,8 @@ format-by-name-rules:
   'actionTrackingId': 'uuid'
   'PublicCertificate': 'any'
   'Content': 'any'
+  'contentType': 'content-type'
+  'MessageContentType': 'content-type'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 

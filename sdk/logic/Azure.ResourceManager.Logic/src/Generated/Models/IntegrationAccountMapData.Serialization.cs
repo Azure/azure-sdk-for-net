@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Logic
             if (Optional.IsDefined(ContentType))
             {
                 writer.WritePropertyName("contentType");
-                writer.WriteStringValue(ContentType);
+                writer.WriteStringValue(ContentType.Value.ToString());
             }
             if (Optional.IsDefined(Metadata))
             {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Logic
             Optional<DateTimeOffset> createdTime = default;
             Optional<DateTimeOffset> changedTime = default;
             Optional<BinaryData> content = default;
-            Optional<string> contentType = default;
+            Optional<ContentType> contentType = default;
             Optional<LogicContentLink> contentLink = default;
             Optional<BinaryData> metadata = default;
             foreach (var property in element.EnumerateObject())
@@ -187,7 +187,12 @@ namespace Azure.ResourceManager.Logic
                         }
                         if (property0.NameEquals("contentType"))
                         {
-                            contentType = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            contentType = new ContentType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("contentLink"))
@@ -214,7 +219,7 @@ namespace Azure.ResourceManager.Logic
                     continue;
                 }
             }
-            return new IntegrationAccountMapData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, mapType, parametersSchema.Value, Optional.ToNullable(createdTime), Optional.ToNullable(changedTime), content.Value, contentType.Value, contentLink.Value, metadata.Value);
+            return new IntegrationAccountMapData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, mapType, parametersSchema.Value, Optional.ToNullable(createdTime), Optional.ToNullable(changedTime), content.Value, Optional.ToNullable(contentType), contentLink.Value, metadata.Value);
         }
     }
 }
