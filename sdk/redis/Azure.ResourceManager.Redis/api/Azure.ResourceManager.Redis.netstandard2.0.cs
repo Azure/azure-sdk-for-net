@@ -111,8 +111,8 @@ namespace Azure.ResourceManager.Redis
     public partial class RedisLinkedServerWithPropertyData : Azure.ResourceManager.Models.ResourceData
     {
         public RedisLinkedServerWithPropertyData() { }
-        public string LinkedRedisCacheId { get { throw null; } set { } }
-        public string LinkedRedisCacheLocation { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier LinkedRedisCacheId { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? LinkedRedisCacheLocation { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Redis.Models.RedisLinkedServerRole? ServerRole { get { throw null; } set { } }
     }
@@ -344,9 +344,9 @@ namespace Azure.ResourceManager.Redis.Models
     }
     public partial class RedisLinkedServerWithPropertyCreateOrUpdateContent
     {
-        public RedisLinkedServerWithPropertyCreateOrUpdateContent(string linkedRedisCacheId, string linkedRedisCacheLocation, Azure.ResourceManager.Redis.Models.RedisLinkedServerRole serverRole) { }
-        public string LinkedRedisCacheId { get { throw null; } }
-        public string LinkedRedisCacheLocation { get { throw null; } }
+        public RedisLinkedServerWithPropertyCreateOrUpdateContent(Azure.Core.ResourceIdentifier linkedRedisCacheId, Azure.Core.AzureLocation linkedRedisCacheLocation, Azure.ResourceManager.Redis.Models.RedisLinkedServerRole serverRole) { }
+        public Azure.Core.ResourceIdentifier LinkedRedisCacheId { get { throw null; } }
+        public Azure.Core.AzureLocation LinkedRedisCacheLocation { get { throw null; } }
         public Azure.ResourceManager.Redis.Models.RedisLinkedServerRole ServerRole { get { throw null; } }
     }
     public partial class RedisNameAvailabilityContent
