@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary>
-    /// Ticket Info of the role assignment
-    /// Serialized Name: RoleAssignmentScheduleRequestPropertiesTicketInfo
-    /// </summary>
+    /// <summary> Ticket Info of the role assignment. </summary>
     public partial class RoleAssignmentScheduleRequestPropertiesTicketInfo
     {
         /// <summary> Initializes a new instance of RoleAssignmentScheduleRequestPropertiesTicketInfo. </summary>
@@ -19,29 +16,17 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> Initializes a new instance of RoleAssignmentScheduleRequestPropertiesTicketInfo. </summary>
-        /// <param name="ticketNumber">
-        /// Ticket number for the role assignment
-        /// Serialized Name: RoleAssignmentScheduleRequestPropertiesTicketInfo.ticketNumber
-        /// </param>
-        /// <param name="ticketSystem">
-        /// Ticket system name for the role assignment
-        /// Serialized Name: RoleAssignmentScheduleRequestPropertiesTicketInfo.ticketSystem
-        /// </param>
+        /// <param name="ticketNumber"> Ticket number for the role assignment. </param>
+        /// <param name="ticketSystem"> Ticket system name for the role assignment. </param>
         internal RoleAssignmentScheduleRequestPropertiesTicketInfo(string ticketNumber, string ticketSystem)
         {
             TicketNumber = ticketNumber;
             TicketSystem = ticketSystem;
         }
 
-        /// <summary>
-        /// Ticket number for the role assignment
-        /// Serialized Name: RoleAssignmentScheduleRequestPropertiesTicketInfo.ticketNumber
-        /// </summary>
+        /// <summary> Ticket number for the role assignment. </summary>
         public string TicketNumber { get; set; }
-        /// <summary>
-        /// Ticket system name for the role assignment
-        /// Serialized Name: RoleAssignmentScheduleRequestPropertiesTicketInfo.ticketSystem
-        /// </summary>
+        /// <summary> Ticket system name for the role assignment. </summary>
         public string TicketSystem { get; set; }
     }
 }

@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary>
-    /// The detail of a user.
-    /// Serialized Name: UserSet
-    /// </summary>
+    /// <summary> The detail of a user. </summary>
     public partial class RoleManagementUserInfo
     {
         /// <summary> Initializes a new instance of RoleManagementUserInfo. </summary>
@@ -19,22 +16,10 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> Initializes a new instance of RoleManagementUserInfo. </summary>
-        /// <param name="userType">
-        /// The type of user.
-        /// Serialized Name: UserSet.userType
-        /// </param>
-        /// <param name="isBackup">
-        /// The value indicating whether the user is a backup fallback approver
-        /// Serialized Name: UserSet.isBackup
-        /// </param>
-        /// <param name="id">
-        /// The object id of the user.
-        /// Serialized Name: UserSet.id
-        /// </param>
-        /// <param name="description">
-        /// The description of the user.
-        /// Serialized Name: UserSet.description
-        /// </param>
+        /// <param name="userType"> The type of user. </param>
+        /// <param name="isBackup"> The value indicating whether the user is a backup fallback approver. </param>
+        /// <param name="id"> The object id of the user. </param>
+        /// <param name="description"> The description of the user. </param>
         internal RoleManagementUserInfo(RoleManagementUserType? userType, bool? isBackup, string id, string description)
         {
             UserType = userType;
@@ -43,25 +28,13 @@ namespace Azure.ResourceManager.Authorization.Models
             Description = description;
         }
 
-        /// <summary>
-        /// The type of user.
-        /// Serialized Name: UserSet.userType
-        /// </summary>
+        /// <summary> The type of user. </summary>
         public RoleManagementUserType? UserType { get; set; }
-        /// <summary>
-        /// The value indicating whether the user is a backup fallback approver
-        /// Serialized Name: UserSet.isBackup
-        /// </summary>
+        /// <summary> The value indicating whether the user is a backup fallback approver. </summary>
         public bool? IsBackup { get; set; }
-        /// <summary>
-        /// The object id of the user.
-        /// Serialized Name: UserSet.id
-        /// </summary>
+        /// <summary> The object id of the user. </summary>
         public string Id { get; set; }
-        /// <summary>
-        /// The description of the user.
-        /// Serialized Name: UserSet.description
-        /// </summary>
+        /// <summary> The description of the user. </summary>
         public string Description { get; set; }
     }
 }

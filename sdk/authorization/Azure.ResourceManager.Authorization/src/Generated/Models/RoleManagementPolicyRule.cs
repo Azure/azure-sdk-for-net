@@ -9,7 +9,6 @@ namespace Azure.ResourceManager.Authorization.Models
 {
     /// <summary>
     /// The role management policy rule.
-    /// Serialized Name: RoleManagementPolicyRule
     /// Please note <see cref="RoleManagementPolicyRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="RoleManagementPolicyApprovalRule"/>, <see cref="RoleManagementPolicyAuthenticationContextRule"/>, <see cref="RoleManagementPolicyEnablementRule"/>, <see cref="RoleManagementPolicyExpirationRule"/> and <see cref="RoleManagementPolicyNotificationRule"/>.
     /// </summary>
@@ -21,18 +20,9 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> Initializes a new instance of RoleManagementPolicyRule. </summary>
-        /// <param name="id">
-        /// The id of the rule.
-        /// Serialized Name: RoleManagementPolicyRule.id
-        /// </param>
-        /// <param name="ruleType">
-        /// The type of rule
-        /// Serialized Name: RoleManagementPolicyRule.ruleType
-        /// </param>
-        /// <param name="target">
-        /// The target of the current rule.
-        /// Serialized Name: RoleManagementPolicyRule.target
-        /// </param>
+        /// <param name="id"> The id of the rule. </param>
+        /// <param name="ruleType"> The type of rule. </param>
+        /// <param name="target"> The target of the current rule. </param>
         internal RoleManagementPolicyRule(string id, RoleManagementPolicyRuleType ruleType, RoleManagementPolicyRuleTarget target)
         {
             Id = id;
@@ -40,20 +30,11 @@ namespace Azure.ResourceManager.Authorization.Models
             Target = target;
         }
 
-        /// <summary>
-        /// The id of the rule.
-        /// Serialized Name: RoleManagementPolicyRule.id
-        /// </summary>
+        /// <summary> The id of the rule. </summary>
         public string Id { get; set; }
-        /// <summary>
-        /// The type of rule
-        /// Serialized Name: RoleManagementPolicyRule.ruleType
-        /// </summary>
+        /// <summary> The type of rule. </summary>
         internal RoleManagementPolicyRuleType RuleType { get; set; }
-        /// <summary>
-        /// The target of the current rule.
-        /// Serialized Name: RoleManagementPolicyRule.target
-        /// </summary>
+        /// <summary> The target of the current rule. </summary>
         public RoleManagementPolicyRuleTarget Target { get; set; }
     }
 }

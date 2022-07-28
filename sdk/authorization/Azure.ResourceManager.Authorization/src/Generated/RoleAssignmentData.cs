@@ -24,19 +24,13 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// Role assignment properties.
-        /// Serialized Name: RoleAssignment.properties
-        /// </param>
+        /// <param name="properties"> Role assignment properties. </param>
         internal RoleAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RoleAssignmentPropertiesWithScope properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }
 
-        /// <summary>
-        /// Role assignment properties.
-        /// Serialized Name: RoleAssignment.properties
-        /// </summary>
+        /// <summary> Role assignment properties. </summary>
         public RoleAssignmentPropertiesWithScope Properties { get; }
     }
 }

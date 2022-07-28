@@ -25,58 +25,19 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="scope">
-        /// The role eligibility schedule scope.
-        /// Serialized Name: RoleEligibilityScheduleInstance.properties.scope
-        /// </param>
-        /// <param name="roleDefinitionId">
-        /// The role definition ID.
-        /// Serialized Name: RoleEligibilityScheduleInstance.properties.roleDefinitionId
-        /// </param>
-        /// <param name="principalId">
-        /// The principal ID.
-        /// Serialized Name: RoleEligibilityScheduleInstance.properties.principalId
-        /// </param>
-        /// <param name="principalType">
-        /// The principal type of the assigned principal ID.
-        /// Serialized Name: RoleEligibilityScheduleInstance.properties.principalType
-        /// </param>
-        /// <param name="roleEligibilityScheduleId">
-        /// Id of the master role eligibility schedule
-        /// Serialized Name: RoleEligibilityScheduleInstance.properties.roleEligibilityScheduleId
-        /// </param>
-        /// <param name="status">
-        /// The status of the role eligibility schedule instance
-        /// Serialized Name: RoleEligibilityScheduleInstance.properties.status
-        /// </param>
-        /// <param name="startOn">
-        /// The startDateTime of the role eligibility schedule instance
-        /// Serialized Name: RoleEligibilityScheduleInstance.properties.startDateTime
-        /// </param>
-        /// <param name="endOn">
-        /// The endDateTime of the role eligibility schedule instance
-        /// Serialized Name: RoleEligibilityScheduleInstance.properties.endDateTime
-        /// </param>
-        /// <param name="memberType">
-        /// Membership type of the role eligibility schedule
-        /// Serialized Name: RoleEligibilityScheduleInstance.properties.memberType
-        /// </param>
-        /// <param name="condition">
-        /// The conditions on the role assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase &apos;foo_storage_container&apos;
-        /// Serialized Name: RoleEligibilityScheduleInstance.properties.condition
-        /// </param>
-        /// <param name="conditionVersion">
-        /// Version of the condition. Currently accepted value is &apos;2.0&apos;
-        /// Serialized Name: RoleEligibilityScheduleInstance.properties.conditionVersion
-        /// </param>
-        /// <param name="createdOn">
-        /// DateTime when role eligibility schedule was created
-        /// Serialized Name: RoleEligibilityScheduleInstance.properties.createdOn
-        /// </param>
-        /// <param name="expandedProperties">
-        /// Additional properties of principal, scope and role definition
-        /// Serialized Name: RoleEligibilityScheduleInstance.properties.expandedProperties
-        /// </param>
+        /// <param name="scope"> The role eligibility schedule scope. </param>
+        /// <param name="roleDefinitionId"> The role definition ID. </param>
+        /// <param name="principalId"> The principal ID. </param>
+        /// <param name="principalType"> The principal type of the assigned principal ID. </param>
+        /// <param name="roleEligibilityScheduleId"> Id of the master role eligibility schedule. </param>
+        /// <param name="status"> The status of the role eligibility schedule instance. </param>
+        /// <param name="startOn"> The startDateTime of the role eligibility schedule instance. </param>
+        /// <param name="endOn"> The endDateTime of the role eligibility schedule instance. </param>
+        /// <param name="memberType"> Membership type of the role eligibility schedule. </param>
+        /// <param name="condition"> The conditions on the role assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase &apos;foo_storage_container&apos;. </param>
+        /// <param name="conditionVersion"> Version of the condition. Currently accepted value is &apos;2.0&apos;. </param>
+        /// <param name="createdOn"> DateTime when role eligibility schedule was created. </param>
+        /// <param name="expandedProperties"> Additional properties of principal, scope and role definition. </param>
         internal RoleEligibilityScheduleInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string scope, ResourceIdentifier roleDefinitionId, Guid? principalId, RoleEligibilitySchedulePrincipalType? principalType, ResourceIdentifier roleEligibilityScheduleId, RoleEligibilityScheduleStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, RoleEligibilityScheduleMemberType? memberType, string condition, string conditionVersion, DateTimeOffset? createdOn, ExpandedProperties expandedProperties) : base(id, name, resourceType, systemData)
         {
             Scope = scope;
@@ -94,70 +55,31 @@ namespace Azure.ResourceManager.Authorization
             ExpandedProperties = expandedProperties;
         }
 
-        /// <summary>
-        /// The role eligibility schedule scope.
-        /// Serialized Name: RoleEligibilityScheduleInstance.properties.scope
-        /// </summary>
+        /// <summary> The role eligibility schedule scope. </summary>
         public string Scope { get; }
-        /// <summary>
-        /// The role definition ID.
-        /// Serialized Name: RoleEligibilityScheduleInstance.properties.roleDefinitionId
-        /// </summary>
+        /// <summary> The role definition ID. </summary>
         public ResourceIdentifier RoleDefinitionId { get; }
-        /// <summary>
-        /// The principal ID.
-        /// Serialized Name: RoleEligibilityScheduleInstance.properties.principalId
-        /// </summary>
+        /// <summary> The principal ID. </summary>
         public Guid? PrincipalId { get; }
-        /// <summary>
-        /// The principal type of the assigned principal ID.
-        /// Serialized Name: RoleEligibilityScheduleInstance.properties.principalType
-        /// </summary>
+        /// <summary> The principal type of the assigned principal ID. </summary>
         public RoleEligibilitySchedulePrincipalType? PrincipalType { get; }
-        /// <summary>
-        /// Id of the master role eligibility schedule
-        /// Serialized Name: RoleEligibilityScheduleInstance.properties.roleEligibilityScheduleId
-        /// </summary>
+        /// <summary> Id of the master role eligibility schedule. </summary>
         public ResourceIdentifier RoleEligibilityScheduleId { get; }
-        /// <summary>
-        /// The status of the role eligibility schedule instance
-        /// Serialized Name: RoleEligibilityScheduleInstance.properties.status
-        /// </summary>
+        /// <summary> The status of the role eligibility schedule instance. </summary>
         public RoleEligibilityScheduleStatus? Status { get; }
-        /// <summary>
-        /// The startDateTime of the role eligibility schedule instance
-        /// Serialized Name: RoleEligibilityScheduleInstance.properties.startDateTime
-        /// </summary>
+        /// <summary> The startDateTime of the role eligibility schedule instance. </summary>
         public DateTimeOffset? StartOn { get; }
-        /// <summary>
-        /// The endDateTime of the role eligibility schedule instance
-        /// Serialized Name: RoleEligibilityScheduleInstance.properties.endDateTime
-        /// </summary>
+        /// <summary> The endDateTime of the role eligibility schedule instance. </summary>
         public DateTimeOffset? EndOn { get; }
-        /// <summary>
-        /// Membership type of the role eligibility schedule
-        /// Serialized Name: RoleEligibilityScheduleInstance.properties.memberType
-        /// </summary>
+        /// <summary> Membership type of the role eligibility schedule. </summary>
         public RoleEligibilityScheduleMemberType? MemberType { get; }
-        /// <summary>
-        /// The conditions on the role assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase &apos;foo_storage_container&apos;
-        /// Serialized Name: RoleEligibilityScheduleInstance.properties.condition
-        /// </summary>
+        /// <summary> The conditions on the role assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase &apos;foo_storage_container&apos;. </summary>
         public string Condition { get; }
-        /// <summary>
-        /// Version of the condition. Currently accepted value is &apos;2.0&apos;
-        /// Serialized Name: RoleEligibilityScheduleInstance.properties.conditionVersion
-        /// </summary>
+        /// <summary> Version of the condition. Currently accepted value is &apos;2.0&apos;. </summary>
         public string ConditionVersion { get; }
-        /// <summary>
-        /// DateTime when role eligibility schedule was created
-        /// Serialized Name: RoleEligibilityScheduleInstance.properties.createdOn
-        /// </summary>
+        /// <summary> DateTime when role eligibility schedule was created. </summary>
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary>
-        /// Additional properties of principal, scope and role definition
-        /// Serialized Name: RoleEligibilityScheduleInstance.properties.expandedProperties
-        /// </summary>
+        /// <summary> Additional properties of principal, scope and role definition. </summary>
         public ExpandedProperties ExpandedProperties { get; }
     }
 }

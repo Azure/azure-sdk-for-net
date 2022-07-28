@@ -28,46 +28,23 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="scope">
-        /// The role management policy scope.
-        /// Serialized Name: RoleManagementPolicy.properties.scope
-        /// </param>
-        /// <param name="displayName">
-        /// The role management policy display name.
-        /// Serialized Name: RoleManagementPolicy.properties.displayName
-        /// </param>
-        /// <param name="description">
-        /// The role management policy description.
-        /// Serialized Name: RoleManagementPolicy.properties.description
-        /// </param>
-        /// <param name="isOrganizationDefault">
-        /// The role management policy is default policy.
-        /// Serialized Name: RoleManagementPolicy.properties.isOrganizationDefault
-        /// </param>
-        /// <param name="lastModifiedBy">
-        /// The name of the entity last modified it
-        /// Serialized Name: RoleManagementPolicy.properties.lastModifiedBy
-        /// </param>
-        /// <param name="lastModifiedOn">
-        /// The last modified date time.
-        /// Serialized Name: RoleManagementPolicy.properties.lastModifiedDateTime
-        /// </param>
+        /// <param name="scope"> The role management policy scope. </param>
+        /// <param name="displayName"> The role management policy display name. </param>
+        /// <param name="description"> The role management policy description. </param>
+        /// <param name="isOrganizationDefault"> The role management policy is default policy. </param>
+        /// <param name="lastModifiedBy"> The name of the entity last modified it. </param>
+        /// <param name="lastModifiedOn"> The last modified date time. </param>
         /// <param name="rules">
         /// The rule applied to the policy.
-        /// Serialized Name: RoleManagementPolicy.properties.rules
         /// Please note <see cref="RoleManagementPolicyRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="RoleManagementPolicyApprovalRule"/>, <see cref="RoleManagementPolicyAuthenticationContextRule"/>, <see cref="RoleManagementPolicyEnablementRule"/>, <see cref="RoleManagementPolicyExpirationRule"/> and <see cref="RoleManagementPolicyNotificationRule"/>.
         /// </param>
         /// <param name="effectiveRules">
         /// The readonly computed rule applied to the policy.
-        /// Serialized Name: RoleManagementPolicy.properties.effectiveRules
         /// Please note <see cref="RoleManagementPolicyRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="RoleManagementPolicyApprovalRule"/>, <see cref="RoleManagementPolicyAuthenticationContextRule"/>, <see cref="RoleManagementPolicyEnablementRule"/>, <see cref="RoleManagementPolicyExpirationRule"/> and <see cref="RoleManagementPolicyNotificationRule"/>.
         /// </param>
-        /// <param name="policyProperties">
-        /// Additional properties of scope
-        /// Serialized Name: RoleManagementPolicy.properties.policyProperties
-        /// </param>
+        /// <param name="policyProperties"> Additional properties of scope. </param>
         internal RoleManagementPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string scope, string displayName, string description, bool? isOrganizationDefault, RoleManagementPrincipal lastModifiedBy, DateTimeOffset? lastModifiedOn, IList<RoleManagementPolicyRule> rules, IReadOnlyList<RoleManagementPolicyRule> effectiveRules, RoleManagementPolicyProperties policyProperties) : base(id, name, resourceType, systemData)
         {
             Scope = scope;
@@ -81,54 +58,31 @@ namespace Azure.ResourceManager.Authorization
             PolicyProperties = policyProperties;
         }
 
-        /// <summary>
-        /// The role management policy scope.
-        /// Serialized Name: RoleManagementPolicy.properties.scope
-        /// </summary>
+        /// <summary> The role management policy scope. </summary>
         public string Scope { get; set; }
-        /// <summary>
-        /// The role management policy display name.
-        /// Serialized Name: RoleManagementPolicy.properties.displayName
-        /// </summary>
+        /// <summary> The role management policy display name. </summary>
         public string DisplayName { get; set; }
-        /// <summary>
-        /// The role management policy description.
-        /// Serialized Name: RoleManagementPolicy.properties.description
-        /// </summary>
+        /// <summary> The role management policy description. </summary>
         public string Description { get; set; }
-        /// <summary>
-        /// The role management policy is default policy.
-        /// Serialized Name: RoleManagementPolicy.properties.isOrganizationDefault
-        /// </summary>
+        /// <summary> The role management policy is default policy. </summary>
         public bool? IsOrganizationDefault { get; set; }
-        /// <summary>
-        /// The name of the entity last modified it
-        /// Serialized Name: RoleManagementPolicy.properties.lastModifiedBy
-        /// </summary>
+        /// <summary> The name of the entity last modified it. </summary>
         public RoleManagementPrincipal LastModifiedBy { get; }
-        /// <summary>
-        /// The last modified date time.
-        /// Serialized Name: RoleManagementPolicy.properties.lastModifiedDateTime
-        /// </summary>
+        /// <summary> The last modified date time. </summary>
         public DateTimeOffset? LastModifiedOn { get; }
         /// <summary>
         /// The rule applied to the policy.
-        /// Serialized Name: RoleManagementPolicy.properties.rules
         /// Please note <see cref="RoleManagementPolicyRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="RoleManagementPolicyApprovalRule"/>, <see cref="RoleManagementPolicyAuthenticationContextRule"/>, <see cref="RoleManagementPolicyEnablementRule"/>, <see cref="RoleManagementPolicyExpirationRule"/> and <see cref="RoleManagementPolicyNotificationRule"/>.
         /// </summary>
         public IList<RoleManagementPolicyRule> Rules { get; }
         /// <summary>
         /// The readonly computed rule applied to the policy.
-        /// Serialized Name: RoleManagementPolicy.properties.effectiveRules
         /// Please note <see cref="RoleManagementPolicyRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="RoleManagementPolicyApprovalRule"/>, <see cref="RoleManagementPolicyAuthenticationContextRule"/>, <see cref="RoleManagementPolicyEnablementRule"/>, <see cref="RoleManagementPolicyExpirationRule"/> and <see cref="RoleManagementPolicyNotificationRule"/>.
         /// </summary>
         public IReadOnlyList<RoleManagementPolicyRule> EffectiveRules { get; }
-        /// <summary>
-        /// Additional properties of scope
-        /// Serialized Name: RoleManagementPolicy.properties.policyProperties
-        /// </summary>
+        /// <summary> Additional properties of scope. </summary>
         public RoleManagementPolicyProperties PolicyProperties { get; }
     }
 }

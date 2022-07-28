@@ -11,10 +11,7 @@ using Azure.ResourceManager.Authorization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary>
-    /// Role assignment list operation result.
-    /// Serialized Name: RoleAssignmentListResult
-    /// </summary>
+    /// <summary> Role assignment list operation result. </summary>
     internal partial class RoleAssignmentListResult
     {
         /// <summary> Initializes a new instance of RoleAssignmentListResult. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> Initializes a new instance of RoleAssignmentListResult. </summary>
-        /// <param name="value">
-        /// Role assignment list.
-        /// Serialized Name: RoleAssignmentListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The URL to use for getting the next set of results.
-        /// Serialized Name: RoleAssignmentListResult.nextLink
-        /// </param>
+        /// <param name="value"> Role assignment list. </param>
+        /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
         internal RoleAssignmentListResult(IReadOnlyList<RoleAssignmentData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// Role assignment list.
-        /// Serialized Name: RoleAssignmentListResult.value
-        /// </summary>
+        /// <summary> Role assignment list. </summary>
         public IReadOnlyList<RoleAssignmentData> Value { get; }
-        /// <summary>
-        /// The URL to use for getting the next set of results.
-        /// Serialized Name: RoleAssignmentListResult.nextLink
-        /// </summary>
+        /// <summary> The URL to use for getting the next set of results. </summary>
         public string NextLink { get; }
     }
 }

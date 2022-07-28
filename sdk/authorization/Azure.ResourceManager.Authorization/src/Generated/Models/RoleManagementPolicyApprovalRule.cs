@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary>
-    /// The role management policy approval rule.
-    /// Serialized Name: RoleManagementPolicyApprovalRule
-    /// </summary>
+    /// <summary> The role management policy approval rule. </summary>
     public partial class RoleManagementPolicyApprovalRule : RoleManagementPolicyRule
     {
         /// <summary> Initializes a new instance of RoleManagementPolicyApprovalRule. </summary>
@@ -20,32 +17,17 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> Initializes a new instance of RoleManagementPolicyApprovalRule. </summary>
-        /// <param name="id">
-        /// The id of the rule.
-        /// Serialized Name: RoleManagementPolicyRule.id
-        /// </param>
-        /// <param name="ruleType">
-        /// The type of rule
-        /// Serialized Name: RoleManagementPolicyRule.ruleType
-        /// </param>
-        /// <param name="target">
-        /// The target of the current rule.
-        /// Serialized Name: RoleManagementPolicyRule.target
-        /// </param>
-        /// <param name="setting">
-        /// The approval setting
-        /// Serialized Name: RoleManagementPolicyApprovalRule.setting
-        /// </param>
+        /// <param name="id"> The id of the rule. </param>
+        /// <param name="ruleType"> The type of rule. </param>
+        /// <param name="target"> The target of the current rule. </param>
+        /// <param name="setting"> The approval setting. </param>
         internal RoleManagementPolicyApprovalRule(string id, RoleManagementPolicyRuleType ruleType, RoleManagementPolicyRuleTarget target, RoleManagementApprovalSettings setting) : base(id, ruleType, target)
         {
             Setting = setting;
             RuleType = ruleType;
         }
 
-        /// <summary>
-        /// The approval setting
-        /// Serialized Name: RoleManagementPolicyApprovalRule.setting
-        /// </summary>
+        /// <summary> The approval setting. </summary>
         public RoleManagementApprovalSettings Setting { get; set; }
     }
 }

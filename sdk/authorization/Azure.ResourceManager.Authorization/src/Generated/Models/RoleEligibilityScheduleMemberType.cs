@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary>
-    /// Membership type of the role eligibility schedule
-    /// Serialized Name: RoleEligibilityScheduleMemberType
-    /// </summary>
+    /// <summary> Membership type of the role eligibility schedule. </summary>
     public readonly partial struct RoleEligibilityScheduleMemberType : IEquatable<RoleEligibilityScheduleMemberType>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.Authorization.Models
         private const string DirectValue = "Direct";
         private const string GroupValue = "Group";
 
-        /// <summary>
-        /// Inherited
-        /// Serialized Name: RoleEligibilityScheduleMemberType.Inherited
-        /// </summary>
+        /// <summary> Inherited. </summary>
         public static RoleEligibilityScheduleMemberType Inherited { get; } = new RoleEligibilityScheduleMemberType(InheritedValue);
-        /// <summary>
-        /// Direct
-        /// Serialized Name: RoleEligibilityScheduleMemberType.Direct
-        /// </summary>
+        /// <summary> Direct. </summary>
         public static RoleEligibilityScheduleMemberType Direct { get; } = new RoleEligibilityScheduleMemberType(DirectValue);
-        /// <summary>
-        /// Group
-        /// Serialized Name: RoleEligibilityScheduleMemberType.Group
-        /// </summary>
+        /// <summary> Group. </summary>
         public static RoleEligibilityScheduleMemberType Group { get; } = new RoleEligibilityScheduleMemberType(GroupValue);
         /// <summary> Determines if two <see cref="RoleEligibilityScheduleMemberType"/> values are the same. </summary>
         public static bool operator ==(RoleEligibilityScheduleMemberType left, RoleEligibilityScheduleMemberType right) => left.Equals(right);

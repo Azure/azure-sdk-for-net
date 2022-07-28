@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary>
-    /// The type of the role assignment schedule request. Eg: SelfActivate, AdminAssign etc
-    /// Serialized Name: RoleAssignmentScheduleRequestType
-    /// </summary>
+    /// <summary> The type of the role assignment schedule request. Eg: SelfActivate, AdminAssign etc. </summary>
     public readonly partial struct RoleAssignmentScheduleRequestType : IEquatable<RoleAssignmentScheduleRequestType>
     {
         private readonly string _value;
@@ -35,50 +32,23 @@ namespace Azure.ResourceManager.Authorization.Models
         private const string SelfExtendValue = "SelfExtend";
         private const string SelfRenewValue = "SelfRenew";
 
-        /// <summary>
-        /// AdminAssign
-        /// Serialized Name: RoleAssignmentScheduleRequestType.AdminAssign
-        /// </summary>
+        /// <summary> AdminAssign. </summary>
         public static RoleAssignmentScheduleRequestType AdminAssign { get; } = new RoleAssignmentScheduleRequestType(AdminAssignValue);
-        /// <summary>
-        /// AdminRemove
-        /// Serialized Name: RoleAssignmentScheduleRequestType.AdminRemove
-        /// </summary>
+        /// <summary> AdminRemove. </summary>
         public static RoleAssignmentScheduleRequestType AdminRemove { get; } = new RoleAssignmentScheduleRequestType(AdminRemoveValue);
-        /// <summary>
-        /// AdminUpdate
-        /// Serialized Name: RoleAssignmentScheduleRequestType.AdminUpdate
-        /// </summary>
+        /// <summary> AdminUpdate. </summary>
         public static RoleAssignmentScheduleRequestType AdminUpdate { get; } = new RoleAssignmentScheduleRequestType(AdminUpdateValue);
-        /// <summary>
-        /// AdminExtend
-        /// Serialized Name: RoleAssignmentScheduleRequestType.AdminExtend
-        /// </summary>
+        /// <summary> AdminExtend. </summary>
         public static RoleAssignmentScheduleRequestType AdminExtend { get; } = new RoleAssignmentScheduleRequestType(AdminExtendValue);
-        /// <summary>
-        /// AdminRenew
-        /// Serialized Name: RoleAssignmentScheduleRequestType.AdminRenew
-        /// </summary>
+        /// <summary> AdminRenew. </summary>
         public static RoleAssignmentScheduleRequestType AdminRenew { get; } = new RoleAssignmentScheduleRequestType(AdminRenewValue);
-        /// <summary>
-        /// SelfActivate
-        /// Serialized Name: RoleAssignmentScheduleRequestType.SelfActivate
-        /// </summary>
+        /// <summary> SelfActivate. </summary>
         public static RoleAssignmentScheduleRequestType SelfActivate { get; } = new RoleAssignmentScheduleRequestType(SelfActivateValue);
-        /// <summary>
-        /// SelfDeactivate
-        /// Serialized Name: RoleAssignmentScheduleRequestType.SelfDeactivate
-        /// </summary>
+        /// <summary> SelfDeactivate. </summary>
         public static RoleAssignmentScheduleRequestType SelfDeactivate { get; } = new RoleAssignmentScheduleRequestType(SelfDeactivateValue);
-        /// <summary>
-        /// SelfExtend
-        /// Serialized Name: RoleAssignmentScheduleRequestType.SelfExtend
-        /// </summary>
+        /// <summary> SelfExtend. </summary>
         public static RoleAssignmentScheduleRequestType SelfExtend { get; } = new RoleAssignmentScheduleRequestType(SelfExtendValue);
-        /// <summary>
-        /// SelfRenew
-        /// Serialized Name: RoleAssignmentScheduleRequestType.SelfRenew
-        /// </summary>
+        /// <summary> SelfRenew. </summary>
         public static RoleAssignmentScheduleRequestType SelfRenew { get; } = new RoleAssignmentScheduleRequestType(SelfRenewValue);
         /// <summary> Determines if two <see cref="RoleAssignmentScheduleRequestType"/> values are the same. </summary>
         public static bool operator ==(RoleAssignmentScheduleRequestType left, RoleAssignmentScheduleRequestType right) => left.Equals(right);

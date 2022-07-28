@@ -9,10 +9,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary>
-    /// Expanded info of resource scope
-    /// Serialized Name: PolicyProperties
-    /// </summary>
+    /// <summary> Expanded info of resource scope. </summary>
     public partial class RoleManagementPolicyProperties
     {
         /// <summary> Initializes a new instance of RoleManagementPolicyProperties. </summary>
@@ -21,18 +18,9 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> Initializes a new instance of RoleManagementPolicyProperties. </summary>
-        /// <param name="scopeId">
-        /// Scope id of the resource
-        /// Serialized Name: PolicyProperties.scope.id
-        /// </param>
-        /// <param name="scopeDisplayName">
-        /// Display name of the resource
-        /// Serialized Name: PolicyProperties.scope.displayName
-        /// </param>
-        /// <param name="scopeType">
-        /// Type of the resource
-        /// Serialized Name: PolicyProperties.scope.type
-        /// </param>
+        /// <param name="scopeId"> Scope id of the resource. </param>
+        /// <param name="scopeDisplayName"> Display name of the resource. </param>
+        /// <param name="scopeType"> Type of the resource. </param>
         internal RoleManagementPolicyProperties(ResourceIdentifier scopeId, string scopeDisplayName, string scopeType)
         {
             ScopeId = scopeId;
@@ -40,20 +28,11 @@ namespace Azure.ResourceManager.Authorization.Models
             ScopeType = scopeType;
         }
 
-        /// <summary>
-        /// Scope id of the resource
-        /// Serialized Name: PolicyProperties.scope.id
-        /// </summary>
+        /// <summary> Scope id of the resource. </summary>
         public ResourceIdentifier ScopeId { get; }
-        /// <summary>
-        /// Display name of the resource
-        /// Serialized Name: PolicyProperties.scope.displayName
-        /// </summary>
+        /// <summary> Display name of the resource. </summary>
         public string ScopeDisplayName { get; }
-        /// <summary>
-        /// Type of the resource
-        /// Serialized Name: PolicyProperties.scope.type
-        /// </summary>
+        /// <summary> Type of the resource. </summary>
         public string ScopeType { get; }
     }
 }

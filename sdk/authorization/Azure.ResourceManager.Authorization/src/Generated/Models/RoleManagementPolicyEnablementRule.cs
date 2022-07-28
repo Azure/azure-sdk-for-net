@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary>
-    /// The role management policy enablement rule.
-    /// Serialized Name: RoleManagementPolicyEnablementRule
-    /// </summary>
+    /// <summary> The role management policy enablement rule. </summary>
     public partial class RoleManagementPolicyEnablementRule : RoleManagementPolicyRule
     {
         /// <summary> Initializes a new instance of RoleManagementPolicyEnablementRule. </summary>
@@ -24,32 +21,17 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> Initializes a new instance of RoleManagementPolicyEnablementRule. </summary>
-        /// <param name="id">
-        /// The id of the rule.
-        /// Serialized Name: RoleManagementPolicyRule.id
-        /// </param>
-        /// <param name="ruleType">
-        /// The type of rule
-        /// Serialized Name: RoleManagementPolicyRule.ruleType
-        /// </param>
-        /// <param name="target">
-        /// The target of the current rule.
-        /// Serialized Name: RoleManagementPolicyRule.target
-        /// </param>
-        /// <param name="enabledRules">
-        /// The list of enabled rules.
-        /// Serialized Name: RoleManagementPolicyEnablementRule.enabledRules
-        /// </param>
+        /// <param name="id"> The id of the rule. </param>
+        /// <param name="ruleType"> The type of rule. </param>
+        /// <param name="target"> The target of the current rule. </param>
+        /// <param name="enabledRules"> The list of enabled rules. </param>
         internal RoleManagementPolicyEnablementRule(string id, RoleManagementPolicyRuleType ruleType, RoleManagementPolicyRuleTarget target, IList<RoleAssignmentEnablementRuleType> enabledRules) : base(id, ruleType, target)
         {
             EnabledRules = enabledRules;
             RuleType = ruleType;
         }
 
-        /// <summary>
-        /// The list of enabled rules.
-        /// Serialized Name: RoleManagementPolicyEnablementRule.enabledRules
-        /// </summary>
+        /// <summary> The list of enabled rules. </summary>
         public IList<RoleAssignmentEnablementRuleType> EnabledRules { get; }
     }
 }

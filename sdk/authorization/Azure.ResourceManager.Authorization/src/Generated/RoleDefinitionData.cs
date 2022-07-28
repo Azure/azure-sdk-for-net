@@ -27,26 +27,11 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="roleName">
-        /// The role name.
-        /// Serialized Name: RoleDefinition.properties.roleName
-        /// </param>
-        /// <param name="description">
-        /// The role definition description.
-        /// Serialized Name: RoleDefinition.properties.description
-        /// </param>
-        /// <param name="roleType">
-        /// The role type.
-        /// Serialized Name: RoleDefinition.properties.type
-        /// </param>
-        /// <param name="permissions">
-        /// Role definition permissions.
-        /// Serialized Name: RoleDefinition.properties.permissions
-        /// </param>
-        /// <param name="assignableScopes">
-        /// Role definition assignable scopes.
-        /// Serialized Name: RoleDefinition.properties.assignableScopes
-        /// </param>
+        /// <param name="roleName"> The role name. </param>
+        /// <param name="description"> The role definition description. </param>
+        /// <param name="roleType"> The role type. </param>
+        /// <param name="permissions"> Role definition permissions. </param>
+        /// <param name="assignableScopes"> Role definition assignable scopes. </param>
         internal RoleDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string roleName, string description, string roleType, IList<RoleDefinitionPermission> permissions, IList<string> assignableScopes) : base(id, name, resourceType, systemData)
         {
             RoleName = roleName;
@@ -56,30 +41,15 @@ namespace Azure.ResourceManager.Authorization
             AssignableScopes = assignableScopes;
         }
 
-        /// <summary>
-        /// The role name.
-        /// Serialized Name: RoleDefinition.properties.roleName
-        /// </summary>
+        /// <summary> The role name. </summary>
         public string RoleName { get; set; }
-        /// <summary>
-        /// The role definition description.
-        /// Serialized Name: RoleDefinition.properties.description
-        /// </summary>
+        /// <summary> The role definition description. </summary>
         public string Description { get; set; }
-        /// <summary>
-        /// The role type.
-        /// Serialized Name: RoleDefinition.properties.type
-        /// </summary>
+        /// <summary> The role type. </summary>
         public string RoleType { get; set; }
-        /// <summary>
-        /// Role definition permissions.
-        /// Serialized Name: RoleDefinition.properties.permissions
-        /// </summary>
+        /// <summary> Role definition permissions. </summary>
         public IList<RoleDefinitionPermission> Permissions { get; }
-        /// <summary>
-        /// Role definition assignable scopes.
-        /// Serialized Name: RoleDefinition.properties.assignableScopes
-        /// </summary>
+        /// <summary> Role definition assignable scopes. </summary>
         public IList<string> AssignableScopes { get; }
     }
 }

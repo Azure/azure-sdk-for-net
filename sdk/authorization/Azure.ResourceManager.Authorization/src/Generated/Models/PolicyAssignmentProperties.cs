@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary>
-    /// Expanded info of resource scope, role definition and policy
-    /// Serialized Name: PolicyAssignmentProperties
-    /// </summary>
+    /// <summary> Expanded info of resource scope, role definition and policy. </summary>
     public partial class PolicyAssignmentProperties : TrackedResourceData
     {
         /// <summary> Initializes a new instance of PolicyAssignmentProperties. </summary>
@@ -31,42 +28,15 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="policyId">
-        /// Id of the policy
-        /// Serialized Name: PolicyAssignmentProperties.policy.id
-        /// </param>
-        /// <param name="lastModifiedBy">
-        /// The name of the entity last modified it
-        /// Serialized Name: PolicyAssignmentProperties.policy.lastModifiedBy
-        /// </param>
-        /// <param name="lastModifiedOn">
-        /// The last modified date time.
-        /// Serialized Name: PolicyAssignmentProperties.policy.lastModifiedDateTime
-        /// </param>
-        /// <param name="roleDefinitionId">
-        /// Id of the role definition
-        /// Serialized Name: PolicyAssignmentProperties.roleDefinition.id
-        /// </param>
-        /// <param name="roleDefinitionDisplayName">
-        /// Display name of the role definition
-        /// Serialized Name: PolicyAssignmentProperties.roleDefinition.displayName
-        /// </param>
-        /// <param name="roleDefinitionType">
-        /// Type of the role definition
-        /// Serialized Name: PolicyAssignmentProperties.roleDefinition.type
-        /// </param>
-        /// <param name="scopeId">
-        /// Scope id of the resource
-        /// Serialized Name: PolicyAssignmentProperties.scope.id
-        /// </param>
-        /// <param name="scopeDisplayName">
-        /// Display name of the resource
-        /// Serialized Name: PolicyAssignmentProperties.scope.displayName
-        /// </param>
-        /// <param name="scopeType">
-        /// Type of the resource
-        /// Serialized Name: PolicyAssignmentProperties.scope.type
-        /// </param>
+        /// <param name="policyId"> Id of the policy. </param>
+        /// <param name="lastModifiedBy"> The name of the entity last modified it. </param>
+        /// <param name="lastModifiedOn"> The last modified date time. </param>
+        /// <param name="roleDefinitionId"> Id of the role definition. </param>
+        /// <param name="roleDefinitionDisplayName"> Display name of the role definition. </param>
+        /// <param name="roleDefinitionType"> Type of the role definition. </param>
+        /// <param name="scopeId"> Scope id of the resource. </param>
+        /// <param name="scopeDisplayName"> Display name of the resource. </param>
+        /// <param name="scopeType"> Type of the resource. </param>
         internal PolicyAssignmentProperties(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier policyId, RoleManagementPrincipal lastModifiedBy, DateTimeOffset? lastModifiedOn, ResourceIdentifier roleDefinitionId, string roleDefinitionDisplayName, string roleDefinitionType, ResourceIdentifier scopeId, string scopeDisplayName, string scopeType) : base(id, name, resourceType, systemData, tags, location)
         {
             PolicyId = policyId;
@@ -80,50 +50,23 @@ namespace Azure.ResourceManager.Authorization.Models
             ScopeType = scopeType;
         }
 
-        /// <summary>
-        /// Id of the policy
-        /// Serialized Name: PolicyAssignmentProperties.policy.id
-        /// </summary>
+        /// <summary> Id of the policy. </summary>
         public ResourceIdentifier PolicyId { get; }
-        /// <summary>
-        /// The name of the entity last modified it
-        /// Serialized Name: PolicyAssignmentProperties.policy.lastModifiedBy
-        /// </summary>
+        /// <summary> The name of the entity last modified it. </summary>
         public RoleManagementPrincipal LastModifiedBy { get; }
-        /// <summary>
-        /// The last modified date time.
-        /// Serialized Name: PolicyAssignmentProperties.policy.lastModifiedDateTime
-        /// </summary>
+        /// <summary> The last modified date time. </summary>
         public DateTimeOffset? LastModifiedOn { get; }
-        /// <summary>
-        /// Id of the role definition
-        /// Serialized Name: PolicyAssignmentProperties.roleDefinition.id
-        /// </summary>
+        /// <summary> Id of the role definition. </summary>
         public ResourceIdentifier RoleDefinitionId { get; }
-        /// <summary>
-        /// Display name of the role definition
-        /// Serialized Name: PolicyAssignmentProperties.roleDefinition.displayName
-        /// </summary>
+        /// <summary> Display name of the role definition. </summary>
         public string RoleDefinitionDisplayName { get; }
-        /// <summary>
-        /// Type of the role definition
-        /// Serialized Name: PolicyAssignmentProperties.roleDefinition.type
-        /// </summary>
+        /// <summary> Type of the role definition. </summary>
         public string RoleDefinitionType { get; }
-        /// <summary>
-        /// Scope id of the resource
-        /// Serialized Name: PolicyAssignmentProperties.scope.id
-        /// </summary>
+        /// <summary> Scope id of the resource. </summary>
         public ResourceIdentifier ScopeId { get; }
-        /// <summary>
-        /// Display name of the resource
-        /// Serialized Name: PolicyAssignmentProperties.scope.displayName
-        /// </summary>
+        /// <summary> Display name of the resource. </summary>
         public string ScopeDisplayName { get; }
-        /// <summary>
-        /// Type of the resource
-        /// Serialized Name: PolicyAssignmentProperties.scope.type
-        /// </summary>
+        /// <summary> Type of the resource. </summary>
         public string ScopeType { get; }
     }
 }

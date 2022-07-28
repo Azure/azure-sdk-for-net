@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary>
-    /// Resource Type
-    /// Serialized Name: ProviderOperationsResourceType
-    /// </summary>
+    /// <summary> Resource Type. </summary>
     public partial class ProviderOperationsResourceType
     {
         /// <summary> Initializes a new instance of ProviderOperationsResourceType. </summary>
@@ -23,18 +20,9 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> Initializes a new instance of ProviderOperationsResourceType. </summary>
-        /// <param name="name">
-        /// The resource type name.
-        /// Serialized Name: ProviderOperationsResourceType.name
-        /// </param>
-        /// <param name="displayName">
-        /// The resource type display name.
-        /// Serialized Name: ProviderOperationsResourceType.displayName
-        /// </param>
-        /// <param name="operations">
-        /// The resource type operations.
-        /// Serialized Name: ProviderOperationsResourceType.operations
-        /// </param>
+        /// <param name="name"> The resource type name. </param>
+        /// <param name="displayName"> The resource type display name. </param>
+        /// <param name="operations"> The resource type operations. </param>
         internal ProviderOperationsResourceType(string name, string displayName, IReadOnlyList<ProviderOperationInfo> operations)
         {
             Name = name;
@@ -42,20 +30,11 @@ namespace Azure.ResourceManager.Authorization.Models
             Operations = operations;
         }
 
-        /// <summary>
-        /// The resource type name.
-        /// Serialized Name: ProviderOperationsResourceType.name
-        /// </summary>
+        /// <summary> The resource type name. </summary>
         public string Name { get; }
-        /// <summary>
-        /// The resource type display name.
-        /// Serialized Name: ProviderOperationsResourceType.displayName
-        /// </summary>
+        /// <summary> The resource type display name. </summary>
         public string DisplayName { get; }
-        /// <summary>
-        /// The resource type operations.
-        /// Serialized Name: ProviderOperationsResourceType.operations
-        /// </summary>
+        /// <summary> The resource type operations. </summary>
         public IReadOnlyList<ProviderOperationInfo> Operations { get; }
     }
 }

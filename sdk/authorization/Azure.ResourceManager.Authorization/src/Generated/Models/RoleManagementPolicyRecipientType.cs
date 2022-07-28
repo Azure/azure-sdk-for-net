@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary>
-    /// The recipient type.
-    /// Serialized Name: RecipientType
-    /// </summary>
+    /// <summary> The recipient type. </summary>
     public readonly partial struct RoleManagementPolicyRecipientType : IEquatable<RoleManagementPolicyRecipientType>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.Authorization.Models
         private const string ApproverValue = "Approver";
         private const string AdminValue = "Admin";
 
-        /// <summary>
-        /// Requestor
-        /// Serialized Name: RecipientType.Requestor
-        /// </summary>
+        /// <summary> Requestor. </summary>
         public static RoleManagementPolicyRecipientType Requestor { get; } = new RoleManagementPolicyRecipientType(RequestorValue);
-        /// <summary>
-        /// Approver
-        /// Serialized Name: RecipientType.Approver
-        /// </summary>
+        /// <summary> Approver. </summary>
         public static RoleManagementPolicyRecipientType Approver { get; } = new RoleManagementPolicyRecipientType(ApproverValue);
-        /// <summary>
-        /// Admin
-        /// Serialized Name: RecipientType.Admin
-        /// </summary>
+        /// <summary> Admin. </summary>
         public static RoleManagementPolicyRecipientType Admin { get; } = new RoleManagementPolicyRecipientType(AdminValue);
         /// <summary> Determines if two <see cref="RoleManagementPolicyRecipientType"/> values are the same. </summary>
         public static bool operator ==(RoleManagementPolicyRecipientType left, RoleManagementPolicyRecipientType right) => left.Equals(right);

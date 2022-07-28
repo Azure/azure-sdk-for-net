@@ -25,70 +25,22 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="scope">
-        /// The role assignment schedule scope.
-        /// Serialized Name: RoleAssignmentSchedule.properties.scope
-        /// </param>
-        /// <param name="roleDefinitionId">
-        /// The role definition ID.
-        /// Serialized Name: RoleAssignmentSchedule.properties.roleDefinitionId
-        /// </param>
-        /// <param name="principalId">
-        /// The principal ID.
-        /// Serialized Name: RoleAssignmentSchedule.properties.principalId
-        /// </param>
-        /// <param name="principalType">
-        /// The principal type of the assigned principal ID.
-        /// Serialized Name: RoleAssignmentSchedule.properties.principalType
-        /// </param>
-        /// <param name="roleAssignmentScheduleRequestId">
-        /// The id of roleAssignmentScheduleRequest used to create this roleAssignmentSchedule
-        /// Serialized Name: RoleAssignmentSchedule.properties.roleAssignmentScheduleRequestId
-        /// </param>
-        /// <param name="linkedRoleEligibilityScheduleId">
-        /// The id of roleEligibilitySchedule used to activated this roleAssignmentSchedule
-        /// Serialized Name: RoleAssignmentSchedule.properties.linkedRoleEligibilityScheduleId
-        /// </param>
-        /// <param name="assignmentType">
-        /// Assignment type of the role assignment schedule
-        /// Serialized Name: RoleAssignmentSchedule.properties.assignmentType
-        /// </param>
-        /// <param name="memberType">
-        /// Membership type of the role assignment schedule
-        /// Serialized Name: RoleAssignmentSchedule.properties.memberType
-        /// </param>
-        /// <param name="status">
-        /// The status of the role assignment schedule.
-        /// Serialized Name: RoleAssignmentSchedule.properties.status
-        /// </param>
-        /// <param name="startOn">
-        /// Start DateTime when role assignment schedule
-        /// Serialized Name: RoleAssignmentSchedule.properties.startDateTime
-        /// </param>
-        /// <param name="endOn">
-        /// End DateTime when role assignment schedule
-        /// Serialized Name: RoleAssignmentSchedule.properties.endDateTime
-        /// </param>
-        /// <param name="condition">
-        /// The conditions on the role assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase &apos;foo_storage_container&apos;
-        /// Serialized Name: RoleAssignmentSchedule.properties.condition
-        /// </param>
-        /// <param name="conditionVersion">
-        /// Version of the condition. Currently accepted value is &apos;2.0&apos;
-        /// Serialized Name: RoleAssignmentSchedule.properties.conditionVersion
-        /// </param>
-        /// <param name="createdOn">
-        /// DateTime when role assignment schedule was created
-        /// Serialized Name: RoleAssignmentSchedule.properties.createdOn
-        /// </param>
-        /// <param name="updatedOn">
-        /// DateTime when role assignment schedule was modified
-        /// Serialized Name: RoleAssignmentSchedule.properties.updatedOn
-        /// </param>
-        /// <param name="expandedProperties">
-        /// Additional properties of principal, scope and role definition
-        /// Serialized Name: RoleAssignmentSchedule.properties.expandedProperties
-        /// </param>
+        /// <param name="scope"> The role assignment schedule scope. </param>
+        /// <param name="roleDefinitionId"> The role definition ID. </param>
+        /// <param name="principalId"> The principal ID. </param>
+        /// <param name="principalType"> The principal type of the assigned principal ID. </param>
+        /// <param name="roleAssignmentScheduleRequestId"> The id of roleAssignmentScheduleRequest used to create this roleAssignmentSchedule. </param>
+        /// <param name="linkedRoleEligibilityScheduleId"> The id of roleEligibilitySchedule used to activated this roleAssignmentSchedule. </param>
+        /// <param name="assignmentType"> Assignment type of the role assignment schedule. </param>
+        /// <param name="memberType"> Membership type of the role assignment schedule. </param>
+        /// <param name="status"> The status of the role assignment schedule. </param>
+        /// <param name="startOn"> Start DateTime when role assignment schedule. </param>
+        /// <param name="endOn"> End DateTime when role assignment schedule. </param>
+        /// <param name="condition"> The conditions on the role assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase &apos;foo_storage_container&apos;. </param>
+        /// <param name="conditionVersion"> Version of the condition. Currently accepted value is &apos;2.0&apos;. </param>
+        /// <param name="createdOn"> DateTime when role assignment schedule was created. </param>
+        /// <param name="updatedOn"> DateTime when role assignment schedule was modified. </param>
+        /// <param name="expandedProperties"> Additional properties of principal, scope and role definition. </param>
         internal RoleAssignmentScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string scope, ResourceIdentifier roleDefinitionId, Guid? principalId, RoleAssignmentSchedulePrincipalType? principalType, ResourceIdentifier roleAssignmentScheduleRequestId, Guid? linkedRoleEligibilityScheduleId, RoleAssignmentScheduleAssignmentType? assignmentType, RoleAssignmentScheduleMemberType? memberType, RoleAssignmentScheduleStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, string condition, string conditionVersion, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, ExpandedProperties expandedProperties) : base(id, name, resourceType, systemData)
         {
             Scope = scope;
@@ -109,85 +61,37 @@ namespace Azure.ResourceManager.Authorization
             ExpandedProperties = expandedProperties;
         }
 
-        /// <summary>
-        /// The role assignment schedule scope.
-        /// Serialized Name: RoleAssignmentSchedule.properties.scope
-        /// </summary>
+        /// <summary> The role assignment schedule scope. </summary>
         public string Scope { get; }
-        /// <summary>
-        /// The role definition ID.
-        /// Serialized Name: RoleAssignmentSchedule.properties.roleDefinitionId
-        /// </summary>
+        /// <summary> The role definition ID. </summary>
         public ResourceIdentifier RoleDefinitionId { get; }
-        /// <summary>
-        /// The principal ID.
-        /// Serialized Name: RoleAssignmentSchedule.properties.principalId
-        /// </summary>
+        /// <summary> The principal ID. </summary>
         public Guid? PrincipalId { get; }
-        /// <summary>
-        /// The principal type of the assigned principal ID.
-        /// Serialized Name: RoleAssignmentSchedule.properties.principalType
-        /// </summary>
+        /// <summary> The principal type of the assigned principal ID. </summary>
         public RoleAssignmentSchedulePrincipalType? PrincipalType { get; }
-        /// <summary>
-        /// The id of roleAssignmentScheduleRequest used to create this roleAssignmentSchedule
-        /// Serialized Name: RoleAssignmentSchedule.properties.roleAssignmentScheduleRequestId
-        /// </summary>
+        /// <summary> The id of roleAssignmentScheduleRequest used to create this roleAssignmentSchedule. </summary>
         public ResourceIdentifier RoleAssignmentScheduleRequestId { get; }
-        /// <summary>
-        /// The id of roleEligibilitySchedule used to activated this roleAssignmentSchedule
-        /// Serialized Name: RoleAssignmentSchedule.properties.linkedRoleEligibilityScheduleId
-        /// </summary>
+        /// <summary> The id of roleEligibilitySchedule used to activated this roleAssignmentSchedule. </summary>
         public Guid? LinkedRoleEligibilityScheduleId { get; }
-        /// <summary>
-        /// Assignment type of the role assignment schedule
-        /// Serialized Name: RoleAssignmentSchedule.properties.assignmentType
-        /// </summary>
+        /// <summary> Assignment type of the role assignment schedule. </summary>
         public RoleAssignmentScheduleAssignmentType? AssignmentType { get; }
-        /// <summary>
-        /// Membership type of the role assignment schedule
-        /// Serialized Name: RoleAssignmentSchedule.properties.memberType
-        /// </summary>
+        /// <summary> Membership type of the role assignment schedule. </summary>
         public RoleAssignmentScheduleMemberType? MemberType { get; }
-        /// <summary>
-        /// The status of the role assignment schedule.
-        /// Serialized Name: RoleAssignmentSchedule.properties.status
-        /// </summary>
+        /// <summary> The status of the role assignment schedule. </summary>
         public RoleAssignmentScheduleStatus? Status { get; }
-        /// <summary>
-        /// Start DateTime when role assignment schedule
-        /// Serialized Name: RoleAssignmentSchedule.properties.startDateTime
-        /// </summary>
+        /// <summary> Start DateTime when role assignment schedule. </summary>
         public DateTimeOffset? StartOn { get; }
-        /// <summary>
-        /// End DateTime when role assignment schedule
-        /// Serialized Name: RoleAssignmentSchedule.properties.endDateTime
-        /// </summary>
+        /// <summary> End DateTime when role assignment schedule. </summary>
         public DateTimeOffset? EndOn { get; }
-        /// <summary>
-        /// The conditions on the role assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase &apos;foo_storage_container&apos;
-        /// Serialized Name: RoleAssignmentSchedule.properties.condition
-        /// </summary>
+        /// <summary> The conditions on the role assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase &apos;foo_storage_container&apos;. </summary>
         public string Condition { get; }
-        /// <summary>
-        /// Version of the condition. Currently accepted value is &apos;2.0&apos;
-        /// Serialized Name: RoleAssignmentSchedule.properties.conditionVersion
-        /// </summary>
+        /// <summary> Version of the condition. Currently accepted value is &apos;2.0&apos;. </summary>
         public string ConditionVersion { get; }
-        /// <summary>
-        /// DateTime when role assignment schedule was created
-        /// Serialized Name: RoleAssignmentSchedule.properties.createdOn
-        /// </summary>
+        /// <summary> DateTime when role assignment schedule was created. </summary>
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary>
-        /// DateTime when role assignment schedule was modified
-        /// Serialized Name: RoleAssignmentSchedule.properties.updatedOn
-        /// </summary>
+        /// <summary> DateTime when role assignment schedule was modified. </summary>
         public DateTimeOffset? UpdatedOn { get; }
-        /// <summary>
-        /// Additional properties of principal, scope and role definition
-        /// Serialized Name: RoleAssignmentSchedule.properties.expandedProperties
-        /// </summary>
+        /// <summary> Additional properties of principal, scope and role definition. </summary>
         public ExpandedProperties ExpandedProperties { get; }
     }
 }

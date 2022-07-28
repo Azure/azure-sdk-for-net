@@ -11,10 +11,7 @@ using Azure.ResourceManager.Authorization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary>
-    /// Role management policy assignment list operation result.
-    /// Serialized Name: RoleManagementPolicyAssignmentListResult
-    /// </summary>
+    /// <summary> Role management policy assignment list operation result. </summary>
     internal partial class RoleManagementPolicyAssignmentListResult
     {
         /// <summary> Initializes a new instance of RoleManagementPolicyAssignmentListResult. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> Initializes a new instance of RoleManagementPolicyAssignmentListResult. </summary>
-        /// <param name="value">
-        /// Role management policy assignment list.
-        /// Serialized Name: RoleManagementPolicyAssignmentListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The URL to use for getting the next set of results.
-        /// Serialized Name: RoleManagementPolicyAssignmentListResult.nextLink
-        /// </param>
+        /// <param name="value"> Role management policy assignment list. </param>
+        /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
         internal RoleManagementPolicyAssignmentListResult(IReadOnlyList<RoleManagementPolicyAssignmentData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// Role management policy assignment list.
-        /// Serialized Name: RoleManagementPolicyAssignmentListResult.value
-        /// </summary>
+        /// <summary> Role management policy assignment list. </summary>
         public IReadOnlyList<RoleManagementPolicyAssignmentData> Value { get; }
-        /// <summary>
-        /// The URL to use for getting the next set of results.
-        /// Serialized Name: RoleManagementPolicyAssignmentListResult.nextLink
-        /// </summary>
+        /// <summary> The URL to use for getting the next set of results. </summary>
         public string NextLink { get; }
     }
 }

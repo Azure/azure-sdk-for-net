@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary>
-    /// The principal type of the assigned principal ID.
-    /// Serialized Name: RoleAssignmentSchedulePrincipalType
-    /// </summary>
+    /// <summary> The principal type of the assigned principal ID. </summary>
     public readonly partial struct RoleAssignmentSchedulePrincipalType : IEquatable<RoleAssignmentSchedulePrincipalType>
     {
         private readonly string _value;
@@ -31,30 +28,15 @@ namespace Azure.ResourceManager.Authorization.Models
         private const string ForeignGroupValue = "ForeignGroup";
         private const string DeviceValue = "Device";
 
-        /// <summary>
-        /// User
-        /// Serialized Name: RoleAssignmentSchedulePrincipalType.User
-        /// </summary>
+        /// <summary> User. </summary>
         public static RoleAssignmentSchedulePrincipalType User { get; } = new RoleAssignmentSchedulePrincipalType(UserValue);
-        /// <summary>
-        /// Group
-        /// Serialized Name: RoleAssignmentSchedulePrincipalType.Group
-        /// </summary>
+        /// <summary> Group. </summary>
         public static RoleAssignmentSchedulePrincipalType Group { get; } = new RoleAssignmentSchedulePrincipalType(GroupValue);
-        /// <summary>
-        /// ServicePrincipal
-        /// Serialized Name: RoleAssignmentSchedulePrincipalType.ServicePrincipal
-        /// </summary>
+        /// <summary> ServicePrincipal. </summary>
         public static RoleAssignmentSchedulePrincipalType ServicePrincipal { get; } = new RoleAssignmentSchedulePrincipalType(ServicePrincipalValue);
-        /// <summary>
-        /// ForeignGroup
-        /// Serialized Name: RoleAssignmentSchedulePrincipalType.ForeignGroup
-        /// </summary>
+        /// <summary> ForeignGroup. </summary>
         public static RoleAssignmentSchedulePrincipalType ForeignGroup { get; } = new RoleAssignmentSchedulePrincipalType(ForeignGroupValue);
-        /// <summary>
-        /// Device
-        /// Serialized Name: RoleAssignmentSchedulePrincipalType.Device
-        /// </summary>
+        /// <summary> Device. </summary>
         public static RoleAssignmentSchedulePrincipalType Device { get; } = new RoleAssignmentSchedulePrincipalType(DeviceValue);
         /// <summary> Determines if two <see cref="RoleAssignmentSchedulePrincipalType"/> values are the same. </summary>
         public static bool operator ==(RoleAssignmentSchedulePrincipalType left, RoleAssignmentSchedulePrincipalType right) => left.Equals(right);

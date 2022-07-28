@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary>
-    /// The status of the role eligibility schedule.
-    /// Serialized Name: RoleEligibilityScheduleStatus
-    /// </summary>
+    /// <summary> The status of the role eligibility schedule. </summary>
     public readonly partial struct RoleEligibilityScheduleStatus : IEquatable<RoleEligibilityScheduleStatus>
     {
         private readonly string _value;
@@ -48,115 +45,49 @@ namespace Azure.ResourceManager.Authorization.Models
         private const string ScheduleCreatedValue = "ScheduleCreated";
         private const string PendingExternalProvisioningValue = "PendingExternalProvisioning";
 
-        /// <summary>
-        /// Accepted
-        /// Serialized Name: RoleEligibilityScheduleStatus.Accepted
-        /// </summary>
+        /// <summary> Accepted. </summary>
         public static RoleEligibilityScheduleStatus Accepted { get; } = new RoleEligibilityScheduleStatus(AcceptedValue);
-        /// <summary>
-        /// PendingEvaluation
-        /// Serialized Name: RoleEligibilityScheduleStatus.PendingEvaluation
-        /// </summary>
+        /// <summary> PendingEvaluation. </summary>
         public static RoleEligibilityScheduleStatus PendingEvaluation { get; } = new RoleEligibilityScheduleStatus(PendingEvaluationValue);
-        /// <summary>
-        /// Granted
-        /// Serialized Name: RoleEligibilityScheduleStatus.Granted
-        /// </summary>
+        /// <summary> Granted. </summary>
         public static RoleEligibilityScheduleStatus Granted { get; } = new RoleEligibilityScheduleStatus(GrantedValue);
-        /// <summary>
-        /// Denied
-        /// Serialized Name: RoleEligibilityScheduleStatus.Denied
-        /// </summary>
+        /// <summary> Denied. </summary>
         public static RoleEligibilityScheduleStatus Denied { get; } = new RoleEligibilityScheduleStatus(DeniedValue);
-        /// <summary>
-        /// PendingProvisioning
-        /// Serialized Name: RoleEligibilityScheduleStatus.PendingProvisioning
-        /// </summary>
+        /// <summary> PendingProvisioning. </summary>
         public static RoleEligibilityScheduleStatus PendingProvisioning { get; } = new RoleEligibilityScheduleStatus(PendingProvisioningValue);
-        /// <summary>
-        /// Provisioned
-        /// Serialized Name: RoleEligibilityScheduleStatus.Provisioned
-        /// </summary>
+        /// <summary> Provisioned. </summary>
         public static RoleEligibilityScheduleStatus Provisioned { get; } = new RoleEligibilityScheduleStatus(ProvisionedValue);
-        /// <summary>
-        /// PendingRevocation
-        /// Serialized Name: RoleEligibilityScheduleStatus.PendingRevocation
-        /// </summary>
+        /// <summary> PendingRevocation. </summary>
         public static RoleEligibilityScheduleStatus PendingRevocation { get; } = new RoleEligibilityScheduleStatus(PendingRevocationValue);
-        /// <summary>
-        /// Revoked
-        /// Serialized Name: RoleEligibilityScheduleStatus.Revoked
-        /// </summary>
+        /// <summary> Revoked. </summary>
         public static RoleEligibilityScheduleStatus Revoked { get; } = new RoleEligibilityScheduleStatus(RevokedValue);
-        /// <summary>
-        /// Canceled
-        /// Serialized Name: RoleEligibilityScheduleStatus.Canceled
-        /// </summary>
+        /// <summary> Canceled. </summary>
         public static RoleEligibilityScheduleStatus Canceled { get; } = new RoleEligibilityScheduleStatus(CanceledValue);
-        /// <summary>
-        /// Failed
-        /// Serialized Name: RoleEligibilityScheduleStatus.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         public static RoleEligibilityScheduleStatus Failed { get; } = new RoleEligibilityScheduleStatus(FailedValue);
-        /// <summary>
-        /// PendingApprovalProvisioning
-        /// Serialized Name: RoleEligibilityScheduleStatus.PendingApprovalProvisioning
-        /// </summary>
+        /// <summary> PendingApprovalProvisioning. </summary>
         public static RoleEligibilityScheduleStatus PendingApprovalProvisioning { get; } = new RoleEligibilityScheduleStatus(PendingApprovalProvisioningValue);
-        /// <summary>
-        /// PendingApproval
-        /// Serialized Name: RoleEligibilityScheduleStatus.PendingApproval
-        /// </summary>
+        /// <summary> PendingApproval. </summary>
         public static RoleEligibilityScheduleStatus PendingApproval { get; } = new RoleEligibilityScheduleStatus(PendingApprovalValue);
-        /// <summary>
-        /// FailedAsResourceIsLocked
-        /// Serialized Name: RoleEligibilityScheduleStatus.FailedAsResourceIsLocked
-        /// </summary>
+        /// <summary> FailedAsResourceIsLocked. </summary>
         public static RoleEligibilityScheduleStatus FailedAsResourceIsLocked { get; } = new RoleEligibilityScheduleStatus(FailedAsResourceIsLockedValue);
-        /// <summary>
-        /// PendingAdminDecision
-        /// Serialized Name: RoleEligibilityScheduleStatus.PendingAdminDecision
-        /// </summary>
+        /// <summary> PendingAdminDecision. </summary>
         public static RoleEligibilityScheduleStatus PendingAdminDecision { get; } = new RoleEligibilityScheduleStatus(PendingAdminDecisionValue);
-        /// <summary>
-        /// AdminApproved
-        /// Serialized Name: RoleEligibilityScheduleStatus.AdminApproved
-        /// </summary>
+        /// <summary> AdminApproved. </summary>
         public static RoleEligibilityScheduleStatus AdminApproved { get; } = new RoleEligibilityScheduleStatus(AdminApprovedValue);
-        /// <summary>
-        /// AdminDenied
-        /// Serialized Name: RoleEligibilityScheduleStatus.AdminDenied
-        /// </summary>
+        /// <summary> AdminDenied. </summary>
         public static RoleEligibilityScheduleStatus AdminDenied { get; } = new RoleEligibilityScheduleStatus(AdminDeniedValue);
-        /// <summary>
-        /// TimedOut
-        /// Serialized Name: RoleEligibilityScheduleStatus.TimedOut
-        /// </summary>
+        /// <summary> TimedOut. </summary>
         public static RoleEligibilityScheduleStatus TimedOut { get; } = new RoleEligibilityScheduleStatus(TimedOutValue);
-        /// <summary>
-        /// ProvisioningStarted
-        /// Serialized Name: RoleEligibilityScheduleStatus.ProvisioningStarted
-        /// </summary>
+        /// <summary> ProvisioningStarted. </summary>
         public static RoleEligibilityScheduleStatus ProvisioningStarted { get; } = new RoleEligibilityScheduleStatus(ProvisioningStartedValue);
-        /// <summary>
-        /// Invalid
-        /// Serialized Name: RoleEligibilityScheduleStatus.Invalid
-        /// </summary>
+        /// <summary> Invalid. </summary>
         public static RoleEligibilityScheduleStatus Invalid { get; } = new RoleEligibilityScheduleStatus(InvalidValue);
-        /// <summary>
-        /// PendingScheduleCreation
-        /// Serialized Name: RoleEligibilityScheduleStatus.PendingScheduleCreation
-        /// </summary>
+        /// <summary> PendingScheduleCreation. </summary>
         public static RoleEligibilityScheduleStatus PendingScheduleCreation { get; } = new RoleEligibilityScheduleStatus(PendingScheduleCreationValue);
-        /// <summary>
-        /// ScheduleCreated
-        /// Serialized Name: RoleEligibilityScheduleStatus.ScheduleCreated
-        /// </summary>
+        /// <summary> ScheduleCreated. </summary>
         public static RoleEligibilityScheduleStatus ScheduleCreated { get; } = new RoleEligibilityScheduleStatus(ScheduleCreatedValue);
-        /// <summary>
-        /// PendingExternalProvisioning
-        /// Serialized Name: RoleEligibilityScheduleStatus.PendingExternalProvisioning
-        /// </summary>
+        /// <summary> PendingExternalProvisioning. </summary>
         public static RoleEligibilityScheduleStatus PendingExternalProvisioning { get; } = new RoleEligibilityScheduleStatus(PendingExternalProvisioningValue);
         /// <summary> Determines if two <see cref="RoleEligibilityScheduleStatus"/> values are the same. </summary>
         public static bool operator ==(RoleEligibilityScheduleStatus left, RoleEligibilityScheduleStatus right) => left.Equals(right);

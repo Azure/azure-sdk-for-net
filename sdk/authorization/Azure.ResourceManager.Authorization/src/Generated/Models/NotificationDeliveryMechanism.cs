@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary>
-    /// The type of notification.
-    /// Serialized Name: NotificationDeliveryMechanism
-    /// </summary>
+    /// <summary> The type of notification. </summary>
     public readonly partial struct NotificationDeliveryMechanism : IEquatable<NotificationDeliveryMechanism>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         private const string EmailValue = "Email";
 
-        /// <summary>
-        /// Email
-        /// Serialized Name: NotificationDeliveryMechanism.Email
-        /// </summary>
+        /// <summary> Email. </summary>
         public static NotificationDeliveryMechanism Email { get; } = new NotificationDeliveryMechanism(EmailValue);
         /// <summary> Determines if two <see cref="NotificationDeliveryMechanism"/> values are the same. </summary>
         public static bool operator ==(NotificationDeliveryMechanism left, NotificationDeliveryMechanism right) => left.Equals(right);

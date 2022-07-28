@@ -14,9 +14,6 @@ output-folder: Generated/
 clear-output-folder: true
 skip-csproj: true
 
-mgmt-debug: 
-  show-serialized-names: true
-
 rename-mapping:
   ProviderOperation: ProviderOperationInfo
   UserSet: RoleManagementUserInfo

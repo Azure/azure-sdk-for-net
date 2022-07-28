@@ -10,21 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary>
-    /// Role assignment properties.
-    /// Serialized Name: RoleAssignmentProperties
-    /// </summary>
+    /// <summary> Role assignment properties. </summary>
     public partial class RoleAssignmentProperties
     {
         /// <summary> Initializes a new instance of RoleAssignmentProperties. </summary>
-        /// <param name="roleDefinitionId">
-        /// The role definition ID used in the role assignment.
-        /// Serialized Name: RoleAssignmentProperties.roleDefinitionId
-        /// </param>
-        /// <param name="principalId">
-        /// The principal ID assigned to the role. This maps to the ID inside the Active Directory. It can point to a user, service principal, or security group.
-        /// Serialized Name: RoleAssignmentProperties.principalId
-        /// </param>
+        /// <param name="roleDefinitionId"> The role definition ID used in the role assignment. </param>
+        /// <param name="principalId"> The principal ID assigned to the role. This maps to the ID inside the Active Directory. It can point to a user, service principal, or security group. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
         public RoleAssignmentProperties(ResourceIdentifier roleDefinitionId, Guid principalId)
         {
@@ -37,15 +28,9 @@ namespace Azure.ResourceManager.Authorization.Models
             PrincipalId = principalId;
         }
 
-        /// <summary>
-        /// The role definition ID used in the role assignment.
-        /// Serialized Name: RoleAssignmentProperties.roleDefinitionId
-        /// </summary>
+        /// <summary> The role definition ID used in the role assignment. </summary>
         public ResourceIdentifier RoleDefinitionId { get; }
-        /// <summary>
-        /// The principal ID assigned to the role. This maps to the ID inside the Active Directory. It can point to a user, service principal, or security group.
-        /// Serialized Name: RoleAssignmentProperties.principalId
-        /// </summary>
+        /// <summary> The principal ID assigned to the role. This maps to the ID inside the Active Directory. It can point to a user, service principal, or security group. </summary>
         public Guid PrincipalId { get; }
     }
 }

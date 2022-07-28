@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary>
-    /// Type of the role assignment schedule expiration
-    /// Serialized Name: RoleAssignmentScheduleExpirationType
-    /// </summary>
+    /// <summary> Type of the role assignment schedule expiration. </summary>
     public readonly partial struct RoleAssignmentScheduleExpirationType : IEquatable<RoleAssignmentScheduleExpirationType>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.Authorization.Models
         private const string AfterDateTimeValue = "AfterDateTime";
         private const string NoExpirationValue = "NoExpiration";
 
-        /// <summary>
-        /// AfterDuration
-        /// Serialized Name: RoleAssignmentScheduleExpirationType.AfterDuration
-        /// </summary>
+        /// <summary> AfterDuration. </summary>
         public static RoleAssignmentScheduleExpirationType AfterDuration { get; } = new RoleAssignmentScheduleExpirationType(AfterDurationValue);
-        /// <summary>
-        /// AfterDateTime
-        /// Serialized Name: RoleAssignmentScheduleExpirationType.AfterDateTime
-        /// </summary>
+        /// <summary> AfterDateTime. </summary>
         public static RoleAssignmentScheduleExpirationType AfterDateTime { get; } = new RoleAssignmentScheduleExpirationType(AfterDateTimeValue);
-        /// <summary>
-        /// NoExpiration
-        /// Serialized Name: RoleAssignmentScheduleExpirationType.NoExpiration
-        /// </summary>
+        /// <summary> NoExpiration. </summary>
         public static RoleAssignmentScheduleExpirationType NoExpiration { get; } = new RoleAssignmentScheduleExpirationType(NoExpirationValue);
         /// <summary> Determines if two <see cref="RoleAssignmentScheduleExpirationType"/> values are the same. </summary>
         public static bool operator ==(RoleAssignmentScheduleExpirationType left, RoleAssignmentScheduleExpirationType right) => left.Equals(right);

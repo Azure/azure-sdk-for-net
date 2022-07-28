@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary>
-    /// Operation
-    /// Serialized Name: ProviderOperation
-    /// </summary>
+    /// <summary> Operation. </summary>
     public partial class ProviderOperationInfo
     {
         /// <summary> Initializes a new instance of ProviderOperationInfo. </summary>
@@ -21,26 +18,11 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> Initializes a new instance of ProviderOperationInfo. </summary>
-        /// <param name="name">
-        /// The operation name.
-        /// Serialized Name: ProviderOperation.name
-        /// </param>
-        /// <param name="displayName">
-        /// The operation display name.
-        /// Serialized Name: ProviderOperation.displayName
-        /// </param>
-        /// <param name="description">
-        /// The operation description.
-        /// Serialized Name: ProviderOperation.description
-        /// </param>
-        /// <param name="origin">
-        /// The operation origin.
-        /// Serialized Name: ProviderOperation.origin
-        /// </param>
-        /// <param name="properties">
-        /// The operation properties.
-        /// Serialized Name: ProviderOperation.properties
-        /// </param>
+        /// <param name="name"> The operation name. </param>
+        /// <param name="displayName"> The operation display name. </param>
+        /// <param name="description"> The operation description. </param>
+        /// <param name="origin"> The operation origin. </param>
+        /// <param name="properties"> The operation properties. </param>
         internal ProviderOperationInfo(string name, string displayName, string description, string origin, BinaryData properties)
         {
             Name = name;
@@ -50,30 +32,15 @@ namespace Azure.ResourceManager.Authorization.Models
             Properties = properties;
         }
 
-        /// <summary>
-        /// The operation name.
-        /// Serialized Name: ProviderOperation.name
-        /// </summary>
+        /// <summary> The operation name. </summary>
         public string Name { get; }
-        /// <summary>
-        /// The operation display name.
-        /// Serialized Name: ProviderOperation.displayName
-        /// </summary>
+        /// <summary> The operation display name. </summary>
         public string DisplayName { get; }
-        /// <summary>
-        /// The operation description.
-        /// Serialized Name: ProviderOperation.description
-        /// </summary>
+        /// <summary> The operation description. </summary>
         public string Description { get; }
-        /// <summary>
-        /// The operation origin.
-        /// Serialized Name: ProviderOperation.origin
-        /// </summary>
+        /// <summary> The operation origin. </summary>
         public string Origin { get; }
-        /// <summary>
-        /// The operation properties.
-        /// Serialized Name: ProviderOperation.properties
-        /// </summary>
+        /// <summary> The operation properties. </summary>
         public BinaryData Properties { get; }
     }
 }

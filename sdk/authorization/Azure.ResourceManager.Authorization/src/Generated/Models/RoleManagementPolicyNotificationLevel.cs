@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary>
-    /// The notification level.
-    /// Serialized Name: NotificationLevel
-    /// </summary>
+    /// <summary> The notification level. </summary>
     public readonly partial struct RoleManagementPolicyNotificationLevel : IEquatable<RoleManagementPolicyNotificationLevel>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.Authorization.Models
         private const string CriticalValue = "Critical";
         private const string AllValue = "All";
 
-        /// <summary>
-        /// None
-        /// Serialized Name: NotificationLevel.None
-        /// </summary>
+        /// <summary> None. </summary>
         public static RoleManagementPolicyNotificationLevel None { get; } = new RoleManagementPolicyNotificationLevel(NoneValue);
-        /// <summary>
-        /// Critical
-        /// Serialized Name: NotificationLevel.Critical
-        /// </summary>
+        /// <summary> Critical. </summary>
         public static RoleManagementPolicyNotificationLevel Critical { get; } = new RoleManagementPolicyNotificationLevel(CriticalValue);
-        /// <summary>
-        /// All
-        /// Serialized Name: NotificationLevel.All
-        /// </summary>
+        /// <summary> All. </summary>
         public static RoleManagementPolicyNotificationLevel All { get; } = new RoleManagementPolicyNotificationLevel(AllValue);
         /// <summary> Determines if two <see cref="RoleManagementPolicyNotificationLevel"/> values are the same. </summary>
         public static bool operator ==(RoleManagementPolicyNotificationLevel left, RoleManagementPolicyNotificationLevel right) => left.Equals(right);

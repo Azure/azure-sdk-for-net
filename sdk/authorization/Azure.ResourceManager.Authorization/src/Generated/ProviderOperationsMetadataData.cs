@@ -27,18 +27,9 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="displayName">
-        /// The provider display name.
-        /// Serialized Name: ProviderOperationsMetadata.displayName
-        /// </param>
-        /// <param name="resourceTypes">
-        /// The provider resource types
-        /// Serialized Name: ProviderOperationsMetadata.resourceTypes
-        /// </param>
-        /// <param name="operations">
-        /// The provider operations.
-        /// Serialized Name: ProviderOperationsMetadata.operations
-        /// </param>
+        /// <param name="displayName"> The provider display name. </param>
+        /// <param name="resourceTypes"> The provider resource types. </param>
+        /// <param name="operations"> The provider operations. </param>
         internal ProviderOperationsMetadataData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, IReadOnlyList<ProviderOperationsResourceType> resourceTypes, IReadOnlyList<ProviderOperationInfo> operations) : base(id, name, resourceType, systemData)
         {
             DisplayName = displayName;
@@ -46,20 +37,11 @@ namespace Azure.ResourceManager.Authorization
             Operations = operations;
         }
 
-        /// <summary>
-        /// The provider display name.
-        /// Serialized Name: ProviderOperationsMetadata.displayName
-        /// </summary>
+        /// <summary> The provider display name. </summary>
         public string DisplayName { get; }
-        /// <summary>
-        /// The provider resource types
-        /// Serialized Name: ProviderOperationsMetadata.resourceTypes
-        /// </summary>
+        /// <summary> The provider resource types. </summary>
         public IReadOnlyList<ProviderOperationsResourceType> ResourceTypes { get; }
-        /// <summary>
-        /// The provider operations.
-        /// Serialized Name: ProviderOperationsMetadata.operations
-        /// </summary>
+        /// <summary> The provider operations. </summary>
         public IReadOnlyList<ProviderOperationInfo> Operations { get; }
     }
 }

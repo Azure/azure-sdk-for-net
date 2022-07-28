@@ -11,10 +11,7 @@ using Azure.ResourceManager.Authorization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary>
-    /// Provider operations metadata list
-    /// Serialized Name: ProviderOperationsMetadataListResult
-    /// </summary>
+    /// <summary> Provider operations metadata list. </summary>
     internal partial class ProviderOperationsMetadataListResult
     {
         /// <summary> Initializes a new instance of ProviderOperationsMetadataListResult. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> Initializes a new instance of ProviderOperationsMetadataListResult. </summary>
-        /// <param name="value">
-        /// The list of providers.
-        /// Serialized Name: ProviderOperationsMetadataListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The URL to use for getting the next set of results.
-        /// Serialized Name: ProviderOperationsMetadataListResult.nextLink
-        /// </param>
+        /// <param name="value"> The list of providers. </param>
+        /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
         internal ProviderOperationsMetadataListResult(IReadOnlyList<ProviderOperationsMetadataData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// The list of providers.
-        /// Serialized Name: ProviderOperationsMetadataListResult.value
-        /// </summary>
+        /// <summary> The list of providers. </summary>
         public IReadOnlyList<ProviderOperationsMetadataData> Value { get; }
-        /// <summary>
-        /// The URL to use for getting the next set of results.
-        /// Serialized Name: ProviderOperationsMetadataListResult.nextLink
-        /// </summary>
+        /// <summary> The URL to use for getting the next set of results. </summary>
         public string NextLink { get; }
     }
 }

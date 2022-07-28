@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary>
-    /// Type of the role eligibility schedule expiration
-    /// Serialized Name: RoleEligibilityScheduleExpirationType
-    /// </summary>
+    /// <summary> Type of the role eligibility schedule expiration. </summary>
     public readonly partial struct RoleEligibilityScheduleExpirationType : IEquatable<RoleEligibilityScheduleExpirationType>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.Authorization.Models
         private const string AfterDateTimeValue = "AfterDateTime";
         private const string NoExpirationValue = "NoExpiration";
 
-        /// <summary>
-        /// AfterDuration
-        /// Serialized Name: RoleEligibilityScheduleExpirationType.AfterDuration
-        /// </summary>
+        /// <summary> AfterDuration. </summary>
         public static RoleEligibilityScheduleExpirationType AfterDuration { get; } = new RoleEligibilityScheduleExpirationType(AfterDurationValue);
-        /// <summary>
-        /// AfterDateTime
-        /// Serialized Name: RoleEligibilityScheduleExpirationType.AfterDateTime
-        /// </summary>
+        /// <summary> AfterDateTime. </summary>
         public static RoleEligibilityScheduleExpirationType AfterDateTime { get; } = new RoleEligibilityScheduleExpirationType(AfterDateTimeValue);
-        /// <summary>
-        /// NoExpiration
-        /// Serialized Name: RoleEligibilityScheduleExpirationType.NoExpiration
-        /// </summary>
+        /// <summary> NoExpiration. </summary>
         public static RoleEligibilityScheduleExpirationType NoExpiration { get; } = new RoleEligibilityScheduleExpirationType(NoExpirationValue);
         /// <summary> Determines if two <see cref="RoleEligibilityScheduleExpirationType"/> values are the same. </summary>
         public static bool operator ==(RoleEligibilityScheduleExpirationType left, RoleEligibilityScheduleExpirationType right) => left.Equals(right);

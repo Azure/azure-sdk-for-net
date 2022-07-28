@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary>
-    /// The type of enablement rule
-    /// Serialized Name: EnablementRules
-    /// </summary>
+    /// <summary> The type of enablement rule. </summary>
     public readonly partial struct RoleAssignmentEnablementRuleType : IEquatable<RoleAssignmentEnablementRuleType>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.Authorization.Models
         private const string JustificationValue = "Justification";
         private const string TicketingValue = "Ticketing";
 
-        /// <summary>
-        /// MultiFactorAuthentication
-        /// Serialized Name: EnablementRules.MultiFactorAuthentication
-        /// </summary>
+        /// <summary> MultiFactorAuthentication. </summary>
         public static RoleAssignmentEnablementRuleType MultiFactorAuthentication { get; } = new RoleAssignmentEnablementRuleType(MultiFactorAuthenticationValue);
-        /// <summary>
-        /// Justification
-        /// Serialized Name: EnablementRules.Justification
-        /// </summary>
+        /// <summary> Justification. </summary>
         public static RoleAssignmentEnablementRuleType Justification { get; } = new RoleAssignmentEnablementRuleType(JustificationValue);
-        /// <summary>
-        /// Ticketing
-        /// Serialized Name: EnablementRules.Ticketing
-        /// </summary>
+        /// <summary> Ticketing. </summary>
         public static RoleAssignmentEnablementRuleType Ticketing { get; } = new RoleAssignmentEnablementRuleType(TicketingValue);
         /// <summary> Determines if two <see cref="RoleAssignmentEnablementRuleType"/> values are the same. </summary>
         public static bool operator ==(RoleAssignmentEnablementRuleType left, RoleAssignmentEnablementRuleType right) => left.Equals(right);

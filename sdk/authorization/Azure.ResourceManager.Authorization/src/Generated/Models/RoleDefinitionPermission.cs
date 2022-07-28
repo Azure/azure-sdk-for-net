@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary>
-    /// Role definition permissions.
-    /// Serialized Name: Permission
-    /// </summary>
+    /// <summary> Role definition permissions. </summary>
     public partial class RoleDefinitionPermission
     {
         /// <summary> Initializes a new instance of RoleDefinitionPermission. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> Initializes a new instance of RoleDefinitionPermission. </summary>
-        /// <param name="actions">
-        /// Allowed actions.
-        /// Serialized Name: Permission.actions
-        /// </param>
-        /// <param name="notActions">
-        /// Denied actions.
-        /// Serialized Name: Permission.notActions
-        /// </param>
+        /// <param name="actions"> Allowed actions. </param>
+        /// <param name="notActions"> Denied actions. </param>
         internal RoleDefinitionPermission(IList<string> actions, IList<string> notActions)
         {
             Actions = actions;
             NotActions = notActions;
         }
 
-        /// <summary>
-        /// Allowed actions.
-        /// Serialized Name: Permission.actions
-        /// </summary>
+        /// <summary> Allowed actions. </summary>
         public IList<string> Actions { get; }
-        /// <summary>
-        /// Denied actions.
-        /// Serialized Name: Permission.notActions
-        /// </summary>
+        /// <summary> Denied actions. </summary>
         public IList<string> NotActions { get; }
     }
 }

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary>
-    /// The type of rule
-    /// Serialized Name: ApprovalMode
-    /// </summary>
+    /// <summary> The type of rule. </summary>
     public readonly partial struct RoleManagementApprovalMode : IEquatable<RoleManagementApprovalMode>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.Authorization.Models
         private const string ParallelValue = "Parallel";
         private const string NoApprovalValue = "NoApproval";
 
-        /// <summary>
-        /// SingleStage
-        /// Serialized Name: ApprovalMode.SingleStage
-        /// </summary>
+        /// <summary> SingleStage. </summary>
         public static RoleManagementApprovalMode SingleStage { get; } = new RoleManagementApprovalMode(SingleStageValue);
-        /// <summary>
-        /// Serial
-        /// Serialized Name: ApprovalMode.Serial
-        /// </summary>
+        /// <summary> Serial. </summary>
         public static RoleManagementApprovalMode Serial { get; } = new RoleManagementApprovalMode(SerialValue);
-        /// <summary>
-        /// Parallel
-        /// Serialized Name: ApprovalMode.Parallel
-        /// </summary>
+        /// <summary> Parallel. </summary>
         public static RoleManagementApprovalMode Parallel { get; } = new RoleManagementApprovalMode(ParallelValue);
-        /// <summary>
-        /// NoApproval
-        /// Serialized Name: ApprovalMode.NoApproval
-        /// </summary>
+        /// <summary> NoApproval. </summary>
         public static RoleManagementApprovalMode NoApproval { get; } = new RoleManagementApprovalMode(NoApprovalValue);
         /// <summary> Determines if two <see cref="RoleManagementApprovalMode"/> values are the same. </summary>
         public static bool operator ==(RoleManagementApprovalMode left, RoleManagementApprovalMode right) => left.Equals(right);

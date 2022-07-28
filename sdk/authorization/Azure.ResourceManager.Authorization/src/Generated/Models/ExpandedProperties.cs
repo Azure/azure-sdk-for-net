@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary>
-    /// The ExpandedProperties.
-    /// Serialized Name: ExpandedProperties
-    /// </summary>
+    /// <summary> The ExpandedProperties. </summary>
     public partial class ExpandedProperties : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ExpandedProperties. </summary>
@@ -31,46 +28,16 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="principalId">
-        /// Id of the principal
-        /// Serialized Name: ExpandedProperties.principal.id
-        /// </param>
-        /// <param name="principalDisplayName">
-        /// Display name of the principal
-        /// Serialized Name: ExpandedProperties.principal.displayName
-        /// </param>
-        /// <param name="email">
-        /// Email id of the principal
-        /// Serialized Name: ExpandedProperties.principal.email
-        /// </param>
-        /// <param name="principalType">
-        /// Type of the principal
-        /// Serialized Name: ExpandedProperties.principal.type
-        /// </param>
-        /// <param name="roleDefinitionId">
-        /// Id of the role definition
-        /// Serialized Name: ExpandedProperties.roleDefinition.id
-        /// </param>
-        /// <param name="roleDefinitionDisplayName">
-        /// Display name of the role definition
-        /// Serialized Name: ExpandedProperties.roleDefinition.displayName
-        /// </param>
-        /// <param name="roleDefinitionType">
-        /// Type of the role definition
-        /// Serialized Name: ExpandedProperties.roleDefinition.type
-        /// </param>
-        /// <param name="scopeId">
-        /// Scope id of the resource
-        /// Serialized Name: ExpandedProperties.scope.id
-        /// </param>
-        /// <param name="scopeDisplayName">
-        /// Display name of the resource
-        /// Serialized Name: ExpandedProperties.scope.displayName
-        /// </param>
-        /// <param name="scopeType">
-        /// Type of the resource
-        /// Serialized Name: ExpandedProperties.scope.type
-        /// </param>
+        /// <param name="principalId"> Id of the principal. </param>
+        /// <param name="principalDisplayName"> Display name of the principal. </param>
+        /// <param name="email"> Email id of the principal. </param>
+        /// <param name="principalType"> Type of the principal. </param>
+        /// <param name="roleDefinitionId"> Id of the role definition. </param>
+        /// <param name="roleDefinitionDisplayName"> Display name of the role definition. </param>
+        /// <param name="roleDefinitionType"> Type of the role definition. </param>
+        /// <param name="scopeId"> Scope id of the resource. </param>
+        /// <param name="scopeDisplayName"> Display name of the resource. </param>
+        /// <param name="scopeType"> Type of the resource. </param>
         internal ExpandedProperties(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Guid? principalId, string principalDisplayName, string email, string principalType, ResourceIdentifier roleDefinitionId, string roleDefinitionDisplayName, string roleDefinitionType, ResourceIdentifier scopeId, string scopeDisplayName, string scopeType) : base(id, name, resourceType, systemData, tags, location)
         {
             PrincipalId = principalId;
@@ -85,55 +52,25 @@ namespace Azure.ResourceManager.Authorization.Models
             ScopeType = scopeType;
         }
 
-        /// <summary>
-        /// Id of the principal
-        /// Serialized Name: ExpandedProperties.principal.id
-        /// </summary>
+        /// <summary> Id of the principal. </summary>
         public Guid? PrincipalId { get; }
-        /// <summary>
-        /// Display name of the principal
-        /// Serialized Name: ExpandedProperties.principal.displayName
-        /// </summary>
+        /// <summary> Display name of the principal. </summary>
         public string PrincipalDisplayName { get; }
-        /// <summary>
-        /// Email id of the principal
-        /// Serialized Name: ExpandedProperties.principal.email
-        /// </summary>
+        /// <summary> Email id of the principal. </summary>
         public string Email { get; }
-        /// <summary>
-        /// Type of the principal
-        /// Serialized Name: ExpandedProperties.principal.type
-        /// </summary>
+        /// <summary> Type of the principal. </summary>
         public string PrincipalType { get; }
-        /// <summary>
-        /// Id of the role definition
-        /// Serialized Name: ExpandedProperties.roleDefinition.id
-        /// </summary>
+        /// <summary> Id of the role definition. </summary>
         public ResourceIdentifier RoleDefinitionId { get; }
-        /// <summary>
-        /// Display name of the role definition
-        /// Serialized Name: ExpandedProperties.roleDefinition.displayName
-        /// </summary>
+        /// <summary> Display name of the role definition. </summary>
         public string RoleDefinitionDisplayName { get; }
-        /// <summary>
-        /// Type of the role definition
-        /// Serialized Name: ExpandedProperties.roleDefinition.type
-        /// </summary>
+        /// <summary> Type of the role definition. </summary>
         public string RoleDefinitionType { get; }
-        /// <summary>
-        /// Scope id of the resource
-        /// Serialized Name: ExpandedProperties.scope.id
-        /// </summary>
+        /// <summary> Scope id of the resource. </summary>
         public ResourceIdentifier ScopeId { get; }
-        /// <summary>
-        /// Display name of the resource
-        /// Serialized Name: ExpandedProperties.scope.displayName
-        /// </summary>
+        /// <summary> Display name of the resource. </summary>
         public string ScopeDisplayName { get; }
-        /// <summary>
-        /// Type of the resource
-        /// Serialized Name: ExpandedProperties.scope.type
-        /// </summary>
+        /// <summary> Type of the resource. </summary>
         public string ScopeType { get; }
     }
 }
