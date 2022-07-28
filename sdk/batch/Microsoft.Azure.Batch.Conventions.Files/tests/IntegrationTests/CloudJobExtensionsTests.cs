@@ -22,6 +22,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
+using BlobTestUtils = Microsoft.Azure.Batch.Conventions.Files.IntegrationTests.Utilities.BlobUtils;
 
 namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
 {
@@ -52,7 +53,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
 
                 var blobs = job.OutputStorage(blobClient).ListOutputs(JobOutputKind.JobOutput).ToList();
                 Assert.NotEmpty(blobs);
-                Assert.True(UrlUtils.CheckOutputFileRefListContainsUri(blobs, $"{_jobId}/$JobOutput/Files/TestText1.txt"));
+                Assert.True(BlobTestUtils.CheckOutputFileRefListContainsDenotedUri(blobs, $"{_jobId}/$JobOutput/Files/TestText1.txt"));
             }
         }
 
@@ -79,7 +80,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
 
                 var blobs = jobOutputStorageFromAccount.ListOutputs(JobOutputKind.JobPreview).ToList();
                 Assert.NotEmpty(blobs);
-                Assert.True(UrlUtils.CheckOutputFileRefListContainsUri(blobs, $"{_jobId}/$JobPreview/SavedViaSas.txt"));
+                Assert.True(BlobTestUtils.CheckOutputFileRefListContainsDenotedUri(blobs, $"{_jobId}/$JobPreview/SavedViaSas.txt"));
             }
         }
     }

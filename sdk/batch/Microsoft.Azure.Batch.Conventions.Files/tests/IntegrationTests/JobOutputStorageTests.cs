@@ -23,6 +23,8 @@ using Xunit.Abstractions;
 using Microsoft.Azure.Batch.Conventions.Files.IntegrationTests.Utilities;
 using Microsoft.Azure.Batch.Conventions.Files.IntegrationTests.Xunit;
 using Microsoft.Azure.Batch.FileConventions.Integration.Tests.Infrastructure;
+using Microsoft.Azure.Batch.Conventions.Files.Utilities;
+using BlobTestUtils = Microsoft.Azure.Batch.Conventions.Files.IntegrationTests.Utilities.BlobUtils;
 
 namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
 {
@@ -50,7 +52,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
 
             var blobs = jobOutputStorage.ListOutputs(JobOutputKind.JobOutput).ToList();
             Assert.NotEmpty(blobs);
-            Assert.Contains(blobs, b => b.Uri.AbsoluteUri.EndsWith($"{_jobId}/$JobOutput/TestText1.txt"));
+            Assert.True(BlobTestUtils.CheckOutputFileRefListContainsDenotedUri(blobs, $"{_jobId}/$JobOutput/TestText1.txt"));
         }
 
         [LiveTest]
@@ -68,7 +70,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
 
             var blobs = jobOutputStorage.ListOutputs(JobOutputKind.JobOutput).ToList();
             Assert.NotEmpty(blobs);
-            Assert.Contains(blobs, b => b.Uri.AbsoluteUri.EndsWith($"{_jobId}/$JobOutput/Files/TestText1.txt"));
+            Assert.True(BlobTestUtils.CheckOutputFileRefListContainsDenotedUri(blobs, $"{_jobId}/$JobOutput/Files/TestText1.txt"));
         }
 
         [LiveTest]
@@ -80,7 +82,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
 
             var blobs = jobOutputStorage.ListOutputs(JobOutputKind.JobOutput).ToList();
             Assert.NotEmpty(blobs);
-            Assert.Contains(blobs, b => b.Uri.AbsoluteUri.EndsWith($"{_jobId}/$JobOutput/RenamedTestText1.txt"));
+            Assert.True(BlobTestUtils.CheckOutputFileRefListContainsDenotedUri(blobs, $"{_jobId}/$JobOutput/RenamedTestText1.txt"));
         }
 
         [LiveTest]
@@ -92,7 +94,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
 
             var blobs = jobOutputStorage.ListOutputs(JobOutputKind.JobOutput).ToList();
             Assert.NotEmpty(blobs);
-            Assert.Contains(blobs, b => b.Uri.AbsoluteUri.EndsWith($"{_jobId}/$JobOutput/File/Under/TestText2.txt"));
+            Assert.True(BlobTestUtils.CheckOutputFileRefListContainsDenotedUri(blobs, $"{_jobId}/$JobOutput/File/Under/TestText2.txt"));
         }
 
         [LiveTest]
@@ -104,7 +106,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
 
             var blobs = jobOutputStorage.ListOutputs(JobOutputKind.JobOutput).ToList();
             Assert.NotEmpty(blobs);
-            Assert.Contains(blobs, b => b.Uri.AbsoluteUri.EndsWith($"{_jobId}/$JobOutput/File/In/The/Depths/TestText3.txt"));
+            Assert.True(BlobTestUtils.CheckOutputFileRefListContainsDenotedUri(blobs, $"{_jobId}/$JobOutput/File/In/The/Depths/TestText3.txt"));
         }
 
         [LiveTest]

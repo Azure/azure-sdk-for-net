@@ -13,6 +13,7 @@
 // limitations under the License.
 
 ﻿using Microsoft.Azure.Batch.Conventions.Files.IntegrationTests.Utilities;
+using Microsoft.Azure.Batch.Conventions.Files.Utilities;
 using Microsoft.Azure.Batch.FileConventions.Integration.Tests.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
+using BlobTestUtils = Microsoft.Azure.Batch.Conventions.Files.IntegrationTests.Utilities.BlobUtils;
 
 namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
 {
@@ -58,7 +60,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
 
                 var blobs = task.OutputStorage(blobClient).ListOutputs(TaskOutputKind.TaskOutput).ToList();
                 Assert.NotEmpty(blobs);
-                Assert.Contains(blobs, b => b.Uri.AbsoluteUri.EndsWith($"{_jobId}/{_taskId}/$TaskOutput/Files/TestText1.txt"));
+                Assert.True(BlobTestUtils.CheckOutputFileRefListContainsDenotedUri(blobs, $"{_jobId}/{_taskId}/$TaskOutput/Files/TestText1.txt"));
                 Assert.Collection(blobs, b => b.Uri.AbsoluteUri.StartsWith(task.GetOutputStoragePath(TaskOutputKind.TaskOutput)));
             }
         }
