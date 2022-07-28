@@ -52,11 +52,11 @@ namespace Azure.ResourceManager.Media
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of MediaServicesOperationResultResources in the SubscriptionResource. </summary>
-        /// <returns> An object representing collection of MediaServicesOperationResultResources and their operations over a MediaServicesOperationResultResource. </returns>
-        public virtual MediaServicesOperationResultCollection GetMediaServicesOperationResults()
+        /// <summary> Gets a collection of MediaServiceOperationResultResources in the SubscriptionResource. </summary>
+        /// <returns> An object representing collection of MediaServiceOperationResultResources and their operations over a MediaServiceOperationResultResource. </returns>
+        public virtual MediaServiceOperationResultCollection GetMediaServiceOperationResults()
         {
-            return GetCachedClient(Client => new MediaServicesOperationResultCollection(Client, Id));
+            return GetCachedClient(Client => new MediaServiceOperationResultCollection(Client, Id));
         }
 
         /// <summary>

@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     case "#Microsoft.Media.H264Video": return H264Video.DeserializeH264Video(element);
                     case "#Microsoft.Media.H265Video": return H265Video.DeserializeH265Video(element);
-                    case "#Microsoft.Media.Image": return ImageProperties.DeserializeImageProperties(element);
+                    case "#Microsoft.Media.Image": return ImageBasicProperties.DeserializeImageBasicProperties(element);
                     case "#Microsoft.Media.JpgImage": return JpgImage.DeserializeJpgImage(element);
                     case "#Microsoft.Media.PngImage": return PngImage.DeserializePngImage(element);
                 }

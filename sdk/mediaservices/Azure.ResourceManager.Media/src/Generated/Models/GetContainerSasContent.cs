@@ -20,6 +20,6 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> The permissions to set on the SAS URL. </summary>
         public AssetContainerPermission? Permissions { get; set; }
         /// <summary> The SAS URL expiration time.  This must be less than 24 hours from the current time. </summary>
-        public DateTimeOffset? ExpiryOn { get; set; }
+        public DateTimeOffset? ExpireOn { get; set; }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -16,17 +17,17 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> Initializes a new instance of AssetContainerSas. </summary>
         internal AssetContainerSas()
         {
-            AssetContainerSasUrls = new ChangeTrackingList<string>();
+            AssetContainerSasUris = new ChangeTrackingList<Uri>();
         }
 
         /// <summary> Initializes a new instance of AssetContainerSas. </summary>
-        /// <param name="assetContainerSasUrls"> The list of Asset container SAS URLs. </param>
-        internal AssetContainerSas(IReadOnlyList<string> assetContainerSasUrls)
+        /// <param name="assetContainerSasUris"> The list of Asset container SAS URLs. </param>
+        internal AssetContainerSas(IReadOnlyList<Uri> assetContainerSasUris)
         {
-            AssetContainerSasUrls = assetContainerSasUrls;
+            AssetContainerSasUris = assetContainerSasUris;
         }
 
         /// <summary> The list of Asset container SAS URLs. </summary>
-        public IReadOnlyList<string> AssetContainerSasUrls { get; }
+        public IReadOnlyList<Uri> AssetContainerSasUris { get; }
     }
 }

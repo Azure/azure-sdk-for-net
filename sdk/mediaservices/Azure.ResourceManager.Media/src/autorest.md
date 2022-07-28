@@ -17,12 +17,14 @@ modelerfour:
   flatten-payloads: false
 
 request-path-to-resource-name:
-  /subscriptions/{subscriptionId}/providers/Microsoft.Media/locations/{locationName}/mediaServicesOperationResults/{operationId}: MediaServicesOperationResult
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/privateLinkResources/{name}: MediaPrivateLink
+  /subscriptions/{subscriptionId}/providers/Microsoft.Media/locations/{locationName}/mediaServicesOperationResults/{operationId}: MediaServiceOperationResult
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/tracks/{trackName}/operationResults/{operationId}: MediaAssetTrackOperationResult
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}: MediaService
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/tracks/{trackName}: MediaAssetTrack
 
 override-operation-name:
   StreamingEndpoints_Skus: GetSupportedSkus
+  StreamingLocators_ListPaths: GetSupportedPaths
   Locations_CheckNameAvailability: CheckMediaNameAvailability
   
 format-by-name-rules:
@@ -55,10 +57,12 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
   Url: Uri
+  Urls: Uris
   AAC: Aac
   ABR: Abr
   CBR: Cbr
   CRF: Crf
+  MP4: Mp4
 
 list-exception:
 - /subscriptions/{subscriptionId}/providers/Microsoft.Media/locations/{locationName}/mediaServicesOperationResults/{operationId}
@@ -95,28 +99,47 @@ rename-mapping:
   EntityNameAvailabilityCheckOutput: MediaNameAvailabilityResult
   EntityNameAvailabilityCheckOutput.nameAvailable: IsNameAvailable
   AssetStreamingLocator.created: CreatedOn
-  Codec: CodecProperties
-  Audio: AudioProperties
-  Overlay: OverlayProperties
-  Complexity: ComplexitySetting
-  ContentKeyPolicyPlayReadyLicense.expirationDate: ExpiresOn
+  Codec: CodecBasicProperties
+  Audio: AudiocommonProperties
+  Overlay: OverlayBasicProperties
+  Complexity: EncoderComplexitySetting
+  ContentKeyPolicyPlayReadyLicense.expirationDate: ExpireOn
   ContentKeyPolicyPlayReadyUnknownOutputPassingOption: ContentKeyPolicyPlayReadyUnknownOutputPassingSetting
   ContentKeyPolicyProperties.created: CreatedOn
   ContentKeyPolicyProperties.lastModified: LastModifiedOn
   ContentKeyPolicyProperties.options: Preferences
-  Filters: FilterOperations
+  Filters: FilteringOperations
   Rectangle: RectangularWindowProperties
   Deinterlace: DeinterlaceSettings
   Rotation: RotationSetting
-  Format: FormatProperties
-  Image: ImageProperties
+  Format: FormatBasicProperties
+  Image: ImageBasicProperties
   Video: InputVideoEncodingProperties
   Layer: LayerProperties
   ListContainerSasInput: GetContainerSasContent
+  ListContainerSasInput.expiryTime: ExpireOn
   ListEdgePoliciesInput: GetEdgePoliciesContent
   Preset: MediaPreset
   StorageAccountType: MediaServiceStorageAccountType
   Visibility: PlayerVisibility
+  AssetCollection: AssetListResult
+  AccountFilterCollection: AccountFilterListResult
+  AssetFilterCollection: AssetFilterListResult
+  AssetTrackCollection: AssetTrackListResult
+  ContentKeyPolicyCollection: ContentKeyPolicyListResult
+  JobCollection: JobListResult
+  MediaServiceCollection: MediaServiceListResult
+  StreamingLocatorCollection: StreamingLocatorListResult
+  StreamingPolicyCollection: StreamingPolicyListResult
+  TransformCollection: TransformListResult
+  StorageEncryptedAssetDecryptionData: StorageEncryptedAssetDecryptionInfo
+  AssetTrack: MediaAssetTrack
+  TrackBase: AssetTrackInfo
+  PrivateLinkResource: MediaPrivateLink
+  ListPathsResponse: GetPathsResult
+  AkamaiSignatureHeaderAuthenticationKey.expiration: ExpireOn
+  ContentKeyPolicyFairPlayOfflineRentalConfiguration.playbackDurationSeconds: PlaybackDurationInSeconds
+  ContentKeyPolicyFairPlayOfflineRentalConfiguration.storageDurationSeconds: StorageDurationInSeconds
   
 directive:
   - from: Accounts.json

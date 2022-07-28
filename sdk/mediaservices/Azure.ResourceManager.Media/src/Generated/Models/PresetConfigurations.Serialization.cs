@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static PresetConfigurations DeserializePresetConfigurations(JsonElement element)
         {
-            Optional<ComplexitySetting> complexity = default;
+            Optional<EncoderComplexitySetting> complexity = default;
             Optional<InterleaveOutput> interleaveOutput = default;
             Optional<float> keyFrameIntervalInSeconds = default;
             Optional<int> maxBitrateBps = default;
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Media.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    complexity = new ComplexitySetting(property.Value.GetString());
+                    complexity = new EncoderComplexitySetting(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("interleaveOutput"))

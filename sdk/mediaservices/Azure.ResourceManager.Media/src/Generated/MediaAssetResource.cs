@@ -124,11 +124,11 @@ namespace Azure.ResourceManager.Media
             return GetAssetFilters().Get(filterName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of MediaServiceAssetTrackResources in the MediaAsset. </summary>
-        /// <returns> An object representing collection of MediaServiceAssetTrackResources and their operations over a MediaServiceAssetTrackResource. </returns>
-        public virtual MediaServiceAssetTrackCollection GetMediaServiceAssetTracks()
+        /// <summary> Gets a collection of MediaAssetTrackResources in the MediaAsset. </summary>
+        /// <returns> An object representing collection of MediaAssetTrackResources and their operations over a MediaAssetTrackResource. </returns>
+        public virtual MediaAssetTrackCollection GetMediaAssetTracks()
         {
-            return GetCachedClient(Client => new MediaServiceAssetTrackCollection(Client, Id));
+            return GetCachedClient(Client => new MediaAssetTrackCollection(Client, Id));
         }
 
         /// <summary>
@@ -141,9 +141,9 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentException"> <paramref name="trackName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="trackName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<MediaServiceAssetTrackResource>> GetMediaServiceAssetTrackAsync(string trackName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MediaAssetTrackResource>> GetMediaAssetTrackAsync(string trackName, CancellationToken cancellationToken = default)
         {
-            return await GetMediaServiceAssetTracks().GetAsync(trackName, cancellationToken).ConfigureAwait(false);
+            return await GetMediaAssetTracks().GetAsync(trackName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -156,9 +156,9 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentException"> <paramref name="trackName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="trackName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<MediaServiceAssetTrackResource> GetMediaServiceAssetTrack(string trackName, CancellationToken cancellationToken = default)
+        public virtual Response<MediaAssetTrackResource> GetMediaAssetTrack(string trackName, CancellationToken cancellationToken = default)
         {
-            return GetMediaServiceAssetTracks().Get(trackName, cancellationToken);
+            return GetMediaAssetTracks().Get(trackName, cancellationToken);
         }
 
         /// <summary>
@@ -321,19 +321,19 @@ namespace Azure.ResourceManager.Media
         /// <param name="content"> The request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> An async collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<string> GetContainerSasAsync(GetContainerSasContent content, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="Uri" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<Uri> GetContainerSasAsync(GetContainerSasContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            async Task<Page<string>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<Uri>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _mediaAssetAssetsClientDiagnostics.CreateScope("MediaAssetResource.GetContainerSas");
                 scope.Start();
                 try
                 {
                     var response = await _mediaAssetAssetsRestClient.ListContainerSasAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.AssetContainerSasUrls, null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.AssetContainerSasUris, null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -352,19 +352,19 @@ namespace Azure.ResourceManager.Media
         /// <param name="content"> The request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> A collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<string> GetContainerSas(GetContainerSasContent content, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="Uri" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<Uri> GetContainerSas(GetContainerSasContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            Page<string> FirstPageFunc(int? pageSizeHint)
+            Page<Uri> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _mediaAssetAssetsClientDiagnostics.CreateScope("MediaAssetResource.GetContainerSas");
                 scope.Start();
                 try
                 {
                     var response = _mediaAssetAssetsRestClient.ListContainerSas(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.AssetContainerSasUrls, null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.AssetContainerSasUris, null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.Media
         /// Operation Id: Assets_GetEncryptionKey
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<StorageEncryptedAssetDecryptionData>> GetEncryptionKeyAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StorageEncryptedAssetDecryptionInfo>> GetEncryptionKeyAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _mediaAssetAssetsClientDiagnostics.CreateScope("MediaAssetResource.GetEncryptionKey");
             scope.Start();
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.Media
         /// Operation Id: Assets_GetEncryptionKey
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<StorageEncryptedAssetDecryptionData> GetEncryptionKey(CancellationToken cancellationToken = default)
+        public virtual Response<StorageEncryptedAssetDecryptionInfo> GetEncryptionKey(CancellationToken cancellationToken = default)
         {
             using var scope = _mediaAssetAssetsClientDiagnostics.CreateScope("MediaAssetResource.GetEncryptionKey");
             scope.Start();

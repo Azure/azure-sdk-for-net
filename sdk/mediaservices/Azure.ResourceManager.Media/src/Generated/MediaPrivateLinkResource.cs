@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Media
 
         private readonly ClientDiagnostics _mediaPrivateLinkPrivateLinkResourcesClientDiagnostics;
         private readonly PrivateLinkResourcesRestOperations _mediaPrivateLinkPrivateLinkResourcesRestClient;
-        private readonly MediaPrivateLinkResourceData _data;
+        private readonly MediaPrivateLinkData _data;
 
         /// <summary> Initializes a new instance of the <see cref="MediaPrivateLinkResource"/> class for mocking. </summary>
         protected MediaPrivateLinkResource()
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Media
         /// <summary> Initializes a new instance of the <see cref = "MediaPrivateLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal MediaPrivateLinkResource(ArmClient client, MediaPrivateLinkResourceData data) : this(client, data.Id)
+        internal MediaPrivateLinkResource(ArmClient client, MediaPrivateLinkData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Media
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual MediaPrivateLinkResourceData Data
+        public virtual MediaPrivateLinkData Data
         {
             get
             {
