@@ -17,3 +17,7 @@ variables:
   DOTNET_NOLOGO: 1
   Package.EnableSBOMSigning: true
   Codeql.SkipTaskAutoInjection: true
+  # Define optional AdditionalTestFilters via pipeline runtime variables or matrix config variables
+  # Variable value must start with either & or | to join conditions.
+  # See https://docs.microsoft.com/en-us/dotnet/core/testing/selective-unit-tests?pivots=nunit
+  AdditionalTestFilters: ""
