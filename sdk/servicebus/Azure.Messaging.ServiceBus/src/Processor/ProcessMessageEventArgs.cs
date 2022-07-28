@@ -32,7 +32,7 @@ namespace Azure.Messaging.ServiceBus
         public string EntityPath => _receiver.EntityPath;
 
         /// <summary>
-        /// The identifier of the Service Bus entity that the message was received from.
+        /// The identifier of the processor that raised this event.
         /// </summary>
         public string Identifier => _receiver.Identifier;
 

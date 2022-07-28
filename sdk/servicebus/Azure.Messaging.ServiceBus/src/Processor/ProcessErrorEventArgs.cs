@@ -51,7 +51,7 @@ namespace Azure.Messaging.ServiceBus
         /// This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</summary>
         public string FullyQualifiedNamespace { get; }
 
-        /// <summary>Gets the client identifier associated with the error event.</summary>
+        /// <summary>Gets the identifier of the processor that raised this event.</summary>
         public string Identifier { get; }
 
         /// <summary>Gets the entity path associated with the error event.</summary>
