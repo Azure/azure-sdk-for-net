@@ -50,7 +50,7 @@ namespace Azure.Messaging.ServiceBus
         public ServiceBusTransportType TransportType { get; }
 
         /// <summary>
-        ///   A unique name used to identify this <see cref="ServiceBusClient"/>.
+        ///   The name used to identify this <see cref="ServiceBusClient"/>.
         /// </summary>
         public string Identifier { get; }
 
@@ -253,15 +253,7 @@ namespace Azure.Messaging.ServiceBus
         ///   The <see cref="ServiceBusClient"/> was constructed with a connection string containing the "EntityPath" token
         ///   that has a different value than the <paramref name="queueOrTopicName"/> value specified here.
         /// </exception>
-        public virtual ServiceBusSender CreateSender(string queueOrTopicName)
-        {
-            ValidateEntityName(queueOrTopicName);
-
-            return new ServiceBusSender(
-                entityPath: queueOrTopicName,
-                connection: Connection,
-                options: new ServiceBusSenderOptions());
-        }
+        public virtual ServiceBusSender CreateSender(string queueOrTopicName) => CreateSender(queueOrTopicName, new ServiceBusSenderOptions());
 
         /// <summary>
         /// Creates a <see cref="ServiceBusSender"/> instance that can be used for sending messages to a specific
@@ -301,16 +293,7 @@ namespace Azure.Messaging.ServiceBus
         ///   The <see cref="ServiceBusClient"/> was constructed with a connection string containing the "EntityPath" token
         ///   that has a different value than the <paramref name="queueName"/> value specified here.
         /// </exception>
-        public virtual ServiceBusReceiver CreateReceiver(string queueName)
-        {
-            ValidateEntityName(queueName);
-
-            return new ServiceBusReceiver(
-                connection: Connection,
-                entityPath: queueName,
-                isSessionEntity: false,
-                options: new ServiceBusReceiverOptions());
-        }
+        public virtual ServiceBusReceiver CreateReceiver(string queueName) => CreateReceiver(queueName, new ServiceBusReceiverOptions());
 
         /// <summary>
         /// Creates a <see cref="ServiceBusReceiver"/> instance that can be used for receiving and settling messages
@@ -359,16 +342,7 @@ namespace Azure.Messaging.ServiceBus
         /// </exception>
         public virtual ServiceBusReceiver CreateReceiver(
             string topicName,
-            string subscriptionName)
-        {
-            ValidateEntityName(topicName);
-
-            return new ServiceBusReceiver(
-                connection: Connection,
-                entityPath: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),
-                isSessionEntity: false,
-                options: new ServiceBusReceiverOptions());
-        }
+            string subscriptionName) => CreateReceiver(topicName, subscriptionName, new ServiceBusReceiverOptions());
 
         /// <summary>
         /// Creates a <see cref="ServiceBusReceiver"/> instance that can be used for

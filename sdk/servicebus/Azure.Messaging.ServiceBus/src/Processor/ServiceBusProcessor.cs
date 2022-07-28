@@ -68,9 +68,8 @@ namespace Azure.Messaging.ServiceBus
         public virtual string EntityPath { get; }
 
         /// <summary>
-        /// Gets the ID to identify this processor. This can be used to correlate logs and exceptions.
+        /// Gets the ID used to identify this processor. This can be used to correlate logs and exceptions.
         /// </summary>
-        /// <remarks>Every new processor has a unique ID.</remarks>
         public string Identifier { get; }
 
         /// <summary>

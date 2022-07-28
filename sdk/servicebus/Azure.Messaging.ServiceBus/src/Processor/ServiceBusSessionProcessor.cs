@@ -30,7 +30,7 @@ namespace Azure.Messaging.ServiceBus
         public virtual string EntityPath => InnerProcessor.EntityPath;
 
         /// <summary>
-        /// A unique name used to identify the processor.  If <c>null</c> or empty, a random unique value will be will be used.
+        /// Gets the Identifier used to identify this processor client.  If <c>null</c> or empty, a random unique value will be will be used.
         /// </summary>
         public string Identifier => InnerProcessor.Identifier;
 

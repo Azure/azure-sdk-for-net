@@ -32,6 +32,11 @@ namespace Azure.Messaging.ServiceBus
         public string SessionId => _sessionReceiver.SessionId;
 
         /// <summary>
+        /// The identifier of the Service Bus entity that the message was received from.
+        /// </summary>
+        public string Identifier => _sessionReceiver.Identifier;
+
+        /// <summary>
         /// Gets the <see cref="DateTimeOffset"/> that the current session is locked until.
         /// </summary>
         public DateTimeOffset SessionLockedUntil => _sessionReceiver.SessionLockedUntil;

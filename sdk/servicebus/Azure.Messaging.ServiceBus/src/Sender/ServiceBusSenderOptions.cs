@@ -13,9 +13,8 @@ namespace Azure.Messaging.ServiceBus
     {
         /// <summary>
         /// A property used to set the <see cref="ServiceBusSender"/> ID to identify the client. This can be used to correlate logs
-        /// and exceptions.
+        /// and exceptions. If <c>null</c> or empty, a random unique value will be used.
         /// </summary>
-        /// <remarks>Every new client has a unique ID.</remarks>
         public string Identifier { get; set; }
 
         /// <summary>

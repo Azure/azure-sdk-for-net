@@ -136,7 +136,8 @@ namespace Azure.Messaging.ServiceBus
         public SubQueue SubQueue { get; set; } = SubQueue.None;
 
         /// <summary>
-        ///   A unique name used to identify the processor.  If <c>null</c> or empty, a random unique value will be will be used.
+        /// A property used to set the <see cref="ServiceBusProcessor"/> ID to identify the client. This can be used to correlate logs
+        /// and exceptions. If <c>null</c> or empty, a random unique value will be used.
         /// </summary>
         public string Identifier { get; set; }
 

@@ -63,7 +63,7 @@ namespace Azure.Messaging.ServiceBus
         public virtual int PrefetchCount { get; }
 
         /// <summary>
-        /// A unique name used to identify the processor.  If <c>null</c> or empty, a random unique value will be will be used.
+        /// A name used to identify the receiver client.  If <c>null</c> or empty, a random unique value will be will be used.
         /// </summary>
         public string Identifier { get; }
 
