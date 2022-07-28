@@ -133,7 +133,7 @@ rename-mapping:
   AppServiceEnvironmentPatchResource: AppServiceEnvironmentPatchContent
   AppserviceGithubToken: AppServiceGithubToken
   AppServicePlanPatchResource: AppServicePlanPatchContent
-  Contact: ContactInformation 
+  Contact: ContactInformation
   Login: LoginInformation
   MSDeploy: MsDeploy
   MSDeployLog: MsDeployLog
