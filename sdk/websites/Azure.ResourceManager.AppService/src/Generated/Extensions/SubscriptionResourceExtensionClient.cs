@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.AppService
         private WebSiteManagementRestOperations _defaultRestClient;
         private ClientDiagnostics _staticSitesClientDiagnostics;
         private StaticSitesRestOperations _staticSitesRestClient;
-        private ClientDiagnostics _staticSiteARMStaticSitesClientDiagnostics;
-        private StaticSitesRestOperations _staticSiteARMStaticSitesRestClient;
+        private ClientDiagnostics _staticSiteClientDiagnostics;
+        private StaticSitesRestOperations _staticSiteRestClient;
         private ClientDiagnostics _webSiteWebAppsClientDiagnostics;
         private WebAppsRestOperations _webSiteWebAppsRestClient;
 
@@ -97,8 +97,8 @@ namespace Azure.ResourceManager.AppService
         private WebSiteManagementRestOperations DefaultRestClient => _defaultRestClient ??= new WebSiteManagementRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics StaticSitesClientDiagnostics => _staticSitesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private StaticSitesRestOperations StaticSitesRestClient => _staticSitesRestClient ??= new StaticSitesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics StaticSiteARMStaticSitesClientDiagnostics => _staticSiteARMStaticSitesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", StaticSiteARMResource.ResourceType.Namespace, Diagnostics);
-        private StaticSitesRestOperations StaticSiteARMStaticSitesRestClient => _staticSiteARMStaticSitesRestClient ??= new StaticSitesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(StaticSiteARMResource.ResourceType));
+        private ClientDiagnostics StaticSiteClientDiagnostics => _staticSiteClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", StaticSiteResource.ResourceType.Namespace, Diagnostics);
+        private StaticSitesRestOperations StaticSiteRestClient => _staticSiteRestClient ??= new StaticSitesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(StaticSiteResource.ResourceType));
         private ClientDiagnostics WebSiteWebAppsClientDiagnostics => _webSiteWebAppsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", WebSiteResource.ResourceType.Namespace, Diagnostics);
         private WebAppsRestOperations WebSiteWebAppsRestClient => _webSiteWebAppsRestClient ??= new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(WebSiteResource.ResourceType));
 
@@ -1972,17 +1972,17 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: StaticSites_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StaticSiteARMResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<StaticSiteARMResource> GetStaticSiteARMsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="StaticSiteResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<StaticSiteResource> GetStaticSitesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<StaticSiteARMResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<StaticSiteResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = StaticSiteARMStaticSitesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetStaticSiteARMs");
+                using var scope = StaticSiteClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetStaticSites");
                 scope.Start();
                 try
                 {
-                    var response = await StaticSiteARMStaticSitesRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new StaticSiteARMResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await StaticSiteRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new StaticSiteResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1990,14 +1990,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            async Task<Page<StaticSiteARMResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<StaticSiteResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = StaticSiteARMStaticSitesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetStaticSiteARMs");
+                using var scope = StaticSiteClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetStaticSites");
                 scope.Start();
                 try
                 {
-                    var response = await StaticSiteARMStaticSitesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new StaticSiteARMResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await StaticSiteRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new StaticSiteResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -2014,17 +2014,17 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: StaticSites_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StaticSiteARMResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<StaticSiteARMResource> GetStaticSiteARMs(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="StaticSiteResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<StaticSiteResource> GetStaticSites(CancellationToken cancellationToken = default)
         {
-            Page<StaticSiteARMResource> FirstPageFunc(int? pageSizeHint)
+            Page<StaticSiteResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = StaticSiteARMStaticSitesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetStaticSiteARMs");
+                using var scope = StaticSiteClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetStaticSites");
                 scope.Start();
                 try
                 {
-                    var response = StaticSiteARMStaticSitesRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new StaticSiteARMResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = StaticSiteRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new StaticSiteResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -2032,14 +2032,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            Page<StaticSiteARMResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<StaticSiteResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = StaticSiteARMStaticSitesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetStaticSiteARMs");
+                using var scope = StaticSiteClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetStaticSites");
                 scope.Start();
                 try
                 {
-                    var response = StaticSiteARMStaticSitesRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new StaticSiteARMResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = StaticSiteRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new StaticSiteResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

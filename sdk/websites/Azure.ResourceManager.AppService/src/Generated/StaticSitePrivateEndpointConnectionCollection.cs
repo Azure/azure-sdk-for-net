@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A class representing a collection of <see cref="StaticSitePrivateEndpointConnectionResource" /> and their operations.
-    /// Each <see cref="StaticSitePrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="StaticSiteARMResource" />.
-    /// To get a <see cref="StaticSitePrivateEndpointConnectionCollection" /> instance call the GetStaticSitePrivateEndpointConnections method from an instance of <see cref="StaticSiteARMResource" />.
+    /// Each <see cref="StaticSitePrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="StaticSiteResource" />.
+    /// To get a <see cref="StaticSitePrivateEndpointConnectionCollection" /> instance call the GetStaticSitePrivateEndpointConnections method from an instance of <see cref="StaticSiteResource" />.
     /// </summary>
     public partial class StaticSitePrivateEndpointConnectionCollection : ArmCollection, IEnumerable<StaticSitePrivateEndpointConnectionResource>, IAsyncEnumerable<StaticSitePrivateEndpointConnectionResource>
     {
@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.AppService
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != StaticSiteARMResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, StaticSiteARMResource.ResourceType), nameof(id));
+            if (id.ResourceType != StaticSiteResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, StaticSiteResource.ResourceType), nameof(id));
         }
 
         /// <summary>

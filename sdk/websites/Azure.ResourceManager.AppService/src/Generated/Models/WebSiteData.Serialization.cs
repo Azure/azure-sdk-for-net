@@ -127,10 +127,10 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("clientCertExclusionPaths");
                 writer.WriteStringValue(ClientCertExclusionPaths);
             }
-            if (Optional.IsDefined(IsHostNamesDisabled))
+            if (Optional.IsDefined(IsHostNameDisabled))
             {
                 writer.WritePropertyName("hostNamesDisabled");
-                writer.WriteBooleanValue(IsHostNamesDisabled.Value);
+                writer.WriteBooleanValue(IsHostNameDisabled.Value);
             }
             if (Optional.IsDefined(CustomDomainVerificationId))
             {

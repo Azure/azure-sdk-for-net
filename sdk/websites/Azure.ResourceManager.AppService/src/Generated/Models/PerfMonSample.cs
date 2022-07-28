@@ -18,18 +18,18 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of PerfMonSample. </summary>
-        /// <param name="measuredCounterOn"> Point in time for which counter was measured. </param>
+        /// <param name="time"> Point in time for which counter was measured. </param>
         /// <param name="instanceName"> Name of the server on which the measurement is made. </param>
         /// <param name="value"> Value of counter at a certain time. </param>
-        internal PerfMonSample(DateTimeOffset? measuredCounterOn, string instanceName, double? value)
+        internal PerfMonSample(DateTimeOffset? time, string instanceName, double? value)
         {
-            MeasuredCounterOn = measuredCounterOn;
+            Time = time;
             InstanceName = instanceName;
             Value = value;
         }
 
         /// <summary> Point in time for which counter was measured. </summary>
-        public DateTimeOffset? MeasuredCounterOn { get; }
+        public DateTimeOffset? Time { get; }
         /// <summary> Name of the server on which the measurement is made. </summary>
         public string InstanceName { get; }
         /// <summary> Value of counter at a certain time. </summary>
