@@ -22,26 +22,26 @@ namespace Azure.Test.Perf.Tests
         [TestCase(1.2345, 5, "1.2345")]
         [TestCase(1.2345, 6, "1.23450")]
         [TestCase(1.2345, 7, "1.234500")]
-        [TestCase(12_345, 1, "10,000")]
-        [TestCase(12_345, 2, "12,000")]
-        [TestCase(12_345, 3, "12,300")]
-        [TestCase(12_345, 4, "12,350")]
+        [TestCase(12_345, 1, "12,345")]
+        [TestCase(12_345, 2, "12,345")]
+        [TestCase(12_345, 3, "12,345")]
+        [TestCase(12_345, 4, "12,345")]
         [TestCase(12_345, 5, "12,345")]
         [TestCase(12_345, 6, "12,345.0")]
         [TestCase(12_345, 7, "12,345.00")]
         [TestCase(8.22929639076288, 4, "8.229")]
-        public void Format(double value, int significantDigits, string expected)
+        public void Format(double value, int minSignificantDigits, string expected)
         {
-            Assert.AreEqual(expected, NumberFormatter.Format(value, significantDigits));
+            Assert.AreEqual(expected, NumberFormatter.Format(value, minSignificantDigits));
         }
 
         [TestCase(0, 0, typeof(ArgumentException))]
         [TestCase(-1, 0, typeof(ArgumentException))]
         [TestCase(1.2345, 0, typeof(ArgumentException))]
         [TestCase(1.2345, -1, typeof(ArgumentException))]
-        public void FormatException(double value, int significantDigits, Type expectedExceptionType)
+        public void FormatException(double value, int minSignificantDigits, Type expectedExceptionType)
         {
-            Assert.Throws(expectedExceptionType, () => NumberFormatter.Format(value, significantDigits));
+            Assert.Throws(expectedExceptionType, () => NumberFormatter.Format(value, minSignificantDigits));
         }
     }
 }
