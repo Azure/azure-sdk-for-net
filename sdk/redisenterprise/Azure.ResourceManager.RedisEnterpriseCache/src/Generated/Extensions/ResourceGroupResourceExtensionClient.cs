@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.RedisEnterpriseCache
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of ClusterResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ClusterResources and their operations over a ClusterResource. </returns>
-        public virtual ClusterCollection GetClusters()
+        /// <summary> Gets a collection of RedisEnterpriseClusterResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of RedisEnterpriseClusterResources and their operations over a RedisEnterpriseClusterResource. </returns>
+        public virtual RedisEnterpriseClusterCollection GetRedisEnterpriseClusters()
         {
-            return GetCachedClient(Client => new ClusterCollection(Client, Id));
+            return GetCachedClient(Client => new RedisEnterpriseClusterCollection(Client, Id));
         }
     }
 }
