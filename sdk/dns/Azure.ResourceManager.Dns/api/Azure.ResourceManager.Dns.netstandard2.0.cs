@@ -578,9 +578,9 @@ namespace Azure.ResourceManager.Dns.Models
         public string Email { get { throw null; } set { } }
         public long? ExpireTimeInSeconds { get { throw null; } set { } }
         public string Host { get { throw null; } set { } }
-        public long? MinimumTtl { get { throw null; } set { } }
-        public long? RefreshTime { get { throw null; } set { } }
-        public long? RetryTime { get { throw null; } set { } }
+        public long? MinimumTtlInSeconds { get { throw null; } set { } }
+        public long? RefreshTimeInSeconds { get { throw null; } set { } }
+        public long? RetryTimeInSeconds { get { throw null; } set { } }
         public long? SerialNumber { get { throw null; } set { } }
     }
     public partial class DnsSrvRecord

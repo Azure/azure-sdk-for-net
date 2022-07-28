@@ -30,25 +30,25 @@ namespace Azure.ResourceManager.Dns.Models
                 writer.WritePropertyName("serialNumber");
                 writer.WriteNumberValue(SerialNumber.Value);
             }
-            if (Optional.IsDefined(RefreshTime))
+            if (Optional.IsDefined(RefreshTimeInSeconds))
             {
                 writer.WritePropertyName("refreshTime");
-                writer.WriteNumberValue(RefreshTime.Value);
+                writer.WriteNumberValue(RefreshTimeInSeconds.Value);
             }
-            if (Optional.IsDefined(RetryTime))
+            if (Optional.IsDefined(RetryTimeInSeconds))
             {
                 writer.WritePropertyName("retryTime");
-                writer.WriteNumberValue(RetryTime.Value);
+                writer.WriteNumberValue(RetryTimeInSeconds.Value);
             }
             if (Optional.IsDefined(ExpireTimeInSeconds))
             {
                 writer.WritePropertyName("expireTime");
                 writer.WriteNumberValue(ExpireTimeInSeconds.Value);
             }
-            if (Optional.IsDefined(MinimumTtl))
+            if (Optional.IsDefined(MinimumTtlInSeconds))
             {
                 writer.WritePropertyName("minimumTTL");
-                writer.WriteNumberValue(MinimumTtl.Value);
+                writer.WriteNumberValue(MinimumTtlInSeconds.Value);
             }
             writer.WriteEndObject();
         }

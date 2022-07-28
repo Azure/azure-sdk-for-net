@@ -94,10 +94,19 @@ directive:
     where: $.definitions.PtrRecord.properties.ptrdname
     transform: $["x-ms-client-name"] = "PtrdName";
 
-# expireTime => expireTimeInSeconds
+# FooTime => FooTimeInSeconds
   - from: swagger-document
     where: $.definitions.SoaRecord.properties.expireTime
     transform: $["x-ms-client-name"] = "expireTimeInSeconds";
+  - from: swagger-document
+    where: $.definitions.SoaRecord.properties.retryTime
+    transform: $["x-ms-client-name"] = "retryTimeInSeconds";
+  - from: swagger-document
+    where: $.definitions.SoaRecord.properties.minimumTTL
+    transform: $["x-ms-client-name"] = "minimumTtlInSeconds";
+  - from: swagger-document
+    where: $.definitions.SoaRecord.properties.refreshTime
+    transform: $["x-ms-client-name"] = "refreshTimeInSeconds";
 
 # Add Prepend Name
   - from: swagger-document
