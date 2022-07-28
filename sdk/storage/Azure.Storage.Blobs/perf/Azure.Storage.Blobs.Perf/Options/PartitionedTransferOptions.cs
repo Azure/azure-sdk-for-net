@@ -50,9 +50,6 @@ namespace Azure.Storage.Blobs.Perf.Options
         [Option("client-encryption")]
         public string EncryptionVersionString { get; set; }
 
-        [Option("transfer-validation")]
-        public StorageChecksumAlgorithm? TransferValidationAlgorithm { get; set; }
-
         public StorageTransferOptions StorageTransferOptions { get; private set; }
 
         BlobClientOptions IBlobClientOptionsProvider.ClientOptions
@@ -88,11 +85,6 @@ namespace Azure.Storage.Blobs.Perf.Options
                         }
                         : default
                 };
-                if (TransferValidationAlgorithm.HasValue)
-                {
-                    result.TransferValidation.Upload.ChecksumAlgorithm = TransferValidationAlgorithm.Value;
-                    result.TransferValidation.Download.ChecksumAlgorithm = TransferValidationAlgorithm.Value;
-                }
                 return result;
             }
         }

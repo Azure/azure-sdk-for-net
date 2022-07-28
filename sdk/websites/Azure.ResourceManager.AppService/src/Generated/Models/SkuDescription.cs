@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of SkuDescription. </summary>
         public SkuDescription()
         {
-            AzureLocations = new ChangeTrackingList<string>();
+            Locations = new ChangeTrackingList<string>();
             Capabilities = new ChangeTrackingList<Capability>();
         }
 
@@ -27,9 +27,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="family"> Family code of the resource SKU. </param>
         /// <param name="capacity"> Current number of instances assigned to the resource. </param>
         /// <param name="skuCapacity"> Min, max, and default scale values of the SKU. </param>
-        /// <param name="azureLocations"> Locations of the SKU. </param>
+        /// <param name="locations"> Locations of the SKU. </param>
         /// <param name="capabilities"> Capabilities of the SKU, e.g., is traffic manager enabled?. </param>
-        internal SkuDescription(string name, string tier, string size, string family, int? capacity, SkuCapacity skuCapacity, IList<string> azureLocations, IList<Capability> capabilities)
+        internal SkuDescription(string name, string tier, string size, string family, int? capacity, SkuCapacity skuCapacity, IList<string> locations, IList<Capability> capabilities)
         {
             Name = name;
             Tier = tier;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppService.Models
             Family = family;
             Capacity = capacity;
             SkuCapacity = skuCapacity;
-            AzureLocations = azureLocations;
+            Locations = locations;
             Capabilities = capabilities;
         }
 
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Min, max, and default scale values of the SKU. </summary>
         public SkuCapacity SkuCapacity { get; set; }
         /// <summary> Locations of the SKU. </summary>
-        public IList<string> AzureLocations { get; }
+        public IList<string> Locations { get; }
         /// <summary> Capabilities of the SKU, e.g., is traffic manager enabled?. </summary>
         public IList<Capability> Capabilities { get; }
     }

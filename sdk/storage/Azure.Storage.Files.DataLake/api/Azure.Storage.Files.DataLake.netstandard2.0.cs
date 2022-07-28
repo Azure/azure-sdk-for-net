@@ -608,6 +608,7 @@ namespace Azure.Storage.Files.DataLake.Models
     {
         public DataLakeFileSystemEncryptionScopeOptions() { }
         public string DefaultEncryptionScope { get { throw null; } set { } }
+        public bool PreventEncryptionScopeOverride { get { throw null; } set { } }
     }
     public partial class DataLakeFileUploadOptions
     {
@@ -873,6 +874,7 @@ namespace Azure.Storage.Files.DataLake.Models
         public Azure.Storage.Files.DataLake.Models.DataLakeLeaseState? LeaseState { get { throw null; } }
         public Azure.Storage.Files.DataLake.Models.DataLakeLeaseStatus? LeaseStatus { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
+        public bool? PreventEncryptionScopeOverride { get { throw null; } }
         public Azure.Storage.Files.DataLake.Models.PublicAccessType? PublicAccess { get { throw null; } }
         public int? RemainingRetentionDays { get { throw null; } }
     }

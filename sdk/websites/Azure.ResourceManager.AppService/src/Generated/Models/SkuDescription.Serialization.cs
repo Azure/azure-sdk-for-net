@@ -46,11 +46,11 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("skuCapacity");
                 writer.WriteObjectValue(SkuCapacity);
             }
-            if (Optional.IsCollectionDefined(AzureLocations))
+            if (Optional.IsCollectionDefined(Locations))
             {
                 writer.WritePropertyName("locations");
                 writer.WriteStartArray();
-                foreach (var item in AzureLocations)
+                foreach (var item in Locations)
                 {
                     writer.WriteStringValue(item);
                 }

@@ -190,12 +190,12 @@ namespace Azure.ResourceManager.AppService.Models
                     writer.WriteNull("httpLoggingEnabled");
                 }
             }
-            if (Optional.IsDefined(IsAcrUseManagedIdentityCreds))
+            if (Optional.IsDefined(AcrUseManagedIdentityCreds))
             {
-                if (IsAcrUseManagedIdentityCreds != null)
+                if (AcrUseManagedIdentityCreds != null)
                 {
                     writer.WritePropertyName("acrUseManagedIdentityCreds");
-                    writer.WriteBooleanValue(IsAcrUseManagedIdentityCreds.Value);
+                    writer.WriteBooleanValue(AcrUseManagedIdentityCreds.Value);
                 }
                 else
                 {
@@ -325,12 +325,12 @@ namespace Azure.ResourceManager.AppService.Models
                     writer.WriteNull("scmType");
                 }
             }
-            if (Optional.IsDefined(IsUse32BitWorkerProcess))
+            if (Optional.IsDefined(Use32BitWorkerProcess))
             {
-                if (IsUse32BitWorkerProcess != null)
+                if (Use32BitWorkerProcess != null)
                 {
                     writer.WritePropertyName("use32BitWorkerProcess");
-                    writer.WriteBooleanValue(IsUse32BitWorkerProcess.Value);
+                    writer.WriteBooleanValue(Use32BitWorkerProcess.Value);
                 }
                 else
                 {
@@ -474,12 +474,12 @@ namespace Azure.ResourceManager.AppService.Models
                     writer.WriteNull("limits");
                 }
             }
-            if (Optional.IsDefined(AutoHealEnabled))
+            if (Optional.IsDefined(IsAutoHealEnabled))
             {
-                if (AutoHealEnabled != null)
+                if (IsAutoHealEnabled != null)
                 {
                     writer.WritePropertyName("autoHealEnabled");
-                    writer.WriteBooleanValue(AutoHealEnabled.Value);
+                    writer.WriteBooleanValue(IsAutoHealEnabled.Value);
                 }
                 else
                 {
@@ -688,24 +688,24 @@ namespace Azure.ResourceManager.AppService.Models
                     writer.WriteNull("scmIpSecurityRestrictions");
                 }
             }
-            if (Optional.IsDefined(IsScmIPSecurityRestrictionsUseMain))
+            if (Optional.IsDefined(ScmIPSecurityRestrictionsUseMain))
             {
-                if (IsScmIPSecurityRestrictionsUseMain != null)
+                if (ScmIPSecurityRestrictionsUseMain != null)
                 {
                     writer.WritePropertyName("scmIpSecurityRestrictionsUseMain");
-                    writer.WriteBooleanValue(IsScmIPSecurityRestrictionsUseMain.Value);
+                    writer.WriteBooleanValue(ScmIPSecurityRestrictionsUseMain.Value);
                 }
                 else
                 {
                     writer.WriteNull("scmIpSecurityRestrictionsUseMain");
                 }
             }
-            if (Optional.IsDefined(IsHttp2Enabled))
+            if (Optional.IsDefined(IsHttp20Enabled))
             {
-                if (IsHttp2Enabled != null)
+                if (IsHttp20Enabled != null)
                 {
                     writer.WritePropertyName("http20Enabled");
-                    writer.WriteBooleanValue(IsHttp2Enabled.Value);
+                    writer.WriteBooleanValue(IsHttp20Enabled.Value);
                 }
                 else
                 {

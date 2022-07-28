@@ -3220,7 +3220,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="content"> Migration migrationOptions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionName"/> or <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<StorageMigrationResponseInfo>> MigrateStorageAsync(WaitUntil waitUntil, string subscriptionName, StorageMigrationContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<StorageMigrationResult>> MigrateStorageAsync(WaitUntil waitUntil, string subscriptionName, StorageMigrationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionName, nameof(subscriptionName));
             Argument.AssertNotNull(content, nameof(content));
@@ -3230,7 +3230,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webSiteWebAppsRestClient.MigrateStorageAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subscriptionName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<StorageMigrationResponseInfo>(new StorageMigrationResponseInfoOperationSource(), _webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateMigrateStorageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subscriptionName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation<StorageMigrationResult>(new StorageMigrationResultOperationSource(), _webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateMigrateStorageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subscriptionName, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -3252,7 +3252,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="content"> Migration migrationOptions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionName"/> or <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<StorageMigrationResponseInfo> MigrateStorage(WaitUntil waitUntil, string subscriptionName, StorageMigrationContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<StorageMigrationResult> MigrateStorage(WaitUntil waitUntil, string subscriptionName, StorageMigrationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionName, nameof(subscriptionName));
             Argument.AssertNotNull(content, nameof(content));
@@ -3262,7 +3262,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webSiteWebAppsRestClient.MigrateStorage(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subscriptionName, content, cancellationToken);
-                var operation = new AppServiceArmOperation<StorageMigrationResponseInfo>(new StorageMigrationResponseInfoOperationSource(), _webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateMigrateStorageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subscriptionName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation<StorageMigrationResult>(new StorageMigrationResultOperationSource(), _webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateMigrateStorageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subscriptionName, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -4064,10 +4064,10 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetPrivateLinkResources
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AppServicePrivateLink" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AppServicePrivateLink> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AppServicePrivateLinkResourceData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AppServicePrivateLinkResourceData> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AppServicePrivateLink>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<AppServicePrivateLinkResourceData>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteResource.GetPrivateLinkResources");
                 scope.Start();
@@ -4091,10 +4091,10 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetPrivateLinkResources
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AppServicePrivateLink" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AppServicePrivateLink> GetPrivateLinkResources(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppServicePrivateLinkResourceData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AppServicePrivateLinkResourceData> GetPrivateLinkResources(CancellationToken cancellationToken = default)
         {
-            Page<AppServicePrivateLink> FirstPageFunc(int? pageSizeHint)
+            Page<AppServicePrivateLinkResourceData> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteResource.GetPrivateLinkResources");
                 scope.Start();
@@ -4322,19 +4322,19 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_RestoreFromDeletedApp
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="info"> Deleted web app restore information. </param>
+        /// <param name="content"> Deleted web app restore information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
-        public virtual async Task<ArmOperation> RestoreFromDeletedAppAsync(WaitUntil waitUntil, DeletedAppRestoreRequestInfo info, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation> RestoreFromDeletedAppAsync(WaitUntil waitUntil, DeletedAppRestoreContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(info, nameof(info));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteResource.RestoreFromDeletedApp");
             scope.Start();
             try
             {
-                var response = await _webSiteWebAppsRestClient.RestoreFromDeletedAppAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, info, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation(_webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateRestoreFromDeletedAppRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, info).Request, response, OperationFinalStateVia.Location);
+                var response = await _webSiteWebAppsRestClient.RestoreFromDeletedAppAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new AppServiceArmOperation(_webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateRestoreFromDeletedAppRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -4352,19 +4352,19 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_RestoreFromDeletedApp
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="info"> Deleted web app restore information. </param>
+        /// <param name="content"> Deleted web app restore information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
-        public virtual ArmOperation RestoreFromDeletedApp(WaitUntil waitUntil, DeletedAppRestoreRequestInfo info, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation RestoreFromDeletedApp(WaitUntil waitUntil, DeletedAppRestoreContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(info, nameof(info));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteResource.RestoreFromDeletedApp");
             scope.Start();
             try
             {
-                var response = _webSiteWebAppsRestClient.RestoreFromDeletedApp(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, info, cancellationToken);
-                var operation = new AppServiceArmOperation(_webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateRestoreFromDeletedAppRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, info).Request, response, OperationFinalStateVia.Location);
+                var response = _webSiteWebAppsRestClient.RestoreFromDeletedApp(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new AppServiceArmOperation(_webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateRestoreFromDeletedAppRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

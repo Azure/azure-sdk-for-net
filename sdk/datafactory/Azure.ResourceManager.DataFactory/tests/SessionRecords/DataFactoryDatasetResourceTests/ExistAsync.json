@@ -6,9 +6,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-207b85ff98dcb4478083bed41544c374-adb634fa5c6a9f45-00",
+        "traceparent": "00-08d4ba5171d41f4592439cd7288d4acd-358dba89f98a3743-00",
         "User-Agent": "azsdk-net-ResourceManager/1.2.0 (.NET Core 3.1.27; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "836718960405dca0b3c00bc482ff2e28",
+        "x-ms-client-request-id": "e11c89361cde7f5a9d58ae2772105b3f",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -17,15 +17,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "747",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 22 Jul 2022 06:08:05 GMT",
+        "Date": "Tue, 26 Jul 2022 06:17:00 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "756e8480-c6f1-4369-b7a0-14677bcd78af",
-        "x-ms-ratelimit-remaining-subscription-reads": "11985",
-        "x-ms-request-id": "756e8480-c6f1-4369-b7a0-14677bcd78af",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220722T060806Z:756e8480-c6f1-4369-b7a0-14677bcd78af"
+        "x-ms-correlation-request-id": "d2a20969-05a4-45d6-a245-2d8dbbdbd539",
+        "x-ms-ratelimit-remaining-subscription-reads": "11986",
+        "x-ms-request-id": "d2a20969-05a4-45d6-a245-2d8dbbdbd539",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220726T061701Z:d2a20969-05a4-45d6-a245-2d8dbbdbd539"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
@@ -56,16 +56,16 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/DataFactory-RG-5278?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/DataFactory-RG-8928?api-version=2021-04-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "22",
         "Content-Type": "application/json",
-        "traceparent": "00-045daa29cd5eb144a19c3053eb4dd58a-5700590906c55842-00",
+        "traceparent": "00-feb5470f0523234f8adb156b392a11ba-7b89211b358a1544-00",
         "User-Agent": "azsdk-net-ResourceManager/1.2.0 (.NET Core 3.1.27; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "00384e77ef5d17ded236bb42e42a011c",
+        "x-ms-client-request-id": "2c744324745105719eccb59a0d038696",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -76,19 +76,19 @@
         "Cache-Control": "no-cache",
         "Content-Length": "236",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 22 Jul 2022 06:08:06 GMT",
+        "Date": "Tue, 26 Jul 2022 06:17:01 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "fccdee63-964b-4cfc-b0a9-f912749507f2",
-        "x-ms-ratelimit-remaining-subscription-writes": "1171",
-        "x-ms-request-id": "fccdee63-964b-4cfc-b0a9-f912749507f2",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220722T060807Z:fccdee63-964b-4cfc-b0a9-f912749507f2"
+        "x-ms-correlation-request-id": "69e3e2c6-b143-4b7a-87c2-84f379f5634a",
+        "x-ms-ratelimit-remaining-subscription-writes": "1189",
+        "x-ms-request-id": "69e3e2c6-b143-4b7a-87c2-84f379f5634a",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220726T061702Z:69e3e2c6-b143-4b7a-87c2-84f379f5634a"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/DataFactory-RG-5278",
-        "name": "DataFactory-RG-5278",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/DataFactory-RG-8928",
+        "name": "DataFactory-RG-8928",
         "type": "Microsoft.Resources/resourceGroups",
         "location": "westus2",
         "properties": {
@@ -97,16 +97,16 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/DataFactory-RG-5278/providers/Microsoft.DataFactory/factories/DataFactory-2016?api-version=2018-06-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/DataFactory-RG-8928/providers/Microsoft.DataFactory/factories/DataFactory-4239?api-version=2018-06-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "48",
         "Content-Type": "application/json",
-        "traceparent": "00-e0232a3e881f2646a763319c98745a0d-38e484e683916e4b-00",
-        "User-Agent": "azsdk-net-ResourceManager.DataFactory/1.0.0-alpha.20220722.1 (.NET Core 3.1.27; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "fe261b3ea5cfbbab515b94ec5a1ef475",
+        "traceparent": "00-dc55587386cca644bb27114d8844f023-87c85a7ed6d48546-00",
+        "User-Agent": "azsdk-net-ResourceManager.DataFactory/1.0.0-alpha.20220726.1 (.NET Core 3.1.27; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "a67441bc3d6c8ff7ade10a2ade97a37e",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -119,42 +119,247 @@
         "Cache-Control": "no-cache",
         "Content-Length": "466",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 22 Jul 2022 06:08:10 GMT",
+        "Date": "Tue, 26 Jul 2022 06:17:07 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "d7b0b4e5-7aee-414c-b357-0878f0b0efb1",
-        "x-ms-ratelimit-remaining-subscription-writes": "1170",
-        "x-ms-request-id": "d7b0b4e5-7aee-414c-b357-0878f0b0efb1",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220722T060811Z:d7b0b4e5-7aee-414c-b357-0878f0b0efb1"
+        "x-ms-correlation-request-id": "5604607c-d0eb-460f-a944-0b510ef147c3",
+        "x-ms-ratelimit-remaining-subscription-writes": "1188",
+        "x-ms-request-id": "5604607c-d0eb-460f-a944-0b510ef147c3",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220726T061707Z:5604607c-d0eb-460f-a944-0b510ef147c3"
       },
       "ResponseBody": {
-        "name": "DataFactory-2016",
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/datafactory-rg-5278/providers/Microsoft.DataFactory/factories/datafactory-2016",
+        "name": "DataFactory-4239",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/datafactory-rg-8928/providers/Microsoft.DataFactory/factories/datafactory-4239",
         "type": "Microsoft.DataFactory/factories",
         "properties": {
           "provisioningState": "Succeeded",
-          "createTime": "2022-07-22T06:08:10.8513967Z",
+          "createTime": "2022-07-26T06:17:06.1735184Z",
           "version": "2018-06-01"
         },
-        "eTag": "\u00223b00514d-0000-0800-0000-62da3eca0000\u0022",
+        "eTag": "\u00221600c602-0000-0800-0000-62df86e20000\u0022",
         "location": "westus2",
         "tags": {}
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/datafactory-rg-5278/providers/Microsoft.DataFactory/factories/datafactory-2016/linkedservices/LinkedService6271?api-version=2018-06-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/DataFactory-RG-8928/providers/Microsoft.Storage/storageAccounts/220726datafactory3833?api-version=2021-09-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "107",
+        "Content-Type": "application/json",
+        "traceparent": "00-f481590d1e4815459a1b3c6e7320436f-947d755aa0e2a343-00",
+        "User-Agent": "azsdk-net-ResourceManager.Storage/1.0.0-alpha.20220725.1 (.NET Core 3.1.27; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "436802f1e588aa15db3f50a5e5905527",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "sku": {
+          "name": "Standard_LRS"
+        },
+        "kind": "BlobStorage",
+        "location": "westus2",
+        "properties": {
+          "accessTier": "Hot"
+        }
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "0",
+        "Content-Type": "text/plain; charset=utf-8",
+        "Date": "Tue, 26 Jul 2022 06:17:11 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Storage/locations/westus2/asyncoperations/2f73af03-658e-4d43-9537-b189238275a8?monitor=true\u0026api-version=2021-09-01",
+        "Pragma": "no-cache",
+        "Retry-After": "17",
+        "Server": "Microsoft-Azure-Storage-Resource-Provider/1.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "436802f1e588aa15db3f50a5e5905527",
+        "x-ms-correlation-request-id": "5e06c998-7573-411a-9386-9514af711b75",
+        "x-ms-ratelimit-remaining-subscription-writes": "1187",
+        "x-ms-request-id": "2f73af03-658e-4d43-9537-b189238275a8",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220726T061711Z:5e06c998-7573-411a-9386-9514af711b75"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Storage/locations/westus2/asyncoperations/2f73af03-658e-4d43-9537-b189238275a8?monitor=true\u0026api-version=2021-09-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-f481590d1e4815459a1b3c6e7320436f-62ebe5492bebe14f-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.0 (.NET Core 3.1.27; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "001baf36521e5b335ffc90fea7e9c851",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "0",
+        "Content-Type": "text/plain; charset=utf-8",
+        "Date": "Tue, 26 Jul 2022 06:17:11 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Storage/locations/westus2/asyncoperations/2f73af03-658e-4d43-9537-b189238275a8?monitor=true\u0026api-version=2021-09-01",
+        "Pragma": "no-cache",
+        "Retry-After": "17",
+        "Server": "Microsoft-Azure-Storage-Resource-Provider/1.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "001baf36521e5b335ffc90fea7e9c851",
+        "x-ms-correlation-request-id": "47f4d4d2-ea14-45ed-a6e7-d907273ddd7a",
+        "x-ms-ratelimit-remaining-subscription-reads": "11985",
+        "x-ms-request-id": "89b36cc9-c82b-4ba6-9a13-cf61bf4a1ff3",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220726T061711Z:47f4d4d2-ea14-45ed-a6e7-d907273ddd7a"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Storage/locations/westus2/asyncoperations/2f73af03-658e-4d43-9537-b189238275a8?monitor=true\u0026api-version=2021-09-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-f481590d1e4815459a1b3c6e7320436f-73ba09cb9c6dbe49-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.2.0 (.NET Core 3.1.27; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "e14d03b497d481511b1d5e0975ab64b4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1279",
+        "Content-Type": "application/json",
+        "Date": "Tue, 26 Jul 2022 06:17:28 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-Azure-Storage-Resource-Provider/1.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "e14d03b497d481511b1d5e0975ab64b4",
+        "x-ms-correlation-request-id": "3d91e0dc-8b2f-4a57-b0dd-125e8255dd3f",
+        "x-ms-ratelimit-remaining-subscription-reads": "11984",
+        "x-ms-request-id": "ebcaaa5d-426d-4769-a2d9-5540a7873311",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220726T061729Z:3d91e0dc-8b2f-4a57-b0dd-125e8255dd3f"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "Standard_LRS",
+          "tier": "Standard"
+        },
+        "kind": "BlobStorage",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/DataFactory-RG-8928/providers/Microsoft.Storage/storageAccounts/220726datafactory3833",
+        "name": "220726datafactory3833",
+        "type": "Microsoft.Storage/storageAccounts",
+        "location": "westus2",
+        "tags": {},
+        "properties": {
+          "keyCreationTime": {
+            "key1": "2022-07-26T06:17:08.9204338Z",
+            "key2": "2022-07-26T06:17:08.9204338Z"
+          },
+          "privateEndpointConnections": [],
+          "minimumTlsVersion": "TLS1_0",
+          "allowBlobPublicAccess": true,
+          "networkAcls": {
+            "bypass": "AzureServices",
+            "virtualNetworkRules": [],
+            "ipRules": [],
+            "defaultAction": "Allow"
+          },
+          "supportsHttpsTrafficOnly": true,
+          "encryption": {
+            "services": {
+              "file": {
+                "keyType": "Account",
+                "enabled": true,
+                "lastEnabledTime": "2022-07-26T06:17:08.9360206Z"
+              },
+              "blob": {
+                "keyType": "Account",
+                "enabled": true,
+                "lastEnabledTime": "2022-07-26T06:17:08.9360206Z"
+              }
+            },
+            "keySource": "Microsoft.Storage"
+          },
+          "accessTier": "Hot",
+          "provisioningState": "Succeeded",
+          "creationTime": "2022-07-26T06:17:08.8266781Z",
+          "primaryEndpoints": {
+            "dfs": "https://220726datafactory3833.dfs.core.windows.net/",
+            "blob": "https://220726datafactory3833.blob.core.windows.net/",
+            "table": "https://220726datafactory3833.table.core.windows.net/"
+          },
+          "primaryLocation": "westus2",
+          "statusOfPrimary": "available"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/DataFactory-RG-8928/providers/Microsoft.Storage/storageAccounts/220726datafactory3833/listKeys?api-version=2021-09-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "0",
+        "traceparent": "00-0fa09cd4616842479d9802eb0aa4ddc5-d0a8b096705a184b-00",
+        "User-Agent": "azsdk-net-ResourceManager.Storage/1.0.0-alpha.20220725.1 (.NET Core 3.1.27; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "356e273854743e098273879ce0e8a3fb",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "222",
+        "Content-Type": "application/json",
+        "Date": "Tue, 26 Jul 2022 06:17:29 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-Azure-Storage-Resource-Provider/1.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "356e273854743e098273879ce0e8a3fb",
+        "x-ms-correlation-request-id": "a63ff04f-ba1b-4c0e-8419-c78e7f1b5314",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "11997",
+        "x-ms-request-id": "8c4f7f9a-fb51-404a-a73d-5c64bf5164c2",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220726T061729Z:a63ff04f-ba1b-4c0e-8419-c78e7f1b5314"
+      },
+      "ResponseBody": {
+        "keys": [
+          {
+            "creationTime": "2022-07-26T06:17:08.9204338Z",
+            "keyName": "key1",
+            "value": "Sanitized",
+            "permissions": "FULL"
+          },
+          {
+            "creationTime": "2022-07-26T06:17:08.9204338Z",
+            "keyName": "key2",
+            "value": "Sanitized",
+            "permissions": "FULL"
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/datafactory-rg-8928/providers/Microsoft.DataFactory/factories/datafactory-4239/linkedservices/LinkedService8186?api-version=2018-06-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "92",
         "Content-Type": "application/json",
-        "traceparent": "00-40ee0165aa735e4f9dd6b1a34fe415a3-64c8c207b473b844-00",
-        "User-Agent": "azsdk-net-ResourceManager.DataFactory/1.0.0-alpha.20220722.1 (.NET Core 3.1.27; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "6423a01539c489296b33cee499cf9609",
+        "traceparent": "00-2a1dc68633c09546bae64a9f635fbeef-4d66cb1852ab0c4b-00",
+        "User-Agent": "azsdk-net-ResourceManager.DataFactory/1.0.0-alpha.20220726.1 (.NET Core 3.1.27; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "da43b51e54255e9e9ae500f329e5b398",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -168,44 +373,43 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "704",
+        "Content-Length": "407",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 22 Jul 2022 06:08:11 GMT",
+        "Date": "Tue, 26 Jul 2022 06:17:29 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "7796a24f-0330-4b86-be4b-b766d3cdc1ee",
-        "x-ms-ratelimit-remaining-subscription-writes": "1169",
-        "x-ms-request-id": "7796a24f-0330-4b86-be4b-b766d3cdc1ee",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220722T060812Z:7796a24f-0330-4b86-be4b-b766d3cdc1ee"
+        "x-ms-correlation-request-id": "97eae93a-09d8-4a9c-a76e-d73fade2c66f",
+        "x-ms-ratelimit-remaining-subscription-writes": "1186",
+        "x-ms-request-id": "97eae93a-09d8-4a9c-a76e-d73fade2c66f",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220726T061730Z:97eae93a-09d8-4a9c-a76e-d73fade2c66f"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/datafactory-rg-5278/providers/Microsoft.DataFactory/factories/datafactory-2016/linkedservices/LinkedService6271",
-        "name": "LinkedService6271",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/datafactory-rg-8928/providers/Microsoft.DataFactory/factories/datafactory-4239/linkedservices/LinkedService8186",
+        "name": "LinkedService8186",
         "type": "Microsoft.DataFactory/factories/linkedservices",
         "properties": {
           "type": "AzureBlobStorage",
           "typeProperties": {
-            "connectionString": "Sanitized",
-            "encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDFEMjIzNTZCLTQ0NkEtNERDOS04NTQ1LTlBNTZFMUI4QjFGRl8zM2U3ODEwYS1hZjk5LTQ5YjEtYWU4MC04MTdlNzdlYzczMTQiDQp9"
+            "connectionString": "Sanitized"
           }
         },
-        "etag": "2900f7c1-0000-0800-0000-62da3ecc0000"
+        "etag": "6500fc00-0000-0800-0000-62df86fa0000"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/datafactory-rg-5278/providers/Microsoft.DataFactory/factories/datafactory-2016/datasets/dataset9740?api-version=2018-06-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/datafactory-rg-8928/providers/Microsoft.DataFactory/factories/datafactory-4239/datasets/dataset9539?api-version=2018-06-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "118",
         "Content-Type": "application/json",
-        "traceparent": "00-8c3c8e219b5dd94b9ff6d84b44aa7234-7b6eb3dbe77b2f42-00",
-        "User-Agent": "azsdk-net-ResourceManager.DataFactory/1.0.0-alpha.20220722.1 (.NET Core 3.1.27; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "2908e343d29f7da2af015af2bdb44245",
+        "traceparent": "00-51799bfd7bbca142a03662fc334b46f9-4dfdb2cba6a6534c-00",
+        "User-Agent": "azsdk-net-ResourceManager.DataFactory/1.0.0-alpha.20220726.1 (.NET Core 3.1.27; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "937b80c55fdc0efa5f6010b4a0327963",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -213,7 +417,7 @@
           "type": null,
           "linkedServiceName": {
             "type": "LinkedServiceReference",
-            "referenceName": "LinkedService6271"
+            "referenceName": "LinkedService8186"
           }
         }
       },
@@ -222,40 +426,40 @@
         "Cache-Control": "no-cache",
         "Content-Length": "466",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 22 Jul 2022 06:08:11 GMT",
+        "Date": "Tue, 26 Jul 2022 06:17:30 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "d38ed129-10a2-43c7-9d19-29065d557df9",
-        "x-ms-ratelimit-remaining-subscription-writes": "1168",
-        "x-ms-request-id": "d38ed129-10a2-43c7-9d19-29065d557df9",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220722T060812Z:d38ed129-10a2-43c7-9d19-29065d557df9"
+        "x-ms-correlation-request-id": "b63bfc04-0445-4a29-9380-c93c38a0e5ba",
+        "x-ms-ratelimit-remaining-subscription-writes": "1185",
+        "x-ms-request-id": "b63bfc04-0445-4a29-9380-c93c38a0e5ba",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220726T061730Z:b63bfc04-0445-4a29-9380-c93c38a0e5ba"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/datafactory-rg-5278/providers/Microsoft.DataFactory/factories/datafactory-2016/datasets/dataset9740",
-        "name": "dataset9740",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/datafactory-rg-8928/providers/Microsoft.DataFactory/factories/datafactory-4239/datasets/dataset9539",
+        "name": "dataset9539",
         "type": "Microsoft.DataFactory/factories/datasets",
         "properties": {
           "type": null,
           "linkedServiceName": {
             "type": "LinkedServiceReference",
-            "referenceName": "LinkedService6271"
+            "referenceName": "LinkedService8186"
           }
         },
-        "etag": "2900f9c1-0000-0800-0000-62da3ecc0000"
+        "etag": "65000a01-0000-0800-0000-62df86fa0000"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/datafactory-rg-5278/providers/Microsoft.DataFactory/factories/datafactory-2016/datasets/dataset9740?api-version=2018-06-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/datafactory-rg-8928/providers/Microsoft.DataFactory/factories/datafactory-4239/datasets/dataset9539?api-version=2018-06-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-26efe5f002e2bb439c3de90fa6a1dc7d-f3edbff4f8312c4e-00",
-        "User-Agent": "azsdk-net-ResourceManager.DataFactory/1.0.0-alpha.20220722.1 (.NET Core 3.1.27; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "de8acfec7ab8fce2756372ddd6b78cfe",
+        "traceparent": "00-6da5d71d794b114a8787faf4752b70ef-71412fb5553bf748-00",
+        "User-Agent": "azsdk-net-ResourceManager.DataFactory/1.0.0-alpha.20220726.1 (.NET Core 3.1.27; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "21f6575212dacfd3d6da6f084b588ed3",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -264,35 +468,152 @@
         "Cache-Control": "no-cache",
         "Content-Length": "466",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 22 Jul 2022 06:08:11 GMT",
+        "Date": "Tue, 26 Jul 2022 06:17:30 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "52b4a919-d3e2-44f1-bc6d-cfa98bd28909",
-        "x-ms-ratelimit-remaining-subscription-reads": "11984",
-        "x-ms-request-id": "52b4a919-d3e2-44f1-bc6d-cfa98bd28909",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220722T060812Z:52b4a919-d3e2-44f1-bc6d-cfa98bd28909"
+        "x-ms-correlation-request-id": "907a37d1-1425-43fb-a148-2d547146a48c",
+        "x-ms-ratelimit-remaining-subscription-reads": "11983",
+        "x-ms-request-id": "907a37d1-1425-43fb-a148-2d547146a48c",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220726T061731Z:907a37d1-1425-43fb-a148-2d547146a48c"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/datafactory-rg-5278/providers/Microsoft.DataFactory/factories/datafactory-2016/datasets/dataset9740",
-        "name": "dataset9740",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/datafactory-rg-8928/providers/Microsoft.DataFactory/factories/datafactory-4239/datasets/dataset9539",
+        "name": "dataset9539",
         "type": "Microsoft.DataFactory/factories/datasets",
         "properties": {
           "type": null,
           "linkedServiceName": {
             "type": "LinkedServiceReference",
-            "referenceName": "LinkedService6271"
+            "referenceName": "LinkedService8186"
           }
         },
-        "etag": "2900f9c1-0000-0800-0000-62da3ecc0000"
+        "etag": "65000a01-0000-0800-0000-62df86fa0000"
       }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/DataFactory-RG-8928/providers/Microsoft.Storage/storageAccounts?api-version=2021-09-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-101873e2ff55e54d9f7c913b93f9688d-d8386475e060cd41-00",
+        "User-Agent": "azsdk-net-ResourceManager.Storage/1.0.0-alpha.20220725.1 (.NET Core 3.1.27; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "232304042380554248cbc6f38da9f9b2",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1291",
+        "Content-Type": "application/json",
+        "Date": "Tue, 26 Jul 2022 06:17:31 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-Azure-Storage-Resource-Provider/1.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "232304042380554248cbc6f38da9f9b2",
+        "x-ms-correlation-request-id": "cddf6a71-ca14-46ab-87d9-cdddc547665e",
+        "x-ms-ratelimit-remaining-subscription-reads": "11982",
+        "x-ms-request-id": "1da9dc42-7654-447a-b927-a3a19ac52844",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220726T061731Z:cddf6a71-ca14-46ab-87d9-cdddc547665e"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "sku": {
+              "name": "Standard_LRS",
+              "tier": "Standard"
+            },
+            "kind": "BlobStorage",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/DataFactory-RG-8928/providers/Microsoft.Storage/storageAccounts/220726datafactory3833",
+            "name": "220726datafactory3833",
+            "type": "Microsoft.Storage/storageAccounts",
+            "location": "westus2",
+            "tags": {},
+            "properties": {
+              "keyCreationTime": {
+                "key1": "2022-07-26T06:17:08.9204338Z",
+                "key2": "2022-07-26T06:17:08.9204338Z"
+              },
+              "privateEndpointConnections": [],
+              "minimumTlsVersion": "TLS1_0",
+              "allowBlobPublicAccess": true,
+              "networkAcls": {
+                "bypass": "AzureServices",
+                "virtualNetworkRules": [],
+                "ipRules": [],
+                "defaultAction": "Allow"
+              },
+              "supportsHttpsTrafficOnly": true,
+              "encryption": {
+                "services": {
+                  "file": {
+                    "keyType": "Account",
+                    "enabled": true,
+                    "lastEnabledTime": "2022-07-26T06:17:08.9360206Z"
+                  },
+                  "blob": {
+                    "keyType": "Account",
+                    "enabled": true,
+                    "lastEnabledTime": "2022-07-26T06:17:08.9360206Z"
+                  }
+                },
+                "keySource": "Microsoft.Storage"
+              },
+              "accessTier": "Hot",
+              "provisioningState": "Succeeded",
+              "creationTime": "2022-07-26T06:17:08.8266781Z",
+              "primaryEndpoints": {
+                "dfs": "https://220726datafactory3833.dfs.core.windows.net/",
+                "blob": "https://220726datafactory3833.blob.core.windows.net/",
+                "table": "https://220726datafactory3833.table.core.windows.net/"
+              },
+              "primaryLocation": "westus2",
+              "statusOfPrimary": "available"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/DataFactory-RG-8928/providers/Microsoft.Storage/storageAccounts/220726datafactory3833?api-version=2021-09-01",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-030c4ff6e347264abb5ce4287f03d124-fd3f2b0f643e3a45-00",
+        "User-Agent": "azsdk-net-ResourceManager.Storage/1.0.0-alpha.20220725.1 (.NET Core 3.1.27; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "8ed68f8776bdb201acabbc01f0f1c307",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "0",
+        "Content-Type": "text/plain; charset=utf-8",
+        "Date": "Tue, 26 Jul 2022 06:17:34 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-Azure-Storage-Resource-Provider/1.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "8ed68f8776bdb201acabbc01f0f1c307",
+        "x-ms-correlation-request-id": "3004f5a3-f271-4438-9710-3163d8504e4c",
+        "x-ms-ratelimit-remaining-subscription-deletes": "14995",
+        "x-ms-request-id": "f098d3ac-4cc8-4ea8-92ba-51dcec000bc4",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220726T061735Z:3004f5a3-f271-4438-9710-3163d8504e4c"
+      },
+      "ResponseBody": null
     }
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
-    "RandomSeed": "447773703",
+    "RandomSeed": "546526064",
     "RESOURCE_MANAGER_URL": null,
     "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
   }

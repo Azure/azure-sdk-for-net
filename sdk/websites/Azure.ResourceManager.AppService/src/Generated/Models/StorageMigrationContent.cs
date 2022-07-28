@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="azurefilesConnectionString"> AzureFiles connection string. </param>
         /// <param name="azurefilesShare"> AzureFiles share. </param>
         /// <param name="switchSiteAfterMigration"> &lt;code&gt;true&lt;/code&gt;if the app should be switched over; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="isBlockWriteAccessToSite"> &lt;code&gt;true&lt;/code&gt; if the app should be read only during copy operation; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="blockWriteAccessToSite"> &lt;code&gt;true&lt;/code&gt; if the app should be read only during copy operation; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal StorageMigrationContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string azurefilesConnectionString, string azurefilesShare, bool? switchSiteAfterMigration, bool? isBlockWriteAccessToSite, string kind) : base(id, name, resourceType, systemData)
+        internal StorageMigrationContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string azurefilesConnectionString, string azurefilesShare, bool? switchSiteAfterMigration, bool? blockWriteAccessToSite, string kind) : base(id, name, resourceType, systemData)
         {
             AzurefilesConnectionString = azurefilesConnectionString;
             AzurefilesShare = azurefilesShare;
             SwitchSiteAfterMigration = switchSiteAfterMigration;
-            IsBlockWriteAccessToSite = isBlockWriteAccessToSite;
+            BlockWriteAccessToSite = blockWriteAccessToSite;
             Kind = kind;
         }
 
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> &lt;code&gt;true&lt;/code&gt;if the app should be switched over; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         public bool? SwitchSiteAfterMigration { get; set; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the app should be read only during copy operation; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
-        public bool? IsBlockWriteAccessToSite { get; set; }
+        public bool? BlockWriteAccessToSite { get; set; }
         /// <summary> Kind of resource. </summary>
         public string Kind { get; set; }
     }

@@ -45,9 +45,6 @@ namespace Azure.Storage.Files.DataLake.Perf.Options
             }
         }
 
-        [Option("transfer-validation")]
-        public StorageChecksumAlgorithm? ChecksumAlgorithm { get; set; }
-
         public StorageTransferOptions StorageTransferOptions { get; private set; }
 
         DataLakeClientOptions IDataLakeClientOptionsProvider.ClientOptions
@@ -55,12 +52,6 @@ namespace Azure.Storage.Files.DataLake.Perf.Options
             get
             {
                 var options = new DataLakeClientOptions();
-                if (ChecksumAlgorithm.HasValue)
-                {
-                    options.TransferValidation.Upload.ChecksumAlgorithm = ChecksumAlgorithm.Value;
-                    options.TransferValidation.Download.ChecksumAlgorithm = ChecksumAlgorithm.Value;
-                }
-                return options;
             }
         }
 

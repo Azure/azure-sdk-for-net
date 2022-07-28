@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="isRemoteDebuggingEnabled"> &lt;code&gt;true&lt;/code&gt; if remote debugging is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="remoteDebuggingVersion"> Remote debugging version. </param>
         /// <param name="isHttpLoggingEnabled"> &lt;code&gt;true&lt;/code&gt; if HTTP logging is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="isAcrUseManagedIdentityCreds"> Flag to use Managed Identity Creds for ACR pull. </param>
+        /// <param name="acrUseManagedIdentityCreds"> Flag to use Managed Identity Creds for ACR pull. </param>
         /// <param name="acrUserManagedIdentityId"> If using user managed identity, the user managed identity ClientId. </param>
         /// <param name="logsDirectorySizeLimit"> HTTP logs directory size limit. </param>
         /// <param name="isDetailedErrorLoggingEnabled"> &lt;code&gt;true&lt;/code&gt; if detailed error logging is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="handlerMappings"> Handler mappings. </param>
         /// <param name="documentRoot"> Document root. </param>
         /// <param name="scmType"> SCM type. </param>
-        /// <param name="isUse32BitWorkerProcess"> &lt;code&gt;true&lt;/code&gt; to use 32-bit worker process; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="use32BitWorkerProcess"> &lt;code&gt;true&lt;/code&gt; to use 32-bit worker process; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="isWebSocketsEnabled"> &lt;code&gt;true&lt;/code&gt; if WebSocket is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="isAlwaysOn"> &lt;code&gt;true&lt;/code&gt; if Always On is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="javaVersion"> Java version. </param>
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="loadBalancing"> Site load balancing. </param>
         /// <param name="experiments"> This is work around for polymorphic types. </param>
         /// <param name="limits"> Site limits. </param>
-        /// <param name="autoHealEnabled"> &lt;code&gt;true&lt;/code&gt; if Auto Heal is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="isAutoHealEnabled"> &lt;code&gt;true&lt;/code&gt; if Auto Heal is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="autoHealRules"> Auto Heal rules. </param>
         /// <param name="tracingOptions"> Tracing options. </param>
         /// <param name="vnetName"> Virtual Network name. </param>
@@ -82,8 +82,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="keyVaultReferenceIdentity"> Identity to use for Key Vault Reference authentication. </param>
         /// <param name="ipSecurityRestrictions"> IP security restrictions for main. </param>
         /// <param name="scmIPSecurityRestrictions"> IP security restrictions for scm. </param>
-        /// <param name="isScmIPSecurityRestrictionsUseMain"> IP security restrictions for scm to use main. </param>
-        /// <param name="isHttp2Enabled"> Http20Enabled: configures a web site to allow clients to connect over http2.0. </param>
+        /// <param name="scmIPSecurityRestrictionsUseMain"> IP security restrictions for scm to use main. </param>
+        /// <param name="isHttp20Enabled"> Http20Enabled: configures a web site to allow clients to connect over http2.0. </param>
         /// <param name="minTlsVersion"> MinTlsVersion: configures the minimum version of TLS required for SSL requests. </param>
         /// <param name="scmMinTlsVersion"> ScmMinTlsVersion: configures the minimum version of TLS required for SSL requests for SCM site. </param>
         /// <param name="ftpsState"> State of FTP / FTPS service. </param>
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// </param>
         /// <param name="azureStorageAccounts"> List of Azure Storage Accounts. </param>
         /// <param name="publicNetworkAccess"> Property to allow or block all public traffic. </param>
-        internal SiteConfigProperties(int? numberOfWorkers, IList<string> defaultDocuments, string netFrameworkVersion, string phpVersion, string pythonVersion, string nodeVersion, string powerShellVersion, string linuxFxVersion, string windowsFxVersion, bool? isRequestTracingEnabled, DateTimeOffset? requestTracingExpirationOn, bool? isRemoteDebuggingEnabled, string remoteDebuggingVersion, bool? isHttpLoggingEnabled, bool? isAcrUseManagedIdentityCreds, string acrUserManagedIdentityId, int? logsDirectorySizeLimit, bool? isDetailedErrorLoggingEnabled, string publishingUsername, IList<NameValuePair> appSettings, IList<ConnStringInfo> connectionStrings, SiteMachineKey machineKey, IList<HandlerMapping> handlerMappings, string documentRoot, ScmType? scmType, bool? isUse32BitWorkerProcess, bool? isWebSocketsEnabled, bool? isAlwaysOn, string javaVersion, string javaContainer, string javaContainerVersion, string appCommandLine, ManagedPipelineMode? managedPipelineMode, IList<VirtualApplication> virtualApplications, SiteLoadBalancing? loadBalancing, Experiments experiments, SiteLimits limits, bool? autoHealEnabled, AutoHealRules autoHealRules, string tracingOptions, string vnetName, bool? isVnetRouteAllEnabled, int? vnetPrivatePortsCount, CorsSettings cors, PushSettings push, ApiDefinitionInfo apiDefinition, ApiManagementConfig apiManagementConfig, string autoSwapSlotName, bool? isLocalMySqlEnabled, int? managedServiceIdentityId, int? xManagedServiceIdentityId, string keyVaultReferenceIdentity, IList<IPSecurityRestriction> ipSecurityRestrictions, IList<IPSecurityRestriction> scmIPSecurityRestrictions, bool? isScmIPSecurityRestrictionsUseMain, bool? isHttp2Enabled, SupportedTlsVersion? minTlsVersion, SupportedTlsVersion? scmMinTlsVersion, FtpsState? ftpsState, int? preWarmedInstanceCount, int? functionAppScaleLimit, string healthCheckPath, bool? isFunctionsRuntimeScaleMonitoringEnabled, string websiteTimeZone, int? minimumElasticInstanceCount, IDictionary<string, AzureStorageInfoValue> azureStorageAccounts, string publicNetworkAccess)
+        internal SiteConfigProperties(int? numberOfWorkers, IList<string> defaultDocuments, string netFrameworkVersion, string phpVersion, string pythonVersion, string nodeVersion, string powerShellVersion, string linuxFxVersion, string windowsFxVersion, bool? isRequestTracingEnabled, DateTimeOffset? requestTracingExpirationOn, bool? isRemoteDebuggingEnabled, string remoteDebuggingVersion, bool? isHttpLoggingEnabled, bool? acrUseManagedIdentityCreds, string acrUserManagedIdentityId, int? logsDirectorySizeLimit, bool? isDetailedErrorLoggingEnabled, string publishingUsername, IList<NameValuePair> appSettings, IList<ConnStringInfo> connectionStrings, SiteMachineKey machineKey, IList<HandlerMapping> handlerMappings, string documentRoot, ScmType? scmType, bool? use32BitWorkerProcess, bool? isWebSocketsEnabled, bool? isAlwaysOn, string javaVersion, string javaContainer, string javaContainerVersion, string appCommandLine, ManagedPipelineMode? managedPipelineMode, IList<VirtualApplication> virtualApplications, SiteLoadBalancing? loadBalancing, Experiments experiments, SiteLimits limits, bool? isAutoHealEnabled, AutoHealRules autoHealRules, string tracingOptions, string vnetName, bool? isVnetRouteAllEnabled, int? vnetPrivatePortsCount, CorsSettings cors, PushSettings push, ApiDefinitionInfo apiDefinition, ApiManagementConfig apiManagementConfig, string autoSwapSlotName, bool? isLocalMySqlEnabled, int? managedServiceIdentityId, int? xManagedServiceIdentityId, string keyVaultReferenceIdentity, IList<IPSecurityRestriction> ipSecurityRestrictions, IList<IPSecurityRestriction> scmIPSecurityRestrictions, bool? scmIPSecurityRestrictionsUseMain, bool? isHttp20Enabled, SupportedTlsVersion? minTlsVersion, SupportedTlsVersion? scmMinTlsVersion, FtpsState? ftpsState, int? preWarmedInstanceCount, int? functionAppScaleLimit, string healthCheckPath, bool? isFunctionsRuntimeScaleMonitoringEnabled, string websiteTimeZone, int? minimumElasticInstanceCount, IDictionary<string, AzureStorageInfoValue> azureStorageAccounts, string publicNetworkAccess)
         {
             NumberOfWorkers = numberOfWorkers;
             DefaultDocuments = defaultDocuments;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.AppService.Models
             IsRemoteDebuggingEnabled = isRemoteDebuggingEnabled;
             RemoteDebuggingVersion = remoteDebuggingVersion;
             IsHttpLoggingEnabled = isHttpLoggingEnabled;
-            IsAcrUseManagedIdentityCreds = isAcrUseManagedIdentityCreds;
+            AcrUseManagedIdentityCreds = acrUseManagedIdentityCreds;
             AcrUserManagedIdentityId = acrUserManagedIdentityId;
             LogsDirectorySizeLimit = logsDirectorySizeLimit;
             IsDetailedErrorLoggingEnabled = isDetailedErrorLoggingEnabled;
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.AppService.Models
             HandlerMappings = handlerMappings;
             DocumentRoot = documentRoot;
             ScmType = scmType;
-            IsUse32BitWorkerProcess = isUse32BitWorkerProcess;
+            Use32BitWorkerProcess = use32BitWorkerProcess;
             IsWebSocketsEnabled = isWebSocketsEnabled;
             IsAlwaysOn = isAlwaysOn;
             JavaVersion = javaVersion;
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.AppService.Models
             LoadBalancing = loadBalancing;
             Experiments = experiments;
             Limits = limits;
-            AutoHealEnabled = autoHealEnabled;
+            IsAutoHealEnabled = isAutoHealEnabled;
             AutoHealRules = autoHealRules;
             TracingOptions = tracingOptions;
             VnetName = vnetName;
@@ -164,8 +164,8 @@ namespace Azure.ResourceManager.AppService.Models
             KeyVaultReferenceIdentity = keyVaultReferenceIdentity;
             IPSecurityRestrictions = ipSecurityRestrictions;
             ScmIPSecurityRestrictions = scmIPSecurityRestrictions;
-            IsScmIPSecurityRestrictionsUseMain = isScmIPSecurityRestrictionsUseMain;
-            IsHttp2Enabled = isHttp2Enabled;
+            ScmIPSecurityRestrictionsUseMain = scmIPSecurityRestrictionsUseMain;
+            IsHttp20Enabled = isHttp20Enabled;
             MinTlsVersion = minTlsVersion;
             ScmMinTlsVersion = scmMinTlsVersion;
             FtpsState = ftpsState;
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> &lt;code&gt;true&lt;/code&gt; if HTTP logging is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         public bool? IsHttpLoggingEnabled { get; set; }
         /// <summary> Flag to use Managed Identity Creds for ACR pull. </summary>
-        public bool? IsAcrUseManagedIdentityCreds { get; set; }
+        public bool? AcrUseManagedIdentityCreds { get; set; }
         /// <summary> If using user managed identity, the user managed identity ClientId. </summary>
         public string AcrUserManagedIdentityId { get; set; }
         /// <summary> HTTP logs directory size limit. </summary>
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> SCM type. </summary>
         public ScmType? ScmType { get; set; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; to use 32-bit worker process; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
-        public bool? IsUse32BitWorkerProcess { get; set; }
+        public bool? Use32BitWorkerProcess { get; set; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if WebSocket is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         public bool? IsWebSocketsEnabled { get; set; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if Always On is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Site limits. </summary>
         public SiteLimits Limits { get; set; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if Auto Heal is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
-        public bool? AutoHealEnabled { get; set; }
+        public bool? IsAutoHealEnabled { get; set; }
         /// <summary> Auto Heal rules. </summary>
         public AutoHealRules AutoHealRules { get; set; }
         /// <summary> Tracing options. </summary>
@@ -323,9 +323,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> IP security restrictions for scm. </summary>
         public IList<IPSecurityRestriction> ScmIPSecurityRestrictions { get; set; }
         /// <summary> IP security restrictions for scm to use main. </summary>
-        public bool? IsScmIPSecurityRestrictionsUseMain { get; set; }
+        public bool? ScmIPSecurityRestrictionsUseMain { get; set; }
         /// <summary> Http20Enabled: configures a web site to allow clients to connect over http2.0. </summary>
-        public bool? IsHttp2Enabled { get; set; }
+        public bool? IsHttp20Enabled { get; set; }
         /// <summary> MinTlsVersion: configures the minimum version of TLS required for SSL requests. </summary>
         public SupportedTlsVersion? MinTlsVersion { get; set; }
         /// <summary> ScmMinTlsVersion: configures the minimum version of TLS required for SSL requests for SCM site. </summary>
