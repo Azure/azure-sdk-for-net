@@ -143,7 +143,6 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual(ManagedServiceIdentityType.None, updatedPolicyAssignment.Data.ManagedIdentity.ManagedServiceIdentityType);
             Assert.AreEqual(SystemAssignedServiceIdentityType.None, updatedPolicyAssignment.Data.Identity.SystemAssignedServiceIdentityType);
         }
-#pragma warning restore CS0618 // This type is obsolete and will be removed in a future release.
 
         private void AssertValidPolicyAssignment(PolicyAssignmentResource model, PolicyAssignmentResource getResult)
         {
@@ -182,5 +181,6 @@ namespace Azure.ResourceManager.Tests
                 }
             }
         }
+#pragma warning restore CS0618 // This type is obsolete and will be removed in a future release.
     }
 }

@@ -51,6 +51,5 @@ namespace Azure.ResourceManager.Models
             get => Identity.ManagedServiceIdentityType.ToString();
             set => Identity.ManagedServiceIdentityType = value.ToString();
         }
-
     }
 }
