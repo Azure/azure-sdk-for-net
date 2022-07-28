@@ -8,7 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Redis.Models
 {
@@ -17,6 +19,14 @@ namespace Azure.ResourceManager.Redis.Models
         internal static OperationStatus DeserializeOperationStatus(JsonElement element)
         {
             Optional<IReadOnlyDictionary<string, BinaryData>> properties = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<string> name = default;
+            string status = default;
+            Optional<float> percentComplete = default;
+            Optional<DateTimeOffset> startTime = default;
+            Optional<DateTimeOffset> endTime = default;
+            Optional<IReadOnlyList<OperationStatusResult>> operations = default;
+            Optional<ResponseError> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"))
@@ -34,8 +44,83 @@ namespace Azure.ResourceManager.Redis.Models
                     properties = dictionary;
                     continue;
                 }
+                if (property.NameEquals("id"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("name"))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("status"))
+                {
+                    status = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("percentComplete"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    percentComplete = property.Value.GetSingle();
+                    continue;
+                }
+                if (property.NameEquals("startTime"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    startTime = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("endTime"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    endTime = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("operations"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<OperationStatusResult> array = new List<OperationStatusResult>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(JsonSerializer.Deserialize<OperationStatusResult>(item.ToString()));
+                    }
+                    operations = array;
+                    continue;
+                }
+                if (property.NameEquals("error"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.ToString());
+                    continue;
+                }
             }
-            return new OperationStatus(Optional.ToDictionary(properties));
+            return new OperationStatus(id.Value, name.Value, status, Optional.ToNullable(percentComplete), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToList(operations), error.Value, Optional.ToDictionary(properties));
         }
     }
 }

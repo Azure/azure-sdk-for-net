@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         /// <param name="sqlStorageUpdateSettings"> SQL storage update settings. </param>
         /// <param name="additionalFeaturesServerConfigurations"> Additional SQL feature settings. </param>
         /// <param name="sqlInstanceSettings"> SQL Instance settings. </param>
-        internal ServerConfigurationsManagementSettings(SqlConnectivityUpdateSettings sqlConnectivityUpdateSettings, SqlWorkloadTypeUpdateSettings sqlWorkloadTypeUpdateSettings, SqlStorageUpdateSettings sqlStorageUpdateSettings, AdditionalFeaturesServerConfigurations additionalFeaturesServerConfigurations, SQLInstanceSettings sqlInstanceSettings)
+        internal ServerConfigurationsManagementSettings(SqlConnectivityUpdateSettings sqlConnectivityUpdateSettings, SqlWorkloadTypeUpdateSettings sqlWorkloadTypeUpdateSettings, SqlStorageUpdateSettings sqlStorageUpdateSettings, AdditionalFeaturesServerConfigurations additionalFeaturesServerConfigurations, SqlInstanceSettings sqlInstanceSettings)
         {
             SqlConnectivityUpdateSettings = sqlConnectivityUpdateSettings;
             SqlWorkloadTypeUpdateSettings = sqlWorkloadTypeUpdateSettings;
@@ -63,6 +63,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         }
 
         /// <summary> SQL Instance settings. </summary>
-        public SQLInstanceSettings SqlInstanceSettings { get; set; }
+        public SqlInstanceSettings SqlInstanceSettings { get; set; }
     }
 }
