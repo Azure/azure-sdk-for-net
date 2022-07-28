@@ -687,7 +687,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 };
 
                 link = new ReceivingAmqpLink(linkSettings);
-                linkSettings.LinkName = $"{Id};{connection.Identifier}:{session.Identifier}:{link.Identifier}";
+                linkSettings.LinkName = $"{connection.Settings.ContainerId};{connection.Identifier}:{session.Identifier}:{link.Identifier}:{linkSettings.Source.ToString()}";
 
                 link.AttachTo(session);
 
