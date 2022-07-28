@@ -7,7 +7,7 @@ namespace Azure.Test.Perf
 {
     public static class NumberFormatter
     {
-        // Formats a positive double with the specified minimum number of significant digits.
+        // Formats a double with the specified minimum number of significant digits.
         // Digits to the left of the decimal point are never dropped.
         // Examples:
         // - Format(12345, 4) -> "12,345"
@@ -15,17 +15,18 @@ namespace Azure.Test.Perf
         // - Format(0.00012345, 4) -> "0.0001234"
         public static string Format(double value, int minSignificantDigits)
         {
-            if (value <= 0)
-            {
-                throw new ArgumentException("Must be greater than zero", nameof(value));
-            }
-
             if (minSignificantDigits <= 0)
             {
                 throw new ArgumentException("Must be greater than zero", nameof(minSignificantDigits));
             }
 
-            var log = Math.Log10(value);
+            // Signficant digits are undefined for the number zero, so hardcode to string "0".
+            if (value == 0)
+            {
+                return "0";
+            }
+
+            var log = Math.Log10(Math.Abs(value));
             var significantDigits = Math.Ceiling(Math.Max(log, minSignificantDigits));
 
             var divisor = Math.Pow(10, Math.Ceiling(log - significantDigits));
