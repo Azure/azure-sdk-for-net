@@ -18,9 +18,11 @@ TBD
 
 ## Model Generation
 
+Models are defined as partial classes with one or more constructors, properties, and methods that read from/write to wire formats.
+
 ### Model Namespace
 
-Generated models will be added to a `.Models` namespace.
+Generated models will be defined in a `.Models` namespace.
 
 ### Type mappings from Cadl to .NET
 
@@ -28,7 +30,7 @@ The following table shows a mapping from Cadl built-in types to the correspondin
 
 Cadl Type | .NET Type | OpenAPI Type | GitHub Issue | Notes
 ------------------- | -------- | -- | -- | -------------
-string | string | string | [autorest.csharp #2337](https://github.com/Azure/autorest.csharp/issues/2337) |
+string | string | string | [autorest.csharp #2337](https://github.com/Azure/autorest.csharp/issues/2337) | [PrimitivePropertyModel.cs](https://github.com/annelo-msft/azure-sdk-for-net/blob/cadl-model-primitive-properties/sdk/template/Azure.Template/src/Generated/Models/PrimitivePropertyModel.cs) [PrimitivePropertyModel.Serialization.cs](https://github.com/annelo-msft/azure-sdk-for-net/blob/cadl-model-primitive-properties/sdk/template/Azure.Template/src/Generated/Models/PrimitivePropertyModel.Serialization.cs)
 bytes | bytes[] | type: string, format: byte | [autorest.csharp #2337](https://github.com/Azure/autorest.csharp/issues/2337) |
 int32  | int | type: integer, format: int32 | [autorest.csharp #2337](https://github.com/Azure/autorest.csharp/issues/2337) |
 int64  | long | type: integer, format: int64 | [autorest.csharp #2337](https://github.com/Azure/autorest.csharp/issues/2337) |
@@ -55,6 +57,8 @@ Collection Property | `IList<T>` get-only | `IReadOnlyList<T>` get-only | `IList
 
 ### Model Constructors
 
+Models have one or more constructors as follows.
+
 #### Main Constructor
 
 - Accessibility is specified in model shape table above
@@ -65,13 +69,24 @@ Collection Property | `IList<T>` get-only | `IReadOnlyList<T>` get-only | `IList
 
 #### Serialization Constructor
 
-- Generated for Output and Round-trip types
 - Internal accessibility
+- Generated for Output and Round-trip types
 - Takes required and optional parameters
 - Takes list properties as `IReadOnlyList<T>` parameters for Output models and `IList<T>` parameters for Round-trip models
 - List properties are initialized by assignment
 
+See examples:
+
+- Reference and value type properties:
+  - [RoundTripModel.cs](https://github.com/annelo-msft/azure-sdk-for-net/blob/cadl-models-roundtrip-basic/sdk/template/Azure.Template/src/Generated/Models/RoundTripModel.cs)
+  - [RoundTripModel.Serialization.cs](https://github.com/annelo-msft/azure-sdk-for-net/blob/cadl-models-roundtrip-basic/sdk/template/Azure.Template/src/Generated/Models/RoundTripModel.Serialization.cs)
+- Collection properties:
+  - [RoundTripModel.cs](https://github.com/annelo-msft/azure-sdk-for-net/blob/cadl-models-collections-basic/sdk/template/Azure.Template/src/Generated/Models/RoundTripModel.cs)
+  - Collection properties [RoundTripModel.Serialization.cs](https://github.com/annelo-msft/azure-sdk-for-net/blob/cadl-models-collections-basic/sdk/template/Azure.Template/src/Generated/Models/RoundTripModel.Serialization.cs)
+
 ### Enums
+
+Enums may be generated as a CLR enum or a C# "Strongly-typed string" as follows.
 
 - Enums are generated in the `.Models` namespace
 - A Cadl `enum` not found in a corresponding  `@knownValues` decorator is generated as a C# `enum`
@@ -80,11 +95,25 @@ Collection Property | `IList<T>` get-only | `IReadOnlyList<T>` get-only | `IList
 
 GitHub issue: [autorest.csharp #2477](https://github.com/Azure/autorest.csharp/issues/2477)
 
+See examples:
+
+- CLR enum:
+  - [DayOfTheWeek.cs](https://github.com/annelo-msft/azure-sdk-for-net/blob/cadl-models-enum-properties/sdk/template/Azure.Template/src/Generated/Models/DayOfTheWeek.cs)
+  - [DayOfTheWeek.Serialization.cs](https://github.com/annelo-msft/azure-sdk-for-net/blob/cadl-models-enum-properties/sdk/template/Azure.Template/src/Generated/Models/DayOfTheWeek.Serialization.cs)
+- Stronly typed string (extensible enum):
+  - [TranslationLanguage.cs](https://github.com/annelo-msft/azure-sdk-for-net/blob/cadl-models-enum-properties/sdk/template/Azure.Template/src/Generated/Models/TranslationLanguage.cs)
+  - No corresponding .Serialization.cs file.
+
 ### Nested Models
 
 Models that are properties of other models are called nested models.  A model that appears only as a non-root of a model graph is defined as partial class according to the same rules as root models.
 
 GitHub issue: [autorest.csharp #2489](https://github.com/Azure/autorest.csharp/issues/2489)
+
+See examples:
+
+- [RoundTripModel.cs](https://github.com/annelo-msft/azure-sdk-for-net/blob/cadl-models-nested-models/sdk/template/Azure.Template/src/Generated/Models/RoundTripModel.cs)
+- [RoundTripModel.Serialization.cs](https://github.com/annelo-msft/azure-sdk-for-net/blob/cadl-models-nested-models/sdk/template/Azure.Template/src/Generated/Models/RoundTripModel.Serialization.cs)
 
 Requirements for model graphs with circular dependencies will be defined in a later iteration.  GitHub issue [autorest.csharp #2506](https://github.com/Azure/autorest.csharp/issues/2506)
 
