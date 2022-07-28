@@ -28,7 +28,7 @@ The following table shows a mapping from Cadl built-in types to the correspondin
 
 Cadl Type | .NET Type | OpenAPI Type | GitHub Issue | Notes
 ------------------- | -------- | -- | -- | -------------
-string | string | string | [autorest.csharp #2337](https://github.com/Azure/autorest.csharp/issues/2337)) |
+string | string | string | [autorest.csharp #2337](https://github.com/Azure/autorest.csharp/issues/2337) |
 bytes | bytes[] | type: string, format: byte | [autorest.csharp #2337](https://github.com/Azure/autorest.csharp/issues/2337) |
 int32  | int | type: integer, format: int32 | [autorest.csharp #2337](https://github.com/Azure/autorest.csharp/issues/2337) |
 int64  | long | type: integer, format: int64 | [autorest.csharp #2337](https://github.com/Azure/autorest.csharp/issues/2337) |
@@ -49,15 +49,15 @@ The following describes the model shapes for different cases of properties.
  Item |  Input | Output | Round-Trip | GitHub Issue
 -- | -------| ------------ | -------- | -- |
 Constructor Accessibility | public | internal | public |
-Required Property | get-only | get-only | get/set |
+Required Property | get-only | get-only | get/set | [autorest.csharp #2463](https://github.com/Azure/autorest.csharp/issues/2463)
 Optional Property | get/set | get-only | get/set | [autorest.csharp #2339](https://github.com/Azure/autorest.csharp/issues/2339)
-Collection Property | `IList<T>` get-only | `IReadOnlyList<T>` get-only | `IList<T>` get-only |
+Collection Property | `IList<T>` get-only | `IReadOnlyList<T>` get-only | `IList<T>` get-only | [autorest.csharp #2471](https://github.com/Azure/autorest.csharp/issues/2471)
 
 ### Model Constructors
 
 #### Main Constructor
 
-- Accessibility is specified by model shape table above
+- Accessibility is specified in model shape table above
 - Takes required parameters and does not take optional parameters
 - Validates required reference type parameters for null using `Argument.AssertNotNull`
 - Takes list properties as `IEnumerable<T>` parameters
@@ -71,17 +71,6 @@ Collection Property | `IList<T>` get-only | `IReadOnlyList<T>` get-only | `IList
 - Takes list properties as `IReadOnlyList<T>` parameters for Output models and `IList<T>` parameters for Round-trip models
 - List properties are initialized by assignment
 
-### Nested Models
-
-Models that appear as properties of other models have their shape determined as follows:
-
-- Models that only appear as properties of input models are input models
-- Models that only appear as properties of output models are output models
-- Models that only appear as properties of round-trip models are round-trip models
-- Models that appear as properties of more than one model shape are round-trip models
-
-GitHub issue: [autorest.csharp #2489](https://github.com/Azure/autorest.csharp/issues/2489)
-
 ### Enums
 
 - Enums are generated in the `.Models` namespace
@@ -90,6 +79,23 @@ GitHub issue: [autorest.csharp #2489](https://github.com/Azure/autorest.csharp/i
 - A Cadl string model with a `@knownValues` decorator is generated as a C# "Strongly-typed string" (sometimes called "extensible enum") and the corresponding Cadl `enum` is not generated as a C# `enum`
 
 GitHub issue: [autorest.csharp #2477](https://github.com/Azure/autorest.csharp/issues/2477)
+
+### Nested Models
+
+Models that are properties of other models are called nested models.  A model that appears only as a non-root of a model graph is defined as partial class according to the same rules as root models.
+
+GitHub issue: [autorest.csharp #2489](https://github.com/Azure/autorest.csharp/issues/2489)
+
+Requirements for model graphs with circular dependencies will be defined in a later iteration.  GitHub issue [autorest.csharp #2506](https://github.com/Azure/autorest.csharp/issues/2506)
+
+#### Nested Model Shape
+
+Models that appear as properties of other models have their shape determined as follows:
+
+- Models that only appear as properties of input models are input models
+- Models that only appear as properties of output models are output models
+- Models that only appear as properties of round-trip models are round-trip models
+- Models that appear as properties of more than one model shape are round-trip models
 
 ### Model Reference Documentation
 
