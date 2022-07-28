@@ -26,13 +26,13 @@ namespace Azure.Test.Perf
                 return "0";
             }
 
-            var log = Math.Log10(Math.Abs(value));
-            var significantDigits = Math.Ceiling(Math.Max(log, minSignificantDigits));
+            double log = Math.Log10(Math.Abs(value));
+            int significantDigits = (int)Math.Ceiling(Math.Max(log, minSignificantDigits));
 
-            var divisor = Math.Pow(10, Math.Ceiling(log - significantDigits));
-            var rounded = divisor * Math.Round(value / divisor, MidpointRounding.AwayFromZero);
+            double divisor = Math.Pow(10, Math.Ceiling(log - significantDigits));
+            double rounded = divisor * Math.Round(value / divisor, MidpointRounding.AwayFromZero);
 
-            var decimals = Math.Ceiling(Math.Max(0, significantDigits - log - 1));
+            int decimals = (int)Math.Ceiling(Math.Max(0, significantDigits - log - 1));
 
             return groupSeparator ? rounded.ToString($"N{decimals}") : rounded.ToString($"F{decimals}");
         }
