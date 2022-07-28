@@ -10,6 +10,6 @@ namespace Azure.Communication.CallingServer
     internal partial class PlayRequestInternal
     {
         [CodeGenMember("PlayTo")]
-        public IList<CommunicationIdentifierModel> PlayTo { get; set; }
+        public IEnumerable<CommunicationIdentifierModel> PlayTo { get; set; }
     }
 }
