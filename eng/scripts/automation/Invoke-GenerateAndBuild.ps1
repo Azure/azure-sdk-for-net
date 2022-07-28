@@ -4,10 +4,14 @@ param (
   [string]$outputJsonFile
 )
 
+. (Join-Path $PSScriptRoot ".." ".." "common" "scripts" "Helpers" PSModule-Helpers.ps1)
 . (Join-Path $PSScriptRoot GenerateAndBuildLib.ps1)
 
 $inputJson = Get-Content $inputJsonFile | Out-String | ConvertFrom-Json
 $swaggerDir = $inputJson.specFolder
+if($swaggerDir) {
+  $swaggerDir = Resolve-Path $swaggerDir
+}
 $swaggerDir = $swaggerDir -replace "\\", "/"
 $readmeFile = $inputJson.relatedReadmeMdFile
 $readmeFile = $readmeFile -replace "\\", "/"
@@ -29,8 +33,7 @@ if ($autorestConfig -ne "") {
         $lines = $range[1] - $range[0] - 1
         $autorestConfigYaml = ($autorestConfigYaml | Select -Skip $startNum | Select -First $lines) |Out-String
     }
-    Install-Module -Name powershell-yaml -Force -Verbose -Scope CurrentUser
-    Import-Module powershell-yaml
+    Install-ModuleIfNotInstalled "powershell-yaml" "0.4.1" | Import-Module
     $yml = ConvertFrom-YAML $autorestConfigYaml
     $requires = $yml["require"]
     if ($requires.Count -gt 0) {
