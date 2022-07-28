@@ -19,7 +19,7 @@
         "content": null,
         "hasBreakingChange": false
       },
-      "packageFolder": "C:/project/azure-sdk-for-net/sdk/deviceupdate/Azure.IoT.DeviceUpdate.Demo"
+      "packageFolder": "/home/azure-sdk-for-net/sdk/deviceupdate/Azure.IoT.DeviceUpdate.Demo"
     }
   ]
 }
