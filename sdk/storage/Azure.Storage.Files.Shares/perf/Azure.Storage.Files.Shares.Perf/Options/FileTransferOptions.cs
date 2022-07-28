@@ -8,27 +8,12 @@ namespace Azure.Storage.Files.Shares.Perf.Options
 {
     public class FileTransferOptions : SizeOptions, IShareClientOptionsProvider
     {
-        [Option("transfer-validation")]
-        public ValidationAlgorithm? TransferValidationAlgorithm { get; set; }
-
         ShareClientOptions IShareClientOptionsProvider.ClientOptions
         {
             get
             {
                 return new ShareClientOptions
                 {
-                    UploadTransferValidationOptions = TransferValidationAlgorithm.HasValue
-                        ? new UploadTransferValidationOptions
-                        {
-                            Algorithm = TransferValidationAlgorithm.Value
-                        }
-                        : default,
-                    DownloadTransferValidationOptions = TransferValidationAlgorithm.HasValue
-                        ? new DownloadTransferValidationOptions
-                        {
-                            Algorithm = TransferValidationAlgorithm.Value
-                        }
-                        : default,
                 };
             }
         }
