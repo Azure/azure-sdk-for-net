@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of LoginInformation. </summary>
         /// <param name="routes"> The routes that specify the endpoints used for login and logout requests. </param>
         /// <param name="tokenStore"> The configuration settings of the token store. </param>
-        /// <param name="preserveUrlFragmentsForLogins"> &lt;code&gt;true&lt;/code&gt; if the fragments from the request are preserved after the login request is made; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="isPreserveUrlFragmentsForLogins"> &lt;code&gt;true&lt;/code&gt; if the fragments from the request are preserved after the login request is made; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="allowedExternalRedirectUrls">
         /// External URLs that can be redirected to as part of logging in or logging out of the app. Note that the query string part of the URL is ignored.
         /// This is an advanced setting typically only needed by Windows Store application backends.
@@ -30,11 +30,11 @@ namespace Azure.ResourceManager.AppService.Models
         /// </param>
         /// <param name="cookieExpiration"> The configuration settings of the session cookie&apos;s expiration. </param>
         /// <param name="nonce"> The configuration settings of the nonce used in the login flow. </param>
-        internal LoginInformation(LoginRoutes routes, TokenStore tokenStore, bool? preserveUrlFragmentsForLogins, IList<string> allowedExternalRedirectUrls, CookieExpiration cookieExpiration, Nonce nonce)
+        internal LoginInformation(LoginRoutes routes, TokenStore tokenStore, bool? isPreserveUrlFragmentsForLogins, IList<string> allowedExternalRedirectUrls, CookieExpiration cookieExpiration, Nonce nonce)
         {
             Routes = routes;
             TokenStore = tokenStore;
-            PreserveUrlFragmentsForLogins = preserveUrlFragmentsForLogins;
+            IsPreserveUrlFragmentsForLogins = isPreserveUrlFragmentsForLogins;
             AllowedExternalRedirectUrls = allowedExternalRedirectUrls;
             CookieExpiration = cookieExpiration;
             Nonce = nonce;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> The configuration settings of the token store. </summary>
         public TokenStore TokenStore { get; set; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the fragments from the request are preserved after the login request is made; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
-        public bool? PreserveUrlFragmentsForLogins { get; set; }
+        public bool? IsPreserveUrlFragmentsForLogins { get; set; }
         /// <summary>
         /// External URLs that can be redirected to as part of logging in or logging out of the app. Note that the query string part of the URL is ignored.
         /// This is an advanced setting typically only needed by Windows Store application backends.

@@ -53,10 +53,10 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("multiSize");
                 writer.WriteStringValue(MultiSize);
             }
-            if (Optional.IsDefined(IpsslAddressCount))
+            if (Optional.IsDefined(IPSslAddressCount))
             {
                 writer.WritePropertyName("ipsslAddressCount");
-                writer.WriteNumberValue(IpsslAddressCount.Value);
+                writer.WriteNumberValue(IPSslAddressCount.Value);
             }
             if (Optional.IsDefined(DnsSuffix))
             {

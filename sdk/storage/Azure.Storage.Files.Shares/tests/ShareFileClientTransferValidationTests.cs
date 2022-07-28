@@ -46,6 +46,10 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareClientOptions options = null)
         {
             options ??= ClientBuilder.GetOptions();
+
+            AssertSupportsHashAlgorithm(uploadTransferValidationOptions?.Algorithm ?? default);
+            AssertSupportsHashAlgorithm(downloadTransferValidationOptions?.Algorithm ?? default);
+
             options.UploadTransferValidationOptions = uploadTransferValidationOptions;
             options.DownloadTransferValidationOptions = downloadTransferValidationOptions;
 
@@ -138,5 +142,13 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         protected override bool ParallelUploadIsChecksumExpected(Request request) => true;
+
+        [Test]
+        public override void TestAutoResolve()
+        {
+            Assert.AreEqual(
+                ValidationAlgorithm.MD5,
+                TransferValidationOptionsExtensions.ResolveAuto(ValidationAlgorithm.Auto));
+        }
     }
 }

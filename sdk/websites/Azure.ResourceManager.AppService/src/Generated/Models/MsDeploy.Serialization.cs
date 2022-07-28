@@ -56,15 +56,15 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(SkipAppData))
+            if (Optional.IsDefined(IsSkipAppData))
             {
                 writer.WritePropertyName("skipAppData");
-                writer.WriteBooleanValue(SkipAppData.Value);
+                writer.WriteBooleanValue(IsSkipAppData.Value);
             }
-            if (Optional.IsDefined(AppOffline))
+            if (Optional.IsDefined(IsAppOffline))
             {
                 writer.WritePropertyName("appOffline");
-                writer.WriteBooleanValue(AppOffline.Value);
+                writer.WriteBooleanValue(IsAppOffline.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

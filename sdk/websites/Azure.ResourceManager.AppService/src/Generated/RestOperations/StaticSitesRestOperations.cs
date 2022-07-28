@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<StaticSiteARMResourceData>> GetStaticSiteAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public async Task<Response<StaticSiteARMData>> GetStaticSiteAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -295,13 +295,13 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        StaticSiteARMResourceData value = default;
+                        StaticSiteARMData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = StaticSiteARMResourceData.DeserializeStaticSiteARMResourceData(document.RootElement);
+                        value = StaticSiteARMData.DeserializeStaticSiteARMData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((StaticSiteARMResourceData)null, message.Response);
+                    return Response.FromValue((StaticSiteARMData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<StaticSiteARMResourceData> GetStaticSite(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public Response<StaticSiteARMData> GetStaticSite(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -326,19 +326,19 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        StaticSiteARMResourceData value = default;
+                        StaticSiteARMData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = StaticSiteARMResourceData.DeserializeStaticSiteARMResourceData(document.RootElement);
+                        value = StaticSiteARMData.DeserializeStaticSiteARMData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((StaticSiteARMResourceData)null, message.Response);
+                    return Response.FromValue((StaticSiteARMData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateStaticSiteRequest(string subscriptionId, string resourceGroupName, string name, StaticSiteARMResourceData data)
+        internal HttpMessage CreateCreateOrUpdateStaticSiteRequest(string subscriptionId, string resourceGroupName, string name, StaticSiteARMData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateStaticSiteAsync(string subscriptionId, string resourceGroupName, string name, StaticSiteARMResourceData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateStaticSiteAsync(string subscriptionId, string resourceGroupName, string name, StaticSiteARMData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdateStaticSite(string subscriptionId, string resourceGroupName, string name, StaticSiteARMResourceData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdateStaticSite(string subscriptionId, string resourceGroupName, string name, StaticSiteARMData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -486,7 +486,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateUpdateStaticSiteRequest(string subscriptionId, string resourceGroupName, string name, StaticSiteARMResourcePatch patch)
+        internal HttpMessage CreateUpdateStaticSiteRequest(string subscriptionId, string resourceGroupName, string name, StaticSiteARMPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -518,7 +518,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<StaticSiteARMResourceData>> UpdateStaticSiteAsync(string subscriptionId, string resourceGroupName, string name, StaticSiteARMResourcePatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response<StaticSiteARMData>> UpdateStaticSiteAsync(string subscriptionId, string resourceGroupName, string name, StaticSiteARMPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -532,9 +532,9 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                 case 202:
                     {
-                        StaticSiteARMResourceData value = default;
+                        StaticSiteARMData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = StaticSiteARMResourceData.DeserializeStaticSiteARMResourceData(document.RootElement);
+                        value = StaticSiteARMData.DeserializeStaticSiteARMData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -550,7 +550,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<StaticSiteARMResourceData> UpdateStaticSite(string subscriptionId, string resourceGroupName, string name, StaticSiteARMResourcePatch patch, CancellationToken cancellationToken = default)
+        public Response<StaticSiteARMData> UpdateStaticSite(string subscriptionId, string resourceGroupName, string name, StaticSiteARMPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -564,9 +564,9 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                 case 202:
                     {
-                        StaticSiteARMResourceData value = default;
+                        StaticSiteARMData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = StaticSiteARMResourceData.DeserializeStaticSiteARMResourceData(document.RootElement);
+                        value = StaticSiteARMData.DeserializeStaticSiteARMData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -739,7 +739,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateUpdateStaticSiteUserRequest(string subscriptionId, string resourceGroupName, string name, string authprovider, string userid, StaticSiteUserARMResource staticSiteUserEnvelope)
+        internal HttpMessage CreateUpdateStaticSiteUserRequest(string subscriptionId, string resourceGroupName, string name, string authprovider, string userid, StaticSiteUserARM staticSiteUserEnvelope)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -777,7 +777,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="authprovider"/>, <paramref name="userid"/> or <paramref name="staticSiteUserEnvelope"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="authprovider"/> or <paramref name="userid"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<StaticSiteUserARMResource>> UpdateStaticSiteUserAsync(string subscriptionId, string resourceGroupName, string name, string authprovider, string userid, StaticSiteUserARMResource staticSiteUserEnvelope, CancellationToken cancellationToken = default)
+        public async Task<Response<StaticSiteUserARM>> UpdateStaticSiteUserAsync(string subscriptionId, string resourceGroupName, string name, string authprovider, string userid, StaticSiteUserARM staticSiteUserEnvelope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -792,9 +792,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        StaticSiteUserARMResource value = default;
+                        StaticSiteUserARM value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = StaticSiteUserARMResource.DeserializeStaticSiteUserARMResource(document.RootElement);
+                        value = StaticSiteUserARM.DeserializeStaticSiteUserARM(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -812,7 +812,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="authprovider"/>, <paramref name="userid"/> or <paramref name="staticSiteUserEnvelope"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="authprovider"/> or <paramref name="userid"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<StaticSiteUserARMResource> UpdateStaticSiteUser(string subscriptionId, string resourceGroupName, string name, string authprovider, string userid, StaticSiteUserARMResource staticSiteUserEnvelope, CancellationToken cancellationToken = default)
+        public Response<StaticSiteUserARM> UpdateStaticSiteUser(string subscriptionId, string resourceGroupName, string name, string authprovider, string userid, StaticSiteUserARM staticSiteUserEnvelope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -827,9 +827,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        StaticSiteUserARMResource value = default;
+                        StaticSiteUserARM value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = StaticSiteUserARMResource.DeserializeStaticSiteUserARMResource(document.RootElement);
+                        value = StaticSiteUserARM.DeserializeStaticSiteUserARM(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -946,7 +946,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="environmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<StaticSiteBuildARMResourceData>> GetStaticSiteBuildAsync(string subscriptionId, string resourceGroupName, string name, string environmentName, CancellationToken cancellationToken = default)
+        public async Task<Response<StaticSiteBuildARMData>> GetStaticSiteBuildAsync(string subscriptionId, string resourceGroupName, string name, string environmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -959,13 +959,13 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        StaticSiteBuildARMResourceData value = default;
+                        StaticSiteBuildARMData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = StaticSiteBuildARMResourceData.DeserializeStaticSiteBuildARMResourceData(document.RootElement);
+                        value = StaticSiteBuildARMData.DeserializeStaticSiteBuildARMData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((StaticSiteBuildARMResourceData)null, message.Response);
+                    return Response.FromValue((StaticSiteBuildARMData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -979,7 +979,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="environmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<StaticSiteBuildARMResourceData> GetStaticSiteBuild(string subscriptionId, string resourceGroupName, string name, string environmentName, CancellationToken cancellationToken = default)
+        public Response<StaticSiteBuildARMData> GetStaticSiteBuild(string subscriptionId, string resourceGroupName, string name, string environmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -992,13 +992,13 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        StaticSiteBuildARMResourceData value = default;
+                        StaticSiteBuildARMData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = StaticSiteBuildARMResourceData.DeserializeStaticSiteBuildARMResourceData(document.RootElement);
+                        value = StaticSiteBuildARMData.DeserializeStaticSiteBuildARMData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((StaticSiteBuildARMResourceData)null, message.Response);
+                    return Response.FromValue((StaticSiteBuildARMData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -1641,7 +1641,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="environmentName"/> or <paramref name="functionAppName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="environmentName"/> or <paramref name="functionAppName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<StaticSiteUserProvidedFunctionAppARMResourceData>> GetUserProvidedFunctionAppForStaticSiteBuildAsync(string subscriptionId, string resourceGroupName, string name, string environmentName, string functionAppName, CancellationToken cancellationToken = default)
+        public async Task<Response<StaticSiteUserProvidedFunctionAppARMData>> GetUserProvidedFunctionAppForStaticSiteBuildAsync(string subscriptionId, string resourceGroupName, string name, string environmentName, string functionAppName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1655,13 +1655,13 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        StaticSiteUserProvidedFunctionAppARMResourceData value = default;
+                        StaticSiteUserProvidedFunctionAppARMData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = StaticSiteUserProvidedFunctionAppARMResourceData.DeserializeStaticSiteUserProvidedFunctionAppARMResourceData(document.RootElement);
+                        value = StaticSiteUserProvidedFunctionAppARMData.DeserializeStaticSiteUserProvidedFunctionAppARMData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((StaticSiteUserProvidedFunctionAppARMResourceData)null, message.Response);
+                    return Response.FromValue((StaticSiteUserProvidedFunctionAppARMData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -1676,7 +1676,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="environmentName"/> or <paramref name="functionAppName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="environmentName"/> or <paramref name="functionAppName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<StaticSiteUserProvidedFunctionAppARMResourceData> GetUserProvidedFunctionAppForStaticSiteBuild(string subscriptionId, string resourceGroupName, string name, string environmentName, string functionAppName, CancellationToken cancellationToken = default)
+        public Response<StaticSiteUserProvidedFunctionAppARMData> GetUserProvidedFunctionAppForStaticSiteBuild(string subscriptionId, string resourceGroupName, string name, string environmentName, string functionAppName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1690,19 +1690,19 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        StaticSiteUserProvidedFunctionAppARMResourceData value = default;
+                        StaticSiteUserProvidedFunctionAppARMData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = StaticSiteUserProvidedFunctionAppARMResourceData.DeserializeStaticSiteUserProvidedFunctionAppARMResourceData(document.RootElement);
+                        value = StaticSiteUserProvidedFunctionAppARMData.DeserializeStaticSiteUserProvidedFunctionAppARMData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((StaticSiteUserProvidedFunctionAppARMResourceData)null, message.Response);
+                    return Response.FromValue((StaticSiteUserProvidedFunctionAppARMData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateRegisterUserProvidedFunctionAppWithStaticSiteBuildRequest(string subscriptionId, string resourceGroupName, string name, string environmentName, string functionAppName, StaticSiteUserProvidedFunctionAppARMResourceData data, bool? isForced)
+        internal HttpMessage CreateRegisterUserProvidedFunctionAppWithStaticSiteBuildRequest(string subscriptionId, string resourceGroupName, string name, string environmentName, string functionAppName, StaticSiteUserProvidedFunctionAppARMData data, bool? isForced)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1745,7 +1745,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="environmentName"/>, <paramref name="functionAppName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="environmentName"/> or <paramref name="functionAppName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> RegisterUserProvidedFunctionAppWithStaticSiteBuildAsync(string subscriptionId, string resourceGroupName, string name, string environmentName, string functionAppName, StaticSiteUserProvidedFunctionAppARMResourceData data, bool? isForced = null, CancellationToken cancellationToken = default)
+        public async Task<Response> RegisterUserProvidedFunctionAppWithStaticSiteBuildAsync(string subscriptionId, string resourceGroupName, string name, string environmentName, string functionAppName, StaticSiteUserProvidedFunctionAppARMData data, bool? isForced = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1777,7 +1777,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="environmentName"/>, <paramref name="functionAppName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="environmentName"/> or <paramref name="functionAppName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response RegisterUserProvidedFunctionAppWithStaticSiteBuild(string subscriptionId, string resourceGroupName, string name, string environmentName, string functionAppName, StaticSiteUserProvidedFunctionAppARMResourceData data, bool? isForced = null, CancellationToken cancellationToken = default)
+        public Response RegisterUserProvidedFunctionAppWithStaticSiteBuild(string subscriptionId, string resourceGroupName, string name, string environmentName, string functionAppName, StaticSiteUserProvidedFunctionAppARMData data, bool? isForced = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1880,7 +1880,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateCreateZipDeploymentForStaticSiteBuildRequest(string subscriptionId, string resourceGroupName, string name, string environmentName, StaticSiteZipDeploymentARMResource staticSiteZipDeploymentEnvelope)
+        internal HttpMessage CreateCreateZipDeploymentForStaticSiteBuildRequest(string subscriptionId, string resourceGroupName, string name, string environmentName, StaticSiteZipDeploymentARM staticSiteZipDeploymentEnvelope)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1916,7 +1916,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="environmentName"/> or <paramref name="staticSiteZipDeploymentEnvelope"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateZipDeploymentForStaticSiteBuildAsync(string subscriptionId, string resourceGroupName, string name, string environmentName, StaticSiteZipDeploymentARMResource staticSiteZipDeploymentEnvelope, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateZipDeploymentForStaticSiteBuildAsync(string subscriptionId, string resourceGroupName, string name, string environmentName, StaticSiteZipDeploymentARM staticSiteZipDeploymentEnvelope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1945,7 +1945,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="environmentName"/> or <paramref name="staticSiteZipDeploymentEnvelope"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateZipDeploymentForStaticSiteBuild(string subscriptionId, string resourceGroupName, string name, string environmentName, StaticSiteZipDeploymentARMResource staticSiteZipDeploymentEnvelope, CancellationToken cancellationToken = default)
+        public Response CreateZipDeploymentForStaticSiteBuild(string subscriptionId, string resourceGroupName, string name, string environmentName, StaticSiteZipDeploymentARM staticSiteZipDeploymentEnvelope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -2139,7 +2139,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateCreateUserRolesInvitationLinkRequest(string subscriptionId, string resourceGroupName, string name, StaticSiteUserInvitationRequestResource staticSiteUserRolesInvitationEnvelope)
+        internal HttpMessage CreateCreateUserRolesInvitationLinkRequest(string subscriptionId, string resourceGroupName, string name, StaticSiteUserInvitationRequestContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -2158,7 +2158,7 @@ namespace Azure.ResourceManager.AppService
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(staticSiteUserRolesInvitationEnvelope);
+            content0.JsonWriter.WriteObjectValue(content);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -2168,26 +2168,26 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the static site. </param>
-        /// <param name="staticSiteUserRolesInvitationEnvelope"> The StaticSiteUserInvitationRequestResource to use. </param>
+        /// <param name="content"> The StaticSiteUserInvitationRequestContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="staticSiteUserRolesInvitationEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<StaticSiteUserInvitationResponseResource>> CreateUserRolesInvitationLinkAsync(string subscriptionId, string resourceGroupName, string name, StaticSiteUserInvitationRequestResource staticSiteUserRolesInvitationEnvelope, CancellationToken cancellationToken = default)
+        public async Task<Response<StaticSiteUserInvitationResponseInfo>> CreateUserRolesInvitationLinkAsync(string subscriptionId, string resourceGroupName, string name, StaticSiteUserInvitationRequestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(staticSiteUserRolesInvitationEnvelope, nameof(staticSiteUserRolesInvitationEnvelope));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCreateUserRolesInvitationLinkRequest(subscriptionId, resourceGroupName, name, staticSiteUserRolesInvitationEnvelope);
+            using var message = CreateCreateUserRolesInvitationLinkRequest(subscriptionId, resourceGroupName, name, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        StaticSiteUserInvitationResponseResource value = default;
+                        StaticSiteUserInvitationResponseInfo value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = StaticSiteUserInvitationResponseResource.DeserializeStaticSiteUserInvitationResponseResource(document.RootElement);
+                        value = StaticSiteUserInvitationResponseInfo.DeserializeStaticSiteUserInvitationResponseInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2199,26 +2199,26 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the static site. </param>
-        /// <param name="staticSiteUserRolesInvitationEnvelope"> The StaticSiteUserInvitationRequestResource to use. </param>
+        /// <param name="content"> The StaticSiteUserInvitationRequestContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="staticSiteUserRolesInvitationEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<StaticSiteUserInvitationResponseResource> CreateUserRolesInvitationLink(string subscriptionId, string resourceGroupName, string name, StaticSiteUserInvitationRequestResource staticSiteUserRolesInvitationEnvelope, CancellationToken cancellationToken = default)
+        public Response<StaticSiteUserInvitationResponseInfo> CreateUserRolesInvitationLink(string subscriptionId, string resourceGroupName, string name, StaticSiteUserInvitationRequestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(staticSiteUserRolesInvitationEnvelope, nameof(staticSiteUserRolesInvitationEnvelope));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCreateUserRolesInvitationLinkRequest(subscriptionId, resourceGroupName, name, staticSiteUserRolesInvitationEnvelope);
+            using var message = CreateCreateUserRolesInvitationLinkRequest(subscriptionId, resourceGroupName, name, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        StaticSiteUserInvitationResponseResource value = default;
+                        StaticSiteUserInvitationResponseInfo value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = StaticSiteUserInvitationResponseResource.DeserializeStaticSiteUserInvitationResponseResource(document.RootElement);
+                        value = StaticSiteUserInvitationResponseInfo.DeserializeStaticSiteUserInvitationResponseInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2335,7 +2335,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="domainName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<StaticSiteCustomDomainOverviewARMResourceData>> GetStaticSiteCustomDomainAsync(string subscriptionId, string resourceGroupName, string name, string domainName, CancellationToken cancellationToken = default)
+        public async Task<Response<StaticSiteCustomDomainOverviewARMData>> GetStaticSiteCustomDomainAsync(string subscriptionId, string resourceGroupName, string name, string domainName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -2348,13 +2348,13 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        StaticSiteCustomDomainOverviewARMResourceData value = default;
+                        StaticSiteCustomDomainOverviewARMData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = StaticSiteCustomDomainOverviewARMResourceData.DeserializeStaticSiteCustomDomainOverviewARMResourceData(document.RootElement);
+                        value = StaticSiteCustomDomainOverviewARMData.DeserializeStaticSiteCustomDomainOverviewARMData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((StaticSiteCustomDomainOverviewARMResourceData)null, message.Response);
+                    return Response.FromValue((StaticSiteCustomDomainOverviewARMData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -2368,7 +2368,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="domainName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<StaticSiteCustomDomainOverviewARMResourceData> GetStaticSiteCustomDomain(string subscriptionId, string resourceGroupName, string name, string domainName, CancellationToken cancellationToken = default)
+        public Response<StaticSiteCustomDomainOverviewARMData> GetStaticSiteCustomDomain(string subscriptionId, string resourceGroupName, string name, string domainName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -2381,13 +2381,13 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        StaticSiteCustomDomainOverviewARMResourceData value = default;
+                        StaticSiteCustomDomainOverviewARMData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = StaticSiteCustomDomainOverviewARMResourceData.DeserializeStaticSiteCustomDomainOverviewARMResourceData(document.RootElement);
+                        value = StaticSiteCustomDomainOverviewARMData.DeserializeStaticSiteCustomDomainOverviewARMData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((StaticSiteCustomDomainOverviewARMResourceData)null, message.Response);
+                    return Response.FromValue((StaticSiteCustomDomainOverviewARMData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -3271,7 +3271,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateApproveOrRejectPrivateEndpointConnectionRequest(string subscriptionId, string resourceGroupName, string name, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestResource privateEndpointWrapper)
+        internal HttpMessage CreateApproveOrRejectPrivateEndpointConnectionRequest(string subscriptionId, string resourceGroupName, string name, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestInfo info)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -3291,7 +3291,7 @@ namespace Azure.ResourceManager.AppService
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(privateEndpointWrapper);
+            content0.JsonWriter.WriteObjectValue(info);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -3302,19 +3302,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the static site. </param>
         /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection. </param>
-        /// <param name="privateEndpointWrapper"> Request body. </param>
+        /// <param name="info"> Request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="privateEndpointConnectionName"/> or <paramref name="privateEndpointWrapper"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="privateEndpointConnectionName"/> or <paramref name="info"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> ApproveOrRejectPrivateEndpointConnectionAsync(string subscriptionId, string resourceGroupName, string name, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestResource privateEndpointWrapper, CancellationToken cancellationToken = default)
+        public async Task<Response> ApproveOrRejectPrivateEndpointConnectionAsync(string subscriptionId, string resourceGroupName, string name, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestInfo info, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
-            Argument.AssertNotNull(privateEndpointWrapper, nameof(privateEndpointWrapper));
+            Argument.AssertNotNull(info, nameof(info));
 
-            using var message = CreateApproveOrRejectPrivateEndpointConnectionRequest(subscriptionId, resourceGroupName, name, privateEndpointConnectionName, privateEndpointWrapper);
+            using var message = CreateApproveOrRejectPrivateEndpointConnectionRequest(subscriptionId, resourceGroupName, name, privateEndpointConnectionName, info);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -3331,19 +3331,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the static site. </param>
         /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection. </param>
-        /// <param name="privateEndpointWrapper"> Request body. </param>
+        /// <param name="info"> Request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="privateEndpointConnectionName"/> or <paramref name="privateEndpointWrapper"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="privateEndpointConnectionName"/> or <paramref name="info"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response ApproveOrRejectPrivateEndpointConnection(string subscriptionId, string resourceGroupName, string name, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestResource privateEndpointWrapper, CancellationToken cancellationToken = default)
+        public Response ApproveOrRejectPrivateEndpointConnection(string subscriptionId, string resourceGroupName, string name, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestInfo info, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
-            Argument.AssertNotNull(privateEndpointWrapper, nameof(privateEndpointWrapper));
+            Argument.AssertNotNull(info, nameof(info));
 
-            using var message = CreateApproveOrRejectPrivateEndpointConnectionRequest(subscriptionId, resourceGroupName, name, privateEndpointConnectionName, privateEndpointWrapper);
+            using var message = CreateApproveOrRejectPrivateEndpointConnectionRequest(subscriptionId, resourceGroupName, name, privateEndpointConnectionName, info);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -3512,7 +3512,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateResetStaticSiteApiKeyRequest(string subscriptionId, string resourceGroupName, string name, StaticSiteResetPropertiesARMResource resetPropertiesEnvelope)
+        internal HttpMessage CreateResetStaticSiteApiKeyRequest(string subscriptionId, string resourceGroupName, string name, StaticSiteResetPropertiesARM resetPropertiesEnvelope)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -3541,11 +3541,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the static site. </param>
-        /// <param name="resetPropertiesEnvelope"> The StaticSiteResetPropertiesARMResource to use. </param>
+        /// <param name="resetPropertiesEnvelope"> The StaticSiteResetPropertiesARM to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="resetPropertiesEnvelope"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> ResetStaticSiteApiKeyAsync(string subscriptionId, string resourceGroupName, string name, StaticSiteResetPropertiesARMResource resetPropertiesEnvelope, CancellationToken cancellationToken = default)
+        public async Task<Response> ResetStaticSiteApiKeyAsync(string subscriptionId, string resourceGroupName, string name, StaticSiteResetPropertiesARM resetPropertiesEnvelope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -3567,11 +3567,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the static site. </param>
-        /// <param name="resetPropertiesEnvelope"> The StaticSiteResetPropertiesARMResource to use. </param>
+        /// <param name="resetPropertiesEnvelope"> The StaticSiteResetPropertiesARM to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="resetPropertiesEnvelope"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response ResetStaticSiteApiKey(string subscriptionId, string resourceGroupName, string name, StaticSiteResetPropertiesARMResource resetPropertiesEnvelope, CancellationToken cancellationToken = default)
+        public Response ResetStaticSiteApiKey(string subscriptionId, string resourceGroupName, string name, StaticSiteResetPropertiesARM resetPropertiesEnvelope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -3698,7 +3698,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="functionAppName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="functionAppName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<StaticSiteUserProvidedFunctionAppARMResourceData>> GetUserProvidedFunctionAppForStaticSiteAsync(string subscriptionId, string resourceGroupName, string name, string functionAppName, CancellationToken cancellationToken = default)
+        public async Task<Response<StaticSiteUserProvidedFunctionAppARMData>> GetUserProvidedFunctionAppForStaticSiteAsync(string subscriptionId, string resourceGroupName, string name, string functionAppName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -3711,13 +3711,13 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        StaticSiteUserProvidedFunctionAppARMResourceData value = default;
+                        StaticSiteUserProvidedFunctionAppARMData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = StaticSiteUserProvidedFunctionAppARMResourceData.DeserializeStaticSiteUserProvidedFunctionAppARMResourceData(document.RootElement);
+                        value = StaticSiteUserProvidedFunctionAppARMData.DeserializeStaticSiteUserProvidedFunctionAppARMData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((StaticSiteUserProvidedFunctionAppARMResourceData)null, message.Response);
+                    return Response.FromValue((StaticSiteUserProvidedFunctionAppARMData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -3731,7 +3731,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="functionAppName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="functionAppName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<StaticSiteUserProvidedFunctionAppARMResourceData> GetUserProvidedFunctionAppForStaticSite(string subscriptionId, string resourceGroupName, string name, string functionAppName, CancellationToken cancellationToken = default)
+        public Response<StaticSiteUserProvidedFunctionAppARMData> GetUserProvidedFunctionAppForStaticSite(string subscriptionId, string resourceGroupName, string name, string functionAppName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -3744,19 +3744,19 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        StaticSiteUserProvidedFunctionAppARMResourceData value = default;
+                        StaticSiteUserProvidedFunctionAppARMData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = StaticSiteUserProvidedFunctionAppARMResourceData.DeserializeStaticSiteUserProvidedFunctionAppARMResourceData(document.RootElement);
+                        value = StaticSiteUserProvidedFunctionAppARMData.DeserializeStaticSiteUserProvidedFunctionAppARMData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((StaticSiteUserProvidedFunctionAppARMResourceData)null, message.Response);
+                    return Response.FromValue((StaticSiteUserProvidedFunctionAppARMData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateRegisterUserProvidedFunctionAppWithStaticSiteRequest(string subscriptionId, string resourceGroupName, string name, string functionAppName, StaticSiteUserProvidedFunctionAppARMResourceData data, bool? isForced)
+        internal HttpMessage CreateRegisterUserProvidedFunctionAppWithStaticSiteRequest(string subscriptionId, string resourceGroupName, string name, string functionAppName, StaticSiteUserProvidedFunctionAppARMData data, bool? isForced)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -3796,7 +3796,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="functionAppName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="functionAppName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> RegisterUserProvidedFunctionAppWithStaticSiteAsync(string subscriptionId, string resourceGroupName, string name, string functionAppName, StaticSiteUserProvidedFunctionAppARMResourceData data, bool? isForced = null, CancellationToken cancellationToken = default)
+        public async Task<Response> RegisterUserProvidedFunctionAppWithStaticSiteAsync(string subscriptionId, string resourceGroupName, string name, string functionAppName, StaticSiteUserProvidedFunctionAppARMData data, bool? isForced = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -3826,7 +3826,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="functionAppName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="functionAppName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response RegisterUserProvidedFunctionAppWithStaticSite(string subscriptionId, string resourceGroupName, string name, string functionAppName, StaticSiteUserProvidedFunctionAppARMResourceData data, bool? isForced = null, CancellationToken cancellationToken = default)
+        public Response RegisterUserProvidedFunctionAppWithStaticSite(string subscriptionId, string resourceGroupName, string name, string functionAppName, StaticSiteUserProvidedFunctionAppARMData data, bool? isForced = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -3922,7 +3922,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateCreateZipDeploymentForStaticSiteRequest(string subscriptionId, string resourceGroupName, string name, StaticSiteZipDeploymentARMResource staticSiteZipDeploymentEnvelope)
+        internal HttpMessage CreateCreateZipDeploymentForStaticSiteRequest(string subscriptionId, string resourceGroupName, string name, StaticSiteZipDeploymentARM staticSiteZipDeploymentEnvelope)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -3955,7 +3955,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="staticSiteZipDeploymentEnvelope"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateZipDeploymentForStaticSiteAsync(string subscriptionId, string resourceGroupName, string name, StaticSiteZipDeploymentARMResource staticSiteZipDeploymentEnvelope, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateZipDeploymentForStaticSiteAsync(string subscriptionId, string resourceGroupName, string name, StaticSiteZipDeploymentARM staticSiteZipDeploymentEnvelope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -3982,7 +3982,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="staticSiteZipDeploymentEnvelope"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateZipDeploymentForStaticSite(string subscriptionId, string resourceGroupName, string name, StaticSiteZipDeploymentARMResource staticSiteZipDeploymentEnvelope, CancellationToken cancellationToken = default)
+        public Response CreateZipDeploymentForStaticSite(string subscriptionId, string resourceGroupName, string name, StaticSiteZipDeploymentARM staticSiteZipDeploymentEnvelope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));

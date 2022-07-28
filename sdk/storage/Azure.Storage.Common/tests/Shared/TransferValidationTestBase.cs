@@ -1786,12 +1786,15 @@ namespace Azure.Storage.Test.Shared
         }
 
         [Test]
+        public abstract void TestAutoResolve();
+
+        [Test]
         public async Task RoundtripWIthDefaults()
         {
             await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
 
             // Arrange
-            const ValidationAlgorithm expectedAlgorithm = ValidationAlgorithm.StorageCrc64;
+            ValidationAlgorithm expectedAlgorithm = TransferValidationOptionsExtensions.ResolveAuto(ValidationAlgorithm.Auto);
             const int dataLength = Constants.KB;
             var data = GetRandomBuffer(dataLength);
             var uploadvalidationOptions = new UploadTransferValidationOptions();

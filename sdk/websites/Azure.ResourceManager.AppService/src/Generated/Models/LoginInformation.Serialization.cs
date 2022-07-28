@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("tokenStore");
                 writer.WriteObjectValue(TokenStore);
             }
-            if (Optional.IsDefined(PreserveUrlFragmentsForLogins))
+            if (Optional.IsDefined(IsPreserveUrlFragmentsForLogins))
             {
                 writer.WritePropertyName("preserveUrlFragmentsForLogins");
-                writer.WriteBooleanValue(PreserveUrlFragmentsForLogins.Value);
+                writer.WriteBooleanValue(IsPreserveUrlFragmentsForLogins.Value);
             }
             if (Optional.IsCollectionDefined(AllowedExternalRedirectUrls))
             {

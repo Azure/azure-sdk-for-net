@@ -16,20 +16,20 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of SiteConfigPropertiesDictionary. </summary>
-        /// <param name="use32BitWorkerProcess"> &lt;code&gt;true&lt;/code&gt; if use32BitWorkerProcess should be set to true for the stack; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="isUse32BitWorkerProcess"> &lt;code&gt;true&lt;/code&gt; if use32BitWorkerProcess should be set to true for the stack; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="linuxFxVersion"> LinuxFxVersion configuration setting. </param>
         /// <param name="javaVersion"> JavaVersion configuration setting. </param>
         /// <param name="powerShellVersion"> PowerShellVersion configuration setting. </param>
-        internal SiteConfigPropertiesDictionary(bool? use32BitWorkerProcess, string linuxFxVersion, string javaVersion, string powerShellVersion)
+        internal SiteConfigPropertiesDictionary(bool? isUse32BitWorkerProcess, string linuxFxVersion, string javaVersion, string powerShellVersion)
         {
-            Use32BitWorkerProcess = use32BitWorkerProcess;
+            IsUse32BitWorkerProcess = isUse32BitWorkerProcess;
             LinuxFxVersion = linuxFxVersion;
             JavaVersion = javaVersion;
             PowerShellVersion = powerShellVersion;
         }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if use32BitWorkerProcess should be set to true for the stack; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
-        public bool? Use32BitWorkerProcess { get; }
+        public bool? IsUse32BitWorkerProcess { get; }
         /// <summary> LinuxFxVersion configuration setting. </summary>
         public string LinuxFxVersion { get; }
         /// <summary> JavaVersion configuration setting. </summary>

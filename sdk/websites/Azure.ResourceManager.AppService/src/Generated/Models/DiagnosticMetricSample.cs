@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of DiagnosticMetricSample. </summary>
-        /// <param name="timestamp"> Time at which metric is measured. </param>
+        /// <param name="timestampOn"> Time at which metric is measured. </param>
         /// <param name="roleInstance">
         /// Role Instance. Null if this counter is not per instance 
         /// This is returned and should be whichever instance name we desire to be returned
@@ -29,9 +29,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="maximum"> Maximum of the metric sampled during the time period. </param>
         /// <param name="minimum"> Minimum of the metric sampled during the time period. </param>
         /// <param name="isAggregated"> Whether the values are aggregates across all workers or not. </param>
-        internal DiagnosticMetricSample(DateTimeOffset? timestamp, string roleInstance, double? total, double? maximum, double? minimum, bool? isAggregated)
+        internal DiagnosticMetricSample(DateTimeOffset? timestampOn, string roleInstance, double? total, double? maximum, double? minimum, bool? isAggregated)
         {
-            Timestamp = timestamp;
+            TimestampOn = timestampOn;
             RoleInstance = roleInstance;
             Total = total;
             Maximum = maximum;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Time at which metric is measured. </summary>
-        public DateTimeOffset? Timestamp { get; set; }
+        public DateTimeOffset? TimestampOn { get; set; }
         /// <summary>
         /// Role Instance. Null if this counter is not per instance 
         /// This is returned and should be whichever instance name we desire to be returned

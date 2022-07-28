@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("category");
                 writer.WriteStringValue(Category);
             }
-            if (Optional.IsDefined(SignalAvailability))
+            if (Optional.IsDefined(HasSignalAvailability))
             {
                 writer.WritePropertyName("signalAvailability");
-                writer.WriteBooleanValue(SignalAvailability.Value);
+                writer.WriteBooleanValue(HasSignalAvailability.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

@@ -7,22 +7,39 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Redis.Models
 {
     /// <summary> Asynchronous operation status. </summary>
-    public partial class OperationStatus
+    public partial class OperationStatus : OperationStatusResult
     {
         /// <summary> Initializes a new instance of OperationStatus. </summary>
-        internal OperationStatus()
+        /// <param name="status"> Operation status. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="status"/> is null. </exception>
+        internal OperationStatus(string status) : base(status)
         {
+            if (status == null)
+            {
+                throw new ArgumentNullException(nameof(status));
+            }
+
             Properties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of OperationStatus. </summary>
+        /// <param name="id"> Fully qualified ID for the async operation. </param>
+        /// <param name="name"> Name of the async operation. </param>
+        /// <param name="status"> Operation status. </param>
+        /// <param name="percentComplete"> Percent of the operation that is complete. </param>
+        /// <param name="startOn"> The start time of the operation. </param>
+        /// <param name="endOn"> The end time of the operation. </param>
+        /// <param name="operations"> The operations list. </param>
+        /// <param name="error"> If present, details of the operation error. </param>
         /// <param name="properties"> Additional properties from RP, only when operation is successful. </param>
-        internal OperationStatus(IReadOnlyDictionary<string, BinaryData> properties)
+        internal OperationStatus(ResourceIdentifier id, string name, string status, float? percentComplete, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<OperationStatusResult> operations, ResponseError error, IReadOnlyDictionary<string, BinaryData> properties) : base(id, name, status, percentComplete, startOn, endOn, operations, error)
         {
             Properties = properties;
         }
