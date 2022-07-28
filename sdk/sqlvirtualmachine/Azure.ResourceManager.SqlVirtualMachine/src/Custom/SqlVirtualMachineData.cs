@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <param name="serverConfigurationsManagementSettings"> SQL Server configuration management settings. </param>
         /// <param name="storageConfigurationSettings"> Storage Configuration Settings. </param>
         /// <param name="assessmentSettings"> Assessment Settings. </param>
-        internal SqlVirtualMachineData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string virtualMachineResourceId, string provisioningState, string sqlImageOffer, SqlServerLicenseType? sqlServerLicenseType, SqlManagementMode? sqlManagement, SqlImageSku? sqlImageSku, string sqlVirtualMachineGroupResourceId, WsfcDomainCredentials wsfcDomainCredentials, string wsfcStaticIP, AutoPatchingSettings autoPatchingSettings, AutoBackupSettings autoBackupSettings, KeyVaultCredentialSettings keyVaultCredentialSettings, ServerConfigurationsManagementSettings serverConfigurationsManagementSettings, StorageConfigurationSettings storageConfigurationSettings, AssessmentSettings assessmentSettings) : base(id, name, resourceType, systemData, tags, location)
+        internal SqlVirtualMachineData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ResourceIdentifier virtualMachineResourceId, string provisioningState, string sqlImageOffer, SqlServerLicenseType? sqlServerLicenseType, SqlManagementMode? sqlManagement, SqlImageSku? sqlImageSku, ResourceIdentifier sqlVirtualMachineGroupResourceId, WsfcDomainCredentials wsfcDomainCredentials, string wsfcStaticIP, AutoPatchingSettings autoPatchingSettings, AutoBackupSettings autoBackupSettings, KeyVaultCredentialSettings keyVaultCredentialSettings, ServerConfigurationsManagementSettings serverConfigurationsManagementSettings, StorageConfigurationSettings storageConfigurationSettings, SqlVirtualMachineAssessmentSettings assessmentSettings) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             VirtualMachineResourceId = virtualMachineResourceId;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <summary> Azure Active Directory identity of the server. Current supported identity types: SystemAssigned, None. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> ARM Resource id of underlying virtual machine created from SQL marketplace image. </summary>
-        public string VirtualMachineResourceId { get; set; }
+        public ResourceIdentifier VirtualMachineResourceId { get; set; }
         /// <summary> Provisioning state to track the async operation status. </summary>
         public string ProvisioningState { get; }
         /// <summary> SQL image offer. Examples include SQL2016-WS2016, SQL2017-WS2016. </summary>
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <summary> SQL Server edition type. </summary>
         public SqlImageSku? SqlImageSku { get; set; }
         /// <summary> ARM resource id of the SQL virtual machine group this SQL virtual machine is or will be part of. </summary>
-        public string SqlVirtualMachineGroupResourceId { get; set; }
+        public ResourceIdentifier SqlVirtualMachineGroupResourceId { get; set; }
         /// <summary> Domain credentials for setting up Windows Server Failover Cluster for SQL availability group. </summary>
         public WsfcDomainCredentials WsfcDomainCredentials { get; set; }
         /// <summary> Domain credentials for setting up Windows Server Failover Cluster for SQL availability group. </summary>
@@ -94,6 +94,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <summary> Storage Configuration Settings. </summary>
         public StorageConfigurationSettings StorageConfigurationSettings { get; set; }
         /// <summary> Assessment Settings. </summary>
-        public AssessmentSettings AssessmentSettings { get; set; }
+        public SqlVirtualMachineAssessmentSettings AssessmentSettings { get; set; }
     }
 }

@@ -25,15 +25,15 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 writer.WritePropertyName("sqlLogSettings");
                 writer.WriteObjectValue(SqlLogSettings);
             }
-            if (Optional.IsDefined(SqlTempDbSettings))
+            if (Optional.IsDefined(SqlTempDBSettings))
             {
                 writer.WritePropertyName("sqlTempDbSettings");
-                writer.WriteObjectValue(SqlTempDbSettings);
+                writer.WriteObjectValue(SqlTempDBSettings);
             }
-            if (Optional.IsDefined(SqlSystemDbOnDataDisk))
+            if (Optional.IsDefined(SqlSystemDBOnDataDisk))
             {
                 writer.WritePropertyName("sqlSystemDbOnDataDisk");
-                writer.WriteBooleanValue(SqlSystemDbOnDataDisk.Value);
+                writer.WriteBooleanValue(SqlSystemDBOnDataDisk.Value);
             }
             if (Optional.IsDefined(DiskConfigurationType))
             {
@@ -50,10 +50,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
         internal static StorageConfigurationSettings DeserializeStorageConfigurationSettings(JsonElement element)
         {
-            Optional<SQLStorageSettings> sqlDataSettings = default;
-            Optional<SQLStorageSettings> sqlLogSettings = default;
-            Optional<SQLTempDbSettings> sqlTempDbSettings = default;
-            Optional<bool> sqlSystemDbOnDataDisk = default;
+            Optional<SqlStorageSettings> sqlDataSettings = default;
+            Optional<SqlStorageSettings> sqlLogSettings = default;
+            Optional<SqlTempDBSettings> sqlTempDBSettings = default;
+            Optional<bool> sqlSystemDBOnDataDisk = default;
             Optional<DiskConfigurationType> diskConfigurationType = default;
             Optional<StorageWorkloadType> storageWorkloadType = default;
             foreach (var property in element.EnumerateObject())
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sqlDataSettings = SQLStorageSettings.DeserializeSQLStorageSettings(property.Value);
+                    sqlDataSettings = SqlStorageSettings.DeserializeSqlStorageSettings(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sqlLogSettings"))
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sqlLogSettings = SQLStorageSettings.DeserializeSQLStorageSettings(property.Value);
+                    sqlLogSettings = SqlStorageSettings.DeserializeSqlStorageSettings(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sqlTempDbSettings"))
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sqlTempDbSettings = SQLTempDbSettings.DeserializeSQLTempDbSettings(property.Value);
+                    sqlTempDBSettings = SqlTempDBSettings.DeserializeSqlTempDBSettings(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sqlSystemDbOnDataDisk"))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sqlSystemDbOnDataDisk = property.Value.GetBoolean();
+                    sqlSystemDBOnDataDisk = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("diskConfigurationType"))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     continue;
                 }
             }
-            return new StorageConfigurationSettings(sqlDataSettings.Value, sqlLogSettings.Value, sqlTempDbSettings.Value, Optional.ToNullable(sqlSystemDbOnDataDisk), Optional.ToNullable(diskConfigurationType), Optional.ToNullable(storageWorkloadType));
+            return new StorageConfigurationSettings(sqlDataSettings.Value, sqlLogSettings.Value, sqlTempDBSettings.Value, Optional.ToNullable(sqlSystemDBOnDataDisk), Optional.ToNullable(diskConfigurationType), Optional.ToNullable(storageWorkloadType));
         }
     }
 }
