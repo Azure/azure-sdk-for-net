@@ -102,17 +102,6 @@ namespace Azure.Communication
         }
 
         [Test]
-        public void TestImplicitConversionOperator()
-        {
-            CommunicationIdentifier communicationUserIdentifier = (CommunicationIdentifier)"8:acs:bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd_45ab2481-1c1c-4005-be24-0ffb879b1130";
-            CommunicationIdentifier microsoftTeamsUserIdentifier = (CommunicationIdentifier)"8:orgid:45ab2481-1c1c-4005-be24-0ffb879b1130";
-            CommunicationIdentifier phoneNumberIdentifier = (CommunicationIdentifier)"4:112345556789";
-            Assert.IsInstanceOf(typeof(CommunicationUserIdentifier), communicationUserIdentifier);
-            Assert.IsInstanceOf(typeof(MicrosoftTeamsUserIdentifier), microsoftTeamsUserIdentifier);
-            Assert.IsInstanceOf(typeof(PhoneNumberIdentifier), phoneNumberIdentifier);
-        }
-
-        [Test]
         public void RawIdIsOverriddenBySubTypes()
         {
             var baseType = typeof(CommunicationIdentifier);

@@ -43,9 +43,6 @@ namespace Azure.Communication
         /// <returns>True if the types or <see cref="RawId"/> values are different.</returns>
         public static bool operator !=(CommunicationIdentifier left, CommunicationIdentifier right) => left.GetType() != right.GetType() || !Equals(left, right);
 
-        /// <summary> Converts a string to a <see cref="CommunicationIdentifier"/>. </summary>
-        public static explicit operator CommunicationIdentifier(string value) => FromRawId(value);
-
         /// <summary>
         /// Creates a <see cref="CommunicationIdentifier"/> from a given rawId.
         /// When storing rawIds, use this function to restore the identifier that was encoded in the rawId.
