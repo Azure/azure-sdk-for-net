@@ -52,6 +52,7 @@ namespace Azure.Storage.Files.DataLake.Perf.Options
             get
             {
                 var options = new DataLakeClientOptions();
+                return options;
             }
         }
 
