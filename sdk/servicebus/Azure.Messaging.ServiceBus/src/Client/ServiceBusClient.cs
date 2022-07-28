@@ -149,9 +149,10 @@ namespace Azure.Messaging.ServiceBus
         public ServiceBusClient(string connectionString, ServiceBusClientOptions options)
         {
             _options = options?.Clone() ?? new ServiceBusClientOptions();
+            _options.Identifier ??= DiagnosticUtilities.GenerateIdentifier(FullyQualifiedNamespace);
             Connection = new ServiceBusConnection(connectionString, _options);
             Logger.ClientCreateStart(typeof(ServiceBusClient), FullyQualifiedNamespace);
-            Identifier = _options.Identifier ?? DiagnosticUtilities.GenerateIdentifier(FullyQualifiedNamespace);
+            Identifier = _options.Identifier;
             TransportType = _options.TransportType;
             Logger.ClientCreateComplete(typeof(ServiceBusClient), Identifier);
         }

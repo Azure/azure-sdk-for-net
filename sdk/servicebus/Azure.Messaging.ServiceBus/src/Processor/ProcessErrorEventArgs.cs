@@ -39,6 +39,30 @@ namespace Azure.Messaging.ServiceBus
             Identifier = identifier;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ProcessErrorEventArgs" /> class.
+        /// </summary>
+        ///
+        /// <param name="exception">The exception that triggered the call to the error event handler.</param>
+        /// <param name="errorSource">The source associated with the error.</param>
+        /// <param name="fullyQualifiedNamespace">The endpoint used when this exception occurred.</param>
+        /// <param name="entityPath">The entity path used when this exception occurred.</param>
+        /// <param name="cancellationToken">The processor's <see cref="System.Threading.CancellationToken"/> instance which will be cancelled
+        /// in the event that <see cref="ServiceBusProcessor.StopProcessingAsync"/> is called.</param>
+        public ProcessErrorEventArgs(
+            Exception exception,
+            ServiceBusErrorSource errorSource,
+            string fullyQualifiedNamespace,
+            string entityPath,
+            CancellationToken cancellationToken)
+        {
+            Exception = exception;
+            ErrorSource = errorSource;
+            FullyQualifiedNamespace = fullyQualifiedNamespace;
+            EntityPath = entityPath;
+            CancellationToken = cancellationToken;
+        }
+
         /// <summary>Gets the exception that triggered the call to the error event handler.</summary>
         public Exception Exception { get; }
 
