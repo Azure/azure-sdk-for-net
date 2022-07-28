@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Models
         [InitializationConstructor]
         public SystemAssignedServiceIdentity(SystemAssignedServiceIdentityType systemAssignedServiceIdentityType)
         {
-            SystemAssignedServiceIdentityType = systemAssignedServiceIdentityType;
+            Identity = new ManagedServiceIdentity(systemAssignedServiceIdentityType.ToString());
         }
 
         /// <summary> Initializes a new instance of SystemAssignedServiceIdentity. </summary>
@@ -29,16 +29,27 @@ namespace Azure.ResourceManager.Models
         [SerializationConstructor]
         internal SystemAssignedServiceIdentity(Guid? principalId, Guid? tenantId, SystemAssignedServiceIdentityType systemAssignedServiceIdentityType)
         {
-            PrincipalId = principalId;
-            TenantId = tenantId;
-            SystemAssignedServiceIdentityType = systemAssignedServiceIdentityType;
+            Identity = new ManagedServiceIdentity(principalId, tenantId, systemAssignedServiceIdentityType.ToString(), null);
         }
 
+        internal ManagedServiceIdentity Identity { get; set; }
+
         /// <summary> The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity. </summary>
-        public Guid? PrincipalId { get; }
+        public Guid? PrincipalId
+        {
+            get => Identity.PrincipalId;
+        }
         /// <summary> The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity. </summary>
-        public Guid? TenantId { get; }
+        public Guid? TenantId
+        {
+            get => Identity.TenantId;
+        }
         /// <summary> Type of managed service identity (either system assigned, or none). </summary>
-        public SystemAssignedServiceIdentityType SystemAssignedServiceIdentityType { get; set; }
+        public SystemAssignedServiceIdentityType SystemAssignedServiceIdentityType
+        {
+            get => Identity.ManagedServiceIdentityType.ToString();
+            set => Identity.ManagedServiceIdentityType = value.ToString();
+        }
+
     }
 }
