@@ -112,6 +112,7 @@ namespace Azure.Messaging.ServiceBus
                         errorSource,
                         Processor.FullyQualifiedNamespace,
                         Processor.EntityPath,
+                        Processor.Identifier,
                         cancellationToken))
                     .ConfigureAwait(false);
             }
@@ -189,6 +190,7 @@ namespace Azure.Messaging.ServiceBus
                             errorSource,
                             Processor.FullyQualifiedNamespace,
                             Processor.EntityPath,
+                            Processor.Identifier,
                             cancellationToken))
                     .ConfigureAwait(false);
 
@@ -221,6 +223,7 @@ namespace Azure.Messaging.ServiceBus
                                         ServiceBusErrorSource.Abandon,
                                         Processor.FullyQualifiedNamespace,
                                         Processor.EntityPath,
+                                        Processor.Identifier,
                                         cancellationToken))
                                 .ConfigureAwait(false);
                         }
@@ -331,6 +334,7 @@ namespace Azure.Messaging.ServiceBus
                         ServiceBusErrorSource.RenewLock,
                         Processor.FullyQualifiedNamespace,
                         Processor.EntityPath,
+                        Processor.Identifier,
                         cancellationToken)).ConfigureAwait(false);
             }
         }

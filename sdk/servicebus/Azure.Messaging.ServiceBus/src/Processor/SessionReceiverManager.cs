@@ -228,6 +228,7 @@ namespace Azure.Messaging.ServiceBus
                         ServiceBusErrorSource.CloseSession,
                         Processor.FullyQualifiedNamespace,
                         Processor.EntityPath,
+                        Processor.Identifier,
                         cancellationToken))
                     .ConfigureAwait(false);
             }
@@ -334,6 +335,7 @@ namespace Azure.Messaging.ServiceBus
                         errorSource,
                         Processor.FullyQualifiedNamespace,
                         Processor.EntityPath,
+                        Processor.Identifier,
                         processorCancellationToken))
                     .ConfigureAwait(false);
             }

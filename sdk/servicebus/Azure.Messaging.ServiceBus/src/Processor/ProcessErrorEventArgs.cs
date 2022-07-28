@@ -20,6 +20,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="errorSource">The source associated with the error.</param>
         /// <param name="fullyQualifiedNamespace">The endpoint used when this exception occurred.</param>
         /// <param name="entityPath">The entity path used when this exception occurred.</param>
+        /// <param name="identifier">The identifier of the client entity that reported this error.</param>
         /// <param name="cancellationToken">The processor's <see cref="System.Threading.CancellationToken"/> instance which will be cancelled
         /// in the event that <see cref="ServiceBusProcessor.StopProcessingAsync"/> is called.</param>
         public ProcessErrorEventArgs(
@@ -27,6 +28,7 @@ namespace Azure.Messaging.ServiceBus
             ServiceBusErrorSource errorSource,
             string fullyQualifiedNamespace,
             string entityPath,
+            string identifier,
             CancellationToken cancellationToken)
         {
             Exception = exception;
@@ -34,6 +36,7 @@ namespace Azure.Messaging.ServiceBus
             FullyQualifiedNamespace = fullyQualifiedNamespace;
             EntityPath = entityPath;
             CancellationToken = cancellationToken;
+            Identifier = identifier;
         }
 
         /// <summary>Gets the exception that triggered the call to the error event handler.</summary>

@@ -889,6 +889,7 @@ namespace Azure.Messaging.ServiceBus
                                     ServiceBusErrorSource.Receive,
                                     FullyQualifiedNamespace,
                                     EntityPath,
+                                    Identifier,
                                     cancellationToken))
                             .ConfigureAwait(false);
                     }
