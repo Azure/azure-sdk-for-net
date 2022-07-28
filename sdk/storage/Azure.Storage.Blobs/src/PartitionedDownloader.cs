@@ -78,7 +78,7 @@ namespace Azure.Storage.Blobs
             }
             else
             {
-                _rangeSize = validationOptions != null
+                _rangeSize = (validationOptions?.ChecksumAlgorithm ?? StorageChecksumAlgorithm.None) != StorageChecksumAlgorithm.None
                     ? Constants.MaxHashRequestDownloadRange
                     : Constants.DefaultBufferSize;
             }
@@ -91,7 +91,7 @@ namespace Azure.Storage.Blobs
             }
             else
             {
-                _initialRangeSize = validationOptions != null
+                _initialRangeSize = (validationOptions?.ChecksumAlgorithm ?? StorageChecksumAlgorithm.None) != StorageChecksumAlgorithm.None
                     ? Constants.MaxHashRequestDownloadRange
                     : Constants.Blob.Block.DefaultInitalDownloadRangeSize;
             }
