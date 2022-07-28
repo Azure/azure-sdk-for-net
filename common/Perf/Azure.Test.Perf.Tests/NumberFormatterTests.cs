@@ -31,6 +31,15 @@ namespace Azure.Test.Perf.Tests
         [TestCase(12_345, 6, "12,345.0")]
         [TestCase(12_345, 7, "12,345.00")]
 
+        // Group separator
+        [TestCase(12_345, 1, "12345", false)]
+        [TestCase(12_345, 2, "12345", false)]
+        [TestCase(12_345, 3, "12345", false)]
+        [TestCase(12_345, 4, "12345", false)]
+        [TestCase(12_345, 5, "12345", false)]
+        [TestCase(12_345, 6, "12345.0", false)]
+        [TestCase(12_345, 7, "12345.00", false)]
+
         // Bug where numbers where fractional part of log10 was > 0.5
         [TestCase(8.22929639076288, 4, "8.229")]
 
@@ -45,9 +54,9 @@ namespace Azure.Test.Perf.Tests
         [TestCase(-0.00012345, 4, "-0.0001235")]
         [TestCase(-1.2345, 4, "-1.235")]
         [TestCase(-12_345, 4, "-12,345")]
-        public void Format(double value, int minSignificantDigits, string expected)
+        public void Format(double value, int minSignificantDigits, string expected, bool groupSeparator = true)
         {
-            Assert.AreEqual(expected, NumberFormatter.Format(value, minSignificantDigits));
+            Assert.AreEqual(expected, NumberFormatter.Format(value, minSignificantDigits, groupSeparator));
         }
 
         [TestCase(1.2345, 0, typeof(ArgumentException))]

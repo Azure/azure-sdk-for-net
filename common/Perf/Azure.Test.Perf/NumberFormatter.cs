@@ -13,7 +13,7 @@ namespace Azure.Test.Perf
         // - Format(12345, 4) -> "12,345"
         // - Format(1.2345, 4) -> "1.235"
         // - Format(0.00012345, 4) -> "0.0001234"
-        public static string Format(double value, int minSignificantDigits)
+        public static string Format(double value, int minSignificantDigits, bool groupSeparator = true)
         {
             if (minSignificantDigits <= 0)
             {
@@ -34,7 +34,7 @@ namespace Azure.Test.Perf
 
             var decimals = Math.Ceiling(Math.Max(0, significantDigits - log - 1));
 
-            return rounded.ToString($"N{decimals}");
+            return groupSeparator ? rounded.ToString($"N{decimals}") : rounded.ToString($"F{decimals}");
         }
     }
 }
