@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System.Net;
+
 namespace Azure.ResourceManager.Dns.Models
 {
     /// <summary> An AAAA record. </summary>
@@ -17,12 +19,12 @@ namespace Azure.ResourceManager.Dns.Models
 
         /// <summary> Initializes a new instance of DnsAaaaRecord. </summary>
         /// <param name="ipv6Address"> The IPv6 address of this AAAA record. </param>
-        internal DnsAaaaRecord(string ipv6Address)
+        internal DnsAaaaRecord(IPAddress ipv6Address)
         {
             IPv6Address = ipv6Address;
         }
 
         /// <summary> The IPv6 address of this AAAA record. </summary>
-        public string IPv6Address { get; set; }
+        public IPAddress IPv6Address { get; set; }
     }
 }

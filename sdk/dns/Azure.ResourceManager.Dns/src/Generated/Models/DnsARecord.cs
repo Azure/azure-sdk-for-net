@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System.Net;
+
 namespace Azure.ResourceManager.Dns.Models
 {
     /// <summary> An A record. </summary>
@@ -17,12 +19,12 @@ namespace Azure.ResourceManager.Dns.Models
 
         /// <summary> Initializes a new instance of DnsARecord. </summary>
         /// <param name="ipv4Address"> The IPv4 address of this A record. </param>
-        internal DnsARecord(string ipv4Address)
+        internal DnsARecord(IPAddress ipv4Address)
         {
             IPv4Address = ipv4Address;
         }
 
         /// <summary> The IPv4 address of this A record. </summary>
-        public string IPv4Address { get; set; }
+        public IPAddress IPv4Address { get; set; }
     }
 }

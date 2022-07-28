@@ -22,6 +22,8 @@ format-by-name-rules:
   '*Uris': 'Uri'
   '*Guid': 'uuid'
   'ifMatch': 'etag'
+  'IPv6Address': 'ip-address'
+  'IPv4Address': 'ip-address'
 
 rename-rules:
   CPU: Cpu

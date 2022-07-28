@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
@@ -18,19 +19,24 @@ namespace Azure.ResourceManager.Dns.Models
             if (Optional.IsDefined(IPv6Address))
             {
                 writer.WritePropertyName("ipv6Address");
-                writer.WriteStringValue(IPv6Address);
+                writer.WriteStringValue(IPv6Address.ToString());
             }
             writer.WriteEndObject();
         }
 
         internal static DnsAaaaRecord DeserializeDnsAaaaRecord(JsonElement element)
         {
-            Optional<string> ipv6Address = default;
+            Optional<IPAddress> ipv6Address = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipv6Address"))
                 {
-                    ipv6Address = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    ipv6Address = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
             }

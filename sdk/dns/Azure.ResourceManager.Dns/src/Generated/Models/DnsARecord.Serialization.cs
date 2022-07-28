@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
@@ -18,19 +19,24 @@ namespace Azure.ResourceManager.Dns.Models
             if (Optional.IsDefined(IPv4Address))
             {
                 writer.WritePropertyName("ipv4Address");
-                writer.WriteStringValue(IPv4Address);
+                writer.WriteStringValue(IPv4Address.ToString());
             }
             writer.WriteEndObject();
         }
 
         internal static DnsARecord DeserializeDnsARecord(JsonElement element)
         {
-            Optional<string> ipv4Address = default;
+            Optional<IPAddress> ipv4Address = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipv4Address"))
                 {
-                    ipv4Address = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    ipv4Address = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
             }
