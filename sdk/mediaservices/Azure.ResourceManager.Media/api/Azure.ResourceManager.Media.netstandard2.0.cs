@@ -72,12 +72,6 @@ namespace Azure.ResourceManager.Media
         public virtual Azure.Response<Azure.ResourceManager.Media.AssetFilterResource> Update(Azure.ResourceManager.Media.AssetFilterData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.AssetFilterResource>> UpdateAsync(Azure.ResourceManager.Media.AssetFilterData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class AssetTrackData : Azure.ResourceManager.Models.ResourceData
-    {
-        public AssetTrackData() { }
-        public Azure.ResourceManager.Media.Models.MediaProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.Media.Models.TrackBase Track { get { throw null; } set { } }
-    }
     public partial class ContentKeyPolicyCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Media.ContentKeyPolicyResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Media.ContentKeyPolicyResource>, System.Collections.IEnumerable
     {
         protected ContentKeyPolicyCollection() { }
@@ -265,17 +259,77 @@ namespace Azure.ResourceManager.Media
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.AssetFilterResource>> GetAssetFilterAsync(string filterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Media.AssetFilterCollection GetAssetFilters() { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.MediaAssetResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<string> GetContainerSas(Azure.ResourceManager.Media.Models.GetContainerSasContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<string> GetContainerSasAsync(Azure.ResourceManager.Media.Models.GetContainerSasContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Media.Models.StorageEncryptedAssetDecryptionData> GetEncryptionKey(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.Models.StorageEncryptedAssetDecryptionData>> GetEncryptionKeyAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Media.MediaServiceAssetTrackResource> GetMediaServiceAssetTrack(string trackName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.MediaServiceAssetTrackResource>> GetMediaServiceAssetTrackAsync(string trackName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Media.MediaServiceAssetTrackCollection GetMediaServiceAssetTracks() { throw null; }
+        public virtual Azure.Pageable<System.Uri> GetContainerSas(Azure.ResourceManager.Media.Models.GetContainerSasContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<System.Uri> GetContainerSasAsync(Azure.ResourceManager.Media.Models.GetContainerSasContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Media.Models.StorageEncryptedAssetDecryptionInfo> GetEncryptionKey(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.Models.StorageEncryptedAssetDecryptionInfo>> GetEncryptionKeyAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Media.MediaAssetTrackResource> GetMediaAssetTrack(string trackName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.MediaAssetTrackResource>> GetMediaAssetTrackAsync(string trackName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Media.MediaAssetTrackCollection GetMediaAssetTracks() { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Media.Models.AssetStreamingLocator> GetStreamingLocators(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Media.Models.AssetStreamingLocator> GetStreamingLocatorsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Media.MediaAssetResource> Update(Azure.ResourceManager.Media.MediaAssetData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.MediaAssetResource>> UpdateAsync(Azure.ResourceManager.Media.MediaAssetData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class MediaAssetTrackCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Media.MediaAssetTrackResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Media.MediaAssetTrackResource>, System.Collections.IEnumerable
+    {
+        protected MediaAssetTrackCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Media.MediaAssetTrackResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string trackName, Azure.ResourceManager.Media.MediaAssetTrackData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Media.MediaAssetTrackResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string trackName, Azure.ResourceManager.Media.MediaAssetTrackData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string trackName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string trackName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Media.MediaAssetTrackResource> Get(string trackName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Media.MediaAssetTrackResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Media.MediaAssetTrackResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.MediaAssetTrackResource>> GetAsync(string trackName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Media.MediaAssetTrackResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Media.MediaAssetTrackResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Media.MediaAssetTrackResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Media.MediaAssetTrackResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class MediaAssetTrackData : Azure.ResourceManager.Models.ResourceData
+    {
+        public MediaAssetTrackData() { }
+        public Azure.ResourceManager.Media.Models.MediaProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Media.Models.AssetTrackInfo Track { get { throw null; } set { } }
+    }
+    public partial class MediaAssetTrackOperationResultCollection : Azure.ResourceManager.ArmCollection
+    {
+        protected MediaAssetTrackOperationResultCollection() { }
+        public virtual Azure.Response<bool> Exists(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Media.MediaAssetTrackOperationResultResource> Get(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.MediaAssetTrackOperationResultResource>> GetAsync(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class MediaAssetTrackOperationResultResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected MediaAssetTrackOperationResultResource() { }
+        public virtual Azure.ResourceManager.Media.MediaAssetTrackData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string assetName, string trackName, string operationId) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Media.MediaAssetTrackOperationResultResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.MediaAssetTrackOperationResultResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class MediaAssetTrackResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected MediaAssetTrackResource() { }
+        public virtual Azure.ResourceManager.Media.MediaAssetTrackData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string assetName, string trackName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Media.MediaAssetTrackResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.MediaAssetTrackResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Media.MediaAssetTrackOperationResultResource> GetMediaAssetTrackOperationResult(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.MediaAssetTrackOperationResultResource>> GetMediaAssetTrackOperationResultAsync(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Media.MediaAssetTrackOperationResultCollection GetMediaAssetTrackOperationResults() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Media.Models.AssetTrackOperationStatus> GetOperationStatus(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.Models.AssetTrackOperationStatus>> GetOperationStatusAsync(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Media.MediaAssetTrackResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Media.MediaAssetTrackData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Media.MediaAssetTrackResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Media.MediaAssetTrackData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation UpdateTrackData(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> UpdateTrackDataAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public static partial class MediaExtensions
     {
@@ -287,20 +341,20 @@ namespace Azure.ResourceManager.Media
         public static Azure.ResourceManager.Media.LiveEventResource GetLiveEventResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Media.LiveOutputResource GetLiveOutputResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Media.MediaAssetResource GetMediaAssetResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Media.MediaAssetTrackOperationResultResource GetMediaAssetTrackOperationResultResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Media.MediaAssetTrackResource GetMediaAssetTrackResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Media.MediaPrivateEndpointConnectionResource GetMediaPrivateEndpointConnectionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Media.MediaPrivateLinkResource GetMediaPrivateLinkResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Media.MediaServiceResource> GetMediaService(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.Media.MediaServiceAssetTrackOperationResultResource GetMediaServiceAssetTrackOperationResultResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Media.MediaServiceAssetTrackResource GetMediaServiceAssetTrackResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.MediaServiceResource>> GetMediaServiceAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Media.MediaServiceOperationResultResource> GetMediaServiceOperationResult(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string locationName, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.MediaServiceOperationResultResource>> GetMediaServiceOperationResultAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string locationName, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.Media.MediaServiceOperationResultResource GetMediaServiceOperationResultResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Media.MediaServiceOperationResultCollection GetMediaServiceOperationResults(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource) { throw null; }
         public static Azure.ResourceManager.Media.MediaServiceResource GetMediaServiceResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Media.MediaServiceCollection GetMediaServices(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Media.MediaServiceResource> GetMediaServices(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Media.MediaServiceResource> GetMediaServicesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.Media.MediaServicesOperationResultResource> GetMediaServicesOperationResult(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string locationName, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.MediaServicesOperationResultResource>> GetMediaServicesOperationResultAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string locationName, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.Media.MediaServicesOperationResultResource GetMediaServicesOperationResultResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Media.MediaServicesOperationResultCollection GetMediaServicesOperationResults(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Media.Models.MediaServiceOperationStatus> GetMediaServicesOperationStatus(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string locationName, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.Models.MediaServiceOperationStatus>> GetMediaServicesOperationStatusAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string locationName, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Media.MediaTransformJobResource GetMediaTransformJobResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -358,76 +412,22 @@ namespace Azure.ResourceManager.Media
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Media.MediaPrivateLinkResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Media.MediaPrivateLinkResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class MediaPrivateLinkResource : Azure.ResourceManager.ArmResource
+    public partial class MediaPrivateLinkData : Azure.ResourceManager.Models.ResourceData
     {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected MediaPrivateLinkResource() { }
-        public virtual Azure.ResourceManager.Media.MediaPrivateLinkResourceData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string name) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Media.MediaPrivateLinkResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.MediaPrivateLinkResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class MediaPrivateLinkResourceData : Azure.ResourceManager.Models.ResourceData
-    {
-        public MediaPrivateLinkResourceData() { }
+        public MediaPrivateLinkData() { }
         public string GroupId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
         public System.Collections.Generic.IList<string> RequiredZoneNames { get { throw null; } }
     }
-    public partial class MediaServiceAssetTrackCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Media.MediaServiceAssetTrackResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Media.MediaServiceAssetTrackResource>, System.Collections.IEnumerable
-    {
-        protected MediaServiceAssetTrackCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Media.MediaServiceAssetTrackResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string trackName, Azure.ResourceManager.Media.AssetTrackData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Media.MediaServiceAssetTrackResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string trackName, Azure.ResourceManager.Media.AssetTrackData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string trackName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string trackName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Media.MediaServiceAssetTrackResource> Get(string trackName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Media.MediaServiceAssetTrackResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Media.MediaServiceAssetTrackResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.MediaServiceAssetTrackResource>> GetAsync(string trackName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Media.MediaServiceAssetTrackResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Media.MediaServiceAssetTrackResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Media.MediaServiceAssetTrackResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Media.MediaServiceAssetTrackResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class MediaServiceAssetTrackOperationResultCollection : Azure.ResourceManager.ArmCollection
-    {
-        protected MediaServiceAssetTrackOperationResultCollection() { }
-        public virtual Azure.Response<bool> Exists(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Media.MediaServiceAssetTrackOperationResultResource> Get(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.MediaServiceAssetTrackOperationResultResource>> GetAsync(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class MediaServiceAssetTrackOperationResultResource : Azure.ResourceManager.ArmResource
+    public partial class MediaPrivateLinkResource : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
-        protected MediaServiceAssetTrackOperationResultResource() { }
-        public virtual Azure.ResourceManager.Media.AssetTrackData Data { get { throw null; } }
+        protected MediaPrivateLinkResource() { }
+        public virtual Azure.ResourceManager.Media.MediaPrivateLinkData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string assetName, string trackName, string operationId) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Media.MediaServiceAssetTrackOperationResultResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.MediaServiceAssetTrackOperationResultResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class MediaServiceAssetTrackResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected MediaServiceAssetTrackResource() { }
-        public virtual Azure.ResourceManager.Media.AssetTrackData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string assetName, string trackName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Media.MediaServiceAssetTrackResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.MediaServiceAssetTrackResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Media.MediaServiceAssetTrackOperationResultResource> GetMediaServiceAssetTrackOperationResult(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.MediaServiceAssetTrackOperationResultResource>> GetMediaServiceAssetTrackOperationResultAsync(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Media.MediaServiceAssetTrackOperationResultCollection GetMediaServiceAssetTrackOperationResults() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Media.Models.AssetTrackOperationStatus> GetOperationStatus(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.Models.AssetTrackOperationStatus>> GetOperationStatusAsync(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Media.MediaServiceAssetTrackResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Media.AssetTrackData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Media.MediaServiceAssetTrackResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Media.AssetTrackData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation UpdateTrackData(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> UpdateTrackDataAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string name) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Media.MediaPrivateLinkResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.MediaPrivateLinkResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class MediaServiceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Media.MediaServiceResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Media.MediaServiceResource>, System.Collections.IEnumerable
     {
@@ -456,6 +456,30 @@ namespace Azure.ResourceManager.Media
         public Azure.ResourceManager.Media.Models.IsMediaServicePublicNetworkAccessEnabled? PublicNetworkAccess { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.MediaServiceStorageAccount> StorageAccounts { get { throw null; } }
         public Azure.ResourceManager.Media.Models.StorageAuthentication? StorageAuthentication { get { throw null; } set { } }
+    }
+    public partial class MediaServiceOperationResultCollection : Azure.ResourceManager.ArmCollection
+    {
+        protected MediaServiceOperationResultCollection() { }
+        public virtual Azure.Response<bool> Exists(string locationName, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string locationName, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Media.MediaServiceOperationResultResource> Get(string locationName, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.MediaServiceOperationResultResource>> GetAsync(string locationName, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class MediaServiceOperationResultResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected MediaServiceOperationResultResource() { }
+        public virtual Azure.ResourceManager.Media.MediaServiceData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public virtual Azure.Response<Azure.ResourceManager.Media.MediaServiceOperationResultResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.MediaServiceOperationResultResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string locationName, string operationId) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Media.MediaServiceOperationResultResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.MediaServiceOperationResultResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Media.MediaServiceOperationResultResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.MediaServiceOperationResultResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Media.MediaServiceOperationResultResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.MediaServiceOperationResultResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class MediaServiceResource : Azure.ResourceManager.ArmResource
     {
@@ -510,30 +534,6 @@ namespace Azure.ResourceManager.Media
         public virtual System.Threading.Tasks.Task<Azure.Response> SyncStorageKeysAsync(Azure.ResourceManager.Media.Models.SyncStorageKeysContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Media.MediaServiceResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Media.Models.MediaServicePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Media.MediaServiceResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Media.Models.MediaServicePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class MediaServicesOperationResultCollection : Azure.ResourceManager.ArmCollection
-    {
-        protected MediaServicesOperationResultCollection() { }
-        public virtual Azure.Response<bool> Exists(string locationName, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string locationName, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Media.MediaServicesOperationResultResource> Get(string locationName, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.MediaServicesOperationResultResource>> GetAsync(string locationName, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class MediaServicesOperationResultResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected MediaServicesOperationResultResource() { }
-        public virtual Azure.ResourceManager.Media.MediaServiceData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.Media.MediaServicesOperationResultResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.MediaServicesOperationResultResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string locationName, string operationId) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Media.MediaServicesOperationResultResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.MediaServicesOperationResultResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Media.MediaServicesOperationResultResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.MediaServicesOperationResultResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Media.MediaServicesOperationResultResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.MediaServicesOperationResultResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class MediaTransformCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Media.MediaTransformResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Media.MediaTransformResource>, System.Collections.IEnumerable
     {
@@ -726,8 +726,8 @@ namespace Azure.ResourceManager.Media
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.StreamingLocatorResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Media.Models.StreamingLocatorContentKey> GetContentKeys(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Media.Models.StreamingLocatorContentKey> GetContentKeysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Media.Models.ListPathsResponse> GetPaths(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.Models.ListPathsResponse>> GetPathsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Media.Models.GetPathsResult> GetSupportedPaths(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.Models.GetPathsResult>> GetSupportedPathsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Media.StreamingLocatorResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Media.StreamingLocatorData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Media.StreamingLocatorResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Media.StreamingLocatorData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -773,7 +773,7 @@ namespace Azure.ResourceManager.Media
 }
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class AacAudio : Azure.ResourceManager.Media.Models.AudioProperties
+    public partial class AacAudio : Azure.ResourceManager.Media.Models.AudiocommonProperties
     {
         public AacAudio() { }
         public Azure.ResourceManager.Media.Models.AacAudioProfile? Profile { get { throw null; } set { } }
@@ -838,7 +838,7 @@ namespace Azure.ResourceManager.Media.Models
     {
         public AkamaiSignatureHeaderAuthenticationKey() { }
         public string Base64Key { get { throw null; } set { } }
-        public System.DateTimeOffset? Expiration { get { throw null; } set { } }
+        public System.DateTimeOffset? ExpireOn { get { throw null; } set { } }
         public string Identifier { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -936,6 +936,10 @@ namespace Azure.ResourceManager.Media.Models
         public System.Guid? StreamingLocatorId { get { throw null; } }
         public string StreamingPolicyName { get { throw null; } }
     }
+    public partial class AssetTrackInfo
+    {
+        public AssetTrackInfo() { }
+    }
     public partial class AssetTrackOperationStatus
     {
         internal AssetTrackOperationStatus() { }
@@ -991,18 +995,18 @@ namespace Azure.ResourceManager.Media.Models
         public System.Collections.Generic.IDictionary<string, string> ExperimentalOptions { get { throw null; } }
         public Azure.ResourceManager.Media.Models.AudioAnalysisMode? Mode { get { throw null; } set { } }
     }
-    public partial class AudioOverlay : Azure.ResourceManager.Media.Models.OverlayProperties
+    public partial class AudiocommonProperties : Azure.ResourceManager.Media.Models.CodecBasicProperties
     {
-        public AudioOverlay(string inputLabel) : base (default(string)) { }
-    }
-    public partial class AudioProperties : Azure.ResourceManager.Media.Models.CodecProperties
-    {
-        public AudioProperties() { }
+        public AudiocommonProperties() { }
         public int? Bitrate { get { throw null; } set { } }
         public int? Channels { get { throw null; } set { } }
         public int? SamplingRate { get { throw null; } set { } }
     }
-    public partial class AudioTrack : Azure.ResourceManager.Media.Models.TrackBase
+    public partial class AudioOverlay : Azure.ResourceManager.Media.Models.OverlayBasicProperties
+    {
+        public AudioOverlay(string inputLabel) : base (default(string)) { }
+    }
+    public partial class AudioTrack : Azure.ResourceManager.Media.Models.AssetTrackInfo
     {
         public AudioTrack() { }
     }
@@ -1079,9 +1083,9 @@ namespace Azure.ResourceManager.Media.Models
     {
         public ClipTime() { }
     }
-    public partial class CodecProperties
+    public partial class CodecBasicProperties
     {
-        public CodecProperties() { }
+        public CodecBasicProperties() { }
         public string Label { get { throw null; } set { } }
     }
     public partial class CommonEncryptionCbcs
@@ -1099,25 +1103,6 @@ namespace Azure.ResourceManager.Media.Models
         public Azure.ResourceManager.Media.Models.StreamingPolicyContentKeys ContentKeys { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.CencDrmConfiguration Drm { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.EnabledProtocols EnabledProtocols { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ComplexitySetting : System.IEquatable<Azure.ResourceManager.Media.Models.ComplexitySetting>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ComplexitySetting(string value) { throw null; }
-        public static Azure.ResourceManager.Media.Models.ComplexitySetting Balanced { get { throw null; } }
-        public static Azure.ResourceManager.Media.Models.ComplexitySetting Quality { get { throw null; } }
-        public static Azure.ResourceManager.Media.Models.ComplexitySetting Speed { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Media.Models.ComplexitySetting other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Media.Models.ComplexitySetting left, Azure.ResourceManager.Media.Models.ComplexitySetting right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Media.Models.ComplexitySetting (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Media.Models.ComplexitySetting left, Azure.ResourceManager.Media.Models.ComplexitySetting right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class ContentKeyPolicyClearKeyConfiguration : Azure.ResourceManager.Media.Models.ContentKeyPolicyConfiguration
     {
@@ -1139,9 +1124,9 @@ namespace Azure.ResourceManager.Media.Models
     }
     public partial class ContentKeyPolicyFairPlayOfflineRentalConfiguration
     {
-        public ContentKeyPolicyFairPlayOfflineRentalConfiguration(long playbackDurationSeconds, long storageDurationSeconds) { }
-        public long PlaybackDurationSeconds { get { throw null; } set { } }
-        public long StorageDurationSeconds { get { throw null; } set { } }
+        public ContentKeyPolicyFairPlayOfflineRentalConfiguration(long playbackDurationInSeconds, long storageDurationInSeconds) { }
+        public long PlaybackDurationInSeconds { get { throw null; } set { } }
+        public long StorageDurationInSeconds { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ContentKeyPolicyFairPlayRentalAndLeaseKeyType : System.IEquatable<Azure.ResourceManager.Media.Models.ContentKeyPolicyFairPlayRentalAndLeaseKeyType>
@@ -1220,7 +1205,7 @@ namespace Azure.ResourceManager.Media.Models
         public System.DateTimeOffset? BeginOn { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyContentKeyLocation ContentKeyLocation { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyContentType ContentType { get { throw null; } set { } }
-        public System.DateTimeOffset? ExpiresOn { get { throw null; } set { } }
+        public System.DateTimeOffset? ExpireOn { get { throw null; } set { } }
         public System.TimeSpan? GracePeriod { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyLicenseType LicenseType { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.ContentKeyPolicyPlayReadyPlayRight PlayRight { get { throw null; } set { } }
@@ -1373,11 +1358,11 @@ namespace Azure.ResourceManager.Media.Models
         public ContentKeyPolicyX509CertificateTokenKey(byte[] rawBody) { }
         public byte[] RawBody { get { throw null; } set { } }
     }
-    public partial class CopyAudio : Azure.ResourceManager.Media.Models.CodecProperties
+    public partial class CopyAudio : Azure.ResourceManager.Media.Models.CodecBasicProperties
     {
         public CopyAudio() { }
     }
-    public partial class CopyVideo : Azure.ResourceManager.Media.Models.CodecProperties
+    public partial class CopyVideo : Azure.ResourceManager.Media.Models.CodecBasicProperties
     {
         public CopyVideo() { }
     }
@@ -1481,6 +1466,25 @@ namespace Azure.ResourceManager.Media.Models
         public bool Download { get { throw null; } set { } }
         public bool Hls { get { throw null; } set { } }
         public bool SmoothStreaming { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct EncoderComplexitySetting : System.IEquatable<Azure.ResourceManager.Media.Models.EncoderComplexitySetting>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public EncoderComplexitySetting(string value) { throw null; }
+        public static Azure.ResourceManager.Media.Models.EncoderComplexitySetting Balanced { get { throw null; } }
+        public static Azure.ResourceManager.Media.Models.EncoderComplexitySetting Quality { get { throw null; } }
+        public static Azure.ResourceManager.Media.Models.EncoderComplexitySetting Speed { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Media.Models.EncoderComplexitySetting other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Media.Models.EncoderComplexitySetting left, Azure.ResourceManager.Media.Models.EncoderComplexitySetting right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Media.Models.EncoderComplexitySetting (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Media.Models.EncoderComplexitySetting left, Azure.ResourceManager.Media.Models.EncoderComplexitySetting right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EncoderNamedPreset : System.IEquatable<Azure.ResourceManager.Media.Models.EncoderNamedPreset>
@@ -1587,12 +1591,12 @@ namespace Azure.ResourceManager.Media.Models
         public static bool operator !=(Azure.ResourceManager.Media.Models.FaceRedactorMode left, Azure.ResourceManager.Media.Models.FaceRedactorMode right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class FilterOperations
+    public partial class FilteringOperations
     {
-        public FilterOperations() { }
+        public FilteringOperations() { }
         public Azure.ResourceManager.Media.Models.RectangularWindowProperties Crop { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.DeinterlaceSettings Deinterlace { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.OverlayProperties> Overlays { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.OverlayBasicProperties> Overlays { get { throw null; } }
         public Azure.ResourceManager.Media.Models.RotationSetting? Rotation { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -1647,9 +1651,9 @@ namespace Azure.ResourceManager.Media.Models
         public FilterTrackSelection(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Media.Models.FilterTrackPropertyCondition> trackSelections) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.FilterTrackPropertyCondition> TrackSelections { get { throw null; } }
     }
-    public partial class FormatProperties
+    public partial class FormatBasicProperties
     {
-        public FormatProperties(string filenamePattern) { }
+        public FormatBasicProperties(string filenamePattern) { }
         public string FilenamePattern { get { throw null; } set { } }
     }
     public partial class FromAllInputFile : Azure.ResourceManager.Media.Models.InputDefinition
@@ -1663,13 +1667,19 @@ namespace Azure.ResourceManager.Media.Models
     public partial class GetContainerSasContent
     {
         public GetContainerSasContent() { }
-        public System.DateTimeOffset? ExpiryOn { get { throw null; } set { } }
+        public System.DateTimeOffset? ExpireOn { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.AssetContainerPermission? Permissions { get { throw null; } set { } }
     }
     public partial class GetEdgePoliciesContent
     {
         public GetEdgePoliciesContent() { }
         public string DeviceId { get { throw null; } set { } }
+    }
+    public partial class GetPathsResult
+    {
+        internal GetPathsResult() { }
+        public System.Collections.Generic.IReadOnlyList<string> DownloadPaths { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Media.Models.StreamingPath> StreamingPaths { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct H264Complexity : System.IEquatable<Azure.ResourceManager.Media.Models.H264Complexity>
@@ -1820,16 +1830,16 @@ namespace Azure.ResourceManager.Media.Models
         public bool? Default { get { throw null; } set { } }
         public bool? Forced { get { throw null; } set { } }
     }
-    public partial class ImageFormat : Azure.ResourceManager.Media.Models.FormatProperties
+    public partial class ImageBasicProperties : Azure.ResourceManager.Media.Models.InputVideoEncodingProperties
     {
-        public ImageFormat(string filenamePattern) : base (default(string)) { }
-    }
-    public partial class ImageProperties : Azure.ResourceManager.Media.Models.InputVideoEncodingProperties
-    {
-        public ImageProperties(string start) { }
+        public ImageBasicProperties(string start) { }
         public string Range { get { throw null; } set { } }
         public string Start { get { throw null; } set { } }
         public string Step { get { throw null; } set { } }
+    }
+    public partial class ImageFormat : Azure.ResourceManager.Media.Models.FormatBasicProperties
+    {
+        public ImageFormat(string filenamePattern) : base (default(string)) { }
     }
     public partial class InputDefinition
     {
@@ -1841,7 +1851,7 @@ namespace Azure.ResourceManager.Media.Models
         public InputFile() { }
         public string Filename { get { throw null; } set { } }
     }
-    public partial class InputVideoEncodingProperties : Azure.ResourceManager.Media.Models.CodecProperties
+    public partial class InputVideoEncodingProperties : Azure.ResourceManager.Media.Models.CodecBasicProperties
     {
         public InputVideoEncodingProperties() { }
         public System.TimeSpan? KeyFrameInterval { get { throw null; } set { } }
@@ -2065,7 +2075,7 @@ namespace Azure.ResourceManager.Media.Models
     {
         public JpgFormat(string filenamePattern) : base (default(string)) { }
     }
-    public partial class JpgImage : Azure.ResourceManager.Media.Models.ImageProperties
+    public partial class JpgImage : Azure.ResourceManager.Media.Models.ImageBasicProperties
     {
         public JpgImage(string start) : base (default(string)) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.JpgLayer> Layers { get { throw null; } }
@@ -2088,12 +2098,6 @@ namespace Azure.ResourceManager.Media.Models
         public string Height { get { throw null; } set { } }
         public string Label { get { throw null; } set { } }
         public string Width { get { throw null; } set { } }
-    }
-    public partial class ListPathsResponse
-    {
-        internal ListPathsResponse() { }
-        public System.Collections.Generic.IReadOnlyList<string> DownloadPaths { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Media.Models.StreamingPath> StreamingPaths { get { throw null; } }
     }
     public partial class LiveEventActionContent
     {
@@ -2150,7 +2154,7 @@ namespace Azure.ResourceManager.Media.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public LiveEventInputProtocol(string value) { throw null; }
-        public static Azure.ResourceManager.Media.Models.LiveEventInputProtocol FragmentedMP4 { get { throw null; } }
+        public static Azure.ResourceManager.Media.Models.LiveEventInputProtocol FragmentedMp4 { get { throw null; } }
         public static Azure.ResourceManager.Media.Models.LiveEventInputProtocol Rtmp { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Media.Models.LiveEventInputProtocol other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -2363,7 +2367,7 @@ namespace Azure.ResourceManager.Media.Models
     {
         public Mp4Format(string filenamePattern) : base (default(string)) { }
     }
-    public partial class MultiBitrateFormat : Azure.ResourceManager.Media.Models.FormatProperties
+    public partial class MultiBitrateFormat : Azure.ResourceManager.Media.Models.FormatBasicProperties
     {
         public MultiBitrateFormat(string filenamePattern) : base (default(string)) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.OutputFile> OutputFiles { get { throw null; } }
@@ -2391,9 +2395,9 @@ namespace Azure.ResourceManager.Media.Models
         public OutputFile(System.Collections.Generic.IEnumerable<string> labels) { }
         public System.Collections.Generic.IList<string> Labels { get { throw null; } }
     }
-    public partial class OverlayProperties
+    public partial class OverlayBasicProperties
     {
-        public OverlayProperties(string inputLabel) { }
+        public OverlayBasicProperties(string inputLabel) { }
         public double? AudioGainLevel { get { throw null; } set { } }
         public System.TimeSpan? End { get { throw null; } set { } }
         public System.TimeSpan? FadeInDuration { get { throw null; } set { } }
@@ -2423,7 +2427,7 @@ namespace Azure.ResourceManager.Media.Models
     {
         public PngFormat(string filenamePattern) : base (default(string)) { }
     }
-    public partial class PngImage : Azure.ResourceManager.Media.Models.ImageProperties
+    public partial class PngImage : Azure.ResourceManager.Media.Models.ImageBasicProperties
     {
         public PngImage(string start) : base (default(string)) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.PngLayer> Layers { get { throw null; } }
@@ -2445,7 +2449,7 @@ namespace Azure.ResourceManager.Media.Models
     public partial class PresetConfigurations
     {
         public PresetConfigurations() { }
-        public Azure.ResourceManager.Media.Models.ComplexitySetting? Complexity { get { throw null; } set { } }
+        public Azure.ResourceManager.Media.Models.EncoderComplexitySetting? Complexity { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.InterleaveOutput? InterleaveOutput { get { throw null; } set { } }
         public float? KeyFrameIntervalInSeconds { get { throw null; } set { } }
         public int? MaxBitrateBps { get { throw null; } set { } }
@@ -2516,10 +2520,10 @@ namespace Azure.ResourceManager.Media.Models
     }
     public partial class StandardEncoderPreset : Azure.ResourceManager.Media.Models.MediaPreset
     {
-        public StandardEncoderPreset(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Media.Models.CodecProperties> codecs, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Media.Models.FormatProperties> formats) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.CodecProperties> Codecs { get { throw null; } }
-        public Azure.ResourceManager.Media.Models.FilterOperations Filters { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.FormatProperties> Formats { get { throw null; } }
+        public StandardEncoderPreset(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Media.Models.CodecBasicProperties> codecs, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Media.Models.FormatBasicProperties> formats) { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.CodecBasicProperties> Codecs { get { throw null; } }
+        public Azure.ResourceManager.Media.Models.FilteringOperations Filters { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.FormatBasicProperties> Formats { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct StorageAuthentication : System.IEquatable<Azure.ResourceManager.Media.Models.StorageAuthentication>
@@ -2539,9 +2543,9 @@ namespace Azure.ResourceManager.Media.Models
         public static bool operator !=(Azure.ResourceManager.Media.Models.StorageAuthentication left, Azure.ResourceManager.Media.Models.StorageAuthentication right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class StorageEncryptedAssetDecryptionData
+    public partial class StorageEncryptedAssetDecryptionInfo
     {
-        internal StorageEncryptedAssetDecryptionData() { }
+        internal StorageEncryptedAssetDecryptionInfo() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Media.Models.AssetFileEncryptionMetadata> AssetFileEncryptionMetadata { get { throw null; } }
         public byte[] Key { get { throw null; } }
     }
@@ -2702,7 +2706,7 @@ namespace Azure.ResourceManager.Media.Models
         public SyncStorageKeysContent() { }
         public string Id { get { throw null; } set { } }
     }
-    public partial class TextTrack : Azure.ResourceManager.Media.Models.TrackBase
+    public partial class TextTrack : Azure.ResourceManager.Media.Models.AssetTrackInfo
     {
         public TextTrack() { }
         public string DisplayName { get { throw null; } set { } }
@@ -2728,10 +2732,6 @@ namespace Azure.ResourceManager.Media.Models
         public static implicit operator Azure.ResourceManager.Media.Models.TrackAttribute (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Media.Models.TrackAttribute left, Azure.ResourceManager.Media.Models.TrackAttribute right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class TrackBase
-    {
-        public TrackBase() { }
     }
     public partial class TrackDescriptor
     {
@@ -2835,7 +2835,7 @@ namespace Azure.ResourceManager.Media.Models
         public int? MaxBitrate { get { throw null; } set { } }
         public int? Slices { get { throw null; } set { } }
     }
-    public partial class VideoOverlay : Azure.ResourceManager.Media.Models.OverlayProperties
+    public partial class VideoOverlay : Azure.ResourceManager.Media.Models.OverlayBasicProperties
     {
         public VideoOverlay(string inputLabel) : base (default(string)) { }
         public Azure.ResourceManager.Media.Models.RectangularWindowProperties CropRectangle { get { throw null; } set { } }
@@ -2862,7 +2862,7 @@ namespace Azure.ResourceManager.Media.Models
         public static bool operator !=(Azure.ResourceManager.Media.Models.VideoSyncMode left, Azure.ResourceManager.Media.Models.VideoSyncMode right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class VideoTrack : Azure.ResourceManager.Media.Models.TrackBase
+    public partial class VideoTrack : Azure.ResourceManager.Media.Models.AssetTrackInfo
     {
         public VideoTrack() { }
     }
