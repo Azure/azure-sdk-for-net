@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Redis
         public string LinkedRedisCacheId { get { throw null; } set { } }
         public string LinkedRedisCacheLocation { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.Redis.Models.ReplicationRole? ServerRole { get { throw null; } set { } }
+        public Azure.ResourceManager.Redis.Models.RedisLinkedServerRole? ServerRole { get { throw null; } set { } }
     }
     public partial class RedisLinkedServerWithPropertyResource : Azure.ResourceManager.ArmResource
     {
@@ -337,12 +337,17 @@ namespace Azure.ResourceManager.Redis.Models
         public int? SslPort { get { throw null; } }
         public string Zone { get { throw null; } }
     }
+    public enum RedisLinkedServerRole
+    {
+        Primary = 0,
+        Secondary = 1,
+    }
     public partial class RedisLinkedServerWithPropertyCreateOrUpdateContent
     {
-        public RedisLinkedServerWithPropertyCreateOrUpdateContent(string linkedRedisCacheId, string linkedRedisCacheLocation, Azure.ResourceManager.Redis.Models.ReplicationRole serverRole) { }
+        public RedisLinkedServerWithPropertyCreateOrUpdateContent(string linkedRedisCacheId, string linkedRedisCacheLocation, Azure.ResourceManager.Redis.Models.RedisLinkedServerRole serverRole) { }
         public string LinkedRedisCacheId { get { throw null; } }
         public string LinkedRedisCacheLocation { get { throw null; } }
-        public Azure.ResourceManager.Redis.Models.ReplicationRole ServerRole { get { throw null; } }
+        public Azure.ResourceManager.Redis.Models.RedisLinkedServerRole ServerRole { get { throw null; } }
     }
     public partial class RedisNameAvailabilityContent
     {
@@ -599,10 +604,5 @@ namespace Azure.ResourceManager.Redis.Models
         public string Name { get { throw null; } }
         public System.DateTimeOffset? Timestamp { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> UpsellNotification { get { throw null; } }
-    }
-    public enum ReplicationRole
-    {
-        Primary = 0,
-        Secondary = 1,
     }
 }

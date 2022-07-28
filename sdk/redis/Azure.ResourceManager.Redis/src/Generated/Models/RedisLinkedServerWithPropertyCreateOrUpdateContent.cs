@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Redis.Models
         /// <param name="linkedRedisCacheLocation"> Location of the linked redis cache. </param>
         /// <param name="serverRole"> Role of the linked server. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedRedisCacheId"/> or <paramref name="linkedRedisCacheLocation"/> is null. </exception>
-        public RedisLinkedServerWithPropertyCreateOrUpdateContent(string linkedRedisCacheId, string linkedRedisCacheLocation, ReplicationRole serverRole)
+        public RedisLinkedServerWithPropertyCreateOrUpdateContent(string linkedRedisCacheId, string linkedRedisCacheLocation, RedisLinkedServerRole serverRole)
         {
             if (linkedRedisCacheId == null)
             {
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.Redis.Models
         /// <summary> Location of the linked redis cache. </summary>
         public string LinkedRedisCacheLocation { get; }
         /// <summary> Role of the linked server. </summary>
-        public ReplicationRole ServerRole { get; }
+        public RedisLinkedServerRole ServerRole { get; }
     }
 }

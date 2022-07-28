@@ -35,6 +35,7 @@ rename-mapping:
   UpgradeNotification: RedisUpgradeNotification
   NotificationListResponse: RedisUpgradeNotificationListResponse
   RedisKeyType: RedisRegenerateKeyType
+  ReplicationRole: RedisLinkedServerRole
 
 prepend-rp-prefix:
   - OperationStatus

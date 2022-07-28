@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Redis
             Optional<SystemData> systemData = default;
             Optional<string> linkedRedisCacheId = default;
             Optional<string> linkedRedisCacheLocation = default;
-            Optional<ReplicationRole> serverRole = default;
+            Optional<RedisLinkedServerRole> serverRole = default;
             Optional<string> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Redis
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            serverRole = property0.Value.GetString().ToReplicationRole();
+                            serverRole = property0.Value.GetString().ToRedisLinkedServerRole();
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))

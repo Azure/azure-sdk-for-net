@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Redis
         /// <param name="linkedRedisCacheLocation"> Location of the linked redis cache. </param>
         /// <param name="serverRole"> Role of the linked server. </param>
         /// <param name="provisioningState"> Terminal state of the link between primary and secondary redis cache. </param>
-        internal RedisLinkedServerWithPropertyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string linkedRedisCacheId, string linkedRedisCacheLocation, ReplicationRole? serverRole, string provisioningState) : base(id, name, resourceType, systemData)
+        internal RedisLinkedServerWithPropertyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string linkedRedisCacheId, string linkedRedisCacheLocation, RedisLinkedServerRole? serverRole, string provisioningState) : base(id, name, resourceType, systemData)
         {
             LinkedRedisCacheId = linkedRedisCacheId;
             LinkedRedisCacheLocation = linkedRedisCacheLocation;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Redis
         /// <summary> Location of the linked redis cache. </summary>
         public string LinkedRedisCacheLocation { get; set; }
         /// <summary> Role of the linked server. </summary>
-        public ReplicationRole? ServerRole { get; set; }
+        public RedisLinkedServerRole? ServerRole { get; set; }
         /// <summary> Terminal state of the link between primary and secondary redis cache. </summary>
         public string ProvisioningState { get; }
     }
