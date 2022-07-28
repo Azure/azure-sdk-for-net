@@ -45,6 +45,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             var apiName = Recording.GenerateAssetName("testapi-");
             var data = new ApiManagementServiceData(AzureLocation.EastUS, new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.Developer, 1), "Sample@Sample.com", "sample")
             {
+                Identity = new ApiManagementServiceIdentity(ApimIdentityType.SystemAssigned),
                 VirtualNetworkType = VirtualNetworkType.Internal,
                 VirtualNetworkConfiguration = virtualNetworkConfiguration
             };
@@ -74,7 +75,8 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
             // ApplyNetworkConfigurationUpdates
             var networkConfigurationContent = new ApiManagementServiceApplyNetworkConfigurationContent();
-            Assert.DoesNotThrowAsync(async () => await apiManagementService.ApplyNetworkConfigurationUpdatesAsync(WaitUntil.Completed, networkConfigurationContent));
+            // Test API is in Updating State
+            Assert.ThrowsAsync<Azure.RequestFailedException>(async () => await apiManagementService.ApplyNetworkConfigurationUpdatesAsync(WaitUntil.Completed, networkConfigurationContent));
 
             // Backup
             var backupRestoreContent = new ApiManagementServiceBackupRestoreContent("contosorpstorage", "apim-backups", "backup5")
