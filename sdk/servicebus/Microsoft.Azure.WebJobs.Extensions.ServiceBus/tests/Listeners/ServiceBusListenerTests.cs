@@ -73,6 +73,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
             var concurrencyOptions = new OptionsWrapper<ConcurrencyOptions>(new ConcurrencyOptions());
             _mockConcurrencyThrottleManager = new Mock<IConcurrencyThrottleManager>(MockBehavior.Strict);
             _concurrencyManager = new ConcurrencyManager(concurrencyOptions, _loggerFactory, _mockConcurrencyThrottleManager.Object);
+            var dynamicTargetValueProvider = new Mock<IDynamicTargetValueProvider>(MockBehavior.Strict);
 
             _listener = new ServiceBusListener(
                 _functionId,
@@ -87,7 +88,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
                 _loggerFactory,
                 false,
                 _mockClientFactory.Object,
-                _concurrencyManager);
+                _concurrencyManager,
+                dynamicTargetValueProvider.Object);
         }
 
         [SetUp]

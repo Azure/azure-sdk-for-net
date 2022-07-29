@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0</TargetFrameworks>
@@ -13,8 +13,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Azure.WebJobs.Sources" PrivateAssets="All" />
     <PackageReference Include="Microsoft.Azure.WebJobs" />
+    <PackageReference Include="Microsoft.Azure.WebJobs.Sources" PrivateAssets="All" />
     <PackageReference Include="Microsoft.Extensions.Azure" />
     <PackageReference Include="Azure.Messaging.ServiceBus" />
   </ItemGroup>
@@ -34,6 +34,10 @@
     <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)DiagnosticScopeFactory.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AppContextSwitchHelper.cs" LinkBase="Shared" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference  Include="Microsoft.Azure.WebJobs" VersionOverride="3.0.34-target-scale" />
   </ItemGroup>
 
 </Project>

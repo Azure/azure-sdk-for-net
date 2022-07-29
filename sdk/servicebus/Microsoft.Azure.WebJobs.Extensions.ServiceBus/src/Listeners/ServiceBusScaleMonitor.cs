@@ -11,10 +11,13 @@ using System.Globalization;
 using Azure.Messaging.ServiceBus;
 using Azure.Messaging.ServiceBus.Administration;
 using Microsoft.Azure.WebJobs.Extensions.ServiceBus.Config;
+using Microsoft.Extensions.Options;
+using System.Xml.Serialization;
 
 namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 {
-    internal class ServiceBusScaleMonitor : IScaleMonitor<ServiceBusTriggerMetrics>
+    //internal class ServiceBusScaleMonitor : IScaleMonitor<ServiceBusTriggerMetrics>
+    internal class ServiceBusScaleMonitor : ITargetScaleMonitor<ServiceBusTriggerMetrics>
     {
         private const string DeadLetterQueuePath = @"/$DeadLetterQueue";
 
@@ -26,10 +29,17 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
         private readonly Lazy<ServiceBusReceiver> _receiver;
         private readonly Lazy<ServiceBusAdministrationClient> _administrationClient;
         private readonly ILogger<ServiceBusScaleMonitor> _logger;
+        private readonly ConcurrencyManager _concurrencyManager;
+        private readonly ServiceBusOptions _serviceBusOptions;
+        private readonly IDynamicTargetValueProvider _dynamicTargetValueProvider;
+
+        private readonly Lazy<bool> _targetBasedScalingEnabled;
+        private readonly Lazy<int> _staticTargetValue;
 
         private DateTime _nextWarningTime;
 
-        public ServiceBusScaleMonitor(string functionId, ServiceBusEntityType serviceBusEntityType, string entityPath, string connection, Lazy<ServiceBusReceiver> receiver, ILoggerFactory loggerFactory, ServiceBusClientFactory clientFactory)
+        public ServiceBusScaleMonitor(string functionId, ServiceBusEntityType serviceBusEntityType, string entityPath, string connection, Lazy<ServiceBusReceiver> receiver, ILoggerFactory loggerFactory, ServiceBusClientFactory clientFactory,
+            ConcurrencyManager concurrencyManager, ServiceBusOptions serviceBusOptions, IDynamicTargetValueProvider dynamicTargetValueProvider)
         {
             _functionId = functionId;
             _serviceBusEntityType = serviceBusEntityType;
@@ -40,6 +50,29 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             _administrationClient = new Lazy<ServiceBusAdministrationClient>(() => clientFactory.CreateAdministrationClient(connection));
             _logger = loggerFactory.CreateLogger<ServiceBusScaleMonitor>();
             _nextWarningTime = DateTime.UtcNow;
+            _concurrencyManager = concurrencyManager;
+            _targetBasedScalingEnabled = new Lazy<bool>(() =>
+            {
+                if (bool.TryParse(Environment.GetEnvironmentVariable(Constants.TargetBasedScalingEnabled), out bool parsedValue))
+                {
+                    return parsedValue;
+                }
+                return false;
+            });
+            _staticTargetValue = new Lazy<int>(() =>
+            {
+                if (_serviceBusOptions.MaxConcurrentCalls > 0)
+                {
+                    return _serviceBusOptions.MaxConcurrentCalls;
+                }
+                if (int.TryParse(Environment.GetEnvironmentVariable(Constants.TargetServiceBusMetric), out int parsedValue))
+                {
+                    return parsedValue;
+                }
+                return Constants.DefaultTargetServiceBusMetric;
+            });
+            _serviceBusOptions = serviceBusOptions;
+            _dynamicTargetValueProvider = dynamicTargetValueProvider;
         }
 
         public ScaleMonitorDescriptor Descriptor
@@ -195,20 +228,45 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 
         ScaleStatus IScaleMonitor.GetScaleStatus(ScaleStatusContext context)
         {
-            return GetScaleStatusCore(context.WorkerCount, context.Metrics?.Cast<ServiceBusTriggerMetrics>().ToArray());
+            throw new NotImplementedException();
         }
 
-        public ScaleStatus GetScaleStatus(ScaleStatusContext<ServiceBusTriggerMetrics> context)
+        public async Task<int> GetScaleVoteAsync(ScaleStatusContext context)
         {
-            return GetScaleStatusCore(context.WorkerCount, context.Metrics?.ToArray());
+            return await GetScaleVoteCoreAsync(context.WorkerCount, context.Metrics?.Cast<ServiceBusTriggerMetrics>().ToArray()).ConfigureAwait(false);
         }
 
-        private ScaleStatus GetScaleStatusCore(int workerCount, ServiceBusTriggerMetrics[] metrics)
+        public async Task<int> GetScaleVoteAsync(ScaleStatusContext<ServiceBusTriggerMetrics> context)
         {
-            ScaleStatus status = new ScaleStatus
+            return await GetScaleVoteCoreAsync(context.WorkerCount, context.Metrics?.ToArray()).ConfigureAwait(false);
+        }
+
+        private async Task<int> GetScaleVoteCoreAsync(int workerCount, ServiceBusTriggerMetrics[] metrics)
+        {
+            if (_targetBasedScalingEnabled.Value)
             {
-                Vote = ScaleVote.None
-            };
+                int targetValue = await _dynamicTargetValueProvider.GetDynamicTargetValue(_functionId, _concurrencyManager.Enabled).ConfigureAwait(false);
+                if (targetValue <= 0)
+                {
+                    // Fallback to default value
+                    targetValue = _staticTargetValue.Value;
+                }
+                return GetTargetScaleVote(targetValue, metrics);
+            }
+            else
+            {
+                return GetIncrementalScaleVote(workerCount, metrics);
+            }
+        }
+
+        private static int GetTargetScaleVote(int targetValue, ServiceBusTriggerMetrics[] metrics)
+        {
+            return (int)Math.Ceiling(metrics.Last().MessageCount / (decimal)targetValue);
+        }
+
+        private int GetIncrementalScaleVote(int workerCount, ServiceBusTriggerMetrics[] metrics)
+        {
+            int status = 0;
 
             const int NumberOfSamplesToConsider = 5;
 
@@ -223,7 +281,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             int partitionCount = metrics.Last().PartitionCount;
             if (partitionCount > 0 && partitionCount < workerCount)
             {
-                status.Vote = ScaleVote.ScaleIn;
+                status = -1;
                 _logger.LogInformation($"WorkerCount ({workerCount}) > PartitionCount ({partitionCount}).");
                 _logger.LogInformation($"Number of instances ({workerCount}) is too high relative to number " +
                                        $"of partitions for Service Bus entity ({_entityPath}, {partitionCount}).");
@@ -240,7 +298,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             long latestMessageCount = metrics.Last().MessageCount;
             if (latestMessageCount > workerCount * 1000)
             {
-                status.Vote = ScaleVote.ScaleOut;
+                status = 1;
                 _logger.LogInformation($"MessageCount ({latestMessageCount}) > WorkerCount ({workerCount}) * 1,000.");
                 _logger.LogInformation($"Message count for Service Bus Entity ({_entityPath}, {latestMessageCount}) " +
                                        $"is too high relative to the number of instances ({workerCount}).");
@@ -251,7 +309,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             bool isIdle = metrics.All(m => m.MessageCount == 0);
             if (isIdle)
             {
-                status.Vote = ScaleVote.ScaleIn;
+                status = -1;
                 _logger.LogInformation($"'{_entityPath}' is idle.");
                 return status;
             }
@@ -267,7 +325,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                     (prev, next) => prev.MessageCount < next.MessageCount) && metrics[0].MessageCount > 0;
                 if (messageCountIncreasing)
                 {
-                    status.Vote = ScaleVote.ScaleOut;
+                    status = 1;
                     _logger.LogInformation($"Message count is increasing for '{_entityPath}'.");
                     return status;
                 }
@@ -282,7 +340,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                         (prev, next) => prev.QueueTime <= next.QueueTime);
                 if (queueTimeIncreasing)
                 {
-                    status.Vote = ScaleVote.ScaleOut;
+                    status = -1;
                     _logger.LogInformation($"Queue time is increasing for '{_entityPath}'.");
                     return status;
                 }
@@ -295,7 +353,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                     (prev, next) => prev.MessageCount > next.MessageCount);
             if (messageCountDecreasing)
             {
-                status.Vote = ScaleVote.ScaleIn;
+                status = 1;
                 _logger.LogInformation($"Message count is decreasing for '{_entityPath}'.");
                 return status;
             }
@@ -306,7 +364,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                 (prev, next) => prev.QueueTime > next.QueueTime);
             if (queueTimeDecreasing)
             {
-                status.Vote = ScaleVote.ScaleIn;
+                status = -1;
                 _logger.LogInformation($"Queue time is decreasing for '{_entityPath}'.");
                 return status;
             }
