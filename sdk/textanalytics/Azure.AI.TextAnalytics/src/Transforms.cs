@@ -375,7 +375,8 @@ namespace Azure.AI.TextAnalytics
 
         #endregion
 
-        #region Multi-Category Classify
+        #region Label Classify
+
         internal static List<ClassificationCategory> ConvertToClassificationCategoryList(List<ClassificationResult> classifications)
             => classifications.Select((classification) => new ClassificationCategory(classification)).ToList();
 
@@ -384,20 +385,20 @@ namespace Azure.AI.TextAnalytics
             return new ClassificationCategoryCollection(ConvertToClassificationCategoryList(extractedClassificationsDocuments.Class.ToList()), ConvertToWarnings(extractedClassificationsDocuments.Warnings));
         }
 
-        internal static MultiLabelClassifyResultCollection ConvertToMultiLabelClassifyResultCollection(CustomLabelClassificationResult results, IDictionary<string, int> idToIndexMap)
+        internal static ClassifyDocumentResultCollection ConvertToClassifyDocumentResultCollection(CustomLabelClassificationResult results, IDictionary<string, int> idToIndexMap)
         {
-            var classifiedCustomCategoryResults = new List<LabelClassifyResult>(results.Errors.Count);
+            var classifiedCustomCategoryResults = new List<ClassifyDocumentResult>(results.Errors.Count);
 
             //Read errors
             foreach (DocumentError error in results.Errors)
             {
-                classifiedCustomCategoryResults.Add(new LabelClassifyResult(error.Id, ConvertToError(error.Error)));
+                classifiedCustomCategoryResults.Add(new ClassifyDocumentResult(error.Id, ConvertToError(error.Error)));
             }
 
             //Read classifications
             foreach (var classificationsDocument in results.Documents)
             {
-                classifiedCustomCategoryResults.Add(new LabelClassifyResult(
+                classifiedCustomCategoryResults.Add(new ClassifyDocumentResult(
                     classificationsDocument.Id,
                     classificationsDocument.Statistics ?? default,
                     ConvertToClassificationCategoryCollection(classificationsDocument),
@@ -405,34 +406,7 @@ namespace Azure.AI.TextAnalytics
             }
 
             classifiedCustomCategoryResults = SortHeterogeneousCollection(classifiedCustomCategoryResults, idToIndexMap);
-            return new MultiLabelClassifyResultCollection(classifiedCustomCategoryResults, results.Statistics, results.ProjectName, results.DeploymentName);
-        }
-
-        #endregion
-
-        #region Single Label Classify
-        internal static SingleLabelClassifyResultCollection ConvertToSingleLabelClassifyResultCollection(CustomLabelClassificationResult results, IDictionary<string, int> idToIndexMap)
-        {
-            var classifiedCustomCategoryResults = new List<SingleLabelClassifyResult>(results.Errors.Count);
-
-            //Read errors
-            foreach (DocumentError error in results.Errors)
-            {
-                classifiedCustomCategoryResults.Add(new SingleLabelClassifyResult(error.Id, ConvertToError(error.Error)));
-            }
-
-            //Read classifications
-            foreach (var classificationDocument in results.Documents)
-            {
-                classifiedCustomCategoryResults.Add(new SingleLabelClassifyResult(
-                    classificationDocument.Id,
-                    classificationDocument.Statistics ?? default,
-                    new ClassificationCategory(classificationDocument.Class.Single()),
-                    ConvertToWarnings(classificationDocument.Warnings)));
-            }
-
-            classifiedCustomCategoryResults = SortHeterogeneousCollection(classifiedCustomCategoryResults, idToIndexMap);
-            return new SingleLabelClassifyResultCollection(classifiedCustomCategoryResults, results.Statistics, results.ProjectName, results.DeploymentName);
+            return new ClassifyDocumentResultCollection(classifiedCustomCategoryResults, results.Statistics, results.ProjectName, results.DeploymentName);
         }
 
         #endregion
@@ -688,11 +662,11 @@ namespace Azure.AI.TextAnalytics
                 }
                 else if (task.Kind == AnalyzeTextLROResultsKind.CustomSingleLabelClassificationLROResults)
                 {
-                    singleLabelClassify.Add(new SingleLabelClassifyActionResult(ConvertToSingleLabelClassifyResultCollection((task as CustomSingleLabelClassificationLROResult).Results, map), task.TaskName, task.LastUpdateDateTime));
+                    singleLabelClassify.Add(new SingleLabelClassifyActionResult(ConvertToClassifyDocumentResultCollection((task as CustomSingleLabelClassificationLROResult).Results, map), task.TaskName, task.LastUpdateDateTime));
                 }
                 else if (task.Kind == AnalyzeTextLROResultsKind.CustomMultiLabelClassificationLROResults)
                 {
-                    multiLabelClassify.Add(new MultiLabelClassifyActionResult(ConvertToMultiLabelClassifyResultCollection((task as CustomMultiLabelClassificationLROResult).Results, map), task.TaskName, task.LastUpdateDateTime));
+                    multiLabelClassify.Add(new MultiLabelClassifyActionResult(ConvertToClassifyDocumentResultCollection((task as CustomMultiLabelClassificationLROResult).Results, map), task.TaskName, task.LastUpdateDateTime));
                 }
             }
 

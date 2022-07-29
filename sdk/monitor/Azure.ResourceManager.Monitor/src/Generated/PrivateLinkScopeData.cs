@@ -5,9 +5,11 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
@@ -16,9 +18,17 @@ namespace Azure.ResourceManager.Monitor
     {
         /// <summary> Initializes a new instance of PrivateLinkScopeData. </summary>
         /// <param name="location"> The location. </param>
-        public PrivateLinkScopeData(AzureLocation location) : base(location)
+        /// <param name="accessModeSettings"> Access mode settings. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="accessModeSettings"/> is null. </exception>
+        public PrivateLinkScopeData(AzureLocation location, AccessModeSettings accessModeSettings) : base(location)
         {
+            if (accessModeSettings == null)
+            {
+                throw new ArgumentNullException(nameof(accessModeSettings));
+            }
+
             PrivateEndpointConnections = new ChangeTrackingList<MonitorPrivateEndpointConnectionData>();
+            AccessModeSettings = accessModeSettings;
         }
 
         /// <summary> Initializes a new instance of PrivateLinkScopeData. </summary>
@@ -30,15 +40,19 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="location"> The location. </param>
         /// <param name="provisioningState"> Current state of this PrivateLinkScope: whether or not is has been provisioned within the resource group it is defined. Users cannot change this value but are able to read from it. Values will include Provisioning ,Succeeded, Canceled and Failed. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
-        internal PrivateLinkScopeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string provisioningState, IReadOnlyList<MonitorPrivateEndpointConnectionData> privateEndpointConnections) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="accessModeSettings"> Access mode settings. </param>
+        internal PrivateLinkScopeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string provisioningState, IReadOnlyList<MonitorPrivateEndpointConnectionData> privateEndpointConnections, AccessModeSettings accessModeSettings) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             PrivateEndpointConnections = privateEndpointConnections;
+            AccessModeSettings = accessModeSettings;
         }
 
         /// <summary> Current state of this PrivateLinkScope: whether or not is has been provisioned within the resource group it is defined. Users cannot change this value but are able to read from it. Values will include Provisioning ,Succeeded, Canceled and Failed. </summary>
         public string ProvisioningState { get; }
         /// <summary> List of private endpoint connections. </summary>
         public IReadOnlyList<MonitorPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
+        /// <summary> Access mode settings. </summary>
+        public AccessModeSettings AccessModeSettings { get; set; }
     }
 }

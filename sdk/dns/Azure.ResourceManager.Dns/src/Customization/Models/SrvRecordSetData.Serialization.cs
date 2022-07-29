@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Dns.Models;
 using Azure.ResourceManager.Models;
@@ -19,10 +20,10 @@ namespace Azure.ResourceManager.Dns
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Etag))
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag");
-                writer.WriteStringValue(Etag);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
@@ -37,10 +38,10 @@ namespace Azure.ResourceManager.Dns
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(TTL))
+            if (Optional.IsDefined(Ttl))
             {
-                writer.WritePropertyName("TTL");
-                writer.WriteNumberValue(TTL.Value);
+                writer.WritePropertyName("Ttl");
+                writer.WriteNumberValue(Ttl.Value);
             }
             if (Optional.IsDefined(TargetResource))
             {
@@ -63,7 +64,7 @@ namespace Azure.ResourceManager.Dns
 
         internal static SrvRecordSetData DeserializeSrvRecordSetData(JsonElement element)
         {
-            Optional<string> etag = default;
+            Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -73,12 +74,17 @@ namespace Azure.ResourceManager.Dns
             Optional<string> fqdn = default;
             Optional<string> provisioningState = default;
             Optional<WritableSubResource> targetResource = default;
-            Optional<IList<SrvRecord>> srvRecords = default;
+            Optional<IList<DnsSrvRecord>> srvRecords = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
                 {
-                    etag = property.Value.GetString();
+                     if (property.Value.ValueKind == JsonValueKind.Null)
+                     {
+                         property.ThrowNonNullablePropertyIsNull();
+                         continue;
+                     }
+                     etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -125,7 +131,7 @@ namespace Azure.ResourceManager.Dns
                             metadata = dictionary;
                             continue;
                         }
-                        if (property0.NameEquals("TTL"))
+                        if (property0.NameEquals("Ttl"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -162,10 +168,10 @@ namespace Azure.ResourceManager.Dns
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<SrvRecord> array = new List<SrvRecord>();
+                            List<DnsSrvRecord> array = new List<DnsSrvRecord>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SrvRecord.DeserializeSrvRecord(item));
+                                array.Add(DnsSrvRecord.DeserializeDnsSrvRecord(item));
                             }
                             srvRecords = array;
                             continue;
@@ -174,7 +180,7 @@ namespace Azure.ResourceManager.Dns
                     continue;
                 }
             }
-            return new SrvRecordSetData(id, name, type, systemData, etag.Value, Optional.ToDictionary(metadata), Optional.ToNullable(ttl), fqdn.Value, provisioningState.Value, targetResource, Optional.ToList(srvRecords));
+            return new SrvRecordSetData(id, name, type, systemData, Optional.ToNullable(etag), Optional.ToDictionary(metadata), Optional.ToNullable(ttl), fqdn.Value, provisioningState.Value, targetResource, Optional.ToList(srvRecords));
         }
     }
 }

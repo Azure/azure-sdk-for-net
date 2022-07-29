@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="sku"> The sku. </param>
         /// <param name="integrationServiceEnvironment"> The integration service environment. </param>
         /// <param name="state"> The workflow state. </param>
-        internal IntegrationAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IntegrationAccountSku sku, ResourceReference integrationServiceEnvironment, WorkflowState? state) : base(id, name, resourceType, systemData, tags, location)
+        internal IntegrationAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IntegrationAccountSku sku, LogicResourceReference integrationServiceEnvironment, LogicWorkflowState? state) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             IntegrationServiceEnvironment = integrationServiceEnvironment;
@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.Logic
         }
 
         /// <summary> The integration service environment. </summary>
-        public ResourceReference IntegrationServiceEnvironment { get; set; }
+        public LogicResourceReference IntegrationServiceEnvironment { get; set; }
         /// <summary> The workflow state. </summary>
-        public WorkflowState? State { get; set; }
+        public LogicWorkflowState? State { get; set; }
     }
 }

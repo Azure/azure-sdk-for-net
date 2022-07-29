@@ -23,10 +23,10 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WritePropertyName("beginDate");
                 writer.WriteStringValue(BeginOn.Value, "O");
             }
-            if (Optional.IsDefined(ExpirationOn))
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationDate");
-                writer.WriteStringValue(ExpirationOn.Value, "O");
+                writer.WriteStringValue(ExpireOn.Value, "O");
             }
             if (Optional.IsDefined(RelativeBeginDate))
             {

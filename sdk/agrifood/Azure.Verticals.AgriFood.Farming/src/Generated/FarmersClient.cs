@@ -225,9 +225,9 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new FarmersClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     status = "<FarmerStatus>",
-        ///     name = "<FarmerName>",
-        ///     description = "<FarmerDescription>",
+        ///     status = "<status>",
+        ///     name = "<name>",
+        ///     description = "<description>",
         ///     properties = new {
         ///         key = new {},
         ///     },
@@ -333,9 +333,9 @@ namespace Azure.Verticals.AgriFood.Farming
         /// var client = new FarmersClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     status = "<FarmerStatus>",
-        ///     name = "<FarmerName>",
-        ///     description = "<FarmerDescription>",
+        ///     status = "<status>",
+        ///     name = "<name>",
+        ///     description = "<description>",
         ///     properties = new {
         ///         key = new {},
         ///     },

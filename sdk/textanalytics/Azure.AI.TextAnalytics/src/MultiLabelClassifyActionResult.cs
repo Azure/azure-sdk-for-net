@@ -11,12 +11,12 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public class MultiLabelClassifyActionResult : TextAnalyticsActionResult
     {
-        private readonly MultiLabelClassifyResultCollection _documentsResults;
+        private readonly ClassifyDocumentResultCollection _documentsResults;
 
         /// <summary>
         /// Successful action.
         /// </summary>
-        internal MultiLabelClassifyActionResult(MultiLabelClassifyResultCollection result, string actionName, DateTimeOffset completedOn)
+        internal MultiLabelClassifyActionResult(ClassifyDocumentResultCollection result, string actionName, DateTimeOffset completedOn)
             : base(actionName, completedOn)
         {
             _documentsResults = result;
@@ -31,7 +31,7 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Gets the result of the execution of a <see cref="MultiLabelClassifyAction"/> per each input document.
         /// </summary>
-        public MultiLabelClassifyResultCollection DocumentsResults
+        public ClassifyDocumentResultCollection DocumentsResults
         {
             get
             {
