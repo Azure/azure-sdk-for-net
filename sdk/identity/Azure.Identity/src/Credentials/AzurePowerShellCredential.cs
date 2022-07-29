@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
@@ -38,7 +37,6 @@ namespace Azure.Identity
         private const string DefaultWorkingDirNonWindows = "/bin/";
         private static readonly string DefaultWorkingDir = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? DefaultWorkingDirWindows : DefaultWorkingDirNonWindows;
         private readonly string _tenantId;
-        private const int ERROR_FILE_NOT_FOUND = 2;
         private readonly bool _logPII;
         private readonly bool _logAccountDetails;
         internal const string AzurePowerShellNotLogInError = "Please run 'Connect-AzAccount' to set up account.";
@@ -178,10 +176,6 @@ namespace Azure.Identity
             if (output.IndexOf(AzurePowerShellNoAzAccountModule, StringComparison.OrdinalIgnoreCase) != -1)
             {
                 throw new CredentialUnavailableException(AzurePowerShellModuleNotInstalledError);
-            }
-            if (output.IndexOf("is not recognized as an internal or external command", StringComparison.OrdinalIgnoreCase) != -1)
-            {
-                throw new Win32Exception(ERROR_FILE_NOT_FOUND);
             }
 
             var needsLogin = output.IndexOf(RunConnectAzAccountToLogin, StringComparison.OrdinalIgnoreCase) != -1 ||
