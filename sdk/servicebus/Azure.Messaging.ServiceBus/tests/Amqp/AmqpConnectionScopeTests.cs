@@ -146,7 +146,7 @@ namespace Azure.Messaging.ServiceBus.Tests
             var cancellationSource = new CancellationTokenSource();
             var mockSession = new AmqpSession(mockConnection, new AmqpSessionSettings(), Mock.Of<ILinkFactory>());
 
-            var mockScope = new Mock<AmqpConnectionScope>(endpoint, endpoint, credential.Object, ServiceBusTransportType.AmqpTcp, null, false, default, default, linkIdentifier)
+            var mockScope = new Mock<AmqpConnectionScope>(endpoint, endpoint, credential.Object, ServiceBusTransportType.AmqpTcp, null, false, default, default)
             {
                 CallBase = true,
             };
@@ -208,7 +208,7 @@ namespace Azure.Messaging.ServiceBus.Tests
             var cancellationSource = new CancellationTokenSource();
             var mockSession = new AmqpSession(mockConnection, new AmqpSessionSettings(), Mock.Of<ILinkFactory>());
 
-            var mockScope = new Mock<AmqpConnectionScope>(endpoint, endpoint, credential.Object, ServiceBusTransportType.AmqpTcp, null, false, default, default, linkIdentifier)
+            var mockScope = new Mock<AmqpConnectionScope>(endpoint, endpoint, credential.Object, ServiceBusTransportType.AmqpTcp, null, false, default, default)
             {
                 CallBase = true,
             };
