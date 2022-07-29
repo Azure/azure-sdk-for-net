@@ -61,7 +61,7 @@ The following section shows you how to initialize and authenticate your client a
 
 ### Create sent share
 
-```C#
+```C# Snippet:Azure_Analytics_Purview_Share_Samples_CreateSentShare
 var credential = new DefaultAzureCredential();
 var endPoint = "https://<my-account-name>.purview.azure.com";
 
@@ -88,9 +88,9 @@ var inPlaceSentShareDto = new
 var sentShare = await sentShareClient.CreateOrUpdateAsync(sentShareName, RequestContent.Create(inPlaceSentShareDto));
 ```
 
-### Add an asset to a sent share 
+### Add an asset to a sent share
 
-```C#
+```C# Snippet:Azure_Analytics_Purview_Share_Samples_AddAnAssetToASentShare
 var credential = new DefaultAzureCredential();
 var endPoint = "https://<my-account-name>.purview.azure.com";
 
@@ -129,7 +129,7 @@ await assetsClient.CreateAsync(WaitUntil.Started, sentShareName, assetName, Requ
 
 ### Send Invitation
 
-```C#
+```C# Snippet:Azure_Analytics_Purview_Share_Samples_SendInvitation
 var credential = new DefaultAzureCredential();
 var endPoint = "https://<my-account-name>.purview.azure.com";
 
@@ -164,7 +164,7 @@ await sentShareInvitationsClient.CreateOrUpdateAsync(sentShareName, invitationNa
 
 ### View sent share invitations
 
-```C#
+```C# Snippet:Azure_Analytics_Purview_Share_Samples_ViewSentShareInvitations
 var credential = new DefaultAzureCredential();
 var endPoint = "https://<my-account-name>.purview.azure.com";
 var sentShareName = "sample-Share";
@@ -186,7 +186,7 @@ var targetEmail = responseInvitationDocument.RootElement.GetProperty("name");
 
 ### View received invitations
 
-```C#
+```C# Snippet:Azure_Analytics_Purview_Share_Samples_ViewReceivedInvitations
 var credential = new DefaultAzureCredential();
 var endPoint = "https://<my-account-name>.purview.azure.com";
 
@@ -197,7 +197,7 @@ var receivedInvitations = receivedInvitationsClient.GetReceivedInvitations();
 
 ### Create a received share
 
-```C#
+```C# Snippet:Azure_Analytics_Purview_Share_Samples_CreateAReceivedShare
 var credential = new DefaultAzureCredential();
 var endPoint = "https://<my-account-name>.purview.azure.com";
 
@@ -238,7 +238,7 @@ var receivedShare = await receivedShareClient.CreateAsync(receivedShareName, Req
 
 ### View accepted shares
 
-```C#
+```C# Snippet:Azure_Analytics_Purview_Share_Samples_ViewAcceptedShares
 var credential = new DefaultAzureCredential();
 var endPoint = "https://<my-account-name>.purview.azure.com";
 var sentShareName = "sample-Share";
@@ -260,7 +260,7 @@ var receiverEmail = JsonDocument.Parse(acceptedSentShare).RootElement.GetPropert
 
 ### Get received assets
 
-```C#
+```C# Snippet:Azure_Analytics_Purview_Share_Samples_GetReceivedAssets
 var credential = new DefaultAzureCredential();
 var endPoint = "https://<my-account-name>.purview.azure.com";
 
