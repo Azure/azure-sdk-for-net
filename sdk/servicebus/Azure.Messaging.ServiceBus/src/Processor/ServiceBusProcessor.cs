@@ -70,7 +70,7 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Gets the ID used to identify this processor. This can be used to correlate logs and exceptions.
         /// </summary>
-        public string Identifier { get; }
+        public virtual string Identifier { get; }
 
         /// <summary>
         /// Gets the <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.

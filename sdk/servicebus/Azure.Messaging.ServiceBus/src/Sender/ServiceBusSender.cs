@@ -66,7 +66,7 @@ namespace Azure.Messaging.ServiceBus
         /// Gets the ID to identify this client. This can be used to correlate logs and exceptions.
         /// </summary>
         ///
-        public string Identifier { get; }
+        public virtual string Identifier { get; }
 
         /// <summary>
         ///   The policy to use for determining retry behavior for when an operation fails.

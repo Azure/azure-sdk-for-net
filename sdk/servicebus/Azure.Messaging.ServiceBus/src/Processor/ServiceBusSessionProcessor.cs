@@ -32,7 +32,7 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Gets the Identifier used to identify this processor client.  If <c>null</c> or empty, a random unique value will be will be used.
         /// </summary>
-        public string Identifier => InnerProcessor.Identifier;
+        public virtual string Identifier => InnerProcessor.Identifier;
 
         /// <inheritdoc cref="ServiceBusProcessor.ReceiveMode"/>
         public virtual ServiceBusReceiveMode ReceiveMode => InnerProcessor.ReceiveMode;

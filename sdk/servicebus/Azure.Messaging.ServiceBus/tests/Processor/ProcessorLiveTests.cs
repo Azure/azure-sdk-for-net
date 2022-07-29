@@ -139,6 +139,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 async Task ProcessMessage(ProcessMessageEventArgs args)
                 {
                     Assert.AreEqual(processor.EntityPath, args.EntityPath);
+                    Assert.AreEqual(processor.Identifier, args.Identifier);
                     Assert.AreEqual(processor.FullyQualifiedNamespace, args.FullyQualifiedNamespace);
                     try
                     {

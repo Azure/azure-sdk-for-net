@@ -65,7 +65,7 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// A name used to identify the receiver client.  If <c>null</c> or empty, a random unique value will be will be used.
         /// </summary>
-        public string Identifier { get; internal set; }
+        public virtual string Identifier { get; internal set; }
 
         /// <summary>
         ///   Indicates whether or not this <see cref="ServiceBusReceiver"/> has been closed.

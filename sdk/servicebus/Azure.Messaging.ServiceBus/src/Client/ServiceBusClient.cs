@@ -52,7 +52,7 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         ///   The name used to identify this <see cref="ServiceBusClient"/>.
         /// </summary>
-        public string Identifier { get; }
+        public virtual string Identifier { get; }
 
         /// <summary>
         ///   The instance of <see cref="ServiceBusEventSource" /> which can be mocked for testing.
