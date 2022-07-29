@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         internal ClusterCodeVersionsResult() { }
         public string CodeVersion { get { throw null; } }
         public Azure.ResourceManager.ServiceFabric.Models.ClusterEnvironment? Environment { get { throw null; } }
-        public System.DateTimeOffset? SupportExpiryOn { get { throw null; } }
+        public System.DateTimeOffset? SupportExpireOn { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ClusterDurabilityLevel : System.IEquatable<Azure.ResourceManager.ServiceFabric.Models.ClusterDurabilityLevel>
@@ -740,7 +740,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         internal ClusterVersionDetails() { }
         public string CodeVersion { get { throw null; } }
         public Azure.ResourceManager.ServiceFabric.Models.ClusterEnvironment? Environment { get { throw null; } }
-        public System.DateTimeOffset? SupportExpiryOn { get { throw null; } }
+        public System.DateTimeOffset? SupportExpireOn { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ClusterVersionsEnvironment : System.IEquatable<Azure.ResourceManager.ServiceFabric.Models.ClusterVersionsEnvironment>

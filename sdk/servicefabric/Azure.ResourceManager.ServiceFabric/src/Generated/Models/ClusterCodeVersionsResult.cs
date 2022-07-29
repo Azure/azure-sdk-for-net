@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// The Service Fabric runtime version of the cluster.
         /// Serialized Name: ClusterCodeVersionsResult.properties.codeVersion
         /// </param>
-        /// <param name="supportExpiryOn">
+        /// <param name="supportExpireOn">
         /// The date of expiry of support of the version.
         /// Serialized Name: ClusterCodeVersionsResult.properties.supportExpiryUtc
         /// </param>
@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// Indicates if this version is for Windows or Linux operating system.
         /// Serialized Name: ClusterCodeVersionsResult.properties.environment
         /// </param>
-        internal ClusterCodeVersionsResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string codeVersion, DateTimeOffset? supportExpiryOn, ClusterEnvironment? environment) : base(id, name, resourceType, systemData)
+        internal ClusterCodeVersionsResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string codeVersion, DateTimeOffset? supportExpireOn, ClusterEnvironment? environment) : base(id, name, resourceType, systemData)
         {
             CodeVersion = codeVersion;
-            SupportExpiryOn = supportExpiryOn;
+            SupportExpireOn = supportExpireOn;
             Environment = environment;
         }
 
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// The date of expiry of support of the version.
         /// Serialized Name: ClusterCodeVersionsResult.properties.supportExpiryUtc
         /// </summary>
-        public DateTimeOffset? SupportExpiryOn { get; }
+        public DateTimeOffset? SupportExpireOn { get; }
         /// <summary>
         /// Indicates if this version is for Windows or Linux operating system.
         /// Serialized Name: ClusterCodeVersionsResult.properties.environment

@@ -36,8 +36,8 @@ rename-mapping:
   ClusterUpdateParameters.properties.eventStoreServiceEnabled: IsEventStoreServiceEnabled
   ClusterUpdateParameters.properties.infrastructureServiceManager: IsInfrastructureServiceManagerEnabled
   ClusterUpdateParameters.properties.waveUpgradePaused: IsWaveUpgradePaused
-  ClusterCodeVersionsResult.properties.supportExpiryUtc: SupportExpiryOn
-  ClusterVersionDetails.supportExpiryUtc: SupportExpiryOn
+  ClusterCodeVersionsResult.properties.supportExpiryUtc: SupportExpireOn
+  ClusterVersionDetails.supportExpiryUtc: SupportExpireOn
   NodeTypeDescription.multipleAvailabilityZones: IsMultipleAvailabilityZonesSupported
   AddOnFeatures: ClusterAddOnFeatures
   ApplicationResource: ServiceFabricApplication
