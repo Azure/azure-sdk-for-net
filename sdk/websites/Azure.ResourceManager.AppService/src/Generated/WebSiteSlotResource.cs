@@ -820,11 +820,11 @@ namespace Azure.ResourceManager.AppService
             return GetWebSiteSlotPublicCertificates().Get(publicCertificateName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SiteSlotSiteextensionResources in the WebSiteSlot. </summary>
-        /// <returns> An object representing collection of SiteSlotSiteextensionResources and their operations over a SiteSlotSiteextensionResource. </returns>
-        public virtual SiteSlotSiteextensionCollection GetSiteSlotSiteextensions()
+        /// <summary> Gets a collection of WebSiteSlotExtensionResources in the WebSiteSlot. </summary>
+        /// <returns> An object representing collection of WebSiteSlotExtensionResources and their operations over a WebSiteSlotExtensionResource. </returns>
+        public virtual WebSiteSlotExtensionCollection GetWebSiteSlotExtensions()
         {
-            return GetCachedClient(Client => new SiteSlotSiteextensionCollection(Client, Id));
+            return GetCachedClient(Client => new WebSiteSlotExtensionCollection(Client, Id));
         }
 
         /// <summary>
@@ -837,9 +837,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="siteExtensionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="siteExtensionId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SiteSlotSiteextensionResource>> GetSiteSlotSiteextensionAsync(string siteExtensionId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebSiteSlotExtensionResource>> GetWebSiteSlotExtensionAsync(string siteExtensionId, CancellationToken cancellationToken = default)
         {
-            return await GetSiteSlotSiteextensions().GetAsync(siteExtensionId, cancellationToken).ConfigureAwait(false);
+            return await GetWebSiteSlotExtensions().GetAsync(siteExtensionId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -852,9 +852,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="siteExtensionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="siteExtensionId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SiteSlotSiteextensionResource> GetSiteSlotSiteextension(string siteExtensionId, CancellationToken cancellationToken = default)
+        public virtual Response<WebSiteSlotExtensionResource> GetWebSiteSlotExtension(string siteExtensionId, CancellationToken cancellationToken = default)
         {
-            return GetSiteSlotSiteextensions().Get(siteExtensionId, cancellationToken);
+            return GetWebSiteSlotExtensions().Get(siteExtensionId, cancellationToken);
         }
 
         /// <summary> Gets an object representing a MigrateMySqlStatusResource along with the instance operations that can be performed on it in the WebSiteSlot. </summary>

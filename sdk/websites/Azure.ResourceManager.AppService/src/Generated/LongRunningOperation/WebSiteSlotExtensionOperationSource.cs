@@ -14,27 +14,27 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
-    internal class SiteSlotSiteextensionOperationSource : IOperationSource<SiteSlotSiteextensionResource>
+    internal class WebSiteSlotExtensionOperationSource : IOperationSource<WebSiteSlotExtensionResource>
     {
         private readonly ArmClient _client;
 
-        internal SiteSlotSiteextensionOperationSource(ArmClient client)
+        internal WebSiteSlotExtensionOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        SiteSlotSiteextensionResource IOperationSource<SiteSlotSiteextensionResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        WebSiteSlotExtensionResource IOperationSource<WebSiteSlotExtensionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SiteExtensionInfoData.DeserializeSiteExtensionInfoData(document.RootElement);
-            return new SiteSlotSiteextensionResource(_client, data);
+            return new WebSiteSlotExtensionResource(_client, data);
         }
 
-        async ValueTask<SiteSlotSiteextensionResource> IOperationSource<SiteSlotSiteextensionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<WebSiteSlotExtensionResource> IOperationSource<WebSiteSlotExtensionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SiteExtensionInfoData.DeserializeSiteExtensionInfoData(document.RootElement);
-            return new SiteSlotSiteextensionResource(_client, data);
+            return new WebSiteSlotExtensionResource(_client, data);
         }
     }
 }

@@ -3528,20 +3528,20 @@ namespace Azure.ResourceManager.AppService
         }
         #endregion
 
-        #region SiteSlotSiteextensionResource
+        #region WebSiteSlotExtensionResource
         /// <summary>
-        /// Gets an object representing a <see cref="SiteSlotSiteextensionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteSlotSiteextensionResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotSiteextensionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="WebSiteSlotExtensionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WebSiteSlotExtensionResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteSlotExtensionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSlotSiteextensionResource" /> object. </returns>
-        public static SiteSlotSiteextensionResource GetSiteSlotSiteextensionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WebSiteSlotExtensionResource" /> object. </returns>
+        public static WebSiteSlotExtensionResource GetWebSiteSlotExtensionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SiteSlotSiteextensionResource.ValidateResourceId(id);
-                return new SiteSlotSiteextensionResource(client, id);
+                WebSiteSlotExtensionResource.ValidateResourceId(id);
+                return new WebSiteSlotExtensionResource(client, id);
             }
             );
         }
