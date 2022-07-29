@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="maxCount"> Commitment period commitment max count. </param>
         /// <param name="quota"> Cognitive Services account commitment quota. </param>
         /// <param name="cost"> Cognitive Services account commitment cost. </param>
-        internal CommitmentTier(string kind, string skuName, HostingModel? hostingModel, string planType, string tier, int? maxCount, CommitmentQuota quota, CommitmentCost cost)
+        internal CommitmentTier(string kind, string skuName, ServiceAccountHostingModel? hostingModel, string planType, string tier, int? maxCount, CommitmentQuota quota, CommitmentCost cost)
         {
             Kind = kind;
             SkuName = skuName;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> The name of the SKU. Ex - P3. It is typically a letter+number code. </summary>
         public string SkuName { get; }
         /// <summary> Account hosting model. </summary>
-        public HostingModel? HostingModel { get; }
+        public ServiceAccountHostingModel? HostingModel { get; }
         /// <summary> Commitment plan type. </summary>
         public string PlanType { get; }
         /// <summary> Commitment period commitment tier. </summary>
