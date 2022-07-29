@@ -9,31 +9,42 @@ using System;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    /// <summary> The ApplicationUserAssignedIdentity. </summary>
+    /// <summary>
+    /// The ApplicationUserAssignedIdentity.
+    /// Serialized Name: ApplicationUserAssignedIdentity
+    /// </summary>
     public partial class ApplicationUserAssignedIdentity
     {
         /// <summary> Initializes a new instance of ApplicationUserAssignedIdentity. </summary>
-        /// <param name="name"> The friendly name of user assigned identity. </param>
-        /// <param name="principalId"> The principal id of user assigned identity. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="principalId"/> is null. </exception>
-        public ApplicationUserAssignedIdentity(string name, string principalId)
+        /// <param name="name">
+        /// The friendly name of user assigned identity.
+        /// Serialized Name: ApplicationUserAssignedIdentity.name
+        /// </param>
+        /// <param name="principalId">
+        /// The principal id of user assigned identity.
+        /// Serialized Name: ApplicationUserAssignedIdentity.principalId
+        /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public ApplicationUserAssignedIdentity(string name, Guid principalId)
         {
             if (name == null)
             {
                 throw new ArgumentNullException(nameof(name));
-            }
-            if (principalId == null)
-            {
-                throw new ArgumentNullException(nameof(principalId));
             }
 
             Name = name;
             PrincipalId = principalId;
         }
 
-        /// <summary> The friendly name of user assigned identity. </summary>
+        /// <summary>
+        /// The friendly name of user assigned identity.
+        /// Serialized Name: ApplicationUserAssignedIdentity.name
+        /// </summary>
         public string Name { get; set; }
-        /// <summary> The principal id of user assigned identity. </summary>
-        public string PrincipalId { get; set; }
+        /// <summary>
+        /// The principal id of user assigned identity.
+        /// Serialized Name: ApplicationUserAssignedIdentity.principalId
+        /// </summary>
+        public Guid PrincipalId { get; set; }
     }
 }
