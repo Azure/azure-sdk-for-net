@@ -57,15 +57,15 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ## Examples
 
-The following section shows you how to initialize and authenticate your client and get a sent share.
+The following section shows you how to initialize and authenticate your client and share data.
 
 ### Create sent share
 
 ```C#
 var credential = new DefaultAzureCredential();
-var endpoint = "https://<my-account-name>.purview.azure.com";
+var endPoint = "https://<my-account-name>.purview.azure.com";
 
-var sentShareClient = new SentSharesClient(endpoint, credential);
+var sentShareClient = new SentSharesClient(endPoint, credential);
 
 // Create sent share
 var sentShareName = "sample-Share";
@@ -78,6 +78,7 @@ var inPlaceSentShareDto = new
         description = "demo share",
         collection = new
         {
+            // for root collection else name of any accessible child collection in the Purview account.
             referenceName = "<reference>",
             type = "CollectionReference"
         }
@@ -104,6 +105,7 @@ var pathNameForReceiver = "from-fabrikam";
 
 var assetData = new
 {
+    // For Adls Gen2 asset use "AdlsGen2Account"
     kind = "blobAccount",
     properties = new
     {
@@ -223,7 +225,8 @@ var receivedShareData = new
         sentShareLocation = "eastus",
         collection = new
         {
-            referenceName = "w95gh9ze", //"<purivewAccountName>",
+            // for root collection else name of any accessible child collection in the Purview account.
+            referenceName = "<purivewAccountName>",
             type = "CollectionReference"
         }
     }
@@ -275,6 +278,7 @@ string receiverStorageResourceId = "<RECEIVER_STORAGE_ACCOUNT_RESOURCE_ID>";
 
 var assetMappingData = new
 {
+    // For Adls Gen2 asset use "AdlsGen2Account"
     kind = "BlobAccount",
     properties = new
     {
