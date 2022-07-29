@@ -26,6 +26,9 @@ The .NET team discourages using C# Records in public APIs, so we will not use th
 ### Model Namespace
 
 Generated models will be defined in a `.Models` namespace.
+##### Discussion Notes
+
+Tracking finalization of namespace decision [autorest.csharp #2514](https://github.com/Azure/autorest.csharp/issues/2514)
 
 ### Type mappings from Cadl to .NET
 
@@ -86,6 +89,13 @@ See examples:
 - Collection properties:
   - [RoundTripModel.cs](https://github.com/annelo-msft/azure-sdk-for-net/blob/cadl-models-collections-basic/sdk/template/Azure.Template/src/Generated/Models/RoundTripModel.cs)
   - Collection properties [RoundTripModel.Serialization.cs](https://github.com/annelo-msft/azure-sdk-for-net/blob/cadl-models-collections-basic/sdk/template/Azure.Template/src/Generated/Models/RoundTripModel.Serialization.cs)
+
+### Collections
+
+There are a number of outstanding open issues regarding how to represent collections being tracked:
+
+- [autorest.csharp #2515](https://github.com/Azure/autorest.csharp/issues/2515)
+- [autorest.csharp #2513](https://github.com/Azure/autorest.csharp/issues/2513)
 
 ### Enums
 
