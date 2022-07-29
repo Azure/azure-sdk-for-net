@@ -262,16 +262,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             DocumentModelOperationDetails operationDetails = await client.GetOperationAsync(modelOperationFromList.FirstOrDefault().OperationId);
 
             ValidateOperationDetails(operationDetails);
-            if (operationDetails.Status == DocumentOperationStatus.Failed)
-            {
-                Assert.NotNull(operationDetails.Error);
-                Assert.NotNull(operationDetails.Error.Code);
-                Assert.NotNull(operationDetails.Error.Message);
-            }
-            else
-            {
-                ValidateDocumentModel(operationDetails.Result);
-            }
         }
 
         [RecordedTest]

@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
@@ -79,7 +78,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary>
         /// Operation result upon success.
         /// </summary>
-        //TODO service is looking into fixing this so it has different return types that we can adapt.
         public DocumentModelDetails Result { get; }
     }
 }
