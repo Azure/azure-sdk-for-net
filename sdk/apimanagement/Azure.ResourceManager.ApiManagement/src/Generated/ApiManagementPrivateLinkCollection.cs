@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary>
     /// A class representing a collection of <see cref="ApiManagementPrivateLinkResource" /> and their operations.
     /// Each <see cref="ApiManagementPrivateLinkResource" /> in the collection will belong to the same instance of <see cref="ApiManagementServiceResource" />.
-    /// To get an <see cref="ApiManagementPrivateLinkResourceCollection" /> instance call the GetApiManagementPrivateLinkResources method from an instance of <see cref="ApiManagementServiceResource" />.
+    /// To get an <see cref="ApiManagementPrivateLinkCollection" /> instance call the GetApiManagementPrivateLinks method from an instance of <see cref="ApiManagementServiceResource" />.
     /// </summary>
-    public partial class ApiManagementPrivateLinkResourceCollection : ArmCollection, IEnumerable<ApiManagementPrivateLinkResource>, IAsyncEnumerable<ApiManagementPrivateLinkResource>
+    public partial class ApiManagementPrivateLinkCollection : ArmCollection, IEnumerable<ApiManagementPrivateLinkResource>, IAsyncEnumerable<ApiManagementPrivateLinkResource>
     {
-        private readonly ClientDiagnostics _apiManagementPrivateLinkResourcePrivateEndpointConnectionClientDiagnostics;
-        private readonly PrivateEndpointConnectionRestOperations _apiManagementPrivateLinkResourcePrivateEndpointConnectionRestClient;
+        private readonly ClientDiagnostics _apiManagementPrivateLinkPrivateEndpointConnectionClientDiagnostics;
+        private readonly PrivateEndpointConnectionRestOperations _apiManagementPrivateLinkPrivateEndpointConnectionRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ApiManagementPrivateLinkResourceCollection"/> class for mocking. </summary>
-        protected ApiManagementPrivateLinkResourceCollection()
+        /// <summary> Initializes a new instance of the <see cref="ApiManagementPrivateLinkCollection"/> class for mocking. </summary>
+        protected ApiManagementPrivateLinkCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ApiManagementPrivateLinkResourceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ApiManagementPrivateLinkCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal ApiManagementPrivateLinkResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ApiManagementPrivateLinkCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _apiManagementPrivateLinkResourcePrivateEndpointConnectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiManagementPrivateLinkResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ApiManagementPrivateLinkResource.ResourceType, out string apiManagementPrivateLinkResourcePrivateEndpointConnectionApiVersion);
-            _apiManagementPrivateLinkResourcePrivateEndpointConnectionRestClient = new PrivateEndpointConnectionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementPrivateLinkResourcePrivateEndpointConnectionApiVersion);
+            _apiManagementPrivateLinkPrivateEndpointConnectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiManagementPrivateLinkResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ApiManagementPrivateLinkResource.ResourceType, out string apiManagementPrivateLinkPrivateEndpointConnectionApiVersion);
+            _apiManagementPrivateLinkPrivateEndpointConnectionRestClient = new PrivateEndpointConnectionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementPrivateLinkPrivateEndpointConnectionApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -66,11 +66,11 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(privateLinkSubResourceName, nameof(privateLinkSubResourceName));
 
-            using var scope = _apiManagementPrivateLinkResourcePrivateEndpointConnectionClientDiagnostics.CreateScope("ApiManagementPrivateLinkResourceCollection.Get");
+            using var scope = _apiManagementPrivateLinkPrivateEndpointConnectionClientDiagnostics.CreateScope("ApiManagementPrivateLinkCollection.Get");
             scope.Start();
             try
             {
-                var response = await _apiManagementPrivateLinkResourcePrivateEndpointConnectionRestClient.GetPrivateLinkResourceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkSubResourceName, cancellationToken).ConfigureAwait(false);
+                var response = await _apiManagementPrivateLinkPrivateEndpointConnectionRestClient.GetPrivateLinkResourceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkSubResourceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ApiManagementPrivateLinkResource(Client, response.Value), response.GetRawResponse());
@@ -95,11 +95,11 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(privateLinkSubResourceName, nameof(privateLinkSubResourceName));
 
-            using var scope = _apiManagementPrivateLinkResourcePrivateEndpointConnectionClientDiagnostics.CreateScope("ApiManagementPrivateLinkResourceCollection.Get");
+            using var scope = _apiManagementPrivateLinkPrivateEndpointConnectionClientDiagnostics.CreateScope("ApiManagementPrivateLinkCollection.Get");
             scope.Start();
             try
             {
-                var response = _apiManagementPrivateLinkResourcePrivateEndpointConnectionRestClient.GetPrivateLinkResource(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkSubResourceName, cancellationToken);
+                var response = _apiManagementPrivateLinkPrivateEndpointConnectionRestClient.GetPrivateLinkResource(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkSubResourceName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ApiManagementPrivateLinkResource(Client, response.Value), response.GetRawResponse());
@@ -122,11 +122,11 @@ namespace Azure.ResourceManager.ApiManagement
         {
             async Task<Page<ApiManagementPrivateLinkResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _apiManagementPrivateLinkResourcePrivateEndpointConnectionClientDiagnostics.CreateScope("ApiManagementPrivateLinkResourceCollection.GetAll");
+                using var scope = _apiManagementPrivateLinkPrivateEndpointConnectionClientDiagnostics.CreateScope("ApiManagementPrivateLinkCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _apiManagementPrivateLinkResourcePrivateEndpointConnectionRestClient.ListPrivateLinkResourcesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _apiManagementPrivateLinkPrivateEndpointConnectionRestClient.ListPrivateLinkResourcesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ApiManagementPrivateLinkResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -149,11 +149,11 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Page<ApiManagementPrivateLinkResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _apiManagementPrivateLinkResourcePrivateEndpointConnectionClientDiagnostics.CreateScope("ApiManagementPrivateLinkResourceCollection.GetAll");
+                using var scope = _apiManagementPrivateLinkPrivateEndpointConnectionClientDiagnostics.CreateScope("ApiManagementPrivateLinkCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _apiManagementPrivateLinkResourcePrivateEndpointConnectionRestClient.ListPrivateLinkResources(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _apiManagementPrivateLinkPrivateEndpointConnectionRestClient.ListPrivateLinkResources(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ApiManagementPrivateLinkResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -178,11 +178,11 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(privateLinkSubResourceName, nameof(privateLinkSubResourceName));
 
-            using var scope = _apiManagementPrivateLinkResourcePrivateEndpointConnectionClientDiagnostics.CreateScope("ApiManagementPrivateLinkResourceCollection.Exists");
+            using var scope = _apiManagementPrivateLinkPrivateEndpointConnectionClientDiagnostics.CreateScope("ApiManagementPrivateLinkCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _apiManagementPrivateLinkResourcePrivateEndpointConnectionRestClient.GetPrivateLinkResourceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkSubResourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _apiManagementPrivateLinkPrivateEndpointConnectionRestClient.GetPrivateLinkResourceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkSubResourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -205,11 +205,11 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(privateLinkSubResourceName, nameof(privateLinkSubResourceName));
 
-            using var scope = _apiManagementPrivateLinkResourcePrivateEndpointConnectionClientDiagnostics.CreateScope("ApiManagementPrivateLinkResourceCollection.Exists");
+            using var scope = _apiManagementPrivateLinkPrivateEndpointConnectionClientDiagnostics.CreateScope("ApiManagementPrivateLinkCollection.Exists");
             scope.Start();
             try
             {
-                var response = _apiManagementPrivateLinkResourcePrivateEndpointConnectionRestClient.GetPrivateLinkResource(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkSubResourceName, cancellationToken: cancellationToken);
+                var response = _apiManagementPrivateLinkPrivateEndpointConnectionRestClient.GetPrivateLinkResource(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkSubResourceName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)

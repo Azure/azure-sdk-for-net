@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ApiManagement
             Optional<SystemData> systemData = default;
             Optional<string> text = default;
             Optional<DateTimeOffset> createdDate = default;
-            Optional<string> userId = default;
+            Optional<ResourceIdentifier> userId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -100,7 +100,12 @@ namespace Azure.ResourceManager.ApiManagement
                         }
                         if (property0.NameEquals("userId"))
                         {
-                            userId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            userId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                     }
