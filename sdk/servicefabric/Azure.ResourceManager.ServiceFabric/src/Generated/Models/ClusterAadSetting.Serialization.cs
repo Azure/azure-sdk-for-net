@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    public partial class ClusterAzureActiveDirectorySetting : IUtf8JsonSerializable
+    public partial class ClusterAadSetting : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             writer.WriteEndObject();
         }
 
-        internal static ClusterAzureActiveDirectorySetting DeserializeClusterAzureActiveDirectorySetting(JsonElement element)
+        internal static ClusterAadSetting DeserializeClusterAadSetting(JsonElement element)
         {
             Optional<Guid> tenantId = default;
             Optional<string> clusterApplication = default;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     continue;
                 }
             }
-            return new ClusterAzureActiveDirectorySetting(Optional.ToNullable(tenantId), clusterApplication.Value, clientApplication.Value);
+            return new ClusterAadSetting(Optional.ToNullable(tenantId), clusterApplication.Value, clientApplication.Value);
         }
     }
 }

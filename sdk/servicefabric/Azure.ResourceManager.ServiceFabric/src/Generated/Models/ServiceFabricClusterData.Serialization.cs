@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.ServiceFabric
             Optional<SystemData> systemData = default;
             Optional<IList<ClusterAddOnFeature>> addOnFeatures = default;
             Optional<IReadOnlyList<ClusterVersionDetails>> availableClusterVersions = default;
-            Optional<ClusterAzureActiveDirectorySetting> azureActiveDirectory = default;
+            Optional<ClusterAadSetting> azureActiveDirectory = default;
             Optional<ClusterCertificateDescription> certificate = default;
             Optional<ClusterServerCertificateCommonNames> certificateCommonNames = default;
             Optional<IList<ClusterClientCertificateCommonName>> clientCertificateCommonNames = default;
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.ServiceFabric
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            azureActiveDirectory = ClusterAzureActiveDirectorySetting.DeserializeClusterAzureActiveDirectorySetting(property0.Value);
+                            azureActiveDirectory = ClusterAadSetting.DeserializeClusterAadSetting(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("certificate"))

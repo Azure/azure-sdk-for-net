@@ -46,7 +46,7 @@ rename-mapping:
   ApplicationTypeResourceList: ServiceFabricApplicationTypeList
   ApplicationTypeVersionResource: ServiceFabricApplicationTypeVersion
   ApplicationTypeVersionResourceList: ServiceFabricApplicationTypeVersionList
-  AzureActiveDirectory: ClusterAzureActiveDirectorySetting
+  AzureActiveDirectory: ClusterAadSetting
   CertificateDescription: ClusterCertificateDescription
   ClientCertificateCommonName: ClusterClientCertificateCommonName
   ClientCertificateThumbprint: ClusterClientCertificateThumbprint

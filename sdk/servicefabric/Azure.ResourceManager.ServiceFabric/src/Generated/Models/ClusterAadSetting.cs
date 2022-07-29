@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     /// The settings to enable AAD authentication on the cluster.
     /// Serialized Name: AzureActiveDirectory
     /// </summary>
-    public partial class ClusterAzureActiveDirectorySetting
+    public partial class ClusterAadSetting
     {
-        /// <summary> Initializes a new instance of ClusterAzureActiveDirectorySetting. </summary>
-        public ClusterAzureActiveDirectorySetting()
+        /// <summary> Initializes a new instance of ClusterAadSetting. </summary>
+        public ClusterAadSetting()
         {
         }
 
-        /// <summary> Initializes a new instance of ClusterAzureActiveDirectorySetting. </summary>
+        /// <summary> Initializes a new instance of ClusterAadSetting. </summary>
         /// <param name="tenantId">
         /// Azure active directory tenant id.
         /// Serialized Name: AzureActiveDirectory.tenantId
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// Azure active directory client application id.
         /// Serialized Name: AzureActiveDirectory.clientApplication
         /// </param>
-        internal ClusterAzureActiveDirectorySetting(Guid? tenantId, string clusterApplication, string clientApplication)
+        internal ClusterAadSetting(Guid? tenantId, string clusterApplication, string clientApplication)
         {
             TenantId = tenantId;
             ClusterApplication = clusterApplication;

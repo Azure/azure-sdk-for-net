@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.ServiceFabric
         public ServiceFabricClusterData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.ServiceFabric.Models.ClusterAddOnFeature> AddOnFeatures { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ServiceFabric.Models.ClusterVersionDetails> AvailableClusterVersions { get { throw null; } }
-        public Azure.ResourceManager.ServiceFabric.Models.ClusterAzureActiveDirectorySetting AzureActiveDirectory { get { throw null; } set { } }
+        public Azure.ResourceManager.ServiceFabric.Models.ClusterAadSetting AzureActiveDirectory { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceFabric.Models.ClusterCertificateDescription Certificate { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceFabric.Models.ClusterServerCertificateCommonNames CertificateCommonNames { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ServiceFabric.Models.ClusterClientCertificateCommonName> ClientCertificateCommonNames { get { throw null; } }
@@ -432,6 +432,13 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public static bool operator !=(Azure.ResourceManager.ServiceFabric.Models.ArmUpgradeFailureAction left, Azure.ResourceManager.ServiceFabric.Models.ArmUpgradeFailureAction right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class ClusterAadSetting
+    {
+        public ClusterAadSetting() { }
+        public string ClientApplication { get { throw null; } set { } }
+        public string ClusterApplication { get { throw null; } set { } }
+        public System.Guid? TenantId { get { throw null; } set { } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ClusterAddOnFeature : System.IEquatable<Azure.ResourceManager.ServiceFabric.Models.ClusterAddOnFeature>
     {
@@ -451,13 +458,6 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public static implicit operator Azure.ResourceManager.ServiceFabric.Models.ClusterAddOnFeature (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ServiceFabric.Models.ClusterAddOnFeature left, Azure.ResourceManager.ServiceFabric.Models.ClusterAddOnFeature right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class ClusterAzureActiveDirectorySetting
-    {
-        public ClusterAzureActiveDirectorySetting() { }
-        public string ClientApplication { get { throw null; } set { } }
-        public string ClusterApplication { get { throw null; } set { } }
-        public System.Guid? TenantId { get { throw null; } set { } }
     }
     public partial class ClusterCertificateDescription
     {
