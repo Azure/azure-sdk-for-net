@@ -129,7 +129,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
             var jobOutputStorage = new JobOutputStorage(blobClient, _jobId);
             await jobOutputStorage.SaveAsync(JobOutputKind.JobOutput, FilePath("TestText1.txt"), "Gettable.txt");
 
-            var blob = jobOutputStorage.GetOutputAsync(JobOutputKind.JobOutput, "Gettable.txt");
+            var blob = jobOutputStorage.GetOutput(JobOutputKind.JobOutput, "Gettable.txt");
 
             var blobContent = await blob.ReadAsByteArrayAsync();
             var originalContent = File.ReadAllBytes(FilePath("TestText1.txt"));
@@ -144,7 +144,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
             var jobOutputStorage = new JobOutputStorage(blobClient, _jobId);
             await jobOutputStorage.SaveAsync(JobOutputKind.JobOutput, FilePath("TestText1.txt"), "This/File/Is/Gettable.txt");
 
-            var blob = jobOutputStorage.GetOutputAsync(JobOutputKind.JobOutput, "This/File/Is/Gettable.txt");
+            var blob = jobOutputStorage.GetOutput(JobOutputKind.JobOutput, "This/File/Is/Gettable.txt");
 
             var blobContent = await blob.ReadAsByteArrayAsync();
             var originalContent = File.ReadAllBytes(FilePath("TestText1.txt"));

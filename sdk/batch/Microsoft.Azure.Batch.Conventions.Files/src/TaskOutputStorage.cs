@@ -170,11 +170,11 @@ namespace Microsoft.Azure.Batch.Conventions.Files
         /// retrieve, for example <see cref="TaskOutputKind.TaskOutput"/> or <see cref="TaskOutputKind.TaskLog"/>.</param>
         /// <param name="filePath">The path under which the output was persisted in blob storage.</param>
         /// <returns>A reference to the requested file in Azure blob storage.</returns>
-        public OutputFileReference GetOutputAsync(
+        public OutputFileReference GetOutput(
             TaskOutputKind kind,
             string filePath
         )
-            => _storagePath.GetOutputAsync(kind, filePath);
+            => _storagePath.GetOutput(kind, filePath);
 
         /// <summary>
         /// Saves the specified file to persistent storage as a <see cref="TaskOutputKind.TaskLog"/>,

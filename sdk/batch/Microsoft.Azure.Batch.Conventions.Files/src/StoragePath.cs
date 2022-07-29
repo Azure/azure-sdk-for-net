@@ -168,7 +168,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files
 
         }
 
-        public OutputFileReference GetOutputAsync(IOutputKind kind, string filePath)
+        public OutputFileReference GetOutput(IOutputKind kind, string filePath)
         {
             if (kind == null)
             {

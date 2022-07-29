@@ -141,11 +141,11 @@ namespace Microsoft.Azure.Batch.Conventions.Files
         /// retrieve, for example <see cref="JobOutputKind.JobOutput"/> or <see cref="JobOutputKind.JobPreview"/>.</param>
         /// <param name="filePath">The path under which the output was persisted in blob storage.</param>
         /// <returns>A reference to the requested file in Azure blob storage.</returns>
-        public OutputFileReference GetOutputAsync(
+        public OutputFileReference GetOutput(
             JobOutputKind kind,
             string filePath
         )
-            => _storagePath.GetOutputAsync(kind, filePath);
+            => _storagePath.GetOutput(kind, filePath);
 
         /// <summary>
         /// Gets the Blob name prefix/folder where files of the given kind are stored

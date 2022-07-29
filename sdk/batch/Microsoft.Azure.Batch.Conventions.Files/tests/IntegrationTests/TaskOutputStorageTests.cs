@@ -132,7 +132,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
             var taskOutputStorage = new TaskOutputStorage(blobClient, _jobId, _taskId);
             await taskOutputStorage.SaveAsync(TaskOutputKind.TaskPreview, FilePath("TestText1.txt"), "Gettable.txt");
 
-            var blob = taskOutputStorage.GetOutputAsync(TaskOutputKind.TaskPreview, "Gettable.txt");
+            var blob = taskOutputStorage.GetOutput(TaskOutputKind.TaskPreview, "Gettable.txt");
 
             var blobContent = await blob.ReadAsByteArrayAsync();
             var originalContent = File.ReadAllBytes(FilePath("TestText1.txt"));
@@ -147,7 +147,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
             var taskOutputStorage = new TaskOutputStorage(blobClient, _jobId, _taskId);
             await taskOutputStorage.SaveAsync(TaskOutputKind.TaskPreview, FilePath("TestText1.txt"), "This/File/Is/Gettable.txt");
 
-            var blob = taskOutputStorage.GetOutputAsync(TaskOutputKind.TaskPreview, "This/File/Is/Gettable.txt");
+            var blob = taskOutputStorage.GetOutput(TaskOutputKind.TaskPreview, "This/File/Is/Gettable.txt");
 
             var blobContent = await blob.ReadAsByteArrayAsync();
             var originalContent = File.ReadAllBytes(FilePath("TestText1.txt"));
@@ -164,7 +164,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
             var taskOutputStorage = new TaskOutputStorage(blobClient, _jobId, _taskId);
             await taskOutputStorage.SaveTextAsync(TaskOutputKind.TaskOutput, sampleXml, "TextNotFromFile.xml");
 
-            var blob = taskOutputStorage.GetOutputAsync(TaskOutputKind.TaskOutput, "TextNotFromFile.xml");
+            var blob = taskOutputStorage.GetOutput(TaskOutputKind.TaskOutput, "TextNotFromFile.xml");
 
             var blobContent = Encoding.UTF8.GetString(await blob.ReadAsByteArrayAsync());
 
@@ -178,7 +178,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
             var taskOutputStorage = new TaskOutputStorage(blobClient, _jobId, _taskId);
             await taskOutputStorage.SaveAsyncImpl(TaskOutputKind.TaskIntermediate, FileSubfolder("File"), @"..\TestTextForOutsideWorkingDirectory.txt");
 
-            var blob = taskOutputStorage.GetOutputAsync(TaskOutputKind.TaskIntermediate, "TestTextForOutsideWorkingDirectory.txt");
+            var blob = taskOutputStorage.GetOutput(TaskOutputKind.TaskIntermediate, "TestTextForOutsideWorkingDirectory.txt");
 
             var blobContent = await blob.ReadAsByteArrayAsync();
             var originalContent = File.ReadAllBytes(FilePath("TestTextForOutsideWorkingDirectory.txt"));
@@ -218,7 +218,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
                     File.AppendAllLines(file, new[] { "Line 3" });
                 }
 
-                var blob = taskOutputStorage.GetOutputAsync(TaskOutputKind.TaskLog, "Tracked1.txt");
+                var blob = taskOutputStorage.GetOutput(TaskOutputKind.TaskLog, "Tracked1.txt");
 
                 var blobContent = await blob.ReadAsByteArrayAsync();
                 var originalContent = File.ReadAllBytes(file);
@@ -261,7 +261,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
                     }
                 }
 
-                var blob = taskOutputStorage.GetOutputAsync(TaskOutputKind.TaskLog, "Tracked2.txt");
+                var blob = taskOutputStorage.GetOutput(TaskOutputKind.TaskLog, "Tracked2.txt");
 
                 var blobContent = await blob.ReadAsByteArrayAsync();
                 var originalContent = File.ReadAllBytes(file);
