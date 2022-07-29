@@ -2763,7 +2763,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public string Family { get { throw null; } }
         public string Kind { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ApiManagement.Models.ApiManagementSkuLocationInfo> LocationInfo { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> Locations { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Core.AzureLocation> Locations { get { throw null; } }
         public string Name { get { throw null; } }
         public string ResourceType { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ApiManagement.Models.ApiManagementSkuRestrictions> Restrictions { get { throw null; } }
@@ -4454,7 +4454,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     public partial class TenantAccessInfoPatch
     {
         public TenantAccessInfoPatch() { }
-        public bool? Enabled { get { throw null; } set { } }
+        public bool? IsEnabled { get { throw null; } set { } }
     }
     public partial class TenantAccessInfoSecretsDetails
     {
