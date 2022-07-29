@@ -72,6 +72,7 @@ namespace Azure.AI.FormRecognizer
                 : diagnostics.CreateRequestFailedException(response, responseError, errorInfo);
         }
 
+        // Just testing ci.
         public static async ValueTask<RequestFailedException> CreateExceptionForFailedOperationAsync(bool async, ClientDiagnostics diagnostics, Response response, ResponseError error)
         {
             var additionalInfo = new Dictionary<string, string>(1) { { "AdditionInformation", error.ToString() } };
