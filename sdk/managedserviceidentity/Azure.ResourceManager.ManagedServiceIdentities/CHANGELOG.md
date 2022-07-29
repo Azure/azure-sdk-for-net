@@ -1,6 +1,16 @@
 # Release History
 
-## 1.0.0 (2022-07-18)
+## 1.1.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.0.0 (2022-07-21)
 
 This is the first stable release of the Azure Managed Service Identity management library.
 

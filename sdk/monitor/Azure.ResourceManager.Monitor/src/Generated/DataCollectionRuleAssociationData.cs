@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="dataCollectionRuleId"> The resource ID of the data collection rule that is to be associated. </param>
         /// <param name="dataCollectionEndpointId"> The resource ID of the data collection endpoint that is to be associated. </param>
         /// <param name="provisioningState"> The resource provisioning state. </param>
-        internal DataCollectionRuleAssociationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, string description, string dataCollectionRuleId, string dataCollectionEndpointId, KnownDataCollectionRuleAssociationProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal DataCollectionRuleAssociationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, string description, ResourceIdentifier dataCollectionRuleId, ResourceIdentifier dataCollectionEndpointId, DataCollectionRuleAssociationProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             ETag = etag;
             Description = description;
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> Description of the association. </summary>
         public string Description { get; set; }
         /// <summary> The resource ID of the data collection rule that is to be associated. </summary>
-        public string DataCollectionRuleId { get; set; }
+        public ResourceIdentifier DataCollectionRuleId { get; set; }
         /// <summary> The resource ID of the data collection endpoint that is to be associated. </summary>
-        public string DataCollectionEndpointId { get; set; }
+        public ResourceIdentifier DataCollectionEndpointId { get; set; }
         /// <summary> The resource provisioning state. </summary>
-        public KnownDataCollectionRuleAssociationProvisioningState? ProvisioningState { get; }
+        public DataCollectionRuleAssociationProvisioningState? ProvisioningState { get; }
     }
 }

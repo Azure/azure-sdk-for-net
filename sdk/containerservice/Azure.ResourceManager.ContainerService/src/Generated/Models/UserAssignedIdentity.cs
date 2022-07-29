@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Details about a user assigned identity. </summary>
@@ -19,7 +21,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="resourceId"> The resource ID of the user assigned identity. </param>
         /// <param name="clientId"> The client ID of the user assigned identity. </param>
         /// <param name="objectId"> The object ID of the user assigned identity. </param>
-        internal UserAssignedIdentity(string resourceId, string clientId, string objectId)
+        internal UserAssignedIdentity(ResourceIdentifier resourceId, string clientId, string objectId)
         {
             ResourceId = resourceId;
             ClientId = clientId;
@@ -27,7 +29,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> The resource ID of the user assigned identity. </summary>
-        public string ResourceId { get; set; }
+        public ResourceIdentifier ResourceId { get; set; }
         /// <summary> The client ID of the user assigned identity. </summary>
         public string ClientId { get; set; }
         /// <summary> The object ID of the user assigned identity. </summary>

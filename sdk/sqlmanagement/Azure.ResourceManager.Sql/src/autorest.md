@@ -47,7 +47,10 @@ format-by-name-rules:
   'clientIP': 'ip-address'
 
 keep-plural-enums:
-  - DiffBackupIntervalInHours
+- DiffBackupIntervalInHours
+
+keep-plural-resource-data:
+- MaintenanceWindows
 
 rename-rules:
   CPU: Cpu
@@ -177,6 +180,9 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/vulnerabilityAssessments/{vulnerabilityAssessmentName}/rules/{ruleId}/baselines/{baselineName}: ManagedDatabaseVulnerabilityAssessmentRuleBaseline
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/vulnerabilityAssessments/{vulnerabilityAssessmentName}/scans/{scanId}: ManagedDatabaseVulnerabilityAssessmentScan
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/advisors/{advisorName}: SqlServerAdvisor
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/virtualNetworkRules/{virtualNetworkRuleName}: SqlServerVirtualNetworkRule
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/replicationLinks/{linkId}: SqlServerDatabaseReplicationLink
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/restorePoints/{restorePointName}: SqlServerDatabaseRestorePoint
   
 
 rename-mapping:
@@ -219,7 +225,7 @@ rename-mapping:
   ServerExternalAdministrator.azureADOnlyAuthentication: IsAzureADOnlyAuthenticationEnabled
   SyncGroup.properties.enableConflictLogging: IsConflictLoggingEnabled
   PrincipalType: SqlServerPrincipalType
-  IsRetryable: ActionIsRetryable
+  IsRetryable: ActionRetryableState
   ExportDatabaseDefinition: DatabaseExportDefinition
   ImportNewDatabaseDefinition: DatabaseImportDefinition
   PartnerInfo: PartnerServerInfo
@@ -231,6 +237,23 @@ rename-mapping:
   ServerOperation: ServerOperationData
   ElasticPoolOperation: ElasticPoolOperationData
   UpdateManagedInstanceDnsServersOperation: ManagedInstanceUpdateDnsServersOperationData
+  VirtualNetworkRule: SqlServerVirtualNetworkRule
+  VirtualNetworkRuleState: SqlServerVirtualNetworkRuleState
+  MetricAvailability: SqlMetricAvailability
+  PrivateEndpointConnectionProperties: ServerPrivateEndpointConnectionProperties
+  PrivateEndpointProvisioningState: SqlPrivateEndpointProvisioningState
+  PrivateLinkServiceConnectionStateActionsRequire: SqlPrivateLinkServiceConnectionActionsRequired
+  PrivateLinkServiceConnectionStateStatus: SqlPrivateLinkServiceConnectionStatus
+  SecurityAlertPolicyName: SqlSecurityAlertPolicyName
+  ServerKeyType: SqlServerKeyType
+  ServerPrivateEndpointConnection: SqlServerPrivateEndpointConnection
+  ReplicationLink: SqlServerDatabaseReplicationLink
+  ReplicationRole: SqlServerDatabaseReplicationRole
+  ServerVersionCapability: SqlServerVersionCapability
+  RestorePoint: SqlServerDatabaseRestorePoint
+  BackupStorageRedundancy: SqlBackupStorageRedundancy
+  PrimaryAggregationType: SqlMetricPrimaryAggregationType
+
 prompted-enum-values:
   - Default
 directive:

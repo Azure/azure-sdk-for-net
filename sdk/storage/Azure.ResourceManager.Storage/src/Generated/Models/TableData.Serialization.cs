@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Storage
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> tableName = default;
-            Optional<IList<TableSignedIdentifier>> signedIdentifiers = default;
+            Optional<IList<StorageTableSignedIdentifier>> signedIdentifiers = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.Storage
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<TableSignedIdentifier> array = new List<TableSignedIdentifier>();
+                            List<StorageTableSignedIdentifier> array = new List<StorageTableSignedIdentifier>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(TableSignedIdentifier.DeserializeTableSignedIdentifier(item));
+                                array.Add(StorageTableSignedIdentifier.DeserializeStorageTableSignedIdentifier(item));
                             }
                             signedIdentifiers = array;
                             continue;

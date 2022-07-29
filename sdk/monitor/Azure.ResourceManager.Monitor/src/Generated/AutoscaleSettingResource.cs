@@ -36,6 +36,8 @@ namespace Azure.ResourceManager.Monitor
 
         private readonly ClientDiagnostics _autoscaleSettingClientDiagnostics;
         private readonly AutoscaleSettingsRestOperations _autoscaleSettingRestClient;
+        private readonly ClientDiagnostics _predictiveMetricClientDiagnostics;
+        private readonly PredictiveMetricRestOperations _predictiveMetricRestClient;
         private readonly AutoscaleSettingData _data;
 
         /// <summary> Initializes a new instance of the <see cref="AutoscaleSettingResource"/> class for mocking. </summary>
@@ -60,6 +62,8 @@ namespace Azure.ResourceManager.Monitor
             _autoscaleSettingClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string autoscaleSettingApiVersion);
             _autoscaleSettingRestClient = new AutoscaleSettingsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, autoscaleSettingApiVersion);
+            _predictiveMetricClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _predictiveMetricRestClient = new PredictiveMetricRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -233,6 +237,72 @@ namespace Azure.ResourceManager.Monitor
             {
                 var response = _autoscaleSettingRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
                 return Response.FromValue(new AutoscaleSettingResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// get predictive autoscale metric future data
+        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/autoscalesettings/{autoscaleSettingName}/predictiveMetrics
+        /// Operation Id: PredictiveMetric_Get
+        /// </summary>
+        /// <param name="timespan"> The timespan of the query. It is a string with the following format &apos;startDateTime_ISO/endDateTime_ISO&apos;. </param>
+        /// <param name="interval"> The interval (i.e. timegrain) of the query. </param>
+        /// <param name="metricNamespace"> Metric namespace to query metric definitions for. </param>
+        /// <param name="metricName"> The names of the metrics (comma separated) to retrieve. Special case: If a metricname itself has a comma in it then use %2 to indicate it. Eg: &apos;Metric,Name1&apos; should be **&apos;Metric%2Name1&apos;**. </param>
+        /// <param name="aggregation"> The list of aggregation types (comma separated) to retrieve. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="timespan"/>, <paramref name="metricNamespace"/>, <paramref name="metricName"/> or <paramref name="aggregation"/> is null. </exception>
+        public virtual async Task<Response<PredictiveResponse>> GetPredictiveMetricAsync(string timespan, TimeSpan interval, string metricNamespace, string metricName, string aggregation, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(timespan, nameof(timespan));
+            Argument.AssertNotNull(metricNamespace, nameof(metricNamespace));
+            Argument.AssertNotNull(metricName, nameof(metricName));
+            Argument.AssertNotNull(aggregation, nameof(aggregation));
+
+            using var scope = _predictiveMetricClientDiagnostics.CreateScope("AutoscaleSettingResource.GetPredictiveMetric");
+            scope.Start();
+            try
+            {
+                var response = await _predictiveMetricRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, timespan, interval, metricNamespace, metricName, aggregation, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// get predictive autoscale metric future data
+        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/autoscalesettings/{autoscaleSettingName}/predictiveMetrics
+        /// Operation Id: PredictiveMetric_Get
+        /// </summary>
+        /// <param name="timespan"> The timespan of the query. It is a string with the following format &apos;startDateTime_ISO/endDateTime_ISO&apos;. </param>
+        /// <param name="interval"> The interval (i.e. timegrain) of the query. </param>
+        /// <param name="metricNamespace"> Metric namespace to query metric definitions for. </param>
+        /// <param name="metricName"> The names of the metrics (comma separated) to retrieve. Special case: If a metricname itself has a comma in it then use %2 to indicate it. Eg: &apos;Metric,Name1&apos; should be **&apos;Metric%2Name1&apos;**. </param>
+        /// <param name="aggregation"> The list of aggregation types (comma separated) to retrieve. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="timespan"/>, <paramref name="metricNamespace"/>, <paramref name="metricName"/> or <paramref name="aggregation"/> is null. </exception>
+        public virtual Response<PredictiveResponse> GetPredictiveMetric(string timespan, TimeSpan interval, string metricNamespace, string metricName, string aggregation, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(timespan, nameof(timespan));
+            Argument.AssertNotNull(metricNamespace, nameof(metricNamespace));
+            Argument.AssertNotNull(metricName, nameof(metricName));
+            Argument.AssertNotNull(aggregation, nameof(aggregation));
+
+            using var scope = _predictiveMetricClientDiagnostics.CreateScope("AutoscaleSettingResource.GetPredictiveMetric");
+            scope.Start();
+            try
+            {
+                var response = _predictiveMetricRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, timespan, interval, metricNamespace, metricName, aggregation, cancellationToken);
+                return response;
             }
             catch (Exception e)
             {

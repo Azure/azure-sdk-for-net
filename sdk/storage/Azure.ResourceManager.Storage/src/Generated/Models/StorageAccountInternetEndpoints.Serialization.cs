@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -14,30 +15,50 @@ namespace Azure.ResourceManager.Storage.Models
     {
         internal static StorageAccountInternetEndpoints DeserializeStorageAccountInternetEndpoints(JsonElement element)
         {
-            Optional<string> blob = default;
-            Optional<string> file = default;
-            Optional<string> web = default;
-            Optional<string> dfs = default;
+            Optional<Uri> blob = default;
+            Optional<Uri> file = default;
+            Optional<Uri> web = default;
+            Optional<Uri> dfs = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("blob"))
                 {
-                    blob = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        blob = null;
+                        continue;
+                    }
+                    blob = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("file"))
                 {
-                    file = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        file = null;
+                        continue;
+                    }
+                    file = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("web"))
                 {
-                    web = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        web = null;
+                        continue;
+                    }
+                    web = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dfs"))
                 {
-                    dfs = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        dfs = null;
+                        continue;
+                    }
+                    dfs = new Uri(property.Value.GetString());
                     continue;
                 }
             }

@@ -61,10 +61,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("failSwapOn");
                 writer.WriteBooleanValue(FailSwapOn.Value);
             }
-            if (Optional.IsDefined(ContainerLogMaxSizeMB))
+            if (Optional.IsDefined(ContainerLogMaxSizeInMB))
             {
                 writer.WritePropertyName("containerLogMaxSizeMB");
-                writer.WriteNumberValue(ContainerLogMaxSizeMB.Value);
+                writer.WriteNumberValue(ContainerLogMaxSizeInMB.Value);
             }
             if (Optional.IsDefined(ContainerLogMaxFiles))
             {

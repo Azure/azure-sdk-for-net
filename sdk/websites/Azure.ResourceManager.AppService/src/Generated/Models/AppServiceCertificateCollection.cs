@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of AppServiceCertificateCollection. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal AppServiceCertificateCollection(IEnumerable<AppServiceCertificateResourceData> value)
+        internal AppServiceCertificateCollection(IEnumerable<AppServiceCertificateData> value)
         {
             if (value == null)
             {
@@ -31,14 +31,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of AppServiceCertificateCollection. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
-        internal AppServiceCertificateCollection(IReadOnlyList<AppServiceCertificateResourceData> value, string nextLink)
+        internal AppServiceCertificateCollection(IReadOnlyList<AppServiceCertificateData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Collection of resources. </summary>
-        public IReadOnlyList<AppServiceCertificateResourceData> Value { get; }
+        public IReadOnlyList<AppServiceCertificateData> Value { get; }
         /// <summary> Link to next page of resources. </summary>
         public string NextLink { get; }
     }

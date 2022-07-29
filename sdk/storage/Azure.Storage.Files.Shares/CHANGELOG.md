@@ -1,15 +1,8 @@
 # Release History
 
 ## 12.12.0-beta.1 (Unreleased)
-
-### Features Added
-Support for SDK-calculated transactional checksums on data transfer.
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added support for service version 2021-10-04.
+- Added support for SDK-calculated transactional checksums on data transfer.
 
 ## 12.11.0 (2022-07-07)
 - Includes all features from 12.11.0-beta.1.
