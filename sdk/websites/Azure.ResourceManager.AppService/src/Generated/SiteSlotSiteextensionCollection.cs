@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A class representing a collection of <see cref="SiteSlotSiteextensionResource" /> and their operations.
-    /// Each <see cref="SiteSlotSiteextensionResource" /> in the collection will belong to the same instance of <see cref="SiteSlotResource" />.
-    /// To get a <see cref="SiteSlotSiteextensionCollection" /> instance call the GetSiteSlotSiteextensions method from an instance of <see cref="SiteSlotResource" />.
+    /// Each <see cref="SiteSlotSiteextensionResource" /> in the collection will belong to the same instance of <see cref="WebSiteSlotResource" />.
+    /// To get a <see cref="SiteSlotSiteextensionCollection" /> instance call the GetSiteSlotSiteextensions method from an instance of <see cref="WebSiteSlotResource" />.
     /// </summary>
     public partial class SiteSlotSiteextensionCollection : ArmCollection, IEnumerable<SiteSlotSiteextensionResource>, IAsyncEnumerable<SiteSlotSiteextensionResource>
     {
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.AppService
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != SiteSlotResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SiteSlotResource.ResourceType), nameof(id));
+            if (id.ResourceType != WebSiteSlotResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, WebSiteSlotResource.ResourceType), nameof(id));
         }
 
         /// <summary>

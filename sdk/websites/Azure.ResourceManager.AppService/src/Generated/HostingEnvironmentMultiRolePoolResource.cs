@@ -431,10 +431,10 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: AppServiceEnvironments_ListMultiRolePoolSkus
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SkuInfo" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SkuInfo> GetMultiRolePoolSkusAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AppServicePoolSkuInfo" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AppServicePoolSkuInfo> GetMultiRolePoolSkusAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SkuInfo>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<AppServicePoolSkuInfo>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentMultiRolePoolResource.GetMultiRolePoolSkus");
                 scope.Start();
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            async Task<Page<SkuInfo>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<AppServicePoolSkuInfo>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentMultiRolePoolResource.GetMultiRolePoolSkus");
                 scope.Start();
@@ -473,10 +473,10 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: AppServiceEnvironments_ListMultiRolePoolSkus
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SkuInfo" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SkuInfo> GetMultiRolePoolSkus(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppServicePoolSkuInfo" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AppServicePoolSkuInfo> GetMultiRolePoolSkus(CancellationToken cancellationToken = default)
         {
-            Page<SkuInfo> FirstPageFunc(int? pageSizeHint)
+            Page<AppServicePoolSkuInfo> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentMultiRolePoolResource.GetMultiRolePoolSkus");
                 scope.Start();
@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            Page<SkuInfo> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<AppServicePoolSkuInfo> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentMultiRolePoolResource.GetMultiRolePoolSkus");
                 scope.Start();

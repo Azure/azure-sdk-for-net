@@ -17,7 +17,6 @@ clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
-  lenient-model-deduplication: true
 
 list-exception:
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}
@@ -43,30 +42,33 @@ request-path-is-non-resource:
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/networkFeatures/{view}
 
 request-path-to-resource-name:
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/basicPublishingCredentialsPolicies/ftp: BasicPublishingCredentialsPolicyFtp
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/configreferences/connectionstrings/{connectionStringKey}: SiteConfigConnectionString
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/continuouswebjobs/{webJobName}: SiteContinuousWebJob
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridconnection/{entityName}: SiteHybridConnection
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/premieraddons/{premierAddOnName}: SitePremierAddon
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/privateAccess/virtualNetworks: SitePrivateAccess
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/resourceHealthMetadata/default: SiteResourceHealthMetadata
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/configreferences/appsettings/{appSettingKey}: SiteSlotConfigAppSetting
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/configreferences/connectionstrings/{connectionStringKey}: SiteSlotConfigConnectionString
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/continuouswebjobs/{webJobName}: SiteSlotContinuousWebJob
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/premieraddons/{premierAddOnName}: SiteSlotPremierAddOn
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/privateAccess/virtualNetworks: SiteSlotPrivateAccess
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/resourceHealthMetadata/default: SiteSlotResourceHealthMetadata
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}: SiteSlotTriggeredWebJob
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}/history/{id}: SiteSlotTriggeredWebJobHistory
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/webjobs/{webJobName}: SiteSlotWebJob
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/sourcecontrols/web: SiteSourceControl
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs/{webJobName}: SiteTriggeredwebJob
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs/{webJobName}/history/{id}: SiteTriggeredWebJobHistory
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/webjobs/{webJobName}: SiteWebJob
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}: WebSite
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sourcecontrols/web: SiteSlotSourceControl
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridconnection/{entityName}: SiteSlotHybridConnection
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/siteextensions/{siteExtensionId}: SiteExtension
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/webjobs/{webJobName}: WebSiteWebJob
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/basicPublishingCredentialsPolicies/ftp: WebSiteFtpPublishingCredentialsPolicy
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/configreferences/connectionstrings/{connectionStringKey}: WebSiteConfigConnectionString
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/continuouswebjobs/{webJobName}: WebSiteContinuousWebJob
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridconnection/{entityName}: WebSiteHybridConnection
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/premieraddons/{premierAddOnName}: WebSitePremierAddon
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/privateAccess/virtualNetworks: WebSitePrivateAccess
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/resourceHealthMetadata/default: WebSiteResourceHealthMetadata
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}: WebSiteSlot
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/webjobs/{webJobName}: WebSiteSlotWebJob
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/basicPublishingCredentialsPolicies/ftp: WebSiteSlotFtpPublishingCredentialsPolicy
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/configreferences/appsettings/{appSettingKey}: WebSiteSlotConfigAppSetting
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/configreferences/connectionstrings/{connectionStringKey}: WebSiteSlotConfigConnectionString
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/continuouswebjobs/{webJobName}: WebSiteSlotContinuousWebJob
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/premieraddons/{premierAddOnName}: WebSiteSlotPremierAddOn
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/privateAccess/virtualNetworks: WebSiteSlotPrivateAccess
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/resourceHealthMetadata/default: WebSiteSlotResourceHealthMetadata
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs/{webJobName}: WebSiteTriggeredwebJob
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs/{webJobName}/history/{id}: WebSiteTriggeredWebJobHistory
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/publicCertificates/{publicCertificateName}: WebSiteSlotPublicCertificate
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sourcecontrols/web: WebSiteSlotSourceControl
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridconnection/{entityName}: WebSiteSlotHybridConnection
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}: WebSiteSlotTriggeredWebJob
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}/history/{id}: WebSiteSlotTriggeredWebJobHistory
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/sourcecontrols/web: WebSiteSourceControl
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/siteextensions/{siteExtensionId}: WebSiteExtension
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}: AppServicePlanHybridConnectionNamespaceRelay
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}: AppServicePlanVirtualNetworkConnection
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}: AppServicePlanVirtualNetworkConnectionGateway
@@ -89,6 +91,22 @@ override-operation-name:
   CheckNameAvailability: CheckAppServiceNameAvailability
   AppServicePlans_ListHybridConnections: GetHybridConnectionRelays
   AppServicePlans_GetHybridConnection: GetHybridConnectionRelays
+  StaticSites_CreateOrUpdateStaticSiteBuildAppSettings: CreateOrUpdateAppSettings
+  StaticSites_CreateOrUpdateStaticSiteBuildFunctionAppSettings: CreateOrUpdateFunctionAppSettings
+  StaticSites_ListStaticSiteBuildFunctions: GetFunctions
+  StaticSites_CreateZipDeploymentForStaticSiteBuild: CreateZipDeployment
+  StaticSites_ListStaticSiteBuildFunctionAppSettings: GetFunctionAppSettings
+  AppServiceCertificateOrders_ValidatePurchaseInformation: ValidateAppServiceCertificateOrderPurchaseInformation
+  Recommendations_ResetAllFilters: ResetAllRecommendationFilters
+  StaticSites_PreviewWorkflow: PreviewStaticSiteWorkflow
+  Provider_GetWebAppStacksForLocation: GetWebAppStacksByLocation
+  GetSubscriptionDeploymentLocations: GetAppServiceDeploymentLocations
+  Domains_ListRecommendations: GetAppServiceDomainRecommendations
+  Domains_CheckAvailability: CheckAppServiceDomainRegistrationAvailability
+  Recommendations_DisableRecommendationForSubscription: DisableAppServiceRecommendation
+  ResourceHealthMetadata_ListByResourceGroup: GetAllResourceHealthMetadata
+  WebApps_ListSnapshotsSlot: GetSlotSnapshots
+  WebApps_ListSnapshotsFromDRSecondarySlot: GetSlotSnapshotsFromDRSecondary
 
 no-property-type-replacement:
 - ApiManagementConfig
@@ -99,6 +117,7 @@ format-by-name-rules:
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
+  'serverFarmId': 'arm-id'
 
 keep-plural-enums:
 - StackPreferredOS
@@ -130,7 +149,20 @@ rename-rules:
   Ms: MS
 
 rename-mapping:
+# site and site related
   Site: WebSite
+  Site.properties.clientAffinityEnabled: IsClientAffinityEnabled
+  Site.properties.clientCertEnabled: IsClientCertEnabled
+  Site.properties.enabled: IsEnabled
+  Site.properties.hostNamesDisabled: IsHostNameDisabled
+  Site.properties.httpsOnly: IsHttpsOnly
+  Site.properties.hyperV: IsHyperV
+  Site.properties.reserved: IsReserved
+  Site.properties.suspendedTill: SuspendOn
+  Site.properties.storageAccountRequired: IsStorageAccountRequired
+  Site.properties.serverFarmId: AppServicePlanId
+  SiteAvailabilityState: WebSiteAvailabilityState
+  Certificate: AppCertificate
   AppServiceCertificateOrderPatchResource: AppServiceCertificateOrderPatch
   AppServiceCertificatePatchResource: AppServiceCertificatePatch
   AppServiceEnvironmentPatchResource: AppServiceEnvironmentPatchContent
@@ -158,7 +190,6 @@ rename-mapping:
   Domain.properties.privacy: AppServiceHasPrivacy
   Domain.properties.expirationTime: ExpireOn
   Domain.properties.autoRenew: IsAutoRenew
-  AppServiceEnvironment.properties.suspended: IsSuspended
   AppServicePlan.properties.elasticScaleEnabled: IsElasticScaleEnabled
   AppServicePlan.properties.freeOfferExpirationTime: FreeOfferExpiredOn
   AppServicePlan.properties.hyperV: IsHyperV
@@ -197,20 +228,15 @@ rename-mapping:
   TriggeredWebJob.properties.using_sdk: IsUsingSdk
   VnetInfoResource.properties.resyncRequired: IsResyncRequired
   WebJob.properties.using_sdk: IsUsingSdk
-  Site.properties.clientAffinityEnabled: IsClientAffinityEnabled
-  Site.properties.clientCertEnabled: IsClientCertEnabled
-  Site.properties.enabled: IsEnabled
-  Site.properties.hostNamesDisabled: IsHostNameDisabled
-  Site.properties.httpsOnly: IsHttpsOnly
-  Site.properties.hyperV: IsHyperV
-  Site.properties.storageAccountRequired: IsStorageAccountRequired
   CsmPublishingProfileOptions.includeDisasterRecoveryEndpoints: IsIncludeDisasterRecoveryEndpoints
   AppServiceCertificateOrderPatchResource.properties.autoRenew: IsAutoRenew
   DomainPatchResource.properties.autoRenew: IsAutoRenew
   DomainPatchResource.properties.privacy: HasPrivacy
   DomainPatchResource.properties.readyForDnsRecordManagement: IsReadyForDnsRecordManagement
-  AppServiceEnvironmentAutoGenerated.suspended: IsSuspended
-  AppServiceEnvironmentAutoGenerated.zoneRedundant: IsZoneRedundant
+  AppServiceEnvironmentResource.properties.suspended: IsSuspended
+  AppServiceEnvironmentResource.properties.zoneRedundant: IsZoneRedundant
+  AppServiceEnvironmentPatchResource.properties.suspended: IsSuspended
+  AppServiceEnvironmentPatchResource.properties.zoneRedundant: IsZoneRedundant
   AppServicePlanPatchResource.properties.elasticScaleEnabled: IsElasticScaleEnabled
   AppServicePlanPatchResource.properties.hyperV: IsHyperV
   AppServicePlanPatchResource.properties.perSiteScaling: IsPerSiteScaling
@@ -276,8 +302,8 @@ rename-mapping:
   VnetInfo.resyncRequired: IsResyncRequired
   VnetValidationFailureDetails.properties.failed: IsFailed
   WebAppRuntimeSettings.remoteDebuggingSupported: IsRemoteDebuggingSupported
-#rename resource
-  AppServiceCertificate: AppServiceCertificateInfo # this is weird
+# rename resource
+  AppServiceCertificate: AppServiceCertificateProperties
   AppServiceCertificateResource: AppServiceCertificate
   StaticSiteARMResource: StaticSite
   StaticSiteBuildARMResource: StaticSiteBuild
@@ -308,12 +334,34 @@ rename-mapping:
   StaticSiteZipDeploymentARMResource: StaticSiteZipDeployment
   StorageMigrationResponse: StorageMigrationResult
   Status: AppServiceStatusInfo
+  AppServiceEnvironmentResource: AppServiceEnvironment
+  AppServiceEnvironment: AppServiceEnvironmentProperties
+  StringDictionary: AppServiceConfigurationDictionary
+  StaticSiteFunctionOverviewARMResource: StaticSiteFunctionOverview
+  ValidateRequest: AppServiceValidateContent
+  ValidateResponse: AppServiceValidateResult
+  SkuInfo: AppServicePoolSkuInfo
+  SkuInfos: AppServiceSkuResult
+  NameIdentifier: AppServiceDomainNameIdentifier
+  SkuCapacity: AppServiceSkuCapacity
+  SkuDescription: AppServiceSkuDescription
+  Snapshot: AppSnapshot
+  AnalysisDefinition: WebSiteAnalysisDefinition
+
+# mgmt-debug:
+#   show-serialized-names: true
 
 directive:
-  - rename-model:
-      from: AppServiceEnvironmentResource
-      to: AppServiceEnvironment
-
+# operation removal - should be temporary
+# pageable lro
+  - remove-operation: AppServiceEnvironments_ChangeVnet
+  - remove-operation: AppServiceEnvironments_Resume
+  - remove-operation: AppServiceEnvironments_Suspend
+# these operations are apparently not operations in Microsoft.Web RP. Instead, their paths look like operations on resource groups
+  - remove-operation: ValidateMove
+  - remove-operation: Move
+# this operation is a LRO operation
+  - remove-operation: Global_GetSubscriptionOperationWithAsyncResponse
 # ResourceId
   - from: Certificates.json
     where: $.definitions.Certificate.properties.properties.properties.serverFarmId
@@ -445,11 +493,6 @@ directive:
             "name": "DomainNotRenewableReasons",
             "modelAsString": true
           }
-
-# pageable lro
-  - remove-operation: AppServiceEnvironments_ChangeVnet
-  - remove-operation: AppServiceEnvironments_Resume
-  - remove-operation: AppServiceEnvironments_Suspend
 # get array
   - remove-operation: AppServicePlans_GetRouteForVnet
   - from: swagger-document
