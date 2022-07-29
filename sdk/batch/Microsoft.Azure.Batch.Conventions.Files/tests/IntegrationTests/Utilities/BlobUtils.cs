@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests.Utilities
 {
@@ -40,7 +41,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests.Utilities
         {
             foreach (OutputFileReference blob in blobs)
             {
-                string decodedAbsoluteUri = System.Web.HttpUtility.UrlDecode(blob.Uri.AbsoluteUri, Encoding.ASCII);
+                string decodedAbsoluteUri = HttpUtility.UrlDecode(blob.Uri.AbsoluteUri, Encoding.ASCII);
                 if (decodedAbsoluteUri.EndsWith(uriTargetPathDenotation))
                 {
                     return true;
