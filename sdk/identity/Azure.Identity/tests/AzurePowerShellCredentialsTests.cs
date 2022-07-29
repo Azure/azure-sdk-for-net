@@ -73,9 +73,6 @@ namespace Azure.Identity.Tests
 
         private static IEnumerable<object[]> ErrorScenarios()
         {
-            yield return new object[] { "'pwsh' is not recognized", AzurePowerShellCredential.PowerShellNotInstalledError };
-            yield return new object[] { "pwsh: command not found", AzurePowerShellCredential.PowerShellNotInstalledError };
-            yield return new object[] { "pwsh: not found", AzurePowerShellCredential.PowerShellNotInstalledError };
             yield return new object[] { "Run Connect-AzAccount to login", AzurePowerShellCredential.AzurePowerShellNotLogInError };
             yield return new object[] { "NoAzAccountModule", AzurePowerShellCredential.AzurePowerShellModuleNotInstalledError };
             yield return new object[] { "Get-AzAccessToken: Run Connect-AzAccount to login.", AzurePowerShellCredential.AzurePowerShellNotLogInError };
@@ -90,6 +87,27 @@ namespace Azure.Identity.Tests
             var testProcess = new TestProcess { Error = errorMessage };
             AzurePowerShellCredential credential = InstrumentClient(
                 new AzurePowerShellCredential(new AzurePowerShellCredentialOptions(), CredentialPipeline.GetInstance(null), new TestProcessService(testProcess)));
+            var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+            Assert.AreEqual(expectedError, ex.Message);
+        }
+
+        /// <summary>
+        /// Requires 2 TestProcess results falling back from pwsh to powershell
+        /// </summary>
+        private static IEnumerable<object[]> FallBackErrorScenarios()
+        {
+            yield return new object[] { "'pwsh' is not recognized", AzurePowerShellCredential.PowerShellNotInstalledError };
+            yield return new object[] { "pwsh: command not found", AzurePowerShellCredential.PowerShellNotInstalledError };
+            yield return new object[] { "pwsh: not found", AzurePowerShellCredential.PowerShellNotInstalledError };
+        }
+
+        [Test]
+        [TestCaseSource(nameof(FallBackErrorScenarios))]
+        public void AuthenticateWithAzurePowerShellCredential_FallBackErrorScenarios(string errorMessage, string expectedError)
+        {
+            var testProcesses = new TestProcess[] { new TestProcess { Error = errorMessage }, new TestProcess { Error = errorMessage } };
+            AzurePowerShellCredential credential = InstrumentClient(
+                new AzurePowerShellCredential(new AzurePowerShellCredentialOptions(), CredentialPipeline.GetInstance(null), new TestProcessService(testProcesses)));
             var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
             Assert.AreEqual(expectedError, ex.Message);
         }
@@ -151,7 +169,10 @@ namespace Azure.Identity.Tests
         {
             var testProcess = new TestProcess { Error = errorMessage };
             AzurePowerShellCredential credential = InstrumentClient(
-                new AzurePowerShellCredential(new AzurePowerShellCredentialOptions(), CredentialPipeline.GetInstance(null), new TestProcessService(testProcess)));
+                new AzurePowerShellCredential(new AzurePowerShellCredentialOptions(), CredentialPipeline.GetInstance(null), new TestProcessService(testProcess))
+                {
+                    UseLegacyPowerShell = true
+                });
             var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
             Assert.AreEqual(AzurePowerShellCredential.PowerShellNotInstalledError, ex.Message);
         }
