@@ -21,6 +21,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace Microsoft.Azure.Batch.Conventions.Files
 {
@@ -45,7 +46,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files
         {
             get
             {
-                var storagePath = System.Web.HttpUtility.UrlDecode(Uri.AbsolutePath, Encoding.ASCII);  // /container/$kind/path or /container/taskid/$kind/path
+                var storagePath = HttpUtility.UrlDecode(Uri.AbsolutePath, Encoding.ASCII);  // /container/$kind/path or /container/taskid/$kind/path
                 var pathFromContainer = storagePath.Substring(storagePath.IndexOf('/', 1) + 1);
                 var kindAndRelativePath = pathFromContainer.Substring(pathFromContainer.IndexOf('$'));
                 var relativePath = kindAndRelativePath.Substring(kindAndRelativePath.IndexOf('/') + 1);
