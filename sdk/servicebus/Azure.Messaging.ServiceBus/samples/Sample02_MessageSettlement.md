@@ -1,6 +1,6 @@
 # Settling Messages
 
-This sample demonstrates how to [settle](https://docs.microsoft.com/azure/service-bus-messaging/message-transfers-locks-settlement#settling-receive-operations) received messages. Message settlement can only be used when using a receiver in [PeekLock](https://docs.microsoft.com/azure/service-bus-messaging/message-transfers-locks-settlement#peeklock) mode, which is the default behavior.
+This sample demonstrates how to [settle](https://docs.microsoft.com/azure/service-bus-messaging/message-transfers-locks-settlement#settling-receive-operations) received messages. Message settlement can only be used when using a receiver in [PeekLock](https://docs.microsoft.com/azure/service-bus-messaging/message-transfers-locks-settlement#peeklock) mode, which is the default behavior. In order for the settlement operation to be successful, the message must be locked. By default, received messages will be locked for 30 seconds. This can be configured via the portal or when creating the queue or subscription using the `ServiceBusAdministrationClient` or by using the [Azure Resource Managemer API](https://www.nuget.org/packages/Azure.ResourceManager.ServiceBus). Additionally, it is possible to extend the lock for an already received message by using the `RenewMessageLockAsync` method.
 
 ## Completing a message
 
@@ -66,6 +66,22 @@ ServiceBusReceiver dlqReceiver = client.CreateReceiver(queueName, new ServiceBus
     SubQueue = SubQueue.DeadLetter
 });
 ServiceBusReceivedMessage dlqMessage = await dlqReceiver.ReceiveMessageAsync();
+```
+
+### Renew the lock for a message and then complete it
+
+```C# Snippet:ServiceBusRenewMessageLockAndComplete
+ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
+
+// If we know that we are going to be processing the message for a long time, we can extend the lock for the message
+// by the configured LockDuration (by default, 30 seconds).
+await receiver.RenewMessageLockAsync(receivedMessage);
+
+// simulate some processing of the message
+await Task.Delay(TimeSpan.FromSeconds(10));
+
+// complete the message, thereby deleting it from the service
+await receiver.CompleteMessageAsync(receivedMessage);
 ```
 
 ## Source
