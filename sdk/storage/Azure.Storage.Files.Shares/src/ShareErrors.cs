@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Globalization;
 using System.Text.Json;
 
 namespace Azure.Storage.Files.Shares
@@ -28,7 +29,7 @@ namespace Azure.Storage.Files.Shares
                 case StorageChecksumAlgorithm.StorageCrc64:
                     throw new ArgumentException("Azure File Shares do not support CRC-64.");
                 default:
-                    throw new ArgumentException($"{nameof(StorageChecksumAlgorithm)} does not support value {Enum.GetName(typeof(StorageChecksumAlgorithm), resolved) ?? resolved}.");
+                    throw new ArgumentException($"{nameof(StorageChecksumAlgorithm)} does not support value {Enum.GetName(typeof(StorageChecksumAlgorithm), resolved) ?? ((int)resolved).ToString(CultureInfo.InvariantCulture)}.");
             }
         }
     }
