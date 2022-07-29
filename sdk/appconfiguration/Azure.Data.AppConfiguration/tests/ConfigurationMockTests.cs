@@ -27,7 +27,7 @@ namespace Azure.Data.AppConfiguration.Tests
         private static readonly string s_credential = "b1d9b31";
         private static readonly string s_secret = "aabbccdd";
         private static readonly string s_connectionString = $"Endpoint={s_endpoint};Id={s_credential};Secret={s_secret}";
-        private static readonly string s_version = new ConfigurationClientOptions().GetVersionString();
+        private static readonly string s_version = new ConfigurationClientOptions().Version;
 
         private static readonly ConfigurationSetting s_testSetting = new ConfigurationSetting("test_key", "test_value")
         {

@@ -16,10 +16,7 @@ namespace Azure.Data.AppConfiguration
     /// </summary>
     public partial class ConfigurationClient
     {
-        private readonly Uri _endpoint;
         private readonly SyncTokenPolicy _syncTokenPolicy;
-        private readonly HttpPipeline _pipeline;
-        private readonly ClientDiagnostics _clientDiagnostics;
 
         /// <summary>
         /// Protected constructor to allow mocking.
@@ -54,7 +51,7 @@ namespace Azure.Data.AppConfiguration
             _syncTokenPolicy = new SyncTokenPolicy();
             _pipeline = CreatePipeline(options, new AuthenticationPolicy(credential, secret), _syncTokenPolicy);
 
-            _clientDiagnostics = new ClientDiagnostics(options);
+            ClientDiagnostics = new ClientDiagnostics(options);
         }
 
         /// <summary>
@@ -82,13 +79,13 @@ namespace Azure.Data.AppConfiguration
             _syncTokenPolicy = new SyncTokenPolicy();
             _pipeline = CreatePipeline(options, new BearerTokenAuthenticationPolicy(credential, GetDefaultScope(endpoint)), _syncTokenPolicy);
 
-            _clientDiagnostics = new ClientDiagnostics(options);
+            ClientDiagnostics = new ClientDiagnostics(options);
         }
 
         private static HttpPipeline CreatePipeline(ConfigurationClientOptions options, HttpPipelinePolicy authenticationPolicy, HttpPipelinePolicy syncTokenPolicy)
         {
             return HttpPipelineBuilder.Build(options,
-                new HttpPipelinePolicy[] {new CustomHeadersPolicy(), new ApiVersionPolicy(options.GetVersionString())},
+                new HttpPipelinePolicy[] {new CustomHeadersPolicy(), new ApiVersionPolicy(options.Version)},
                 new HttpPipelinePolicy[] {authenticationPolicy, syncTokenPolicy},
                 new ResponseClassifier());
         }
@@ -132,14 +129,18 @@ namespace Azure.Data.AppConfiguration
         /// <returns>A response containing the added <see cref="ConfigurationSetting"/>.</returns>
         public virtual async Task<Response<ConfigurationSetting>> AddConfigurationSettingAsync(ConfigurationSetting setting, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(AddConfigurationSetting)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(AddConfigurationSetting)}");
             scope.AddAttribute("key", setting?.Key);
             scope.Start();
 
             try
             {
-                using Request request = CreateAddRequest(setting);
-                Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
+                RequestContext context = CreateContext(cancellationToken);
+                RequestContent content = CreateContent(setting);
+                ContentType contentType = new ContentType(HttpHeader.Common.JsonContentType.Value.ToString());
+                MatchConditions requestOptions = new MatchConditions { IfNoneMatch = ETag.All };
+
+                Response response = await PutKeyValueAsync(setting.Key, content, contentType, setting.Label, requestOptions, context).ConfigureAwait(false);
 
                 switch (response.Status)
                 {
@@ -147,9 +148,9 @@ namespace Azure.Data.AppConfiguration
                     case 201:
                         return await CreateResponseAsync(response, cancellationToken).ConfigureAwait(false);
                     case 412:
-                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, new ResponseError(null, "Setting was already present.")).ConfigureAwait(false);
+                        throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(response, new ResponseError(null, "Setting was already present.")).ConfigureAwait(false);
                     default:
-                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
+                        throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
                 }
             }
             catch (Exception e)
@@ -159,6 +160,24 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
+        private static RequestContent CreateContent(ConfigurationSetting setting)
+        {
+            Argument.AssertNotNull(setting, nameof(setting));
+            Argument.AssertNotNullOrEmpty(setting.Key, $"{nameof(setting)}.{nameof(setting.Key)}");
+
+            ReadOnlyMemory<byte> serializedSetting = ConfigurationServiceSerializer.SerializeRequestBody(setting);
+            RequestContent content = RequestContent.Create(serializedSetting);
+
+            return content;
+        }
+
+        private static RequestContext CreateContext(CancellationToken cancellationToken)
+        {
+            RequestContext context = new RequestContext();
+            context.CancellationToken = cancellationToken;
+
+            return context;
+        }
         /// <summary>
         /// Creates a <see cref="ConfigurationSetting"/> only if the setting does not already exist in the configuration store.
         /// </summary>
@@ -167,24 +186,27 @@ namespace Azure.Data.AppConfiguration
         /// <returns>A response containing the added <see cref="ConfigurationSetting"/>.</returns>
         public virtual Response<ConfigurationSetting> AddConfigurationSetting(ConfigurationSetting setting, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(AddConfigurationSetting)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(AddConfigurationSetting)}");
             scope.AddAttribute("key", setting?.Key);
             scope.Start();
 
             try
             {
-                using Request request = CreateAddRequest(setting);
-                Response response = _pipeline.SendRequest(request, cancellationToken);
+                RequestContext context = CreateContext(cancellationToken);
+                RequestContent content = CreateContent(setting);
+                ContentType contentType = new ContentType(HttpHeader.Common.JsonContentType.Value.ToString());
+                MatchConditions requestOptions = new MatchConditions { IfNoneMatch = ETag.All };
 
+                Response response = PutKeyValue(setting.Key, content, contentType, setting.Label, requestOptions, context);
                 switch (response.Status)
                 {
                     case 200:
                     case 201:
                         return CreateResponse(response);
                     case 412:
-                        throw _clientDiagnostics.CreateRequestFailedException(response, new ResponseError(null, "Setting was already present."));
+                        throw ClientDiagnostics.CreateRequestFailedException(response, new ResponseError(null, "Setting was already present."));
                     default:
-                        throw _clientDiagnostics.CreateRequestFailedException(response);
+                        throw ClientDiagnostics.CreateRequestFailedException(response);
                 }
             }
             catch (Exception e)
@@ -258,7 +280,7 @@ namespace Azure.Data.AppConfiguration
         public virtual async Task<Response<ConfigurationSetting>> SetConfigurationSettingAsync(ConfigurationSetting setting, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(setting, nameof(setting));
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(SetConfigurationSetting)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(SetConfigurationSetting)}");
             scope.AddAttribute("key", setting?.Key);
             scope.Start();
 
@@ -270,10 +292,10 @@ namespace Azure.Data.AppConfiguration
                 return response.Status switch
                 {
                     200 => await CreateResponseAsync(response, cancellationToken).ConfigureAwait(false),
-                    409 => throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, new ResponseError(null, "The setting is read only")).ConfigureAwait(false),
+                    409 => throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(response, new ResponseError(null, "The setting is read only")).ConfigureAwait(false),
 
                     // Throws on 412 if resource was modified.
-                    _ => throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false),
+                    _ => throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false),
                 };
             }
             catch (Exception e)
@@ -296,7 +318,7 @@ namespace Azure.Data.AppConfiguration
         public virtual Response<ConfigurationSetting> SetConfigurationSetting(ConfigurationSetting setting, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(setting, nameof(setting));
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(SetConfigurationSetting)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(SetConfigurationSetting)}");
             scope.AddAttribute("key", setting?.Key);
             scope.Start();
 
@@ -308,10 +330,10 @@ namespace Azure.Data.AppConfiguration
                 return response.Status switch
                 {
                     200 => CreateResponse(response),
-                    409 => throw _clientDiagnostics.CreateRequestFailedException(response, new ResponseError(null, "The setting is read only")),
+                    409 => throw ClientDiagnostics.CreateRequestFailedException(response, new ResponseError(null, "The setting is read only")),
 
                     // Throws on 412 if resource was modified.
-                    _ => throw _clientDiagnostics.CreateRequestFailedException(response),
+                    _ => throw ClientDiagnostics.CreateRequestFailedException(response),
                 };
             }
             catch (Exception e)
@@ -405,23 +427,28 @@ namespace Azure.Data.AppConfiguration
 
         private async Task<Response> DeleteConfigurationSettingAsync(string key, string label, MatchConditions requestOptions, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(DeleteConfigurationSetting)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(DeleteConfigurationSetting)}");
             scope.AddAttribute("key", key);
             scope.Start();
 
             try
             {
-                using Request request = CreateDeleteRequest(key, label, requestOptions);
-                Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
+                var eTag = requestOptions?.IfMatch;
+                if (requestOptions != null && requestOptions.IfMatch.HasValue)
+                {
+                     eTag = new ETag($"\"{requestOptions?.IfMatch.Value.ToString()}\"");
+                }
+                RequestContext context = CreateContext(cancellationToken);
+                Response response = await DeleteKeyValueAsync(key, label, eTag, context).ConfigureAwait(false);
 
                 return response.Status switch
                 {
                     200 => response,
                     204 => response,
-                    409 => throw _clientDiagnostics.CreateRequestFailedException(response, new ResponseError(null, "The setting is read only")),
+                    409 => throw ClientDiagnostics.CreateRequestFailedException(response, new ResponseError(null, "The setting is read only")),
 
                     // Throws on 412 if resource was modified.
-                    _ => throw _clientDiagnostics.CreateRequestFailedException(response)
+                    _ => throw ClientDiagnostics.CreateRequestFailedException(response)
                 };
             }
             catch (Exception e)
@@ -433,23 +460,28 @@ namespace Azure.Data.AppConfiguration
 
         private Response DeleteConfigurationSetting(string key, string label, MatchConditions requestOptions, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(DeleteConfigurationSetting)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(DeleteConfigurationSetting)}");
             scope.AddAttribute("key", key);
             scope.Start();
 
             try
             {
-                using Request request = CreateDeleteRequest(key, label, requestOptions);
-                Response response = _pipeline.SendRequest(request, cancellationToken);
+                ETag? eTag = requestOptions?.IfMatch;
+                if (requestOptions != null && requestOptions.IfMatch.HasValue)
+                {
+                    eTag = new ETag($"\"{requestOptions?.IfMatch.Value.ToString()}\"");
+                }
+                RequestContext context = CreateContext(cancellationToken);
+                Response response = DeleteKeyValue(key, label, eTag, context);
 
                 return response.Status switch
                 {
                     200 => response,
                     204 => response,
-                    409 => throw _clientDiagnostics.CreateRequestFailedException(response, new ResponseError(null, "The setting is read only.")),
+                    409 => throw ClientDiagnostics.CreateRequestFailedException(response, new ResponseError(null, "The setting is read only.")),
 
                     // Throws on 412 if resource was modified.
-                    _ => throw _clientDiagnostics.CreateRequestFailedException(response)
+                    _ => throw ClientDiagnostics.CreateRequestFailedException(response)
                 };
             }
             catch (Exception e)
@@ -570,7 +602,7 @@ namespace Azure.Data.AppConfiguration
         /// <returns>A response containing the retrieved <see cref="ConfigurationSetting"/>.</returns>
         internal virtual async Task<Response<ConfigurationSetting>> GetConfigurationSettingAsync(string key, string label, DateTimeOffset? acceptDateTime, MatchConditions conditions, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(GetConfigurationSetting)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(GetConfigurationSetting)}");
             scope.AddAttribute(nameof(key), key);
             scope.Start();
 
@@ -583,7 +615,7 @@ namespace Azure.Data.AppConfiguration
                 {
                     200 => await CreateResponseAsync(response, cancellationToken).ConfigureAwait(false),
                     304 => CreateResourceModifiedResponse(response),
-                    _ => throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false),
+                    _ => throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false),
                 };
             }
             catch (Exception e)
@@ -604,7 +636,7 @@ namespace Azure.Data.AppConfiguration
         /// <returns>A response containing the retrieved <see cref="ConfigurationSetting"/>.</returns>
         internal virtual Response<ConfigurationSetting> GetConfigurationSetting(string key, string label, DateTimeOffset? acceptDateTime, MatchConditions conditions, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(GetConfigurationSetting)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(GetConfigurationSetting)}");
             scope.AddAttribute(nameof(key), key);
             scope.Start();
 
@@ -617,7 +649,7 @@ namespace Azure.Data.AppConfiguration
                 {
                     200 => CreateResponse(response),
                     304 => CreateResourceModifiedResponse(response),
-                    _ => throw _clientDiagnostics.CreateRequestFailedException(response),
+                    _ => throw ClientDiagnostics.CreateRequestFailedException(response),
                 };
             }
             catch (Exception e)
@@ -728,7 +760,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         private async Task<Page<ConfigurationSetting>> GetConfigurationSettingsPageAsync(SettingSelector selector, string pageLink, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(GetConfigurationSettings)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(GetConfigurationSettings)}");
             scope.Start();
 
             try
@@ -743,7 +775,7 @@ namespace Azure.Data.AppConfiguration
                         SettingBatch settingBatch = await ConfigurationServiceSerializer.ParseBatchAsync(response, cancellationToken).ConfigureAwait(false);
                         return Page<ConfigurationSetting>.FromValues(settingBatch.Settings, settingBatch.NextBatchLink, response);
                     default:
-                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
+                        throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
                 }
             }
             catch (Exception e)
@@ -761,7 +793,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         private Page<ConfigurationSetting> GetConfigurationSettingsPage(SettingSelector selector, string pageLink, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(GetConfigurationSettings)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(GetConfigurationSettings)}");
             scope.Start();
 
             try
@@ -776,7 +808,7 @@ namespace Azure.Data.AppConfiguration
                         SettingBatch settingBatch = ConfigurationServiceSerializer.ParseBatch(response);
                         return Page<ConfigurationSetting>.FromValues(settingBatch.Settings, settingBatch.NextBatchLink, response);
                     default:
-                        throw _clientDiagnostics.CreateRequestFailedException(response);
+                        throw ClientDiagnostics.CreateRequestFailedException(response);
                 }
             }
             catch (Exception e)
@@ -810,7 +842,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         private async Task<Page<ConfigurationSetting>> GetRevisionsPageAsync(SettingSelector selector, string pageLink, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(GetRevisions)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(GetRevisions)}");
             scope.Start();
 
             try
@@ -824,7 +856,7 @@ namespace Azure.Data.AppConfiguration
                         SettingBatch settingBatch = await ConfigurationServiceSerializer.ParseBatchAsync(response, cancellationToken).ConfigureAwait(false);
                         return Page<ConfigurationSetting>.FromValues(settingBatch.Settings, settingBatch.NextBatchLink, response);
                     default:
-                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
+                        throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
                 }
             }
             catch (Exception e)
@@ -843,7 +875,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         private Page<ConfigurationSetting> GetRevisionsPage(SettingSelector selector, string pageLink, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(GetRevisions)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(GetRevisions)}");
             scope.Start();
 
             try
@@ -857,7 +889,7 @@ namespace Azure.Data.AppConfiguration
                         SettingBatch settingBatch = ConfigurationServiceSerializer.ParseBatch(response);
                         return Page<ConfigurationSetting>.FromValues(settingBatch.Settings, settingBatch.NextBatchLink, response);
                     default:
-                        throw _clientDiagnostics.CreateRequestFailedException(response);
+                        throw ClientDiagnostics.CreateRequestFailedException(response);
                 }
             }
             catch (Exception e)
@@ -968,7 +1000,7 @@ namespace Azure.Data.AppConfiguration
 
         private async ValueTask<Response<ConfigurationSetting>> SetReadOnlyAsync(string key, string label, MatchConditions requestOptions, bool isReadOnly, bool async, CancellationToken cancellationToken)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(SetReadOnly)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(SetReadOnly)}");
             scope.AddAttribute("key", key);
             scope.Start();
 
@@ -985,8 +1017,8 @@ namespace Azure.Data.AppConfiguration
                         ? await CreateResponseAsync(response, cancellationToken).ConfigureAwait(false)
                         : CreateResponse(response),
                     _ => throw (async
-                        ? await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false)
-                        : _clientDiagnostics.CreateRequestFailedException(response))
+                        ? await ClientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false)
+                        : ClientDiagnostics.CreateRequestFailedException(response))
                 };
             }
             catch (Exception e)
