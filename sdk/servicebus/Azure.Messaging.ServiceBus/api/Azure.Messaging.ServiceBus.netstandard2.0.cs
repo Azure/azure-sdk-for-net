@@ -96,7 +96,7 @@ namespace Azure.Messaging.ServiceBus
         public ServiceBusClient(string fullyQualifiedNamespace, Azure.Core.TokenCredential credential, Azure.Messaging.ServiceBus.ServiceBusClientOptions options) { }
         public ServiceBusClient(string connectionString, Azure.Messaging.ServiceBus.ServiceBusClientOptions options) { }
         public virtual string FullyQualifiedNamespace { get { throw null; } }
-        public string Identifier { get { throw null; } }
+        public virtual string Identifier { get { throw null; } }
         public virtual bool IsClosed { get { throw null; } }
         public Azure.Messaging.ServiceBus.ServiceBusTransportType TransportType { get { throw null; } }
         public virtual System.Threading.Tasks.Task<Azure.Messaging.ServiceBus.ServiceBusSessionReceiver> AcceptNextSessionAsync(string queueName, Azure.Messaging.ServiceBus.ServiceBusSessionReceiverOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -252,7 +252,7 @@ namespace Azure.Messaging.ServiceBus
         public virtual bool AutoCompleteMessages { get { throw null; } }
         public virtual string EntityPath { get { throw null; } }
         public virtual string FullyQualifiedNamespace { get { throw null; } }
-        public string Identifier { get { throw null; } }
+        public virtual string Identifier { get { throw null; } }
         public virtual bool IsClosed { get { throw null; } }
         public virtual bool IsProcessing { get { throw null; } }
         public virtual System.TimeSpan MaxAutoLockRenewalDuration { get { throw null; } }
@@ -335,7 +335,7 @@ namespace Azure.Messaging.ServiceBus
         protected ServiceBusReceiver(Azure.Messaging.ServiceBus.ServiceBusClient client, string topicName, string subscriptionName, Azure.Messaging.ServiceBus.ServiceBusReceiverOptions options) { }
         public virtual string EntityPath { get { throw null; } }
         public virtual string FullyQualifiedNamespace { get { throw null; } }
-        public string Identifier { get { throw null; } }
+        public virtual string Identifier { get { throw null; } }
         public virtual bool IsClosed { get { throw null; } }
         public virtual int PrefetchCount { get { throw null; } }
         public virtual Azure.Messaging.ServiceBus.ServiceBusReceiveMode ReceiveMode { get { throw null; } }
@@ -428,7 +428,7 @@ namespace Azure.Messaging.ServiceBus
         protected ServiceBusSender(Azure.Messaging.ServiceBus.ServiceBusClient client, string queueOrTopicName, Azure.Messaging.ServiceBus.ServiceBusSenderOptions options) { }
         public virtual string EntityPath { get { throw null; } }
         public virtual string FullyQualifiedNamespace { get { throw null; } }
-        public string Identifier { get { throw null; } }
+        public virtual string Identifier { get { throw null; } }
         public virtual bool IsClosed { get { throw null; } }
         public virtual System.Threading.Tasks.Task CancelScheduledMessageAsync(long sequenceNumber, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task CancelScheduledMessagesAsync(System.Collections.Generic.IEnumerable<long> sequenceNumbers, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -467,7 +467,7 @@ namespace Azure.Messaging.ServiceBus
         public virtual bool AutoCompleteMessages { get { throw null; } }
         public virtual string EntityPath { get { throw null; } }
         public virtual string FullyQualifiedNamespace { get { throw null; } }
-        public string Identifier { get { throw null; } }
+        public virtual string Identifier { get { throw null; } }
         protected internal virtual Azure.Messaging.ServiceBus.ServiceBusProcessor InnerProcessor { get { throw null; } }
         public virtual bool IsClosed { get { throw null; } }
         public virtual bool IsProcessing { get { throw null; } }
