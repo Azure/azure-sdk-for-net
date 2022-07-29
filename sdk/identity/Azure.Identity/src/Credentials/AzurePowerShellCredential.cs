@@ -105,7 +105,10 @@ namespace Azure.Identity
                 }
                 return scope.Succeeded(token);
             }
-            catch (Win32Exception ex) when (ex.NativeErrorCode == ERROR_FILE_NOT_FOUND && RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            // External execution is wrapped in a "cmd /c" command which will never throw a native Win32Exception ERROR_FILE_NOT_FOUND
+            // Check against the message for constant PowerShellNotInstalledError
+            // Do not retry if already using legacy PowerShell to prevent delays
+            catch (CredentialUnavailableException ex) when (UseLegacyPowerShell == false && ex.Message == PowerShellNotInstalledError && RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 UseLegacyPowerShell = true;
                 try
