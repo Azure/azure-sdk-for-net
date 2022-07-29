@@ -42,7 +42,7 @@ namespace Azure.Messaging.ServiceBus
                 // Pass None for subqueue since the subqueue has already
                 // been taken into account when computing the EntityPath of the processor.
                 SubQueue = SubQueue.None,
-                Identifier = processor.Identifier
+                Identifier = $"{processor.Identifier}-Receiver"
             };
             _maxReceiveWaitTime = ProcessorOptions.MaxReceiveWaitTime;
             Receiver = new ServiceBusReceiver(
@@ -254,6 +254,7 @@ namespace Azure.Messaging.ServiceBus
             new ProcessMessageEventArgs(
             message,
             this,
+            Processor.Identifier,
             cancellationToken);
 
         protected virtual async Task OnMessageHandler(EventArgs args) =>

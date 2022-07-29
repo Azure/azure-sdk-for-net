@@ -111,7 +111,7 @@ namespace Azure.Messaging.ServiceBus
                 options = options?.Clone() ?? new ServiceBusSenderOptions();
 
                 EntityPath = entityPath;
-                Identifier = options.Identifier ?? DiagnosticUtilities.GenerateIdentifier(EntityPath);
+                Identifier = string.IsNullOrEmpty(options.Identifier) ? DiagnosticUtilities.GenerateIdentifier(EntityPath) : options.Identifier;
                 _connection = connection;
                 _retryPolicy = _connection.RetryOptions.ToRetryPolicy();
                 _innerSender = _connection.CreateTransportSender(

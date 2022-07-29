@@ -151,7 +151,7 @@ namespace Azure.Messaging.ServiceBus
             _options = options?.Clone() ?? new ServiceBusClientOptions();
             Connection = new ServiceBusConnection(connectionString, _options);
             Logger.ClientCreateStart(typeof(ServiceBusClient), FullyQualifiedNamespace);
-            Identifier = _options.Identifier ?? DiagnosticUtilities.GenerateIdentifier(FullyQualifiedNamespace);
+            Identifier = string.IsNullOrEmpty(_options.Identifier) ? DiagnosticUtilities.GenerateIdentifier(FullyQualifiedNamespace) : _options.Identifier;
             TransportType = _options.TransportType;
             Logger.ClientCreateComplete(typeof(ServiceBusClient), Identifier);
         }
@@ -231,7 +231,7 @@ namespace Azure.Messaging.ServiceBus
         {
             Logger.ClientCreateStart(typeof(ServiceBusClient), fullyQualifiedNamespace);
             _options = options?.Clone() ?? new ServiceBusClientOptions();
-            Identifier = _options.Identifier ?? DiagnosticUtilities.GenerateIdentifier(fullyQualifiedNamespace);
+            Identifier = string.IsNullOrEmpty(_options.Identifier) ? DiagnosticUtilities.GenerateIdentifier(fullyQualifiedNamespace) : _options.Identifier;
             Connection = ServiceBusConnection.CreateWithCredential(
                 fullyQualifiedNamespace,
                 credential,

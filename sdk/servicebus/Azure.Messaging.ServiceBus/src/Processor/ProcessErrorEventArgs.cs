@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using System.Threading;
 
 namespace Azure.Messaging.ServiceBus
@@ -20,7 +21,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="errorSource">The source associated with the error.</param>
         /// <param name="fullyQualifiedNamespace">The endpoint used when this exception occurred.</param>
         /// <param name="entityPath">The entity path used when this exception occurred.</param>
-        /// <param name="identifier">The identifier of the client entity that reported this error.</param>
+        /// <param name="identifier">The identifier of the processor that reported this error.</param>
         /// <param name="cancellationToken">The processor's <see cref="System.Threading.CancellationToken"/> instance which will be cancelled
         /// in the event that <see cref="ServiceBusProcessor.StopProcessingAsync"/> is called.</param>
         public ProcessErrorEventArgs(
@@ -29,13 +30,8 @@ namespace Azure.Messaging.ServiceBus
             string fullyQualifiedNamespace,
             string entityPath,
             string identifier,
-            CancellationToken cancellationToken)
+            CancellationToken cancellationToken) : this(exception, errorSource, fullyQualifiedNamespace, entityPath, cancellationToken)
         {
-            Exception = exception;
-            ErrorSource = errorSource;
-            FullyQualifiedNamespace = fullyQualifiedNamespace;
-            EntityPath = entityPath;
-            CancellationToken = cancellationToken;
             Identifier = identifier;
         }
 
@@ -49,6 +45,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="entityPath">The entity path used when this exception occurred.</param>
         /// <param name="cancellationToken">The processor's <see cref="System.Threading.CancellationToken"/> instance which will be cancelled
         /// in the event that <see cref="ServiceBusProcessor.StopProcessingAsync"/> is called.</param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public ProcessErrorEventArgs(
             Exception exception,
             ServiceBusErrorSource errorSource,

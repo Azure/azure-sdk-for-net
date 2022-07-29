@@ -190,7 +190,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
             bool useSingleSession,
             TimeSpan operationTimeout,
             ServiceBusTransportMetrics metrics,
+#pragma warning disable CA1801 // Review unused parameters. This parameter will be used for future planned features.
             string identifier = default)
+#pragma warning restore CA1801 // Review unused parameters
         {
             Argument.AssertNotNull(serviceEndpoint, nameof(serviceEndpoint));
             Argument.AssertNotNull(credential, nameof(credential));
@@ -200,7 +202,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             ServiceEndpoint = serviceEndpoint;
             Transport = transport;
             Proxy = proxy;
-            Id = identifier ?? $"{ServiceEndpoint}-{Guid.NewGuid().ToString("D", CultureInfo.InvariantCulture).Substring(0, 8)}";
+            Id = $"{ServiceEndpoint}-{Guid.NewGuid().ToString("D", CultureInfo.InvariantCulture).Substring(0, 8)}";
             TokenProvider = new CbsTokenProvider(new ServiceBusTokenCredential(credential), AuthorizationTokenExpirationBuffer, OperationCancellationSource.Token);
             _useSingleSession = useSingleSession;
 #pragma warning disable CA2214 // Do not call overridable methods in constructors. This internal method is virtual for testing purposes.
