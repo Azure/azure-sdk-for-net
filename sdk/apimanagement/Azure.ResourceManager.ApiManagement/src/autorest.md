@@ -17,6 +17,10 @@ modelerfour:
   flatten-payloads: false
 skip-serialization-format-xml: true
 
+no-property-type-replacement: 
+- ApiManagementServiceIdentity
+- PortalSettingsContractData
+
 list-exception:
 - /subscriptions/{subscriptionId}/providers/Microsoft.ApiManagement/locations/{location}/deletedservices/{serviceName}
 
@@ -288,10 +292,6 @@ directive:
       $.ApiManagementServiceBaseProperties.properties.publicIpAddressId["x-nullable"] = true;
       $.ApiManagementServiceBaseProperties.properties.privateEndpointConnections["x-nullable"] = true;
       $.ApiVersionConstraint.properties.minApiVersion["x-nullable"] = true;
-      $.ApiManagementServiceIdentity.properties["foo"] = {
-          "description": "This property is set for disable ManagedServiceIdentity common type mapping, do not set.",
-          "type": "string"
-        };
       $.ApiManagementServiceResource.properties.identity["x-nullable"] = true;
       $.ApiManagementServiceResource.properties.zones["x-nullable"] = true;
   - from: apimanagement.json

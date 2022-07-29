@@ -31,11 +31,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Foo))
-            {
-                writer.WritePropertyName("foo");
-                writer.WriteStringValue(Foo);
-            }
             writer.WriteEndObject();
         }
 
@@ -45,7 +40,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<Guid> principalId = default;
             Optional<Guid> tenantId = default;
             Optional<IDictionary<string, UserAssignedIdentity>> userAssignedIdentities = default;
-            Optional<string> foo = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -88,13 +82,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     userAssignedIdentities = dictionary;
                     continue;
                 }
-                if (property.NameEquals("foo"))
-                {
-                    foo = property.Value.GetString();
-                    continue;
-                }
             }
-            return new ApiManagementServiceIdentity(type, Optional.ToNullable(principalId), Optional.ToNullable(tenantId), Optional.ToDictionary(userAssignedIdentities), foo.Value);
+            return new ApiManagementServiceIdentity(type, Optional.ToNullable(principalId), Optional.ToNullable(tenantId), Optional.ToDictionary(userAssignedIdentities));
         }
     }
 }

@@ -33,14 +33,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/
         ///     providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}&apos;.
         /// </param>
-        /// <param name="foo"> This property is set for disable ManagedServiceIdentity common type mapping, do not set. </param>
-        internal ApiManagementServiceIdentity(ApimIdentityType apimIdentityType, Guid? principalId, Guid? tenantId, IDictionary<string, UserAssignedIdentity> userAssignedIdentities, string foo)
+        internal ApiManagementServiceIdentity(ApimIdentityType apimIdentityType, Guid? principalId, Guid? tenantId, IDictionary<string, UserAssignedIdentity> userAssignedIdentities)
         {
             ApimIdentityType = apimIdentityType;
             PrincipalId = principalId;
             TenantId = tenantId;
             UserAssignedIdentities = userAssignedIdentities;
-            Foo = foo;
         }
 
         /// <summary> The type of identity used for the resource. The type &apos;SystemAssigned, UserAssigned&apos; includes both an implicitly created identity and a set of user assigned identities. The type &apos;None&apos; will remove any identities from the service. </summary>
@@ -56,7 +54,5 @@ namespace Azure.ResourceManager.ApiManagement.Models
         ///     providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}&apos;.
         /// </summary>
         public IDictionary<string, UserAssignedIdentity> UserAssignedIdentities { get; }
-        /// <summary> This property is set for disable ManagedServiceIdentity common type mapping, do not set. </summary>
-        public string Foo { get; set; }
     }
 }

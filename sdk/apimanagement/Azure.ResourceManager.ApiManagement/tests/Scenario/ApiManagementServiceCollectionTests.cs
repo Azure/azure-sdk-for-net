@@ -29,9 +29,9 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         }
 
         [Test]
-        public async Task Create_Get_GetAll_Exists()
+        public async Task Create_Delete()
         {
-            // Create
+            // Create vnet First
             var collection = await GetApiManagementServiceCollectionAsync();
             var vnetName = Recording.GenerateAssetName("testvnet-");
             var vnetData = new VirtualNetworkData()
@@ -42,6 +42,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             };
             var vnet = (await VNetCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnetData)).Value;
             var virtualNetworkConfiguration = new VirtualNetworkConfiguration() { SubnetResourceId = new ResourceIdentifier(vnet.Data.Subnets.FirstOrDefault().Id) };
+
             var apiName = Recording.GenerateAssetName("testapi-");
             var data = new ApiManagementServiceData(AzureLocation.EastUS, new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.Developer, 1), "Sample@Sample.com", "sample")
             {
@@ -52,38 +53,45 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             var apiManagementService = (await collection.CreateOrUpdateAsync(WaitUntil.Completed, apiName, data)).Value;
             Assert.AreEqual(apiManagementService.Data.Name, apiName);
 
-            // Get
-            var apiManagementService2 = (await collection.GetAsync(apiName)).Value;
-            Assert.AreEqual(apiManagementService2.Data.Name, apiManagementService.Data.Name);
+            // DeployTenantConfiguration
+            var contentName = Recording.GenerateAssetName("testcontent-");
+            var contentData = new ConfigurationDeployContent() { Branch = "", Force = true};
+            await apiManagementService.DeployTenantConfigurationAsync(WaitUntil.Completed, contentName, contentData);
 
-            // GetAll
+            // Delete
+            await apiManagementService.DeleteAsync(WaitUntil.Completed);
+        }
+
+        [Test]
+        public async Task Get()
+        {
+            // Please create the resource first.
+            var resourceGroup = await DefaultSubscription.GetResourceGroups().GetAsync("sdktestrg");
+            var collection = resourceGroup.Value.GetApiManagementServices();
+            var apiManagementService = (await collection.GetAsync("sdktestapi")).Value;
+            Assert.NotNull(apiManagementService.Data.Name);
+        }
+
+        [Test]
+        public async Task GetAll()
+        {
+            // Please create the resource first.
+            var resourceGroup = await DefaultSubscription.GetResourceGroups().GetAsync("sdktestrg");
+            var collection = resourceGroup.Value.GetApiManagementServices();
             var apiManagementServices = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.AreEqual(apiManagementServices.FirstOrDefault().Data.Name, apiName);
             Assert.GreaterOrEqual(apiManagementServices.Count, 1);
+        }
 
-            // Exists
-            var apiManagementServiceTrue = await collection.ExistsAsync(apiName);
+        [Test]
+        public async Task Exists()
+        {
+            // Please create the resource first.
+            var resourceGroup = await DefaultSubscription.GetResourceGroups().GetAsync("sdktestrg");
+            var collection = resourceGroup.Value.GetApiManagementServices();
+            var apiManagementServiceTrue = await collection.ExistsAsync("sdktestapi");
             var apiManagementServiceFalse = await collection.ExistsAsync("foo");
             Assert.IsTrue(apiManagementServiceTrue);
             Assert.IsFalse(apiManagementServiceFalse);
-
-            // Add Tag
-            await apiManagementService.AddTagAsync("testkey", "testvalue");
-            apiManagementService = (await apiManagementService.GetAsync()).Value;
-            Assert.AreEqual(apiManagementService.Data.Tags.FirstOrDefault().Key, "testkey");
-            Assert.AreEqual(apiManagementService.Data.Tags.FirstOrDefault().Value, "testvalue");
-
-            // ApplyNetworkConfigurationUpdates
-            var networkConfigurationContent = new ApiManagementServiceApplyNetworkConfigurationContent();
-            // Test API is in Updating State
-            Assert.ThrowsAsync<Azure.RequestFailedException>(async () => await apiManagementService.ApplyNetworkConfigurationUpdatesAsync(WaitUntil.Completed, networkConfigurationContent));
-
-            // Backup
-            var backupRestoreContent = new ApiManagementServiceBackupRestoreContent("contosorpstorage", "apim-backups", "backup5")
-            {
-                AccessType = StorageAccountAccessType.SystemAssignedManagedIdentity
-            };
-            Assert.DoesNotThrowAsync(async () => await apiManagementService.BackupAsync(WaitUntil.Completed, backupRestoreContent));
         }
     }
 }
