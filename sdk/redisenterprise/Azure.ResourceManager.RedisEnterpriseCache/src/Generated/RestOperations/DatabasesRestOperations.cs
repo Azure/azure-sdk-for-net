@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.RedisEnterpriseCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DatabaseList>> ListByClusterAsync(string subscriptionId, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
+        public async Task<Response<RedisEnterpriseDatabaseList>> ListByClusterAsync(string subscriptionId, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -77,9 +77,9 @@ namespace Azure.ResourceManager.RedisEnterpriseCache
             {
                 case 200:
                     {
-                        DatabaseList value = default;
+                        RedisEnterpriseDatabaseList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DatabaseList.DeserializeDatabaseList(document.RootElement);
+                        value = RedisEnterpriseDatabaseList.DeserializeRedisEnterpriseDatabaseList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.RedisEnterpriseCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DatabaseList> ListByCluster(string subscriptionId, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
+        public Response<RedisEnterpriseDatabaseList> ListByCluster(string subscriptionId, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.RedisEnterpriseCache
             {
                 case 200:
                     {
-                        DatabaseList value = default;
+                        RedisEnterpriseDatabaseList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DatabaseList.DeserializeDatabaseList(document.RootElement);
+                        value = RedisEnterpriseDatabaseList.DeserializeRedisEnterpriseDatabaseList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.RedisEnterpriseCache
             }
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, DatabaseData data)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, RedisEnterpriseDatabaseData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.RedisEnterpriseCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="databaseName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, DatabaseData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, RedisEnterpriseDatabaseData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.RedisEnterpriseCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="databaseName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Create(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, DatabaseData data, CancellationToken cancellationToken = default)
+        public Response Create(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, RedisEnterpriseDatabaseData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.RedisEnterpriseCache
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, DatabasePatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, RedisEnterpriseDatabasePatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.RedisEnterpriseCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="databaseName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, DatabasePatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, RedisEnterpriseDatabasePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.RedisEnterpriseCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="databaseName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, DatabasePatch patch, CancellationToken cancellationToken = default)
+        public Response Update(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, RedisEnterpriseDatabasePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.RedisEnterpriseCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="databaseName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DatabaseData>> GetAsync(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, CancellationToken cancellationToken = default)
+        public async Task<Response<RedisEnterpriseDatabaseData>> GetAsync(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -327,13 +327,13 @@ namespace Azure.ResourceManager.RedisEnterpriseCache
             {
                 case 200:
                     {
-                        DatabaseData value = default;
+                        RedisEnterpriseDatabaseData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DatabaseData.DeserializeDatabaseData(document.RootElement);
+                        value = RedisEnterpriseDatabaseData.DeserializeRedisEnterpriseDatabaseData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DatabaseData)null, message.Response);
+                    return Response.FromValue((RedisEnterpriseDatabaseData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.RedisEnterpriseCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="databaseName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DatabaseData> Get(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, CancellationToken cancellationToken = default)
+        public Response<RedisEnterpriseDatabaseData> Get(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -360,13 +360,13 @@ namespace Azure.ResourceManager.RedisEnterpriseCache
             {
                 case 200:
                     {
-                        DatabaseData value = default;
+                        RedisEnterpriseDatabaseData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DatabaseData.DeserializeDatabaseData(document.RootElement);
+                        value = RedisEnterpriseDatabaseData.DeserializeRedisEnterpriseDatabaseData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DatabaseData)null, message.Response);
+                    return Response.FromValue((RedisEnterpriseDatabaseData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.RedisEnterpriseCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="databaseName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AccessKeys>> ListKeysAsync(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, CancellationToken cancellationToken = default)
+        public async Task<Response<RedisEnterpriseDataAccessKeys>> ListKeysAsync(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -494,9 +494,9 @@ namespace Azure.ResourceManager.RedisEnterpriseCache
             {
                 case 200:
                     {
-                        AccessKeys value = default;
+                        RedisEnterpriseDataAccessKeys value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AccessKeys.DeserializeAccessKeys(document.RootElement);
+                        value = RedisEnterpriseDataAccessKeys.DeserializeRedisEnterpriseDataAccessKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -512,7 +512,7 @@ namespace Azure.ResourceManager.RedisEnterpriseCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="databaseName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AccessKeys> ListKeys(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, CancellationToken cancellationToken = default)
+        public Response<RedisEnterpriseDataAccessKeys> ListKeys(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -525,9 +525,9 @@ namespace Azure.ResourceManager.RedisEnterpriseCache
             {
                 case 200:
                     {
-                        AccessKeys value = default;
+                        RedisEnterpriseDataAccessKeys value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AccessKeys.DeserializeAccessKeys(document.RootElement);
+                        value = RedisEnterpriseDataAccessKeys.DeserializeRedisEnterpriseDataAccessKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -535,7 +535,7 @@ namespace Azure.ResourceManager.RedisEnterpriseCache
             }
         }
 
-        internal HttpMessage CreateRegenerateKeyRequest(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, RegenerateKeyContent content)
+        internal HttpMessage CreateRegenerateKeyRequest(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, RedisEnterpriseRegenerateKeyContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.RedisEnterpriseCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="databaseName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> RegenerateKeyAsync(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, RegenerateKeyContent content, CancellationToken cancellationToken = default)
+        public async Task<Response> RegenerateKeyAsync(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, RedisEnterpriseRegenerateKeyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -600,7 +600,7 @@ namespace Azure.ResourceManager.RedisEnterpriseCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="databaseName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response RegenerateKey(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, RegenerateKeyContent content, CancellationToken cancellationToken = default)
+        public Response RegenerateKey(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, RedisEnterpriseRegenerateKeyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -620,7 +620,7 @@ namespace Azure.ResourceManager.RedisEnterpriseCache
             }
         }
 
-        internal HttpMessage CreateImportRequest(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, ImportClusterContent content)
+        internal HttpMessage CreateImportRequest(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, ImportRedisEnterpriseDatabaseContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -656,7 +656,7 @@ namespace Azure.ResourceManager.RedisEnterpriseCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="databaseName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> ImportAsync(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, ImportClusterContent content, CancellationToken cancellationToken = default)
+        public async Task<Response> ImportAsync(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, ImportRedisEnterpriseDatabaseContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -685,7 +685,7 @@ namespace Azure.ResourceManager.RedisEnterpriseCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="databaseName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Import(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, ImportClusterContent content, CancellationToken cancellationToken = default)
+        public Response Import(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, ImportRedisEnterpriseDatabaseContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -705,7 +705,7 @@ namespace Azure.ResourceManager.RedisEnterpriseCache
             }
         }
 
-        internal HttpMessage CreateExportRequest(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, ExportClusterContent content)
+        internal HttpMessage CreateExportRequest(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, ExportRedisEnterpriseDatabaseContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -741,7 +741,7 @@ namespace Azure.ResourceManager.RedisEnterpriseCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="databaseName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> ExportAsync(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, ExportClusterContent content, CancellationToken cancellationToken = default)
+        public async Task<Response> ExportAsync(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, ExportRedisEnterpriseDatabaseContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -770,7 +770,7 @@ namespace Azure.ResourceManager.RedisEnterpriseCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="databaseName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Export(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, ExportClusterContent content, CancellationToken cancellationToken = default)
+        public Response Export(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, ExportRedisEnterpriseDatabaseContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -790,7 +790,7 @@ namespace Azure.ResourceManager.RedisEnterpriseCache
             }
         }
 
-        internal HttpMessage CreateForceUnlinkRequest(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, ForceUnlinkContent content)
+        internal HttpMessage CreateForceUnlinkRequest(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, ForceUnlinkRedisEnterpriseDatabaseContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -826,7 +826,7 @@ namespace Azure.ResourceManager.RedisEnterpriseCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="databaseName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> ForceUnlinkAsync(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, ForceUnlinkContent content, CancellationToken cancellationToken = default)
+        public async Task<Response> ForceUnlinkAsync(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, ForceUnlinkRedisEnterpriseDatabaseContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -855,7 +855,7 @@ namespace Azure.ResourceManager.RedisEnterpriseCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="databaseName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response ForceUnlink(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, ForceUnlinkContent content, CancellationToken cancellationToken = default)
+        public Response ForceUnlink(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, ForceUnlinkRedisEnterpriseDatabaseContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -897,7 +897,7 @@ namespace Azure.ResourceManager.RedisEnterpriseCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DatabaseList>> ListByClusterNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
+        public async Task<Response<RedisEnterpriseDatabaseList>> ListByClusterNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -910,9 +910,9 @@ namespace Azure.ResourceManager.RedisEnterpriseCache
             {
                 case 200:
                     {
-                        DatabaseList value = default;
+                        RedisEnterpriseDatabaseList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DatabaseList.DeserializeDatabaseList(document.RootElement);
+                        value = RedisEnterpriseDatabaseList.DeserializeRedisEnterpriseDatabaseList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -928,7 +928,7 @@ namespace Azure.ResourceManager.RedisEnterpriseCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DatabaseList> ListByClusterNextPage(string nextLink, string subscriptionId, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
+        public Response<RedisEnterpriseDatabaseList> ListByClusterNextPage(string nextLink, string subscriptionId, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -941,9 +941,9 @@ namespace Azure.ResourceManager.RedisEnterpriseCache
             {
                 case 200:
                     {
-                        DatabaseList value = default;
+                        RedisEnterpriseDatabaseList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DatabaseList.DeserializeDatabaseList(document.RootElement);
+                        value = RedisEnterpriseDatabaseList.DeserializeRedisEnterpriseDatabaseList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

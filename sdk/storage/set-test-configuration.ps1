@@ -33,3 +33,7 @@ function getTestConfigurationPath() {
 $outfile = getTestConfigurationPath
 Write-Host "Writing test configuration xml to $outfile"
 $TestConfigurationXmlContent | Out-File $outfile
+
+Write-Verbose "Setting AZ_STORAGE_CONFIG_PATH environment variable used by Storage Tests"
+# https://github.com/microsoft/azure-pipelines-tasks/blob/master/docs/authoring/commands.md#logging-commands
+Write-Host "##vso[task.setvariable variable=AZ_STORAGE_CONFIG_PATH]$outfile"

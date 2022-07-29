@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Media
     /// A Class representing a StreamingEndpoint along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="StreamingEndpointResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetStreamingEndpointResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MediaserviceResource" /> using the GetStreamingEndpoint method.
+    /// Otherwise you can get one from its parent resource <see cref="MediaServiceResource" /> using the GetStreamingEndpoint method.
     /// </summary>
     public partial class StreamingEndpointResource : ArmResource
     {
@@ -255,11 +255,11 @@ namespace Azure.ResourceManager.Media
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ArmStreamingEndpointSkuInfo" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ArmStreamingEndpointSkuInfo> SkusAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ArmStreamingEndpointSkuInfo> GetSupportedSkusAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<ArmStreamingEndpointSkuInfo>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _streamingEndpointClientDiagnostics.CreateScope("StreamingEndpointResource.Skus");
+                using var scope = _streamingEndpointClientDiagnostics.CreateScope("StreamingEndpointResource.GetSupportedSkus");
                 scope.Start();
                 try
                 {
@@ -282,11 +282,11 @@ namespace Azure.ResourceManager.Media
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ArmStreamingEndpointSkuInfo" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ArmStreamingEndpointSkuInfo> Skus(CancellationToken cancellationToken = default)
+        public virtual Pageable<ArmStreamingEndpointSkuInfo> GetSupportedSkus(CancellationToken cancellationToken = default)
         {
             Page<ArmStreamingEndpointSkuInfo> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _streamingEndpointClientDiagnostics.CreateScope("StreamingEndpointResource.Skus");
+                using var scope = _streamingEndpointClientDiagnostics.CreateScope("StreamingEndpointResource.GetSupportedSkus");
                 scope.Start();
                 try
                 {

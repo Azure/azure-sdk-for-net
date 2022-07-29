@@ -13,15 +13,15 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> MSDeploy ARM PUT information. </summary>
-    public partial class MsDeploy : ResourceData
+    public partial class MSDeploy : ResourceData
     {
-        /// <summary> Initializes a new instance of MsDeploy. </summary>
-        public MsDeploy()
+        /// <summary> Initializes a new instance of MSDeploy. </summary>
+        public MSDeploy()
         {
             SetParameters = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of MsDeploy. </summary>
+        /// <summary> Initializes a new instance of MSDeploy. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="dbType"> Database Type. </param>
         /// <param name="setParametersXmlFileUri"> URI of MSDeploy Parameters file. Must not be set if SetParameters is used. </param>
         /// <param name="setParameters"> MSDeploy Parameters. Must not be set if SetParametersXmlFileUri is used. </param>
-        /// <param name="isSkipAppData">
+        /// <param name="skipAppData">
         /// Controls whether the MSDeploy operation skips the App_Data directory.
         /// If set to &lt;code&gt;true&lt;/code&gt;, the existing App_Data directory on the destination
         /// will not be deleted, and any App_Data directory in the source will be ignored.
@@ -42,14 +42,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// Setting is &lt;code&gt;false&lt;/code&gt; by default.
         /// </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal MsDeploy(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri packageUri, string connectionString, string dbType, Uri setParametersXmlFileUri, IDictionary<string, string> setParameters, bool? isSkipAppData, bool? isAppOffline, string kind) : base(id, name, resourceType, systemData)
+        internal MSDeploy(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri packageUri, string connectionString, string dbType, Uri setParametersXmlFileUri, IDictionary<string, string> setParameters, bool? skipAppData, bool? isAppOffline, string kind) : base(id, name, resourceType, systemData)
         {
             PackageUri = packageUri;
             ConnectionString = connectionString;
             DbType = dbType;
             SetParametersXmlFileUri = setParametersXmlFileUri;
             SetParameters = setParameters;
-            IsSkipAppData = isSkipAppData;
+            SkipAppData = skipAppData;
             IsAppOffline = isAppOffline;
             Kind = kind;
         }
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// will not be deleted, and any App_Data directory in the source will be ignored.
         /// Setting is &lt;code&gt;false&lt;/code&gt; by default.
         /// </summary>
-        public bool? IsSkipAppData { get; set; }
+        public bool? SkipAppData { get; set; }
         /// <summary>
         /// Sets the AppOffline rule while the MSDeploy operation executes.
         /// Setting is &lt;code&gt;false&lt;/code&gt; by default.

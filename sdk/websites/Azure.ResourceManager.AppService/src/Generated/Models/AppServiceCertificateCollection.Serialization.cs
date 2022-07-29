@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static AppServiceCertificateCollection DeserializeAppServiceCertificateCollection(JsonElement element)
         {
-            IReadOnlyList<AppServicCertificateData> value = default;
+            IReadOnlyList<AppServiceCertificateData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<AppServicCertificateData> array = new List<AppServicCertificateData>();
+                    List<AppServiceCertificateData> array = new List<AppServiceCertificateData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppServicCertificateData.DeserializeAppServicCertificateData(item));
+                        array.Add(AppServiceCertificateData.DeserializeAppServiceCertificateData(item));
                     }
                     value = array;
                     continue;

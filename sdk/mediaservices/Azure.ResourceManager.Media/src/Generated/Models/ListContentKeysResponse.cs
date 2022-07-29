@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> Class of response for listContentKeys action. </summary>
-    public partial class ListContentKeysResponse
+    internal partial class ListContentKeysResponse
     {
         /// <summary> Initializes a new instance of ListContentKeysResponse. </summary>
         internal ListContentKeysResponse()

@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// Correlation ID of cloning operation. This ID ties multiple cloning operations
         /// together to use the same snapshot.
         /// </param>
-        /// <param name="isOverwrite"> &lt;code&gt;true&lt;/code&gt; to overwrite destination app; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="isCloneCustomHostNames"> &lt;code&gt;true&lt;/code&gt; to clone custom hostnames from source app; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="isCloneSourceControl"> &lt;code&gt;true&lt;/code&gt; to clone source control from source app; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="overwrite"> &lt;code&gt;true&lt;/code&gt; to overwrite destination app; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="cloneCustomHostNames"> &lt;code&gt;true&lt;/code&gt; to clone custom hostnames from source app; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="cloneSourceControl"> &lt;code&gt;true&lt;/code&gt; to clone source control from source app; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="sourceWebAppId">
         /// ARM resource ID of the source app. App resource ID is of the form 
         /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName} for production slots and 
@@ -51,23 +51,23 @@ namespace Azure.ResourceManager.AppService.Models
         /// Application setting overrides for cloned app. If specified, these settings override the settings cloned 
         /// from source app. Otherwise, application settings from source app are retained.
         /// </param>
-        /// <param name="isConfigureLoadBalancing"> &lt;code&gt;true&lt;/code&gt; to configure load balancing for source and destination app. </param>
+        /// <param name="configureLoadBalancing"> &lt;code&gt;true&lt;/code&gt; to configure load balancing for source and destination app. </param>
         /// <param name="trafficManagerProfileId">
         /// ARM resource ID of the Traffic Manager profile to use, if it exists. Traffic Manager resource ID is of the form 
         /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficManagerProfiles/{profileName}.
         /// </param>
         /// <param name="trafficManagerProfileName"> Name of Traffic Manager profile to create. This is only needed if Traffic Manager profile does not already exist. </param>
-        internal CloningInfo(Guid? correlationId, bool? isOverwrite, bool? isCloneCustomHostNames, bool? isCloneSourceControl, ResourceIdentifier sourceWebAppId, string sourceWebAppLocation, string hostingEnvironment, IDictionary<string, string> appSettingsOverrides, bool? isConfigureLoadBalancing, ResourceIdentifier trafficManagerProfileId, string trafficManagerProfileName)
+        internal CloningInfo(Guid? correlationId, bool? overwrite, bool? cloneCustomHostNames, bool? cloneSourceControl, ResourceIdentifier sourceWebAppId, string sourceWebAppLocation, string hostingEnvironment, IDictionary<string, string> appSettingsOverrides, bool? configureLoadBalancing, ResourceIdentifier trafficManagerProfileId, string trafficManagerProfileName)
         {
             CorrelationId = correlationId;
-            IsOverwrite = isOverwrite;
-            IsCloneCustomHostNames = isCloneCustomHostNames;
-            IsCloneSourceControl = isCloneSourceControl;
+            Overwrite = overwrite;
+            CloneCustomHostNames = cloneCustomHostNames;
+            CloneSourceControl = cloneSourceControl;
             SourceWebAppId = sourceWebAppId;
             SourceWebAppLocation = sourceWebAppLocation;
             HostingEnvironment = hostingEnvironment;
             AppSettingsOverrides = appSettingsOverrides;
-            IsConfigureLoadBalancing = isConfigureLoadBalancing;
+            ConfigureLoadBalancing = configureLoadBalancing;
             TrafficManagerProfileId = trafficManagerProfileId;
             TrafficManagerProfileName = trafficManagerProfileName;
         }
@@ -78,11 +78,11 @@ namespace Azure.ResourceManager.AppService.Models
         /// </summary>
         public Guid? CorrelationId { get; set; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; to overwrite destination app; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
-        public bool? IsOverwrite { get; set; }
+        public bool? Overwrite { get; set; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; to clone custom hostnames from source app; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
-        public bool? IsCloneCustomHostNames { get; set; }
+        public bool? CloneCustomHostNames { get; set; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; to clone source control from source app; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
-        public bool? IsCloneSourceControl { get; set; }
+        public bool? CloneSourceControl { get; set; }
         /// <summary>
         /// ARM resource ID of the source app. App resource ID is of the form 
         /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName} for production slots and 
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// </summary>
         public IDictionary<string, string> AppSettingsOverrides { get; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; to configure load balancing for source and destination app. </summary>
-        public bool? IsConfigureLoadBalancing { get; set; }
+        public bool? ConfigureLoadBalancing { get; set; }
         /// <summary>
         /// ARM resource ID of the Traffic Manager profile to use, if it exists. Traffic Manager resource ID is of the form 
         /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficManagerProfiles/{profileName}.

@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.AppService
         /// - ClientCertEnabled: true and ClientCertMode: Optional means ClientCert is optional or accepted.
         /// </param>
         /// <param name="clientCertExclusionPaths"> client certificate authentication comma-separated exclusion paths. </param>
-        /// <param name="isHostNamesDisabled">
+        /// <param name="isHostNameDisabled">
         /// &lt;code&gt;true&lt;/code&gt; to disable the public hostnames of the app; otherwise, &lt;code&gt;false&lt;/code&gt;.
         ///  If &lt;code&gt;true&lt;/code&gt;, the app is only accessible via API management process.
         /// </param>
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AppService
         /// This must be of the form /subscriptions/{subscriptionName}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{subnetName}
         /// </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal WebSiteData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ExtendedLocation extendedLocation, string state, IReadOnlyList<string> hostNames, string repositorySiteName, UsageState? usageState, bool? isEnabled, IReadOnlyList<string> enabledHostNames, SiteAvailabilityState? availabilityState, IList<HostNameSslState> hostNameSslStates, string serverFarmId, bool? reserved, bool? isXenon, bool? isHyperV, DateTimeOffset? lastModifiedTimeUtc, SiteConfigProperties siteConfig, IReadOnlyList<string> trafficManagerHostNames, bool? scmSiteAlsoStopped, string targetSwapSlot, HostingEnvironmentProfile hostingEnvironmentProfile, bool? isClientAffinityEnabled, bool? isClientCertEnabled, ClientCertMode? clientCertMode, string clientCertExclusionPaths, bool? isHostNamesDisabled, string customDomainVerificationId, string outboundIPAddresses, string possibleOutboundIPAddresses, int? containerSize, int? dailyMemoryTimeQuota, DateTimeOffset? suspendedTill, int? maxNumberOfWorkers, CloningInfo cloningInfo, string resourceGroup, bool? isDefaultContainer, string defaultHostName, SlotSwapStatus slotSwapStatus, bool? isHttpsOnly, RedundancyMode? redundancyMode, Guid? inProgressOperationId, bool? isStorageAccountRequired, string keyVaultReferenceIdentity, string virtualNetworkSubnetId, string kind) : base(id, name, resourceType, systemData, tags, location)
+        internal WebSiteData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ExtendedLocation extendedLocation, string state, IReadOnlyList<string> hostNames, string repositorySiteName, UsageState? usageState, bool? isEnabled, IReadOnlyList<string> enabledHostNames, SiteAvailabilityState? availabilityState, IList<HostNameSslState> hostNameSslStates, string serverFarmId, bool? reserved, bool? isXenon, bool? isHyperV, DateTimeOffset? lastModifiedTimeUtc, SiteConfigProperties siteConfig, IReadOnlyList<string> trafficManagerHostNames, bool? scmSiteAlsoStopped, string targetSwapSlot, HostingEnvironmentProfile hostingEnvironmentProfile, bool? isClientAffinityEnabled, bool? isClientCertEnabled, ClientCertMode? clientCertMode, string clientCertExclusionPaths, bool? isHostNameDisabled, string customDomainVerificationId, string outboundIPAddresses, string possibleOutboundIPAddresses, int? containerSize, int? dailyMemoryTimeQuota, DateTimeOffset? suspendedTill, int? maxNumberOfWorkers, CloningInfo cloningInfo, string resourceGroup, bool? isDefaultContainer, string defaultHostName, SlotSwapStatus slotSwapStatus, bool? isHttpsOnly, RedundancyMode? redundancyMode, Guid? inProgressOperationId, bool? isStorageAccountRequired, string keyVaultReferenceIdentity, string virtualNetworkSubnetId, string kind) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             ExtendedLocation = extendedLocation;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.AppService
             IsClientCertEnabled = isClientCertEnabled;
             ClientCertMode = clientCertMode;
             ClientCertExclusionPaths = clientCertExclusionPaths;
-            IsHostNamesDisabled = isHostNamesDisabled;
+            IsHostNameDisabled = isHostNameDisabled;
             CustomDomainVerificationId = customDomainVerificationId;
             OutboundIPAddresses = outboundIPAddresses;
             PossibleOutboundIPAddresses = possibleOutboundIPAddresses;
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.AppService
         /// &lt;code&gt;true&lt;/code&gt; to disable the public hostnames of the app; otherwise, &lt;code&gt;false&lt;/code&gt;.
         ///  If &lt;code&gt;true&lt;/code&gt;, the app is only accessible via API management process.
         /// </summary>
-        public bool? IsHostNamesDisabled { get; set; }
+        public bool? IsHostNameDisabled { get; set; }
         /// <summary> Unique identifier that verifies the custom domains assigned to the app. Customer will add this id to a txt record for verification. </summary>
         public string CustomDomainVerificationId { get; set; }
         /// <summary> List of IP addresses that the app uses for outbound connections (e.g. database access). Includes VIPs from tenants that site can be hosted with current settings. Read-only. </summary>
