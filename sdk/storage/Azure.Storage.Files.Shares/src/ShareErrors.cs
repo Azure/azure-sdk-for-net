@@ -28,7 +28,7 @@ namespace Azure.Storage.Files.Shares
                 case StorageChecksumAlgorithm.StorageCrc64:
                     throw new ArgumentException("Azure File Shares do not support CRC-64.");
                 default:
-                    throw new ArgumentException($"SDK does not support ValidationAlgorithm value {Enum.GetName(typeof(StorageChecksumAlgorithm), resolved)}.");
+                    throw new ArgumentException($"{nameof(StorageChecksumAlgorithm)} does not support value {Enum.GetName(typeof(StorageChecksumAlgorithm), resolved) ?? resolved}.");
             }
         }
     }
