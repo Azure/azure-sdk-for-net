@@ -35,7 +35,7 @@ namespace Azure.Test.Perf
 
             int decimals = (int)Math.Max(0, significantDigits - Math.Floor(log) - 1);
 
-            return groupSeparator ? rounded.ToString($"N{decimals}") : rounded.ToString($"F{decimals}");
+            return rounded.ToString(groupSeparator ? $"N{decimals}" : $"F{decimals}");
         }
     }
 }
