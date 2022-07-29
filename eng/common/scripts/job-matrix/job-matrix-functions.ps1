@@ -193,7 +193,7 @@ function ParseFilter([string]$filter) {
 function GetMatrixConfigFromYaml([String] $yamlConfig)
 {
     $config = $yamlConfig | ConvertFrom-Yaml
-    return GetMatrixConfigFromJson($config | ConvertTo-Json)
+    return GetMatrixConfigFromJson (ConvertTo-Json $config)
 }
 
 # Importing the JSON as PSCustomObject preserves key ordering,

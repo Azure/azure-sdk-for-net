@@ -12,6 +12,8 @@ class StressTestPackageInfo {
     [string]$Deployer
 }
 
+. $PSScriptRoot/../job-matrix/job-matrix-functions.ps1
+
 function FindStressPackages(
     [string]$directory,
     [hashtable]$filters = @{},
@@ -26,6 +28,11 @@ function FindStressPackages(
     foreach ($chartFile in $chartFiles) {
         $chart = ParseChart $chartFile
         if (matchesAnnotations $chart $filters) {
+            $matrixFilePath = (Join-Path $chartFile.Directory.FullName '/matrix.yaml')
+            if (Test-Path $matrixFilePath) {
+                ScenariosMatrixGeneration $matrixFilePath
+            }
+
             $packages += NewStressTestPackageInfo `
                             -chart $chart `
                             -chartFile $chartFile `
@@ -60,6 +67,31 @@ function GetUsername() {
     $stressUser = $stressUser -replace '_|\W', '-'
 
     return $stressUser.ToLower()
+}
+
+function ScenariosMatrixGeneration(
+    [string]$matrixFilePath
+) {
+    $yamlConfig = Get-Content $matrixFilePath -Raw
+    $matrix = GenerateMatrix (GetMatrixConfigFromYaml $yamlConfig) "sparse"
+    $serializedMatrix = SerializePipelineMatrix $matrix
+    $prettyMatrix = $serializedMatrix.pretty | ConvertFrom-Json -AsHashtable
+
+    $scenariosMatrix = @()
+    foreach($permutation in $prettyMatrix.GetEnumerator()) {
+        $entry = @{}
+        $entry.Name = $permutation.key
+        foreach ($param in $permutation.value.GetEnumerator()) {
+            $entry.add($param.key, $param.value)
+        }
+        $scenariosMatrix += $entry
+    }
+
+    $valuesYaml = Get-Content (Join-Path $matrixFilePath '../values.yaml') -Raw
+    $values = $valuesYaml | ConvertFrom-Yaml
+
+    $values.Scenarios += $scenariosMatrix
+    $values | ConvertTo-Yaml | Out-File -FilePath (Join-Path $matrixFilePath '../generatedValues.yaml')
 }
 
 function NewStressTestPackageInfo(
