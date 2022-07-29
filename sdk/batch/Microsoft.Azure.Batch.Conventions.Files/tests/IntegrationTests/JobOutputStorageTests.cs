@@ -111,6 +111,19 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
 
         [LiveTest]
         [Fact]
+        public async Task IfAFileIsSaved_ThenItAppearsInTheListByHierachy()
+        {
+            var jobOutputStorage = new JobOutputStorage(blobClient, _jobId);
+            await jobOutputStorage.SaveAsync(JobOutputKind.JobOutput, FilePath("TestText1.txt"), "This/File/Is/Gettable.txt");
+
+            var jobOutputContainerName = ContainerNameUtils.GetSafeContainerName(_jobId);
+            var blobs = blobClient.GetBlobContainerClient(jobOutputContainerName).ListBlobsByHierachy().ToList();
+            Assert.NotEmpty(blobs);
+            Assert.Contains(blobs, b => b.Blob.Name.Equals($"$JobOutput/This/File/Is/Gettable.txt"));
+        }
+
+        [LiveTest]
+        [Fact]
         public async Task IfAFileIsSaved_ThenItCanBeGot()
         {
             var jobOutputStorage = new JobOutputStorage(blobClient, _jobId);
