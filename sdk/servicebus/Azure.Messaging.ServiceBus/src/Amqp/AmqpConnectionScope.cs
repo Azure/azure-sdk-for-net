@@ -180,7 +180,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="useSingleSession">If true, all links will use a single session.</param>
         /// <param name="operationTimeout">The timeout for operations associated with the connection.</param>
         /// <param name="metrics">The metrics instance to populate transport metrics. May be null.</param>
-        /// <param name="identifier">The unique identifier to assign this scope, if null, one will be generated.</param>
         public AmqpConnectionScope(
             Uri serviceEndpoint,
             Uri connectionEndpoint,
@@ -189,10 +188,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             IWebProxy proxy,
             bool useSingleSession,
             TimeSpan operationTimeout,
-            ServiceBusTransportMetrics metrics,
-#pragma warning disable CA1801 // Review unused parameters. This parameter will be used for future planned features.
-            string identifier = default)
-#pragma warning restore CA1801 // Review unused parameters
+            ServiceBusTransportMetrics metrics)
         {
             Argument.AssertNotNull(serviceEndpoint, nameof(serviceEndpoint));
             Argument.AssertNotNull(credential, nameof(credential));

@@ -120,8 +120,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 options.WebProxy,
                 options.EnableCrossEntityTransactions,
                 options.RetryOptions.TryTimeout,
-                TransportMetrics,
-                options.Identifier);
+                TransportMetrics);
         }
 
         /// <summary>
