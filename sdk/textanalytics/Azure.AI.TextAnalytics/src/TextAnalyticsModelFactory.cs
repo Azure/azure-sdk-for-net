@@ -1265,13 +1265,13 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="TextAnalytics.AnalyzeSentimentActionResult"/> for mocking purposes.
+        /// Initializes a new instance of <see cref="TextAnalytics.AnalyzeHealthcareEntitiesActionResult"/> for mocking purposes.
         /// </summary>
         /// <param name="actionName">Sets the <see cref="TextAnalyticsActionResult.ActionName"/> property.</param>
         /// <param name="completedOn">Sets the <see cref="TextAnalyticsActionResult.CompletedOn"/> property.</param>
         /// <param name="code">Sets the <see cref="TextAnalyticsError.ErrorCode"/> property.</param>
         /// <param name="message">Sets the <see cref="TextAnalyticsError.Message"/> property.</param>
-        /// <returns>A new instance of <see cref="TextAnalytics.AnalyzeSentimentActionResult"/> for mocking purposes.</returns>
+        /// <returns>A new instance of <see cref="TextAnalytics.AnalyzeHealthcareEntitiesActionResult"/> for mocking purposes.</returns>
         public static AnalyzeHealthcareEntitiesActionResult AnalyzeHealthcareEntitiesActionResult(
             string actionName,
             DateTimeOffset completedOn,
