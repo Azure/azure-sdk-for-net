@@ -284,10 +284,11 @@ directive:
       $.PortalSettingsContractProperties.properties.userRegistration['x-ms-client-name'] = 'IsUserRegistration';
       $.AccessInformationCreateParameterProperties.properties.enabled['x-ms-client-name'] = 'IsEnabled';
       $.PrivateEndpointConnectionRequest.properties.id['x-ms-format'] = 'arm-id';
+      $.AccessInformationUpdateParameterProperties.properties.enabled['x-ms-client-name'] = 'IsEnabled';
   - from: apimskus.json
     where: $.definitions
     transform: >
-      $.ApiManagementSku.properties.locations['x-ms-format'] = 'azure-location';
+      $.ApiManagementSku.properties.locations.items['x-ms-format'] = 'azure-location';
   - from: apimdeployment.json
     where: $.definitions
     transform: >
