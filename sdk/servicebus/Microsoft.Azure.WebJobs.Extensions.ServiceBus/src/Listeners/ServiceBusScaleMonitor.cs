@@ -52,12 +52,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             _nextWarningTime = DateTime.UtcNow;
             _concurrencyManager = concurrencyManager;
             _targetBasedScalingEnabled = new Lazy<bool>(() =>
-            {
-                if (bool.TryParse(Environment.GetEnvironmentVariable(Constants.TargetBasedScalingEnabled), out bool parsedValue))
-                {
-                    return parsedValue;
-                }
-                return false;
+            {;
+                return Environment.GetEnvironmentVariable(Constants.TargetBasedScalingEnabled) == "1";
             });
             _staticTargetValue = new Lazy<int>(() =>
             {
