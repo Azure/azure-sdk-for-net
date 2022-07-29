@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Logic.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("messageContentType");
-            writer.WriteStringValue(MessageContentType);
+            writer.WriteStringValue(MessageContentType.ToString());
             writer.WritePropertyName("transmitFileNameInMimeHeader");
             writer.WriteBooleanValue(TransmitFileNameInMimeHeader);
             writer.WritePropertyName("fileNameTemplate");
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static AS2EnvelopeSettings DeserializeAS2EnvelopeSettings(JsonElement element)
         {
-            string messageContentType = default;
+            ContentType messageContentType = default;
             bool transmitFileNameInMimeHeader = default;
             string fileNameTemplate = default;
             bool suspendMessageOnFileNameGenerationError = default;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 if (property.NameEquals("messageContentType"))
                 {
-                    messageContentType = property.Value.GetString();
+                    messageContentType = new ContentType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("transmitFileNameInMimeHeader"))

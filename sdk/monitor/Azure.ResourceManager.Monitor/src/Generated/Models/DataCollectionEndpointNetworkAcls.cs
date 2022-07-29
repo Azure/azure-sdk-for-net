@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Initializes a new instance of DataCollectionEndpointNetworkAcls. </summary>
         /// <param name="publicNetworkAccess"> The configuration to set whether network access from public internet to the endpoints are allowed. </param>
-        internal DataCollectionEndpointNetworkAcls(KnownPublicNetworkAccessOption? publicNetworkAccess) : base(publicNetworkAccess)
+        internal DataCollectionEndpointNetworkAcls(MonitorPublicNetworkAccess? publicNetworkAccess) : base(publicNetworkAccess)
         {
         }
     }

@@ -223,14 +223,14 @@ namespace Azure.ResourceManager.IotCentral.Models
         public string ManifestId { get { throw null; } }
         public string ManifestVersion { get { throw null; } }
         public string Name { get { throw null; } }
-        public float? Order { get { throw null; } }
+        public int? Order { get { throw null; } }
         public string Title { get { throw null; } }
     }
     public partial class IotCentralAppTemplateLocation
     {
         internal IotCentralAppTemplateLocation() { }
         public string DisplayName { get { throw null; } }
-        public string Id { get { throw null; } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct IotCentralNetworkAction : System.IEquatable<Azure.ResourceManager.IotCentral.Models.IotCentralNetworkAction>
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.IotCentral.Models
     {
         public IotCentralNetworkRuleSets() { }
         public bool? ApplyToDevices { get { throw null; } set { } }
-        public bool? ApplyToIoTCentral { get { throw null; } set { } }
+        public bool? ApplyToIotCentral { get { throw null; } set { } }
         public Azure.ResourceManager.IotCentral.Models.IotCentralNetworkAction? DefaultAction { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.IotCentral.Models.IotCentralNetworkRuleSetIPRule> IPRules { get { throw null; } }
     }

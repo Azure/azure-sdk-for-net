@@ -1,0 +1,58 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://ads-dev-eastus-pv.purview.azure.com/share/receivedInvitations?api-version=2021-09-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Connection": "keep-alive",
+        "traceparent": "00-3c4aa1a2fc33a24bbae2a0d195c7691d-97d7d772ec885349-00",
+        "User-Agent": "azsdk-net-Analytics.Share/1.0.3-alpha.20220714.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "0a07350ba376b1be5b6c8f9e6e56b885",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "614",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 14 Jul 2022 21:54:42 GMT",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-correlation-request-id": "22ac7f4d-b67b-4f55-8316-5152ed9789f8"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "properties": {
+              "targetActiveDirectoryId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+              "targetObjectId": "fc010728-94f6-4e9c-be3c-c08687414bd4",
+              "description": "",
+              "invitationStatus": "Pending",
+              "location": "eastus",
+              "sentShareName": "sentShare1",
+              "sentAt": "2022-07-14T21:51:28.6336482Z",
+              "shareKind": "InPlace",
+              "receiverName": null,
+              "receiverEmail": null,
+              "receiverTenantName": null,
+              "senderName": "SyMS",
+              "senderEmail": null,
+              "senderTenantName": "Microsoft"
+            },
+            "invitationKind": "Application",
+            "id": "/receivedInvitations/f891d280-9016-4b0c-8a6d-549caad3be9f",
+            "name": "f891d280-9016-4b0c-8a6d-549caad3be9f",
+            "type": "receivedInvitations"
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": null,
+    "PURVIEW_SHARE_URL": "https://ads-dev-eastus-pv.purview.azure.com/share",
+    "RandomSeed": "1429369378"
+  }
+}

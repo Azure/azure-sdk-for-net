@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static ConnectivityIssue DeserializeConnectivityIssue(JsonElement element)
         {
-            Optional<Origin> origin = default;
-            Optional<Severity> severity = default;
+            Optional<IssueOrigin> origin = default;
+            Optional<IssueSeverity> severity = default;
             Optional<IssueType> type = default;
             Optional<IReadOnlyList<IDictionary<string, string>>> context = default;
             foreach (var property in element.EnumerateObject())
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    origin = new Origin(property.Value.GetString());
+                    origin = new IssueOrigin(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("severity"))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    severity = new Severity(property.Value.GetString());
+                    severity = new IssueSeverity(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("type"))

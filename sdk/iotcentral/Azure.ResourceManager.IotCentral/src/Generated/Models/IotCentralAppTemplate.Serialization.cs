@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.IotCentral.Models
             Optional<string> manifestVersion = default;
             Optional<string> name = default;
             Optional<string> title = default;
-            Optional<float> order = default;
+            Optional<int> order = default;
             Optional<string> description = default;
             Optional<string> industry = default;
             Optional<IReadOnlyList<IotCentralAppTemplateLocation>> locations = default;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.IotCentral.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    order = property.Value.GetSingle();
+                    order = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("description"))

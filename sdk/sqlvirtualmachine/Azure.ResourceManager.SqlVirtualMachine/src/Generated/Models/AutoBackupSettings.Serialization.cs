@@ -17,15 +17,15 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Enable))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enable");
-                writer.WriteBooleanValue(Enable.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(EnableEncryption))
+            if (Optional.IsDefined(IsEncryptionEnabled))
             {
                 writer.WritePropertyName("enableEncryption");
-                writer.WriteBooleanValue(EnableEncryption.Value);
+                writer.WriteBooleanValue(IsEncryptionEnabled.Value);
             }
             if (Optional.IsDefined(RetentionPeriod))
             {
@@ -52,10 +52,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 writer.WritePropertyName("password");
                 writer.WriteStringValue(Password);
             }
-            if (Optional.IsDefined(BackupSystemDbs))
+            if (Optional.IsDefined(IsSystemDbsIncludedInBackup))
             {
                 writer.WritePropertyName("backupSystemDbs");
-                writer.WriteBooleanValue(BackupSystemDbs.Value);
+                writer.WriteBooleanValue(IsSystemDbsIncludedInBackup.Value);
             }
             if (Optional.IsDefined(BackupScheduleType))
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             Optional<string> password = default;
             Optional<bool> backupSystemDbs = default;
             Optional<BackupScheduleType> backupScheduleType = default;
-            Optional<FullBackupFrequencyType> fullBackupFrequency = default;
+            Optional<FullBackupFrequency> fullBackupFrequency = default;
             Optional<IList<AutoBackupDaysOfWeek>> daysOfWeek = default;
             Optional<int> fullBackupStartTime = default;
             Optional<int> fullBackupWindowHours = default;
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    fullBackupFrequency = new FullBackupFrequencyType(property.Value.GetString());
+                    fullBackupFrequency = new FullBackupFrequency(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("daysOfWeek"))
