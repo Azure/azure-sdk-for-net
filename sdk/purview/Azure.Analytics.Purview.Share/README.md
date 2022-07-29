@@ -13,7 +13,7 @@ Microsoft Purview Share is a fully managed cloud service.
 Install the Microsoft Purview Share client library for .NET with [NuGet][client_nuget_package]:
 
 ```dotnetcli
-dotnet add package Azure.Analysis.Purview.Share --prerelease
+dotnet add package Azure.Analytis.Purview.Share --prerelease
 ```
 
 ### Prerequisites
@@ -26,11 +26,13 @@ dotnet add package Azure.Analysis.Purview.Share --prerelease
 
 This document demonstrates using [DefaultAzureCredential][default_cred_ref] to authenticate via Azure Active Directory. However, any of the credentials offered by the [Azure.Identity][azure_identity] will be accepted.  See the [Azure.Identity][azure_identity] documentation for more information about other credentials.
 
-Once you have chosen and configured your credential, you can create instances of the `AccountClient`.
+Once you have chosen and configured your credential, you can create instances of the `SentSharesClient`.
 
 ```C#
 var credential = new DefaultAzureCredential();
-var client = new PurviewAccountClient(new Uri("https://<my-account-name>.purview.azure.com"), credential);
+var endPoint = "https://<my-account-name>.purview.azure.com";
+
+var sentShareClient = new SentSharesClient(endPoint, credential);
 ```
 
 ## Key concepts
