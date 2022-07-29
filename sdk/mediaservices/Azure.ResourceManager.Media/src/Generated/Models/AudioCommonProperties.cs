@@ -9,24 +9,24 @@ namespace Azure.ResourceManager.Media.Models
 {
     /// <summary>
     /// Defines the common properties for all audio codecs.
-    /// Please note <see cref="AudiocommonProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// Please note <see cref="AudioCommonProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AacAudio"/>.
     /// </summary>
-    public partial class AudiocommonProperties : CodecBasicProperties
+    public partial class AudioCommonProperties : CodecBasicProperties
     {
-        /// <summary> Initializes a new instance of AudiocommonProperties. </summary>
-        public AudiocommonProperties()
+        /// <summary> Initializes a new instance of AudioCommonProperties. </summary>
+        public AudioCommonProperties()
         {
             OdataType = "#Microsoft.Media.Audio";
         }
 
-        /// <summary> Initializes a new instance of AudiocommonProperties. </summary>
+        /// <summary> Initializes a new instance of AudioCommonProperties. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="label"> An optional label for the codec. The label can be used to control muxing behavior. </param>
         /// <param name="channels"> The number of channels in the audio. </param>
         /// <param name="samplingRate"> The sampling rate to use for encoding in hertz. </param>
         /// <param name="bitrate"> The bitrate, in bits per second, of the output encoded audio. </param>
-        internal AudiocommonProperties(string odataType, string label, int? channels, int? samplingRate, int? bitrate) : base(odataType, label)
+        internal AudioCommonProperties(string odataType, string label, int? channels, int? samplingRate, int? bitrate) : base(odataType, label)
         {
             Channels = channels;
             SamplingRate = samplingRate;
