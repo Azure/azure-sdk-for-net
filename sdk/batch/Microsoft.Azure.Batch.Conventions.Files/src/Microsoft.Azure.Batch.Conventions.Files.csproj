@@ -22,4 +22,8 @@
     <PackageReference Include="Microsoft.Azure.Batch" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="System.Web" />
+  </ItemGroup>
+
 </Project>
