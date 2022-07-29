@@ -343,8 +343,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                 Uri customConnectionEndpoint,
                 ServiceBusTokenCredential credential,
                 ServiceBusTransportType transport,
-                IWebProxy proxy,
-                string identifier = default) : base(serviceEndpoint, customConnectionEndpoint, credential, transport, proxy, false, default, default, identifier)
+                IWebProxy proxy) : base(serviceEndpoint, customConnectionEndpoint, credential, transport, proxy, false, default, default)
             {
                 MockConnection = new Mock<AmqpConnection>(new MockTransport(), CreateMockAmqpSettings(), new AmqpConnectionSettings());
             }
