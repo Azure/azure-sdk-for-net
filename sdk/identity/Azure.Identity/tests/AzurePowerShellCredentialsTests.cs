@@ -11,6 +11,7 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity.Tests.Mock;
 using NUnit.Framework;
+using System.Runtime.InteropServices;
 
 namespace Azure.Identity.Tests
 {
@@ -92,7 +93,7 @@ namespace Azure.Identity.Tests
         }
 
         /// <summary>
-        /// Requires 2 TestProcess results falling back from pwsh to powershell
+        /// Requires 2 TestProcess results falling back from pwsh to powershell on Windows
         /// </summary>
         private static IEnumerable<object[]> FallBackErrorScenarios()
         {
@@ -105,7 +106,12 @@ namespace Azure.Identity.Tests
         [TestCaseSource(nameof(FallBackErrorScenarios))]
         public void AuthenticateWithAzurePowerShellCredential_FallBackErrorScenarios(string errorMessage, string expectedError)
         {
-            var testProcesses = new TestProcess[] { new TestProcess { Error = errorMessage }, new TestProcess { Error = errorMessage } };
+            // This will require two processes on Windows and one on other platforms
+            // Purposefully stripping out the second process to ensure any attempt to fallback is caught on non-Windows
+            TestProcess[] testProcesses = new TestProcess[] { new TestProcess { Error = errorMessage }, new TestProcess { Error = errorMessage } };
+            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                testProcesses = new TestProcess[] { testProcesses[0] };
+
             AzurePowerShellCredential credential = InstrumentClient(
                 new AzurePowerShellCredential(new AzurePowerShellCredentialOptions(), CredentialPipeline.GetInstance(null), new TestProcessService(testProcesses)));
             var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
