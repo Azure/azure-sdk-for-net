@@ -42,7 +42,7 @@ resources:
     type: github
     endpoint: Azure
     name: Azure/azure-sdk-tools
-    ref: refs/pull/3770/merge
+    ref: main
 
 variables:
 - ${{ parameters.Variables }}
