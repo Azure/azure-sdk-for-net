@@ -13,11 +13,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
     public partial class CertificateInformation
     {
         /// <summary> Initializes a new instance of CertificateInformation. </summary>
-        /// <param name="expiry"> Expiration date of the certificate. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
+        /// <param name="expiresOn"> Expiration date of the certificate. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
         /// <param name="thumbprint"> Thumbprint of the certificate. </param>
         /// <param name="subject"> Subject of the certificate. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="thumbprint"/> or <paramref name="subject"/> is null. </exception>
-        public CertificateInformation(DateTimeOffset expiry, string thumbprint, string subject)
+        public CertificateInformation(DateTimeOffset expiresOn, string thumbprint, string subject)
         {
             if (thumbprint == null)
             {
@@ -28,13 +28,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 throw new ArgumentNullException(nameof(subject));
             }
 
-            Expiry = expiry;
+            ExpiresOn = expiresOn;
             Thumbprint = thumbprint;
             Subject = subject;
         }
 
         /// <summary> Expiration date of the certificate. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
-        public DateTimeOffset Expiry { get; set; }
+        public DateTimeOffset ExpiresOn { get; set; }
         /// <summary> Thumbprint of the certificate. </summary>
         public string Thumbprint { get; set; }
         /// <summary> Subject of the certificate. </summary>

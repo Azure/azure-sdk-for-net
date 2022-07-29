@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="memoryFreeKB"> Unused memory (MemFree and SwapFree in /proc/meminfo), in kB. </param>
         /// <param name="memoryTotalKB"> Total installed memory (MemTotal and SwapTotal in /proc/meminfo), in kB. </param>
         /// <param name="cpuUsage"> A float representing the current system-wide CPU utilization as a percentage. </param>
-        internal CassandraClusterDataCenterNodeItem(string address, CassandraNodeState? state, string status, string load, IReadOnlyList<string> tokens, int? size, string hostId, string rack, string timestamp, long? diskUsedKB, long? diskFreeKB, long? memoryUsedKB, long? memoryBuffersAndCachedKB, long? memoryFreeKB, long? memoryTotalKB, double? cpuUsage)
+        internal CassandraClusterDataCenterNodeItem(string address, CassandraNodeState? state, string status, string load, IReadOnlyList<string> tokens, int? size, Guid? hostId, string rack, string timestamp, long? diskUsedKB, long? diskFreeKB, long? memoryUsedKB, long? memoryBuffersAndCachedKB, long? memoryFreeKB, long? memoryTotalKB, double? cpuUsage)
         {
             Address = address;
             State = state;
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Gets the size. </summary>
         public int? Size { get; }
         /// <summary> The network ID of the node. </summary>
-        public string HostId { get; }
+        public Guid? HostId { get; }
         /// <summary> The rack this node is part of. </summary>
         public string Rack { get; }
         /// <summary> The timestamp when these statistics were captured. </summary>

@@ -28,11 +28,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string SwaggerLinkJsonValue = "swagger-link-json";
         private const string WsdlValue = "wsdl";
         private const string WsdlLinkValue = "wsdl-link";
-        private const string OpenapiValue = "openapi";
-        private const string OpenapiJsonValue = "openapi+json";
-        private const string OpenapiLinkValue = "openapi-link";
-        private const string OpenapiJsonLinkValue = "openapi+json-link";
-        private const string GraphqlLinkValue = "graphql-link";
+        private const string OpenApiValue = "openapi";
+        private const string OpenApiJsonValue = "openapi+json";
+        private const string OpenApiLinkValue = "openapi-link";
+        private const string OpenApiJsonLinkValue = "openapi+json-link";
+        private const string GraphQLLinkValue = "graphql-link";
 
         /// <summary> The contents are inline and Content type is a WADL document. </summary>
         public static ContentFormat WadlXml { get; } = new ContentFormat(WadlXmlValue);
@@ -47,15 +47,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> The WSDL document is hosted on a publicly accessible internet address. </summary>
         public static ContentFormat WsdlLink { get; } = new ContentFormat(WsdlLinkValue);
         /// <summary> The contents are inline and Content Type is a OpenAPI 3.0 YAML Document. </summary>
-        public static ContentFormat Openapi { get; } = new ContentFormat(OpenapiValue);
+        public static ContentFormat OpenApi { get; } = new ContentFormat(OpenApiValue);
         /// <summary> The contents are inline and Content Type is a OpenAPI 3.0 JSON Document. </summary>
-        public static ContentFormat OpenapiJson { get; } = new ContentFormat(OpenapiJsonValue);
+        public static ContentFormat OpenApiJson { get; } = new ContentFormat(OpenApiJsonValue);
         /// <summary> The OpenAPI 3.0 YAML document is hosted on a publicly accessible internet address. </summary>
-        public static ContentFormat OpenapiLink { get; } = new ContentFormat(OpenapiLinkValue);
+        public static ContentFormat OpenApiLink { get; } = new ContentFormat(OpenApiLinkValue);
         /// <summary> The OpenAPI 3.0 JSON document is hosted on a publicly accessible internet address. </summary>
-        public static ContentFormat OpenapiJsonLink { get; } = new ContentFormat(OpenapiJsonLinkValue);
+        public static ContentFormat OpenApiJsonLink { get; } = new ContentFormat(OpenApiJsonLinkValue);
         /// <summary> The GraphQL API endpoint hosted on a publicly accessible internet address. </summary>
-        public static ContentFormat GraphqlLink { get; } = new ContentFormat(GraphqlLinkValue);
+        public static ContentFormat GraphQLLink { get; } = new ContentFormat(GraphQLLinkValue);
         /// <summary> Determines if two <see cref="ContentFormat"/> values are the same. </summary>
         public static bool operator ==(ContentFormat left, ContentFormat right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContentFormat"/> values are not the same. </summary>

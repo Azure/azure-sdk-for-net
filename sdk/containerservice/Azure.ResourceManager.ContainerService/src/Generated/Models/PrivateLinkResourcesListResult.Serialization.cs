@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ContainerService.Models
     {
         internal static PrivateLinkResourcesListResult DeserializePrivateLinkResourcesListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ContainerServicePrivateLinkResource>> value = default;
+            Optional<IReadOnlyList<ContainerServicePrivateLinkResourceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ContainerServicePrivateLinkResource> array = new List<ContainerServicePrivateLinkResource>();
+                    List<ContainerServicePrivateLinkResourceData> array = new List<ContainerServicePrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerServicePrivateLinkResource.DeserializeContainerServicePrivateLinkResource(item));
+                        array.Add(ContainerServicePrivateLinkResourceData.DeserializeContainerServicePrivateLinkResourceData(item));
                     }
                     value = array;
                     continue;

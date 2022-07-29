@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.KeyVault
 
         internal static ManagedHsmPrivateEndpointConnectionData DeserializeManagedHsmPrivateEndpointConnectionData(JsonElement element)
         {
-            Optional<ETag> eTag = default;
+            Optional<ETag> etag = default;
             Optional<ManagedHsmSku> sku = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.KeyVault
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    eTag = new ETag(property.Value.GetString());
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("sku"))
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.KeyVault
                     continue;
                 }
             }
-            return new ManagedHsmPrivateEndpointConnectionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(eTag), privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState), sku.Value);
+            return new ManagedHsmPrivateEndpointConnectionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState), sku.Value);
         }
     }
 }

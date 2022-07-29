@@ -59,11 +59,11 @@ namespace Azure.ResourceManager.Logic
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            PartnerType partnerType = default;
+            IntegrationAccountPartnerType partnerType = default;
             Optional<DateTimeOffset> createdTime = default;
             Optional<DateTimeOffset> changedTime = default;
             Optional<BinaryData> metadata = default;
-            PartnerContent content = default;
+            IntegrationAccountPartnerContent content = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"))
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Logic
                     {
                         if (property0.NameEquals("partnerType"))
                         {
-                            partnerType = new PartnerType(property0.Value.GetString());
+                            partnerType = new IntegrationAccountPartnerType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("createdTime"))
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Logic
                         }
                         if (property0.NameEquals("content"))
                         {
-                            content = PartnerContent.DeserializePartnerContent(property0.Value);
+                            content = IntegrationAccountPartnerContent.DeserializeIntegrationAccountPartnerContent(property0.Value);
                             continue;
                         }
                     }

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Batch
             Optional<PoolAllocationMode> poolAllocationMode = default;
             Optional<KeyVaultReference> keyVaultReference = default;
             Optional<PublicNetworkAccessType?> publicNetworkAccess = default;
-            Optional<NetworkProfile> networkProfile = default;
+            Optional<BatchVirtualMachineNetworkProfile> networkProfile = default;
             Optional<IReadOnlyList<BatchPrivateEndpointConnectionData>> privateEndpointConnections = default;
             Optional<AutoStorageProperties> autoStorage = default;
             Optional<Models.EncryptionProperties> encryption = default;
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Batch
                                 networkProfile = null;
                                 continue;
                             }
-                            networkProfile = NetworkProfile.DeserializeNetworkProfile(property0.Value);
+                            networkProfile = BatchVirtualMachineNetworkProfile.DeserializeBatchVirtualMachineNetworkProfile(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("privateEndpointConnections"))

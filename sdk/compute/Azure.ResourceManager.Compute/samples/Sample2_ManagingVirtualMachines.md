@@ -90,7 +90,7 @@ VirtualMachineData input = new VirtualMachineData(resourceGroup.Data.Location)
             Caching = CachingType.ReadWrite,
             ManagedDisk = new VirtualMachineManagedDisk()
             {
-                StorageAccountType = StorageAccountType.StandardLRS
+                StorageAccountType = StorageAccountType.StandardLrs
             }
         },
         ImageReference = new ImageReference()

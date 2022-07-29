@@ -10,7 +10,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: Compute
 namespace: Azure.ResourceManager.Compute
-require: https://github.com/Azure/azure-rest-api-specs/blob/e50265479cae5da79144cce18a80751214a4ceca/specification/compute/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/6c11930fe7757c6416cb2580eeddb4e57695c707/specification/compute/resource-manager/readme.md
 tag: package-2022-04-04
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -28,14 +28,14 @@ format-by-name-rules:
 
 keep-plural-enums:
 - IntervalInMins
-- ExpandTypeForGetCapacityReservationGroups
+- VmGuestPatchClassificationForWindows # we have this because the generator will change windows to window which does not make sense
 
 rename-rules:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
   Ip: IP
-  Ips: IPs
+  Ips: IPs|ips
   ID: Id
   IDs: Ids
   VM: Vm
@@ -49,14 +49,17 @@ rename-rules:
   VPN: Vpn
   NAT: Nat
   WAN: Wan
-  Ipv4: IPv4
-  Ipv6: IPv6
-  Ipsec: IPsec
+  Ipv4: IPv4|ipv4
+  Ipv6: IPv6|ipv6
+  Ipsec: IPsec|ipsec
   SSO: Sso
   URI: Uri
+  Etag: ETag|etag
   SSD: Ssd
   SAS: Sas
   VCPUs: VCpus
+  LRS: Lrs
+  ZRS: Zrs
   RestorePointCollection: RestorePointGroup # the word `collection` is reserved by the SDK, therefore we need to rename all the occurrences of this in all resources and models
   EncryptionSettingsCollection: EncryptionSettingsGroup # the word `collection` is reserved by the SDK, therefore we need to rename all the occurrences of this in all resources and models
 
@@ -83,6 +86,7 @@ override-operation-name:
   VirtualMachineScaleSetRollingUpgrades_StartOSUpgrade: StartOSUpgrade
   LogAnalytics_ExportRequestRateByInterval: ExportLogAnalyticsRequestRateByInterval
   LogAnalytics_ExportThrottledRequests: ExportLogAnalyticsThrottledRequests
+  ResourceSkus_List: GetComputeResourceSkus
 
 request-path-to-resource-data:
   /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}: SharedGallery
@@ -98,7 +102,6 @@ prepend-rp-prefix:
 - ApiError
 - ApiErrorBase
 - DeleteOptions
-- ProtocolType
 - ResourceSku
 - ResourceSkuCapacity
 - ResourceSkuLocationInfo
@@ -109,7 +112,6 @@ prepend-rp-prefix:
 - ResourceSkuZoneDetails
 - ResourceSkuCapacityScaleType
 - EncryptionType
-- ProtocolType
 - PublicIPAddressSku
 - PublicIPAddressSkuName
 - PublicIPAddressSkuTier
@@ -171,8 +173,6 @@ rename-mapping:
   VMDiskSecurityProfile: VirtualMachineDiskSecurityProfile
   VmDiskTypes: VirtualMachineDiskType
   VMGalleryApplication: VirtualMachineGalleryApplication
-  VMGuestPatchClassification_Linux: LinuxVmGuestPatchClassification
-  VMGuestPatchClassification_Windows: WindowsVmGuestPatchClassification
   VMSizeProperties: VirtualMachineSizeProperties
   ManagedDiskParameters: VirtualMachineManagedDisk
   VirtualMachineScaleSetManagedDiskParameters: VirtualMachineScaleSetManagedDisk
@@ -188,6 +188,10 @@ rename-mapping:
   RunCommandResult: VirtualMachineRunCommandResult
   UpgradeMode: VirtualMachineScaleSetUpgradeMode
   UpgradePolicy: VirtualMachineScaleSetUpgradePolicy
+  ResourceSkuCapabilities: ComputeResourceSkuCapabilities
+  ProtocolTypes: WinRMListenerProtocolType
+  VMGuestPatchClassificationLinux: VmGuestPatchClassificationForLinux
+  VMGuestPatchClassificationWindows: VmGuestPatchClassificationForWindows
 
 directive:
 # copy the systemData from common-types here so that it will be automatically replaced
@@ -348,10 +352,4 @@ directive:
   - from: virtualMachineScaleSet.json
     where: $.definitions.VirtualMachineScaleSetExtension.properties.name
     transform: $["readOnly"] = true;
-  # fixing a swagger mistake, can be removed after github.com/Azure/azure-rest-api-specs/pull/19679 merges
-  - from: gallery.json
-    where: $.definitions.SharingProfile.properties.communityGalleryInfo
-    transform: >
-      $.items = undefined;
-      $["$ref"] = "#/definitions/CommunityGalleryInfo";
 ```

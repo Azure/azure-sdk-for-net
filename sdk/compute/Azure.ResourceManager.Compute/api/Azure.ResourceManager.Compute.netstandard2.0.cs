@@ -506,6 +506,8 @@ namespace Azure.ResourceManager.Compute
         public static Azure.ResourceManager.Compute.CommunityGalleryImageVersionResource GetCommunityGalleryImageVersionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Compute.CommunityGalleryResource GetCommunityGalleryResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Compute.ComputePrivateEndpointConnectionResource GetComputePrivateEndpointConnectionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Compute.Models.ComputeResourceSku> GetComputeResourceSkus(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string filter = null, string includeExtendedLocations = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Compute.Models.ComputeResourceSku> GetComputeResourceSkusAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string filter = null, string includeExtendedLocations = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Compute.DedicatedHostGroupResource> GetDedicatedHostGroup(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string hostGroupName, Azure.ResourceManager.Compute.Models.InstanceViewType? expand = default(Azure.ResourceManager.Compute.Models.InstanceViewType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.DedicatedHostGroupResource>> GetDedicatedHostGroupAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string hostGroupName, Azure.ResourceManager.Compute.Models.InstanceViewType? expand = default(Azure.ResourceManager.Compute.Models.InstanceViewType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Compute.DedicatedHostGroupResource GetDedicatedHostGroupResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -558,8 +560,6 @@ namespace Azure.ResourceManager.Compute
         public static Azure.AsyncPageable<Azure.ResourceManager.Compute.ProximityPlacementGroupResource> GetProximityPlacementGroupsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Compute.Models.VirtualMachineImageBase> GetPublishersVirtualMachineImagesEdgeZones(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, string edgeZone, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Compute.Models.VirtualMachineImageBase> GetPublishersVirtualMachineImagesEdgeZonesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, string edgeZone, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.Compute.Models.ComputeResourceSku> GetResourceSkus(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string filter = null, string includeExtendedLocations = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Compute.Models.ComputeResourceSku> GetResourceSkusAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string filter = null, string includeExtendedLocations = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Compute.RestorePointGroupResource> GetRestorePointGroup(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string restorePointGroupName, Azure.ResourceManager.Compute.Models.RestorePointGroupExpand? expand = default(Azure.ResourceManager.Compute.Models.RestorePointGroupExpand?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.RestorePointGroupResource>> GetRestorePointGroupAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string restorePointGroupName, Azure.ResourceManager.Compute.Models.RestorePointGroupExpand? expand = default(Azure.ResourceManager.Compute.Models.RestorePointGroupExpand?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Compute.RestorePointGroupResource GetRestorePointGroupResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -2746,7 +2746,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal ComputeResourceSku() { }
         public System.Collections.Generic.IReadOnlyList<string> ApiVersions { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.ResourceSkuCapabilities> Capabilities { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.ComputeResourceSkuCapabilities> Capabilities { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.ComputeResourceSkuCapacity Capacity { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.ResourceSkuCosts> Costs { get { throw null; } }
         public string Family { get { throw null; } }
@@ -2758,6 +2758,12 @@ namespace Azure.ResourceManager.Compute.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.ComputeResourceSkuRestrictions> Restrictions { get { throw null; } }
         public string Size { get { throw null; } }
         public string Tier { get { throw null; } }
+    }
+    public partial class ComputeResourceSkuCapabilities
+    {
+        internal ComputeResourceSkuCapabilities() { }
+        public string Name { get { throw null; } }
+        public string Value { get { throw null; } }
     }
     public partial class ComputeResourceSkuCapacity
     {
@@ -2777,7 +2783,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal ComputeResourceSkuLocationInfo() { }
         public System.Collections.Generic.IReadOnlyList<string> ExtendedLocations { get { throw null; } }
-        public Azure.ResourceManager.Compute.Models.ExtendedLocationType? ExtendedLocationType { get { throw null; } }
+        public Azure.ResourceManager.Resources.Models.ExtendedLocationType? ExtendedLocationType { get { throw null; } }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.ComputeResourceSkuZoneDetails> ZoneDetails { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Zones { get { throw null; } }
@@ -2809,7 +2815,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class ComputeResourceSkuZoneDetails
     {
         internal ComputeResourceSkuZoneDetails() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.ResourceSkuCapabilities> Capabilities { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.ComputeResourceSkuCapabilities> Capabilities { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Name { get { throw null; } }
     }
     public partial class ComputeSku
@@ -3304,13 +3310,13 @@ namespace Azure.ResourceManager.Compute.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public DiskStorageAccountType(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.DiskStorageAccountType PremiumLRS { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.DiskStorageAccountType PremiumV2LRS { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.DiskStorageAccountType PremiumZRS { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.DiskStorageAccountType StandardLRS { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.DiskStorageAccountType StandardSsdLRS { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.DiskStorageAccountType StandardSsdZRS { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.DiskStorageAccountType UltraSsdLRS { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.DiskStorageAccountType PremiumLrs { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.DiskStorageAccountType PremiumV2Lrs { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.DiskStorageAccountType PremiumZrs { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.DiskStorageAccountType StandardLrs { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.DiskStorageAccountType StandardSsdLrs { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.DiskStorageAccountType StandardSsdZrs { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.DiskStorageAccountType UltraSsdLrs { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Compute.Models.DiskStorageAccountType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -3361,23 +3367,6 @@ namespace Azure.ResourceManager.Compute.Models
         public static bool operator ==(Azure.ResourceManager.Compute.Models.ExecutionState left, Azure.ResourceManager.Compute.Models.ExecutionState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Compute.Models.ExecutionState (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Compute.Models.ExecutionState left, Azure.ResourceManager.Compute.Models.ExecutionState right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ExtendedLocationType : System.IEquatable<Azure.ResourceManager.Compute.Models.ExtendedLocationType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ExtendedLocationType(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.ExtendedLocationType EdgeZone { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Compute.Models.ExtendedLocationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Compute.Models.ExtendedLocationType left, Azure.ResourceManager.Compute.Models.ExtendedLocationType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Compute.Models.ExtendedLocationType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Compute.Models.ExtendedLocationType left, Azure.ResourceManager.Compute.Models.ExtendedLocationType right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class GalleryApplicationPatch : Azure.ResourceManager.Models.ResourceData
@@ -3700,9 +3689,9 @@ namespace Azure.ResourceManager.Compute.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public ImageStorageAccountType(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.ImageStorageAccountType PremiumLRS { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.ImageStorageAccountType StandardLRS { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.ImageStorageAccountType StandardZRS { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.ImageStorageAccountType PremiumLrs { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.ImageStorageAccountType StandardLrs { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.ImageStorageAccountType StandardZrs { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Compute.Models.ImageStorageAccountType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -3827,7 +3816,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class LinuxParameters
     {
         public LinuxParameters() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationLinux> ClassificationsToInclude { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationForLinux> ClassificationsToInclude { get { throw null; } }
         public string MaintenanceRunId { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> PackageNameMasksToExclude { get { throw null; } }
         public System.Collections.Generic.IList<string> PackageNameMasksToInclude { get { throw null; } }
@@ -4240,11 +4229,6 @@ namespace Azure.ResourceManager.Compute.Models
         internal PirSharedGalleryResourceData() { }
         public string UniqueId { get { throw null; } }
     }
-    public enum ProtocolType
-    {
-        Http = 0,
-        Https = 1,
-    }
     public partial class ProximityPlacementGroupPatch : Azure.ResourceManager.Compute.Models.ComputeResourcePatch
     {
         public ProximityPlacementGroupPatch() { }
@@ -4400,12 +4384,6 @@ namespace Azure.ResourceManager.Compute.Models
         public ResourceRange() { }
         public int? Max { get { throw null; } set { } }
         public int? Min { get { throw null; } set { } }
-    }
-    public partial class ResourceSkuCapabilities
-    {
-        internal ResourceSkuCapabilities() { }
-        public string Name { get { throw null; } }
-        public string Value { get { throw null; } }
     }
     public partial class ResourceSkuCosts
     {
@@ -4851,9 +4829,9 @@ namespace Azure.ResourceManager.Compute.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public SnapshotStorageAccountType(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.SnapshotStorageAccountType PremiumLRS { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.SnapshotStorageAccountType StandardLRS { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.SnapshotStorageAccountType StandardZRS { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.SnapshotStorageAccountType PremiumLrs { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.SnapshotStorageAccountType StandardLrs { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.SnapshotStorageAccountType StandardZrs { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Compute.Models.SnapshotStorageAccountType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -4900,13 +4878,13 @@ namespace Azure.ResourceManager.Compute.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public StorageAccountType(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.StorageAccountType PremiumLRS { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.StorageAccountType PremiumV2LRS { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.StorageAccountType PremiumZRS { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.StorageAccountType StandardLRS { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.StorageAccountType StandardSsdLRS { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.StorageAccountType StandardSsdZRS { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.StorageAccountType UltraSsdLRS { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.StorageAccountType PremiumLrs { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.StorageAccountType PremiumV2Lrs { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.StorageAccountType PremiumZrs { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.StorageAccountType StandardLrs { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.StorageAccountType StandardSsdLrs { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.StorageAccountType StandardSsdZrs { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.StorageAccountType UltraSsdLrs { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Compute.Models.StorageAccountType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -6047,46 +6025,46 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.ResourceManager.Compute.Models.VirtualMachineOSDisk OSDisk { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct VmGuestPatchClassificationLinux : System.IEquatable<Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationLinux>
+    public readonly partial struct VmGuestPatchClassificationForLinux : System.IEquatable<Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationForLinux>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public VmGuestPatchClassificationLinux(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationLinux Critical { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationLinux Other { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationLinux Security { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationLinux other) { throw null; }
+        public VmGuestPatchClassificationForLinux(string value) { throw null; }
+        public static Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationForLinux Critical { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationForLinux Other { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationForLinux Security { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationForLinux other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationLinux left, Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationLinux right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationLinux (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationLinux left, Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationLinux right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationForLinux left, Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationForLinux right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationForLinux (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationForLinux left, Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationForLinux right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct VmGuestPatchClassificationWindow : System.IEquatable<Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationWindow>
+    public readonly partial struct VmGuestPatchClassificationForWindows : System.IEquatable<Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationForWindows>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public VmGuestPatchClassificationWindow(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationWindow Critical { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationWindow Definition { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationWindow FeaturePack { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationWindow Security { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationWindow ServicePack { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationWindow Tools { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationWindow UpdateRollUp { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationWindow Updates { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationWindow other) { throw null; }
+        public VmGuestPatchClassificationForWindows(string value) { throw null; }
+        public static Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationForWindows Critical { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationForWindows Definition { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationForWindows FeaturePack { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationForWindows Security { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationForWindows ServicePack { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationForWindows Tools { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationForWindows UpdateRollUp { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationForWindows Updates { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationForWindows other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationWindow left, Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationWindow right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationWindow (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationWindow left, Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationWindow right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationForWindows left, Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationForWindows right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationForWindows (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationForWindows left, Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationForWindows right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -6163,7 +6141,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class WindowsParameters
     {
         public WindowsParameters() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationWindow> ClassificationsToInclude { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VmGuestPatchClassificationForWindows> ClassificationsToInclude { get { throw null; } }
         public bool? ExcludeKbsRequiringReboot { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> KbNumbersToExclude { get { throw null; } }
         public System.Collections.Generic.IList<string> KbNumbersToInclude { get { throw null; } }
@@ -6230,6 +6208,11 @@ namespace Azure.ResourceManager.Compute.Models
     {
         public WinRMListener() { }
         public System.Uri CertificateUri { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.ProtocolType? Protocol { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.WinRMListenerProtocolType? Protocol { get { throw null; } set { } }
+    }
+    public enum WinRMListenerProtocolType
+    {
+        Http = 0,
+        Https = 1,
     }
 }

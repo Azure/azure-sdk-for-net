@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.Compute.Models
         internal ComputeResourceSkuZoneDetails()
         {
             Name = new ChangeTrackingList<string>();
-            Capabilities = new ChangeTrackingList<ResourceSkuCapabilities>();
+            Capabilities = new ChangeTrackingList<ComputeResourceSkuCapabilities>();
         }
 
         /// <summary> Initializes a new instance of ComputeResourceSkuZoneDetails. </summary>
         /// <param name="name"> The set of zones that the SKU is available in with the specified capabilities. </param>
         /// <param name="capabilities"> A list of capabilities that are available for the SKU in the specified list of zones. </param>
-        internal ComputeResourceSkuZoneDetails(IReadOnlyList<string> name, IReadOnlyList<ResourceSkuCapabilities> capabilities)
+        internal ComputeResourceSkuZoneDetails(IReadOnlyList<string> name, IReadOnlyList<ComputeResourceSkuCapabilities> capabilities)
         {
             Name = name;
             Capabilities = capabilities;
@@ -32,6 +32,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The set of zones that the SKU is available in with the specified capabilities. </summary>
         public IReadOnlyList<string> Name { get; }
         /// <summary> A list of capabilities that are available for the SKU in the specified list of zones. </summary>
-        public IReadOnlyList<ResourceSkuCapabilities> Capabilities { get; }
+        public IReadOnlyList<ComputeResourceSkuCapabilities> Capabilities { get; }
     }
 }

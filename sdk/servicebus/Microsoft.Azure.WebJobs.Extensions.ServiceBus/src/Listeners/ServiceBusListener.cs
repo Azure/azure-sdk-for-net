@@ -390,10 +390,13 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                         }
                     }
 
-                    IReadOnlyList<ServiceBusReceivedMessage> messages =
-                        await receiver.ReceiveMessagesAsync(
-                            _serviceBusOptions.MaxMessageBatchSize,
-                            cancellationToken: cancellationToken).AwaitWithCancellation(cancellationToken);
+                    // For non-session receiver, we just fall back to the operation timeout.
+                    TimeSpan? maxWaitTime = _isSessionsEnabled ? _serviceBusOptions.SessionIdleTimeout : null;
+
+                    IReadOnlyList<ServiceBusReceivedMessage> messages = await receiver.ReceiveMessagesAsync(
+                        _serviceBusOptions.MaxMessageBatchSize,
+                        maxWaitTime,
+                        cancellationToken).ConfigureAwait(false);
 
                     if (messages.Count > 0)
                     {

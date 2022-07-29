@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.Storage.Models
         internal static BlobInventoryPolicyDefinition DeserializeBlobInventoryPolicyDefinition(JsonElement element)
         {
             Optional<BlobInventoryPolicyFilter> filters = default;
-            Format format = default;
-            Schedule schedule = default;
-            ObjectType objectType = default;
+            BlobInventoryPolicyFormat format = default;
+            BlobInventoryPolicySchedule schedule = default;
+            BlobInventoryPolicyObjectType objectType = default;
             IList<string> schemaFields = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -58,17 +58,17 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (property.NameEquals("format"))
                 {
-                    format = new Format(property.Value.GetString());
+                    format = new BlobInventoryPolicyFormat(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("schedule"))
                 {
-                    schedule = new Schedule(property.Value.GetString());
+                    schedule = new BlobInventoryPolicySchedule(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("objectType"))
                 {
-                    objectType = new ObjectType(property.Value.GetString());
+                    objectType = new BlobInventoryPolicyObjectType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("schemaFields"))

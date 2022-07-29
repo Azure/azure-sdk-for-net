@@ -27,44 +27,6 @@ namespace Azure.ResourceManager.ContainerService
             );
         }
 
-        /// <summary> Gets a collection of OSOptionProfileResources in the SubscriptionResource. </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of OSOptionProfileResources and their operations over a OSOptionProfileResource. </returns>
-        public static OSOptionProfileCollection GetOSOptionProfiles(this SubscriptionResource subscriptionResource)
-        {
-            return GetExtensionClient(subscriptionResource).GetOSOptionProfiles();
-        }
-
-        /// <summary>
-        /// Gets supported OS options in the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/locations/{location}/osOptions/default
-        /// Operation Id: ManagedClusters_GetOSOptions
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of Azure region. </param>
-        /// <param name="resourceType"> The resource type for which the OS options needs to be returned. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public static async Task<Response<OSOptionProfileResource>> GetOSOptionProfileAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string resourceType = null, CancellationToken cancellationToken = default)
-        {
-            return await subscriptionResource.GetOSOptionProfiles().GetAsync(location, resourceType, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets supported OS options in the specified subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/locations/{location}/osOptions/default
-        /// Operation Id: ManagedClusters_GetOSOptions
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of Azure region. </param>
-        /// <param name="resourceType"> The resource type for which the OS options needs to be returned. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public static Response<OSOptionProfileResource> GetOSOptionProfile(this SubscriptionResource subscriptionResource, AzureLocation location, string resourceType = null, CancellationToken cancellationToken = default)
-        {
-            return subscriptionResource.GetOSOptionProfiles().Get(location, resourceType, cancellationToken);
-        }
-
         /// <summary>
         /// Gets a list of managed clusters in the specified subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/managedClusters
@@ -98,10 +60,10 @@ namespace Azure.ResourceManager.ContainerService
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SnapshotResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SnapshotResource> GetSnapshotsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AgentPoolSnapshotResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<AgentPoolSnapshotResource> GetAgentPoolSnapshotsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetSnapshotsAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetAgentPoolSnapshotsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -111,10 +73,10 @@ namespace Azure.ResourceManager.ContainerService
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SnapshotResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SnapshotResource> GetSnapshots(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AgentPoolSnapshotResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<AgentPoolSnapshotResource> GetAgentPoolSnapshots(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetSnapshots(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetAgentPoolSnapshots(cancellationToken);
         }
 
         private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
@@ -166,12 +128,12 @@ namespace Azure.ResourceManager.ContainerService
             return resourceGroupResource.GetManagedClusters().Get(resourceName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SnapshotResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of AgentPoolSnapshotResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of SnapshotResources and their operations over a SnapshotResource. </returns>
-        public static SnapshotCollection GetSnapshots(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of AgentPoolSnapshotResources and their operations over a AgentPoolSnapshotResource. </returns>
+        public static AgentPoolSnapshotCollection GetAgentPoolSnapshots(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetSnapshots();
+            return GetExtensionClient(resourceGroupResource).GetAgentPoolSnapshots();
         }
 
         /// <summary>
@@ -185,9 +147,9 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<SnapshotResource>> GetSnapshotAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        public static async Task<Response<AgentPoolSnapshotResource>> GetAgentPoolSnapshotAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetSnapshots().GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetAgentPoolSnapshots().GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -201,9 +163,9 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<SnapshotResource> GetSnapshot(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        public static Response<AgentPoolSnapshotResource> GetAgentPoolSnapshot(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetSnapshots().Get(resourceName, cancellationToken);
+            return resourceGroupResource.GetAgentPoolSnapshots().Get(resourceName, cancellationToken);
         }
 
         #region OSOptionProfileResource
@@ -339,20 +301,20 @@ namespace Azure.ResourceManager.ContainerService
         }
         #endregion
 
-        #region SnapshotResource
+        #region AgentPoolSnapshotResource
         /// <summary>
-        /// Gets an object representing a <see cref="SnapshotResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SnapshotResource.CreateResourceIdentifier" /> to create a <see cref="SnapshotResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AgentPoolSnapshotResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AgentPoolSnapshotResource.CreateResourceIdentifier" /> to create an <see cref="AgentPoolSnapshotResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SnapshotResource" /> object. </returns>
-        public static SnapshotResource GetSnapshotResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AgentPoolSnapshotResource" /> object. </returns>
+        public static AgentPoolSnapshotResource GetAgentPoolSnapshotResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SnapshotResource.ValidateResourceId(id);
-                return new SnapshotResource(client, id);
+                AgentPoolSnapshotResource.ValidateResourceId(id);
+                return new AgentPoolSnapshotResource(client, id);
             }
             );
         }

@@ -634,20 +634,20 @@ namespace Azure.ResourceManager.CosmosDB
         }
         #endregion
 
-        #region CosmosTableResource
+        #region CosmosDBTableResource
         /// <summary>
-        /// Gets an object representing a <see cref="CosmosTableResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CosmosTableResource.CreateResourceIdentifier" /> to create a <see cref="CosmosTableResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="CosmosDBTableResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CosmosDBTableResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBTableResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CosmosTableResource" /> object. </returns>
-        public static CosmosTableResource GetCosmosTableResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CosmosDBTableResource" /> object. </returns>
+        public static CosmosDBTableResource GetCosmosDBTableResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                CosmosTableResource.ValidateResourceId(id);
-                return new CosmosTableResource(client, id);
+                CosmosDBTableResource.ValidateResourceId(id);
+                return new CosmosDBTableResource(client, id);
             }
             );
         }

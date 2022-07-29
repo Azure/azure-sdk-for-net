@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStringValue(Users);
             }
             writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
+            writer.WriteStringValue(DatabaseName);
             writer.WriteEndObject();
         }
 

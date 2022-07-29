@@ -9,6 +9,7 @@ using Azure.Core.TestFramework;
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
+using Azure.Storage.Test.Shared;
 using Moq;
 using NUnit.Framework;
 
@@ -602,6 +603,77 @@ namespace Azure.Storage.Files.Shares.Tests
             TestHelper.AssertExpectedException(
                 () => serviceClient.GenerateAccountSasUri(sasBuilder),
                 new InvalidOperationException("SAS Uri cannot be generated. builder.Services does specify Files. builder.Services must either specify Files or specify all Services are accessible in the value."));
+        }
+
+        private async Task InvokeAccountSasTest(
+            string permissions = "rwdylacuptfi",
+            string services = "bqtf",
+            string resourceType = "sco")
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+            string directoryName = GetNewDirectoryName();
+            string fileName = GetNewFileName();
+            ShareDirectoryClient directory = InstrumentClient(test.Share.GetDirectoryClient(directoryName));
+            await directory.CreateAsync().ConfigureAwait(false);
+            ShareFileClient file = directory.GetFileClient(fileName);
+            await file.CreateAsync(Constants.MB).ConfigureAwait(false);
+
+            // Generate a SAS that would set the srt / ResourceTypes in a different order than
+            // the .NET SDK would normally create the SAS
+            TestAccountSasBuilder accountSasBuilder = new TestAccountSasBuilder(
+                permissions: permissions,
+                expiresOn: Recording.UtcNow.AddDays(1),
+                services: services,
+                resourceTypes: resourceType);
+
+            UriBuilder blobUriBuilder = new UriBuilder(file.Uri)
+            {
+                Query = accountSasBuilder.ToTestSasQueryParameters(Tenants.GetNewSharedKeyCredentials()).ToString()
+            };
+
+            // Assert
+            ShareFileClient sasBlobClient = InstrumentClient(new ShareFileClient(blobUriBuilder.Uri, GetOptions()));
+            await sasBlobClient.GetPropertiesAsync();
+        }
+
+        [RecordedTest]
+        [TestCase("sco")]
+        [TestCase("soc")]
+        [TestCase("cos")]
+        [TestCase("ocs")]
+        [TestCase("os")]
+        [TestCase("oc")]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_06_12)]
+        public async Task AccountSas_ResourceTypeOrder(string resourceType)
+        {
+            await InvokeAccountSasTest(resourceType: resourceType);
+        }
+
+        [RecordedTest]
+        [TestCase("bfqt")]
+        [TestCase("qftb")]
+        [TestCase("tqfb")]
+        [TestCase("fqt")]
+        [TestCase("qf")]
+        [TestCase("fb")]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_06_12)]
+        public async Task AccountSas_ServiceOrder(string services)
+        {
+            await InvokeAccountSasTest(services: services);
+        }
+
+        [RecordedTest]
+        [TestCase("rwdylacuptfi")]
+        [TestCase("cuprwdylatfi")]
+        [TestCase("cudypafitrwl")]
+        [TestCase("cuprwdyla")]
+        [TestCase("rywdlcaup")]
+        [TestCase("larwdycup")]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_06_12)]
+        public async Task AccountSas_PermissionsOrder(string permissions)
+        {
+            await InvokeAccountSasTest(permissions: permissions);
         }
         #endregion
 

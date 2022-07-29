@@ -60,7 +60,7 @@ jobs:
           OSVmImage: MMS2019
         MacOs:
           Pool: Azure Pipelines
-          OSVmImage: "macOS-10.15"
+          OSVmImage: "macos-11"
     pool:
       name: $(Pool)
       vmImage: $(OSVmImage)

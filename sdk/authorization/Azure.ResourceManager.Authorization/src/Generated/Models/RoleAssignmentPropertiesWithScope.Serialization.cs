@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -16,7 +17,7 @@ namespace Azure.ResourceManager.Authorization.Models
         {
             Optional<string> scope = default;
             Optional<ResourceIdentifier> roleDefinitionId = default;
-            Optional<string> principalId = default;
+            Optional<Guid> principalId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scope"))
@@ -36,11 +37,16 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 if (property.NameEquals("principalId"))
                 {
-                    principalId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    principalId = property.Value.GetGuid();
                     continue;
                 }
             }
-            return new RoleAssignmentPropertiesWithScope(scope.Value, roleDefinitionId.Value, principalId.Value);
+            return new RoleAssignmentPropertiesWithScope(scope.Value, roleDefinitionId.Value, Optional.ToNullable(principalId));
         }
     }
 }

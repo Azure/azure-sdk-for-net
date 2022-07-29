@@ -71,9 +71,16 @@ rename-mapping:
   TunnelConnectionHealth.lastConnectionEstablishedUtcTime: lastConnectionEstablishedOn
   ConnectivityIssue.type: ConnectivityIssueType
   HttpHeader: NetworkWatcherHttpHeader
+  HttpMethod: NetworkWatcherHttpMethod
+  HttpConfiguration: NetworkHttpConfiguration
+  HttpConfigurationMethod: NetworkHttpConfigurationMethod
   IPVersion: NetworkIPVersion
   IPConfiguration: NetworkIPConfiguration
+  IPConfigurationProfile: NetworkIPConfigurationProfile
+  IPConfigurationBgpPeeringAddress: NetworkIPConfigurationBgpPeeringAddress
   IPAllocationMethod: NetworkIPAllocationMethod
+  IpAllocationType: NetworkIPAllocationType
+  IpAllocationListResult: NetworkIPAllocationListResult
   AuthenticationMethod: NetworkAuthenticationMethod
   ConnectionStateSnapshot.connectionState: NetworkConnectionState
   ConnectivityInformation.connectionStatus: NetworkConnectionStatus
@@ -165,6 +172,8 @@ request-path-to-resource-name:
 override-operation-name:
   ApplicationGateways_ListAvailableWafRuleSets: GetApplicationGatewayAvailableWafRuleSetsAsync
   VirtualNetworkGateways_VpnDeviceConfigurationScript: VpnDeviceConfigurationScript
+  VirtualHubBgpConnections_ListLearnedRoutes: GetLearnedRoutesVirtualHubBgpConnection
+  VirtualHubBgpConnections_ListAdvertisedRoutes: GetAdvertisedRoutesVirtualHubBgpConnection
 
 directive:
   - remove-operation: 'PutBastionShareableLink'

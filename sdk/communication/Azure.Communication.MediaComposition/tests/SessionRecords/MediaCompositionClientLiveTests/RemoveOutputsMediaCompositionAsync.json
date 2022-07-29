@@ -1,0 +1,244 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://shwali-test-resource.int.communication.azure.net/mediaCompositions/presentation?api-version=2022-07-16-preview1",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "683",
+        "Content-Type": "application/json",
+        "traceparent": "00-0cb74d23f6210c4aaf09451d10e43536-0865c40758d5cd4b-00",
+        "User-Agent": "azsdk-net-Communication.MediaComposition/1.0.0-alpha.20220713.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "18b2041786f01ec1225715cc427f6ffa",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Wed, 13 Jul 2022 23:21:45 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "id": "presentation",
+        "layout": {
+          "resolution": {
+            "width": 1920,
+            "height": 1080
+          },
+          "presenter": {
+            "presenterId": "presenter",
+            "supportId": "support"
+          }
+        },
+        "inputs": {
+          "presenter": {
+            "participant": {
+              "id": {
+                "microsoftTeamsUser": {
+                  "userId": "f3ba9014-6dca-4456-8ec0-fa03cfa2b7b7"
+                }
+              },
+              "placeholderImageUri": "https://imageendpoint",
+              "call": "teamsMeeting"
+            }
+          },
+          "support": {
+            "participant": {
+              "id": {
+                "microsoftTeamsUser": {
+                  "userId": "fa4337b5-f13a-41c5-a34f-f2aa46699b61"
+                }
+              },
+              "placeholderImageUri": "https://imageendpoint",
+              "call": "teamsMeeting"
+            }
+          },
+          "teamsMeeting": {
+            "teamsMeeting": {
+              "teamsJoinUrl": "https://teamsJoinUrl"
+            }
+          }
+        },
+        "outputs": {
+          "acsGroupCall": {
+            "groupCall": {
+              "id": "d12d2277-ffec-4e22-9979-8c0d8c13d193"
+            }
+          }
+        },
+        "streamState": "notStarted"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2022-07-16-preview1",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 13 Jul 2022 23:21:43 GMT",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0h1PPYgAAAADGfPdhNpTaRaqs0hz5lQ4tWVZSMzBFREdFMDMxMABjYzkyNzU4ZC0wNWY3LTRhZDYtYWE1ZS0wZmE5NzE4ZDg5ODU=",
+        "X-Cache": "CONFIG_NOCACHE"
+      },
+      "ResponseBody": {
+        "id": "presentation",
+        "layout": {
+          "kind": "presenter",
+          "resolution": {
+            "width": 1920,
+            "height": 1080
+          },
+          "presenter": {
+            "presenterId": "presenter",
+            "supportId": "support",
+            "supportPosition": "bottomRight",
+            "supportAspectRatio": 1
+          }
+        },
+        "inputs": {
+          "presenter": {
+            "kind": "participant",
+            "participant": {
+              "id": {
+                "microsoftTeamsUser": {
+                  "userId": "f3ba9014-6dca-4456-8ec0-fa03cfa2b7b7"
+                }
+              },
+              "placeholderImageUri": "https://imageendpoint",
+              "call": "teamsMeeting"
+            }
+          },
+          "support": {
+            "kind": "participant",
+            "participant": {
+              "id": {
+                "microsoftTeamsUser": {
+                  "userId": "fa4337b5-f13a-41c5-a34f-f2aa46699b61"
+                }
+              },
+              "placeholderImageUri": "https://imageendpoint",
+              "call": "teamsMeeting"
+            }
+          },
+          "teamsMeeting": {
+            "kind": "teamsMeeting",
+            "teamsMeeting": {
+              "teamsJoinUrl": "https://teamsJoinUrl"
+            }
+          }
+        },
+        "outputs": {
+          "acsGroupCall": {
+            "kind": "groupCall",
+            "groupCall": {
+              "id": "d12d2277-ffec-4e22-9979-8c0d8c13d193"
+            }
+          }
+        },
+        "streamState": "notStarted"
+      }
+    },
+    {
+      "RequestUri": "https://shwali-test-resource.int.communication.azure.net/mediaCompositions/presentation?api-version=2022-07-16-preview1",
+      "RequestMethod": "PATCH",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "53",
+        "Content-Type": "application/json",
+        "traceparent": "00-bd9a71ede496a143b95c7ab3435d0ef6-957e000cc8331e49-00",
+        "User-Agent": "azsdk-net-Communication.MediaComposition/1.0.0-alpha.20220713.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "c485498fe7f1f1af6c53705f3f9ff370",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Wed, 13 Jul 2022 23:21:45 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "id": "presentation",
+        "outputs": {
+          "acsGroupCall": null
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2022-07-16-preview1",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 13 Jul 2022 23:21:43 GMT",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0h1PPYgAAAAAouTb/GddxQYIVGzWKPHjLWVZSMzBFREdFMDMxMABjYzkyNzU4ZC0wNWY3LTRhZDYtYWE1ZS0wZmE5NzE4ZDg5ODU=",
+        "X-Cache": "CONFIG_NOCACHE"
+      },
+      "ResponseBody": {
+        "id": "presentation",
+        "layout": {
+          "kind": "presenter",
+          "resolution": {
+            "width": 1920,
+            "height": 1080
+          },
+          "presenter": {
+            "presenterId": "presenter",
+            "supportId": "support",
+            "supportPosition": "bottomRight",
+            "supportAspectRatio": 1
+          }
+        },
+        "inputs": {
+          "presenter": {
+            "kind": "participant",
+            "participant": {
+              "id": {
+                "microsoftTeamsUser": {
+                  "userId": "f3ba9014-6dca-4456-8ec0-fa03cfa2b7b7"
+                }
+              },
+              "placeholderImageUri": "https://imageendpoint",
+              "call": "teamsMeeting"
+            }
+          },
+          "support": {
+            "kind": "participant",
+            "participant": {
+              "id": {
+                "microsoftTeamsUser": {
+                  "userId": "fa4337b5-f13a-41c5-a34f-f2aa46699b61"
+                }
+              },
+              "placeholderImageUri": "https://imageendpoint",
+              "call": "teamsMeeting"
+            }
+          },
+          "teamsMeeting": {
+            "kind": "teamsMeeting",
+            "teamsMeeting": {
+              "teamsJoinUrl": "https://teamsJoinUrl"
+            }
+          }
+        },
+        "outputs": {},
+        "streamState": "notStarted"
+      }
+    },
+    {
+      "RequestUri": "https://shwali-test-resource.int.communication.azure.net/mediaCompositions/presentation?api-version=2022-07-16-preview1",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-87783ea8ea18244fbec3127f6d6f8b3c-4d4a0cddcab3904f-00",
+        "User-Agent": "azsdk-net-Communication.MediaComposition/1.0.0-alpha.20220713.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "2462e00a4e4810c98f8d216cae0c19dc",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Wed, 13 Jul 2022 23:21:45 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "api-supported-versions": "2022-07-16-preview1",
+        "Date": "Wed, 13 Jul 2022 23:21:43 GMT",
+        "X-Azure-Ref": "0h1PPYgAAAAAwI4cc1bPPSIZUsZO08P4NWVZSMzBFREdFMDMxMABjYzkyNzU4ZC0wNWY3LTRhZDYtYWE1ZS0wZmE5NzE4ZDg5ODU=",
+        "X-Cache": "CONFIG_NOCACHE"
+      },
+      "ResponseBody": null
+    }
+  ],
+  "Variables": {
+    "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://shwali-test-resource.int.communication.azure.net/;accesskey=Kg==",
+    "RandomSeed": "53226169"
+  }
+}
