@@ -24,7 +24,7 @@ namespace Azure.Test.Perf
             // Special case since log(0) is undefined
             if (value == 0)
             {
-                return value.ToString($"N{minSignificantDigits - 1}");
+                return value.ToString($"F{minSignificantDigits - 1}");
             }
 
             double log = Math.Log10(Math.Abs(value));
