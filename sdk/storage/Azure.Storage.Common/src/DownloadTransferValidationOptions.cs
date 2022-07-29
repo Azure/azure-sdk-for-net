@@ -14,7 +14,7 @@ namespace Azure.Storage
         public StorageChecksumAlgorithm ChecksumAlgorithm { get; set; } = StorageChecksumAlgorithm.None;
 
         /// <summary>
-        /// Defaults to true. False can only be specified on specific operations.
+        /// Defaults to true. False can only be specified on specific operations and not at the client level.
         /// Indicates whether the SDK should validate the content
         /// body against the content hash before returning contents to the caller.
         /// If set to false, caller is responsible for extracting the hash out

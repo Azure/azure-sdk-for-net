@@ -136,7 +136,8 @@ namespace Azure.Storage.Blobs
         public Uri GeoRedundantSecondaryUri { get; set; }
 
         /// <summary>
-        /// Transfer validation options to be applied to blob transfers from this client.
+        /// Configures whether to send or receive checksum headers for blob uploads and downloads. Downloads
+        /// can optionally validate that the content matches the checksum.
         /// </summary>
         public TransferValidationOptions TransferValidation { get; } = new();
 
