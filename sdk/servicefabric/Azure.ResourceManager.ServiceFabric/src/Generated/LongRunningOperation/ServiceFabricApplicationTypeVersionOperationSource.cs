@@ -14,11 +14,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ServiceFabric
 {
-    internal class ServiceFabricApplicationTypeVersionResourceOperationSource : IOperationSource<ServiceFabricApplicationTypeVersionResource>
+    internal class ServiceFabricApplicationTypeVersionOperationSource : IOperationSource<ServiceFabricApplicationTypeVersionResource>
     {
         private readonly ArmClient _client;
 
-        internal ServiceFabricApplicationTypeVersionResourceOperationSource(ArmClient client)
+        internal ServiceFabricApplicationTypeVersionOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.ServiceFabric
         ServiceFabricApplicationTypeVersionResource IOperationSource<ServiceFabricApplicationTypeVersionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            var data = ServiceFabricApplicationTypeVersionResourceData.DeserializeServiceFabricApplicationTypeVersionResourceData(document.RootElement);
+            var data = ServiceFabricApplicationTypeVersionData.DeserializeServiceFabricApplicationTypeVersionData(document.RootElement);
             return new ServiceFabricApplicationTypeVersionResource(_client, data);
         }
 
         async ValueTask<ServiceFabricApplicationTypeVersionResource> IOperationSource<ServiceFabricApplicationTypeVersionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = ServiceFabricApplicationTypeVersionResourceData.DeserializeServiceFabricApplicationTypeVersionResourceData(document.RootElement);
+            var data = ServiceFabricApplicationTypeVersionData.DeserializeServiceFabricApplicationTypeVersionData(document.RootElement);
             return new ServiceFabricApplicationTypeVersionResource(_client, data);
         }
     }

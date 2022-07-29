@@ -16,18 +16,18 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     /// The application resource for patch operations.
     /// Serialized Name: ApplicationResourceUpdate
     /// </summary>
-    public partial class ServiceFabricApplicationResourcePatch : TrackedResourceData
+    public partial class ServiceFabricApplicationPatch : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ServiceFabricApplicationResourcePatch. </summary>
+        /// <summary> Initializes a new instance of ServiceFabricApplicationPatch. </summary>
         /// <param name="location"> The location. </param>
-        public ServiceFabricApplicationResourcePatch(AzureLocation location) : base(location)
+        public ServiceFabricApplicationPatch(AzureLocation location) : base(location)
         {
             Parameters = new ChangeTrackingDictionary<string, string>();
             Metrics = new ChangeTrackingList<ApplicationMetricDescription>();
             ManagedIdentities = new ChangeTrackingList<ApplicationUserAssignedIdentity>();
         }
 
-        /// <summary> Initializes a new instance of ServiceFabricApplicationResourcePatch. </summary>
+        /// <summary> Initializes a new instance of ServiceFabricApplicationPatch. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// Azure resource etag.
         /// Serialized Name: ProxyResource.etag
         /// </param>
-        internal ServiceFabricApplicationResourcePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string typeVersion, IDictionary<string, string> parameters, ApplicationUpgradePolicy upgradePolicy, long? minimumNodes, long? maximumNodes, bool? removeApplicationCapacity, IList<ApplicationMetricDescription> metrics, IList<ApplicationUserAssignedIdentity> managedIdentities, ETag? etag) : base(id, name, resourceType, systemData, tags, location)
+        internal ServiceFabricApplicationPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string typeVersion, IDictionary<string, string> parameters, ApplicationUpgradePolicy upgradePolicy, long? minimumNodes, long? maximumNodes, bool? removeApplicationCapacity, IList<ApplicationMetricDescription> metrics, IList<ApplicationUserAssignedIdentity> managedIdentities, ETag? etag) : base(id, name, resourceType, systemData, tags, location)
         {
             TypeVersion = typeVersion;
             Parameters = parameters;

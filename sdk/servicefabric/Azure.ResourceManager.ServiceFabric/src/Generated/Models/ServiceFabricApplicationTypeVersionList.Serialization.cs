@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     {
         internal static ServiceFabricApplicationTypeVersionList DeserializeServiceFabricApplicationTypeVersionList(JsonElement element)
         {
-            Optional<IReadOnlyList<ServiceFabricApplicationTypeVersionResourceData>> value = default;
+            Optional<IReadOnlyList<ServiceFabricApplicationTypeVersionData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ServiceFabricApplicationTypeVersionResourceData> array = new List<ServiceFabricApplicationTypeVersionResourceData>();
+                    List<ServiceFabricApplicationTypeVersionData> array = new List<ServiceFabricApplicationTypeVersionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceFabricApplicationTypeVersionResourceData.DeserializeServiceFabricApplicationTypeVersionResourceData(item));
+                        array.Add(ServiceFabricApplicationTypeVersionData.DeserializeServiceFabricApplicationTypeVersionData(item));
                     }
                     value = array;
                     continue;

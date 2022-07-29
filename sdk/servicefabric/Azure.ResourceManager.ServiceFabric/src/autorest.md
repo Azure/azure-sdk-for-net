@@ -40,8 +40,11 @@ rename-mapping:
   ClusterVersionDetails.supportExpiryUtc: SupportExpiryOn
   NodeTypeDescription.multipleAvailabilityZones: IsMultipleAvailabilityZonesSupported
   AddOnFeatures: ClusterAddOnFeatures
+  ApplicationResource: ServiceFabricApplication
   ApplicationResourceList: ServiceFabricApplicationList
+  ApplicationTypeResource: ServiceFabricApplicationType
   ApplicationTypeResourceList: ServiceFabricApplicationTypeList
+  ApplicationTypeVersionResource: ServiceFabricApplicationTypeVersion
   ApplicationTypeVersionResourceList: ServiceFabricApplicationTypeVersionList
   AzureActiveDirectory: ClusterAzureActiveDirectorySetting
   CertificateDescription: ClusterCertificateDescription
@@ -62,13 +65,11 @@ rename-mapping:
   ServerCertificateCommonName: ClusterServerCertificateCommonName
   ServerCertificateCommonNames: ClusterServerCertificateCommonNames
   ServiceKind: ApplicationServiceKind
+  ServiceResource: ServiceFabricService
   StoreName: ClusterCertificateStoreName
   UpgradeMode: ClusterUpgradeMode
   
 prepend-rp-prefix:
-  - ApplicationResource
-  - ApplicationTypeResource
-  - ApplicationTypeVersionResource
   - Cluster
   - ClusterListResult
   - ClusterState

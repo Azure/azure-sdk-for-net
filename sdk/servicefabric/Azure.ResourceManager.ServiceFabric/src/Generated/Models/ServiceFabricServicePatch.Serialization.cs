@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    public partial class ServiceFabricServiceResourcePatch : IUtf8JsonSerializable
+    public partial class ServiceFabricServicePatch : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             writer.WriteEndObject();
         }
 
-        internal static ServiceFabricServiceResourcePatch DeserializeServiceFabricServiceResourcePatch(JsonElement element)
+        internal static ServiceFabricServicePatch DeserializeServiceFabricServicePatch(JsonElement element)
         {
             Optional<ETag> etag = default;
             Optional<IDictionary<string, string>> tags = default;
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     continue;
                 }
             }
-            return new ServiceFabricServiceResourcePatch(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, placementConstraints.Value, Optional.ToList(correlationScheme), Optional.ToList(serviceLoadMetrics), Optional.ToList(servicePlacementPolicies), Optional.ToNullable(defaultMoveCost), Optional.ToNullable(serviceKind), Optional.ToNullable(etag));
+            return new ServiceFabricServicePatch(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, placementConstraints.Value, Optional.ToList(correlationScheme), Optional.ToList(serviceLoadMetrics), Optional.ToList(servicePlacementPolicies), Optional.ToNullable(defaultMoveCost), Optional.ToNullable(serviceKind), Optional.ToNullable(etag));
         }
     }
 }

@@ -12,16 +12,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ServiceFabric
 {
-    /// <summary> A class representing the ServiceFabricApplicationTypeResource data model. </summary>
-    public partial class ServiceFabricApplicationTypeResourceData : TrackedResourceData
+    /// <summary> A class representing the ServiceFabricApplicationType data model. </summary>
+    public partial class ServiceFabricApplicationTypeData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ServiceFabricApplicationTypeResourceData. </summary>
+        /// <summary> Initializes a new instance of ServiceFabricApplicationTypeData. </summary>
         /// <param name="location"> The location. </param>
-        public ServiceFabricApplicationTypeResourceData(AzureLocation location) : base(location)
+        public ServiceFabricApplicationTypeData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceFabricApplicationTypeResourceData. </summary>
+        /// <summary> Initializes a new instance of ServiceFabricApplicationTypeData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// Azure resource etag.
         /// Serialized Name: ProxyResource.etag
         /// </param>
-        internal ServiceFabricApplicationTypeResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string provisioningState, ETag? etag) : base(id, name, resourceType, systemData, tags, location)
+        internal ServiceFabricApplicationTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string provisioningState, ETag? etag) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             ETag = etag;

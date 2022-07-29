@@ -13,17 +13,17 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ServiceFabric
 {
-    /// <summary> A class representing the ServiceFabricApplicationTypeVersionResource data model. </summary>
-    public partial class ServiceFabricApplicationTypeVersionResourceData : TrackedResourceData
+    /// <summary> A class representing the ServiceFabricApplicationTypeVersion data model. </summary>
+    public partial class ServiceFabricApplicationTypeVersionData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ServiceFabricApplicationTypeVersionResourceData. </summary>
+        /// <summary> Initializes a new instance of ServiceFabricApplicationTypeVersionData. </summary>
         /// <param name="location"> The location. </param>
-        public ServiceFabricApplicationTypeVersionResourceData(AzureLocation location) : base(location)
+        public ServiceFabricApplicationTypeVersionData(AzureLocation location) : base(location)
         {
             DefaultParameterList = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ServiceFabricApplicationTypeVersionResourceData. </summary>
+        /// <summary> Initializes a new instance of ServiceFabricApplicationTypeVersionData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// Azure resource etag.
         /// Serialized Name: ProxyResource.etag
         /// </param>
-        internal ServiceFabricApplicationTypeVersionResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string provisioningState, Uri appPackageUri, IReadOnlyDictionary<string, string> defaultParameterList, ETag? etag) : base(id, name, resourceType, systemData, tags, location)
+        internal ServiceFabricApplicationTypeVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string provisioningState, Uri appPackageUri, IReadOnlyDictionary<string, string> defaultParameterList, ETag? etag) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             AppPackageUri = appPackageUri;

@@ -16,18 +16,18 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     /// The service resource for patch operations.
     /// Serialized Name: ServiceResourceUpdate
     /// </summary>
-    public partial class ServiceFabricServiceResourcePatch : TrackedResourceData
+    public partial class ServiceFabricServicePatch : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ServiceFabricServiceResourcePatch. </summary>
+        /// <summary> Initializes a new instance of ServiceFabricServicePatch. </summary>
         /// <param name="location"> The location. </param>
-        public ServiceFabricServiceResourcePatch(AzureLocation location) : base(location)
+        public ServiceFabricServicePatch(AzureLocation location) : base(location)
         {
             CorrelationScheme = new ChangeTrackingList<ServiceCorrelationDescription>();
             ServiceLoadMetrics = new ChangeTrackingList<ServiceLoadMetricDescription>();
             ServicePlacementPolicies = new ChangeTrackingList<ServicePlacementPolicyDescription>();
         }
 
-        /// <summary> Initializes a new instance of ServiceFabricServiceResourcePatch. </summary>
+        /// <summary> Initializes a new instance of ServiceFabricServicePatch. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// Azure resource etag.
         /// Serialized Name: ProxyResource.etag
         /// </param>
-        internal ServiceFabricServiceResourcePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string placementConstraints, IList<ServiceCorrelationDescription> correlationScheme, IList<ServiceLoadMetricDescription> serviceLoadMetrics, IList<ServicePlacementPolicyDescription> servicePlacementPolicies, ApplicationMoveCost? defaultMoveCost, ApplicationServiceKind? serviceKind, ETag? etag) : base(id, name, resourceType, systemData, tags, location)
+        internal ServiceFabricServicePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string placementConstraints, IList<ServiceCorrelationDescription> correlationScheme, IList<ServiceLoadMetricDescription> serviceLoadMetrics, IList<ServicePlacementPolicyDescription> servicePlacementPolicies, ApplicationMoveCost? defaultMoveCost, ApplicationServiceKind? serviceKind, ETag? etag) : base(id, name, resourceType, systemData, tags, location)
         {
             PlacementConstraints = placementConstraints;
             CorrelationScheme = correlationScheme;

@@ -14,11 +14,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ServiceFabric
 {
-    internal class ServiceFabricServiceResourceOperationSource : IOperationSource<ServiceFabricServiceResource>
+    internal class ServiceFabricServiceOperationSource : IOperationSource<ServiceFabricServiceResource>
     {
         private readonly ArmClient _client;
 
-        internal ServiceFabricServiceResourceOperationSource(ArmClient client)
+        internal ServiceFabricServiceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.ServiceFabric
         ServiceFabricServiceResource IOperationSource<ServiceFabricServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            var data = ServiceFabricServiceResourceData.DeserializeServiceFabricServiceResourceData(document.RootElement);
+            var data = ServiceFabricServiceData.DeserializeServiceFabricServiceData(document.RootElement);
             return new ServiceFabricServiceResource(_client, data);
         }
 
         async ValueTask<ServiceFabricServiceResource> IOperationSource<ServiceFabricServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = ServiceFabricServiceResourceData.DeserializeServiceFabricServiceResourceData(document.RootElement);
+            var data = ServiceFabricServiceData.DeserializeServiceFabricServiceData(document.RootElement);
             return new ServiceFabricServiceResource(_client, data);
         }
     }

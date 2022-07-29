@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -13,7 +14,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ServiceFabric
 {
-    public partial class ServiceFabricApplicationTypeResourceData : IUtf8JsonSerializable
+    public partial class ServiceFabricApplicationTypeVersionData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -33,11 +34,16 @@ namespace Azure.ResourceManager.ServiceFabric
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
+            if (Optional.IsDefined(AppPackageUri))
+            {
+                writer.WritePropertyName("appPackageUrl");
+                writer.WriteStringValue(AppPackageUri.AbsoluteUri);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
-        internal static ServiceFabricApplicationTypeResourceData DeserializeServiceFabricApplicationTypeResourceData(JsonElement element)
+        internal static ServiceFabricApplicationTypeVersionData DeserializeServiceFabricApplicationTypeVersionData(JsonElement element)
         {
             Optional<ETag> etag = default;
             Optional<IDictionary<string, string>> tags = default;
@@ -47,6 +53,8 @@ namespace Azure.ResourceManager.ServiceFabric
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> provisioningState = default;
+            Optional<Uri> appPackageUrl = default;
+            Optional<IReadOnlyDictionary<string, string>> defaultParameterList = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
@@ -118,11 +126,36 @@ namespace Azure.ResourceManager.ServiceFabric
                             provisioningState = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("appPackageUrl"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                appPackageUrl = null;
+                                continue;
+                            }
+                            appPackageUrl = new Uri(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("defaultParameterList"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                dictionary.Add(property1.Name, property1.Value.GetString());
+                            }
+                            defaultParameterList = dictionary;
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new ServiceFabricApplicationTypeResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, provisioningState.Value, Optional.ToNullable(etag));
+            return new ServiceFabricApplicationTypeVersionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, provisioningState.Value, appPackageUrl.Value, Optional.ToDictionary(defaultParameterList), Optional.ToNullable(etag));
         }
     }
 }

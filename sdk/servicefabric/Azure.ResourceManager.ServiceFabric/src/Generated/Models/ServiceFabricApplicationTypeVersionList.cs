@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <summary> Initializes a new instance of ServiceFabricApplicationTypeVersionList. </summary>
         internal ServiceFabricApplicationTypeVersionList()
         {
-            Value = new ChangeTrackingList<ServiceFabricApplicationTypeVersionResourceData>();
+            Value = new ChangeTrackingList<ServiceFabricApplicationTypeVersionData>();
         }
 
         /// <summary> Initializes a new instance of ServiceFabricApplicationTypeVersionList. </summary>
@@ -29,14 +29,14 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// URL to get the next set of application type version list results if there are any.
         /// Serialized Name: ApplicationTypeVersionResourceList.nextLink
         /// </param>
-        internal ServiceFabricApplicationTypeVersionList(IReadOnlyList<ServiceFabricApplicationTypeVersionResourceData> value, string nextLink)
+        internal ServiceFabricApplicationTypeVersionList(IReadOnlyList<ServiceFabricApplicationTypeVersionData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Serialized Name: ApplicationTypeVersionResourceList.value. </summary>
-        public IReadOnlyList<ServiceFabricApplicationTypeVersionResourceData> Value { get; }
+        public IReadOnlyList<ServiceFabricApplicationTypeVersionData> Value { get; }
         /// <summary>
         /// URL to get the next set of application type version list results if there are any.
         /// Serialized Name: ApplicationTypeVersionResourceList.nextLink

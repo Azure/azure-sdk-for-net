@@ -13,19 +13,19 @@ using Azure.ResourceManager.ServiceFabric.Models;
 
 namespace Azure.ResourceManager.ServiceFabric
 {
-    /// <summary> A class representing the ServiceFabricServiceResource data model. </summary>
-    public partial class ServiceFabricServiceResourceData : TrackedResourceData
+    /// <summary> A class representing the ServiceFabricService data model. </summary>
+    public partial class ServiceFabricServiceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ServiceFabricServiceResourceData. </summary>
+        /// <summary> Initializes a new instance of ServiceFabricServiceData. </summary>
         /// <param name="location"> The location. </param>
-        public ServiceFabricServiceResourceData(AzureLocation location) : base(location)
+        public ServiceFabricServiceData(AzureLocation location) : base(location)
         {
             CorrelationScheme = new ChangeTrackingList<ServiceCorrelationDescription>();
             ServiceLoadMetrics = new ChangeTrackingList<ServiceLoadMetricDescription>();
             ServicePlacementPolicies = new ChangeTrackingList<ServicePlacementPolicyDescription>();
         }
 
-        /// <summary> Initializes a new instance of ServiceFabricServiceResourceData. </summary>
+        /// <summary> Initializes a new instance of ServiceFabricServiceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// Azure resource etag.
         /// Serialized Name: ProxyResource.etag
         /// </param>
-        internal ServiceFabricServiceResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string placementConstraints, IList<ServiceCorrelationDescription> correlationScheme, IList<ServiceLoadMetricDescription> serviceLoadMetrics, IList<ServicePlacementPolicyDescription> servicePlacementPolicies, ApplicationMoveCost? defaultMoveCost, string provisioningState, ApplicationServiceKind? serviceKind, string serviceTypeName, PartitionSchemeDescription partitionDescription, ArmServicePackageActivationMode? servicePackageActivationMode, string serviceDnsName, ETag? etag) : base(id, name, resourceType, systemData, tags, location)
+        internal ServiceFabricServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string placementConstraints, IList<ServiceCorrelationDescription> correlationScheme, IList<ServiceLoadMetricDescription> serviceLoadMetrics, IList<ServicePlacementPolicyDescription> servicePlacementPolicies, ApplicationMoveCost? defaultMoveCost, string provisioningState, ApplicationServiceKind? serviceKind, string serviceTypeName, PartitionSchemeDescription partitionDescription, ArmServicePackageActivationMode? servicePackageActivationMode, string serviceDnsName, ETag? etag) : base(id, name, resourceType, systemData, tags, location)
         {
             PlacementConstraints = placementConstraints;
             CorrelationScheme = correlationScheme;

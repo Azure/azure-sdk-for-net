@@ -10,14 +10,20 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.ServiceFabric.Models;
 
-namespace Azure.ResourceManager.ServiceFabric.Models
+namespace Azure.ResourceManager.ServiceFabric
 {
-    public partial class ServiceFabricApplicationResourcePatch : IUtf8JsonSerializable
+    public partial class ServiceFabricApplicationData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity");
+                JsonSerializer.Serialize(writer, Identity);
+            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags");
@@ -89,12 +95,18 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(TypeName))
+            {
+                writer.WritePropertyName("typeName");
+                writer.WriteStringValue(TypeName);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
-        internal static ServiceFabricApplicationResourcePatch DeserializeServiceFabricApplicationResourcePatch(JsonElement element)
+        internal static ServiceFabricApplicationData DeserializeServiceFabricApplicationData(JsonElement element)
         {
+            Optional<ManagedServiceIdentity> identity = default;
             Optional<ETag> etag = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -110,8 +122,20 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             Optional<bool> removeApplicationCapacity = default;
             Optional<IList<ApplicationMetricDescription>> metrics = default;
             Optional<IList<ApplicationUserAssignedIdentity>> managedIdentities = default;
+            Optional<string> provisioningState = default;
+            Optional<string> typeName = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("identity"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString());
+                    continue;
+                }
                 if (property.NameEquals("etag"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -266,11 +290,21 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                             managedIdentities = array;
                             continue;
                         }
+                        if (property0.NameEquals("provisioningState"))
+                        {
+                            provisioningState = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("typeName"))
+                        {
+                            typeName = property0.Value.GetString();
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new ServiceFabricApplicationResourcePatch(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, typeVersion.Value, Optional.ToDictionary(parameters), upgradePolicy.Value, Optional.ToNullable(minimumNodes), Optional.ToNullable(maximumNodes), Optional.ToNullable(removeApplicationCapacity), Optional.ToList(metrics), Optional.ToList(managedIdentities), Optional.ToNullable(etag));
+            return new ServiceFabricApplicationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, typeVersion.Value, Optional.ToDictionary(parameters), upgradePolicy.Value, Optional.ToNullable(minimumNodes), Optional.ToNullable(maximumNodes), Optional.ToNullable(removeApplicationCapacity), Optional.ToList(metrics), Optional.ToList(managedIdentities), provisioningState.Value, typeName.Value, Optional.ToNullable(etag));
         }
     }
 }

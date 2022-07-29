@@ -10,11 +10,10 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.ServiceFabric.Models;
 
-namespace Azure.ResourceManager.ServiceFabric
+namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    public partial class ServiceFabricServiceResourceData : IUtf8JsonSerializable
+    public partial class ServiceFabricApplicationPatch : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -34,76 +33,67 @@ namespace Azure.ResourceManager.ServiceFabric
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(PlacementConstraints))
+            if (Optional.IsDefined(TypeVersion))
             {
-                writer.WritePropertyName("placementConstraints");
-                writer.WriteStringValue(PlacementConstraints);
+                writer.WritePropertyName("typeVersion");
+                writer.WriteStringValue(TypeVersion);
             }
-            if (Optional.IsCollectionDefined(CorrelationScheme))
+            if (Optional.IsCollectionDefined(Parameters))
             {
-                writer.WritePropertyName("correlationScheme");
+                writer.WritePropertyName("parameters");
+                writer.WriteStartObject();
+                foreach (var item in Parameters)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(UpgradePolicy))
+            {
+                writer.WritePropertyName("upgradePolicy");
+                writer.WriteObjectValue(UpgradePolicy);
+            }
+            if (Optional.IsDefined(MinimumNodes))
+            {
+                writer.WritePropertyName("minimumNodes");
+                writer.WriteNumberValue(MinimumNodes.Value);
+            }
+            if (Optional.IsDefined(MaximumNodes))
+            {
+                writer.WritePropertyName("maximumNodes");
+                writer.WriteNumberValue(MaximumNodes.Value);
+            }
+            if (Optional.IsDefined(RemoveApplicationCapacity))
+            {
+                writer.WritePropertyName("removeApplicationCapacity");
+                writer.WriteBooleanValue(RemoveApplicationCapacity.Value);
+            }
+            if (Optional.IsCollectionDefined(Metrics))
+            {
+                writer.WritePropertyName("metrics");
                 writer.WriteStartArray();
-                foreach (var item in CorrelationScheme)
+                foreach (var item in Metrics)
                 {
                     writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ServiceLoadMetrics))
+            if (Optional.IsCollectionDefined(ManagedIdentities))
             {
-                writer.WritePropertyName("serviceLoadMetrics");
+                writer.WritePropertyName("managedIdentities");
                 writer.WriteStartArray();
-                foreach (var item in ServiceLoadMetrics)
+                foreach (var item in ManagedIdentities)
                 {
                     writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(ServicePlacementPolicies))
-            {
-                writer.WritePropertyName("servicePlacementPolicies");
-                writer.WriteStartArray();
-                foreach (var item in ServicePlacementPolicies)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(DefaultMoveCost))
-            {
-                writer.WritePropertyName("defaultMoveCost");
-                writer.WriteStringValue(DefaultMoveCost.Value.ToString());
-            }
-            if (Optional.IsDefined(ServiceKind))
-            {
-                writer.WritePropertyName("serviceKind");
-                writer.WriteStringValue(ServiceKind.Value.ToString());
-            }
-            if (Optional.IsDefined(ServiceTypeName))
-            {
-                writer.WritePropertyName("serviceTypeName");
-                writer.WriteStringValue(ServiceTypeName);
-            }
-            if (Optional.IsDefined(PartitionDescription))
-            {
-                writer.WritePropertyName("partitionDescription");
-                writer.WriteObjectValue(PartitionDescription);
-            }
-            if (Optional.IsDefined(ServicePackageActivationMode))
-            {
-                writer.WritePropertyName("servicePackageActivationMode");
-                writer.WriteStringValue(ServicePackageActivationMode.Value.ToString());
-            }
-            if (Optional.IsDefined(ServiceDnsName))
-            {
-                writer.WritePropertyName("serviceDnsName");
-                writer.WriteStringValue(ServiceDnsName);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
-        internal static ServiceFabricServiceResourceData DeserializeServiceFabricServiceResourceData(JsonElement element)
+        internal static ServiceFabricApplicationPatch DeserializeServiceFabricApplicationPatch(JsonElement element)
         {
             Optional<ETag> etag = default;
             Optional<IDictionary<string, string>> tags = default;
@@ -112,17 +102,14 @@ namespace Azure.ResourceManager.ServiceFabric
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> placementConstraints = default;
-            Optional<IList<ServiceCorrelationDescription>> correlationScheme = default;
-            Optional<IList<ServiceLoadMetricDescription>> serviceLoadMetrics = default;
-            Optional<IList<ServicePlacementPolicyDescription>> servicePlacementPolicies = default;
-            Optional<ApplicationMoveCost> defaultMoveCost = default;
-            Optional<string> provisioningState = default;
-            Optional<ApplicationServiceKind> serviceKind = default;
-            Optional<string> serviceTypeName = default;
-            Optional<PartitionSchemeDescription> partitionDescription = default;
-            Optional<ArmServicePackageActivationMode> servicePackageActivationMode = default;
-            Optional<string> serviceDnsName = default;
+            Optional<string> typeVersion = default;
+            Optional<IDictionary<string, string>> parameters = default;
+            Optional<ApplicationUpgradePolicy> upgradePolicy = default;
+            Optional<long> minimumNodes = default;
+            Optional<long> maximumNodes = default;
+            Optional<bool> removeApplicationCapacity = default;
+            Optional<IList<ApplicationMetricDescription>> metrics = default;
+            Optional<IList<ApplicationUserAssignedIdentity>> managedIdentities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
@@ -189,116 +176,101 @@ namespace Azure.ResourceManager.ServiceFabric
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("placementConstraints"))
+                        if (property0.NameEquals("typeVersion"))
                         {
-                            placementConstraints = property0.Value.GetString();
+                            typeVersion = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("correlationScheme"))
+                        if (property0.NameEquals("parameters"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ServiceCorrelationDescription> array = new List<ServiceCorrelationDescription>();
+                            Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                dictionary.Add(property1.Name, property1.Value.GetString());
+                            }
+                            parameters = dictionary;
+                            continue;
+                        }
+                        if (property0.NameEquals("upgradePolicy"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            upgradePolicy = ApplicationUpgradePolicy.DeserializeApplicationUpgradePolicy(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("minimumNodes"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            minimumNodes = property0.Value.GetInt64();
+                            continue;
+                        }
+                        if (property0.NameEquals("maximumNodes"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            maximumNodes = property0.Value.GetInt64();
+                            continue;
+                        }
+                        if (property0.NameEquals("removeApplicationCapacity"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            removeApplicationCapacity = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("metrics"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<ApplicationMetricDescription> array = new List<ApplicationMetricDescription>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ServiceCorrelationDescription.DeserializeServiceCorrelationDescription(item));
+                                array.Add(ApplicationMetricDescription.DeserializeApplicationMetricDescription(item));
                             }
-                            correlationScheme = array;
+                            metrics = array;
                             continue;
                         }
-                        if (property0.NameEquals("serviceLoadMetrics"))
+                        if (property0.NameEquals("managedIdentities"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ServiceLoadMetricDescription> array = new List<ServiceLoadMetricDescription>();
+                            List<ApplicationUserAssignedIdentity> array = new List<ApplicationUserAssignedIdentity>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ServiceLoadMetricDescription.DeserializeServiceLoadMetricDescription(item));
+                                array.Add(ApplicationUserAssignedIdentity.DeserializeApplicationUserAssignedIdentity(item));
                             }
-                            serviceLoadMetrics = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("servicePlacementPolicies"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            List<ServicePlacementPolicyDescription> array = new List<ServicePlacementPolicyDescription>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(ServicePlacementPolicyDescription.DeserializeServicePlacementPolicyDescription(item));
-                            }
-                            servicePlacementPolicies = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("defaultMoveCost"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            defaultMoveCost = new ApplicationMoveCost(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"))
-                        {
-                            provisioningState = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("serviceKind"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            serviceKind = new ApplicationServiceKind(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("serviceTypeName"))
-                        {
-                            serviceTypeName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("partitionDescription"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            partitionDescription = PartitionSchemeDescription.DeserializePartitionSchemeDescription(property0.Value);
-                            continue;
-                        }
-                        if (property0.NameEquals("servicePackageActivationMode"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            servicePackageActivationMode = new ArmServicePackageActivationMode(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("serviceDnsName"))
-                        {
-                            serviceDnsName = property0.Value.GetString();
+                            managedIdentities = array;
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new ServiceFabricServiceResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, placementConstraints.Value, Optional.ToList(correlationScheme), Optional.ToList(serviceLoadMetrics), Optional.ToList(servicePlacementPolicies), Optional.ToNullable(defaultMoveCost), provisioningState.Value, Optional.ToNullable(serviceKind), serviceTypeName.Value, partitionDescription.Value, Optional.ToNullable(servicePackageActivationMode), serviceDnsName.Value, Optional.ToNullable(etag));
+            return new ServiceFabricApplicationPatch(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, typeVersion.Value, Optional.ToDictionary(parameters), upgradePolicy.Value, Optional.ToNullable(minimumNodes), Optional.ToNullable(maximumNodes), Optional.ToNullable(removeApplicationCapacity), Optional.ToList(metrics), Optional.ToList(managedIdentities), Optional.ToNullable(etag));
         }
     }
 }

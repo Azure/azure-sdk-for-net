@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <summary> Initializes a new instance of ServiceFabricApplicationList. </summary>
         internal ServiceFabricApplicationList()
         {
-            Value = new ChangeTrackingList<ServiceFabricApplicationResourceData>();
+            Value = new ChangeTrackingList<ServiceFabricApplicationData>();
         }
 
         /// <summary> Initializes a new instance of ServiceFabricApplicationList. </summary>
@@ -29,14 +29,14 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// URL to get the next set of application list results if there are any.
         /// Serialized Name: ApplicationResourceList.nextLink
         /// </param>
-        internal ServiceFabricApplicationList(IReadOnlyList<ServiceFabricApplicationResourceData> value, string nextLink)
+        internal ServiceFabricApplicationList(IReadOnlyList<ServiceFabricApplicationData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Serialized Name: ApplicationResourceList.value. </summary>
-        public IReadOnlyList<ServiceFabricApplicationResourceData> Value { get; }
+        public IReadOnlyList<ServiceFabricApplicationData> Value { get; }
         /// <summary>
         /// URL to get the next set of application list results if there are any.
         /// Serialized Name: ApplicationResourceList.nextLink

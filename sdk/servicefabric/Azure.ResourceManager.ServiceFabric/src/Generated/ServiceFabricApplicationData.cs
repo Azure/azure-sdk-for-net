@@ -13,19 +13,19 @@ using Azure.ResourceManager.ServiceFabric.Models;
 
 namespace Azure.ResourceManager.ServiceFabric
 {
-    /// <summary> A class representing the ServiceFabricApplicationResource data model. </summary>
-    public partial class ServiceFabricApplicationResourceData : TrackedResourceData
+    /// <summary> A class representing the ServiceFabricApplication data model. </summary>
+    public partial class ServiceFabricApplicationData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ServiceFabricApplicationResourceData. </summary>
+        /// <summary> Initializes a new instance of ServiceFabricApplicationData. </summary>
         /// <param name="location"> The location. </param>
-        public ServiceFabricApplicationResourceData(AzureLocation location) : base(location)
+        public ServiceFabricApplicationData(AzureLocation location) : base(location)
         {
             Parameters = new ChangeTrackingDictionary<string, string>();
             Metrics = new ChangeTrackingList<ApplicationMetricDescription>();
             ManagedIdentities = new ChangeTrackingList<ApplicationUserAssignedIdentity>();
         }
 
-        /// <summary> Initializes a new instance of ServiceFabricApplicationResourceData. </summary>
+        /// <summary> Initializes a new instance of ServiceFabricApplicationData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// Azure resource etag.
         /// Serialized Name: ProxyResource.etag
         /// </param>
-        internal ServiceFabricApplicationResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string typeVersion, IDictionary<string, string> parameters, ApplicationUpgradePolicy upgradePolicy, long? minimumNodes, long? maximumNodes, bool? removeApplicationCapacity, IList<ApplicationMetricDescription> metrics, IList<ApplicationUserAssignedIdentity> managedIdentities, string provisioningState, string typeName, ETag? etag) : base(id, name, resourceType, systemData, tags, location)
+        internal ServiceFabricApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string typeVersion, IDictionary<string, string> parameters, ApplicationUpgradePolicy upgradePolicy, long? minimumNodes, long? maximumNodes, bool? removeApplicationCapacity, IList<ApplicationMetricDescription> metrics, IList<ApplicationUserAssignedIdentity> managedIdentities, string provisioningState, string typeName, ETag? etag) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             TypeVersion = typeVersion;

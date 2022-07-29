@@ -1,33 +1,10 @@
 namespace Azure.ResourceManager.ServiceFabric
 {
-    public partial class ServiceFabricApplicationResource : Azure.ResourceManager.ArmResource
+    public partial class ServiceFabricApplicationCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationResource>, System.Collections.IEnumerable
     {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected ServiceFabricApplicationResource() { }
-        public virtual Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationResourceData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName, string applicationName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricServiceResource> GetServiceFabricServiceResource(string serviceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricServiceResource>> GetServiceFabricServiceResourceAsync(string serviceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ServiceFabric.ServiceFabricServiceResourceCollection GetServiceFabricServiceResources() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ServiceFabric.Models.ServiceFabricApplicationResourcePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ServiceFabric.Models.ServiceFabricApplicationResourcePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class ServiceFabricApplicationResourceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationResource>, System.Collections.IEnumerable
-    {
-        protected ServiceFabricApplicationResourceCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string applicationName, Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string applicationName, Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected ServiceFabricApplicationCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string applicationName, Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string applicationName, Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string applicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string applicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationResource> Get(string applicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -38,9 +15,9 @@ namespace Azure.ResourceManager.ServiceFabric
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ServiceFabricApplicationResourceData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class ServiceFabricApplicationData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ServiceFabricApplicationResourceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ServiceFabricApplicationData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ServiceFabric.Models.ApplicationUserAssignedIdentity> ManagedIdentities { get { throw null; } }
@@ -54,34 +31,34 @@ namespace Azure.ResourceManager.ServiceFabric
         public string TypeVersion { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceFabric.Models.ApplicationUpgradePolicy UpgradePolicy { get { throw null; } set { } }
     }
-    public partial class ServiceFabricApplicationTypeResource : Azure.ResourceManager.ArmResource
+    public partial class ServiceFabricApplicationResource : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
-        protected ServiceFabricApplicationTypeResource() { }
-        public virtual Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeResourceData Data { get { throw null; } }
+        protected ServiceFabricApplicationResource() { }
+        public virtual Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName, string applicationTypeName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName, string applicationName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeVersionResource> GetServiceFabricApplicationTypeVersionResource(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeVersionResource>> GetServiceFabricApplicationTypeVersionResourceAsync(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeVersionResourceCollection GetServiceFabricApplicationTypeVersionResources() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricServiceResource> GetServiceFabricService(string serviceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricServiceResource>> GetServiceFabricServiceAsync(string serviceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ServiceFabric.ServiceFabricServiceCollection GetServiceFabricServices() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ServiceFabric.Models.ServiceFabricApplicationPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ServiceFabric.Models.ServiceFabricApplicationPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class ServiceFabricApplicationTypeResourceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeResource>, System.Collections.IEnumerable
+    public partial class ServiceFabricApplicationTypeCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeResource>, System.Collections.IEnumerable
     {
-        protected ServiceFabricApplicationTypeResourceCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string applicationTypeName, Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string applicationTypeName, Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected ServiceFabricApplicationTypeCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string applicationTypeName, Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string applicationTypeName, Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string applicationTypeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string applicationTypeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeResource> Get(string applicationTypeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -92,9 +69,55 @@ namespace Azure.ResourceManager.ServiceFabric
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ServiceFabricApplicationTypeResourceData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class ServiceFabricApplicationTypeData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ServiceFabricApplicationTypeResourceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ServiceFabricApplicationTypeData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public Azure.ETag? ETag { get { throw null; } }
+        public string ProvisioningState { get { throw null; } }
+    }
+    public partial class ServiceFabricApplicationTypeResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected ServiceFabricApplicationTypeResource() { }
+        public virtual Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public virtual Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName, string applicationTypeName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeVersionResource> GetServiceFabricApplicationTypeVersion(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeVersionResource>> GetServiceFabricApplicationTypeVersionAsync(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeVersionCollection GetServiceFabricApplicationTypeVersions() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ServiceFabricApplicationTypeVersionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeVersionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeVersionResource>, System.Collections.IEnumerable
+    {
+        protected ServiceFabricApplicationTypeVersionCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeVersionResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string version, Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeVersionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeVersionResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string version, Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeVersionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeVersionResource> Get(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeVersionResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeVersionResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeVersionResource>> GetAsync(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeVersionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeVersionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeVersionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeVersionResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class ServiceFabricApplicationTypeVersionData : Azure.ResourceManager.Models.TrackedResourceData
+    {
+        public ServiceFabricApplicationTypeVersionData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public System.Uri AppPackageUri { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, string> DefaultParameterList { get { throw null; } }
         public Azure.ETag? ETag { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
     }
@@ -102,7 +125,7 @@ namespace Azure.ResourceManager.ServiceFabric
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ServiceFabricApplicationTypeVersionResource() { }
-        public virtual Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeVersionResourceData Data { get { throw null; } }
+        public virtual Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeVersionData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeVersionResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeVersionResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -115,31 +138,8 @@ namespace Azure.ResourceManager.ServiceFabric
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeVersionResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeVersionResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeVersionResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeVersionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeVersionResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeVersionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeVersionResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class ServiceFabricApplicationTypeVersionResourceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeVersionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeVersionResource>, System.Collections.IEnumerable
-    {
-        protected ServiceFabricApplicationTypeVersionResourceCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeVersionResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string version, Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeVersionResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeVersionResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string version, Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeVersionResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeVersionResource> Get(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeVersionResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeVersionResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeVersionResource>> GetAsync(string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeVersionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeVersionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeVersionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeVersionResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class ServiceFabricApplicationTypeVersionResourceData : Azure.ResourceManager.Models.TrackedResourceData
-    {
-        public ServiceFabricApplicationTypeVersionResourceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public System.Uri AppPackageUri { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyDictionary<string, string> DefaultParameterList { get { throw null; } }
-        public Azure.ETag? ETag { get { throw null; } }
-        public string ProvisioningState { get { throw null; } }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeVersionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeVersionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeVersionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeVersionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ServiceFabricClusterCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ServiceFabric.ServiceFabricClusterResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceFabric.ServiceFabricClusterResource>, System.Collections.IEnumerable
     {
@@ -206,12 +206,12 @@ namespace Azure.ResourceManager.ServiceFabric
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricClusterResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricClusterResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationResource> GetServiceFabricApplicationResource(string applicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationResource>> GetServiceFabricApplicationResourceAsync(string applicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationResourceCollection GetServiceFabricApplicationResources() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeResource> GetServiceFabricApplicationTypeResource(string applicationTypeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeResource>> GetServiceFabricApplicationTypeResourceAsync(string applicationTypeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeResourceCollection GetServiceFabricApplicationTypeResources() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationResource> GetServiceFabricApplication(string applicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationResource>> GetServiceFabricApplicationAsync(string applicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationCollection GetServiceFabricApplications() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeResource> GetServiceFabricApplicationType(string applicationTypeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeResource>> GetServiceFabricApplicationTypeAsync(string applicationTypeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeCollection GetServiceFabricApplicationTypes() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ServiceFabric.Models.UpgradableVersionPathResult> GetUpgradableVersions(Azure.ResourceManager.ServiceFabric.Models.UpgradableVersionsDescription versionsDescription = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabric.Models.UpgradableVersionPathResult>> GetUpgradableVersionsAsync(Azure.ResourceManager.ServiceFabric.Models.UpgradableVersionsDescription versionsDescription = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricClusterResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -242,11 +242,41 @@ namespace Azure.ResourceManager.ServiceFabric
         public static Azure.AsyncPageable<Azure.ResourceManager.ServiceFabric.ServiceFabricClusterResource> GetServiceFabricClustersAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.ServiceFabric.ServiceFabricServiceResource GetServiceFabricServiceResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
     }
+    public partial class ServiceFabricServiceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ServiceFabric.ServiceFabricServiceResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceFabric.ServiceFabricServiceResource>, System.Collections.IEnumerable
+    {
+        protected ServiceFabricServiceCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceFabric.ServiceFabricServiceResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string serviceName, Azure.ResourceManager.ServiceFabric.ServiceFabricServiceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceFabric.ServiceFabricServiceResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string serviceName, Azure.ResourceManager.ServiceFabric.ServiceFabricServiceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string serviceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string serviceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricServiceResource> Get(string serviceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ServiceFabric.ServiceFabricServiceResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ServiceFabric.ServiceFabricServiceResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricServiceResource>> GetAsync(string serviceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.ServiceFabric.ServiceFabricServiceResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ServiceFabric.ServiceFabricServiceResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.ServiceFabric.ServiceFabricServiceResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceFabric.ServiceFabricServiceResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class ServiceFabricServiceData : Azure.ResourceManager.Models.TrackedResourceData
+    {
+        public ServiceFabricServiceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ServiceFabric.Models.ServiceCorrelationDescription> CorrelationScheme { get { throw null; } }
+        public Azure.ResourceManager.ServiceFabric.Models.ApplicationMoveCost? DefaultMoveCost { get { throw null; } set { } }
+        public Azure.ETag? ETag { get { throw null; } }
+        public Azure.ResourceManager.ServiceFabric.Models.PartitionSchemeDescription PartitionDescription { get { throw null; } set { } }
+        public string PlacementConstraints { get { throw null; } set { } }
+        public string ProvisioningState { get { throw null; } }
+        public string ServiceDnsName { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ServiceFabric.Models.ServiceLoadMetricDescription> ServiceLoadMetrics { get { throw null; } }
+        public Azure.ResourceManager.ServiceFabric.Models.ArmServicePackageActivationMode? ServicePackageActivationMode { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ServiceFabric.Models.ServicePlacementPolicyDescription> ServicePlacementPolicies { get { throw null; } }
+        public string ServiceTypeName { get { throw null; } set { } }
+    }
     public partial class ServiceFabricServiceResource : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ServiceFabricServiceResource() { }
-        public virtual Azure.ResourceManager.ServiceFabric.ServiceFabricServiceResourceData Data { get { throw null; } }
+        public virtual Azure.ResourceManager.ServiceFabric.ServiceFabricServiceData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricServiceResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricServiceResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -259,38 +289,8 @@ namespace Azure.ResourceManager.ServiceFabric
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricServiceResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricServiceResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricServiceResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceFabric.ServiceFabricServiceResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ServiceFabric.Models.ServiceFabricServiceResourcePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceFabric.ServiceFabricServiceResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ServiceFabric.Models.ServiceFabricServiceResourcePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class ServiceFabricServiceResourceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ServiceFabric.ServiceFabricServiceResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceFabric.ServiceFabricServiceResource>, System.Collections.IEnumerable
-    {
-        protected ServiceFabricServiceResourceCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceFabric.ServiceFabricServiceResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string serviceName, Azure.ResourceManager.ServiceFabric.ServiceFabricServiceResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceFabric.ServiceFabricServiceResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string serviceName, Azure.ResourceManager.ServiceFabric.ServiceFabricServiceResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string serviceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string serviceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricServiceResource> Get(string serviceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.ServiceFabric.ServiceFabricServiceResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.ServiceFabric.ServiceFabricServiceResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricServiceResource>> GetAsync(string serviceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.ServiceFabric.ServiceFabricServiceResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ServiceFabric.ServiceFabricServiceResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.ServiceFabric.ServiceFabricServiceResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceFabric.ServiceFabricServiceResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class ServiceFabricServiceResourceData : Azure.ResourceManager.Models.TrackedResourceData
-    {
-        public ServiceFabricServiceResourceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ServiceFabric.Models.ServiceCorrelationDescription> CorrelationScheme { get { throw null; } }
-        public Azure.ResourceManager.ServiceFabric.Models.ApplicationMoveCost? DefaultMoveCost { get { throw null; } set { } }
-        public Azure.ETag? ETag { get { throw null; } }
-        public Azure.ResourceManager.ServiceFabric.Models.PartitionSchemeDescription PartitionDescription { get { throw null; } set { } }
-        public string PlacementConstraints { get { throw null; } set { } }
-        public string ProvisioningState { get { throw null; } }
-        public string ServiceDnsName { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ServiceFabric.Models.ServiceLoadMetricDescription> ServiceLoadMetrics { get { throw null; } }
-        public Azure.ResourceManager.ServiceFabric.Models.ArmServicePackageActivationMode? ServicePackageActivationMode { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ServiceFabric.Models.ServicePlacementPolicyDescription> ServicePlacementPolicies { get { throw null; } }
-        public string ServiceTypeName { get { throw null; } set { } }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceFabric.ServiceFabricServiceResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ServiceFabric.Models.ServiceFabricServicePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceFabric.ServiceFabricServiceResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ServiceFabric.Models.ServiceFabricServicePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.ServiceFabric.Models
@@ -806,9 +806,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public static bool operator !=(Azure.ResourceManager.ServiceFabric.Models.ServiceCorrelationScheme left, Azure.ResourceManager.ServiceFabric.Models.ServiceCorrelationScheme right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ServiceFabricApplicationResourcePatch : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class ServiceFabricApplicationPatch : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ServiceFabricApplicationResourcePatch(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ServiceFabricApplicationPatch(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ETag? ETag { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ServiceFabric.Models.ApplicationUserAssignedIdentity> ManagedIdentities { get { throw null; } }
         public long? MaximumNodes { get { throw null; } set { } }
@@ -892,9 +892,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public static bool operator !=(Azure.ResourceManager.ServiceFabric.Models.ServiceFabricProvisioningState left, Azure.ResourceManager.ServiceFabric.Models.ServiceFabricProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ServiceFabricServiceResourcePatch : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class ServiceFabricServicePatch : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ServiceFabricServiceResourcePatch(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ServiceFabricServicePatch(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.ServiceFabric.Models.ServiceCorrelationDescription> CorrelationScheme { get { throw null; } }
         public Azure.ResourceManager.ServiceFabric.Models.ApplicationMoveCost? DefaultMoveCost { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } }

@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.ServiceFabric
     /// <summary>
     /// A class representing a collection of <see cref="ServiceFabricApplicationTypeResource" /> and their operations.
     /// Each <see cref="ServiceFabricApplicationTypeResource" /> in the collection will belong to the same instance of <see cref="ServiceFabricClusterResource" />.
-    /// To get a <see cref="ServiceFabricApplicationTypeResourceCollection" /> instance call the GetServiceFabricApplicationTypeResources method from an instance of <see cref="ServiceFabricClusterResource" />.
+    /// To get a <see cref="ServiceFabricApplicationTypeCollection" /> instance call the GetServiceFabricApplicationTypes method from an instance of <see cref="ServiceFabricClusterResource" />.
     /// </summary>
-    public partial class ServiceFabricApplicationTypeResourceCollection : ArmCollection, IEnumerable<ServiceFabricApplicationTypeResource>, IAsyncEnumerable<ServiceFabricApplicationTypeResource>
+    public partial class ServiceFabricApplicationTypeCollection : ArmCollection, IEnumerable<ServiceFabricApplicationTypeResource>, IAsyncEnumerable<ServiceFabricApplicationTypeResource>
     {
-        private readonly ClientDiagnostics _serviceFabricApplicationTypeResourceApplicationTypesClientDiagnostics;
-        private readonly ApplicationTypesRestOperations _serviceFabricApplicationTypeResourceApplicationTypesRestClient;
+        private readonly ClientDiagnostics _serviceFabricApplicationTypeApplicationTypesClientDiagnostics;
+        private readonly ApplicationTypesRestOperations _serviceFabricApplicationTypeApplicationTypesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ServiceFabricApplicationTypeResourceCollection"/> class for mocking. </summary>
-        protected ServiceFabricApplicationTypeResourceCollection()
+        /// <summary> Initializes a new instance of the <see cref="ServiceFabricApplicationTypeCollection"/> class for mocking. </summary>
+        protected ServiceFabricApplicationTypeCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ServiceFabricApplicationTypeResourceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServiceFabricApplicationTypeCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal ServiceFabricApplicationTypeResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ServiceFabricApplicationTypeCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _serviceFabricApplicationTypeResourceApplicationTypesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceFabric", ServiceFabricApplicationTypeResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ServiceFabricApplicationTypeResource.ResourceType, out string serviceFabricApplicationTypeResourceApplicationTypesApiVersion);
-            _serviceFabricApplicationTypeResourceApplicationTypesRestClient = new ApplicationTypesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serviceFabricApplicationTypeResourceApplicationTypesApiVersion);
+            _serviceFabricApplicationTypeApplicationTypesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceFabric", ServiceFabricApplicationTypeResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ServiceFabricApplicationTypeResource.ResourceType, out string serviceFabricApplicationTypeApplicationTypesApiVersion);
+            _serviceFabricApplicationTypeApplicationTypesRestClient = new ApplicationTypesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serviceFabricApplicationTypeApplicationTypesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -64,16 +64,16 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationTypeName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ServiceFabricApplicationTypeResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string applicationTypeName, ServiceFabricApplicationTypeResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ServiceFabricApplicationTypeResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string applicationTypeName, ServiceFabricApplicationTypeData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationTypeName, nameof(applicationTypeName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _serviceFabricApplicationTypeResourceApplicationTypesClientDiagnostics.CreateScope("ServiceFabricApplicationTypeResourceCollection.CreateOrUpdate");
+            using var scope = _serviceFabricApplicationTypeApplicationTypesClientDiagnostics.CreateScope("ServiceFabricApplicationTypeCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _serviceFabricApplicationTypeResourceApplicationTypesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationTypeName, data, cancellationToken).ConfigureAwait(false);
+                var response = await _serviceFabricApplicationTypeApplicationTypesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationTypeName, data, cancellationToken).ConfigureAwait(false);
                 var operation = new ServiceFabricArmOperation<ServiceFabricApplicationTypeResource>(Response.FromValue(new ServiceFabricApplicationTypeResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -97,16 +97,16 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationTypeName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ServiceFabricApplicationTypeResource> CreateOrUpdate(WaitUntil waitUntil, string applicationTypeName, ServiceFabricApplicationTypeResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ServiceFabricApplicationTypeResource> CreateOrUpdate(WaitUntil waitUntil, string applicationTypeName, ServiceFabricApplicationTypeData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationTypeName, nameof(applicationTypeName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _serviceFabricApplicationTypeResourceApplicationTypesClientDiagnostics.CreateScope("ServiceFabricApplicationTypeResourceCollection.CreateOrUpdate");
+            using var scope = _serviceFabricApplicationTypeApplicationTypesClientDiagnostics.CreateScope("ServiceFabricApplicationTypeCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _serviceFabricApplicationTypeResourceApplicationTypesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationTypeName, data, cancellationToken);
+                var response = _serviceFabricApplicationTypeApplicationTypesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationTypeName, data, cancellationToken);
                 var operation = new ServiceFabricArmOperation<ServiceFabricApplicationTypeResource>(Response.FromValue(new ServiceFabricApplicationTypeResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
@@ -132,11 +132,11 @@ namespace Azure.ResourceManager.ServiceFabric
         {
             Argument.AssertNotNullOrEmpty(applicationTypeName, nameof(applicationTypeName));
 
-            using var scope = _serviceFabricApplicationTypeResourceApplicationTypesClientDiagnostics.CreateScope("ServiceFabricApplicationTypeResourceCollection.Get");
+            using var scope = _serviceFabricApplicationTypeApplicationTypesClientDiagnostics.CreateScope("ServiceFabricApplicationTypeCollection.Get");
             scope.Start();
             try
             {
-                var response = await _serviceFabricApplicationTypeResourceApplicationTypesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationTypeName, cancellationToken).ConfigureAwait(false);
+                var response = await _serviceFabricApplicationTypeApplicationTypesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationTypeName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ServiceFabricApplicationTypeResource(Client, response.Value), response.GetRawResponse());
@@ -161,11 +161,11 @@ namespace Azure.ResourceManager.ServiceFabric
         {
             Argument.AssertNotNullOrEmpty(applicationTypeName, nameof(applicationTypeName));
 
-            using var scope = _serviceFabricApplicationTypeResourceApplicationTypesClientDiagnostics.CreateScope("ServiceFabricApplicationTypeResourceCollection.Get");
+            using var scope = _serviceFabricApplicationTypeApplicationTypesClientDiagnostics.CreateScope("ServiceFabricApplicationTypeCollection.Get");
             scope.Start();
             try
             {
-                var response = _serviceFabricApplicationTypeResourceApplicationTypesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationTypeName, cancellationToken);
+                var response = _serviceFabricApplicationTypeApplicationTypesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationTypeName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ServiceFabricApplicationTypeResource(Client, response.Value), response.GetRawResponse());
@@ -188,11 +188,11 @@ namespace Azure.ResourceManager.ServiceFabric
         {
             async Task<Page<ServiceFabricApplicationTypeResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _serviceFabricApplicationTypeResourceApplicationTypesClientDiagnostics.CreateScope("ServiceFabricApplicationTypeResourceCollection.GetAll");
+                using var scope = _serviceFabricApplicationTypeApplicationTypesClientDiagnostics.CreateScope("ServiceFabricApplicationTypeCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _serviceFabricApplicationTypeResourceApplicationTypesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _serviceFabricApplicationTypeApplicationTypesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ServiceFabricApplicationTypeResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -215,11 +215,11 @@ namespace Azure.ResourceManager.ServiceFabric
         {
             Page<ServiceFabricApplicationTypeResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _serviceFabricApplicationTypeResourceApplicationTypesClientDiagnostics.CreateScope("ServiceFabricApplicationTypeResourceCollection.GetAll");
+                using var scope = _serviceFabricApplicationTypeApplicationTypesClientDiagnostics.CreateScope("ServiceFabricApplicationTypeCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _serviceFabricApplicationTypeResourceApplicationTypesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _serviceFabricApplicationTypeApplicationTypesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ServiceFabricApplicationTypeResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -244,11 +244,11 @@ namespace Azure.ResourceManager.ServiceFabric
         {
             Argument.AssertNotNullOrEmpty(applicationTypeName, nameof(applicationTypeName));
 
-            using var scope = _serviceFabricApplicationTypeResourceApplicationTypesClientDiagnostics.CreateScope("ServiceFabricApplicationTypeResourceCollection.Exists");
+            using var scope = _serviceFabricApplicationTypeApplicationTypesClientDiagnostics.CreateScope("ServiceFabricApplicationTypeCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _serviceFabricApplicationTypeResourceApplicationTypesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationTypeName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _serviceFabricApplicationTypeApplicationTypesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationTypeName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -271,11 +271,11 @@ namespace Azure.ResourceManager.ServiceFabric
         {
             Argument.AssertNotNullOrEmpty(applicationTypeName, nameof(applicationTypeName));
 
-            using var scope = _serviceFabricApplicationTypeResourceApplicationTypesClientDiagnostics.CreateScope("ServiceFabricApplicationTypeResourceCollection.Exists");
+            using var scope = _serviceFabricApplicationTypeApplicationTypesClientDiagnostics.CreateScope("ServiceFabricApplicationTypeCollection.Exists");
             scope.Start();
             try
             {
-                var response = _serviceFabricApplicationTypeResourceApplicationTypesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationTypeName, cancellationToken: cancellationToken);
+                var response = _serviceFabricApplicationTypeApplicationTypesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationTypeName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
