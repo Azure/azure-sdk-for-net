@@ -1208,13 +1208,11 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         private static ArraySegment<byte> ReadStreamToArraySegment(Stream stream)
         {
-            if (stream == null)
-            {
-                return new ArraySegment<byte>();
-            }
-
             switch (stream)
             {
+                case { Length: < 1 }:
+                    return default;
+
                 case BufferListStream bufferListStream:
                     return bufferListStream.ReadBytes((int)stream.Length);
 
@@ -1222,14 +1220,22 @@ namespace Azure.Messaging.EventHubs.Amqp
                 {
                     using var memStreamCopy = new MemoryStream((int)(memStreamSource.Length - memStreamSource.Position));
                     memStreamSource.CopyTo(memStreamCopy, StreamBufferSizeInBytes);
-                    return new ArraySegment<byte>(memStreamCopy.ToArray());
+                    if (!memStreamCopy.TryGetBuffer(out ArraySegment<byte> segment))
+                    {
+                        segment = new ArraySegment<byte>(memStreamCopy.ToArray());
+                    }
+                    return segment;
                 }
 
                 default:
                 {
-                    using var memStream = new MemoryStream(StreamBufferSizeInBytes);
-                    stream.CopyTo(memStream, StreamBufferSizeInBytes);
-                    return new ArraySegment<byte>(memStream.ToArray());
+                    using var memStreamCopy = new MemoryStream(StreamBufferSizeInBytes);
+                    stream.CopyTo(memStreamCopy, StreamBufferSizeInBytes);
+                    if (!memStreamCopy.TryGetBuffer(out ArraySegment<byte> segment))
+                    {
+                        segment = new ArraySegment<byte>(memStreamCopy.ToArray());
+                    }
+                    return segment;
                 }
             }
         }

@@ -87,24 +87,24 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     keywords = "<SearchRequestKeywords>",
+        ///     keywords = "<keywords>",
         ///     offset = 1234,
         ///     limit = 1234,
         ///     filter = new {},
         ///     facets = new[] {
         ///         new {
         ///             count = 1234,
-        ///             facet = "<SearchFacetItemFacet>",
+        ///             facet = "<facet>",
         ///             sort = new {},
         ///         }
         ///     },
         ///     taxonomySetting = new {
         ///         assetTypes = new[] {
-        ///             "<SearchRequestTaxonomySettingAssetTypesItem>"
+        ///             "<String>"
         ///         },
         ///         facet = new {
         ///             count = 1234,
-        ///             facet = "<SearchFacetItemFacet>",
+        ///             facet = "<facet>",
         ///             sort = new {},
         ///         },
         ///     },
@@ -246,24 +246,24 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     keywords = "<SearchRequestKeywords>",
+        ///     keywords = "<keywords>",
         ///     offset = 1234,
         ///     limit = 1234,
         ///     filter = new {},
         ///     facets = new[] {
         ///         new {
         ///             count = 1234,
-        ///             facet = "<SearchFacetItemFacet>",
+        ///             facet = "<facet>",
         ///             sort = new {},
         ///         }
         ///     },
         ///     taxonomySetting = new {
         ///         assetTypes = new[] {
-        ///             "<SearchRequestTaxonomySettingAssetTypesItem>"
+        ///             "<String>"
         ///         },
         ///         facet = new {
         ///             count = 1234,
-        ///             facet = "<SearchFacetItemFacet>",
+        ///             facet = "<facet>",
         ///             sort = new {},
         ///         },
         ///     },
@@ -405,7 +405,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     keywords = "<SuggestRequestKeywords>",
+        ///     keywords = "<keywords>",
         ///     limit = 1234,
         ///     filter = new {},
         /// };
@@ -499,7 +499,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     keywords = "<SuggestRequestKeywords>",
+        ///     keywords = "<keywords>",
         ///     limit = 1234,
         ///     filter = new {},
         /// };
@@ -593,8 +593,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     entityType = "<BrowseRequestEntityType>",
-        ///     path = "<BrowseRequestPath>",
+        ///     entityType = "<entityType>",
+        ///     path = "<path>",
         ///     limit = 1234,
         ///     offset = 1234,
         /// };
@@ -684,8 +684,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     entityType = "<BrowseRequestEntityType>",
-        ///     path = "<BrowseRequestPath>",
+        ///     entityType = "<entityType>",
+        ///     path = "<path>",
         ///     limit = 1234,
         ///     offset = 1234,
         /// };
@@ -775,7 +775,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     keywords = "<AutoCompleteRequestKeywords>",
+        ///     keywords = "<keywords>",
         ///     limit = 1234,
         ///     filter = new {},
         /// };
@@ -854,7 +854,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// var client = new PurviewCatalogClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     keywords = "<AutoCompleteRequestKeywords>",
+        ///     keywords = "<keywords>",
         ///     limit = 1234,
         ///     filter = new {},
         /// };

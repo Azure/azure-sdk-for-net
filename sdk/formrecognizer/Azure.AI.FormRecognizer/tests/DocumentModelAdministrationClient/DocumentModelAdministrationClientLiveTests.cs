@@ -78,7 +78,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/29966")]
         public async Task StartBuildModelWithNeuralBuildMode()
         {
             // Test takes too long to finish running, and seems to cause multiple failures in our

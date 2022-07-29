@@ -18,28 +18,28 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         /// <summary> Initializes a new instance of StorageConfigurationSettings. </summary>
         /// <param name="sqlDataSettings"> SQL Server Data Storage Settings. </param>
         /// <param name="sqlLogSettings"> SQL Server Log Storage Settings. </param>
-        /// <param name="sqlTempDbSettings"> SQL Server TempDb Storage Settings. </param>
-        /// <param name="sqlSystemDbOnDataDisk"> SQL Server SystemDb Storage on DataPool if true. </param>
+        /// <param name="sqlTempDBSettings"> SQL Server TempDb Storage Settings. </param>
+        /// <param name="sqlSystemDBOnDataDisk"> SQL Server SystemDb Storage on DataPool if true. </param>
         /// <param name="diskConfigurationType"> Disk configuration to apply to SQL Server. </param>
         /// <param name="storageWorkloadType"> Storage workload type. </param>
-        internal StorageConfigurationSettings(SQLStorageSettings sqlDataSettings, SQLStorageSettings sqlLogSettings, SQLTempDbSettings sqlTempDbSettings, bool? sqlSystemDbOnDataDisk, DiskConfigurationType? diskConfigurationType, StorageWorkloadType? storageWorkloadType)
+        internal StorageConfigurationSettings(SqlStorageSettings sqlDataSettings, SqlStorageSettings sqlLogSettings, SqlTempDBSettings sqlTempDBSettings, bool? sqlSystemDBOnDataDisk, DiskConfigurationType? diskConfigurationType, StorageWorkloadType? storageWorkloadType)
         {
             SqlDataSettings = sqlDataSettings;
             SqlLogSettings = sqlLogSettings;
-            SqlTempDbSettings = sqlTempDbSettings;
-            SqlSystemDbOnDataDisk = sqlSystemDbOnDataDisk;
+            SqlTempDBSettings = sqlTempDBSettings;
+            SqlSystemDBOnDataDisk = sqlSystemDBOnDataDisk;
             DiskConfigurationType = diskConfigurationType;
             StorageWorkloadType = storageWorkloadType;
         }
 
         /// <summary> SQL Server Data Storage Settings. </summary>
-        public SQLStorageSettings SqlDataSettings { get; set; }
+        public SqlStorageSettings SqlDataSettings { get; set; }
         /// <summary> SQL Server Log Storage Settings. </summary>
-        public SQLStorageSettings SqlLogSettings { get; set; }
+        public SqlStorageSettings SqlLogSettings { get; set; }
         /// <summary> SQL Server TempDb Storage Settings. </summary>
-        public SQLTempDbSettings SqlTempDbSettings { get; set; }
+        public SqlTempDBSettings SqlTempDBSettings { get; set; }
         /// <summary> SQL Server SystemDb Storage on DataPool if true. </summary>
-        public bool? SqlSystemDbOnDataDisk { get; set; }
+        public bool? SqlSystemDBOnDataDisk { get; set; }
         /// <summary> Disk configuration to apply to SQL Server. </summary>
         public DiskConfigurationType? DiskConfigurationType { get; set; }
         /// <summary> Storage workload type. </summary>
