@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         }
 
         [Test]
-        public async Task Backup()
+        public async Task Backup_Restore()
         {
             // Please create the resource first.
             var apiManagementService = await GetApiManagementServiceAsync();
@@ -272,8 +272,36 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         {
             // Please create the resource first.
             var apiManagementService = await GetApiManagementServiceAsync();
-            var result = (await apiManagementService.GetTenantConfigurationSyncStateAsync("foo")).Value;
-            Assert.NotNull(result.Name);
+            Assert.ThrowsAsync<Azure.RequestFailedException>(async () => await apiManagementService.GetTenantConfigurationSyncStateAsync("foo"));
+        }
+
+        [Test]
+        public async Task PerformConnectivityCheckAsync()
+        {
+            // Please create the resource first.
+            var apiManagementService = await GetApiManagementServiceAsync();
+            var source = new ConnectivityCheckRequestSource("eastus");
+            var destination = new ConnectivityCheckRequestDestination("8.8.8.8", 53);
+            var content = new ConnectivityCheckContent(source, destination)
+            {
+                PreferredIPVersion = PreferredIPVersion.IPv4
+            };
+            await apiManagementService.PerformConnectivityCheckAsyncAsync(WaitUntil.Completed, content);
+        }
+
+        [Test]
+        public async Task TenantConfiguration_Deploy_Save_Get()
+        {
+            // Please create the resource first.
+            var apiManagementService = await GetApiManagementServiceAsync();
+            var configName = Recording.GenerateAssetName("testconfig-");
+            var deploy = new ConfigurationDeployContent() { Branch = "master" };
+            var result = await apiManagementService.DeployTenantConfigurationAsync(WaitUntil.Completed, configName, deploy);
+            var content = new ConfigurationSaveContent() { Branch = "master" };
+            var result1 = await apiManagementService.SaveTenantConfigurationAsync(WaitUntil.Completed, configName, content);
+            var result2 = await apiManagementService.GetTenantConfigurationSyncStateAsync(configName);
+            Assert.AreEqual(result.Value.Name, result2.Value.Name);
+            Assert.AreEqual(result1.Value.Name, result2.Value.Name);
         }
     }
 }
