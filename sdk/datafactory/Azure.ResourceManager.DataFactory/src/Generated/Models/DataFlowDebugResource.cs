@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="properties">
         /// Data flow properties.
         /// Serialized Name: DataFlowDebugResource.properties
-        /// Please note <see cref="DataFlowDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactoryDataFlowDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Flowlet"/>, <see cref="MappingDataFlow"/> and <see cref="WranglingDataFlow"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public DataFlowDebugResource(DataFlowDefinition properties)
+        public DataFlowDebugResource(FactoryDataFlowDefinition properties)
         {
             if (properties == null)
             {
@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary>
         /// Data flow properties.
         /// Serialized Name: DataFlowDebugResource.properties
-        /// Please note <see cref="DataFlowDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactoryDataFlowDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Flowlet"/>, <see cref="MappingDataFlow"/> and <see cref="WranglingDataFlow"/>.
         /// </summary>
-        public DataFlowDefinition Properties { get; }
+        public FactoryDataFlowDefinition Properties { get; }
     }
 }

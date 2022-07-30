@@ -51,32 +51,38 @@ rename-rules:
   Etag: ETag|etag
 
 rename-mapping:
-  DataFlowResource: FactoryDataFlow
   DatasetDataElement.name: ColumnName
   DatasetDataElement.type: columnType
   DatasetSchemaDataElement.name: schemaColumnName
   DatasetSchemaDataElement.type: schemaColumnType
   DatasetCompression.type: datasetCompressionType
-  Factory: DataFactory
-  GlobalParameterResource: DataFactoryGlobalParameter
-  PrivateEndpointConnectionResource: DataFactoryPrivateEndpointConnection
-  TriggerResource: DataFactoryTrigger
-  PipelineResource: DataFactoryPipeline
+  AccessPolicyResponse: AccessPolicyResult
+  Activity: DataFactoryPipelineActivity
   AddDataFlowToDebugSessionResponse: AddDataFlowToDebugSessionResult
   CreateDataFlowDebugSessionResponse: CreateDataFlowDebugSessionResult
+  CreateRunResponse: CreateRunResult
+  DataFlow: FactoryDataFlowDefinition
   DataFlowDebugCommandResponse: DataFlowDebugCommandResult
-  AccessPolicyResponse: AccessPolicyResult
+  DataFlowResource: DataFactoryDataFlow
+  DatasetResource: DataFactoryDataset
+  ExposureControlBatchResponse: ExposureControlBatchResult
   ExposureControlResponse: ExposureControlResult
   ExposureControlRequest: ExposureControlContent
+  Factory: DataFactory
   GitHubAccessTokenResponse: GitHubAccessTokenResult
+  GlobalParameterResource: DataFactoryGlobalParameter
+  IntegrationRuntimeResource: DataFactoryIntegrationRuntime
+  LinkedServiceResource: DataFactoryLinkedService
+  ManagedPrivateEndpointResource: DataFactoryPrivateEndpoint
+  ManagedVirtualNetworkResource: DataFactoryVirtualNetwork
+  PipelineResource: DataFactoryPipeline
+  PrivateEndpointConnectionResource: DataFactoryPrivateEndpointConnection
   RunFilterParameters: RunFilterContent
-  ExposureControlBatchResponse: ExposureControlBatchResult
-  IntegrationRuntimeStatusResponse: IntegrationRuntimeStatusResult
   SsisObjectMetadataStatusResponse: SsisObjectMetadataStatusResult
-  CreateRunResponse: CreateRunResult
+  TriggerResource: DataFactoryTrigger
   Trigger: DataFactoryTriggerProperties
-  Activity: DataFactoryPipelineActivity
-
+  IntegrationRuntimeStatusResponse: IntegrationRuntimeStatusResult
+  
 # prepend-rp-prefix:
 #  - DataFlowDefinition
 
@@ -96,8 +102,8 @@ directive:
       $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/addDataFlowToDebugSession'].post.parameters[4].name = 'content';
       $['/subscriptions/{subscriptionId}/providers/Microsoft.DataFactory/locations/{locationId}/getFeatureValue'].post.parameters[3].name = 'content';
       $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/getFeatureValue'].post.parameters[4].name = 'content';
-  - from: DataFlow.json
-    where: $.definitions
-    transform: >
-      $.DataFlow['x-ms-client-name'] = 'FactoryDataFlowDefinition';
+#  - from: DataFlow.json
+#    where: $.definitions
+#    transform: >
+#      $.DataFlow['x-ms-client-name'] = 'FactoryDataFlowDefinition';
 ```

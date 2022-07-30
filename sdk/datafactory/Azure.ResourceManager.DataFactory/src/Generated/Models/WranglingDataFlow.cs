@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Power Query data flow.
     /// Serialized Name: WranglingDataFlow
     /// </summary>
-    public partial class WranglingDataFlow : DataFlowDefinition
+    public partial class WranglingDataFlow : FactoryDataFlowDefinition
     {
         /// <summary> Initializes a new instance of WranglingDataFlow. </summary>
         public WranglingDataFlow()
@@ -27,19 +27,19 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of WranglingDataFlow. </summary>
         /// <param name="dataFlowType">
         /// Type of data flow.
-        /// Serialized Name: DataFlowDefinition.type
+        /// Serialized Name: DataFlow.type
         /// </param>
         /// <param name="description">
         /// The description of the data flow.
-        /// Serialized Name: DataFlowDefinition.description
+        /// Serialized Name: DataFlow.description
         /// </param>
         /// <param name="annotations">
         /// List of tags that can be used for describing the data flow.
-        /// Serialized Name: DataFlowDefinition.annotations
+        /// Serialized Name: DataFlow.annotations
         /// </param>
         /// <param name="folder">
         /// The folder that this data flow is in. If not specified, Data flow will appear at the root level.
-        /// Serialized Name: DataFlowDefinition.folder
+        /// Serialized Name: DataFlow.folder
         /// </param>
         /// <param name="sources">
         /// List of sources in Power Query.

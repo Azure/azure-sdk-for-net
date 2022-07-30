@@ -13,18 +13,18 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataFactory
 {
-    /// <summary> A class representing the DataFlow data model. </summary>
-    public partial class DataFlowData : ResourceData
+    /// <summary> A class representing the DataFactoryDataFlow data model. </summary>
+    public partial class DataFactoryDataFlowData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataFlowData. </summary>
+        /// <summary> Initializes a new instance of DataFactoryDataFlowData. </summary>
         /// <param name="properties">
         /// Data flow properties.
         /// Serialized Name: DataFlowResource.properties
-        /// Please note <see cref="DataFlowDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactoryDataFlowDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Flowlet"/>, <see cref="MappingDataFlow"/> and <see cref="WranglingDataFlow"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public DataFlowData(DataFlowDefinition properties)
+        public DataFactoryDataFlowData(FactoryDataFlowDefinition properties)
         {
             if (properties == null)
             {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataFactory
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of DataFlowData. </summary>
+        /// <summary> Initializes a new instance of DataFactoryDataFlowData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -42,14 +42,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="properties">
         /// Data flow properties.
         /// Serialized Name: DataFlowResource.properties
-        /// Please note <see cref="DataFlowDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactoryDataFlowDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Flowlet"/>, <see cref="MappingDataFlow"/> and <see cref="WranglingDataFlow"/>.
         /// </param>
         /// <param name="eTag">
         /// Etag identifies change in the resource.
         /// Serialized Name: SubResource.etag
         /// </param>
-        internal DataFlowData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataFlowDefinition properties, ETag? eTag) : base(id, name, resourceType, systemData)
+        internal DataFactoryDataFlowData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, FactoryDataFlowDefinition properties, ETag? eTag) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             ETag = eTag;
@@ -58,10 +58,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <summary>
         /// Data flow properties.
         /// Serialized Name: DataFlowResource.properties
-        /// Please note <see cref="DataFlowDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactoryDataFlowDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Flowlet"/>, <see cref="MappingDataFlow"/> and <see cref="WranglingDataFlow"/>.
         /// </summary>
-        public DataFlowDefinition Properties { get; set; }
+        public FactoryDataFlowDefinition Properties { get; set; }
         /// <summary>
         /// Etag identifies change in the resource.
         /// Serialized Name: SubResource.etag

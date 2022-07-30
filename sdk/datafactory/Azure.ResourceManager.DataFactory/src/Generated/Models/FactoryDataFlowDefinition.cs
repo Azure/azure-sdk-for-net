@@ -13,36 +13,36 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary>
     /// Azure Data Factory nested object which contains a flow with data movements and transformations.
-    /// Serialized Name: DataFlowDefinition
-    /// Please note <see cref="DataFlowDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// Serialized Name: DataFlow
+    /// Please note <see cref="FactoryDataFlowDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="Flowlet"/>, <see cref="MappingDataFlow"/> and <see cref="WranglingDataFlow"/>.
     /// </summary>
-    public partial class DataFlowDefinition
+    public partial class FactoryDataFlowDefinition
     {
-        /// <summary> Initializes a new instance of DataFlowDefinition. </summary>
-        public DataFlowDefinition()
+        /// <summary> Initializes a new instance of FactoryDataFlowDefinition. </summary>
+        public FactoryDataFlowDefinition()
         {
             Annotations = new ChangeTrackingList<BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of DataFlowDefinition. </summary>
+        /// <summary> Initializes a new instance of FactoryDataFlowDefinition. </summary>
         /// <param name="dataFlowType">
         /// Type of data flow.
-        /// Serialized Name: DataFlowDefinition.type
+        /// Serialized Name: DataFlow.type
         /// </param>
         /// <param name="description">
         /// The description of the data flow.
-        /// Serialized Name: DataFlowDefinition.description
+        /// Serialized Name: DataFlow.description
         /// </param>
         /// <param name="annotations">
         /// List of tags that can be used for describing the data flow.
-        /// Serialized Name: DataFlowDefinition.annotations
+        /// Serialized Name: DataFlow.annotations
         /// </param>
         /// <param name="folder">
         /// The folder that this data flow is in. If not specified, Data flow will appear at the root level.
-        /// Serialized Name: DataFlowDefinition.folder
+        /// Serialized Name: DataFlow.folder
         /// </param>
-        internal DataFlowDefinition(string dataFlowType, string description, IList<BinaryData> annotations, DataFlowFolder folder)
+        internal FactoryDataFlowDefinition(string dataFlowType, string description, IList<BinaryData> annotations, DataFlowFolder folder)
         {
             DataFlowType = dataFlowType;
             Description = description;
@@ -52,22 +52,22 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary>
         /// Type of data flow.
-        /// Serialized Name: DataFlowDefinition.type
+        /// Serialized Name: DataFlow.type
         /// </summary>
         internal string DataFlowType { get; set; }
         /// <summary>
         /// The description of the data flow.
-        /// Serialized Name: DataFlowDefinition.description
+        /// Serialized Name: DataFlow.description
         /// </summary>
         public string Description { get; set; }
         /// <summary>
         /// List of tags that can be used for describing the data flow.
-        /// Serialized Name: DataFlowDefinition.annotations
+        /// Serialized Name: DataFlow.annotations
         /// </summary>
         public IList<BinaryData> Annotations { get; }
         /// <summary>
         /// The folder that this data flow is in. If not specified, Data flow will appear at the root level.
-        /// Serialized Name: DataFlowDefinition.folder
+        /// Serialized Name: DataFlow.folder
         /// </summary>
         internal DataFlowFolder Folder { get; set; }
         /// <summary>

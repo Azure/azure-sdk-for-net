@@ -11,10 +11,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Update integration runtime request.
     /// Serialized Name: UpdateIntegrationRuntimeRequest
     /// </summary>
-    public partial class IntegrationRuntimeResourcePatch
+    public partial class DataFactoryIntegrationRuntimePatch
     {
-        /// <summary> Initializes a new instance of IntegrationRuntimeResourcePatch. </summary>
-        public IntegrationRuntimeResourcePatch()
+        /// <summary> Initializes a new instance of DataFactoryIntegrationRuntimePatch. </summary>
+        public DataFactoryIntegrationRuntimePatch()
         {
         }
 

@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DataFactory
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string factoryName, string datasetName, DatasetResourceData data, string ifMatch)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string factoryName, string datasetName, DataFactoryDatasetData data, string ifMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/>, <paramref name="datasetName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="datasetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DatasetResourceData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string factoryName, string datasetName, DatasetResourceData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DataFactoryDatasetData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string factoryName, string datasetName, DataFactoryDatasetData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -170,9 +170,9 @@ namespace Azure.ResourceManager.DataFactory
             {
                 case 200:
                     {
-                        DatasetResourceData value = default;
+                        DataFactoryDatasetData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DatasetResourceData.DeserializeDatasetResourceData(document.RootElement);
+                        value = DataFactoryDatasetData.DeserializeDataFactoryDatasetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/>, <paramref name="datasetName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="datasetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DatasetResourceData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string factoryName, string datasetName, DatasetResourceData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public Response<DataFactoryDatasetData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string factoryName, string datasetName, DataFactoryDatasetData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -204,9 +204,9 @@ namespace Azure.ResourceManager.DataFactory
             {
                 case 200:
                     {
-                        DatasetResourceData value = default;
+                        DataFactoryDatasetData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DatasetResourceData.DeserializeDatasetResourceData(document.RootElement);
+                        value = DataFactoryDatasetData.DeserializeDataFactoryDatasetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="datasetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="datasetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DatasetResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string factoryName, string datasetName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DataFactoryDatasetData>> GetAsync(string subscriptionId, string resourceGroupName, string factoryName, string datasetName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -262,14 +262,14 @@ namespace Azure.ResourceManager.DataFactory
             {
                 case 200:
                     {
-                        DatasetResourceData value = default;
+                        DataFactoryDatasetData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DatasetResourceData.DeserializeDatasetResourceData(document.RootElement);
+                        value = DataFactoryDatasetData.DeserializeDataFactoryDatasetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 304:
                 case 404:
-                    return Response.FromValue((DatasetResourceData)null, message.Response);
+                    return Response.FromValue((DataFactoryDatasetData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="datasetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="datasetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DatasetResourceData> Get(string subscriptionId, string resourceGroupName, string factoryName, string datasetName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public Response<DataFactoryDatasetData> Get(string subscriptionId, string resourceGroupName, string factoryName, string datasetName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -297,14 +297,14 @@ namespace Azure.ResourceManager.DataFactory
             {
                 case 200:
                     {
-                        DatasetResourceData value = default;
+                        DataFactoryDatasetData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DatasetResourceData.DeserializeDatasetResourceData(document.RootElement);
+                        value = DataFactoryDatasetData.DeserializeDataFactoryDatasetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 304:
                 case 404:
-                    return Response.FromValue((DatasetResourceData)null, message.Response);
+                    return Response.FromValue((DataFactoryDatasetData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

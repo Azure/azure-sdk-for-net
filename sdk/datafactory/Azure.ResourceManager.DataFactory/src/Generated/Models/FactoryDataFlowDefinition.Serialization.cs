@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DataFlowDefinition : IUtf8JsonSerializable
+    public partial class FactoryDataFlowDefinition : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static DataFlowDefinition DeserializeDataFlowDefinition(JsonElement element)
+        internal static FactoryDataFlowDefinition DeserializeFactoryDataFlowDefinition(JsonElement element)
         {
             if (element.TryGetProperty("type", out JsonElement discriminator))
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     continue;
                 }
             }
-            return new DataFlowDefinition(type, description.Value, Optional.ToList(annotations), folder.Value);
+            return new FactoryDataFlowDefinition(type, description.Value, Optional.ToList(annotations), folder.Value);
         }
     }
 }

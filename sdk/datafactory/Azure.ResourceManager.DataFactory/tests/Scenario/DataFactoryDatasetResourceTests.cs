@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
             }
         }
 
-        private async Task<DatasetResource> CreateDefaultDataset(string datasetName)
+        private async Task<DataFactoryDatasetResource> CreateDefaultDataset(string datasetName)
         {
             LinkedServiceReference linkedServiceReference = new LinkedServiceReference(LinkedServiceReferenceType.LinkedServiceReference, _linkedServiceName);
             Dataset properties = new Dataset(linkedServiceReference);
-            DatasetResourceData data = new DatasetResourceData(properties);
-            var dataset = await _dataFactory.GetDatasetResources().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
+            DataFactoryDatasetData data = new DataFactoryDatasetData(properties);
+            var dataset = await _dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return dataset.Value;
         }
 
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
         {
             string datasetName = Recording.GenerateAssetName("dataset");
             await CreateDefaultDataset(datasetName);
-            bool flag = await _dataFactory.GetDatasetResources().ExistsAsync(datasetName);
+            bool flag = await _dataFactory.GetDataFactoryDatasets().ExistsAsync(datasetName);
             Assert.IsTrue(flag);
         }
 
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
         {
             string datasetName = Recording.GenerateAssetName("dataset");
             await CreateDefaultDataset(datasetName);
-            var dataset = await _dataFactory.GetDatasetResources().GetAsync(datasetName);
+            var dataset = await _dataFactory.GetDataFactoryDatasets().GetAsync(datasetName);
             Assert.IsNotNull(dataset);
             Assert.AreEqual(datasetName, dataset.Value.Data.Name);
         }
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
         {
             string datasetName = Recording.GenerateAssetName("dataset");
             await CreateDefaultDataset(datasetName);
-            var list = await _dataFactory.GetDatasetResources().GetAllAsync().ToEnumerableAsync();
+            var list = await _dataFactory.GetDataFactoryDatasets().GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
             Assert.AreEqual(1,list.Count);
         }
@@ -106,11 +106,11 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
         {
             string datasetName = Recording.GenerateAssetName("dataset");
             var dataset = await CreateDefaultDataset(datasetName);
-            bool flag = await _dataFactory.GetDatasetResources().ExistsAsync(datasetName);
+            bool flag = await _dataFactory.GetDataFactoryDatasets().ExistsAsync(datasetName);
             Assert.IsTrue(flag);
 
             await dataset.DeleteAsync(WaitUntil.Completed);
-            flag = await _dataFactory.GetDatasetResources().ExistsAsync(datasetName);
+            flag = await _dataFactory.GetDataFactoryDatasets().ExistsAsync(datasetName);
             Assert.IsFalse(flag);
         }
     }

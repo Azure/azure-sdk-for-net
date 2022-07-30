@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataFactory
 {
-    public partial class DataFlowData : IUtf8JsonSerializable
+    public partial class DataFactoryIntegrationRuntimeData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -23,9 +23,9 @@ namespace Azure.ResourceManager.DataFactory
             writer.WriteEndObject();
         }
 
-        internal static DataFlowData DeserializeDataFlowData(JsonElement element)
+        internal static DataFactoryIntegrationRuntimeData DeserializeDataFactoryIntegrationRuntimeData(JsonElement element)
         {
-            DataFlowDefinition properties = default;
+            IntegrationRuntime properties = default;
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataFactory
             {
                 if (property.NameEquals("properties"))
                 {
-                    properties = DataFlowDefinition.DeserializeDataFlowDefinition(property.Value);
+                    properties = IntegrationRuntime.DeserializeIntegrationRuntime(property.Value);
                     continue;
                 }
                 if (property.NameEquals("etag"))
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataFactory
                     continue;
                 }
             }
-            return new DataFlowData(id, name, type, systemData.Value, properties, Optional.ToNullable(etag));
+            return new DataFactoryIntegrationRuntimeData(id, name, type, systemData.Value, properties, Optional.ToNullable(etag));
         }
     }
 }

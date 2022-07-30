@@ -17,46 +17,46 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DataFactory
 {
     /// <summary>
-    /// A Class representing a DatasetResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DatasetResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDatasetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DataFactoryResource" /> using the GetDatasetResource method.
+    /// A Class representing a DataFactoryDataset along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataFactoryDatasetResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetDataFactoryDatasetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DataFactoryResource" /> using the GetDataFactoryDataset method.
     /// </summary>
-    public partial class DatasetResource : ArmResource
+    public partial class DataFactoryDatasetResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="DatasetResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="DataFactoryDatasetResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string factoryName, string datasetName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/datasets/{datasetName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _datasetResourceDatasetsClientDiagnostics;
-        private readonly DatasetsRestOperations _datasetResourceDatasetsRestClient;
-        private readonly DatasetResourceData _data;
+        private readonly ClientDiagnostics _dataFactoryDatasetDatasetsClientDiagnostics;
+        private readonly DatasetsRestOperations _dataFactoryDatasetDatasetsRestClient;
+        private readonly DataFactoryDatasetData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="DatasetResource"/> class for mocking. </summary>
-        protected DatasetResource()
+        /// <summary> Initializes a new instance of the <see cref="DataFactoryDatasetResource"/> class for mocking. </summary>
+        protected DataFactoryDatasetResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DatasetResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "DataFactoryDatasetResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DatasetResource(ArmClient client, DatasetResourceData data) : this(client, data.Id)
+        internal DataFactoryDatasetResource(ArmClient client, DataFactoryDatasetData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DatasetResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataFactoryDatasetResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DatasetResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal DataFactoryDatasetResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _datasetResourceDatasetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string datasetResourceDatasetsApiVersion);
-            _datasetResourceDatasetsRestClient = new DatasetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, datasetResourceDatasetsApiVersion);
+            _dataFactoryDatasetDatasetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string dataFactoryDatasetDatasetsApiVersion);
+            _dataFactoryDatasetDatasetsRestClient = new DatasetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataFactoryDatasetDatasetsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DataFactory
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual DatasetResourceData Data
+        public virtual DataFactoryDatasetData Data
         {
             get
             {
@@ -93,16 +93,16 @@ namespace Azure.ResourceManager.DataFactory
         /// </summary>
         /// <param name="ifNoneMatch"> ETag of the dataset entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DatasetResource>> GetAsync(string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataFactoryDatasetResource>> GetAsync(string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _datasetResourceDatasetsClientDiagnostics.CreateScope("DatasetResource.Get");
+            using var scope = _dataFactoryDatasetDatasetsClientDiagnostics.CreateScope("DataFactoryDatasetResource.Get");
             scope.Start();
             try
             {
-                var response = await _datasetResourceDatasetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+                var response = await _dataFactoryDatasetDatasetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifNoneMatch, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DatasetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataFactoryDatasetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -118,16 +118,16 @@ namespace Azure.ResourceManager.DataFactory
         /// </summary>
         /// <param name="ifNoneMatch"> ETag of the dataset entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DatasetResource> Get(string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual Response<DataFactoryDatasetResource> Get(string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _datasetResourceDatasetsClientDiagnostics.CreateScope("DatasetResource.Get");
+            using var scope = _dataFactoryDatasetDatasetsClientDiagnostics.CreateScope("DataFactoryDatasetResource.Get");
             scope.Start();
             try
             {
-                var response = _datasetResourceDatasetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifNoneMatch, cancellationToken);
+                var response = _dataFactoryDatasetDatasetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifNoneMatch, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DatasetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataFactoryDatasetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,11 +145,11 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _datasetResourceDatasetsClientDiagnostics.CreateScope("DatasetResource.Delete");
+            using var scope = _dataFactoryDatasetDatasetsClientDiagnostics.CreateScope("DataFactoryDatasetResource.Delete");
             scope.Start();
             try
             {
-                var response = await _datasetResourceDatasetsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _dataFactoryDatasetDatasetsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new DataFactoryArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -171,11 +171,11 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _datasetResourceDatasetsClientDiagnostics.CreateScope("DatasetResource.Delete");
+            using var scope = _dataFactoryDatasetDatasetsClientDiagnostics.CreateScope("DataFactoryDatasetResource.Delete");
             scope.Start();
             try
             {
-                var response = _datasetResourceDatasetsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _dataFactoryDatasetDatasetsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 var operation = new DataFactoryArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -198,16 +198,16 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="ifMatch"> ETag of the dataset entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<DatasetResource>> UpdateAsync(WaitUntil waitUntil, DatasetResourceData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DataFactoryDatasetResource>> UpdateAsync(WaitUntil waitUntil, DataFactoryDatasetData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _datasetResourceDatasetsClientDiagnostics.CreateScope("DatasetResource.Update");
+            using var scope = _dataFactoryDatasetDatasetsClientDiagnostics.CreateScope("DataFactoryDatasetResource.Update");
             scope.Start();
             try
             {
-                var response = await _datasetResourceDatasetsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new DataFactoryArmOperation<DatasetResource>(Response.FromValue(new DatasetResource(Client, response), response.GetRawResponse()));
+                var response = await _dataFactoryDatasetDatasetsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
+                var operation = new DataFactoryArmOperation<DataFactoryDatasetResource>(Response.FromValue(new DataFactoryDatasetResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -229,16 +229,16 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="ifMatch"> ETag of the dataset entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<DatasetResource> Update(WaitUntil waitUntil, DatasetResourceData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DataFactoryDatasetResource> Update(WaitUntil waitUntil, DataFactoryDatasetData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _datasetResourceDatasetsClientDiagnostics.CreateScope("DatasetResource.Update");
+            using var scope = _dataFactoryDatasetDatasetsClientDiagnostics.CreateScope("DataFactoryDatasetResource.Update");
             scope.Start();
             try
             {
-                var response = _datasetResourceDatasetsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken);
-                var operation = new DataFactoryArmOperation<DatasetResource>(Response.FromValue(new DatasetResource(Client, response), response.GetRawResponse()));
+                var response = _dataFactoryDatasetDatasetsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken);
+                var operation = new DataFactoryArmOperation<DataFactoryDatasetResource>(Response.FromValue(new DataFactoryDatasetResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

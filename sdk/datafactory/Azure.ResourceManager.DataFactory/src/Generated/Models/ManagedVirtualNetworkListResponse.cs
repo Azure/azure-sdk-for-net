@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Serialized Name: ManagedVirtualNetworkListResponse.value
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal ManagedVirtualNetworkListResponse(IEnumerable<ManagedVirtualNetworkResourceData> value)
+        internal ManagedVirtualNetworkListResponse(IEnumerable<DataFactoryVirtualNetworkData> value)
         {
             if (value == null)
             {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The link to the next page of results, if any remaining results exist.
         /// Serialized Name: ManagedVirtualNetworkListResponse.nextLink
         /// </param>
-        internal ManagedVirtualNetworkListResponse(IReadOnlyList<ManagedVirtualNetworkResourceData> value, string nextLink)
+        internal ManagedVirtualNetworkListResponse(IReadOnlyList<DataFactoryVirtualNetworkData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// List of managed Virtual Networks.
         /// Serialized Name: ManagedVirtualNetworkListResponse.value
         /// </summary>
-        public IReadOnlyList<ManagedVirtualNetworkResourceData> Value { get; }
+        public IReadOnlyList<DataFactoryVirtualNetworkData> Value { get; }
         /// <summary>
         /// The link to the next page of results, if any remaining results exist.
         /// Serialized Name: ManagedVirtualNetworkListResponse.nextLink

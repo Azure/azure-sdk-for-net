@@ -17,46 +17,46 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DataFactory
 {
     /// <summary>
-    /// A Class representing a LinkedServiceResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="LinkedServiceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetLinkedServiceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DataFactoryResource" /> using the GetLinkedServiceResource method.
+    /// A Class representing a DataFactoryLinkedService along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataFactoryLinkedServiceResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetDataFactoryLinkedServiceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DataFactoryResource" /> using the GetDataFactoryLinkedService method.
     /// </summary>
-    public partial class LinkedServiceResource : ArmResource
+    public partial class DataFactoryLinkedServiceResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="LinkedServiceResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="DataFactoryLinkedServiceResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string factoryName, string linkedServiceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/linkedservices/{linkedServiceName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _linkedServiceResourceLinkedServicesClientDiagnostics;
-        private readonly LinkedServicesRestOperations _linkedServiceResourceLinkedServicesRestClient;
-        private readonly LinkedServiceResourceData _data;
+        private readonly ClientDiagnostics _dataFactoryLinkedServiceLinkedServicesClientDiagnostics;
+        private readonly LinkedServicesRestOperations _dataFactoryLinkedServiceLinkedServicesRestClient;
+        private readonly DataFactoryLinkedServiceData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="LinkedServiceResource"/> class for mocking. </summary>
-        protected LinkedServiceResource()
+        /// <summary> Initializes a new instance of the <see cref="DataFactoryLinkedServiceResource"/> class for mocking. </summary>
+        protected DataFactoryLinkedServiceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "LinkedServiceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "DataFactoryLinkedServiceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal LinkedServiceResource(ArmClient client, LinkedServiceResourceData data) : this(client, data.Id)
+        internal DataFactoryLinkedServiceResource(ArmClient client, DataFactoryLinkedServiceData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="LinkedServiceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataFactoryLinkedServiceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal LinkedServiceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal DataFactoryLinkedServiceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _linkedServiceResourceLinkedServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string linkedServiceResourceLinkedServicesApiVersion);
-            _linkedServiceResourceLinkedServicesRestClient = new LinkedServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, linkedServiceResourceLinkedServicesApiVersion);
+            _dataFactoryLinkedServiceLinkedServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string dataFactoryLinkedServiceLinkedServicesApiVersion);
+            _dataFactoryLinkedServiceLinkedServicesRestClient = new LinkedServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataFactoryLinkedServiceLinkedServicesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DataFactory
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual LinkedServiceResourceData Data
+        public virtual DataFactoryLinkedServiceData Data
         {
             get
             {
@@ -93,16 +93,16 @@ namespace Azure.ResourceManager.DataFactory
         /// </summary>
         /// <param name="ifNoneMatch"> ETag of the linked service entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<LinkedServiceResource>> GetAsync(string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataFactoryLinkedServiceResource>> GetAsync(string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _linkedServiceResourceLinkedServicesClientDiagnostics.CreateScope("LinkedServiceResource.Get");
+            using var scope = _dataFactoryLinkedServiceLinkedServicesClientDiagnostics.CreateScope("DataFactoryLinkedServiceResource.Get");
             scope.Start();
             try
             {
-                var response = await _linkedServiceResourceLinkedServicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+                var response = await _dataFactoryLinkedServiceLinkedServicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifNoneMatch, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LinkedServiceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataFactoryLinkedServiceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -118,16 +118,16 @@ namespace Azure.ResourceManager.DataFactory
         /// </summary>
         /// <param name="ifNoneMatch"> ETag of the linked service entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<LinkedServiceResource> Get(string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual Response<DataFactoryLinkedServiceResource> Get(string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _linkedServiceResourceLinkedServicesClientDiagnostics.CreateScope("LinkedServiceResource.Get");
+            using var scope = _dataFactoryLinkedServiceLinkedServicesClientDiagnostics.CreateScope("DataFactoryLinkedServiceResource.Get");
             scope.Start();
             try
             {
-                var response = _linkedServiceResourceLinkedServicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifNoneMatch, cancellationToken);
+                var response = _dataFactoryLinkedServiceLinkedServicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifNoneMatch, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LinkedServiceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataFactoryLinkedServiceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,11 +145,11 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _linkedServiceResourceLinkedServicesClientDiagnostics.CreateScope("LinkedServiceResource.Delete");
+            using var scope = _dataFactoryLinkedServiceLinkedServicesClientDiagnostics.CreateScope("DataFactoryLinkedServiceResource.Delete");
             scope.Start();
             try
             {
-                var response = await _linkedServiceResourceLinkedServicesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _dataFactoryLinkedServiceLinkedServicesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new DataFactoryArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -171,11 +171,11 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _linkedServiceResourceLinkedServicesClientDiagnostics.CreateScope("LinkedServiceResource.Delete");
+            using var scope = _dataFactoryLinkedServiceLinkedServicesClientDiagnostics.CreateScope("DataFactoryLinkedServiceResource.Delete");
             scope.Start();
             try
             {
-                var response = _linkedServiceResourceLinkedServicesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _dataFactoryLinkedServiceLinkedServicesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 var operation = new DataFactoryArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -198,16 +198,16 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="ifMatch"> ETag of the linkedService entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<LinkedServiceResource>> UpdateAsync(WaitUntil waitUntil, LinkedServiceResourceData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DataFactoryLinkedServiceResource>> UpdateAsync(WaitUntil waitUntil, DataFactoryLinkedServiceData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _linkedServiceResourceLinkedServicesClientDiagnostics.CreateScope("LinkedServiceResource.Update");
+            using var scope = _dataFactoryLinkedServiceLinkedServicesClientDiagnostics.CreateScope("DataFactoryLinkedServiceResource.Update");
             scope.Start();
             try
             {
-                var response = await _linkedServiceResourceLinkedServicesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new DataFactoryArmOperation<LinkedServiceResource>(Response.FromValue(new LinkedServiceResource(Client, response), response.GetRawResponse()));
+                var response = await _dataFactoryLinkedServiceLinkedServicesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
+                var operation = new DataFactoryArmOperation<DataFactoryLinkedServiceResource>(Response.FromValue(new DataFactoryLinkedServiceResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -229,16 +229,16 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="ifMatch"> ETag of the linkedService entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<LinkedServiceResource> Update(WaitUntil waitUntil, LinkedServiceResourceData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DataFactoryLinkedServiceResource> Update(WaitUntil waitUntil, DataFactoryLinkedServiceData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _linkedServiceResourceLinkedServicesClientDiagnostics.CreateScope("LinkedServiceResource.Update");
+            using var scope = _dataFactoryLinkedServiceLinkedServicesClientDiagnostics.CreateScope("DataFactoryLinkedServiceResource.Update");
             scope.Start();
             try
             {
-                var response = _linkedServiceResourceLinkedServicesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken);
-                var operation = new DataFactoryArmOperation<LinkedServiceResource>(Response.FromValue(new LinkedServiceResource(Client, response), response.GetRawResponse()));
+                var response = _dataFactoryLinkedServiceLinkedServicesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken);
+                var operation = new DataFactoryArmOperation<DataFactoryLinkedServiceResource>(Response.FromValue(new DataFactoryLinkedServiceResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

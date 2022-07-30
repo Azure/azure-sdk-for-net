@@ -20,28 +20,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DataFactory
 {
     /// <summary>
-    /// A class representing a collection of <see cref="LinkedServiceResource" /> and their operations.
-    /// Each <see cref="LinkedServiceResource" /> in the collection will belong to the same instance of <see cref="DataFactoryResource" />.
-    /// To get a <see cref="LinkedServiceResourceCollection" /> instance call the GetLinkedServiceResources method from an instance of <see cref="DataFactoryResource" />.
+    /// A class representing a collection of <see cref="DataFactoryLinkedServiceResource" /> and their operations.
+    /// Each <see cref="DataFactoryLinkedServiceResource" /> in the collection will belong to the same instance of <see cref="DataFactoryResource" />.
+    /// To get a <see cref="DataFactoryLinkedServiceCollection" /> instance call the GetDataFactoryLinkedServices method from an instance of <see cref="DataFactoryResource" />.
     /// </summary>
-    public partial class LinkedServiceResourceCollection : ArmCollection, IEnumerable<LinkedServiceResource>, IAsyncEnumerable<LinkedServiceResource>
+    public partial class DataFactoryLinkedServiceCollection : ArmCollection, IEnumerable<DataFactoryLinkedServiceResource>, IAsyncEnumerable<DataFactoryLinkedServiceResource>
     {
-        private readonly ClientDiagnostics _linkedServiceResourceLinkedServicesClientDiagnostics;
-        private readonly LinkedServicesRestOperations _linkedServiceResourceLinkedServicesRestClient;
+        private readonly ClientDiagnostics _dataFactoryLinkedServiceLinkedServicesClientDiagnostics;
+        private readonly LinkedServicesRestOperations _dataFactoryLinkedServiceLinkedServicesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="LinkedServiceResourceCollection"/> class for mocking. </summary>
-        protected LinkedServiceResourceCollection()
+        /// <summary> Initializes a new instance of the <see cref="DataFactoryLinkedServiceCollection"/> class for mocking. </summary>
+        protected DataFactoryLinkedServiceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="LinkedServiceResourceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataFactoryLinkedServiceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal LinkedServiceResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal DataFactoryLinkedServiceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _linkedServiceResourceLinkedServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", LinkedServiceResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(LinkedServiceResource.ResourceType, out string linkedServiceResourceLinkedServicesApiVersion);
-            _linkedServiceResourceLinkedServicesRestClient = new LinkedServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, linkedServiceResourceLinkedServicesApiVersion);
+            _dataFactoryLinkedServiceLinkedServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", DataFactoryLinkedServiceResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(DataFactoryLinkedServiceResource.ResourceType, out string dataFactoryLinkedServiceLinkedServicesApiVersion);
+            _dataFactoryLinkedServiceLinkedServicesRestClient = new LinkedServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataFactoryLinkedServiceLinkedServicesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -65,17 +65,17 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="linkedServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<LinkedServiceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string linkedServiceName, LinkedServiceResourceData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DataFactoryLinkedServiceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string linkedServiceName, DataFactoryLinkedServiceData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(linkedServiceName, nameof(linkedServiceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _linkedServiceResourceLinkedServicesClientDiagnostics.CreateScope("LinkedServiceResourceCollection.CreateOrUpdate");
+            using var scope = _dataFactoryLinkedServiceLinkedServicesClientDiagnostics.CreateScope("DataFactoryLinkedServiceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _linkedServiceResourceLinkedServicesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkedServiceName, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new DataFactoryArmOperation<LinkedServiceResource>(Response.FromValue(new LinkedServiceResource(Client, response), response.GetRawResponse()));
+                var response = await _dataFactoryLinkedServiceLinkedServicesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkedServiceName, data, ifMatch, cancellationToken).ConfigureAwait(false);
+                var operation = new DataFactoryArmOperation<DataFactoryLinkedServiceResource>(Response.FromValue(new DataFactoryLinkedServiceResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -99,17 +99,17 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="linkedServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<LinkedServiceResource> CreateOrUpdate(WaitUntil waitUntil, string linkedServiceName, LinkedServiceResourceData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DataFactoryLinkedServiceResource> CreateOrUpdate(WaitUntil waitUntil, string linkedServiceName, DataFactoryLinkedServiceData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(linkedServiceName, nameof(linkedServiceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _linkedServiceResourceLinkedServicesClientDiagnostics.CreateScope("LinkedServiceResourceCollection.CreateOrUpdate");
+            using var scope = _dataFactoryLinkedServiceLinkedServicesClientDiagnostics.CreateScope("DataFactoryLinkedServiceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _linkedServiceResourceLinkedServicesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkedServiceName, data, ifMatch, cancellationToken);
-                var operation = new DataFactoryArmOperation<LinkedServiceResource>(Response.FromValue(new LinkedServiceResource(Client, response), response.GetRawResponse()));
+                var response = _dataFactoryLinkedServiceLinkedServicesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkedServiceName, data, ifMatch, cancellationToken);
+                var operation = new DataFactoryArmOperation<DataFactoryLinkedServiceResource>(Response.FromValue(new DataFactoryLinkedServiceResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -131,18 +131,18 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="linkedServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
-        public virtual async Task<Response<LinkedServiceResource>> GetAsync(string linkedServiceName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataFactoryLinkedServiceResource>> GetAsync(string linkedServiceName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(linkedServiceName, nameof(linkedServiceName));
 
-            using var scope = _linkedServiceResourceLinkedServicesClientDiagnostics.CreateScope("LinkedServiceResourceCollection.Get");
+            using var scope = _dataFactoryLinkedServiceLinkedServicesClientDiagnostics.CreateScope("DataFactoryLinkedServiceCollection.Get");
             scope.Start();
             try
             {
-                var response = await _linkedServiceResourceLinkedServicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkedServiceName, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+                var response = await _dataFactoryLinkedServiceLinkedServicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkedServiceName, ifNoneMatch, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LinkedServiceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataFactoryLinkedServiceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -161,18 +161,18 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="linkedServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
-        public virtual Response<LinkedServiceResource> Get(string linkedServiceName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual Response<DataFactoryLinkedServiceResource> Get(string linkedServiceName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(linkedServiceName, nameof(linkedServiceName));
 
-            using var scope = _linkedServiceResourceLinkedServicesClientDiagnostics.CreateScope("LinkedServiceResourceCollection.Get");
+            using var scope = _dataFactoryLinkedServiceLinkedServicesClientDiagnostics.CreateScope("DataFactoryLinkedServiceCollection.Get");
             scope.Start();
             try
             {
-                var response = _linkedServiceResourceLinkedServicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkedServiceName, ifNoneMatch, cancellationToken);
+                var response = _dataFactoryLinkedServiceLinkedServicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkedServiceName, ifNoneMatch, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LinkedServiceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataFactoryLinkedServiceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -187,17 +187,17 @@ namespace Azure.ResourceManager.DataFactory
         /// Operation Id: LinkedServices_ListByFactory
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="LinkedServiceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<LinkedServiceResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DataFactoryLinkedServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DataFactoryLinkedServiceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<LinkedServiceResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<DataFactoryLinkedServiceResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _linkedServiceResourceLinkedServicesClientDiagnostics.CreateScope("LinkedServiceResourceCollection.GetAll");
+                using var scope = _dataFactoryLinkedServiceLinkedServicesClientDiagnostics.CreateScope("DataFactoryLinkedServiceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _linkedServiceResourceLinkedServicesRestClient.ListByFactoryAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new LinkedServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _dataFactoryLinkedServiceLinkedServicesRestClient.ListByFactoryAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new DataFactoryLinkedServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -205,14 +205,14 @@ namespace Azure.ResourceManager.DataFactory
                     throw;
                 }
             }
-            async Task<Page<LinkedServiceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<DataFactoryLinkedServiceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _linkedServiceResourceLinkedServicesClientDiagnostics.CreateScope("LinkedServiceResourceCollection.GetAll");
+                using var scope = _dataFactoryLinkedServiceLinkedServicesClientDiagnostics.CreateScope("DataFactoryLinkedServiceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _linkedServiceResourceLinkedServicesRestClient.ListByFactoryNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new LinkedServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _dataFactoryLinkedServiceLinkedServicesRestClient.ListByFactoryNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new DataFactoryLinkedServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -229,17 +229,17 @@ namespace Azure.ResourceManager.DataFactory
         /// Operation Id: LinkedServices_ListByFactory
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LinkedServiceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<LinkedServiceResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DataFactoryLinkedServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DataFactoryLinkedServiceResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<LinkedServiceResource> FirstPageFunc(int? pageSizeHint)
+            Page<DataFactoryLinkedServiceResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _linkedServiceResourceLinkedServicesClientDiagnostics.CreateScope("LinkedServiceResourceCollection.GetAll");
+                using var scope = _dataFactoryLinkedServiceLinkedServicesClientDiagnostics.CreateScope("DataFactoryLinkedServiceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _linkedServiceResourceLinkedServicesRestClient.ListByFactory(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new LinkedServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _dataFactoryLinkedServiceLinkedServicesRestClient.ListByFactory(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new DataFactoryLinkedServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -247,14 +247,14 @@ namespace Azure.ResourceManager.DataFactory
                     throw;
                 }
             }
-            Page<LinkedServiceResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<DataFactoryLinkedServiceResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _linkedServiceResourceLinkedServicesClientDiagnostics.CreateScope("LinkedServiceResourceCollection.GetAll");
+                using var scope = _dataFactoryLinkedServiceLinkedServicesClientDiagnostics.CreateScope("DataFactoryLinkedServiceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _linkedServiceResourceLinkedServicesRestClient.ListByFactoryNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new LinkedServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _dataFactoryLinkedServiceLinkedServicesRestClient.ListByFactoryNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new DataFactoryLinkedServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -279,11 +279,11 @@ namespace Azure.ResourceManager.DataFactory
         {
             Argument.AssertNotNullOrEmpty(linkedServiceName, nameof(linkedServiceName));
 
-            using var scope = _linkedServiceResourceLinkedServicesClientDiagnostics.CreateScope("LinkedServiceResourceCollection.Exists");
+            using var scope = _dataFactoryLinkedServiceLinkedServicesClientDiagnostics.CreateScope("DataFactoryLinkedServiceCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _linkedServiceResourceLinkedServicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkedServiceName, ifNoneMatch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _dataFactoryLinkedServiceLinkedServicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkedServiceName, ifNoneMatch, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -307,11 +307,11 @@ namespace Azure.ResourceManager.DataFactory
         {
             Argument.AssertNotNullOrEmpty(linkedServiceName, nameof(linkedServiceName));
 
-            using var scope = _linkedServiceResourceLinkedServicesClientDiagnostics.CreateScope("LinkedServiceResourceCollection.Exists");
+            using var scope = _dataFactoryLinkedServiceLinkedServicesClientDiagnostics.CreateScope("DataFactoryLinkedServiceCollection.Exists");
             scope.Start();
             try
             {
-                var response = _linkedServiceResourceLinkedServicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkedServiceName, ifNoneMatch, cancellationToken: cancellationToken);
+                var response = _dataFactoryLinkedServiceLinkedServicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkedServiceName, ifNoneMatch, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.DataFactory
             }
         }
 
-        IEnumerator<LinkedServiceResource> IEnumerable<LinkedServiceResource>.GetEnumerator()
+        IEnumerator<DataFactoryLinkedServiceResource> IEnumerable<DataFactoryLinkedServiceResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.DataFactory
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<LinkedServiceResource> IAsyncEnumerable<LinkedServiceResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<DataFactoryLinkedServiceResource> IAsyncEnumerable<DataFactoryLinkedServiceResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

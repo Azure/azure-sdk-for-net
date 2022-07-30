@@ -20,28 +20,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DataFactory
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DatasetResource" /> and their operations.
-    /// Each <see cref="DatasetResource" /> in the collection will belong to the same instance of <see cref="DataFactoryResource" />.
-    /// To get a <see cref="DatasetResourceCollection" /> instance call the GetDatasetResources method from an instance of <see cref="DataFactoryResource" />.
+    /// A class representing a collection of <see cref="DataFactoryDatasetResource" /> and their operations.
+    /// Each <see cref="DataFactoryDatasetResource" /> in the collection will belong to the same instance of <see cref="DataFactoryResource" />.
+    /// To get a <see cref="DataFactoryDatasetCollection" /> instance call the GetDataFactoryDatasets method from an instance of <see cref="DataFactoryResource" />.
     /// </summary>
-    public partial class DatasetResourceCollection : ArmCollection, IEnumerable<DatasetResource>, IAsyncEnumerable<DatasetResource>
+    public partial class DataFactoryDatasetCollection : ArmCollection, IEnumerable<DataFactoryDatasetResource>, IAsyncEnumerable<DataFactoryDatasetResource>
     {
-        private readonly ClientDiagnostics _datasetResourceDatasetsClientDiagnostics;
-        private readonly DatasetsRestOperations _datasetResourceDatasetsRestClient;
+        private readonly ClientDiagnostics _dataFactoryDatasetDatasetsClientDiagnostics;
+        private readonly DatasetsRestOperations _dataFactoryDatasetDatasetsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="DatasetResourceCollection"/> class for mocking. </summary>
-        protected DatasetResourceCollection()
+        /// <summary> Initializes a new instance of the <see cref="DataFactoryDatasetCollection"/> class for mocking. </summary>
+        protected DataFactoryDatasetCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DatasetResourceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataFactoryDatasetCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal DatasetResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal DataFactoryDatasetCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _datasetResourceDatasetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", DatasetResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(DatasetResource.ResourceType, out string datasetResourceDatasetsApiVersion);
-            _datasetResourceDatasetsRestClient = new DatasetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, datasetResourceDatasetsApiVersion);
+            _dataFactoryDatasetDatasetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", DataFactoryDatasetResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(DataFactoryDatasetResource.ResourceType, out string dataFactoryDatasetDatasetsApiVersion);
+            _dataFactoryDatasetDatasetsRestClient = new DatasetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataFactoryDatasetDatasetsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -65,17 +65,17 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="datasetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="datasetName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<DatasetResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string datasetName, DatasetResourceData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DataFactoryDatasetResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string datasetName, DataFactoryDatasetData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(datasetName, nameof(datasetName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _datasetResourceDatasetsClientDiagnostics.CreateScope("DatasetResourceCollection.CreateOrUpdate");
+            using var scope = _dataFactoryDatasetDatasetsClientDiagnostics.CreateScope("DataFactoryDatasetCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _datasetResourceDatasetsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, datasetName, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new DataFactoryArmOperation<DatasetResource>(Response.FromValue(new DatasetResource(Client, response), response.GetRawResponse()));
+                var response = await _dataFactoryDatasetDatasetsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, datasetName, data, ifMatch, cancellationToken).ConfigureAwait(false);
+                var operation = new DataFactoryArmOperation<DataFactoryDatasetResource>(Response.FromValue(new DataFactoryDatasetResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -99,17 +99,17 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="datasetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="datasetName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<DatasetResource> CreateOrUpdate(WaitUntil waitUntil, string datasetName, DatasetResourceData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DataFactoryDatasetResource> CreateOrUpdate(WaitUntil waitUntil, string datasetName, DataFactoryDatasetData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(datasetName, nameof(datasetName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _datasetResourceDatasetsClientDiagnostics.CreateScope("DatasetResourceCollection.CreateOrUpdate");
+            using var scope = _dataFactoryDatasetDatasetsClientDiagnostics.CreateScope("DataFactoryDatasetCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _datasetResourceDatasetsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, datasetName, data, ifMatch, cancellationToken);
-                var operation = new DataFactoryArmOperation<DatasetResource>(Response.FromValue(new DatasetResource(Client, response), response.GetRawResponse()));
+                var response = _dataFactoryDatasetDatasetsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, datasetName, data, ifMatch, cancellationToken);
+                var operation = new DataFactoryArmOperation<DataFactoryDatasetResource>(Response.FromValue(new DataFactoryDatasetResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -131,18 +131,18 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="datasetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="datasetName"/> is null. </exception>
-        public virtual async Task<Response<DatasetResource>> GetAsync(string datasetName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataFactoryDatasetResource>> GetAsync(string datasetName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(datasetName, nameof(datasetName));
 
-            using var scope = _datasetResourceDatasetsClientDiagnostics.CreateScope("DatasetResourceCollection.Get");
+            using var scope = _dataFactoryDatasetDatasetsClientDiagnostics.CreateScope("DataFactoryDatasetCollection.Get");
             scope.Start();
             try
             {
-                var response = await _datasetResourceDatasetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, datasetName, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+                var response = await _dataFactoryDatasetDatasetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, datasetName, ifNoneMatch, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DatasetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataFactoryDatasetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -161,18 +161,18 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="datasetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="datasetName"/> is null. </exception>
-        public virtual Response<DatasetResource> Get(string datasetName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual Response<DataFactoryDatasetResource> Get(string datasetName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(datasetName, nameof(datasetName));
 
-            using var scope = _datasetResourceDatasetsClientDiagnostics.CreateScope("DatasetResourceCollection.Get");
+            using var scope = _dataFactoryDatasetDatasetsClientDiagnostics.CreateScope("DataFactoryDatasetCollection.Get");
             scope.Start();
             try
             {
-                var response = _datasetResourceDatasetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, datasetName, ifNoneMatch, cancellationToken);
+                var response = _dataFactoryDatasetDatasetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, datasetName, ifNoneMatch, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DatasetResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataFactoryDatasetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -187,17 +187,17 @@ namespace Azure.ResourceManager.DataFactory
         /// Operation Id: Datasets_ListByFactory
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DatasetResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DatasetResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DataFactoryDatasetResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DataFactoryDatasetResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DatasetResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<DataFactoryDatasetResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _datasetResourceDatasetsClientDiagnostics.CreateScope("DatasetResourceCollection.GetAll");
+                using var scope = _dataFactoryDatasetDatasetsClientDiagnostics.CreateScope("DataFactoryDatasetCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _datasetResourceDatasetsRestClient.ListByFactoryAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DatasetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _dataFactoryDatasetDatasetsRestClient.ListByFactoryAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new DataFactoryDatasetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -205,14 +205,14 @@ namespace Azure.ResourceManager.DataFactory
                     throw;
                 }
             }
-            async Task<Page<DatasetResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<DataFactoryDatasetResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _datasetResourceDatasetsClientDiagnostics.CreateScope("DatasetResourceCollection.GetAll");
+                using var scope = _dataFactoryDatasetDatasetsClientDiagnostics.CreateScope("DataFactoryDatasetCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _datasetResourceDatasetsRestClient.ListByFactoryNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DatasetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _dataFactoryDatasetDatasetsRestClient.ListByFactoryNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new DataFactoryDatasetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -229,17 +229,17 @@ namespace Azure.ResourceManager.DataFactory
         /// Operation Id: Datasets_ListByFactory
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DatasetResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DatasetResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DataFactoryDatasetResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DataFactoryDatasetResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<DatasetResource> FirstPageFunc(int? pageSizeHint)
+            Page<DataFactoryDatasetResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _datasetResourceDatasetsClientDiagnostics.CreateScope("DatasetResourceCollection.GetAll");
+                using var scope = _dataFactoryDatasetDatasetsClientDiagnostics.CreateScope("DataFactoryDatasetCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _datasetResourceDatasetsRestClient.ListByFactory(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DatasetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _dataFactoryDatasetDatasetsRestClient.ListByFactory(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new DataFactoryDatasetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -247,14 +247,14 @@ namespace Azure.ResourceManager.DataFactory
                     throw;
                 }
             }
-            Page<DatasetResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<DataFactoryDatasetResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _datasetResourceDatasetsClientDiagnostics.CreateScope("DatasetResourceCollection.GetAll");
+                using var scope = _dataFactoryDatasetDatasetsClientDiagnostics.CreateScope("DataFactoryDatasetCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _datasetResourceDatasetsRestClient.ListByFactoryNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DatasetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _dataFactoryDatasetDatasetsRestClient.ListByFactoryNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new DataFactoryDatasetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -279,11 +279,11 @@ namespace Azure.ResourceManager.DataFactory
         {
             Argument.AssertNotNullOrEmpty(datasetName, nameof(datasetName));
 
-            using var scope = _datasetResourceDatasetsClientDiagnostics.CreateScope("DatasetResourceCollection.Exists");
+            using var scope = _dataFactoryDatasetDatasetsClientDiagnostics.CreateScope("DataFactoryDatasetCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _datasetResourceDatasetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, datasetName, ifNoneMatch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _dataFactoryDatasetDatasetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, datasetName, ifNoneMatch, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -307,11 +307,11 @@ namespace Azure.ResourceManager.DataFactory
         {
             Argument.AssertNotNullOrEmpty(datasetName, nameof(datasetName));
 
-            using var scope = _datasetResourceDatasetsClientDiagnostics.CreateScope("DatasetResourceCollection.Exists");
+            using var scope = _dataFactoryDatasetDatasetsClientDiagnostics.CreateScope("DataFactoryDatasetCollection.Exists");
             scope.Start();
             try
             {
-                var response = _datasetResourceDatasetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, datasetName, ifNoneMatch, cancellationToken: cancellationToken);
+                var response = _dataFactoryDatasetDatasetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, datasetName, ifNoneMatch, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.DataFactory
             }
         }
 
-        IEnumerator<DatasetResource> IEnumerable<DatasetResource>.GetEnumerator()
+        IEnumerator<DataFactoryDatasetResource> IEnumerable<DataFactoryDatasetResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.DataFactory
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<DatasetResource> IAsyncEnumerable<DatasetResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<DataFactoryDatasetResource> IAsyncEnumerable<DataFactoryDatasetResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

@@ -13,10 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataFactory
 {
-    /// <summary> A class representing the IntegrationRuntimeResource data model. </summary>
-    public partial class IntegrationRuntimeResourceData : ResourceData
+    /// <summary> A class representing the DataFactoryIntegrationRuntime data model. </summary>
+    public partial class DataFactoryIntegrationRuntimeData : ResourceData
     {
-        /// <summary> Initializes a new instance of IntegrationRuntimeResourceData. </summary>
+        /// <summary> Initializes a new instance of DataFactoryIntegrationRuntimeData. </summary>
         /// <param name="properties">
         /// Integration runtime properties.
         /// Serialized Name: IntegrationRuntimeResource.properties
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataFactory
         /// The available derived classes include <see cref="ManagedIntegrationRuntime"/> and <see cref="SelfHostedIntegrationRuntime"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public IntegrationRuntimeResourceData(IntegrationRuntime properties)
+        public DataFactoryIntegrationRuntimeData(IntegrationRuntime properties)
         {
             if (properties == null)
             {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataFactory
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of IntegrationRuntimeResourceData. </summary>
+        /// <summary> Initializes a new instance of DataFactoryIntegrationRuntimeData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DataFactory
         /// Etag identifies change in the resource.
         /// Serialized Name: SubResource.etag
         /// </param>
-        internal IntegrationRuntimeResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IntegrationRuntime properties, ETag? eTag) : base(id, name, resourceType, systemData)
+        internal DataFactoryIntegrationRuntimeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IntegrationRuntime properties, ETag? eTag) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             ETag = eTag;

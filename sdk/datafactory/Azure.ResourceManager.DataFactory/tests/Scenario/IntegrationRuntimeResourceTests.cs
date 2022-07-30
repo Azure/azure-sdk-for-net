@@ -41,14 +41,14 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
             _dataFactory = await Client.GetDataFactoryResource(_dataFactoryIdentifier).GetAsync();
         }
 
-        private async Task<IntegrationRuntimeResource> CreateDefaultIntegrationRuntime(string integrationRuntimeName)
+        private async Task<DataFactoryIntegrationRuntimeResource> CreateDefaultIntegrationRuntime(string integrationRuntimeName)
         {
             IntegrationRuntime properties = new IntegrationRuntime()
             {
                 RuntimeType = "SelfHosted"
             };
-            IntegrationRuntimeResourceData data = new IntegrationRuntimeResourceData(properties);
-            var integrationRuntime = await _dataFactory.GetIntegrationRuntimeResources().CreateOrUpdateAsync(WaitUntil.Completed, integrationRuntimeName, data);
+            DataFactoryIntegrationRuntimeData data = new DataFactoryIntegrationRuntimeData(properties);
+            var integrationRuntime = await _dataFactory.GetDataFactoryIntegrationRuntimes().CreateOrUpdateAsync(WaitUntil.Completed, integrationRuntimeName, data);
             return integrationRuntime.Value;
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
         {
             string integrationRuntimeName = Recording.GenerateAssetName("intergration");
             await CreateDefaultIntegrationRuntime(integrationRuntimeName);
-            bool flag = await _dataFactory.GetIntegrationRuntimeResources().ExistsAsync(integrationRuntimeName);
+            bool flag = await _dataFactory.GetDataFactoryIntegrationRuntimes().ExistsAsync(integrationRuntimeName);
             Assert.IsTrue(flag);
         }
 
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
         {
             string integrationRuntimeName = Recording.GenerateAssetName("intergration");
              await CreateDefaultIntegrationRuntime(integrationRuntimeName);
-            var integrationRuntime = await _dataFactory.GetIntegrationRuntimeResources().GetAsync(integrationRuntimeName);
+            var integrationRuntime = await _dataFactory.GetDataFactoryIntegrationRuntimes().GetAsync(integrationRuntimeName);
             Assert.IsNotNull(integrationRuntime);
         }
 
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
         {
             string integrationRuntimeName = Recording.GenerateAssetName("intergration");
             await CreateDefaultIntegrationRuntime(integrationRuntimeName);
-            var list = await _dataFactory.GetIntegrationRuntimeResources().GetAllAsync().ToEnumerableAsync();
+            var list = await _dataFactory.GetDataFactoryIntegrationRuntimes().GetAllAsync().ToEnumerableAsync();
             Assert.IsNotNull(list);
         }
 
@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
         {
             string integrationRuntimeName = Recording.GenerateAssetName("intergration");
             var integrationRuntime = await CreateDefaultIntegrationRuntime(integrationRuntimeName);
-            bool flag = await _dataFactory.GetIntegrationRuntimeResources().ExistsAsync(integrationRuntimeName);
+            bool flag = await _dataFactory.GetDataFactoryIntegrationRuntimes().ExistsAsync(integrationRuntimeName);
             Assert.IsTrue(flag);
 
             await integrationRuntime.DeleteAsync(WaitUntil.Completed);
-            flag = await _dataFactory.GetIntegrationRuntimeResources().ExistsAsync(integrationRuntimeName);
+            flag = await _dataFactory.GetDataFactoryIntegrationRuntimes().ExistsAsync(integrationRuntimeName);
             Assert.IsFalse(flag);
         }
     }

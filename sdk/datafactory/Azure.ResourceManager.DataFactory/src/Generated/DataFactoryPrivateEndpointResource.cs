@@ -17,46 +17,46 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DataFactory
 {
     /// <summary>
-    /// A Class representing a ManagedPrivateEndpointResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ManagedPrivateEndpointResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetManagedPrivateEndpointResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ManagedVirtualNetworkResource" /> using the GetManagedPrivateEndpointResource method.
+    /// A Class representing a DataFactoryPrivateEndpoint along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataFactoryPrivateEndpointResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetDataFactoryPrivateEndpointResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DataFactoryVirtualNetworkResource" /> using the GetDataFactoryPrivateEndpoint method.
     /// </summary>
-    public partial class ManagedPrivateEndpointResource : ArmResource
+    public partial class DataFactoryPrivateEndpointResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ManagedPrivateEndpointResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="DataFactoryPrivateEndpointResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string factoryName, string managedVirtualNetworkName, string managedPrivateEndpointName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/managedVirtualNetworks/{managedVirtualNetworkName}/managedPrivateEndpoints/{managedPrivateEndpointName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _managedPrivateEndpointResourceManagedPrivateEndpointsClientDiagnostics;
-        private readonly ManagedPrivateEndpointsRestOperations _managedPrivateEndpointResourceManagedPrivateEndpointsRestClient;
-        private readonly ManagedPrivateEndpointResourceData _data;
+        private readonly ClientDiagnostics _dataFactoryPrivateEndpointManagedPrivateEndpointsClientDiagnostics;
+        private readonly ManagedPrivateEndpointsRestOperations _dataFactoryPrivateEndpointManagedPrivateEndpointsRestClient;
+        private readonly DataFactoryPrivateEndpointData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="ManagedPrivateEndpointResource"/> class for mocking. </summary>
-        protected ManagedPrivateEndpointResource()
+        /// <summary> Initializes a new instance of the <see cref="DataFactoryPrivateEndpointResource"/> class for mocking. </summary>
+        protected DataFactoryPrivateEndpointResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ManagedPrivateEndpointResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "DataFactoryPrivateEndpointResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ManagedPrivateEndpointResource(ArmClient client, ManagedPrivateEndpointResourceData data) : this(client, data.Id)
+        internal DataFactoryPrivateEndpointResource(ArmClient client, DataFactoryPrivateEndpointData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ManagedPrivateEndpointResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataFactoryPrivateEndpointResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ManagedPrivateEndpointResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal DataFactoryPrivateEndpointResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _managedPrivateEndpointResourceManagedPrivateEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string managedPrivateEndpointResourceManagedPrivateEndpointsApiVersion);
-            _managedPrivateEndpointResourceManagedPrivateEndpointsRestClient = new ManagedPrivateEndpointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managedPrivateEndpointResourceManagedPrivateEndpointsApiVersion);
+            _dataFactoryPrivateEndpointManagedPrivateEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string dataFactoryPrivateEndpointManagedPrivateEndpointsApiVersion);
+            _dataFactoryPrivateEndpointManagedPrivateEndpointsRestClient = new ManagedPrivateEndpointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataFactoryPrivateEndpointManagedPrivateEndpointsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DataFactory
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual ManagedPrivateEndpointResourceData Data
+        public virtual DataFactoryPrivateEndpointData Data
         {
             get
             {
@@ -93,16 +93,16 @@ namespace Azure.ResourceManager.DataFactory
         /// </summary>
         /// <param name="ifNoneMatch"> ETag of the managed private endpoint entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ManagedPrivateEndpointResource>> GetAsync(string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataFactoryPrivateEndpointResource>> GetAsync(string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _managedPrivateEndpointResourceManagedPrivateEndpointsClientDiagnostics.CreateScope("ManagedPrivateEndpointResource.Get");
+            using var scope = _dataFactoryPrivateEndpointManagedPrivateEndpointsClientDiagnostics.CreateScope("DataFactoryPrivateEndpointResource.Get");
             scope.Start();
             try
             {
-                var response = await _managedPrivateEndpointResourceManagedPrivateEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+                var response = await _dataFactoryPrivateEndpointManagedPrivateEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifNoneMatch, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedPrivateEndpointResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataFactoryPrivateEndpointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -118,16 +118,16 @@ namespace Azure.ResourceManager.DataFactory
         /// </summary>
         /// <param name="ifNoneMatch"> ETag of the managed private endpoint entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ManagedPrivateEndpointResource> Get(string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual Response<DataFactoryPrivateEndpointResource> Get(string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _managedPrivateEndpointResourceManagedPrivateEndpointsClientDiagnostics.CreateScope("ManagedPrivateEndpointResource.Get");
+            using var scope = _dataFactoryPrivateEndpointManagedPrivateEndpointsClientDiagnostics.CreateScope("DataFactoryPrivateEndpointResource.Get");
             scope.Start();
             try
             {
-                var response = _managedPrivateEndpointResourceManagedPrivateEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifNoneMatch, cancellationToken);
+                var response = _dataFactoryPrivateEndpointManagedPrivateEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifNoneMatch, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedPrivateEndpointResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataFactoryPrivateEndpointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,11 +145,11 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _managedPrivateEndpointResourceManagedPrivateEndpointsClientDiagnostics.CreateScope("ManagedPrivateEndpointResource.Delete");
+            using var scope = _dataFactoryPrivateEndpointManagedPrivateEndpointsClientDiagnostics.CreateScope("DataFactoryPrivateEndpointResource.Delete");
             scope.Start();
             try
             {
-                var response = await _managedPrivateEndpointResourceManagedPrivateEndpointsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _dataFactoryPrivateEndpointManagedPrivateEndpointsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new DataFactoryArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -171,11 +171,11 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _managedPrivateEndpointResourceManagedPrivateEndpointsClientDiagnostics.CreateScope("ManagedPrivateEndpointResource.Delete");
+            using var scope = _dataFactoryPrivateEndpointManagedPrivateEndpointsClientDiagnostics.CreateScope("DataFactoryPrivateEndpointResource.Delete");
             scope.Start();
             try
             {
-                var response = _managedPrivateEndpointResourceManagedPrivateEndpointsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _dataFactoryPrivateEndpointManagedPrivateEndpointsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 var operation = new DataFactoryArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -198,16 +198,16 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="ifMatch"> ETag of the managed private endpoint entity. Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ManagedPrivateEndpointResource>> UpdateAsync(WaitUntil waitUntil, ManagedPrivateEndpointResourceData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DataFactoryPrivateEndpointResource>> UpdateAsync(WaitUntil waitUntil, DataFactoryPrivateEndpointData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _managedPrivateEndpointResourceManagedPrivateEndpointsClientDiagnostics.CreateScope("ManagedPrivateEndpointResource.Update");
+            using var scope = _dataFactoryPrivateEndpointManagedPrivateEndpointsClientDiagnostics.CreateScope("DataFactoryPrivateEndpointResource.Update");
             scope.Start();
             try
             {
-                var response = await _managedPrivateEndpointResourceManagedPrivateEndpointsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new DataFactoryArmOperation<ManagedPrivateEndpointResource>(Response.FromValue(new ManagedPrivateEndpointResource(Client, response), response.GetRawResponse()));
+                var response = await _dataFactoryPrivateEndpointManagedPrivateEndpointsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
+                var operation = new DataFactoryArmOperation<DataFactoryPrivateEndpointResource>(Response.FromValue(new DataFactoryPrivateEndpointResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -229,16 +229,16 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="ifMatch"> ETag of the managed private endpoint entity. Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ManagedPrivateEndpointResource> Update(WaitUntil waitUntil, ManagedPrivateEndpointResourceData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DataFactoryPrivateEndpointResource> Update(WaitUntil waitUntil, DataFactoryPrivateEndpointData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _managedPrivateEndpointResourceManagedPrivateEndpointsClientDiagnostics.CreateScope("ManagedPrivateEndpointResource.Update");
+            using var scope = _dataFactoryPrivateEndpointManagedPrivateEndpointsClientDiagnostics.CreateScope("DataFactoryPrivateEndpointResource.Update");
             scope.Start();
             try
             {
-                var response = _managedPrivateEndpointResourceManagedPrivateEndpointsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken);
-                var operation = new DataFactoryArmOperation<ManagedPrivateEndpointResource>(Response.FromValue(new ManagedPrivateEndpointResource(Client, response), response.GetRawResponse()));
+                var response = _dataFactoryPrivateEndpointManagedPrivateEndpointsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken);
+                var operation = new DataFactoryArmOperation<DataFactoryPrivateEndpointResource>(Response.FromValue(new DataFactoryPrivateEndpointResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

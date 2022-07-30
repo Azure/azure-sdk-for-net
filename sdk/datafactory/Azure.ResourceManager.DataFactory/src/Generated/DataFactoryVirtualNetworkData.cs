@@ -13,16 +13,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataFactory
 {
-    /// <summary> A class representing the ManagedPrivateEndpointResource data model. </summary>
-    public partial class ManagedPrivateEndpointResourceData : ResourceData
+    /// <summary> A class representing the DataFactoryVirtualNetwork data model. </summary>
+    public partial class DataFactoryVirtualNetworkData : ResourceData
     {
-        /// <summary> Initializes a new instance of ManagedPrivateEndpointResourceData. </summary>
+        /// <summary> Initializes a new instance of DataFactoryVirtualNetworkData. </summary>
         /// <param name="properties">
-        /// Managed private endpoint properties.
-        /// Serialized Name: ManagedPrivateEndpointResource.properties
+        /// Managed Virtual Network properties.
+        /// Serialized Name: ManagedVirtualNetworkResource.properties
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public ManagedPrivateEndpointResourceData(ManagedPrivateEndpoint properties)
+        public DataFactoryVirtualNetworkData(ManagedVirtualNetwork properties)
         {
             if (properties == null)
             {
@@ -32,30 +32,30 @@ namespace Azure.ResourceManager.DataFactory
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of ManagedPrivateEndpointResourceData. </summary>
+        /// <summary> Initializes a new instance of DataFactoryVirtualNetworkData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties">
-        /// Managed private endpoint properties.
-        /// Serialized Name: ManagedPrivateEndpointResource.properties
+        /// Managed Virtual Network properties.
+        /// Serialized Name: ManagedVirtualNetworkResource.properties
         /// </param>
         /// <param name="eTag">
         /// Etag identifies change in the resource.
         /// Serialized Name: SubResource.etag
         /// </param>
-        internal ManagedPrivateEndpointResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedPrivateEndpoint properties, ETag? eTag) : base(id, name, resourceType, systemData)
+        internal DataFactoryVirtualNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedVirtualNetwork properties, ETag? eTag) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             ETag = eTag;
         }
 
         /// <summary>
-        /// Managed private endpoint properties.
-        /// Serialized Name: ManagedPrivateEndpointResource.properties
+        /// Managed Virtual Network properties.
+        /// Serialized Name: ManagedVirtualNetworkResource.properties
         /// </summary>
-        public ManagedPrivateEndpoint Properties { get; set; }
+        public ManagedVirtualNetwork Properties { get; set; }
         /// <summary>
         /// Etag identifies change in the resource.
         /// Serialized Name: SubResource.etag

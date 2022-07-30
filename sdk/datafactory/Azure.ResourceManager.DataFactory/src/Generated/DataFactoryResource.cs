@@ -119,11 +119,11 @@ namespace Azure.ResourceManager.DataFactory
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of IntegrationRuntimeResources in the DataFactory. </summary>
-        /// <returns> An object representing collection of IntegrationRuntimeResources and their operations over a IntegrationRuntimeResource. </returns>
-        public virtual IntegrationRuntimeResourceCollection GetIntegrationRuntimeResources()
+        /// <summary> Gets a collection of DataFactoryIntegrationRuntimeResources in the DataFactory. </summary>
+        /// <returns> An object representing collection of DataFactoryIntegrationRuntimeResources and their operations over a DataFactoryIntegrationRuntimeResource. </returns>
+        public virtual DataFactoryIntegrationRuntimeCollection GetDataFactoryIntegrationRuntimes()
         {
-            return GetCachedClient(Client => new IntegrationRuntimeResourceCollection(Client, Id));
+            return GetCachedClient(Client => new DataFactoryIntegrationRuntimeCollection(Client, Id));
         }
 
         /// <summary>
@@ -137,9 +137,9 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentException"> <paramref name="integrationRuntimeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="integrationRuntimeName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<IntegrationRuntimeResource>> GetIntegrationRuntimeResourceAsync(string integrationRuntimeName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataFactoryIntegrationRuntimeResource>> GetDataFactoryIntegrationRuntimeAsync(string integrationRuntimeName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            return await GetIntegrationRuntimeResources().GetAsync(integrationRuntimeName, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+            return await GetDataFactoryIntegrationRuntimes().GetAsync(integrationRuntimeName, ifNoneMatch, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -153,32 +153,16 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentException"> <paramref name="integrationRuntimeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="integrationRuntimeName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<IntegrationRuntimeResource> GetIntegrationRuntimeResource(string integrationRuntimeName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual Response<DataFactoryIntegrationRuntimeResource> GetDataFactoryIntegrationRuntime(string integrationRuntimeName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            return GetIntegrationRuntimeResources().Get(integrationRuntimeName, ifNoneMatch, cancellationToken);
+            return GetDataFactoryIntegrationRuntimes().Get(integrationRuntimeName, ifNoneMatch, cancellationToken);
         }
 
-        /// <summary> Gets a collection of LinkedServiceResources in the DataFactory. </summary>
-        /// <returns> An object representing collection of LinkedServiceResources and their operations over a LinkedServiceResource. </returns>
-        public virtual LinkedServiceResourceCollection GetLinkedServiceResources()
+        /// <summary> Gets a collection of DataFactoryLinkedServiceResources in the DataFactory. </summary>
+        /// <returns> An object representing collection of DataFactoryLinkedServiceResources and their operations over a DataFactoryLinkedServiceResource. </returns>
+        public virtual DataFactoryLinkedServiceCollection GetDataFactoryLinkedServices()
         {
-            return GetCachedClient(Client => new LinkedServiceResourceCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Gets a linked service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/linkedservices/{linkedServiceName}
-        /// Operation Id: LinkedServices_Get
-        /// </summary>
-        /// <param name="linkedServiceName"> The linked service name. </param>
-        /// <param name="ifNoneMatch"> ETag of the linked service entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="linkedServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<LinkedServiceResource>> GetLinkedServiceResourceAsync(string linkedServiceName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
-        {
-            return await GetLinkedServiceResources().GetAsync(linkedServiceName, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(Client => new DataFactoryLinkedServiceCollection(Client, Id));
         }
 
         /// <summary>
@@ -192,16 +176,32 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentException"> <paramref name="linkedServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<LinkedServiceResource> GetLinkedServiceResource(string linkedServiceName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataFactoryLinkedServiceResource>> GetDataFactoryLinkedServiceAsync(string linkedServiceName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            return GetLinkedServiceResources().Get(linkedServiceName, ifNoneMatch, cancellationToken);
+            return await GetDataFactoryLinkedServices().GetAsync(linkedServiceName, ifNoneMatch, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of DatasetResources in the DataFactory. </summary>
-        /// <returns> An object representing collection of DatasetResources and their operations over a DatasetResource. </returns>
-        public virtual DatasetResourceCollection GetDatasetResources()
+        /// <summary>
+        /// Gets a linked service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/linkedservices/{linkedServiceName}
+        /// Operation Id: LinkedServices_Get
+        /// </summary>
+        /// <param name="linkedServiceName"> The linked service name. </param>
+        /// <param name="ifNoneMatch"> ETag of the linked service entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="linkedServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DataFactoryLinkedServiceResource> GetDataFactoryLinkedService(string linkedServiceName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(Client => new DatasetResourceCollection(Client, Id));
+            return GetDataFactoryLinkedServices().Get(linkedServiceName, ifNoneMatch, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of DataFactoryDatasetResources in the DataFactory. </summary>
+        /// <returns> An object representing collection of DataFactoryDatasetResources and their operations over a DataFactoryDatasetResource. </returns>
+        public virtual DataFactoryDatasetCollection GetDataFactoryDatasets()
+        {
+            return GetCachedClient(Client => new DataFactoryDatasetCollection(Client, Id));
         }
 
         /// <summary>
@@ -215,9 +215,9 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentException"> <paramref name="datasetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="datasetName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DatasetResource>> GetDatasetResourceAsync(string datasetName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataFactoryDatasetResource>> GetDataFactoryDatasetAsync(string datasetName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            return await GetDatasetResources().GetAsync(datasetName, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+            return await GetDataFactoryDatasets().GetAsync(datasetName, ifNoneMatch, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -231,9 +231,9 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentException"> <paramref name="datasetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="datasetName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DatasetResource> GetDatasetResource(string datasetName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual Response<DataFactoryDatasetResource> GetDataFactoryDataset(string datasetName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            return GetDatasetResources().Get(datasetName, ifNoneMatch, cancellationToken);
+            return GetDataFactoryDatasets().Get(datasetName, ifNoneMatch, cancellationToken);
         }
 
         /// <summary> Gets a collection of DataFactoryPipelineResources in the DataFactory. </summary>
@@ -314,11 +314,11 @@ namespace Azure.ResourceManager.DataFactory
             return GetDataFactoryTriggers().Get(triggerName, ifNoneMatch, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DataFlowResources in the DataFactory. </summary>
-        /// <returns> An object representing collection of DataFlowResources and their operations over a DataFlowResource. </returns>
-        public virtual DataFlowCollection GetDataFlows()
+        /// <summary> Gets a collection of DataFactoryDataFlowResources in the DataFactory. </summary>
+        /// <returns> An object representing collection of DataFactoryDataFlowResources and their operations over a DataFactoryDataFlowResource. </returns>
+        public virtual DataFactoryDataFlowCollection GetDataFactoryDataFlows()
         {
-            return GetCachedClient(Client => new DataFlowCollection(Client, Id));
+            return GetCachedClient(Client => new DataFactoryDataFlowCollection(Client, Id));
         }
 
         /// <summary>
@@ -332,9 +332,9 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentException"> <paramref name="dataFlowName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataFlowName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DataFlowResource>> GetDataFlowAsync(string dataFlowName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataFactoryDataFlowResource>> GetDataFactoryDataFlowAsync(string dataFlowName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            return await GetDataFlows().GetAsync(dataFlowName, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+            return await GetDataFactoryDataFlows().GetAsync(dataFlowName, ifNoneMatch, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -348,32 +348,16 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentException"> <paramref name="dataFlowName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataFlowName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DataFlowResource> GetDataFlow(string dataFlowName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual Response<DataFactoryDataFlowResource> GetDataFactoryDataFlow(string dataFlowName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            return GetDataFlows().Get(dataFlowName, ifNoneMatch, cancellationToken);
+            return GetDataFactoryDataFlows().Get(dataFlowName, ifNoneMatch, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ManagedVirtualNetworkResources in the DataFactory. </summary>
-        /// <returns> An object representing collection of ManagedVirtualNetworkResources and their operations over a ManagedVirtualNetworkResource. </returns>
-        public virtual ManagedVirtualNetworkResourceCollection GetManagedVirtualNetworkResources()
+        /// <summary> Gets a collection of DataFactoryVirtualNetworkResources in the DataFactory. </summary>
+        /// <returns> An object representing collection of DataFactoryVirtualNetworkResources and their operations over a DataFactoryVirtualNetworkResource. </returns>
+        public virtual DataFactoryVirtualNetworkCollection GetDataFactoryVirtualNetworks()
         {
-            return GetCachedClient(Client => new ManagedVirtualNetworkResourceCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Gets a managed Virtual Network.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/managedVirtualNetworks/{managedVirtualNetworkName}
-        /// Operation Id: ManagedVirtualNetworks_Get
-        /// </summary>
-        /// <param name="managedVirtualNetworkName"> Managed virtual network name. </param>
-        /// <param name="ifNoneMatch"> ETag of the managed Virtual Network entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="managedVirtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="managedVirtualNetworkName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ManagedVirtualNetworkResource>> GetManagedVirtualNetworkResourceAsync(string managedVirtualNetworkName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
-        {
-            return await GetManagedVirtualNetworkResources().GetAsync(managedVirtualNetworkName, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(Client => new DataFactoryVirtualNetworkCollection(Client, Id));
         }
 
         /// <summary>
@@ -387,9 +371,25 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentException"> <paramref name="managedVirtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedVirtualNetworkName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ManagedVirtualNetworkResource> GetManagedVirtualNetworkResource(string managedVirtualNetworkName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataFactoryVirtualNetworkResource>> GetDataFactoryVirtualNetworkAsync(string managedVirtualNetworkName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            return GetManagedVirtualNetworkResources().Get(managedVirtualNetworkName, ifNoneMatch, cancellationToken);
+            return await GetDataFactoryVirtualNetworks().GetAsync(managedVirtualNetworkName, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a managed Virtual Network.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/managedVirtualNetworks/{managedVirtualNetworkName}
+        /// Operation Id: ManagedVirtualNetworks_Get
+        /// </summary>
+        /// <param name="managedVirtualNetworkName"> Managed virtual network name. </param>
+        /// <param name="ifNoneMatch"> ETag of the managed Virtual Network entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="managedVirtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="managedVirtualNetworkName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DataFactoryVirtualNetworkResource> GetDataFactoryVirtualNetwork(string managedVirtualNetworkName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        {
+            return GetDataFactoryVirtualNetworks().Get(managedVirtualNetworkName, ifNoneMatch, cancellationToken);
         }
 
         /// <summary> Gets a collection of DataFactoryPrivateEndpointConnectionResources in the DataFactory. </summary>

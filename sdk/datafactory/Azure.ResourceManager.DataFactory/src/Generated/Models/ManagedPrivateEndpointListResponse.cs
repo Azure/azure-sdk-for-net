@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Serialized Name: ManagedPrivateEndpointListResponse.value
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal ManagedPrivateEndpointListResponse(IEnumerable<ManagedPrivateEndpointResourceData> value)
+        internal ManagedPrivateEndpointListResponse(IEnumerable<DataFactoryPrivateEndpointData> value)
         {
             if (value == null)
             {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The link to the next page of results, if any remaining results exist.
         /// Serialized Name: ManagedPrivateEndpointListResponse.nextLink
         /// </param>
-        internal ManagedPrivateEndpointListResponse(IReadOnlyList<ManagedPrivateEndpointResourceData> value, string nextLink)
+        internal ManagedPrivateEndpointListResponse(IReadOnlyList<DataFactoryPrivateEndpointData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// List of managed private endpoints.
         /// Serialized Name: ManagedPrivateEndpointListResponse.value
         /// </summary>
-        public IReadOnlyList<ManagedPrivateEndpointResourceData> Value { get; }
+        public IReadOnlyList<DataFactoryPrivateEndpointData> Value { get; }
         /// <summary>
         /// The link to the next page of results, if any remaining results exist.
         /// Serialized Name: ManagedPrivateEndpointListResponse.nextLink

@@ -20,28 +20,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DataFactory
 {
     /// <summary>
-    /// A class representing a collection of <see cref="IntegrationRuntimeResource" /> and their operations.
-    /// Each <see cref="IntegrationRuntimeResource" /> in the collection will belong to the same instance of <see cref="DataFactoryResource" />.
-    /// To get an <see cref="IntegrationRuntimeResourceCollection" /> instance call the GetIntegrationRuntimeResources method from an instance of <see cref="DataFactoryResource" />.
+    /// A class representing a collection of <see cref="DataFactoryIntegrationRuntimeResource" /> and their operations.
+    /// Each <see cref="DataFactoryIntegrationRuntimeResource" /> in the collection will belong to the same instance of <see cref="DataFactoryResource" />.
+    /// To get a <see cref="DataFactoryIntegrationRuntimeCollection" /> instance call the GetDataFactoryIntegrationRuntimes method from an instance of <see cref="DataFactoryResource" />.
     /// </summary>
-    public partial class IntegrationRuntimeResourceCollection : ArmCollection, IEnumerable<IntegrationRuntimeResource>, IAsyncEnumerable<IntegrationRuntimeResource>
+    public partial class DataFactoryIntegrationRuntimeCollection : ArmCollection, IEnumerable<DataFactoryIntegrationRuntimeResource>, IAsyncEnumerable<DataFactoryIntegrationRuntimeResource>
     {
-        private readonly ClientDiagnostics _integrationRuntimeResourceIntegrationRuntimesClientDiagnostics;
-        private readonly IntegrationRuntimesRestOperations _integrationRuntimeResourceIntegrationRuntimesRestClient;
+        private readonly ClientDiagnostics _dataFactoryIntegrationRuntimeIntegrationRuntimesClientDiagnostics;
+        private readonly IntegrationRuntimesRestOperations _dataFactoryIntegrationRuntimeIntegrationRuntimesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="IntegrationRuntimeResourceCollection"/> class for mocking. </summary>
-        protected IntegrationRuntimeResourceCollection()
+        /// <summary> Initializes a new instance of the <see cref="DataFactoryIntegrationRuntimeCollection"/> class for mocking. </summary>
+        protected DataFactoryIntegrationRuntimeCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="IntegrationRuntimeResourceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataFactoryIntegrationRuntimeCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal IntegrationRuntimeResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal DataFactoryIntegrationRuntimeCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _integrationRuntimeResourceIntegrationRuntimesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", IntegrationRuntimeResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(IntegrationRuntimeResource.ResourceType, out string integrationRuntimeResourceIntegrationRuntimesApiVersion);
-            _integrationRuntimeResourceIntegrationRuntimesRestClient = new IntegrationRuntimesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, integrationRuntimeResourceIntegrationRuntimesApiVersion);
+            _dataFactoryIntegrationRuntimeIntegrationRuntimesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", DataFactoryIntegrationRuntimeResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(DataFactoryIntegrationRuntimeResource.ResourceType, out string dataFactoryIntegrationRuntimeIntegrationRuntimesApiVersion);
+            _dataFactoryIntegrationRuntimeIntegrationRuntimesRestClient = new IntegrationRuntimesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataFactoryIntegrationRuntimeIntegrationRuntimesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -65,17 +65,17 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="integrationRuntimeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="integrationRuntimeName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<IntegrationRuntimeResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string integrationRuntimeName, IntegrationRuntimeResourceData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DataFactoryIntegrationRuntimeResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string integrationRuntimeName, DataFactoryIntegrationRuntimeData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(integrationRuntimeName, nameof(integrationRuntimeName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _integrationRuntimeResourceIntegrationRuntimesClientDiagnostics.CreateScope("IntegrationRuntimeResourceCollection.CreateOrUpdate");
+            using var scope = _dataFactoryIntegrationRuntimeIntegrationRuntimesClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _integrationRuntimeResourceIntegrationRuntimesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, integrationRuntimeName, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new DataFactoryArmOperation<IntegrationRuntimeResource>(Response.FromValue(new IntegrationRuntimeResource(Client, response), response.GetRawResponse()));
+                var response = await _dataFactoryIntegrationRuntimeIntegrationRuntimesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, integrationRuntimeName, data, ifMatch, cancellationToken).ConfigureAwait(false);
+                var operation = new DataFactoryArmOperation<DataFactoryIntegrationRuntimeResource>(Response.FromValue(new DataFactoryIntegrationRuntimeResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -99,17 +99,17 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="integrationRuntimeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="integrationRuntimeName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<IntegrationRuntimeResource> CreateOrUpdate(WaitUntil waitUntil, string integrationRuntimeName, IntegrationRuntimeResourceData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DataFactoryIntegrationRuntimeResource> CreateOrUpdate(WaitUntil waitUntil, string integrationRuntimeName, DataFactoryIntegrationRuntimeData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(integrationRuntimeName, nameof(integrationRuntimeName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _integrationRuntimeResourceIntegrationRuntimesClientDiagnostics.CreateScope("IntegrationRuntimeResourceCollection.CreateOrUpdate");
+            using var scope = _dataFactoryIntegrationRuntimeIntegrationRuntimesClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _integrationRuntimeResourceIntegrationRuntimesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, integrationRuntimeName, data, ifMatch, cancellationToken);
-                var operation = new DataFactoryArmOperation<IntegrationRuntimeResource>(Response.FromValue(new IntegrationRuntimeResource(Client, response), response.GetRawResponse()));
+                var response = _dataFactoryIntegrationRuntimeIntegrationRuntimesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, integrationRuntimeName, data, ifMatch, cancellationToken);
+                var operation = new DataFactoryArmOperation<DataFactoryIntegrationRuntimeResource>(Response.FromValue(new DataFactoryIntegrationRuntimeResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -131,18 +131,18 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="integrationRuntimeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="integrationRuntimeName"/> is null. </exception>
-        public virtual async Task<Response<IntegrationRuntimeResource>> GetAsync(string integrationRuntimeName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataFactoryIntegrationRuntimeResource>> GetAsync(string integrationRuntimeName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(integrationRuntimeName, nameof(integrationRuntimeName));
 
-            using var scope = _integrationRuntimeResourceIntegrationRuntimesClientDiagnostics.CreateScope("IntegrationRuntimeResourceCollection.Get");
+            using var scope = _dataFactoryIntegrationRuntimeIntegrationRuntimesClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeCollection.Get");
             scope.Start();
             try
             {
-                var response = await _integrationRuntimeResourceIntegrationRuntimesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, integrationRuntimeName, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+                var response = await _dataFactoryIntegrationRuntimeIntegrationRuntimesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, integrationRuntimeName, ifNoneMatch, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new IntegrationRuntimeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataFactoryIntegrationRuntimeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -161,18 +161,18 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="integrationRuntimeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="integrationRuntimeName"/> is null. </exception>
-        public virtual Response<IntegrationRuntimeResource> Get(string integrationRuntimeName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual Response<DataFactoryIntegrationRuntimeResource> Get(string integrationRuntimeName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(integrationRuntimeName, nameof(integrationRuntimeName));
 
-            using var scope = _integrationRuntimeResourceIntegrationRuntimesClientDiagnostics.CreateScope("IntegrationRuntimeResourceCollection.Get");
+            using var scope = _dataFactoryIntegrationRuntimeIntegrationRuntimesClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeCollection.Get");
             scope.Start();
             try
             {
-                var response = _integrationRuntimeResourceIntegrationRuntimesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, integrationRuntimeName, ifNoneMatch, cancellationToken);
+                var response = _dataFactoryIntegrationRuntimeIntegrationRuntimesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, integrationRuntimeName, ifNoneMatch, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new IntegrationRuntimeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataFactoryIntegrationRuntimeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -187,17 +187,17 @@ namespace Azure.ResourceManager.DataFactory
         /// Operation Id: IntegrationRuntimes_ListByFactory
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="IntegrationRuntimeResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<IntegrationRuntimeResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DataFactoryIntegrationRuntimeResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DataFactoryIntegrationRuntimeResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<IntegrationRuntimeResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<DataFactoryIntegrationRuntimeResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _integrationRuntimeResourceIntegrationRuntimesClientDiagnostics.CreateScope("IntegrationRuntimeResourceCollection.GetAll");
+                using var scope = _dataFactoryIntegrationRuntimeIntegrationRuntimesClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _integrationRuntimeResourceIntegrationRuntimesRestClient.ListByFactoryAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new IntegrationRuntimeResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _dataFactoryIntegrationRuntimeIntegrationRuntimesRestClient.ListByFactoryAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new DataFactoryIntegrationRuntimeResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -205,14 +205,14 @@ namespace Azure.ResourceManager.DataFactory
                     throw;
                 }
             }
-            async Task<Page<IntegrationRuntimeResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<DataFactoryIntegrationRuntimeResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _integrationRuntimeResourceIntegrationRuntimesClientDiagnostics.CreateScope("IntegrationRuntimeResourceCollection.GetAll");
+                using var scope = _dataFactoryIntegrationRuntimeIntegrationRuntimesClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _integrationRuntimeResourceIntegrationRuntimesRestClient.ListByFactoryNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new IntegrationRuntimeResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _dataFactoryIntegrationRuntimeIntegrationRuntimesRestClient.ListByFactoryNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new DataFactoryIntegrationRuntimeResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -229,17 +229,17 @@ namespace Azure.ResourceManager.DataFactory
         /// Operation Id: IntegrationRuntimes_ListByFactory
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="IntegrationRuntimeResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<IntegrationRuntimeResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DataFactoryIntegrationRuntimeResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DataFactoryIntegrationRuntimeResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<IntegrationRuntimeResource> FirstPageFunc(int? pageSizeHint)
+            Page<DataFactoryIntegrationRuntimeResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _integrationRuntimeResourceIntegrationRuntimesClientDiagnostics.CreateScope("IntegrationRuntimeResourceCollection.GetAll");
+                using var scope = _dataFactoryIntegrationRuntimeIntegrationRuntimesClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _integrationRuntimeResourceIntegrationRuntimesRestClient.ListByFactory(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new IntegrationRuntimeResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _dataFactoryIntegrationRuntimeIntegrationRuntimesRestClient.ListByFactory(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new DataFactoryIntegrationRuntimeResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -247,14 +247,14 @@ namespace Azure.ResourceManager.DataFactory
                     throw;
                 }
             }
-            Page<IntegrationRuntimeResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<DataFactoryIntegrationRuntimeResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _integrationRuntimeResourceIntegrationRuntimesClientDiagnostics.CreateScope("IntegrationRuntimeResourceCollection.GetAll");
+                using var scope = _dataFactoryIntegrationRuntimeIntegrationRuntimesClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _integrationRuntimeResourceIntegrationRuntimesRestClient.ListByFactoryNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new IntegrationRuntimeResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _dataFactoryIntegrationRuntimeIntegrationRuntimesRestClient.ListByFactoryNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new DataFactoryIntegrationRuntimeResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -279,11 +279,11 @@ namespace Azure.ResourceManager.DataFactory
         {
             Argument.AssertNotNullOrEmpty(integrationRuntimeName, nameof(integrationRuntimeName));
 
-            using var scope = _integrationRuntimeResourceIntegrationRuntimesClientDiagnostics.CreateScope("IntegrationRuntimeResourceCollection.Exists");
+            using var scope = _dataFactoryIntegrationRuntimeIntegrationRuntimesClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _integrationRuntimeResourceIntegrationRuntimesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, integrationRuntimeName, ifNoneMatch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _dataFactoryIntegrationRuntimeIntegrationRuntimesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, integrationRuntimeName, ifNoneMatch, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -307,11 +307,11 @@ namespace Azure.ResourceManager.DataFactory
         {
             Argument.AssertNotNullOrEmpty(integrationRuntimeName, nameof(integrationRuntimeName));
 
-            using var scope = _integrationRuntimeResourceIntegrationRuntimesClientDiagnostics.CreateScope("IntegrationRuntimeResourceCollection.Exists");
+            using var scope = _dataFactoryIntegrationRuntimeIntegrationRuntimesClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeCollection.Exists");
             scope.Start();
             try
             {
-                var response = _integrationRuntimeResourceIntegrationRuntimesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, integrationRuntimeName, ifNoneMatch, cancellationToken: cancellationToken);
+                var response = _dataFactoryIntegrationRuntimeIntegrationRuntimesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, integrationRuntimeName, ifNoneMatch, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.DataFactory
             }
         }
 
-        IEnumerator<IntegrationRuntimeResource> IEnumerable<IntegrationRuntimeResource>.GetEnumerator()
+        IEnumerator<DataFactoryIntegrationRuntimeResource> IEnumerable<DataFactoryIntegrationRuntimeResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.DataFactory
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<IntegrationRuntimeResource> IAsyncEnumerable<IntegrationRuntimeResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<DataFactoryIntegrationRuntimeResource> IAsyncEnumerable<DataFactoryIntegrationRuntimeResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

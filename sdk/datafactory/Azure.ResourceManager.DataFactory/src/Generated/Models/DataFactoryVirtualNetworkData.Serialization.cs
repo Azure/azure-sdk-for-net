@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataFactory
 {
-    public partial class DatasetResourceData : IUtf8JsonSerializable
+    public partial class DataFactoryVirtualNetworkData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -23,9 +23,9 @@ namespace Azure.ResourceManager.DataFactory
             writer.WriteEndObject();
         }
 
-        internal static DatasetResourceData DeserializeDatasetResourceData(JsonElement element)
+        internal static DataFactoryVirtualNetworkData DeserializeDataFactoryVirtualNetworkData(JsonElement element)
         {
-            Dataset properties = default;
+            ManagedVirtualNetwork properties = default;
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataFactory
             {
                 if (property.NameEquals("properties"))
                 {
-                    properties = Dataset.DeserializeDataset(property.Value);
+                    properties = ManagedVirtualNetwork.DeserializeManagedVirtualNetwork(property.Value);
                     continue;
                 }
                 if (property.NameEquals("etag"))
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataFactory
                     continue;
                 }
             }
-            return new DatasetResourceData(id, name, type, systemData.Value, properties, Optional.ToNullable(etag));
+            return new DataFactoryVirtualNetworkData(id, name, type, systemData.Value, properties, Optional.ToNullable(etag));
         }
     }
 }

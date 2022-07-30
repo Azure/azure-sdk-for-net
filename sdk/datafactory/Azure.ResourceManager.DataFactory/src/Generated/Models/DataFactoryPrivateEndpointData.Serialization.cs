@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataFactory
 {
-    public partial class LinkedServiceResourceData : IUtf8JsonSerializable
+    public partial class DataFactoryPrivateEndpointData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -23,9 +23,9 @@ namespace Azure.ResourceManager.DataFactory
             writer.WriteEndObject();
         }
 
-        internal static LinkedServiceResourceData DeserializeLinkedServiceResourceData(JsonElement element)
+        internal static DataFactoryPrivateEndpointData DeserializeDataFactoryPrivateEndpointData(JsonElement element)
         {
-            LinkedService properties = default;
+            ManagedPrivateEndpoint properties = default;
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataFactory
             {
                 if (property.NameEquals("properties"))
                 {
-                    properties = LinkedService.DeserializeLinkedService(property.Value);
+                    properties = ManagedPrivateEndpoint.DeserializeManagedPrivateEndpoint(property.Value);
                     continue;
                 }
                 if (property.NameEquals("etag"))
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataFactory
                     continue;
                 }
             }
-            return new LinkedServiceResourceData(id, name, type, systemData.Value, properties, Optional.ToNullable(etag));
+            return new DataFactoryPrivateEndpointData(id, name, type, systemData.Value, properties, Optional.ToNullable(etag));
         }
     }
 }

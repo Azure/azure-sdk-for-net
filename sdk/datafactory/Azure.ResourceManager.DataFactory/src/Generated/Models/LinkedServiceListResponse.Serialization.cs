@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         internal static LinkedServiceListResponse DeserializeLinkedServiceListResponse(JsonElement element)
         {
-            IReadOnlyList<LinkedServiceResourceData> value = default;
+            IReadOnlyList<DataFactoryLinkedServiceData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<LinkedServiceResourceData> array = new List<LinkedServiceResourceData>();
+                    List<DataFactoryLinkedServiceData> array = new List<DataFactoryLinkedServiceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LinkedServiceResourceData.DeserializeLinkedServiceResourceData(item));
+                        array.Add(DataFactoryLinkedServiceData.DeserializeDataFactoryLinkedServiceData(item));
                     }
                     value = array;
                     continue;
