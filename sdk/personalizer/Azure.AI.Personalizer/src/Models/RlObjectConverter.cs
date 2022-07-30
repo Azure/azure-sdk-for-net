@@ -20,6 +20,10 @@ namespace Azure.AI.Personalizer
             DecisionContext decisionContext = new DecisionContext(contextFeatures, rankableActions);
             var jsonSerializerOptions = new JsonSerializerOptions
             {
+                Converters =
+                {
+                     new JsonBinaryDataConverter(),
+                },
                 IgnoreNullValues = true
             };
             return JsonSerializer.Serialize(decisionContext, jsonSerializerOptions);

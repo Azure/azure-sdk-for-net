@@ -90,6 +90,10 @@ namespace Azure.AI.Personalizer
             DecisionContext decisionContext = new DecisionContext(options, slotIdToFeatures);
             var jsonSerializerOptions = new JsonSerializerOptions
             {
+                Converters =
+                {
+                     new JsonBinaryDataConverter(),
+                },
                 IgnoreNullValues = true
             };
             var contextJson = JsonSerializer.Serialize(decisionContext, jsonSerializerOptions);

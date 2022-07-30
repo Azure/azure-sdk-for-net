@@ -47,6 +47,10 @@ namespace Azure.AI.Personalizer.Tests
             #pragma warning disable SYSLIB0020
             var jsonSerializerOptions = new JsonSerializerOptions
             {
+                Converters =
+                {
+                     new JsonBinaryDataConverter(),
+                },
                 IgnoreNullValues = true
             };
             var contextJson = JsonSerializer.Serialize(decisionContext, jsonSerializerOptions);
