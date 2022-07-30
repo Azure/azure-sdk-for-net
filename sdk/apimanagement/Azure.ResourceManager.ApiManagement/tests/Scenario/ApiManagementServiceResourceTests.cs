@@ -63,12 +63,20 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         public async Task Backup_Restore()
         {
             // Please create the resource first.
+            // Backup
             var apiManagementService = await GetApiManagementServiceAsync();
-            var backupRestoreContent = new ApiManagementServiceBackupRestoreContent("apiteststorageaccount", "apiblob", "backup5")
+            var backupContent = new ApiManagementServiceBackupRestoreContent("apiteststorageaccount", "apiblob", "backup5")
             {
                 AccessType = StorageAccountAccessType.SystemAssignedManagedIdentity
             };
-            Assert.ThrowsAsync<Azure.RequestFailedException>(async () => await apiManagementService.BackupAsync(WaitUntil.Completed, backupRestoreContent));
+            Assert.ThrowsAsync<Azure.RequestFailedException>(async () => await apiManagementService.BackupAsync(WaitUntil.Completed, backupContent));
+
+            // Restore
+            var restoreContent = new ApiManagementServiceBackupRestoreContent("apiteststorageaccount", "apiblob", "backup5")
+            {
+                AccessType = StorageAccountAccessType.SystemAssignedManagedIdentity
+            };
+            Assert.ThrowsAsync<Azure.RequestFailedException>(async () => await apiManagementService.RestoreAsync(WaitUntil.Completed, restoreContent));
         }
 
         [Test]
@@ -296,12 +304,37 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             var apiManagementService = await GetApiManagementServiceAsync();
             var configName = Recording.GenerateAssetName("testconfig-");
             var deploy = new ConfigurationDeployContent() { Branch = "master" };
-            var result = await apiManagementService.DeployTenantConfigurationAsync(WaitUntil.Completed, configName, deploy);
+            Assert.ThrowsAsync<Azure.RequestFailedException>(async () => await apiManagementService.ValidateTenantConfigurationAsync(WaitUntil.Completed, configName, deploy));
+            Assert.ThrowsAsync<Azure.RequestFailedException>(async () => await apiManagementService.DeployTenantConfigurationAsync(WaitUntil.Completed, configName, deploy));
             var content = new ConfigurationSaveContent() { Branch = "master" };
-            var result1 = await apiManagementService.SaveTenantConfigurationAsync(WaitUntil.Completed, configName, content);
-            var result2 = await apiManagementService.GetTenantConfigurationSyncStateAsync(configName);
-            Assert.AreEqual(result.Value.Name, result2.Value.Name);
-            Assert.AreEqual(result1.Value.Name, result2.Value.Name);
+            Assert.ThrowsAsync<Azure.RequestFailedException>(async () => await apiManagementService.SaveTenantConfigurationAsync(WaitUntil.Completed, configName, content));
+            Assert.ThrowsAsync<Azure.RequestFailedException>(async () => await apiManagementService.GetTenantConfigurationSyncStateAsync(configName));
+        }
+
+        [Test]
+        public async Task UpdateQuotaByCounterKeys()
+        {
+            // Please create the resource first.
+            var apiManagementService = await GetApiManagementServiceAsync();
+            var updateContent = new QuotaCounterValueUpdateContent()
+            {
+                CallsCount = 0,
+                KbTransferred = 2.5630078125
+            };
+            Assert.ThrowsAsync<Azure.RequestFailedException>(async () => await apiManagementService.UpdateQuotaByCounterKeysAsync("ba", updateContent).ToEnumerableAsync());
+        }
+
+        [Test]
+        public async Task UpdateQuotaByPeriodKey()
+        {
+            // Please create the resource first.
+            var apiManagementService = await GetApiManagementServiceAsync();
+            var updateContent = new QuotaCounterValueUpdateContent()
+            {
+                CallsCount = 0,
+                KbTransferred = 0
+            };
+            Assert.ThrowsAsync<Azure.RequestFailedException>(async () => await apiManagementService.UpdateQuotaByPeriodKeyAsync("ba", "0_P3Y6M4DT12H30M5S", updateContent));
         }
     }
 }

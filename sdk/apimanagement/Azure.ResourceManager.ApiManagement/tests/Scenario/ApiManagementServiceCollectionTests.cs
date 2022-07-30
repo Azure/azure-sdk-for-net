@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
     public class ApiManagementServiceCollectionTests : ApiManagementManagementTestBase
     {
         public ApiManagementServiceCollectionTests(bool isAsync)
-                    : base(isAsync, RecordedTestMode.Record)
+                    : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         }
 
         [Test]
-        public async Task Create_Delete()
+        public async Task Create_Update_Delete()
         {
             // Create vnet First
             var collection = await GetApiManagementServiceCollectionAsync();
@@ -53,10 +53,10 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             var apiManagementService = (await collection.CreateOrUpdateAsync(WaitUntil.Completed, apiName, data)).Value;
             Assert.AreEqual(apiManagementService.Data.Name, apiName);
 
-            // DeployTenantConfiguration
-            var contentName = Recording.GenerateAssetName("testcontent-");
-            var contentData = new ConfigurationDeployContent() { Branch = "", Force = true};
-            await apiManagementService.DeployTenantConfigurationAsync(WaitUntil.Completed, contentName, contentData);
+            // Update
+            var patch = new ApiManagementServicePatch() { Tags = { { "newkey", "newvalue" } } };
+            var updated = await apiManagementService.UpdateAsync(WaitUntil.Completed, patch);
+            Assert.AreEqual(updated.Value.Data.Tags.FirstOrDefault().Key, "newkey");
 
             // Delete
             await apiManagementService.DeleteAsync(WaitUntil.Completed);
