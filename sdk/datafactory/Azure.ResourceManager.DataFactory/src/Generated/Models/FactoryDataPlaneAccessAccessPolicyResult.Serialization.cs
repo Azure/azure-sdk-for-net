@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class AccessPolicyResult
+    public partial class FactoryDataPlaneAccessAccessPolicyResult
     {
-        internal static AccessPolicyResult DeserializeAccessPolicyResult(JsonElement element)
+        internal static FactoryDataPlaneAccessAccessPolicyResult DeserializeFactoryDataPlaneAccessAccessPolicyResult(JsonElement element)
         {
             Optional<UserAccessPolicy> policy = default;
             Optional<string> accessToken = default;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     continue;
                 }
             }
-            return new AccessPolicyResult(policy.Value, accessToken.Value, dataPlaneUrl.Value);
+            return new FactoryDataPlaneAccessAccessPolicyResult(policy.Value, accessToken.Value, dataPlaneUrl.Value);
         }
     }
 }

@@ -56,9 +56,13 @@ rename-mapping:
   DatasetSchemaDataElement.name: schemaColumnName
   DatasetSchemaDataElement.type: schemaColumnType
   DatasetCompression.type: datasetCompressionType
-  AccessPolicyResponse: AccessPolicyResult
+  AccessPolicyResponse: FactoryDataPlaneAccessAccessPolicyResult
   Activity: DataFactoryPipelineActivity
-  AddDataFlowToDebugSessionResponse: AddDataFlowToDebugSessionResult
+  ActivityDependency: PipelineActivityDependencyInfo
+  ActivityPolicy: PipelineActivityPolicyInfo
+  ActivityRun: PipelineActivityRunInfo
+  ActivityRunsQueryResponse: PipelineActivityRunsQueryResult
+  AddDataFlowToDebugSessionResponse: FactoryDataFlowLinkDebugSessionResult
   CreateDataFlowDebugSessionResponse: CreateDataFlowDebugSessionResult
   CreateRunResponse: CreateRunResult
   DataFlow: FactoryDataFlowDefinition

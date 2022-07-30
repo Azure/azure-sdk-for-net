@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Key,Value pairs, mapping the names of Azure ML endpoint&apos;s Web Service Inputs to AzureMLWebServiceFile objects specifying the input Blob locations.. This information will be passed in the WebServiceInputs property of the Azure ML batch execution request.
         /// Serialized Name: AzureMLBatchExecutionActivity.typeProperties.webServiceInputs
         /// </param>
-        internal AzureMLBatchExecutionActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, IDictionary<string, BinaryData> globalParameters, IDictionary<string, AzureMLWebServiceFile> webServiceOutputs, IDictionary<string, AzureMLWebServiceFile> webServiceInputs) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal AzureMLBatchExecutionActivity(string name, string activityType, string description, IList<PipelineActivityDependencyInfo> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, LinkedServiceReference linkedServiceName, PipelineActivityPolicyInfo policy, IDictionary<string, BinaryData> globalParameters, IDictionary<string, AzureMLWebServiceFile> webServiceOutputs, IDictionary<string, AzureMLWebServiceFile> webServiceInputs) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             GlobalParameters = globalParameters;
             WebServiceOutputs = webServiceOutputs;

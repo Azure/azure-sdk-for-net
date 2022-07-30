@@ -682,7 +682,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="policy"> Data Plane user access policy definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policy"/> is null. </exception>
-        public virtual async Task<Response<AccessPolicyResult>> GetDataPlaneAccessAsync(UserAccessPolicy policy, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FactoryDataPlaneAccessAccessPolicyResult>> GetDataPlaneAccessAsync(UserAccessPolicy policy, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(policy, nameof(policy));
 
@@ -708,7 +708,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="policy"> Data Plane user access policy definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policy"/> is null. </exception>
-        public virtual Response<AccessPolicyResult> GetDataPlaneAccess(UserAccessPolicy policy, CancellationToken cancellationToken = default)
+        public virtual Response<FactoryDataPlaneAccessAccessPolicyResult> GetDataPlaneAccess(UserAccessPolicy policy, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(policy, nameof(policy));
 
@@ -1012,13 +1012,13 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="runId"/> or <paramref name="content"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ActivityRun" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ActivityRun> GetActivityRunsByPipelineRunAsync(string runId, RunFilterContent content, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="PipelineActivityRunInfo" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PipelineActivityRunInfo> GetActivityRunsByPipelineRunAsync(string runId, RunFilterContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
             Argument.AssertNotNull(content, nameof(content));
 
-            async Task<Page<ActivityRun>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<PipelineActivityRunInfo>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _activityRunsClientDiagnostics.CreateScope("DataFactoryResource.GetActivityRunsByPipelineRun");
                 scope.Start();
@@ -1046,13 +1046,13 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="runId"/> or <paramref name="content"/> is null. </exception>
-        /// <returns> A collection of <see cref="ActivityRun" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ActivityRun> GetActivityRunsByPipelineRun(string runId, RunFilterContent content, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PipelineActivityRunInfo" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PipelineActivityRunInfo> GetActivityRunsByPipelineRun(string runId, RunFilterContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
             Argument.AssertNotNull(content, nameof(content));
 
-            Page<ActivityRun> FirstPageFunc(int? pageSizeHint)
+            Page<PipelineActivityRunInfo> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _activityRunsClientDiagnostics.CreateScope("DataFactoryResource.GetActivityRunsByPipelineRun");
                 scope.Start();
@@ -1346,7 +1346,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="content"> Data flow debug session definition with debug content. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<AddDataFlowToDebugSessionResult>> AddDataFlowDataFlowDebugSessionAsync(DataFlowDebugPackage content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FactoryDataFlowLinkDebugSessionResult>> AddDataFlowDataFlowDebugSessionAsync(DataFlowDebugPackage content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1372,7 +1372,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="content"> Data flow debug session definition with debug content. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<AddDataFlowToDebugSessionResult> AddDataFlowDataFlowDebugSession(DataFlowDebugPackage content, CancellationToken cancellationToken = default)
+        public virtual Response<FactoryDataFlowLinkDebugSessionResult> AddDataFlowDataFlowDebugSession(DataFlowDebugPackage content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 

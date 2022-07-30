@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Compilation mode of U-SQL. Must be one of these values : Semantic, Full and SingleBox. Type: string (or Expression with resultType string).
         /// Serialized Name: DataLakeAnalyticsUsqlActivity.typeProperties.compilationMode
         /// </param>
-        internal DataLakeAnalyticsUsqlActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, BinaryData scriptPath, LinkedServiceReference scriptLinkedService, BinaryData degreeOfParallelism, BinaryData priority, IDictionary<string, BinaryData> parameters, BinaryData runtimeVersion, BinaryData compilationMode) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal DataLakeAnalyticsUsqlActivity(string name, string activityType, string description, IList<PipelineActivityDependencyInfo> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, LinkedServiceReference linkedServiceName, PipelineActivityPolicyInfo policy, BinaryData scriptPath, LinkedServiceReference scriptLinkedService, BinaryData degreeOfParallelism, BinaryData priority, IDictionary<string, BinaryData> parameters, BinaryData runtimeVersion, BinaryData compilationMode) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             ScriptPath = scriptPath;
             ScriptLinkedService = scriptLinkedService;

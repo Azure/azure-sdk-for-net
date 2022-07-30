@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Activity dependency information.
     /// Serialized Name: ActivityDependency
     /// </summary>
-    public partial class ActivityDependency
+    public partial class PipelineActivityDependencyInfo
     {
-        /// <summary> Initializes a new instance of ActivityDependency. </summary>
+        /// <summary> Initializes a new instance of PipelineActivityDependencyInfo. </summary>
         /// <param name="activity">
         /// Activity name.
         /// Serialized Name: ActivityDependency.activity
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Serialized Name: ActivityDependency.dependencyConditions
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="activity"/> or <paramref name="dependencyConditions"/> is null. </exception>
-        public ActivityDependency(string activity, IEnumerable<DependencyCondition> dependencyConditions)
+        public PipelineActivityDependencyInfo(string activity, IEnumerable<DependencyCondition> dependencyConditions)
         {
             if (activity == null)
             {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of ActivityDependency. </summary>
+        /// <summary> Initializes a new instance of PipelineActivityDependencyInfo. </summary>
         /// <param name="activity">
         /// Activity name.
         /// Serialized Name: ActivityDependency.activity
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Serialized Name: ActivityDependency.dependencyConditions
         /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal ActivityDependency(string activity, IList<DependencyCondition> dependencyConditions, IDictionary<string, BinaryData> additionalProperties)
+        internal PipelineActivityDependencyInfo(string activity, IList<DependencyCondition> dependencyConditions, IDictionary<string, BinaryData> additionalProperties)
         {
             Activity = activity;
             DependencyConditions = dependencyConditions;

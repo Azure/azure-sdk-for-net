@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             string name = default;
             string type = default;
             Optional<string> description = default;
-            Optional<IList<ActivityDependency>> dependsOn = default;
+            Optional<IList<PipelineActivityDependencyInfo>> dependsOn = default;
             Optional<IList<UserProperty>> userProperties = default;
             Optional<bool> isSequential = default;
             Optional<int> batchCount = default;
@@ -117,10 +117,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ActivityDependency> array = new List<ActivityDependency>();
+                    List<PipelineActivityDependencyInfo> array = new List<PipelineActivityDependencyInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ActivityDependency.DeserializeActivityDependency(item));
+                        array.Add(PipelineActivityDependencyInfo.DeserializePipelineActivityDependencyInfo(item));
                     }
                     dependsOn = array;
                     continue;

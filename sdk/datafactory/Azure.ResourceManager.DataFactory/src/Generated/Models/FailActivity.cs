@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The error code that categorizes the error type of the Fail activity. It can be dynamic content that&apos;s evaluated to a non empty/blank string at runtime. Type: string (or Expression with resultType string).
         /// Serialized Name: FailActivity.typeProperties.errorCode
         /// </param>
-        internal FailActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, BinaryData message, BinaryData errorCode) : base(name, activityType, description, dependsOn, userProperties, additionalProperties)
+        internal FailActivity(string name, string activityType, string description, IList<PipelineActivityDependencyInfo> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, BinaryData message, BinaryData errorCode) : base(name, activityType, description, dependsOn, userProperties, additionalProperties)
         {
             Message = message;
             ErrorCode = errorCode;

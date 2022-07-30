@@ -15,15 +15,15 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// A list activity runs.
     /// Serialized Name: ActivityRunsQueryResponse
     /// </summary>
-    internal partial class ActivityRunsQueryResponse
+    internal partial class PipelineActivityRunsQueryResult
     {
-        /// <summary> Initializes a new instance of ActivityRunsQueryResponse. </summary>
+        /// <summary> Initializes a new instance of PipelineActivityRunsQueryResult. </summary>
         /// <param name="value">
         /// List of activity runs.
         /// Serialized Name: ActivityRunsQueryResponse.value
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal ActivityRunsQueryResponse(IEnumerable<ActivityRun> value)
+        internal PipelineActivityRunsQueryResult(IEnumerable<PipelineActivityRunInfo> value)
         {
             if (value == null)
             {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ActivityRunsQueryResponse. </summary>
+        /// <summary> Initializes a new instance of PipelineActivityRunsQueryResult. </summary>
         /// <param name="value">
         /// List of activity runs.
         /// Serialized Name: ActivityRunsQueryResponse.value
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The continuation token for getting the next page of results, if any remaining results exist, null otherwise.
         /// Serialized Name: ActivityRunsQueryResponse.continuationToken
         /// </param>
-        internal ActivityRunsQueryResponse(IReadOnlyList<ActivityRun> value, string continuationToken)
+        internal PipelineActivityRunsQueryResult(IReadOnlyList<PipelineActivityRunInfo> value, string continuationToken)
         {
             Value = value;
             ContinuationToken = continuationToken;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// List of activity runs.
         /// Serialized Name: ActivityRunsQueryResponse.value
         /// </summary>
-        public IReadOnlyList<ActivityRun> Value { get; }
+        public IReadOnlyList<PipelineActivityRunInfo> Value { get; }
         /// <summary>
         /// The continuation token for getting the next page of results, if any remaining results exist, null otherwise.
         /// Serialized Name: ActivityRunsQueryResponse.continuationToken

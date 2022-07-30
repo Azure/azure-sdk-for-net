@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Value and type setting for stored procedure parameters. Example: &quot;{Parameter1: {value: &quot;1&quot;, type: &quot;int&quot;}}&quot;.
         /// Serialized Name: SqlServerStoredProcedureActivity.typeProperties.storedProcedureParameters
         /// </param>
-        internal SqlServerStoredProcedureActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, BinaryData storedProcedureName, BinaryData storedProcedureParameters) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal SqlServerStoredProcedureActivity(string name, string activityType, string description, IList<PipelineActivityDependencyInfo> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, LinkedServiceReference linkedServiceName, PipelineActivityPolicyInfo policy, BinaryData storedProcedureName, BinaryData storedProcedureParameters) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             StoredProcedureName = storedProcedureName;
             StoredProcedureParameters = storedProcedureParameters;

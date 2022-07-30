@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             Name = name;
-            DependsOn = new ChangeTrackingList<ActivityDependency>();
+            DependsOn = new ChangeTrackingList<PipelineActivityDependencyInfo>();
             UserProperties = new ChangeTrackingList<UserProperty>();
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Serialized Name: Activity.userProperties
         /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal DataFactoryPipelineActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties)
+        internal DataFactoryPipelineActivity(string name, string activityType, string description, IList<PipelineActivityDependencyInfo> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties)
         {
             Name = name;
             ActivityType = activityType;
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Activity depends on condition.
         /// Serialized Name: Activity.dependsOn
         /// </summary>
-        public IList<ActivityDependency> DependsOn { get; }
+        public IList<PipelineActivityDependencyInfo> DependsOn { get; }
         /// <summary>
         /// Activity user properties.
         /// Serialized Name: Activity.userProperties

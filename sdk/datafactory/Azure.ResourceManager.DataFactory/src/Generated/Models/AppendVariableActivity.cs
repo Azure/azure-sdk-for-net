@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Value to be appended. Could be a static value or Expression
         /// Serialized Name: AppendVariableActivity.typeProperties.value
         /// </param>
-        internal AppendVariableActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, string variableName, BinaryData value) : base(name, activityType, description, dependsOn, userProperties, additionalProperties)
+        internal AppendVariableActivity(string name, string activityType, string description, IList<PipelineActivityDependencyInfo> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, string variableName, BinaryData value) : base(name, activityType, description, dependsOn, userProperties, additionalProperties)
         {
             VariableName = variableName;
             Value = value;

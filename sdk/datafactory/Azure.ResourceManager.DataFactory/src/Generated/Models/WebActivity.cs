@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The integration runtime reference.
         /// Serialized Name: WebActivity.typeProperties.connectVia
         /// </param>
-        internal WebActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, WebActivityMethod method, BinaryData uri, BinaryData headers, BinaryData body, WebActivityAuthentication authentication, bool? disableCertValidation, IList<DatasetReference> datasets, IList<LinkedServiceReference> linkedServices, IntegrationRuntimeReference connectVia) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal WebActivity(string name, string activityType, string description, IList<PipelineActivityDependencyInfo> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, LinkedServiceReference linkedServiceName, PipelineActivityPolicyInfo policy, WebActivityMethod method, BinaryData uri, BinaryData headers, BinaryData body, WebActivityAuthentication authentication, bool? disableCertValidation, IList<DatasetReference> datasets, IList<LinkedServiceReference> linkedServices, IntegrationRuntimeReference connectVia) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             Method = method;
             Uri = uri;

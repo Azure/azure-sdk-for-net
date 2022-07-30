@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Serialized Name: Activity.userProperties
         /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal ControlActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties) : base(name, activityType, description, dependsOn, userProperties, additionalProperties)
+        internal ControlActivity(string name, string activityType, string description, IList<PipelineActivityDependencyInfo> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties) : base(name, activityType, description, dependsOn, userProperties, additionalProperties)
         {
             ActivityType = activityType ?? "Container";
         }

@@ -11,19 +11,19 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Response body structure for starting data flow debug session.
     /// Serialized Name: AddDataFlowToDebugSessionResponse
     /// </summary>
-    public partial class AddDataFlowToDebugSessionResult
+    public partial class FactoryDataFlowLinkDebugSessionResult
     {
-        /// <summary> Initializes a new instance of AddDataFlowToDebugSessionResult. </summary>
-        internal AddDataFlowToDebugSessionResult()
+        /// <summary> Initializes a new instance of FactoryDataFlowLinkDebugSessionResult. </summary>
+        internal FactoryDataFlowLinkDebugSessionResult()
         {
         }
 
-        /// <summary> Initializes a new instance of AddDataFlowToDebugSessionResult. </summary>
+        /// <summary> Initializes a new instance of FactoryDataFlowLinkDebugSessionResult. </summary>
         /// <param name="jobVersion">
         /// The ID of data flow debug job version.
         /// Serialized Name: AddDataFlowToDebugSessionResponse.jobVersion
         /// </param>
-        internal AddDataFlowToDebugSessionResult(string jobVersion)
+        internal FactoryDataFlowLinkDebugSessionResult(string jobVersion)
         {
             JobVersion = jobVersion;
         }

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Allows user to specify defines for Pig job request.
         /// Serialized Name: HDInsightPigActivity.typeProperties.defines
         /// </param>
-        internal HDInsightPigActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, IList<LinkedServiceReference> storageLinkedServices, BinaryData arguments, HDInsightActivityDebugInfoOption? getDebugInfo, BinaryData scriptPath, LinkedServiceReference scriptLinkedService, IDictionary<string, BinaryData> defines) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal HDInsightPigActivity(string name, string activityType, string description, IList<PipelineActivityDependencyInfo> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, LinkedServiceReference linkedServiceName, PipelineActivityPolicyInfo policy, IList<LinkedServiceReference> storageLinkedServices, BinaryData arguments, HDInsightActivityDebugInfoOption? getDebugInfo, BinaryData scriptPath, LinkedServiceReference scriptLinkedService, IDictionary<string, BinaryData> defines) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             StorageLinkedServices = storageLinkedServices;
             Arguments = arguments;

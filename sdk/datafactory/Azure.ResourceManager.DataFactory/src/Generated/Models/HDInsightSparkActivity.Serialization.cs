@@ -139,11 +139,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         internal static HDInsightSparkActivity DeserializeHDInsightSparkActivity(JsonElement element)
         {
             Optional<LinkedServiceReference> linkedServiceName = default;
-            Optional<ActivityPolicy> policy = default;
+            Optional<PipelineActivityPolicyInfo> policy = default;
             string name = default;
             string type = default;
             Optional<string> description = default;
-            Optional<IList<ActivityDependency>> dependsOn = default;
+            Optional<IList<PipelineActivityDependencyInfo>> dependsOn = default;
             Optional<IList<UserProperty>> userProperties = default;
             BinaryData rootPath = default;
             BinaryData entryFilePath = default;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    policy = ActivityPolicy.DeserializeActivityPolicy(property.Value);
+                    policy = PipelineActivityPolicyInfo.DeserializePipelineActivityPolicyInfo(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -199,10 +199,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ActivityDependency> array = new List<ActivityDependency>();
+                    List<PipelineActivityDependencyInfo> array = new List<PipelineActivityDependencyInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ActivityDependency.DeserializeActivityDependency(item));
+                        array.Add(PipelineActivityDependencyInfo.DeserializePipelineActivityDependencyInfo(item));
                     }
                     dependsOn = array;
                     continue;

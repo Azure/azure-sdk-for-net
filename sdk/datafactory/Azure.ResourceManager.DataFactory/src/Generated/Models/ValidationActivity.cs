@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Validation activity dataset reference.
         /// Serialized Name: ValidationActivity.typeProperties.dataset
         /// </param>
-        internal ValidationActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, BinaryData timeout, BinaryData sleep, BinaryData minimumSize, BinaryData childItems, DatasetReference dataset) : base(name, activityType, description, dependsOn, userProperties, additionalProperties)
+        internal ValidationActivity(string name, string activityType, string description, IList<PipelineActivityDependencyInfo> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, BinaryData timeout, BinaryData sleep, BinaryData minimumSize, BinaryData childItems, DatasetReference dataset) : base(name, activityType, description, dependsOn, userProperties, additionalProperties)
         {
             Timeout = timeout;
             Sleep = sleep;
