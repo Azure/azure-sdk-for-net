@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Batch
         /// <param name="identity"> The type of identity used for the Batch Pool. </param>
         /// <param name="displayName"> The display name need not be unique and can contain any Unicode characters up to a maximum length of 1024. </param>
         /// <param name="lastModified"> This is the last time at which the pool level data, such as the targetDedicatedNodes or autoScaleSettings, changed. It does not factor in node-level changes such as a compute node changing state. </param>
-        /// <param name="creationOn"> The creation time of the pool. </param>
+        /// <param name="createdOn"> The creation time of the pool. </param>
         /// <param name="provisioningState"> The current state of the pool. </param>
         /// <param name="provisioningStateTransitionOn"> The time at which the pool entered its current state. </param>
         /// <param name="allocationState"> Whether the pool is resizing. </param>
@@ -60,12 +60,12 @@ namespace Azure.ResourceManager.Batch
         /// <param name="resizeOperationStatus"> Describes either the current operation (if the pool AllocationState is Resizing) or the previously completed operation (if the AllocationState is Steady). </param>
         /// <param name="mountConfiguration"> This supports Azure Files, NFS, CIFS/SMB, and Blobfuse. </param>
         /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
-        internal PoolData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, BatchPoolIdentity identity, string displayName, DateTimeOffset? lastModified, DateTimeOffset? creationOn, PoolProvisioningState? provisioningState, DateTimeOffset? provisioningStateTransitionOn, AllocationState? allocationState, DateTimeOffset? allocationStateTransitionOn, string vmSize, DeploymentConfiguration deploymentConfiguration, int? currentDedicatedNodes, int? currentLowPriorityNodes, ScaleSettings scaleSettings, AutoScaleRun autoScaleRun, InterNodeCommunicationState? interNodeCommunication, NetworkConfiguration networkConfiguration, int? taskSlotsPerNode, TaskSchedulingPolicy taskSchedulingPolicy, IList<UserAccount> userAccounts, IList<MetadataItem> metadata, StartTask startTask, IList<CertificateReference> certificates, IList<ApplicationPackageReference> applicationPackages, IList<string> applicationLicenses, ResizeOperationStatus resizeOperationStatus, IList<MountConfiguration> mountConfiguration, ETag? etag) : base(id, name, resourceType, systemData)
+        internal PoolData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, BatchPoolIdentity identity, string displayName, DateTimeOffset? lastModified, DateTimeOffset? createdOn, PoolProvisioningState? provisioningState, DateTimeOffset? provisioningStateTransitionOn, AllocationState? allocationState, DateTimeOffset? allocationStateTransitionOn, string vmSize, DeploymentConfiguration deploymentConfiguration, int? currentDedicatedNodes, int? currentLowPriorityNodes, ScaleSettings scaleSettings, AutoScaleRun autoScaleRun, InterNodeCommunicationState? interNodeCommunication, NetworkConfiguration networkConfiguration, int? taskSlotsPerNode, TaskSchedulingPolicy taskSchedulingPolicy, IList<UserAccount> userAccounts, IList<MetadataItem> metadata, StartTask startTask, IList<CertificateReference> certificates, IList<ApplicationPackageReference> applicationPackages, IList<string> applicationLicenses, ResizeOperationStatus resizeOperationStatus, IList<MountConfiguration> mountConfiguration, ETag? etag) : base(id, name, resourceType, systemData)
         {
             Identity = identity;
             DisplayName = displayName;
             LastModified = lastModified;
-            CreationOn = creationOn;
+            CreatedOn = createdOn;
             ProvisioningState = provisioningState;
             ProvisioningStateTransitionOn = provisioningStateTransitionOn;
             AllocationState = allocationState;
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Batch
         /// <summary> This is the last time at which the pool level data, such as the targetDedicatedNodes or autoScaleSettings, changed. It does not factor in node-level changes such as a compute node changing state. </summary>
         public DateTimeOffset? LastModified { get; }
         /// <summary> The creation time of the pool. </summary>
-        public DateTimeOffset? CreationOn { get; }
+        public DateTimeOffset? CreatedOn { get; }
         /// <summary> The current state of the pool. </summary>
         public PoolProvisioningState? ProvisioningState { get; }
         /// <summary> The time at which the pool entered its current state. </summary>

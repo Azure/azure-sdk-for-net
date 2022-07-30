@@ -12,11 +12,27 @@ using Azure.ResourceManager.PostgreSql;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
-    public partial class PostgreSqlConfigurationListResult
+    public partial class PostgreSqlConfigurationList : IUtf8JsonSerializable
     {
-        internal static PostgreSqlConfigurationListResult DeserializePostgreSqlConfigurationListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
-            Optional<IReadOnlyList<PostgreSqlConfigurationData>> value = default;
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value");
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static PostgreSqlConfigurationList DeserializePostgreSqlConfigurationList(JsonElement element)
+        {
+            Optional<IList<PostgreSqlConfigurationData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -35,7 +51,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                     continue;
                 }
             }
-            return new PostgreSqlConfigurationListResult(Optional.ToList(value));
+            return new PostgreSqlConfigurationList(Optional.ToList(value));
         }
     }
 }
