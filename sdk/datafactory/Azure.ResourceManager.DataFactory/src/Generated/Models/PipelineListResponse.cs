@@ -12,11 +12,17 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> A list of pipeline resources. </summary>
+    /// <summary>
+    /// A list of pipeline resources.
+    /// Serialized Name: PipelineListResponse
+    /// </summary>
     internal partial class PipelineListResponse
     {
         /// <summary> Initializes a new instance of PipelineListResponse. </summary>
-        /// <param name="value"> List of pipelines. </param>
+        /// <param name="value">
+        /// List of pipelines.
+        /// Serialized Name: PipelineListResponse.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal PipelineListResponse(IEnumerable<DataFactoryPipelineData> value)
         {
@@ -29,17 +35,29 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of PipelineListResponse. </summary>
-        /// <param name="value"> List of pipelines. </param>
-        /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
+        /// <param name="value">
+        /// List of pipelines.
+        /// Serialized Name: PipelineListResponse.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link to the next page of results, if any remaining results exist.
+        /// Serialized Name: PipelineListResponse.nextLink
+        /// </param>
         internal PipelineListResponse(IReadOnlyList<DataFactoryPipelineData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> List of pipelines. </summary>
+        /// <summary>
+        /// List of pipelines.
+        /// Serialized Name: PipelineListResponse.value
+        /// </summary>
         public IReadOnlyList<DataFactoryPipelineData> Value { get; }
-        /// <summary> The link to the next page of results, if any remaining results exist. </summary>
+        /// <summary>
+        /// The link to the next page of results, if any remaining results exist.
+        /// Serialized Name: PipelineListResponse.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The list of HTTP methods supported by a WebActivity. </summary>
+    /// <summary>
+    /// The list of HTTP methods supported by a WebActivity.
+    /// Serialized Name: WebActivityMethod
+    /// </summary>
     public readonly partial struct WebActivityMethod : IEquatable<WebActivityMethod>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string PUTValue = "PUT";
         private const string DeleteValue = "DELETE";
 
-        /// <summary> GET. </summary>
+        /// <summary>
+        /// GET
+        /// Serialized Name: WebActivityMethod.GET
+        /// </summary>
         public static WebActivityMethod GET { get; } = new WebActivityMethod(GETValue);
-        /// <summary> POST. </summary>
+        /// <summary>
+        /// POST
+        /// Serialized Name: WebActivityMethod.POST
+        /// </summary>
         public static WebActivityMethod Post { get; } = new WebActivityMethod(PostValue);
-        /// <summary> PUT. </summary>
+        /// <summary>
+        /// PUT
+        /// Serialized Name: WebActivityMethod.PUT
+        /// </summary>
         public static WebActivityMethod PUT { get; } = new WebActivityMethod(PUTValue);
-        /// <summary> DELETE. </summary>
+        /// <summary>
+        /// DELETE
+        /// Serialized Name: WebActivityMethod.DELETE
+        /// </summary>
         public static WebActivityMethod Delete { get; } = new WebActivityMethod(DeleteValue);
         /// <summary> Determines if two <see cref="WebActivityMethod"/> values are the same. </summary>
         public static bool operator ==(WebActivityMethod left, WebActivityMethod right) => left.Equals(right);

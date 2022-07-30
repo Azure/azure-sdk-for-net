@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Request body structure for deleting data flow debug session. </summary>
+    /// <summary>
+    /// Request body structure for deleting data flow debug session.
+    /// Serialized Name: DeleteDataFlowDebugSessionRequest
+    /// </summary>
     public partial class DeleteDataFlowDebugSessionContent
     {
         /// <summary> Initializes a new instance of DeleteDataFlowDebugSessionContent. </summary>
@@ -15,7 +18,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
         }
 
-        /// <summary> The ID of data flow debug session. </summary>
+        /// <summary>
+        /// The ID of data flow debug session.
+        /// Serialized Name: DeleteDataFlowDebugSessionRequest.sessionId
+        /// </summary>
         public string SessionId { get; set; }
     }
 }

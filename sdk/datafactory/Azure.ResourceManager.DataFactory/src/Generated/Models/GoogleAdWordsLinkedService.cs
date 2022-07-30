@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Google AdWords service linked service. </summary>
+    /// <summary>
+    /// Google AdWords service linked service.
+    /// Serialized Name: GoogleAdWordsLinkedService
+    /// </summary>
     public partial class GoogleAdWordsLinkedService : LinkedService
     {
         /// <summary> Initializes a new instance of GoogleAdWordsLinkedService. </summary>
@@ -20,36 +23,81 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of GoogleAdWordsLinkedService. </summary>
-        /// <param name="linkedServiceType"> Type of linked service. </param>
-        /// <param name="connectVia"> The integration runtime reference. </param>
-        /// <param name="description"> Linked service description. </param>
-        /// <param name="parameters"> Parameters for linked service. </param>
-        /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
+        /// <param name="linkedServiceType">
+        /// Type of linked service.
+        /// Serialized Name: LinkedService.type
+        /// </param>
+        /// <param name="connectVia">
+        /// The integration runtime reference.
+        /// Serialized Name: LinkedService.connectVia
+        /// </param>
+        /// <param name="description">
+        /// Linked service description.
+        /// Serialized Name: LinkedService.description
+        /// </param>
+        /// <param name="parameters">
+        /// Parameters for linked service.
+        /// Serialized Name: LinkedService.parameters
+        /// </param>
+        /// <param name="annotations">
+        /// List of tags that can be used for describing the linked service.
+        /// Serialized Name: LinkedService.annotations
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="connectionProperties"> Properties used to connect to GoogleAds. It is mutually exclusive with any other properties in the linked service. Type: object. </param>
-        /// <param name="clientCustomerId"> The Client customer ID of the AdWords account that you want to fetch report data for. </param>
+        /// <param name="connectionProperties">
+        /// Properties used to connect to GoogleAds. It is mutually exclusive with any other properties in the linked service. Type: object.
+        /// Serialized Name: GoogleAdWordsLinkedService.typeProperties.connectionProperties
+        /// </param>
+        /// <param name="clientCustomerId">
+        /// The Client customer ID of the AdWords account that you want to fetch report data for.
+        /// Serialized Name: GoogleAdWordsLinkedService.typeProperties.clientCustomerID
+        /// </param>
         /// <param name="developerToken">
         /// The developer token associated with the manager account that you use to grant access to the AdWords API.
+        /// Serialized Name: GoogleAdWordsLinkedService.typeProperties.developerToken
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
-        /// <param name="authenticationType"> The OAuth 2.0 authentication mechanism used for authentication. ServiceAuthentication can only be used on self-hosted IR. </param>
+        /// <param name="authenticationType">
+        /// The OAuth 2.0 authentication mechanism used for authentication. ServiceAuthentication can only be used on self-hosted IR.
+        /// Serialized Name: GoogleAdWordsLinkedService.typeProperties.authenticationType
+        /// </param>
         /// <param name="refreshToken">
         /// The refresh token obtained from Google for authorizing access to AdWords for UserAuthentication.
+        /// Serialized Name: GoogleAdWordsLinkedService.typeProperties.refreshToken
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
-        /// <param name="clientId"> The client id of the google application used to acquire the refresh token. Type: string (or Expression with resultType string). </param>
+        /// <param name="clientId">
+        /// The client id of the google application used to acquire the refresh token. Type: string (or Expression with resultType string).
+        /// Serialized Name: GoogleAdWordsLinkedService.typeProperties.clientId
+        /// </param>
         /// <param name="clientSecret">
         /// The client secret of the google application used to acquire the refresh token.
+        /// Serialized Name: GoogleAdWordsLinkedService.typeProperties.clientSecret
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
-        /// <param name="email"> The service account email ID that is used for ServiceAuthentication and can only be used on self-hosted IR. </param>
-        /// <param name="keyFilePath"> The full path to the .p12 key file that is used to authenticate the service account email address and can only be used on self-hosted IR. </param>
-        /// <param name="trustedCertPath"> The full path of the .pem file containing trusted CA certificates for verifying the server when connecting over SSL. This property can only be set when using SSL on self-hosted IR. The default value is the cacerts.pem file installed with the IR. </param>
-        /// <param name="useSystemTrustStore"> Specifies whether to use a CA certificate from the system trust store or from a specified PEM file. The default value is false. </param>
-        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
+        /// <param name="email">
+        /// The service account email ID that is used for ServiceAuthentication and can only be used on self-hosted IR.
+        /// Serialized Name: GoogleAdWordsLinkedService.typeProperties.email
+        /// </param>
+        /// <param name="keyFilePath">
+        /// The full path to the .p12 key file that is used to authenticate the service account email address and can only be used on self-hosted IR.
+        /// Serialized Name: GoogleAdWordsLinkedService.typeProperties.keyFilePath
+        /// </param>
+        /// <param name="trustedCertPath">
+        /// The full path of the .pem file containing trusted CA certificates for verifying the server when connecting over SSL. This property can only be set when using SSL on self-hosted IR. The default value is the cacerts.pem file installed with the IR.
+        /// Serialized Name: GoogleAdWordsLinkedService.typeProperties.trustedCertPath
+        /// </param>
+        /// <param name="useSystemTrustStore">
+        /// Specifies whether to use a CA certificate from the system trust store or from a specified PEM file. The default value is false.
+        /// Serialized Name: GoogleAdWordsLinkedService.typeProperties.useSystemTrustStore
+        /// </param>
+        /// <param name="encryptedCredential">
+        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
+        /// Serialized Name: GoogleAdWordsLinkedService.typeProperties.encryptedCredential
+        /// </param>
         internal GoogleAdWordsLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData connectionProperties, BinaryData clientCustomerId, SecretBase developerToken, GoogleAdWordsAuthenticationType? authenticationType, SecretBase refreshToken, BinaryData clientId, SecretBase clientSecret, BinaryData email, BinaryData keyFilePath, BinaryData trustedCertPath, BinaryData useSystemTrustStore, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             ConnectionProperties = connectionProperties;
@@ -67,41 +115,71 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "GoogleAdWords";
         }
 
-        /// <summary> Properties used to connect to GoogleAds. It is mutually exclusive with any other properties in the linked service. Type: object. </summary>
+        /// <summary>
+        /// Properties used to connect to GoogleAds. It is mutually exclusive with any other properties in the linked service. Type: object.
+        /// Serialized Name: GoogleAdWordsLinkedService.typeProperties.connectionProperties
+        /// </summary>
         public BinaryData ConnectionProperties { get; set; }
-        /// <summary> The Client customer ID of the AdWords account that you want to fetch report data for. </summary>
+        /// <summary>
+        /// The Client customer ID of the AdWords account that you want to fetch report data for.
+        /// Serialized Name: GoogleAdWordsLinkedService.typeProperties.clientCustomerID
+        /// </summary>
         public BinaryData ClientCustomerId { get; set; }
         /// <summary>
         /// The developer token associated with the manager account that you use to grant access to the AdWords API.
+        /// Serialized Name: GoogleAdWordsLinkedService.typeProperties.developerToken
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
         public SecretBase DeveloperToken { get; set; }
-        /// <summary> The OAuth 2.0 authentication mechanism used for authentication. ServiceAuthentication can only be used on self-hosted IR. </summary>
+        /// <summary>
+        /// The OAuth 2.0 authentication mechanism used for authentication. ServiceAuthentication can only be used on self-hosted IR.
+        /// Serialized Name: GoogleAdWordsLinkedService.typeProperties.authenticationType
+        /// </summary>
         public GoogleAdWordsAuthenticationType? AuthenticationType { get; set; }
         /// <summary>
         /// The refresh token obtained from Google for authorizing access to AdWords for UserAuthentication.
+        /// Serialized Name: GoogleAdWordsLinkedService.typeProperties.refreshToken
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
         public SecretBase RefreshToken { get; set; }
-        /// <summary> The client id of the google application used to acquire the refresh token. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The client id of the google application used to acquire the refresh token. Type: string (or Expression with resultType string).
+        /// Serialized Name: GoogleAdWordsLinkedService.typeProperties.clientId
+        /// </summary>
         public BinaryData ClientId { get; set; }
         /// <summary>
         /// The client secret of the google application used to acquire the refresh token.
+        /// Serialized Name: GoogleAdWordsLinkedService.typeProperties.clientSecret
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
         public SecretBase ClientSecret { get; set; }
-        /// <summary> The service account email ID that is used for ServiceAuthentication and can only be used on self-hosted IR. </summary>
+        /// <summary>
+        /// The service account email ID that is used for ServiceAuthentication and can only be used on self-hosted IR.
+        /// Serialized Name: GoogleAdWordsLinkedService.typeProperties.email
+        /// </summary>
         public BinaryData Email { get; set; }
-        /// <summary> The full path to the .p12 key file that is used to authenticate the service account email address and can only be used on self-hosted IR. </summary>
+        /// <summary>
+        /// The full path to the .p12 key file that is used to authenticate the service account email address and can only be used on self-hosted IR.
+        /// Serialized Name: GoogleAdWordsLinkedService.typeProperties.keyFilePath
+        /// </summary>
         public BinaryData KeyFilePath { get; set; }
-        /// <summary> The full path of the .pem file containing trusted CA certificates for verifying the server when connecting over SSL. This property can only be set when using SSL on self-hosted IR. The default value is the cacerts.pem file installed with the IR. </summary>
+        /// <summary>
+        /// The full path of the .pem file containing trusted CA certificates for verifying the server when connecting over SSL. This property can only be set when using SSL on self-hosted IR. The default value is the cacerts.pem file installed with the IR.
+        /// Serialized Name: GoogleAdWordsLinkedService.typeProperties.trustedCertPath
+        /// </summary>
         public BinaryData TrustedCertPath { get; set; }
-        /// <summary> Specifies whether to use a CA certificate from the system trust store or from a specified PEM file. The default value is false. </summary>
+        /// <summary>
+        /// Specifies whether to use a CA certificate from the system trust store or from a specified PEM file. The default value is false.
+        /// Serialized Name: GoogleAdWordsLinkedService.typeProperties.useSystemTrustStore
+        /// </summary>
         public BinaryData UseSystemTrustStore { get; set; }
-        /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
+        /// Serialized Name: GoogleAdWordsLinkedService.typeProperties.encryptedCredential
+        /// </summary>
         public BinaryData EncryptedCredential { get; set; }
     }
 }

@@ -19,6 +19,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <summary> Initializes a new instance of DataFactoryTriggerData. </summary>
         /// <param name="properties">
         /// Properties of the trigger.
+        /// Serialized Name: TriggerResource.properties
         /// Please note <see cref="DataFactoryTriggerProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="BlobEventsTrigger"/>, <see cref="BlobTrigger"/>, <see cref="ChainingTrigger"/>, <see cref="CustomEventsTrigger"/>, <see cref="MultiplePipelineTrigger"/>, <see cref="RerunTumblingWindowTrigger"/>, <see cref="ScheduleTrigger"/> and <see cref="TumblingWindowTrigger"/>.
         /// </param>
@@ -40,10 +41,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties">
         /// Properties of the trigger.
+        /// Serialized Name: TriggerResource.properties
         /// Please note <see cref="DataFactoryTriggerProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="BlobEventsTrigger"/>, <see cref="BlobTrigger"/>, <see cref="ChainingTrigger"/>, <see cref="CustomEventsTrigger"/>, <see cref="MultiplePipelineTrigger"/>, <see cref="RerunTumblingWindowTrigger"/>, <see cref="ScheduleTrigger"/> and <see cref="TumblingWindowTrigger"/>.
         /// </param>
-        /// <param name="eTag"> Etag identifies change in the resource. </param>
+        /// <param name="eTag">
+        /// Etag identifies change in the resource.
+        /// Serialized Name: SubResource.etag
+        /// </param>
         internal DataFactoryTriggerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataFactoryTriggerProperties properties, ETag? eTag) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
@@ -52,11 +57,15 @@ namespace Azure.ResourceManager.DataFactory
 
         /// <summary>
         /// Properties of the trigger.
+        /// Serialized Name: TriggerResource.properties
         /// Please note <see cref="DataFactoryTriggerProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="BlobEventsTrigger"/>, <see cref="BlobTrigger"/>, <see cref="ChainingTrigger"/>, <see cref="CustomEventsTrigger"/>, <see cref="MultiplePipelineTrigger"/>, <see cref="RerunTumblingWindowTrigger"/>, <see cref="ScheduleTrigger"/> and <see cref="TumblingWindowTrigger"/>.
         /// </summary>
         public DataFactoryTriggerProperties Properties { get; set; }
-        /// <summary> Etag identifies change in the resource. </summary>
+        /// <summary>
+        /// Etag identifies change in the resource.
+        /// Serialized Name: SubResource.etag
+        /// </summary>
         public ETag? ETag { get; }
     }
 }

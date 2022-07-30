@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Ssis parameter. </summary>
+    /// <summary>
+    /// Ssis parameter.
+    /// Serialized Name: SsisParameter
+    /// </summary>
     public partial class SsisParameter
     {
         /// <summary> Initializes a new instance of SsisParameter. </summary>
@@ -16,18 +19,54 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of SsisParameter. </summary>
-        /// <param name="id"> Parameter id. </param>
-        /// <param name="name"> Parameter name. </param>
-        /// <param name="description"> Parameter description. </param>
-        /// <param name="dataType"> Parameter type. </param>
-        /// <param name="required"> Whether parameter is required. </param>
-        /// <param name="sensitive"> Whether parameter is sensitive. </param>
-        /// <param name="designDefaultValue"> Design default value of parameter. </param>
-        /// <param name="defaultValue"> Default value of parameter. </param>
-        /// <param name="sensitiveDefaultValue"> Default sensitive value of parameter. </param>
-        /// <param name="valueType"> Parameter value type. </param>
-        /// <param name="valueSet"> Parameter value set. </param>
-        /// <param name="variable"> Parameter reference variable. </param>
+        /// <param name="id">
+        /// Parameter id.
+        /// Serialized Name: SsisParameter.id
+        /// </param>
+        /// <param name="name">
+        /// Parameter name.
+        /// Serialized Name: SsisParameter.name
+        /// </param>
+        /// <param name="description">
+        /// Parameter description.
+        /// Serialized Name: SsisParameter.description
+        /// </param>
+        /// <param name="dataType">
+        /// Parameter type.
+        /// Serialized Name: SsisParameter.dataType
+        /// </param>
+        /// <param name="required">
+        /// Whether parameter is required.
+        /// Serialized Name: SsisParameter.required
+        /// </param>
+        /// <param name="sensitive">
+        /// Whether parameter is sensitive.
+        /// Serialized Name: SsisParameter.sensitive
+        /// </param>
+        /// <param name="designDefaultValue">
+        /// Design default value of parameter.
+        /// Serialized Name: SsisParameter.designDefaultValue
+        /// </param>
+        /// <param name="defaultValue">
+        /// Default value of parameter.
+        /// Serialized Name: SsisParameter.defaultValue
+        /// </param>
+        /// <param name="sensitiveDefaultValue">
+        /// Default sensitive value of parameter.
+        /// Serialized Name: SsisParameter.sensitiveDefaultValue
+        /// </param>
+        /// <param name="valueType">
+        /// Parameter value type.
+        /// Serialized Name: SsisParameter.valueType
+        /// </param>
+        /// <param name="valueSet">
+        /// Parameter value set.
+        /// Serialized Name: SsisParameter.valueSet
+        /// </param>
+        /// <param name="variable">
+        /// Parameter reference variable.
+        /// Serialized Name: SsisParameter.variable
+        /// </param>
         internal SsisParameter(long? id, string name, string description, string dataType, bool? required, bool? sensitive, string designDefaultValue, string defaultValue, string sensitiveDefaultValue, string valueType, bool? valueSet, string variable)
         {
             Id = id;
@@ -44,29 +83,65 @@ namespace Azure.ResourceManager.DataFactory.Models
             Variable = variable;
         }
 
-        /// <summary> Parameter id. </summary>
+        /// <summary>
+        /// Parameter id.
+        /// Serialized Name: SsisParameter.id
+        /// </summary>
         public long? Id { get; }
-        /// <summary> Parameter name. </summary>
+        /// <summary>
+        /// Parameter name.
+        /// Serialized Name: SsisParameter.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> Parameter description. </summary>
+        /// <summary>
+        /// Parameter description.
+        /// Serialized Name: SsisParameter.description
+        /// </summary>
         public string Description { get; }
-        /// <summary> Parameter type. </summary>
+        /// <summary>
+        /// Parameter type.
+        /// Serialized Name: SsisParameter.dataType
+        /// </summary>
         public string DataType { get; }
-        /// <summary> Whether parameter is required. </summary>
+        /// <summary>
+        /// Whether parameter is required.
+        /// Serialized Name: SsisParameter.required
+        /// </summary>
         public bool? Required { get; }
-        /// <summary> Whether parameter is sensitive. </summary>
+        /// <summary>
+        /// Whether parameter is sensitive.
+        /// Serialized Name: SsisParameter.sensitive
+        /// </summary>
         public bool? Sensitive { get; }
-        /// <summary> Design default value of parameter. </summary>
+        /// <summary>
+        /// Design default value of parameter.
+        /// Serialized Name: SsisParameter.designDefaultValue
+        /// </summary>
         public string DesignDefaultValue { get; }
-        /// <summary> Default value of parameter. </summary>
+        /// <summary>
+        /// Default value of parameter.
+        /// Serialized Name: SsisParameter.defaultValue
+        /// </summary>
         public string DefaultValue { get; }
-        /// <summary> Default sensitive value of parameter. </summary>
+        /// <summary>
+        /// Default sensitive value of parameter.
+        /// Serialized Name: SsisParameter.sensitiveDefaultValue
+        /// </summary>
         public string SensitiveDefaultValue { get; }
-        /// <summary> Parameter value type. </summary>
+        /// <summary>
+        /// Parameter value type.
+        /// Serialized Name: SsisParameter.valueType
+        /// </summary>
         public string ValueType { get; }
-        /// <summary> Parameter value set. </summary>
+        /// <summary>
+        /// Parameter value set.
+        /// Serialized Name: SsisParameter.valueSet
+        /// </summary>
         public bool? ValueSet { get; }
-        /// <summary> Parameter reference variable. </summary>
+        /// <summary>
+        /// Parameter reference variable.
+        /// Serialized Name: SsisParameter.variable
+        /// </summary>
         public string Variable { get; }
     }
 }

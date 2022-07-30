@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Snowflake export command settings. </summary>
+    /// <summary>
+    /// Snowflake export command settings.
+    /// Serialized Name: SnowflakeExportCopyCommand
+    /// </summary>
     public partial class SnowflakeExportCopyCommand : ExportSettings
     {
         /// <summary> Initializes a new instance of SnowflakeExportCopyCommand. </summary>
@@ -23,10 +26,19 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of SnowflakeExportCopyCommand. </summary>
-        /// <param name="exportSettingsType"> The export setting type. </param>
+        /// <param name="exportSettingsType">
+        /// The export setting type.
+        /// Serialized Name: ExportSettings.type
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="additionalCopyOptions"> Additional copy options directly passed to snowflake Copy Command. Type: key value pairs (value should be string type) (or Expression with resultType object). Example: &quot;additionalCopyOptions&quot;: { &quot;DATE_FORMAT&quot;: &quot;MM/DD/YYYY&quot;, &quot;TIME_FORMAT&quot;: &quot;&apos;HH24:MI:SS.FF&apos;&quot; }. </param>
-        /// <param name="additionalFormatOptions"> Additional format options directly passed to snowflake Copy Command. Type: key value pairs (value should be string type) (or Expression with resultType object). Example: &quot;additionalFormatOptions&quot;: { &quot;OVERWRITE&quot;: &quot;TRUE&quot;, &quot;MAX_FILE_SIZE&quot;: &quot;&apos;FALSE&apos;&quot; }. </param>
+        /// <param name="additionalCopyOptions">
+        /// Additional copy options directly passed to snowflake Copy Command. Type: key value pairs (value should be string type) (or Expression with resultType object). Example: &quot;additionalCopyOptions&quot;: { &quot;DATE_FORMAT&quot;: &quot;MM/DD/YYYY&quot;, &quot;TIME_FORMAT&quot;: &quot;&apos;HH24:MI:SS.FF&apos;&quot; }
+        /// Serialized Name: SnowflakeExportCopyCommand.additionalCopyOptions
+        /// </param>
+        /// <param name="additionalFormatOptions">
+        /// Additional format options directly passed to snowflake Copy Command. Type: key value pairs (value should be string type) (or Expression with resultType object). Example: &quot;additionalFormatOptions&quot;: { &quot;OVERWRITE&quot;: &quot;TRUE&quot;, &quot;MAX_FILE_SIZE&quot;: &quot;&apos;FALSE&apos;&quot; }
+        /// Serialized Name: SnowflakeExportCopyCommand.additionalFormatOptions
+        /// </param>
         internal SnowflakeExportCopyCommand(string exportSettingsType, IDictionary<string, BinaryData> additionalProperties, IDictionary<string, BinaryData> additionalCopyOptions, IDictionary<string, BinaryData> additionalFormatOptions) : base(exportSettingsType, additionalProperties)
         {
             AdditionalCopyOptions = additionalCopyOptions;
@@ -34,9 +46,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             ExportSettingsType = exportSettingsType ?? "SnowflakeExportCopyCommand";
         }
 
-        /// <summary> Additional copy options directly passed to snowflake Copy Command. Type: key value pairs (value should be string type) (or Expression with resultType object). Example: &quot;additionalCopyOptions&quot;: { &quot;DATE_FORMAT&quot;: &quot;MM/DD/YYYY&quot;, &quot;TIME_FORMAT&quot;: &quot;&apos;HH24:MI:SS.FF&apos;&quot; }. </summary>
+        /// <summary>
+        /// Additional copy options directly passed to snowflake Copy Command. Type: key value pairs (value should be string type) (or Expression with resultType object). Example: &quot;additionalCopyOptions&quot;: { &quot;DATE_FORMAT&quot;: &quot;MM/DD/YYYY&quot;, &quot;TIME_FORMAT&quot;: &quot;&apos;HH24:MI:SS.FF&apos;&quot; }
+        /// Serialized Name: SnowflakeExportCopyCommand.additionalCopyOptions
+        /// </summary>
         public IDictionary<string, BinaryData> AdditionalCopyOptions { get; }
-        /// <summary> Additional format options directly passed to snowflake Copy Command. Type: key value pairs (value should be string type) (or Expression with resultType object). Example: &quot;additionalFormatOptions&quot;: { &quot;OVERWRITE&quot;: &quot;TRUE&quot;, &quot;MAX_FILE_SIZE&quot;: &quot;&apos;FALSE&apos;&quot; }. </summary>
+        /// <summary>
+        /// Additional format options directly passed to snowflake Copy Command. Type: key value pairs (value should be string type) (or Expression with resultType object). Example: &quot;additionalFormatOptions&quot;: { &quot;OVERWRITE&quot;: &quot;TRUE&quot;, &quot;MAX_FILE_SIZE&quot;: &quot;&apos;FALSE&apos;&quot; }
+        /// Serialized Name: SnowflakeExportCopyCommand.additionalFormatOptions
+        /// </summary>
         public IDictionary<string, BinaryData> AdditionalFormatOptions { get; }
     }
 }

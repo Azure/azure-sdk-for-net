@@ -9,12 +9,21 @@ using System;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Managed Virtual Network reference type. </summary>
+    /// <summary>
+    /// Managed Virtual Network reference type.
+    /// Serialized Name: ManagedVirtualNetworkReference
+    /// </summary>
     public partial class ManagedVirtualNetworkReference
     {
         /// <summary> Initializes a new instance of ManagedVirtualNetworkReference. </summary>
-        /// <param name="referenceType"> Managed Virtual Network reference type. </param>
-        /// <param name="referenceName"> Reference ManagedVirtualNetwork name. </param>
+        /// <param name="referenceType">
+        /// Managed Virtual Network reference type.
+        /// Serialized Name: ManagedVirtualNetworkReference.type
+        /// </param>
+        /// <param name="referenceName">
+        /// Reference ManagedVirtualNetwork name.
+        /// Serialized Name: ManagedVirtualNetworkReference.referenceName
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
         public ManagedVirtualNetworkReference(ManagedVirtualNetworkReferenceType referenceType, string referenceName)
         {
@@ -27,9 +36,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             ReferenceName = referenceName;
         }
 
-        /// <summary> Managed Virtual Network reference type. </summary>
+        /// <summary>
+        /// Managed Virtual Network reference type.
+        /// Serialized Name: ManagedVirtualNetworkReference.type
+        /// </summary>
         public ManagedVirtualNetworkReferenceType ReferenceType { get; set; }
-        /// <summary> Reference ManagedVirtualNetwork name. </summary>
+        /// <summary>
+        /// Reference ManagedVirtualNetwork name.
+        /// Serialized Name: ManagedVirtualNetworkReference.referenceName
+        /// </summary>
         public string ReferenceName { get; set; }
     }
 }

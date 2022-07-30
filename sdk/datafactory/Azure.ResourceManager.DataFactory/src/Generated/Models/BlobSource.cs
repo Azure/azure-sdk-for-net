@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> A copy activity Azure Blob source. </summary>
+    /// <summary>
+    /// A copy activity Azure Blob source.
+    /// Serialized Name: BlobSource
+    /// </summary>
     public partial class BlobSource : CopySource
     {
         /// <summary> Initializes a new instance of BlobSource. </summary>
@@ -20,15 +23,39 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of BlobSource. </summary>
-        /// <param name="copySourceType"> Copy source type. </param>
-        /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
-        /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
-        /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
-        /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
+        /// <param name="copySourceType">
+        /// Copy source type.
+        /// Serialized Name: CopySource.type
+        /// </param>
+        /// <param name="sourceRetryCount">
+        /// Source retry count. Type: integer (or Expression with resultType integer).
+        /// Serialized Name: CopySource.sourceRetryCount
+        /// </param>
+        /// <param name="sourceRetryWait">
+        /// Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
+        /// Serialized Name: CopySource.sourceRetryWait
+        /// </param>
+        /// <param name="maxConcurrentConnections">
+        /// The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer).
+        /// Serialized Name: CopySource.maxConcurrentConnections
+        /// </param>
+        /// <param name="disableMetricsCollection">
+        /// If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: CopySource.disableMetricsCollection
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="treatEmptyAsNull"> Treat empty as null. Type: boolean (or Expression with resultType boolean). </param>
-        /// <param name="skipHeaderLineCount"> Number of header lines to skip from each blob. Type: integer (or Expression with resultType integer). </param>
-        /// <param name="recursive"> If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean). </param>
+        /// <param name="treatEmptyAsNull">
+        /// Treat empty as null. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: BlobSource.treatEmptyAsNull
+        /// </param>
+        /// <param name="skipHeaderLineCount">
+        /// Number of header lines to skip from each blob. Type: integer (or Expression with resultType integer).
+        /// Serialized Name: BlobSource.skipHeaderLineCount
+        /// </param>
+        /// <param name="recursive">
+        /// If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: BlobSource.recursive
+        /// </param>
         internal BlobSource(string copySourceType, BinaryData sourceRetryCount, BinaryData sourceRetryWait, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, BinaryData treatEmptyAsNull, BinaryData skipHeaderLineCount, BinaryData recursive) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             TreatEmptyAsNull = treatEmptyAsNull;
@@ -37,11 +64,20 @@ namespace Azure.ResourceManager.DataFactory.Models
             CopySourceType = copySourceType ?? "BlobSource";
         }
 
-        /// <summary> Treat empty as null. Type: boolean (or Expression with resultType boolean). </summary>
+        /// <summary>
+        /// Treat empty as null. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: BlobSource.treatEmptyAsNull
+        /// </summary>
         public BinaryData TreatEmptyAsNull { get; set; }
-        /// <summary> Number of header lines to skip from each blob. Type: integer (or Expression with resultType integer). </summary>
+        /// <summary>
+        /// Number of header lines to skip from each blob. Type: integer (or Expression with resultType integer).
+        /// Serialized Name: BlobSource.skipHeaderLineCount
+        /// </summary>
         public BinaryData SkipHeaderLineCount { get; set; }
-        /// <summary> If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean). </summary>
+        /// <summary>
+        /// If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: BlobSource.recursive
+        /// </summary>
         public BinaryData Recursive { get; set; }
     }
 }

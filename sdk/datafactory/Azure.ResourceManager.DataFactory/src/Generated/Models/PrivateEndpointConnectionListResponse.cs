@@ -12,11 +12,17 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> A list of linked service resources. </summary>
+    /// <summary>
+    /// A list of linked service resources.
+    /// Serialized Name: PrivateEndpointConnectionListResponse
+    /// </summary>
     internal partial class PrivateEndpointConnectionListResponse
     {
         /// <summary> Initializes a new instance of PrivateEndpointConnectionListResponse. </summary>
-        /// <param name="value"> List of Private Endpoint Connections. </param>
+        /// <param name="value">
+        /// List of Private Endpoint Connections.
+        /// Serialized Name: PrivateEndpointConnectionListResponse.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal PrivateEndpointConnectionListResponse(IEnumerable<DataFactoryPrivateEndpointConnectionData> value)
         {
@@ -29,17 +35,29 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of PrivateEndpointConnectionListResponse. </summary>
-        /// <param name="value"> List of Private Endpoint Connections. </param>
-        /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
+        /// <param name="value">
+        /// List of Private Endpoint Connections.
+        /// Serialized Name: PrivateEndpointConnectionListResponse.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link to the next page of results, if any remaining results exist.
+        /// Serialized Name: PrivateEndpointConnectionListResponse.nextLink
+        /// </param>
         internal PrivateEndpointConnectionListResponse(IReadOnlyList<DataFactoryPrivateEndpointConnectionData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> List of Private Endpoint Connections. </summary>
+        /// <summary>
+        /// List of Private Endpoint Connections.
+        /// Serialized Name: PrivateEndpointConnectionListResponse.value
+        /// </summary>
         public IReadOnlyList<DataFactoryPrivateEndpointConnectionData> Value { get; }
-        /// <summary> The link to the next page of results, if any remaining results exist. </summary>
+        /// <summary>
+        /// The link to the next page of results, if any remaining results exist.
+        /// Serialized Name: PrivateEndpointConnectionListResponse.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

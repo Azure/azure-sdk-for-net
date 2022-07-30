@@ -11,11 +11,17 @@ using System.Linq;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> A list of exposure control feature values. </summary>
+    /// <summary>
+    /// A list of exposure control feature values.
+    /// Serialized Name: ExposureControlBatchResponse
+    /// </summary>
     public partial class ExposureControlBatchResult
     {
         /// <summary> Initializes a new instance of ExposureControlBatchResult. </summary>
-        /// <param name="exposureControlResponses"> List of exposure control feature values. </param>
+        /// <param name="exposureControlResponses">
+        /// List of exposure control feature values.
+        /// Serialized Name: ExposureControlBatchResponse.exposureControlResponses
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="exposureControlResponses"/> is null. </exception>
         internal ExposureControlBatchResult(IEnumerable<ExposureControlResult> exposureControlResponses)
         {
@@ -28,13 +34,19 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of ExposureControlBatchResult. </summary>
-        /// <param name="exposureControlResponses"> List of exposure control feature values. </param>
+        /// <param name="exposureControlResponses">
+        /// List of exposure control feature values.
+        /// Serialized Name: ExposureControlBatchResponse.exposureControlResponses
+        /// </param>
         internal ExposureControlBatchResult(IReadOnlyList<ExposureControlResult> exposureControlResponses)
         {
             ExposureControlResponses = exposureControlResponses;
         }
 
-        /// <summary> List of exposure control feature values. </summary>
+        /// <summary>
+        /// List of exposure control feature values.
+        /// Serialized Name: ExposureControlBatchResponse.exposureControlResponses
+        /// </summary>
         public IReadOnlyList<ExposureControlResult> ExposureControlResponses { get; }
     }
 }

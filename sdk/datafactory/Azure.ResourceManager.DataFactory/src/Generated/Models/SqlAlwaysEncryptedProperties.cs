@@ -9,25 +9,41 @@ using System;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Sql always encrypted properties. </summary>
+    /// <summary>
+    /// Sql always encrypted properties.
+    /// Serialized Name: SqlAlwaysEncryptedProperties
+    /// </summary>
     public partial class SqlAlwaysEncryptedProperties
     {
         /// <summary> Initializes a new instance of SqlAlwaysEncryptedProperties. </summary>
-        /// <param name="alwaysEncryptedAkvAuthType"> Sql always encrypted AKV authentication type. Type: string (or Expression with resultType string). </param>
+        /// <param name="alwaysEncryptedAkvAuthType">
+        /// Sql always encrypted AKV authentication type. Type: string (or Expression with resultType string).
+        /// Serialized Name: SqlAlwaysEncryptedProperties.alwaysEncryptedAkvAuthType
+        /// </param>
         public SqlAlwaysEncryptedProperties(SqlAlwaysEncryptedAkvAuthType alwaysEncryptedAkvAuthType)
         {
             AlwaysEncryptedAkvAuthType = alwaysEncryptedAkvAuthType;
         }
 
         /// <summary> Initializes a new instance of SqlAlwaysEncryptedProperties. </summary>
-        /// <param name="alwaysEncryptedAkvAuthType"> Sql always encrypted AKV authentication type. Type: string (or Expression with resultType string). </param>
-        /// <param name="servicePrincipalId"> The client ID of the application in Azure Active Directory used for Azure Key Vault authentication. Type: string (or Expression with resultType string). </param>
+        /// <param name="alwaysEncryptedAkvAuthType">
+        /// Sql always encrypted AKV authentication type. Type: string (or Expression with resultType string).
+        /// Serialized Name: SqlAlwaysEncryptedProperties.alwaysEncryptedAkvAuthType
+        /// </param>
+        /// <param name="servicePrincipalId">
+        /// The client ID of the application in Azure Active Directory used for Azure Key Vault authentication. Type: string (or Expression with resultType string).
+        /// Serialized Name: SqlAlwaysEncryptedProperties.servicePrincipalId
+        /// </param>
         /// <param name="servicePrincipalKey">
         /// The key of the service principal used to authenticate against Azure Key Vault.
+        /// Serialized Name: SqlAlwaysEncryptedProperties.servicePrincipalKey
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
-        /// <param name="credential"> The credential reference containing authentication information. </param>
+        /// <param name="credential">
+        /// The credential reference containing authentication information.
+        /// Serialized Name: SqlAlwaysEncryptedProperties.credential
+        /// </param>
         internal SqlAlwaysEncryptedProperties(SqlAlwaysEncryptedAkvAuthType alwaysEncryptedAkvAuthType, BinaryData servicePrincipalId, SecretBase servicePrincipalKey, CredentialReference credential)
         {
             AlwaysEncryptedAkvAuthType = alwaysEncryptedAkvAuthType;
@@ -36,17 +52,27 @@ namespace Azure.ResourceManager.DataFactory.Models
             Credential = credential;
         }
 
-        /// <summary> Sql always encrypted AKV authentication type. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Sql always encrypted AKV authentication type. Type: string (or Expression with resultType string).
+        /// Serialized Name: SqlAlwaysEncryptedProperties.alwaysEncryptedAkvAuthType
+        /// </summary>
         public SqlAlwaysEncryptedAkvAuthType AlwaysEncryptedAkvAuthType { get; set; }
-        /// <summary> The client ID of the application in Azure Active Directory used for Azure Key Vault authentication. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The client ID of the application in Azure Active Directory used for Azure Key Vault authentication. Type: string (or Expression with resultType string).
+        /// Serialized Name: SqlAlwaysEncryptedProperties.servicePrincipalId
+        /// </summary>
         public BinaryData ServicePrincipalId { get; set; }
         /// <summary>
         /// The key of the service principal used to authenticate against Azure Key Vault.
+        /// Serialized Name: SqlAlwaysEncryptedProperties.servicePrincipalKey
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
         public SecretBase ServicePrincipalKey { get; set; }
-        /// <summary> The credential reference containing authentication information. </summary>
+        /// <summary>
+        /// The credential reference containing authentication information.
+        /// Serialized Name: SqlAlwaysEncryptedProperties.credential
+        /// </summary>
         public CredentialReference Credential { get; set; }
     }
 }

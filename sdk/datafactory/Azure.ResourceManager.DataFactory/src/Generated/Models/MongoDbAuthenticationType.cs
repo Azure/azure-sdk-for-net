@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The authentication type to be used to connect to the MongoDB database. </summary>
+    /// <summary>
+    /// The authentication type to be used to connect to the MongoDB database.
+    /// Serialized Name: MongoDbAuthenticationType
+    /// </summary>
     public readonly partial struct MongoDbAuthenticationType : IEquatable<MongoDbAuthenticationType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string BasicValue = "Basic";
         private const string AnonymousValue = "Anonymous";
 
-        /// <summary> Basic. </summary>
+        /// <summary>
+        /// Basic
+        /// Serialized Name: MongoDbAuthenticationType.Basic
+        /// </summary>
         public static MongoDbAuthenticationType Basic { get; } = new MongoDbAuthenticationType(BasicValue);
-        /// <summary> Anonymous. </summary>
+        /// <summary>
+        /// Anonymous
+        /// Serialized Name: MongoDbAuthenticationType.Anonymous
+        /// </summary>
         public static MongoDbAuthenticationType Anonymous { get; } = new MongoDbAuthenticationType(AnonymousValue);
         /// <summary> Determines if two <see cref="MongoDbAuthenticationType"/> values are the same. </summary>
         public static bool operator ==(MongoDbAuthenticationType left, MongoDbAuthenticationType right) => left.Equals(right);

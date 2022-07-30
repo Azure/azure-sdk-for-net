@@ -10,11 +10,17 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Trigger that creates pipeline runs periodically, on schedule. </summary>
+    /// <summary>
+    /// Trigger that creates pipeline runs periodically, on schedule.
+    /// Serialized Name: ScheduleTrigger
+    /// </summary>
     public partial class ScheduleTrigger : MultiplePipelineTrigger
     {
         /// <summary> Initializes a new instance of ScheduleTrigger. </summary>
-        /// <param name="recurrence"> Recurrence schedule configuration. </param>
+        /// <param name="recurrence">
+        /// Recurrence schedule configuration.
+        /// Serialized Name: ScheduleTrigger.typeProperties.recurrence
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recurrence"/> is null. </exception>
         public ScheduleTrigger(ScheduleTriggerRecurrence recurrence)
         {
@@ -28,20 +34,41 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of ScheduleTrigger. </summary>
-        /// <param name="triggerType"> Trigger type. </param>
-        /// <param name="description"> Trigger description. </param>
-        /// <param name="runtimeState"> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </param>
-        /// <param name="annotations"> List of tags that can be used for describing the trigger. </param>
+        /// <param name="triggerType">
+        /// Trigger type.
+        /// Serialized Name: Trigger.type
+        /// </param>
+        /// <param name="description">
+        /// Trigger description.
+        /// Serialized Name: Trigger.description
+        /// </param>
+        /// <param name="runtimeState">
+        /// Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger.
+        /// Serialized Name: Trigger.runtimeState
+        /// </param>
+        /// <param name="annotations">
+        /// List of tags that can be used for describing the trigger.
+        /// Serialized Name: Trigger.annotations
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="pipelines"> Pipelines that need to be started. </param>
-        /// <param name="recurrence"> Recurrence schedule configuration. </param>
+        /// <param name="pipelines">
+        /// Pipelines that need to be started.
+        /// Serialized Name: MultiplePipelineTrigger.pipelines
+        /// </param>
+        /// <param name="recurrence">
+        /// Recurrence schedule configuration.
+        /// Serialized Name: ScheduleTrigger.typeProperties.recurrence
+        /// </param>
         internal ScheduleTrigger(string triggerType, string description, TriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, IList<TriggerPipelineReference> pipelines, ScheduleTriggerRecurrence recurrence) : base(triggerType, description, runtimeState, annotations, additionalProperties, pipelines)
         {
             Recurrence = recurrence;
             TriggerType = triggerType ?? "ScheduleTrigger";
         }
 
-        /// <summary> Recurrence schedule configuration. </summary>
+        /// <summary>
+        /// Recurrence schedule configuration.
+        /// Serialized Name: ScheduleTrigger.typeProperties.recurrence
+        /// </summary>
         public ScheduleTriggerRecurrence Recurrence { get; set; }
     }
 }

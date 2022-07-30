@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Pipeline that needs to be triggered with the given parameters. </summary>
+    /// <summary>
+    /// Pipeline that needs to be triggered with the given parameters.
+    /// Serialized Name: TriggerPipelineReference
+    /// </summary>
     public partial class TriggerPipelineReference
     {
         /// <summary> Initializes a new instance of TriggerPipelineReference. </summary>
@@ -21,17 +24,29 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of TriggerPipelineReference. </summary>
-        /// <param name="pipelineReference"> Pipeline reference. </param>
-        /// <param name="parameters"> Pipeline parameters. </param>
+        /// <param name="pipelineReference">
+        /// Pipeline reference.
+        /// Serialized Name: TriggerPipelineReference.pipelineReference
+        /// </param>
+        /// <param name="parameters">
+        /// Pipeline parameters.
+        /// Serialized Name: TriggerPipelineReference.parameters
+        /// </param>
         internal TriggerPipelineReference(PipelineReference pipelineReference, IDictionary<string, BinaryData> parameters)
         {
             PipelineReference = pipelineReference;
             Parameters = parameters;
         }
 
-        /// <summary> Pipeline reference. </summary>
+        /// <summary>
+        /// Pipeline reference.
+        /// Serialized Name: TriggerPipelineReference.pipelineReference
+        /// </summary>
         public PipelineReference PipelineReference { get; set; }
-        /// <summary> Pipeline parameters. </summary>
+        /// <summary>
+        /// Pipeline parameters.
+        /// Serialized Name: TriggerPipelineReference.parameters
+        /// </summary>
         public IDictionary<string, BinaryData> Parameters { get; }
     }
 }

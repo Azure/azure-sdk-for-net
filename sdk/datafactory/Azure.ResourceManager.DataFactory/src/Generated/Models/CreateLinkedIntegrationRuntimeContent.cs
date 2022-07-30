@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The linked integration runtime information. </summary>
+    /// <summary>
+    /// The linked integration runtime information.
+    /// Serialized Name: CreateLinkedIntegrationRuntimeRequest
+    /// </summary>
     public partial class CreateLinkedIntegrationRuntimeContent
     {
         /// <summary> Initializes a new instance of CreateLinkedIntegrationRuntimeContent. </summary>
@@ -15,13 +18,25 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
         }
 
-        /// <summary> The name of the linked integration runtime. </summary>
+        /// <summary>
+        /// The name of the linked integration runtime.
+        /// Serialized Name: CreateLinkedIntegrationRuntimeRequest.name
+        /// </summary>
         public string Name { get; set; }
-        /// <summary> The ID of the subscription that the linked integration runtime belongs to. </summary>
+        /// <summary>
+        /// The ID of the subscription that the linked integration runtime belongs to.
+        /// Serialized Name: CreateLinkedIntegrationRuntimeRequest.subscriptionId
+        /// </summary>
         public string SubscriptionId { get; set; }
-        /// <summary> The name of the data factory that the linked integration runtime belongs to. </summary>
+        /// <summary>
+        /// The name of the data factory that the linked integration runtime belongs to.
+        /// Serialized Name: CreateLinkedIntegrationRuntimeRequest.dataFactoryName
+        /// </summary>
         public string DataFactoryName { get; set; }
-        /// <summary> The location of the data factory that the linked integration runtime belongs to. </summary>
+        /// <summary>
+        /// The location of the data factory that the linked integration runtime belongs to.
+        /// Serialized Name: CreateLinkedIntegrationRuntimeRequest.dataFactoryLocation
+        /// </summary>
         public string DataFactoryLocation { get; set; }
     }
 }

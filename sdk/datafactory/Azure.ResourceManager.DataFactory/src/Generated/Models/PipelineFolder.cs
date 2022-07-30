@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The folder that this Pipeline is in. If not specified, Pipeline will appear at the root level. </summary>
+    /// <summary>
+    /// The folder that this Pipeline is in. If not specified, Pipeline will appear at the root level.
+    /// Serialized Name: PipelineFolder
+    /// </summary>
     internal partial class PipelineFolder
     {
         /// <summary> Initializes a new instance of PipelineFolder. </summary>
@@ -16,13 +19,19 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of PipelineFolder. </summary>
-        /// <param name="name"> The name of the folder that this Pipeline is in. </param>
+        /// <param name="name">
+        /// The name of the folder that this Pipeline is in.
+        /// Serialized Name: PipelineFolder.name
+        /// </param>
         internal PipelineFolder(string name)
         {
             Name = name;
         }
 
-        /// <summary> The name of the folder that this Pipeline is in. </summary>
+        /// <summary>
+        /// The name of the folder that this Pipeline is in.
+        /// Serialized Name: PipelineFolder.name
+        /// </summary>
         public string Name { get; set; }
     }
 }

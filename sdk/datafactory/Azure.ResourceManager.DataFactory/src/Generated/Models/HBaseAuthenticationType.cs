@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The authentication mechanism to use to connect to the HBase server. </summary>
+    /// <summary>
+    /// The authentication mechanism to use to connect to the HBase server.
+    /// Serialized Name: HBaseAuthenticationType
+    /// </summary>
     public readonly partial struct HBaseAuthenticationType : IEquatable<HBaseAuthenticationType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string AnonymousValue = "Anonymous";
         private const string BasicValue = "Basic";
 
-        /// <summary> Anonymous. </summary>
+        /// <summary>
+        /// Anonymous
+        /// Serialized Name: HBaseAuthenticationType.Anonymous
+        /// </summary>
         public static HBaseAuthenticationType Anonymous { get; } = new HBaseAuthenticationType(AnonymousValue);
-        /// <summary> Basic. </summary>
+        /// <summary>
+        /// Basic
+        /// Serialized Name: HBaseAuthenticationType.Basic
+        /// </summary>
         public static HBaseAuthenticationType Basic { get; } = new HBaseAuthenticationType(BasicValue);
         /// <summary> Determines if two <see cref="HBaseAuthenticationType"/> values are the same. </summary>
         public static bool operator ==(HBaseAuthenticationType left, HBaseAuthenticationType right) => left.Equals(right);

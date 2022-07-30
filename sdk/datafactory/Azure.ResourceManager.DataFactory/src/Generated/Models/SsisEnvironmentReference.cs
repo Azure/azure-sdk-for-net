@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Ssis environment reference. </summary>
+    /// <summary>
+    /// Ssis environment reference.
+    /// Serialized Name: SsisEnvironmentReference
+    /// </summary>
     public partial class SsisEnvironmentReference
     {
         /// <summary> Initializes a new instance of SsisEnvironmentReference. </summary>
@@ -16,10 +19,22 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of SsisEnvironmentReference. </summary>
-        /// <param name="id"> Environment reference id. </param>
-        /// <param name="environmentFolderName"> Environment folder name. </param>
-        /// <param name="environmentName"> Environment name. </param>
-        /// <param name="referenceType"> Reference type. </param>
+        /// <param name="id">
+        /// Environment reference id.
+        /// Serialized Name: SsisEnvironmentReference.id
+        /// </param>
+        /// <param name="environmentFolderName">
+        /// Environment folder name.
+        /// Serialized Name: SsisEnvironmentReference.environmentFolderName
+        /// </param>
+        /// <param name="environmentName">
+        /// Environment name.
+        /// Serialized Name: SsisEnvironmentReference.environmentName
+        /// </param>
+        /// <param name="referenceType">
+        /// Reference type
+        /// Serialized Name: SsisEnvironmentReference.referenceType
+        /// </param>
         internal SsisEnvironmentReference(long? id, string environmentFolderName, string environmentName, string referenceType)
         {
             Id = id;
@@ -28,13 +43,25 @@ namespace Azure.ResourceManager.DataFactory.Models
             ReferenceType = referenceType;
         }
 
-        /// <summary> Environment reference id. </summary>
+        /// <summary>
+        /// Environment reference id.
+        /// Serialized Name: SsisEnvironmentReference.id
+        /// </summary>
         public long? Id { get; }
-        /// <summary> Environment folder name. </summary>
+        /// <summary>
+        /// Environment folder name.
+        /// Serialized Name: SsisEnvironmentReference.environmentFolderName
+        /// </summary>
         public string EnvironmentFolderName { get; }
-        /// <summary> Environment name. </summary>
+        /// <summary>
+        /// Environment name.
+        /// Serialized Name: SsisEnvironmentReference.environmentName
+        /// </summary>
         public string EnvironmentName { get; }
-        /// <summary> Reference type. </summary>
+        /// <summary>
+        /// Reference type
+        /// Serialized Name: SsisEnvironmentReference.referenceType
+        /// </summary>
         public string ReferenceType { get; }
     }
 }

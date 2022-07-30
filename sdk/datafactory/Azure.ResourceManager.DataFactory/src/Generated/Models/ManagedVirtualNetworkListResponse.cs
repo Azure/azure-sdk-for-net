@@ -12,11 +12,17 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> A list of managed Virtual Network resources. </summary>
+    /// <summary>
+    /// A list of managed Virtual Network resources.
+    /// Serialized Name: ManagedVirtualNetworkListResponse
+    /// </summary>
     internal partial class ManagedVirtualNetworkListResponse
     {
         /// <summary> Initializes a new instance of ManagedVirtualNetworkListResponse. </summary>
-        /// <param name="value"> List of managed Virtual Networks. </param>
+        /// <param name="value">
+        /// List of managed Virtual Networks.
+        /// Serialized Name: ManagedVirtualNetworkListResponse.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ManagedVirtualNetworkListResponse(IEnumerable<ManagedVirtualNetworkResourceData> value)
         {
@@ -29,17 +35,29 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of ManagedVirtualNetworkListResponse. </summary>
-        /// <param name="value"> List of managed Virtual Networks. </param>
-        /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
+        /// <param name="value">
+        /// List of managed Virtual Networks.
+        /// Serialized Name: ManagedVirtualNetworkListResponse.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link to the next page of results, if any remaining results exist.
+        /// Serialized Name: ManagedVirtualNetworkListResponse.nextLink
+        /// </param>
         internal ManagedVirtualNetworkListResponse(IReadOnlyList<ManagedVirtualNetworkResourceData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> List of managed Virtual Networks. </summary>
+        /// <summary>
+        /// List of managed Virtual Networks.
+        /// Serialized Name: ManagedVirtualNetworkListResponse.value
+        /// </summary>
         public IReadOnlyList<ManagedVirtualNetworkResourceData> Value { get; }
-        /// <summary> The link to the next page of results, if any remaining results exist. </summary>
+        /// <summary>
+        /// The link to the next page of results, if any remaining results exist.
+        /// Serialized Name: ManagedVirtualNetworkListResponse.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

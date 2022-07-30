@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Global Parameter type. </summary>
+    /// <summary>
+    /// Global Parameter type.
+    /// Serialized Name: GlobalParameterType
+    /// </summary>
     public readonly partial struct GlobalParameterType : IEquatable<GlobalParameterType>
     {
         private readonly string _value;
@@ -29,17 +32,35 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string BoolValue = "Bool";
         private const string ArrayValue = "Array";
 
-        /// <summary> Object. </summary>
+        /// <summary>
+        /// Object
+        /// Serialized Name: GlobalParameterType.Object
+        /// </summary>
         public static GlobalParameterType Object { get; } = new GlobalParameterType(ObjectValue);
-        /// <summary> String. </summary>
+        /// <summary>
+        /// String
+        /// Serialized Name: GlobalParameterType.String
+        /// </summary>
         public static GlobalParameterType String { get; } = new GlobalParameterType(StringValue);
-        /// <summary> Int. </summary>
+        /// <summary>
+        /// Int
+        /// Serialized Name: GlobalParameterType.Int
+        /// </summary>
         public static GlobalParameterType Int { get; } = new GlobalParameterType(IntValue);
-        /// <summary> Float. </summary>
+        /// <summary>
+        /// Float
+        /// Serialized Name: GlobalParameterType.Float
+        /// </summary>
         public static GlobalParameterType Float { get; } = new GlobalParameterType(FloatValue);
-        /// <summary> Bool. </summary>
+        /// <summary>
+        /// Bool
+        /// Serialized Name: GlobalParameterType.Bool
+        /// </summary>
         public static GlobalParameterType Bool { get; } = new GlobalParameterType(BoolValue);
-        /// <summary> Array. </summary>
+        /// <summary>
+        /// Array
+        /// Serialized Name: GlobalParameterType.Array
+        /// </summary>
         public static GlobalParameterType Array { get; } = new GlobalParameterType(ArrayValue);
         /// <summary> Determines if two <see cref="GlobalParameterType"/> values are the same. </summary>
         public static bool operator ==(GlobalParameterType left, GlobalParameterType right) => left.Equals(right);

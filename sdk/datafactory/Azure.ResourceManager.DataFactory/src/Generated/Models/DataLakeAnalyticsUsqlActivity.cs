@@ -11,13 +11,25 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Data Lake Analytics U-SQL activity. </summary>
+    /// <summary>
+    /// Data Lake Analytics U-SQL activity.
+    /// Serialized Name: DataLakeAnalyticsUsqlActivity
+    /// </summary>
     public partial class DataLakeAnalyticsUsqlActivity : ExecutionActivity
     {
         /// <summary> Initializes a new instance of DataLakeAnalyticsUsqlActivity. </summary>
-        /// <param name="name"> Activity name. </param>
-        /// <param name="scriptPath"> Case-sensitive path to folder that contains the U-SQL script. Type: string (or Expression with resultType string). </param>
-        /// <param name="scriptLinkedService"> Script linked service reference. </param>
+        /// <param name="name">
+        /// Activity name.
+        /// Serialized Name: Activity.name
+        /// </param>
+        /// <param name="scriptPath">
+        /// Case-sensitive path to folder that contains the U-SQL script. Type: string (or Expression with resultType string).
+        /// Serialized Name: DataLakeAnalyticsUsqlActivity.typeProperties.scriptPath
+        /// </param>
+        /// <param name="scriptLinkedService">
+        /// Script linked service reference.
+        /// Serialized Name: DataLakeAnalyticsUsqlActivity.typeProperties.scriptLinkedService
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="scriptPath"/> or <paramref name="scriptLinkedService"/> is null. </exception>
         public DataLakeAnalyticsUsqlActivity(string name, BinaryData scriptPath, LinkedServiceReference scriptLinkedService) : base(name)
         {
@@ -41,21 +53,63 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of DataLakeAnalyticsUsqlActivity. </summary>
-        /// <param name="name"> Activity name. </param>
-        /// <param name="activityType"> Type of activity. </param>
-        /// <param name="description"> Activity description. </param>
-        /// <param name="dependsOn"> Activity depends on condition. </param>
-        /// <param name="userProperties"> Activity user properties. </param>
+        /// <param name="name">
+        /// Activity name.
+        /// Serialized Name: Activity.name
+        /// </param>
+        /// <param name="activityType">
+        /// Type of activity.
+        /// Serialized Name: Activity.type
+        /// </param>
+        /// <param name="description">
+        /// Activity description.
+        /// Serialized Name: Activity.description
+        /// </param>
+        /// <param name="dependsOn">
+        /// Activity depends on condition.
+        /// Serialized Name: Activity.dependsOn
+        /// </param>
+        /// <param name="userProperties">
+        /// Activity user properties.
+        /// Serialized Name: Activity.userProperties
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
-        /// <param name="policy"> Activity policy. </param>
-        /// <param name="scriptPath"> Case-sensitive path to folder that contains the U-SQL script. Type: string (or Expression with resultType string). </param>
-        /// <param name="scriptLinkedService"> Script linked service reference. </param>
-        /// <param name="degreeOfParallelism"> The maximum number of nodes simultaneously used to run the job. Default value is 1. Type: integer (or Expression with resultType integer), minimum: 1. </param>
-        /// <param name="priority"> Determines which jobs out of all that are queued should be selected to run first. The lower the number, the higher the priority. Default value is 1000. Type: integer (or Expression with resultType integer), minimum: 1. </param>
-        /// <param name="parameters"> Parameters for U-SQL job request. </param>
-        /// <param name="runtimeVersion"> Runtime version of the U-SQL engine to use. Type: string (or Expression with resultType string). </param>
-        /// <param name="compilationMode"> Compilation mode of U-SQL. Must be one of these values : Semantic, Full and SingleBox. Type: string (or Expression with resultType string). </param>
+        /// <param name="linkedServiceName">
+        /// Linked service reference.
+        /// Serialized Name: ExecutionActivity.linkedServiceName
+        /// </param>
+        /// <param name="policy">
+        /// Activity policy.
+        /// Serialized Name: ExecutionActivity.policy
+        /// </param>
+        /// <param name="scriptPath">
+        /// Case-sensitive path to folder that contains the U-SQL script. Type: string (or Expression with resultType string).
+        /// Serialized Name: DataLakeAnalyticsUsqlActivity.typeProperties.scriptPath
+        /// </param>
+        /// <param name="scriptLinkedService">
+        /// Script linked service reference.
+        /// Serialized Name: DataLakeAnalyticsUsqlActivity.typeProperties.scriptLinkedService
+        /// </param>
+        /// <param name="degreeOfParallelism">
+        /// The maximum number of nodes simultaneously used to run the job. Default value is 1. Type: integer (or Expression with resultType integer), minimum: 1.
+        /// Serialized Name: DataLakeAnalyticsUsqlActivity.typeProperties.degreeOfParallelism
+        /// </param>
+        /// <param name="priority">
+        /// Determines which jobs out of all that are queued should be selected to run first. The lower the number, the higher the priority. Default value is 1000. Type: integer (or Expression with resultType integer), minimum: 1.
+        /// Serialized Name: DataLakeAnalyticsUsqlActivity.typeProperties.priority
+        /// </param>
+        /// <param name="parameters">
+        /// Parameters for U-SQL job request.
+        /// Serialized Name: DataLakeAnalyticsUsqlActivity.typeProperties.parameters
+        /// </param>
+        /// <param name="runtimeVersion">
+        /// Runtime version of the U-SQL engine to use. Type: string (or Expression with resultType string).
+        /// Serialized Name: DataLakeAnalyticsUsqlActivity.typeProperties.runtimeVersion
+        /// </param>
+        /// <param name="compilationMode">
+        /// Compilation mode of U-SQL. Must be one of these values : Semantic, Full and SingleBox. Type: string (or Expression with resultType string).
+        /// Serialized Name: DataLakeAnalyticsUsqlActivity.typeProperties.compilationMode
+        /// </param>
         internal DataLakeAnalyticsUsqlActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, BinaryData scriptPath, LinkedServiceReference scriptLinkedService, BinaryData degreeOfParallelism, BinaryData priority, IDictionary<string, BinaryData> parameters, BinaryData runtimeVersion, BinaryData compilationMode) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             ScriptPath = scriptPath;
@@ -68,19 +122,40 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = activityType ?? "DataLakeAnalyticsU-SQL";
         }
 
-        /// <summary> Case-sensitive path to folder that contains the U-SQL script. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Case-sensitive path to folder that contains the U-SQL script. Type: string (or Expression with resultType string).
+        /// Serialized Name: DataLakeAnalyticsUsqlActivity.typeProperties.scriptPath
+        /// </summary>
         public BinaryData ScriptPath { get; set; }
-        /// <summary> Script linked service reference. </summary>
+        /// <summary>
+        /// Script linked service reference.
+        /// Serialized Name: DataLakeAnalyticsUsqlActivity.typeProperties.scriptLinkedService
+        /// </summary>
         public LinkedServiceReference ScriptLinkedService { get; set; }
-        /// <summary> The maximum number of nodes simultaneously used to run the job. Default value is 1. Type: integer (or Expression with resultType integer), minimum: 1. </summary>
+        /// <summary>
+        /// The maximum number of nodes simultaneously used to run the job. Default value is 1. Type: integer (or Expression with resultType integer), minimum: 1.
+        /// Serialized Name: DataLakeAnalyticsUsqlActivity.typeProperties.degreeOfParallelism
+        /// </summary>
         public BinaryData DegreeOfParallelism { get; set; }
-        /// <summary> Determines which jobs out of all that are queued should be selected to run first. The lower the number, the higher the priority. Default value is 1000. Type: integer (or Expression with resultType integer), minimum: 1. </summary>
+        /// <summary>
+        /// Determines which jobs out of all that are queued should be selected to run first. The lower the number, the higher the priority. Default value is 1000. Type: integer (or Expression with resultType integer), minimum: 1.
+        /// Serialized Name: DataLakeAnalyticsUsqlActivity.typeProperties.priority
+        /// </summary>
         public BinaryData Priority { get; set; }
-        /// <summary> Parameters for U-SQL job request. </summary>
+        /// <summary>
+        /// Parameters for U-SQL job request.
+        /// Serialized Name: DataLakeAnalyticsUsqlActivity.typeProperties.parameters
+        /// </summary>
         public IDictionary<string, BinaryData> Parameters { get; }
-        /// <summary> Runtime version of the U-SQL engine to use. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Runtime version of the U-SQL engine to use. Type: string (or Expression with resultType string).
+        /// Serialized Name: DataLakeAnalyticsUsqlActivity.typeProperties.runtimeVersion
+        /// </summary>
         public BinaryData RuntimeVersion { get; set; }
-        /// <summary> Compilation mode of U-SQL. Must be one of these values : Semantic, Full and SingleBox. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Compilation mode of U-SQL. Must be one of these values : Semantic, Full and SingleBox. Type: string (or Expression with resultType string).
+        /// Serialized Name: DataLakeAnalyticsUsqlActivity.typeProperties.compilationMode
+        /// </summary>
         public BinaryData CompilationMode { get; set; }
     }
 }

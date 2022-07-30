@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The authentication type to use. </summary>
+    /// <summary>
+    /// The authentication type to use.
+    /// Serialized Name: TeamDeskAuthenticationType
+    /// </summary>
     public readonly partial struct TeamDeskAuthenticationType : IEquatable<TeamDeskAuthenticationType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string BasicValue = "Basic";
         private const string TokenValue = "Token";
 
-        /// <summary> Basic. </summary>
+        /// <summary>
+        /// Basic
+        /// Serialized Name: TeamDeskAuthenticationType.Basic
+        /// </summary>
         public static TeamDeskAuthenticationType Basic { get; } = new TeamDeskAuthenticationType(BasicValue);
-        /// <summary> Token. </summary>
+        /// <summary>
+        /// Token
+        /// Serialized Name: TeamDeskAuthenticationType.Token
+        /// </summary>
         public static TeamDeskAuthenticationType Token { get; } = new TeamDeskAuthenticationType(TokenValue);
         /// <summary> Determines if two <see cref="TeamDeskAuthenticationType"/> values are the same. </summary>
         public static bool operator ==(TeamDeskAuthenticationType left, TeamDeskAuthenticationType right) => left.Equals(right);

@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Azure data lake store read settings. </summary>
+    /// <summary>
+    /// Azure data lake store read settings.
+    /// Serialized Name: AzureDataLakeStoreReadSettings
+    /// </summary>
     public partial class AzureDataLakeStoreReadSettings : StoreReadSettings
     {
         /// <summary> Initializes a new instance of AzureDataLakeStoreReadSettings. </summary>
@@ -20,21 +23,63 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of AzureDataLakeStoreReadSettings. </summary>
-        /// <param name="storeReadSettingsType"> The read setting type. </param>
-        /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
-        /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
+        /// <param name="storeReadSettingsType">
+        /// The read setting type.
+        /// Serialized Name: StoreReadSettings.type
+        /// </param>
+        /// <param name="maxConcurrentConnections">
+        /// The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer).
+        /// Serialized Name: StoreReadSettings.maxConcurrentConnections
+        /// </param>
+        /// <param name="disableMetricsCollection">
+        /// If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: StoreReadSettings.disableMetricsCollection
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="recursive"> If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean). </param>
-        /// <param name="wildcardFolderPath"> ADLS wildcardFolderPath. Type: string (or Expression with resultType string). </param>
-        /// <param name="wildcardFileName"> ADLS wildcardFileName. Type: string (or Expression with resultType string). </param>
-        /// <param name="fileListPath"> Point to a text file that lists each file (relative path to the path configured in the dataset) that you want to copy. Type: string (or Expression with resultType string). </param>
-        /// <param name="listAfter"> Lists files after the value (exclusive) based on file/folder names’ lexicographical order. Applies under the folderPath in data set, and filter files/sub-folders under the folderPath. Type: string (or Expression with resultType string). </param>
-        /// <param name="listBefore"> Lists files before the value (inclusive) based on file/folder names’ lexicographical order. Applies under the folderPath in data set, and filter files/sub-folders under the folderPath. Type: string (or Expression with resultType string). </param>
-        /// <param name="enablePartitionDiscovery"> Indicates whether to enable partition discovery. </param>
-        /// <param name="partitionRootPath"> Specify the root path where partition discovery starts from. Type: string (or Expression with resultType string). </param>
-        /// <param name="deleteFilesAfterCompletion"> Indicates whether the source files need to be deleted after copy completion. Default is false. Type: boolean (or Expression with resultType boolean). </param>
-        /// <param name="modifiedDatetimeStart"> The start of file&apos;s modified datetime. Type: string (or Expression with resultType string). </param>
-        /// <param name="modifiedDatetimeEnd"> The end of file&apos;s modified datetime. Type: string (or Expression with resultType string). </param>
+        /// <param name="recursive">
+        /// If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: AzureDataLakeStoreReadSettings.recursive
+        /// </param>
+        /// <param name="wildcardFolderPath">
+        /// ADLS wildcardFolderPath. Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureDataLakeStoreReadSettings.wildcardFolderPath
+        /// </param>
+        /// <param name="wildcardFileName">
+        /// ADLS wildcardFileName. Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureDataLakeStoreReadSettings.wildcardFileName
+        /// </param>
+        /// <param name="fileListPath">
+        /// Point to a text file that lists each file (relative path to the path configured in the dataset) that you want to copy. Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureDataLakeStoreReadSettings.fileListPath
+        /// </param>
+        /// <param name="listAfter">
+        /// Lists files after the value (exclusive) based on file/folder names’ lexicographical order. Applies under the folderPath in data set, and filter files/sub-folders under the folderPath. Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureDataLakeStoreReadSettings.listAfter
+        /// </param>
+        /// <param name="listBefore">
+        /// Lists files before the value (inclusive) based on file/folder names’ lexicographical order. Applies under the folderPath in data set, and filter files/sub-folders under the folderPath. Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureDataLakeStoreReadSettings.listBefore
+        /// </param>
+        /// <param name="enablePartitionDiscovery">
+        /// Indicates whether to enable partition discovery.
+        /// Serialized Name: AzureDataLakeStoreReadSettings.enablePartitionDiscovery
+        /// </param>
+        /// <param name="partitionRootPath">
+        /// Specify the root path where partition discovery starts from. Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureDataLakeStoreReadSettings.partitionRootPath
+        /// </param>
+        /// <param name="deleteFilesAfterCompletion">
+        /// Indicates whether the source files need to be deleted after copy completion. Default is false. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: AzureDataLakeStoreReadSettings.deleteFilesAfterCompletion
+        /// </param>
+        /// <param name="modifiedDatetimeStart">
+        /// The start of file&apos;s modified datetime. Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureDataLakeStoreReadSettings.modifiedDatetimeStart
+        /// </param>
+        /// <param name="modifiedDatetimeEnd">
+        /// The end of file&apos;s modified datetime. Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureDataLakeStoreReadSettings.modifiedDatetimeEnd
+        /// </param>
         internal AzureDataLakeStoreReadSettings(string storeReadSettingsType, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, BinaryData recursive, BinaryData wildcardFolderPath, BinaryData wildcardFileName, BinaryData fileListPath, BinaryData listAfter, BinaryData listBefore, bool? enablePartitionDiscovery, BinaryData partitionRootPath, BinaryData deleteFilesAfterCompletion, BinaryData modifiedDatetimeStart, BinaryData modifiedDatetimeEnd) : base(storeReadSettingsType, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             Recursive = recursive;
@@ -51,27 +96,60 @@ namespace Azure.ResourceManager.DataFactory.Models
             StoreReadSettingsType = storeReadSettingsType ?? "AzureDataLakeStoreReadSettings";
         }
 
-        /// <summary> If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean). </summary>
+        /// <summary>
+        /// If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: AzureDataLakeStoreReadSettings.recursive
+        /// </summary>
         public BinaryData Recursive { get; set; }
-        /// <summary> ADLS wildcardFolderPath. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// ADLS wildcardFolderPath. Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureDataLakeStoreReadSettings.wildcardFolderPath
+        /// </summary>
         public BinaryData WildcardFolderPath { get; set; }
-        /// <summary> ADLS wildcardFileName. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// ADLS wildcardFileName. Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureDataLakeStoreReadSettings.wildcardFileName
+        /// </summary>
         public BinaryData WildcardFileName { get; set; }
-        /// <summary> Point to a text file that lists each file (relative path to the path configured in the dataset) that you want to copy. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Point to a text file that lists each file (relative path to the path configured in the dataset) that you want to copy. Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureDataLakeStoreReadSettings.fileListPath
+        /// </summary>
         public BinaryData FileListPath { get; set; }
-        /// <summary> Lists files after the value (exclusive) based on file/folder names’ lexicographical order. Applies under the folderPath in data set, and filter files/sub-folders under the folderPath. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Lists files after the value (exclusive) based on file/folder names’ lexicographical order. Applies under the folderPath in data set, and filter files/sub-folders under the folderPath. Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureDataLakeStoreReadSettings.listAfter
+        /// </summary>
         public BinaryData ListAfter { get; set; }
-        /// <summary> Lists files before the value (inclusive) based on file/folder names’ lexicographical order. Applies under the folderPath in data set, and filter files/sub-folders under the folderPath. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Lists files before the value (inclusive) based on file/folder names’ lexicographical order. Applies under the folderPath in data set, and filter files/sub-folders under the folderPath. Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureDataLakeStoreReadSettings.listBefore
+        /// </summary>
         public BinaryData ListBefore { get; set; }
-        /// <summary> Indicates whether to enable partition discovery. </summary>
+        /// <summary>
+        /// Indicates whether to enable partition discovery.
+        /// Serialized Name: AzureDataLakeStoreReadSettings.enablePartitionDiscovery
+        /// </summary>
         public bool? EnablePartitionDiscovery { get; set; }
-        /// <summary> Specify the root path where partition discovery starts from. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Specify the root path where partition discovery starts from. Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureDataLakeStoreReadSettings.partitionRootPath
+        /// </summary>
         public BinaryData PartitionRootPath { get; set; }
-        /// <summary> Indicates whether the source files need to be deleted after copy completion. Default is false. Type: boolean (or Expression with resultType boolean). </summary>
+        /// <summary>
+        /// Indicates whether the source files need to be deleted after copy completion. Default is false. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: AzureDataLakeStoreReadSettings.deleteFilesAfterCompletion
+        /// </summary>
         public BinaryData DeleteFilesAfterCompletion { get; set; }
-        /// <summary> The start of file&apos;s modified datetime. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The start of file&apos;s modified datetime. Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureDataLakeStoreReadSettings.modifiedDatetimeStart
+        /// </summary>
         public BinaryData ModifiedDatetimeStart { get; set; }
-        /// <summary> The end of file&apos;s modified datetime. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The end of file&apos;s modified datetime. Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureDataLakeStoreReadSettings.modifiedDatetimeEnd
+        /// </summary>
         public BinaryData ModifiedDatetimeEnd { get; set; }
     }
 }

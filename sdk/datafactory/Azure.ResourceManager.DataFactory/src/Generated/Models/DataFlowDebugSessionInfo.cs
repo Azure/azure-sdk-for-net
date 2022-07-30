@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Data flow debug session info. </summary>
+    /// <summary>
+    /// Data flow debug session info.
+    /// Serialized Name: DataFlowDebugSessionInfo
+    /// </summary>
     public partial class DataFlowDebugSessionInfo
     {
         /// <summary> Initializes a new instance of DataFlowDebugSessionInfo. </summary>
@@ -21,15 +24,42 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of DataFlowDebugSessionInfo. </summary>
-        /// <param name="dataFlowName"> The name of the data flow. </param>
-        /// <param name="computeType"> Compute type of the cluster. </param>
-        /// <param name="coreCount"> Core count of the cluster. </param>
-        /// <param name="nodeCount"> Node count of the cluster. (deprecated property). </param>
-        /// <param name="integrationRuntimeName"> Attached integration runtime name of data flow debug session. </param>
-        /// <param name="sessionId"> The ID of data flow debug session. </param>
-        /// <param name="startTime"> Start time of data flow debug session. </param>
-        /// <param name="timeToLiveInMinutes"> Compute type of the cluster. </param>
-        /// <param name="lastActivityTime"> Last activity time of data flow debug session. </param>
+        /// <param name="dataFlowName">
+        /// The name of the data flow.
+        /// Serialized Name: DataFlowDebugSessionInfo.dataFlowName
+        /// </param>
+        /// <param name="computeType">
+        /// Compute type of the cluster.
+        /// Serialized Name: DataFlowDebugSessionInfo.computeType
+        /// </param>
+        /// <param name="coreCount">
+        /// Core count of the cluster.
+        /// Serialized Name: DataFlowDebugSessionInfo.coreCount
+        /// </param>
+        /// <param name="nodeCount">
+        /// Node count of the cluster. (deprecated property)
+        /// Serialized Name: DataFlowDebugSessionInfo.nodeCount
+        /// </param>
+        /// <param name="integrationRuntimeName">
+        /// Attached integration runtime name of data flow debug session.
+        /// Serialized Name: DataFlowDebugSessionInfo.integrationRuntimeName
+        /// </param>
+        /// <param name="sessionId">
+        /// The ID of data flow debug session.
+        /// Serialized Name: DataFlowDebugSessionInfo.sessionId
+        /// </param>
+        /// <param name="startTime">
+        /// Start time of data flow debug session.
+        /// Serialized Name: DataFlowDebugSessionInfo.startTime
+        /// </param>
+        /// <param name="timeToLiveInMinutes">
+        /// Compute type of the cluster.
+        /// Serialized Name: DataFlowDebugSessionInfo.timeToLiveInMinutes
+        /// </param>
+        /// <param name="lastActivityTime">
+        /// Last activity time of data flow debug session.
+        /// Serialized Name: DataFlowDebugSessionInfo.lastActivityTime
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal DataFlowDebugSessionInfo(string dataFlowName, string computeType, int? coreCount, int? nodeCount, string integrationRuntimeName, string sessionId, string startTime, int? timeToLiveInMinutes, string lastActivityTime, IReadOnlyDictionary<string, BinaryData> additionalProperties)
         {
@@ -45,23 +75,50 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = additionalProperties;
         }
 
-        /// <summary> The name of the data flow. </summary>
+        /// <summary>
+        /// The name of the data flow.
+        /// Serialized Name: DataFlowDebugSessionInfo.dataFlowName
+        /// </summary>
         public string DataFlowName { get; }
-        /// <summary> Compute type of the cluster. </summary>
+        /// <summary>
+        /// Compute type of the cluster.
+        /// Serialized Name: DataFlowDebugSessionInfo.computeType
+        /// </summary>
         public string ComputeType { get; }
-        /// <summary> Core count of the cluster. </summary>
+        /// <summary>
+        /// Core count of the cluster.
+        /// Serialized Name: DataFlowDebugSessionInfo.coreCount
+        /// </summary>
         public int? CoreCount { get; }
-        /// <summary> Node count of the cluster. (deprecated property). </summary>
+        /// <summary>
+        /// Node count of the cluster. (deprecated property)
+        /// Serialized Name: DataFlowDebugSessionInfo.nodeCount
+        /// </summary>
         public int? NodeCount { get; }
-        /// <summary> Attached integration runtime name of data flow debug session. </summary>
+        /// <summary>
+        /// Attached integration runtime name of data flow debug session.
+        /// Serialized Name: DataFlowDebugSessionInfo.integrationRuntimeName
+        /// </summary>
         public string IntegrationRuntimeName { get; }
-        /// <summary> The ID of data flow debug session. </summary>
+        /// <summary>
+        /// The ID of data flow debug session.
+        /// Serialized Name: DataFlowDebugSessionInfo.sessionId
+        /// </summary>
         public string SessionId { get; }
-        /// <summary> Start time of data flow debug session. </summary>
+        /// <summary>
+        /// Start time of data flow debug session.
+        /// Serialized Name: DataFlowDebugSessionInfo.startTime
+        /// </summary>
         public string StartTime { get; }
-        /// <summary> Compute type of the cluster. </summary>
+        /// <summary>
+        /// Compute type of the cluster.
+        /// Serialized Name: DataFlowDebugSessionInfo.timeToLiveInMinutes
+        /// </summary>
         public int? TimeToLiveInMinutes { get; }
-        /// <summary> Last activity time of data flow debug session. </summary>
+        /// <summary>
+        /// Last activity time of data flow debug session.
+        /// Serialized Name: DataFlowDebugSessionInfo.lastActivityTime
+        /// </summary>
         public string LastActivityTime { get; }
         /// <summary> Additional Properties. </summary>
         public IReadOnlyDictionary<string, BinaryData> AdditionalProperties { get; }

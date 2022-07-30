@@ -12,11 +12,17 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> A query of triggers. </summary>
+    /// <summary>
+    /// A query of triggers.
+    /// Serialized Name: TriggerQueryResponse
+    /// </summary>
     internal partial class TriggerQueryResponse
     {
         /// <summary> Initializes a new instance of TriggerQueryResponse. </summary>
-        /// <param name="value"> List of triggers. </param>
+        /// <param name="value">
+        /// List of triggers.
+        /// Serialized Name: TriggerQueryResponse.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal TriggerQueryResponse(IEnumerable<DataFactoryTriggerData> value)
         {
@@ -29,17 +35,29 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of TriggerQueryResponse. </summary>
-        /// <param name="value"> List of triggers. </param>
-        /// <param name="continuationToken"> The continuation token for getting the next page of results, if any remaining results exist, null otherwise. </param>
+        /// <param name="value">
+        /// List of triggers.
+        /// Serialized Name: TriggerQueryResponse.value
+        /// </param>
+        /// <param name="continuationToken">
+        /// The continuation token for getting the next page of results, if any remaining results exist, null otherwise.
+        /// Serialized Name: TriggerQueryResponse.continuationToken
+        /// </param>
         internal TriggerQueryResponse(IReadOnlyList<DataFactoryTriggerData> value, string continuationToken)
         {
             Value = value;
             ContinuationToken = continuationToken;
         }
 
-        /// <summary> List of triggers. </summary>
+        /// <summary>
+        /// List of triggers.
+        /// Serialized Name: TriggerQueryResponse.value
+        /// </summary>
         public IReadOnlyList<DataFactoryTriggerData> Value { get; }
-        /// <summary> The continuation token for getting the next page of results, if any remaining results exist, null otherwise. </summary>
+        /// <summary>
+        /// The continuation token for getting the next page of results, if any remaining results exist, null otherwise.
+        /// Serialized Name: TriggerQueryResponse.continuationToken
+        /// </summary>
         public string ContinuationToken { get; }
     }
 }

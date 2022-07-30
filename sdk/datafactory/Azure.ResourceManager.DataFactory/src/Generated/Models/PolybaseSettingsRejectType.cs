@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Indicates whether the RejectValue property is specified as a literal value or a percentage. </summary>
+    /// <summary>
+    /// Indicates whether the RejectValue property is specified as a literal value or a percentage.
+    /// Serialized Name: PolybaseSettingsRejectType
+    /// </summary>
     public readonly partial struct PolybaseSettingsRejectType : IEquatable<PolybaseSettingsRejectType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string ValueValue = "value";
         private const string PercentageValue = "percentage";
 
-        /// <summary> value. </summary>
+        /// <summary>
+        /// value
+        /// Serialized Name: PolybaseSettingsRejectType.value
+        /// </summary>
         public static PolybaseSettingsRejectType Value { get; } = new PolybaseSettingsRejectType(ValueValue);
-        /// <summary> percentage. </summary>
+        /// <summary>
+        /// percentage
+        /// Serialized Name: PolybaseSettingsRejectType.percentage
+        /// </summary>
         public static PolybaseSettingsRejectType Percentage { get; } = new PolybaseSettingsRejectType(PercentageValue);
         /// <summary> Determines if two <see cref="PolybaseSettingsRejectType"/> values are the same. </summary>
         public static bool operator ==(PolybaseSettingsRejectType left, PolybaseSettingsRejectType right) => left.Equals(right);

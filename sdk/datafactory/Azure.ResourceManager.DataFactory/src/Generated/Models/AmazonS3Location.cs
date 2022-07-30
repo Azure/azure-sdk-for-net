@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The location of amazon S3 dataset. </summary>
+    /// <summary>
+    /// The location of amazon S3 dataset.
+    /// Serialized Name: AmazonS3Location
+    /// </summary>
     public partial class AmazonS3Location : DatasetLocation
     {
         /// <summary> Initializes a new instance of AmazonS3Location. </summary>
@@ -20,12 +23,27 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of AmazonS3Location. </summary>
-        /// <param name="datasetLocationType"> Type of dataset storage location. </param>
-        /// <param name="folderPath"> Specify the folder path of dataset. Type: string (or Expression with resultType string). </param>
-        /// <param name="fileName"> Specify the file name of dataset. Type: string (or Expression with resultType string). </param>
+        /// <param name="datasetLocationType">
+        /// Type of dataset storage location.
+        /// Serialized Name: DatasetLocation.type
+        /// </param>
+        /// <param name="folderPath">
+        /// Specify the folder path of dataset. Type: string (or Expression with resultType string)
+        /// Serialized Name: DatasetLocation.folderPath
+        /// </param>
+        /// <param name="fileName">
+        /// Specify the file name of dataset. Type: string (or Expression with resultType string).
+        /// Serialized Name: DatasetLocation.fileName
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="bucketName"> Specify the bucketName of amazon S3. Type: string (or Expression with resultType string). </param>
-        /// <param name="version"> Specify the version of amazon S3. Type: string (or Expression with resultType string). </param>
+        /// <param name="bucketName">
+        /// Specify the bucketName of amazon S3. Type: string (or Expression with resultType string)
+        /// Serialized Name: AmazonS3Location.bucketName
+        /// </param>
+        /// <param name="version">
+        /// Specify the version of amazon S3. Type: string (or Expression with resultType string).
+        /// Serialized Name: AmazonS3Location.version
+        /// </param>
         internal AmazonS3Location(string datasetLocationType, BinaryData folderPath, BinaryData fileName, IDictionary<string, BinaryData> additionalProperties, BinaryData bucketName, BinaryData version) : base(datasetLocationType, folderPath, fileName, additionalProperties)
         {
             BucketName = bucketName;
@@ -33,9 +51,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetLocationType = datasetLocationType ?? "AmazonS3Location";
         }
 
-        /// <summary> Specify the bucketName of amazon S3. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Specify the bucketName of amazon S3. Type: string (or Expression with resultType string)
+        /// Serialized Name: AmazonS3Location.bucketName
+        /// </summary>
         public BinaryData BucketName { get; set; }
-        /// <summary> Specify the version of amazon S3. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Specify the version of amazon S3. Type: string (or Expression with resultType string).
+        /// Serialized Name: AmazonS3Location.version
+        /// </summary>
         public BinaryData Version { get; set; }
     }
 }

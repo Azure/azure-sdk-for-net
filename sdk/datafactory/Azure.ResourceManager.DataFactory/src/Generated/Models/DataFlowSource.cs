@@ -9,11 +9,17 @@ using System;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Transformation for data flow source. </summary>
+    /// <summary>
+    /// Transformation for data flow source.
+    /// Serialized Name: DataFlowSource
+    /// </summary>
     public partial class DataFlowSource : Transformation
     {
         /// <summary> Initializes a new instance of DataFlowSource. </summary>
-        /// <param name="name"> Transformation name. </param>
+        /// <param name="name">
+        /// Transformation name.
+        /// Serialized Name: Transformation.name
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public DataFlowSource(string name) : base(name)
         {
@@ -24,18 +30,39 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of DataFlowSource. </summary>
-        /// <param name="name"> Transformation name. </param>
-        /// <param name="description"> Transformation description. </param>
-        /// <param name="dataset"> Dataset reference. </param>
-        /// <param name="linkedService"> Linked service reference. </param>
-        /// <param name="flowlet"> Flowlet Reference. </param>
-        /// <param name="schemaLinkedService"> Schema linked service reference. </param>
+        /// <param name="name">
+        /// Transformation name.
+        /// Serialized Name: Transformation.name
+        /// </param>
+        /// <param name="description">
+        /// Transformation description.
+        /// Serialized Name: Transformation.description
+        /// </param>
+        /// <param name="dataset">
+        /// Dataset reference.
+        /// Serialized Name: Transformation.dataset
+        /// </param>
+        /// <param name="linkedService">
+        /// Linked service reference.
+        /// Serialized Name: Transformation.linkedService
+        /// </param>
+        /// <param name="flowlet">
+        /// Flowlet Reference
+        /// Serialized Name: Transformation.flowlet
+        /// </param>
+        /// <param name="schemaLinkedService">
+        /// Schema linked service reference.
+        /// Serialized Name: DataFlowSource.schemaLinkedService
+        /// </param>
         internal DataFlowSource(string name, string description, DatasetReference dataset, LinkedServiceReference linkedService, DataFlowReference flowlet, LinkedServiceReference schemaLinkedService) : base(name, description, dataset, linkedService, flowlet)
         {
             SchemaLinkedService = schemaLinkedService;
         }
 
-        /// <summary> Schema linked service reference. </summary>
+        /// <summary>
+        /// Schema linked service reference.
+        /// Serialized Name: DataFlowSource.schemaLinkedService
+        /// </summary>
         public LinkedServiceReference SchemaLinkedService { get; set; }
     }
 }

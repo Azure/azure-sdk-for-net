@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Client secret information for factory&apos;s bring your own app repository configuration. </summary>
+    /// <summary>
+    /// Client secret information for factory&apos;s bring your own app repository configuration.
+    /// Serialized Name: GitHubClientSecret
+    /// </summary>
     public partial class GitHubClientSecret
     {
         /// <summary> Initializes a new instance of GitHubClientSecret. </summary>
@@ -18,17 +21,29 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of GitHubClientSecret. </summary>
-        /// <param name="byoaSecretAkvUri"> Bring your own app client secret AKV URL. </param>
-        /// <param name="byoaSecretName"> Bring your own app client secret name in AKV. </param>
+        /// <param name="byoaSecretAkvUri">
+        /// Bring your own app client secret AKV URL.
+        /// Serialized Name: GitHubClientSecret.byoaSecretAkvUrl
+        /// </param>
+        /// <param name="byoaSecretName">
+        /// Bring your own app client secret name in AKV.
+        /// Serialized Name: GitHubClientSecret.byoaSecretName
+        /// </param>
         internal GitHubClientSecret(Uri byoaSecretAkvUri, string byoaSecretName)
         {
             ByoaSecretAkvUri = byoaSecretAkvUri;
             ByoaSecretName = byoaSecretName;
         }
 
-        /// <summary> Bring your own app client secret AKV URL. </summary>
+        /// <summary>
+        /// Bring your own app client secret AKV URL.
+        /// Serialized Name: GitHubClientSecret.byoaSecretAkvUrl
+        /// </summary>
         public Uri ByoaSecretAkvUri { get; set; }
-        /// <summary> Bring your own app client secret name in AKV. </summary>
+        /// <summary>
+        /// Bring your own app client secret name in AKV.
+        /// Serialized Name: GitHubClientSecret.byoaSecretName
+        /// </summary>
         public string ByoaSecretName { get; set; }
     }
 }

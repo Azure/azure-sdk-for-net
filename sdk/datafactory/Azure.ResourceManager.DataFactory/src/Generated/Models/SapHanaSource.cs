@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> A copy activity source for SAP HANA source. </summary>
+    /// <summary>
+    /// A copy activity source for SAP HANA source.
+    /// Serialized Name: SapHanaSource
+    /// </summary>
     public partial class SapHanaSource : TabularSource
     {
         /// <summary> Initializes a new instance of SapHanaSource. </summary>
@@ -20,18 +23,51 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of SapHanaSource. </summary>
-        /// <param name="copySourceType"> Copy source type. </param>
-        /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
-        /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
-        /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
-        /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
+        /// <param name="copySourceType">
+        /// Copy source type.
+        /// Serialized Name: CopySource.type
+        /// </param>
+        /// <param name="sourceRetryCount">
+        /// Source retry count. Type: integer (or Expression with resultType integer).
+        /// Serialized Name: CopySource.sourceRetryCount
+        /// </param>
+        /// <param name="sourceRetryWait">
+        /// Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
+        /// Serialized Name: CopySource.sourceRetryWait
+        /// </param>
+        /// <param name="maxConcurrentConnections">
+        /// The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer).
+        /// Serialized Name: CopySource.maxConcurrentConnections
+        /// </param>
+        /// <param name="disableMetricsCollection">
+        /// If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: CopySource.disableMetricsCollection
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="queryTimeout"> Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
-        /// <param name="additionalColumns"> Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects). </param>
-        /// <param name="query"> SAP HANA Sql query. Type: string (or Expression with resultType string). </param>
-        /// <param name="packetSize"> The packet size of data read from SAP HANA. Type: integer(or Expression with resultType integer). </param>
-        /// <param name="partitionOption"> The partition mechanism that will be used for SAP HANA read in parallel. Possible values include: &quot;None&quot;, &quot;PhysicalPartitionsOfTable&quot;, &quot;SapHanaDynamicRange&quot;. </param>
-        /// <param name="partitionSettings"> The settings that will be leveraged for SAP HANA source partitioning. </param>
+        /// <param name="queryTimeout">
+        /// Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
+        /// Serialized Name: TabularSource.queryTimeout
+        /// </param>
+        /// <param name="additionalColumns">
+        /// Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects).
+        /// Serialized Name: TabularSource.additionalColumns
+        /// </param>
+        /// <param name="query">
+        /// SAP HANA Sql query. Type: string (or Expression with resultType string).
+        /// Serialized Name: SapHanaSource.query
+        /// </param>
+        /// <param name="packetSize">
+        /// The packet size of data read from SAP HANA. Type: integer(or Expression with resultType integer).
+        /// Serialized Name: SapHanaSource.packetSize
+        /// </param>
+        /// <param name="partitionOption">
+        /// The partition mechanism that will be used for SAP HANA read in parallel. Possible values include: &quot;None&quot;, &quot;PhysicalPartitionsOfTable&quot;, &quot;SapHanaDynamicRange&quot;. 
+        /// Serialized Name: SapHanaSource.partitionOption
+        /// </param>
+        /// <param name="partitionSettings">
+        /// The settings that will be leveraged for SAP HANA source partitioning.
+        /// Serialized Name: SapHanaSource.partitionSettings
+        /// </param>
         internal SapHanaSource(string copySourceType, BinaryData sourceRetryCount, BinaryData sourceRetryWait, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, BinaryData queryTimeout, BinaryData additionalColumns, BinaryData query, BinaryData packetSize, BinaryData partitionOption, SapHanaPartitionSettings partitionSettings) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties, queryTimeout, additionalColumns)
         {
             Query = query;
@@ -41,15 +77,30 @@ namespace Azure.ResourceManager.DataFactory.Models
             CopySourceType = copySourceType ?? "SapHanaSource";
         }
 
-        /// <summary> SAP HANA Sql query. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// SAP HANA Sql query. Type: string (or Expression with resultType string).
+        /// Serialized Name: SapHanaSource.query
+        /// </summary>
         public BinaryData Query { get; set; }
-        /// <summary> The packet size of data read from SAP HANA. Type: integer(or Expression with resultType integer). </summary>
+        /// <summary>
+        /// The packet size of data read from SAP HANA. Type: integer(or Expression with resultType integer).
+        /// Serialized Name: SapHanaSource.packetSize
+        /// </summary>
         public BinaryData PacketSize { get; set; }
-        /// <summary> The partition mechanism that will be used for SAP HANA read in parallel. Possible values include: &quot;None&quot;, &quot;PhysicalPartitionsOfTable&quot;, &quot;SapHanaDynamicRange&quot;. </summary>
+        /// <summary>
+        /// The partition mechanism that will be used for SAP HANA read in parallel. Possible values include: &quot;None&quot;, &quot;PhysicalPartitionsOfTable&quot;, &quot;SapHanaDynamicRange&quot;. 
+        /// Serialized Name: SapHanaSource.partitionOption
+        /// </summary>
         public BinaryData PartitionOption { get; set; }
-        /// <summary> The settings that will be leveraged for SAP HANA source partitioning. </summary>
+        /// <summary>
+        /// The settings that will be leveraged for SAP HANA source partitioning.
+        /// Serialized Name: SapHanaSource.partitionSettings
+        /// </summary>
         internal SapHanaPartitionSettings PartitionSettings { get; set; }
-        /// <summary> The name of the column that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The name of the column that will be used for proceeding range partitioning. Type: string (or Expression with resultType string).
+        /// Serialized Name: SapHanaPartitionSettings.partitionColumnName
+        /// </summary>
         public BinaryData PartitionColumnName
         {
             get => PartitionSettings is null ? default : PartitionSettings.PartitionColumnName;

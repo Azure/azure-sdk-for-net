@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> A copy activity Rest service Sink. </summary>
+    /// <summary>
+    /// A copy activity Rest service Sink.
+    /// Serialized Name: RestSink
+    /// </summary>
     public partial class RestSink : CopySink
     {
         /// <summary> Initializes a new instance of RestSink. </summary>
@@ -20,19 +23,55 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of RestSink. </summary>
-        /// <param name="copySinkType"> Copy sink type. </param>
-        /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
-        /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
-        /// <param name="sinkRetryCount"> Sink retry count. Type: integer (or Expression with resultType integer). </param>
-        /// <param name="sinkRetryWait"> Sink retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
-        /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the sink data store. Type: integer (or Expression with resultType integer). </param>
-        /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
+        /// <param name="copySinkType">
+        /// Copy sink type.
+        /// Serialized Name: CopySink.type
+        /// </param>
+        /// <param name="writeBatchSize">
+        /// Write batch size. Type: integer (or Expression with resultType integer), minimum: 0.
+        /// Serialized Name: CopySink.writeBatchSize
+        /// </param>
+        /// <param name="writeBatchTimeout">
+        /// Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
+        /// Serialized Name: CopySink.writeBatchTimeout
+        /// </param>
+        /// <param name="sinkRetryCount">
+        /// Sink retry count. Type: integer (or Expression with resultType integer).
+        /// Serialized Name: CopySink.sinkRetryCount
+        /// </param>
+        /// <param name="sinkRetryWait">
+        /// Sink retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
+        /// Serialized Name: CopySink.sinkRetryWait
+        /// </param>
+        /// <param name="maxConcurrentConnections">
+        /// The maximum concurrent connection count for the sink data store. Type: integer (or Expression with resultType integer).
+        /// Serialized Name: CopySink.maxConcurrentConnections
+        /// </param>
+        /// <param name="disableMetricsCollection">
+        /// If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: CopySink.disableMetricsCollection
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="requestMethod"> The HTTP method used to call the RESTful API. The default is POST. Type: string (or Expression with resultType string). </param>
-        /// <param name="additionalHeaders"> The additional HTTP headers in the request to the RESTful API. Type: string (or Expression with resultType string). </param>
-        /// <param name="httpRequestTimeout"> The timeout (TimeSpan) to get an HTTP response. It is the timeout to get a response, not the timeout to read response data. Default value: 00:01:40. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
-        /// <param name="requestInterval"> The time to await before sending next request, in milliseconds. </param>
-        /// <param name="httpCompressionType"> Http Compression Type to Send data in compressed format with Optimal Compression Level, Default is None. And The Only Supported option is Gzip. </param>
+        /// <param name="requestMethod">
+        /// The HTTP method used to call the RESTful API. The default is POST. Type: string (or Expression with resultType string).
+        /// Serialized Name: RestSink.requestMethod
+        /// </param>
+        /// <param name="additionalHeaders">
+        /// The additional HTTP headers in the request to the RESTful API. Type: string (or Expression with resultType string).
+        /// Serialized Name: RestSink.additionalHeaders
+        /// </param>
+        /// <param name="httpRequestTimeout">
+        /// The timeout (TimeSpan) to get an HTTP response. It is the timeout to get a response, not the timeout to read response data. Default value: 00:01:40. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
+        /// Serialized Name: RestSink.httpRequestTimeout
+        /// </param>
+        /// <param name="requestInterval">
+        /// The time to await before sending next request, in milliseconds 
+        /// Serialized Name: RestSink.requestInterval
+        /// </param>
+        /// <param name="httpCompressionType">
+        /// Http Compression Type to Send data in compressed format with Optimal Compression Level, Default is None. And The Only Supported option is Gzip. 
+        /// Serialized Name: RestSink.httpCompressionType
+        /// </param>
         internal RestSink(string copySinkType, BinaryData writeBatchSize, BinaryData writeBatchTimeout, BinaryData sinkRetryCount, BinaryData sinkRetryWait, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, BinaryData requestMethod, BinaryData additionalHeaders, BinaryData httpRequestTimeout, BinaryData requestInterval, BinaryData httpCompressionType) : base(copySinkType, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             RequestMethod = requestMethod;
@@ -43,15 +82,30 @@ namespace Azure.ResourceManager.DataFactory.Models
             CopySinkType = copySinkType ?? "RestSink";
         }
 
-        /// <summary> The HTTP method used to call the RESTful API. The default is POST. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The HTTP method used to call the RESTful API. The default is POST. Type: string (or Expression with resultType string).
+        /// Serialized Name: RestSink.requestMethod
+        /// </summary>
         public BinaryData RequestMethod { get; set; }
-        /// <summary> The additional HTTP headers in the request to the RESTful API. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The additional HTTP headers in the request to the RESTful API. Type: string (or Expression with resultType string).
+        /// Serialized Name: RestSink.additionalHeaders
+        /// </summary>
         public BinaryData AdditionalHeaders { get; set; }
-        /// <summary> The timeout (TimeSpan) to get an HTTP response. It is the timeout to get a response, not the timeout to read response data. Default value: 00:01:40. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </summary>
+        /// <summary>
+        /// The timeout (TimeSpan) to get an HTTP response. It is the timeout to get a response, not the timeout to read response data. Default value: 00:01:40. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
+        /// Serialized Name: RestSink.httpRequestTimeout
+        /// </summary>
         public BinaryData HttpRequestTimeout { get; set; }
-        /// <summary> The time to await before sending next request, in milliseconds. </summary>
+        /// <summary>
+        /// The time to await before sending next request, in milliseconds 
+        /// Serialized Name: RestSink.requestInterval
+        /// </summary>
         public BinaryData RequestInterval { get; set; }
-        /// <summary> Http Compression Type to Send data in compressed format with Optimal Compression Level, Default is None. And The Only Supported option is Gzip. </summary>
+        /// <summary>
+        /// Http Compression Type to Send data in compressed format with Optimal Compression Level, Default is None. And The Only Supported option is Gzip. 
+        /// Serialized Name: RestSink.httpCompressionType
+        /// </summary>
         public BinaryData HttpCompressionType { get; set; }
     }
 }

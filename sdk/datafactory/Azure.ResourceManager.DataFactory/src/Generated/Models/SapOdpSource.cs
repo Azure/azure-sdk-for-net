@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> A copy activity source for SAP ODP source. </summary>
+    /// <summary>
+    /// A copy activity source for SAP ODP source.
+    /// Serialized Name: SapOdpSource
+    /// </summary>
     public partial class SapOdpSource : TabularSource
     {
         /// <summary> Initializes a new instance of SapOdpSource. </summary>
@@ -20,18 +23,51 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of SapOdpSource. </summary>
-        /// <param name="copySourceType"> Copy source type. </param>
-        /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
-        /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
-        /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
-        /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
+        /// <param name="copySourceType">
+        /// Copy source type.
+        /// Serialized Name: CopySource.type
+        /// </param>
+        /// <param name="sourceRetryCount">
+        /// Source retry count. Type: integer (or Expression with resultType integer).
+        /// Serialized Name: CopySource.sourceRetryCount
+        /// </param>
+        /// <param name="sourceRetryWait">
+        /// Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
+        /// Serialized Name: CopySource.sourceRetryWait
+        /// </param>
+        /// <param name="maxConcurrentConnections">
+        /// The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer).
+        /// Serialized Name: CopySource.maxConcurrentConnections
+        /// </param>
+        /// <param name="disableMetricsCollection">
+        /// If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: CopySource.disableMetricsCollection
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="queryTimeout"> Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
-        /// <param name="additionalColumns"> Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects). </param>
-        /// <param name="extractionMode"> The extraction mode. Allowed value include: Full, Delta and Recovery. The default value is Full. Type: string (or Expression with resultType string). </param>
-        /// <param name="subscriberProcess"> The subscriber process to manage the delta process. Type: string (or Expression with resultType string). </param>
-        /// <param name="selection"> Specifies the selection conditions from source data. Type: array of objects(selection) (or Expression with resultType array of objects). </param>
-        /// <param name="projection"> Specifies the columns to be selected from source data. Type: array of objects(projection) (or Expression with resultType array of objects). </param>
+        /// <param name="queryTimeout">
+        /// Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
+        /// Serialized Name: TabularSource.queryTimeout
+        /// </param>
+        /// <param name="additionalColumns">
+        /// Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects).
+        /// Serialized Name: TabularSource.additionalColumns
+        /// </param>
+        /// <param name="extractionMode">
+        /// The extraction mode. Allowed value include: Full, Delta and Recovery. The default value is Full. Type: string (or Expression with resultType string).
+        /// Serialized Name: SapOdpSource.extractionMode
+        /// </param>
+        /// <param name="subscriberProcess">
+        /// The subscriber process to manage the delta process. Type: string (or Expression with resultType string).
+        /// Serialized Name: SapOdpSource.subscriberProcess
+        /// </param>
+        /// <param name="selection">
+        /// Specifies the selection conditions from source data. Type: array of objects(selection) (or Expression with resultType array of objects).
+        /// Serialized Name: SapOdpSource.selection
+        /// </param>
+        /// <param name="projection">
+        /// Specifies the columns to be selected from source data. Type: array of objects(projection) (or Expression with resultType array of objects).
+        /// Serialized Name: SapOdpSource.projection
+        /// </param>
         internal SapOdpSource(string copySourceType, BinaryData sourceRetryCount, BinaryData sourceRetryWait, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, BinaryData queryTimeout, BinaryData additionalColumns, BinaryData extractionMode, BinaryData subscriberProcess, BinaryData selection, BinaryData projection) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties, queryTimeout, additionalColumns)
         {
             ExtractionMode = extractionMode;
@@ -41,13 +77,25 @@ namespace Azure.ResourceManager.DataFactory.Models
             CopySourceType = copySourceType ?? "SapOdpSource";
         }
 
-        /// <summary> The extraction mode. Allowed value include: Full, Delta and Recovery. The default value is Full. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The extraction mode. Allowed value include: Full, Delta and Recovery. The default value is Full. Type: string (or Expression with resultType string).
+        /// Serialized Name: SapOdpSource.extractionMode
+        /// </summary>
         public BinaryData ExtractionMode { get; set; }
-        /// <summary> The subscriber process to manage the delta process. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The subscriber process to manage the delta process. Type: string (or Expression with resultType string).
+        /// Serialized Name: SapOdpSource.subscriberProcess
+        /// </summary>
         public BinaryData SubscriberProcess { get; set; }
-        /// <summary> Specifies the selection conditions from source data. Type: array of objects(selection) (or Expression with resultType array of objects). </summary>
+        /// <summary>
+        /// Specifies the selection conditions from source data. Type: array of objects(selection) (or Expression with resultType array of objects).
+        /// Serialized Name: SapOdpSource.selection
+        /// </summary>
         public BinaryData Selection { get; set; }
-        /// <summary> Specifies the columns to be selected from source data. Type: array of objects(projection) (or Expression with resultType array of objects). </summary>
+        /// <summary>
+        /// Specifies the columns to be selected from source data. Type: array of objects(projection) (or Expression with resultType array of objects).
+        /// Serialized Name: SapOdpSource.projection
+        /// </summary>
         public BinaryData Projection { get; set; }
     }
 }

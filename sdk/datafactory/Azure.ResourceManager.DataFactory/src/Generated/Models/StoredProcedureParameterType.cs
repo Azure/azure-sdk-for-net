@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Stored procedure parameter type. </summary>
+    /// <summary>
+    /// Stored procedure parameter type.
+    /// Serialized Name: StoredProcedureParameterType
+    /// </summary>
     public readonly partial struct StoredProcedureParameterType : IEquatable<StoredProcedureParameterType>
     {
         private readonly string _value;
@@ -30,19 +33,40 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string BooleanValue = "Boolean";
         private const string DateValue = "Date";
 
-        /// <summary> String. </summary>
+        /// <summary>
+        /// String
+        /// Serialized Name: StoredProcedureParameterType.String
+        /// </summary>
         public static StoredProcedureParameterType String { get; } = new StoredProcedureParameterType(StringValue);
-        /// <summary> Int. </summary>
+        /// <summary>
+        /// Int
+        /// Serialized Name: StoredProcedureParameterType.Int
+        /// </summary>
         public static StoredProcedureParameterType Int { get; } = new StoredProcedureParameterType(IntValue);
-        /// <summary> Int64. </summary>
+        /// <summary>
+        /// Int64
+        /// Serialized Name: StoredProcedureParameterType.Int64
+        /// </summary>
         public static StoredProcedureParameterType Int64 { get; } = new StoredProcedureParameterType(Int64Value);
-        /// <summary> Decimal. </summary>
+        /// <summary>
+        /// Decimal
+        /// Serialized Name: StoredProcedureParameterType.Decimal
+        /// </summary>
         public static StoredProcedureParameterType Decimal { get; } = new StoredProcedureParameterType(DecimalValue);
-        /// <summary> Guid. </summary>
+        /// <summary>
+        /// Guid
+        /// Serialized Name: StoredProcedureParameterType.Guid
+        /// </summary>
         public static StoredProcedureParameterType Guid { get; } = new StoredProcedureParameterType(GuidValue);
-        /// <summary> Boolean. </summary>
+        /// <summary>
+        /// Boolean
+        /// Serialized Name: StoredProcedureParameterType.Boolean
+        /// </summary>
         public static StoredProcedureParameterType Boolean { get; } = new StoredProcedureParameterType(BooleanValue);
-        /// <summary> Date. </summary>
+        /// <summary>
+        /// Date
+        /// Serialized Name: StoredProcedureParameterType.Date
+        /// </summary>
         public static StoredProcedureParameterType Date { get; } = new StoredProcedureParameterType(DateValue);
         /// <summary> Determines if two <see cref="StoredProcedureParameterType"/> values are the same. </summary>
         public static bool operator ==(StoredProcedureParameterType left, StoredProcedureParameterType right) => left.Equals(right);

@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The location of Amazon S3 Compatible dataset. </summary>
+    /// <summary>
+    /// The location of Amazon S3 Compatible dataset.
+    /// Serialized Name: AmazonS3CompatibleLocation
+    /// </summary>
     public partial class AmazonS3CompatibleLocation : DatasetLocation
     {
         /// <summary> Initializes a new instance of AmazonS3CompatibleLocation. </summary>
@@ -20,12 +23,27 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of AmazonS3CompatibleLocation. </summary>
-        /// <param name="datasetLocationType"> Type of dataset storage location. </param>
-        /// <param name="folderPath"> Specify the folder path of dataset. Type: string (or Expression with resultType string). </param>
-        /// <param name="fileName"> Specify the file name of dataset. Type: string (or Expression with resultType string). </param>
+        /// <param name="datasetLocationType">
+        /// Type of dataset storage location.
+        /// Serialized Name: DatasetLocation.type
+        /// </param>
+        /// <param name="folderPath">
+        /// Specify the folder path of dataset. Type: string (or Expression with resultType string)
+        /// Serialized Name: DatasetLocation.folderPath
+        /// </param>
+        /// <param name="fileName">
+        /// Specify the file name of dataset. Type: string (or Expression with resultType string).
+        /// Serialized Name: DatasetLocation.fileName
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="bucketName"> Specify the bucketName of Amazon S3 Compatible. Type: string (or Expression with resultType string). </param>
-        /// <param name="version"> Specify the version of Amazon S3 Compatible. Type: string (or Expression with resultType string). </param>
+        /// <param name="bucketName">
+        /// Specify the bucketName of Amazon S3 Compatible. Type: string (or Expression with resultType string)
+        /// Serialized Name: AmazonS3CompatibleLocation.bucketName
+        /// </param>
+        /// <param name="version">
+        /// Specify the version of Amazon S3 Compatible. Type: string (or Expression with resultType string).
+        /// Serialized Name: AmazonS3CompatibleLocation.version
+        /// </param>
         internal AmazonS3CompatibleLocation(string datasetLocationType, BinaryData folderPath, BinaryData fileName, IDictionary<string, BinaryData> additionalProperties, BinaryData bucketName, BinaryData version) : base(datasetLocationType, folderPath, fileName, additionalProperties)
         {
             BucketName = bucketName;
@@ -33,9 +51,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetLocationType = datasetLocationType ?? "AmazonS3CompatibleLocation";
         }
 
-        /// <summary> Specify the bucketName of Amazon S3 Compatible. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Specify the bucketName of Amazon S3 Compatible. Type: string (or Expression with resultType string)
+        /// Serialized Name: AmazonS3CompatibleLocation.bucketName
+        /// </summary>
         public BinaryData BucketName { get; set; }
-        /// <summary> Specify the version of Amazon S3 Compatible. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Specify the version of Amazon S3 Compatible. Type: string (or Expression with resultType string).
+        /// Serialized Name: AmazonS3CompatibleLocation.version
+        /// </summary>
         public BinaryData Version { get; set; }
     }
 }

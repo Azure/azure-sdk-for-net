@@ -18,7 +18,10 @@ namespace Azure.ResourceManager.DataFactory
     public partial class DataFactoryGlobalParameterData : ResourceData
     {
         /// <summary> Initializes a new instance of DataFactoryGlobalParameterData. </summary>
-        /// <param name="properties"> Properties of the global parameter. </param>
+        /// <param name="properties">
+        /// Properties of the global parameter.
+        /// Serialized Name: GlobalParameterResource.properties
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public DataFactoryGlobalParameterData(IDictionary<string, GlobalParameterSpecification> properties)
         {
@@ -35,17 +38,29 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Properties of the global parameter. </param>
-        /// <param name="eTag"> Etag identifies change in the resource. </param>
+        /// <param name="properties">
+        /// Properties of the global parameter.
+        /// Serialized Name: GlobalParameterResource.properties
+        /// </param>
+        /// <param name="eTag">
+        /// Etag identifies change in the resource.
+        /// Serialized Name: SubResource.etag
+        /// </param>
         internal DataFactoryGlobalParameterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, GlobalParameterSpecification> properties, ETag? eTag) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             ETag = eTag;
         }
 
-        /// <summary> Properties of the global parameter. </summary>
+        /// <summary>
+        /// Properties of the global parameter.
+        /// Serialized Name: GlobalParameterResource.properties
+        /// </summary>
         public IDictionary<string, GlobalParameterSpecification> Properties { get; }
-        /// <summary> Etag identifies change in the resource. </summary>
+        /// <summary>
+        /// Etag identifies change in the resource.
+        /// Serialized Name: SubResource.etag
+        /// </summary>
         public ETag? ETag { get; }
     }
 }

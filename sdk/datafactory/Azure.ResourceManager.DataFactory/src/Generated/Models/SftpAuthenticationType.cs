@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The authentication type to be used to connect to the FTP server. </summary>
+    /// <summary>
+    /// The authentication type to be used to connect to the FTP server.
+    /// Serialized Name: SftpAuthenticationType
+    /// </summary>
     public readonly partial struct SftpAuthenticationType : IEquatable<SftpAuthenticationType>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string SshPublicKeyValue = "SshPublicKey";
         private const string MultiFactorValue = "MultiFactor";
 
-        /// <summary> Basic. </summary>
+        /// <summary>
+        /// Basic
+        /// Serialized Name: SftpAuthenticationType.Basic
+        /// </summary>
         public static SftpAuthenticationType Basic { get; } = new SftpAuthenticationType(BasicValue);
-        /// <summary> SshPublicKey. </summary>
+        /// <summary>
+        /// SshPublicKey
+        /// Serialized Name: SftpAuthenticationType.SshPublicKey
+        /// </summary>
         public static SftpAuthenticationType SshPublicKey { get; } = new SftpAuthenticationType(SshPublicKeyValue);
-        /// <summary> MultiFactor. </summary>
+        /// <summary>
+        /// MultiFactor
+        /// Serialized Name: SftpAuthenticationType.MultiFactor
+        /// </summary>
         public static SftpAuthenticationType MultiFactor { get; } = new SftpAuthenticationType(MultiFactorValue);
         /// <summary> Determines if two <see cref="SftpAuthenticationType"/> values are the same. </summary>
         public static bool operator ==(SftpAuthenticationType left, SftpAuthenticationType right) => left.Equals(right);

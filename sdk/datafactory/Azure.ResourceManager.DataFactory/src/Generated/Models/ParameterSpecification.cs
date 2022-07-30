@@ -9,28 +9,46 @@ using System;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Definition of a single parameter for an entity. </summary>
+    /// <summary>
+    /// Definition of a single parameter for an entity.
+    /// Serialized Name: ParameterSpecification
+    /// </summary>
     public partial class ParameterSpecification
     {
         /// <summary> Initializes a new instance of ParameterSpecification. </summary>
-        /// <param name="parameterType"> Parameter type. </param>
+        /// <param name="parameterType">
+        /// Parameter type.
+        /// Serialized Name: ParameterSpecification.type
+        /// </param>
         public ParameterSpecification(ParameterType parameterType)
         {
             ParameterType = parameterType;
         }
 
         /// <summary> Initializes a new instance of ParameterSpecification. </summary>
-        /// <param name="parameterType"> Parameter type. </param>
-        /// <param name="defaultValue"> Default value of parameter. </param>
+        /// <param name="parameterType">
+        /// Parameter type.
+        /// Serialized Name: ParameterSpecification.type
+        /// </param>
+        /// <param name="defaultValue">
+        /// Default value of parameter.
+        /// Serialized Name: ParameterSpecification.defaultValue
+        /// </param>
         internal ParameterSpecification(ParameterType parameterType, BinaryData defaultValue)
         {
             ParameterType = parameterType;
             DefaultValue = defaultValue;
         }
 
-        /// <summary> Parameter type. </summary>
+        /// <summary>
+        /// Parameter type.
+        /// Serialized Name: ParameterSpecification.type
+        /// </summary>
         public ParameterType ParameterType { get; set; }
-        /// <summary> Default value of parameter. </summary>
+        /// <summary>
+        /// Default value of parameter.
+        /// Serialized Name: ParameterSpecification.defaultValue
+        /// </summary>
         public BinaryData DefaultValue { get; set; }
     }
 }

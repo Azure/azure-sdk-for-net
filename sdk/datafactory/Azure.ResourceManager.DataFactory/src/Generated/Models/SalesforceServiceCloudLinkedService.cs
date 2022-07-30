@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Linked service for Salesforce Service Cloud. </summary>
+    /// <summary>
+    /// Linked service for Salesforce Service Cloud.
+    /// Serialized Name: SalesforceServiceCloudLinkedService
+    /// </summary>
     public partial class SalesforceServiceCloudLinkedService : LinkedService
     {
         /// <summary> Initializes a new instance of SalesforceServiceCloudLinkedService. </summary>
@@ -20,27 +23,59 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of SalesforceServiceCloudLinkedService. </summary>
-        /// <param name="linkedServiceType"> Type of linked service. </param>
-        /// <param name="connectVia"> The integration runtime reference. </param>
-        /// <param name="description"> Linked service description. </param>
-        /// <param name="parameters"> Parameters for linked service. </param>
-        /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
+        /// <param name="linkedServiceType">
+        /// Type of linked service.
+        /// Serialized Name: LinkedService.type
+        /// </param>
+        /// <param name="connectVia">
+        /// The integration runtime reference.
+        /// Serialized Name: LinkedService.connectVia
+        /// </param>
+        /// <param name="description">
+        /// Linked service description.
+        /// Serialized Name: LinkedService.description
+        /// </param>
+        /// <param name="parameters">
+        /// Parameters for linked service.
+        /// Serialized Name: LinkedService.parameters
+        /// </param>
+        /// <param name="annotations">
+        /// List of tags that can be used for describing the linked service.
+        /// Serialized Name: LinkedService.annotations
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="environmentUri"> The URL of Salesforce Service Cloud instance. Default is &apos;https://login.salesforce.com&apos;. To copy data from sandbox, specify &apos;https://test.salesforce.com&apos;. To copy data from custom domain, specify, for example, &apos;https://[domain].my.salesforce.com&apos;. Type: string (or Expression with resultType string). </param>
-        /// <param name="username"> The username for Basic authentication of the Salesforce instance. Type: string (or Expression with resultType string). </param>
+        /// <param name="environmentUri">
+        /// The URL of Salesforce Service Cloud instance. Default is &apos;https://login.salesforce.com&apos;. To copy data from sandbox, specify &apos;https://test.salesforce.com&apos;. To copy data from custom domain, specify, for example, &apos;https://[domain].my.salesforce.com&apos;. Type: string (or Expression with resultType string).
+        /// Serialized Name: SalesforceServiceCloudLinkedService.typeProperties.environmentUrl
+        /// </param>
+        /// <param name="username">
+        /// The username for Basic authentication of the Salesforce instance. Type: string (or Expression with resultType string).
+        /// Serialized Name: SalesforceServiceCloudLinkedService.typeProperties.username
+        /// </param>
         /// <param name="password">
         /// The password for Basic authentication of the Salesforce instance.
+        /// Serialized Name: SalesforceServiceCloudLinkedService.typeProperties.password
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="securityToken">
         /// The security token is optional to remotely access Salesforce instance.
+        /// Serialized Name: SalesforceServiceCloudLinkedService.typeProperties.securityToken
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
-        /// <param name="apiVersion"> The Salesforce API version used in ADF. Type: string (or Expression with resultType string). </param>
-        /// <param name="extendedProperties"> Extended properties appended to the connection string. Type: string (or Expression with resultType string). </param>
-        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
+        /// <param name="apiVersion">
+        /// The Salesforce API version used in ADF. Type: string (or Expression with resultType string).
+        /// Serialized Name: SalesforceServiceCloudLinkedService.typeProperties.apiVersion
+        /// </param>
+        /// <param name="extendedProperties">
+        /// Extended properties appended to the connection string. Type: string (or Expression with resultType string).
+        /// Serialized Name: SalesforceServiceCloudLinkedService.typeProperties.extendedProperties
+        /// </param>
+        /// <param name="encryptedCredential">
+        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
+        /// Serialized Name: SalesforceServiceCloudLinkedService.typeProperties.encryptedCredential
+        /// </param>
         internal SalesforceServiceCloudLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData environmentUri, BinaryData username, SecretBase password, SecretBase securityToken, BinaryData apiVersion, BinaryData extendedProperties, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             EnvironmentUri = environmentUri;
@@ -53,27 +88,44 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "SalesforceServiceCloud";
         }
 
-        /// <summary> The URL of Salesforce Service Cloud instance. Default is &apos;https://login.salesforce.com&apos;. To copy data from sandbox, specify &apos;https://test.salesforce.com&apos;. To copy data from custom domain, specify, for example, &apos;https://[domain].my.salesforce.com&apos;. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The URL of Salesforce Service Cloud instance. Default is &apos;https://login.salesforce.com&apos;. To copy data from sandbox, specify &apos;https://test.salesforce.com&apos;. To copy data from custom domain, specify, for example, &apos;https://[domain].my.salesforce.com&apos;. Type: string (or Expression with resultType string).
+        /// Serialized Name: SalesforceServiceCloudLinkedService.typeProperties.environmentUrl
+        /// </summary>
         public BinaryData EnvironmentUri { get; set; }
-        /// <summary> The username for Basic authentication of the Salesforce instance. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The username for Basic authentication of the Salesforce instance. Type: string (or Expression with resultType string).
+        /// Serialized Name: SalesforceServiceCloudLinkedService.typeProperties.username
+        /// </summary>
         public BinaryData Username { get; set; }
         /// <summary>
         /// The password for Basic authentication of the Salesforce instance.
+        /// Serialized Name: SalesforceServiceCloudLinkedService.typeProperties.password
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
         public SecretBase Password { get; set; }
         /// <summary>
         /// The security token is optional to remotely access Salesforce instance.
+        /// Serialized Name: SalesforceServiceCloudLinkedService.typeProperties.securityToken
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
         public SecretBase SecurityToken { get; set; }
-        /// <summary> The Salesforce API version used in ADF. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The Salesforce API version used in ADF. Type: string (or Expression with resultType string).
+        /// Serialized Name: SalesforceServiceCloudLinkedService.typeProperties.apiVersion
+        /// </summary>
         public BinaryData ApiVersion { get; set; }
-        /// <summary> Extended properties appended to the connection string. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Extended properties appended to the connection string. Type: string (or Expression with resultType string).
+        /// Serialized Name: SalesforceServiceCloudLinkedService.typeProperties.extendedProperties
+        /// </summary>
         public BinaryData ExtendedProperties { get; set; }
-        /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
+        /// Serialized Name: SalesforceServiceCloudLinkedService.typeProperties.encryptedCredential
+        /// </summary>
         public BinaryData EncryptedCredential { get; set; }
     }
 }

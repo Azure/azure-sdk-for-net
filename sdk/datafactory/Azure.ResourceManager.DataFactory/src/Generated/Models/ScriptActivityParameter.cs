@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Parameters of a script block. </summary>
+    /// <summary>
+    /// Parameters of a script block.
+    /// Serialized Name: ScriptActivityParameter
+    /// </summary>
     public partial class ScriptActivityParameter
     {
         /// <summary> Initializes a new instance of ScriptActivityParameter. </summary>
@@ -18,11 +21,26 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of ScriptActivityParameter. </summary>
-        /// <param name="name"> The name of the parameter. Type: string (or Expression with resultType string). </param>
-        /// <param name="parameterType"> The type of the parameter. </param>
-        /// <param name="value"> The value of the parameter. </param>
-        /// <param name="direction"> The direction of the parameter. </param>
-        /// <param name="size"> The size of the output direction parameter. </param>
+        /// <param name="name">
+        /// The name of the parameter. Type: string (or Expression with resultType string).
+        /// Serialized Name: ScriptActivityParameter.name
+        /// </param>
+        /// <param name="parameterType">
+        /// The type of the parameter.
+        /// Serialized Name: ScriptActivityParameter.type
+        /// </param>
+        /// <param name="value">
+        /// The value of the parameter.
+        /// Serialized Name: ScriptActivityParameter.value
+        /// </param>
+        /// <param name="direction">
+        /// The direction of the parameter.
+        /// Serialized Name: ScriptActivityParameter.direction
+        /// </param>
+        /// <param name="size">
+        /// The size of the output direction parameter.
+        /// Serialized Name: ScriptActivityParameter.size
+        /// </param>
         internal ScriptActivityParameter(BinaryData name, ScriptActivityParameterType? parameterType, BinaryData value, ScriptActivityParameterDirection? direction, int? size)
         {
             Name = name;
@@ -32,15 +50,30 @@ namespace Azure.ResourceManager.DataFactory.Models
             Size = size;
         }
 
-        /// <summary> The name of the parameter. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The name of the parameter. Type: string (or Expression with resultType string).
+        /// Serialized Name: ScriptActivityParameter.name
+        /// </summary>
         public BinaryData Name { get; set; }
-        /// <summary> The type of the parameter. </summary>
+        /// <summary>
+        /// The type of the parameter.
+        /// Serialized Name: ScriptActivityParameter.type
+        /// </summary>
         public ScriptActivityParameterType? ParameterType { get; set; }
-        /// <summary> The value of the parameter. </summary>
+        /// <summary>
+        /// The value of the parameter.
+        /// Serialized Name: ScriptActivityParameter.value
+        /// </summary>
         public BinaryData Value { get; set; }
-        /// <summary> The direction of the parameter. </summary>
+        /// <summary>
+        /// The direction of the parameter.
+        /// Serialized Name: ScriptActivityParameter.direction
+        /// </summary>
         public ScriptActivityParameterDirection? Direction { get; set; }
-        /// <summary> The size of the output direction parameter. </summary>
+        /// <summary>
+        /// The size of the output direction parameter.
+        /// Serialized Name: ScriptActivityParameter.size
+        /// </summary>
         public int? Size { get; set; }
     }
 }

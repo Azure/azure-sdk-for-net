@@ -12,11 +12,17 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> A list of Global parameters. </summary>
+    /// <summary>
+    /// A list of Global parameters.
+    /// Serialized Name: GlobalParameterListResponse
+    /// </summary>
     internal partial class GlobalParameterListResponse
     {
         /// <summary> Initializes a new instance of GlobalParameterListResponse. </summary>
-        /// <param name="value"> List of global parameters. </param>
+        /// <param name="value">
+        /// List of global parameters.
+        /// Serialized Name: GlobalParameterListResponse.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal GlobalParameterListResponse(IEnumerable<DataFactoryGlobalParameterData> value)
         {
@@ -29,17 +35,29 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of GlobalParameterListResponse. </summary>
-        /// <param name="value"> List of global parameters. </param>
-        /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
+        /// <param name="value">
+        /// List of global parameters.
+        /// Serialized Name: GlobalParameterListResponse.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link to the next page of results, if any remaining results exist.
+        /// Serialized Name: GlobalParameterListResponse.nextLink
+        /// </param>
         internal GlobalParameterListResponse(IReadOnlyList<DataFactoryGlobalParameterData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> List of global parameters. </summary>
+        /// <summary>
+        /// List of global parameters.
+        /// Serialized Name: GlobalParameterListResponse.value
+        /// </summary>
         public IReadOnlyList<DataFactoryGlobalParameterData> Value { get; }
-        /// <summary> The link to the next page of results, if any remaining results exist. </summary>
+        /// <summary>
+        /// The link to the next page of results, if any remaining results exist.
+        /// Serialized Name: GlobalParameterListResponse.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

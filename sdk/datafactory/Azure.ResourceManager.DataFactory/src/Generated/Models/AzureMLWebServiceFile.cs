@@ -9,12 +9,21 @@ using System;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Azure ML WebService Input/Output file. </summary>
+    /// <summary>
+    /// Azure ML WebService Input/Output file
+    /// Serialized Name: AzureMLWebServiceFile
+    /// </summary>
     public partial class AzureMLWebServiceFile
     {
         /// <summary> Initializes a new instance of AzureMLWebServiceFile. </summary>
-        /// <param name="filePath"> The relative file path, including container name, in the Azure Blob Storage specified by the LinkedService. Type: string (or Expression with resultType string). </param>
-        /// <param name="linkedServiceName"> Reference to an Azure Storage LinkedService, where Azure ML WebService Input/Output file located. </param>
+        /// <param name="filePath">
+        /// The relative file path, including container name, in the Azure Blob Storage specified by the LinkedService. Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureMLWebServiceFile.filePath
+        /// </param>
+        /// <param name="linkedServiceName">
+        /// Reference to an Azure Storage LinkedService, where Azure ML WebService Input/Output file located.
+        /// Serialized Name: AzureMLWebServiceFile.linkedServiceName
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filePath"/> or <paramref name="linkedServiceName"/> is null. </exception>
         public AzureMLWebServiceFile(BinaryData filePath, LinkedServiceReference linkedServiceName)
         {
@@ -31,9 +40,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceName = linkedServiceName;
         }
 
-        /// <summary> The relative file path, including container name, in the Azure Blob Storage specified by the LinkedService. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The relative file path, including container name, in the Azure Blob Storage specified by the LinkedService. Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureMLWebServiceFile.filePath
+        /// </summary>
         public BinaryData FilePath { get; set; }
-        /// <summary> Reference to an Azure Storage LinkedService, where Azure ML WebService Input/Output file located. </summary>
+        /// <summary>
+        /// Reference to an Azure Storage LinkedService, where Azure ML WebService Input/Output file located.
+        /// Serialized Name: AzureMLWebServiceFile.linkedServiceName
+        /// </summary>
         public LinkedServiceReference LinkedServiceName { get; set; }
     }
 }

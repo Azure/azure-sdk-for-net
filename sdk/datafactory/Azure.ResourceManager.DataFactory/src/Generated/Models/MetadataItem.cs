@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Specify the name and value of custom metadata item. </summary>
+    /// <summary>
+    /// Specify the name and value of custom metadata item.
+    /// Serialized Name: MetadataItem
+    /// </summary>
     public partial class MetadataItem
     {
         /// <summary> Initializes a new instance of MetadataItem. </summary>
@@ -18,17 +21,29 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of MetadataItem. </summary>
-        /// <param name="name"> Metadata item key name. Type: string (or Expression with resultType string). </param>
-        /// <param name="value"> Metadata item value. Type: string (or Expression with resultType string). </param>
+        /// <param name="name">
+        /// Metadata item key name. Type: string (or Expression with resultType string).
+        /// Serialized Name: MetadataItem.name
+        /// </param>
+        /// <param name="value">
+        /// Metadata item value. Type: string (or Expression with resultType string).
+        /// Serialized Name: MetadataItem.value
+        /// </param>
         internal MetadataItem(BinaryData name, BinaryData value)
         {
             Name = name;
             Value = value;
         }
 
-        /// <summary> Metadata item key name. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Metadata item key name. Type: string (or Expression with resultType string).
+        /// Serialized Name: MetadataItem.name
+        /// </summary>
         public BinaryData Name { get; set; }
-        /// <summary> Metadata item value. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Metadata item value. Type: string (or Expression with resultType string).
+        /// Serialized Name: MetadataItem.value
+        /// </summary>
         public BinaryData Value { get; set; }
     }
 }

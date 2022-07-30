@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Data flow properties for managed integration runtime. </summary>
+    /// <summary>
+    /// Data flow properties for managed integration runtime.
+    /// Serialized Name: IntegrationRuntimeDataFlowProperties
+    /// </summary>
     public partial class IntegrationRuntimeDataFlowProperties
     {
         /// <summary> Initializes a new instance of IntegrationRuntimeDataFlowProperties. </summary>
@@ -21,10 +24,22 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of IntegrationRuntimeDataFlowProperties. </summary>
-        /// <param name="computeType"> Compute type of the cluster which will execute data flow job. </param>
-        /// <param name="coreCount"> Core count of the cluster which will execute data flow job. Supported values are: 8, 16, 32, 48, 80, 144 and 272. </param>
-        /// <param name="timeToLive"> Time to live (in minutes) setting of the cluster which will execute data flow job. </param>
-        /// <param name="cleanup"> Cluster will not be recycled and it will be used in next data flow activity run until TTL (time to live) is reached if this is set as false. Default is true. </param>
+        /// <param name="computeType">
+        /// Compute type of the cluster which will execute data flow job.
+        /// Serialized Name: IntegrationRuntimeDataFlowProperties.computeType
+        /// </param>
+        /// <param name="coreCount">
+        /// Core count of the cluster which will execute data flow job. Supported values are: 8, 16, 32, 48, 80, 144 and 272.
+        /// Serialized Name: IntegrationRuntimeDataFlowProperties.coreCount
+        /// </param>
+        /// <param name="timeToLive">
+        /// Time to live (in minutes) setting of the cluster which will execute data flow job.
+        /// Serialized Name: IntegrationRuntimeDataFlowProperties.timeToLive
+        /// </param>
+        /// <param name="cleanup">
+        /// Cluster will not be recycled and it will be used in next data flow activity run until TTL (time to live) is reached if this is set as false. Default is true.
+        /// Serialized Name: IntegrationRuntimeDataFlowProperties.cleanup
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal IntegrationRuntimeDataFlowProperties(DataFlowComputeType? computeType, int? coreCount, int? timeToLive, bool? cleanup, IDictionary<string, BinaryData> additionalProperties)
         {
@@ -35,13 +50,25 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = additionalProperties;
         }
 
-        /// <summary> Compute type of the cluster which will execute data flow job. </summary>
+        /// <summary>
+        /// Compute type of the cluster which will execute data flow job.
+        /// Serialized Name: IntegrationRuntimeDataFlowProperties.computeType
+        /// </summary>
         public DataFlowComputeType? ComputeType { get; set; }
-        /// <summary> Core count of the cluster which will execute data flow job. Supported values are: 8, 16, 32, 48, 80, 144 and 272. </summary>
+        /// <summary>
+        /// Core count of the cluster which will execute data flow job. Supported values are: 8, 16, 32, 48, 80, 144 and 272.
+        /// Serialized Name: IntegrationRuntimeDataFlowProperties.coreCount
+        /// </summary>
         public int? CoreCount { get; set; }
-        /// <summary> Time to live (in minutes) setting of the cluster which will execute data flow job. </summary>
+        /// <summary>
+        /// Time to live (in minutes) setting of the cluster which will execute data flow job.
+        /// Serialized Name: IntegrationRuntimeDataFlowProperties.timeToLive
+        /// </summary>
         public int? TimeToLive { get; set; }
-        /// <summary> Cluster will not be recycled and it will be used in next data flow activity run until TTL (time to live) is reached if this is set as false. Default is true. </summary>
+        /// <summary>
+        /// Cluster will not be recycled and it will be used in next data flow activity run until TTL (time to live) is reached if this is set as false. Default is true.
+        /// Serialized Name: IntegrationRuntimeDataFlowProperties.cleanup
+        /// </summary>
         public bool? Cleanup { get; set; }
         /// <summary> Additional Properties. </summary>
         public IDictionary<string, BinaryData> AdditionalProperties { get; }

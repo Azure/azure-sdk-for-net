@@ -11,11 +11,17 @@ using System.Linq;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> A list of trigger runs. </summary>
+    /// <summary>
+    /// A list of trigger runs.
+    /// Serialized Name: TriggerRunsQueryResponse
+    /// </summary>
     internal partial class TriggerRunsQueryResponse
     {
         /// <summary> Initializes a new instance of TriggerRunsQueryResponse. </summary>
-        /// <param name="value"> List of trigger runs. </param>
+        /// <param name="value">
+        /// List of trigger runs.
+        /// Serialized Name: TriggerRunsQueryResponse.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal TriggerRunsQueryResponse(IEnumerable<TriggerRun> value)
         {
@@ -28,17 +34,29 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of TriggerRunsQueryResponse. </summary>
-        /// <param name="value"> List of trigger runs. </param>
-        /// <param name="continuationToken"> The continuation token for getting the next page of results, if any remaining results exist, null otherwise. </param>
+        /// <param name="value">
+        /// List of trigger runs.
+        /// Serialized Name: TriggerRunsQueryResponse.value
+        /// </param>
+        /// <param name="continuationToken">
+        /// The continuation token for getting the next page of results, if any remaining results exist, null otherwise.
+        /// Serialized Name: TriggerRunsQueryResponse.continuationToken
+        /// </param>
         internal TriggerRunsQueryResponse(IReadOnlyList<TriggerRun> value, string continuationToken)
         {
             Value = value;
             ContinuationToken = continuationToken;
         }
 
-        /// <summary> List of trigger runs. </summary>
+        /// <summary>
+        /// List of trigger runs.
+        /// Serialized Name: TriggerRunsQueryResponse.value
+        /// </summary>
         public IReadOnlyList<TriggerRun> Value { get; }
-        /// <summary> The continuation token for getting the next page of results, if any remaining results exist, null otherwise. </summary>
+        /// <summary>
+        /// The continuation token for getting the next page of results, if any remaining results exist, null otherwise.
+        /// Serialized Name: TriggerRunsQueryResponse.continuationToken
+        /// </summary>
         public string ContinuationToken { get; }
     }
 }

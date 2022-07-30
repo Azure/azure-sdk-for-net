@@ -32,20 +32,48 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity"> Managed service identity of the factory. </param>
-        /// <param name="provisioningState"> Factory provisioning state, example Succeeded. </param>
-        /// <param name="createOn"> Time the factory was created in ISO8601 format. </param>
-        /// <param name="version"> Version of the factory. </param>
-        /// <param name="purviewConfiguration"> Purview information of the factory. </param>
+        /// <param name="identity">
+        /// Managed service identity of the factory.
+        /// Serialized Name: Factory.identity
+        /// </param>
+        /// <param name="provisioningState">
+        /// Factory provisioning state, example Succeeded.
+        /// Serialized Name: Factory.properties.provisioningState
+        /// </param>
+        /// <param name="createOn">
+        /// Time the factory was created in ISO8601 format.
+        /// Serialized Name: Factory.properties.createTime
+        /// </param>
+        /// <param name="version">
+        /// Version of the factory.
+        /// Serialized Name: Factory.properties.version
+        /// </param>
+        /// <param name="purviewConfiguration">
+        /// Purview information of the factory.
+        /// Serialized Name: Factory.properties.purviewConfiguration
+        /// </param>
         /// <param name="repoConfiguration">
         /// Git repo information of the factory.
+        /// Serialized Name: Factory.properties.repoConfiguration
         /// Please note <see cref="FactoryRepoConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FactoryGitHubConfiguration"/> and <see cref="FactoryVstsConfiguration"/>.
         /// </param>
-        /// <param name="globalParameters"> List of parameters for factory. </param>
-        /// <param name="encryption"> Properties to enable Customer Managed Key for the factory. </param>
-        /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for the data factory. </param>
-        /// <param name="eTag"> Etag identifies change in the resource. </param>
+        /// <param name="globalParameters">
+        /// List of parameters for factory.
+        /// Serialized Name: Factory.properties.globalParameters
+        /// </param>
+        /// <param name="encryption">
+        /// Properties to enable Customer Managed Key for the factory.
+        /// Serialized Name: Factory.properties.encryption
+        /// </param>
+        /// <param name="publicNetworkAccess">
+        /// Whether or not public network access is allowed for the data factory.
+        /// Serialized Name: Factory.properties.publicNetworkAccess
+        /// </param>
+        /// <param name="eTag">
+        /// Etag identifies change in the resource.
+        /// Serialized Name: Resource.eTag
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal DataFactoryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, FactoryIdentity identity, string provisioningState, DateTimeOffset? createOn, string version, PurviewConfiguration purviewConfiguration, FactoryRepoConfiguration repoConfiguration, IDictionary<string, GlobalParameterSpecification> globalParameters, EncryptionConfiguration encryption, PublicNetworkAccess? publicNetworkAccess, ETag? eTag, IDictionary<string, BinaryData> additionalProperties) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -62,17 +90,35 @@ namespace Azure.ResourceManager.DataFactory
             AdditionalProperties = additionalProperties;
         }
 
-        /// <summary> Managed service identity of the factory. </summary>
+        /// <summary>
+        /// Managed service identity of the factory.
+        /// Serialized Name: Factory.identity
+        /// </summary>
         public FactoryIdentity Identity { get; set; }
-        /// <summary> Factory provisioning state, example Succeeded. </summary>
+        /// <summary>
+        /// Factory provisioning state, example Succeeded.
+        /// Serialized Name: Factory.properties.provisioningState
+        /// </summary>
         public string ProvisioningState { get; }
-        /// <summary> Time the factory was created in ISO8601 format. </summary>
+        /// <summary>
+        /// Time the factory was created in ISO8601 format.
+        /// Serialized Name: Factory.properties.createTime
+        /// </summary>
         public DateTimeOffset? CreateOn { get; }
-        /// <summary> Version of the factory. </summary>
+        /// <summary>
+        /// Version of the factory.
+        /// Serialized Name: Factory.properties.version
+        /// </summary>
         public string Version { get; }
-        /// <summary> Purview information of the factory. </summary>
+        /// <summary>
+        /// Purview information of the factory.
+        /// Serialized Name: Factory.properties.purviewConfiguration
+        /// </summary>
         internal PurviewConfiguration PurviewConfiguration { get; set; }
-        /// <summary> Purview resource id. </summary>
+        /// <summary>
+        /// Purview resource id.
+        /// Serialized Name: PurviewConfiguration.purviewResourceId
+        /// </summary>
         public ResourceIdentifier PurviewResourceId
         {
             get => PurviewConfiguration is null ? default : PurviewConfiguration.PurviewResourceId;
@@ -86,17 +132,30 @@ namespace Azure.ResourceManager.DataFactory
 
         /// <summary>
         /// Git repo information of the factory.
+        /// Serialized Name: Factory.properties.repoConfiguration
         /// Please note <see cref="FactoryRepoConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FactoryGitHubConfiguration"/> and <see cref="FactoryVstsConfiguration"/>.
         /// </summary>
         public FactoryRepoConfiguration RepoConfiguration { get; set; }
-        /// <summary> List of parameters for factory. </summary>
+        /// <summary>
+        /// List of parameters for factory.
+        /// Serialized Name: Factory.properties.globalParameters
+        /// </summary>
         public IDictionary<string, GlobalParameterSpecification> GlobalParameters { get; }
-        /// <summary> Properties to enable Customer Managed Key for the factory. </summary>
+        /// <summary>
+        /// Properties to enable Customer Managed Key for the factory.
+        /// Serialized Name: Factory.properties.encryption
+        /// </summary>
         public EncryptionConfiguration Encryption { get; set; }
-        /// <summary> Whether or not public network access is allowed for the data factory. </summary>
+        /// <summary>
+        /// Whether or not public network access is allowed for the data factory.
+        /// Serialized Name: Factory.properties.publicNetworkAccess
+        /// </summary>
         public PublicNetworkAccess? PublicNetworkAccess { get; set; }
-        /// <summary> Etag identifies change in the resource. </summary>
+        /// <summary>
+        /// Etag identifies change in the resource.
+        /// Serialized Name: Resource.eTag
+        /// </summary>
         public ETag? ETag { get; }
         /// <summary> Additional Properties. </summary>
         public IDictionary<string, BinaryData> AdditionalProperties { get; }

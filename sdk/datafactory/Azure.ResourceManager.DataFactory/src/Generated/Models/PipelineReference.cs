@@ -9,12 +9,21 @@ using System;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Pipeline reference type. </summary>
+    /// <summary>
+    /// Pipeline reference type.
+    /// Serialized Name: PipelineReference
+    /// </summary>
     public partial class PipelineReference
     {
         /// <summary> Initializes a new instance of PipelineReference. </summary>
-        /// <param name="referenceType"> Pipeline reference type. </param>
-        /// <param name="referenceName"> Reference pipeline name. </param>
+        /// <param name="referenceType">
+        /// Pipeline reference type.
+        /// Serialized Name: PipelineReference.type
+        /// </param>
+        /// <param name="referenceName">
+        /// Reference pipeline name.
+        /// Serialized Name: PipelineReference.referenceName
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
         public PipelineReference(PipelineReferenceType referenceType, string referenceName)
         {
@@ -28,9 +37,18 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of PipelineReference. </summary>
-        /// <param name="referenceType"> Pipeline reference type. </param>
-        /// <param name="referenceName"> Reference pipeline name. </param>
-        /// <param name="name"> Reference name. </param>
+        /// <param name="referenceType">
+        /// Pipeline reference type.
+        /// Serialized Name: PipelineReference.type
+        /// </param>
+        /// <param name="referenceName">
+        /// Reference pipeline name.
+        /// Serialized Name: PipelineReference.referenceName
+        /// </param>
+        /// <param name="name">
+        /// Reference name.
+        /// Serialized Name: PipelineReference.name
+        /// </param>
         internal PipelineReference(PipelineReferenceType referenceType, string referenceName, string name)
         {
             ReferenceType = referenceType;
@@ -38,11 +56,20 @@ namespace Azure.ResourceManager.DataFactory.Models
             Name = name;
         }
 
-        /// <summary> Pipeline reference type. </summary>
+        /// <summary>
+        /// Pipeline reference type.
+        /// Serialized Name: PipelineReference.type
+        /// </summary>
         public PipelineReferenceType ReferenceType { get; set; }
-        /// <summary> Reference pipeline name. </summary>
+        /// <summary>
+        /// Reference pipeline name.
+        /// Serialized Name: PipelineReference.referenceName
+        /// </summary>
         public string ReferenceName { get; set; }
-        /// <summary> Reference name. </summary>
+        /// <summary>
+        /// Reference name.
+        /// Serialized Name: PipelineReference.name
+        /// </summary>
         public string Name { get; set; }
     }
 }

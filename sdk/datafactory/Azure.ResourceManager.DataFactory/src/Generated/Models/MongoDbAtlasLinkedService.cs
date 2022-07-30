@@ -10,12 +10,21 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Linked service for MongoDB Atlas data source. </summary>
+    /// <summary>
+    /// Linked service for MongoDB Atlas data source.
+    /// Serialized Name: MongoDbAtlasLinkedService
+    /// </summary>
     public partial class MongoDbAtlasLinkedService : LinkedService
     {
         /// <summary> Initializes a new instance of MongoDbAtlasLinkedService. </summary>
-        /// <param name="connectionString"> The MongoDB Atlas connection string. Type: string, SecureString or AzureKeyVaultSecretReference. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
-        /// <param name="database"> The name of the MongoDB Atlas database that you want to access. Type: string (or Expression with resultType string). </param>
+        /// <param name="connectionString">
+        /// The MongoDB Atlas connection string. Type: string, SecureString or AzureKeyVaultSecretReference. Type: string, SecureString or AzureKeyVaultSecretReference.
+        /// Serialized Name: MongoDbAtlasLinkedService.typeProperties.connectionString
+        /// </param>
+        /// <param name="database">
+        /// The name of the MongoDB Atlas database that you want to access. Type: string (or Expression with resultType string).
+        /// Serialized Name: MongoDbAtlasLinkedService.typeProperties.database
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> or <paramref name="database"/> is null. </exception>
         public MongoDbAtlasLinkedService(BinaryData connectionString, BinaryData database)
         {
@@ -34,14 +43,35 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of MongoDbAtlasLinkedService. </summary>
-        /// <param name="linkedServiceType"> Type of linked service. </param>
-        /// <param name="connectVia"> The integration runtime reference. </param>
-        /// <param name="description"> Linked service description. </param>
-        /// <param name="parameters"> Parameters for linked service. </param>
-        /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
+        /// <param name="linkedServiceType">
+        /// Type of linked service.
+        /// Serialized Name: LinkedService.type
+        /// </param>
+        /// <param name="connectVia">
+        /// The integration runtime reference.
+        /// Serialized Name: LinkedService.connectVia
+        /// </param>
+        /// <param name="description">
+        /// Linked service description.
+        /// Serialized Name: LinkedService.description
+        /// </param>
+        /// <param name="parameters">
+        /// Parameters for linked service.
+        /// Serialized Name: LinkedService.parameters
+        /// </param>
+        /// <param name="annotations">
+        /// List of tags that can be used for describing the linked service.
+        /// Serialized Name: LinkedService.annotations
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="connectionString"> The MongoDB Atlas connection string. Type: string, SecureString or AzureKeyVaultSecretReference. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
-        /// <param name="database"> The name of the MongoDB Atlas database that you want to access. Type: string (or Expression with resultType string). </param>
+        /// <param name="connectionString">
+        /// The MongoDB Atlas connection string. Type: string, SecureString or AzureKeyVaultSecretReference. Type: string, SecureString or AzureKeyVaultSecretReference.
+        /// Serialized Name: MongoDbAtlasLinkedService.typeProperties.connectionString
+        /// </param>
+        /// <param name="database">
+        /// The name of the MongoDB Atlas database that you want to access. Type: string (or Expression with resultType string).
+        /// Serialized Name: MongoDbAtlasLinkedService.typeProperties.database
+        /// </param>
         internal MongoDbAtlasLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData connectionString, BinaryData database) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             ConnectionString = connectionString;
@@ -49,9 +79,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "MongoDbAtlas";
         }
 
-        /// <summary> The MongoDB Atlas connection string. Type: string, SecureString or AzureKeyVaultSecretReference. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
+        /// <summary>
+        /// The MongoDB Atlas connection string. Type: string, SecureString or AzureKeyVaultSecretReference. Type: string, SecureString or AzureKeyVaultSecretReference.
+        /// Serialized Name: MongoDbAtlasLinkedService.typeProperties.connectionString
+        /// </summary>
         public BinaryData ConnectionString { get; set; }
-        /// <summary> The name of the MongoDB Atlas database that you want to access. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The name of the MongoDB Atlas database that you want to access. Type: string (or Expression with resultType string).
+        /// Serialized Name: MongoDbAtlasLinkedService.typeProperties.database
+        /// </summary>
         public BinaryData Database { get; set; }
     }
 }

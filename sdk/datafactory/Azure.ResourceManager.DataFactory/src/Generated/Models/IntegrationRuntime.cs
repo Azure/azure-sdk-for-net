@@ -13,6 +13,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary>
     /// Azure Data Factory nested object which serves as a compute resource for activities.
+    /// Serialized Name: IntegrationRuntime
     /// Please note <see cref="IntegrationRuntime"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="ManagedIntegrationRuntime"/> and <see cref="SelfHostedIntegrationRuntime"/>.
     /// </summary>
@@ -25,8 +26,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of IntegrationRuntime. </summary>
-        /// <param name="runtimeType"> Type of integration runtime. </param>
-        /// <param name="description"> Integration runtime description. </param>
+        /// <param name="runtimeType">
+        /// Type of integration runtime.
+        /// Serialized Name: IntegrationRuntime.type
+        /// </param>
+        /// <param name="description">
+        /// Integration runtime description.
+        /// Serialized Name: IntegrationRuntime.description
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal IntegrationRuntime(IntegrationRuntimeType runtimeType, string description, IDictionary<string, BinaryData> additionalProperties)
         {
@@ -35,9 +42,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = additionalProperties;
         }
 
-        /// <summary> Type of integration runtime. </summary>
+        /// <summary>
+        /// Type of integration runtime.
+        /// Serialized Name: IntegrationRuntime.type
+        /// </summary>
         internal IntegrationRuntimeType RuntimeType { get; set; }
-        /// <summary> Integration runtime description. </summary>
+        /// <summary>
+        /// Integration runtime description.
+        /// Serialized Name: IntegrationRuntime.description
+        /// </summary>
         public string Description { get; set; }
         /// <summary> Additional Properties. </summary>
         public IDictionary<string, BinaryData> AdditionalProperties { get; }

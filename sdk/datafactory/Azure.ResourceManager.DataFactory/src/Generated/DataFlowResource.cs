@@ -17,10 +17,10 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DataFactory
 {
     /// <summary>
-    /// A Class representing a DataFlowResource along with the instance operations that can be performed on it.
+    /// A Class representing a DataFlow along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataFlowResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetDataFlowResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DataFactoryResource" /> using the GetDataFlowResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DataFactoryResource" /> using the GetDataFlow method.
     /// </summary>
     public partial class DataFlowResource : ArmResource
     {
@@ -31,9 +31,9 @@ namespace Azure.ResourceManager.DataFactory
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _dataFlowResourceDataFlowsClientDiagnostics;
-        private readonly DataFlowsRestOperations _dataFlowResourceDataFlowsRestClient;
-        private readonly DataFlowResourceData _data;
+        private readonly ClientDiagnostics _dataFlowClientDiagnostics;
+        private readonly DataFlowsRestOperations _dataFlowRestClient;
+        private readonly DataFlowData _data;
 
         /// <summary> Initializes a new instance of the <see cref="DataFlowResource"/> class for mocking. </summary>
         protected DataFlowResource()
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <summary> Initializes a new instance of the <see cref = "DataFlowResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DataFlowResource(ArmClient client, DataFlowResourceData data) : this(client, data.Id)
+        internal DataFlowResource(ArmClient client, DataFlowData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -54,9 +54,9 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DataFlowResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _dataFlowResourceDataFlowsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string dataFlowResourceDataFlowsApiVersion);
-            _dataFlowResourceDataFlowsRestClient = new DataFlowsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataFlowResourceDataFlowsApiVersion);
+            _dataFlowClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string dataFlowApiVersion);
+            _dataFlowRestClient = new DataFlowsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataFlowApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DataFactory
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual DataFlowResourceData Data
+        public virtual DataFlowData Data
         {
             get
             {
@@ -95,11 +95,11 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DataFlowResource>> GetAsync(string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _dataFlowResourceDataFlowsClientDiagnostics.CreateScope("DataFlowResource.Get");
+            using var scope = _dataFlowClientDiagnostics.CreateScope("DataFlowResource.Get");
             scope.Start();
             try
             {
-                var response = await _dataFlowResourceDataFlowsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+                var response = await _dataFlowRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifNoneMatch, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DataFlowResource(Client, response.Value), response.GetRawResponse());
@@ -120,11 +120,11 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DataFlowResource> Get(string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _dataFlowResourceDataFlowsClientDiagnostics.CreateScope("DataFlowResource.Get");
+            using var scope = _dataFlowClientDiagnostics.CreateScope("DataFlowResource.Get");
             scope.Start();
             try
             {
-                var response = _dataFlowResourceDataFlowsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifNoneMatch, cancellationToken);
+                var response = _dataFlowRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifNoneMatch, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DataFlowResource(Client, response.Value), response.GetRawResponse());
@@ -145,11 +145,11 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _dataFlowResourceDataFlowsClientDiagnostics.CreateScope("DataFlowResource.Delete");
+            using var scope = _dataFlowClientDiagnostics.CreateScope("DataFlowResource.Delete");
             scope.Start();
             try
             {
-                var response = await _dataFlowResourceDataFlowsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _dataFlowRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new DataFactoryArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -171,11 +171,11 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _dataFlowResourceDataFlowsClientDiagnostics.CreateScope("DataFlowResource.Delete");
+            using var scope = _dataFlowClientDiagnostics.CreateScope("DataFlowResource.Delete");
             scope.Start();
             try
             {
-                var response = _dataFlowResourceDataFlowsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _dataFlowRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 var operation = new DataFactoryArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -198,15 +198,15 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="ifMatch"> ETag of the data flow entity. Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<DataFlowResource>> UpdateAsync(WaitUntil waitUntil, DataFlowResourceData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DataFlowResource>> UpdateAsync(WaitUntil waitUntil, DataFlowData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _dataFlowResourceDataFlowsClientDiagnostics.CreateScope("DataFlowResource.Update");
+            using var scope = _dataFlowClientDiagnostics.CreateScope("DataFlowResource.Update");
             scope.Start();
             try
             {
-                var response = await _dataFlowResourceDataFlowsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
+                var response = await _dataFlowRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
                 var operation = new DataFactoryArmOperation<DataFlowResource>(Response.FromValue(new DataFlowResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -229,15 +229,15 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="ifMatch"> ETag of the data flow entity. Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<DataFlowResource> Update(WaitUntil waitUntil, DataFlowResourceData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DataFlowResource> Update(WaitUntil waitUntil, DataFlowData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _dataFlowResourceDataFlowsClientDiagnostics.CreateScope("DataFlowResource.Update");
+            using var scope = _dataFlowClientDiagnostics.CreateScope("DataFlowResource.Update");
             scope.Start();
             try
             {
-                var response = _dataFlowResourceDataFlowsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken);
+                var response = _dataFlowRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken);
                 var operation = new DataFactoryArmOperation<DataFlowResource>(Response.FromValue(new DataFlowResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);

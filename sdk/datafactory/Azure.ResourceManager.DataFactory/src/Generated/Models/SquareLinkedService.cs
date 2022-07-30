@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Square Service linked service. </summary>
+    /// <summary>
+    /// Square Service linked service.
+    /// Serialized Name: SquareLinkedService
+    /// </summary>
     public partial class SquareLinkedService : LinkedService
     {
         /// <summary> Initializes a new instance of SquareLinkedService. </summary>
@@ -20,25 +23,65 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of SquareLinkedService. </summary>
-        /// <param name="linkedServiceType"> Type of linked service. </param>
-        /// <param name="connectVia"> The integration runtime reference. </param>
-        /// <param name="description"> Linked service description. </param>
-        /// <param name="parameters"> Parameters for linked service. </param>
-        /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
+        /// <param name="linkedServiceType">
+        /// Type of linked service.
+        /// Serialized Name: LinkedService.type
+        /// </param>
+        /// <param name="connectVia">
+        /// The integration runtime reference.
+        /// Serialized Name: LinkedService.connectVia
+        /// </param>
+        /// <param name="description">
+        /// Linked service description.
+        /// Serialized Name: LinkedService.description
+        /// </param>
+        /// <param name="parameters">
+        /// Parameters for linked service.
+        /// Serialized Name: LinkedService.parameters
+        /// </param>
+        /// <param name="annotations">
+        /// List of tags that can be used for describing the linked service.
+        /// Serialized Name: LinkedService.annotations
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="connectionProperties"> Properties used to connect to Square. It is mutually exclusive with any other properties in the linked service. Type: object. </param>
-        /// <param name="host"> The URL of the Square instance. (i.e. mystore.mysquare.com). </param>
-        /// <param name="clientId"> The client ID associated with your Square application. </param>
+        /// <param name="connectionProperties">
+        /// Properties used to connect to Square. It is mutually exclusive with any other properties in the linked service. Type: object.
+        /// Serialized Name: SquareLinkedService.typeProperties.connectionProperties
+        /// </param>
+        /// <param name="host">
+        /// The URL of the Square instance. (i.e. mystore.mysquare.com)
+        /// Serialized Name: SquareLinkedService.typeProperties.host
+        /// </param>
+        /// <param name="clientId">
+        /// The client ID associated with your Square application.
+        /// Serialized Name: SquareLinkedService.typeProperties.clientId
+        /// </param>
         /// <param name="clientSecret">
         /// The client secret associated with your Square application.
+        /// Serialized Name: SquareLinkedService.typeProperties.clientSecret
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
-        /// <param name="redirectUri"> The redirect URL assigned in the Square application dashboard. (i.e. http://localhost:2500). </param>
-        /// <param name="useEncryptedEndpoints"> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </param>
-        /// <param name="useHostVerification"> Specifies whether to require the host name in the server&apos;s certificate to match the host name of the server when connecting over SSL. The default value is true. </param>
-        /// <param name="usePeerVerification"> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. </param>
-        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
+        /// <param name="redirectUri">
+        /// The redirect URL assigned in the Square application dashboard. (i.e. http://localhost:2500)
+        /// Serialized Name: SquareLinkedService.typeProperties.redirectUri
+        /// </param>
+        /// <param name="useEncryptedEndpoints">
+        /// Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true.
+        /// Serialized Name: SquareLinkedService.typeProperties.useEncryptedEndpoints
+        /// </param>
+        /// <param name="useHostVerification">
+        /// Specifies whether to require the host name in the server&apos;s certificate to match the host name of the server when connecting over SSL. The default value is true.
+        /// Serialized Name: SquareLinkedService.typeProperties.useHostVerification
+        /// </param>
+        /// <param name="usePeerVerification">
+        /// Specifies whether to verify the identity of the server when connecting over SSL. The default value is true.
+        /// Serialized Name: SquareLinkedService.typeProperties.usePeerVerification
+        /// </param>
+        /// <param name="encryptedCredential">
+        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
+        /// Serialized Name: SquareLinkedService.typeProperties.encryptedCredential
+        /// </param>
         internal SquareLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData connectionProperties, BinaryData host, BinaryData clientId, SecretBase clientSecret, BinaryData redirectUri, BinaryData useEncryptedEndpoints, BinaryData useHostVerification, BinaryData usePeerVerification, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             ConnectionProperties = connectionProperties;
@@ -53,27 +96,52 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "Square";
         }
 
-        /// <summary> Properties used to connect to Square. It is mutually exclusive with any other properties in the linked service. Type: object. </summary>
+        /// <summary>
+        /// Properties used to connect to Square. It is mutually exclusive with any other properties in the linked service. Type: object.
+        /// Serialized Name: SquareLinkedService.typeProperties.connectionProperties
+        /// </summary>
         public BinaryData ConnectionProperties { get; set; }
-        /// <summary> The URL of the Square instance. (i.e. mystore.mysquare.com). </summary>
+        /// <summary>
+        /// The URL of the Square instance. (i.e. mystore.mysquare.com)
+        /// Serialized Name: SquareLinkedService.typeProperties.host
+        /// </summary>
         public BinaryData Host { get; set; }
-        /// <summary> The client ID associated with your Square application. </summary>
+        /// <summary>
+        /// The client ID associated with your Square application.
+        /// Serialized Name: SquareLinkedService.typeProperties.clientId
+        /// </summary>
         public BinaryData ClientId { get; set; }
         /// <summary>
         /// The client secret associated with your Square application.
+        /// Serialized Name: SquareLinkedService.typeProperties.clientSecret
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
         public SecretBase ClientSecret { get; set; }
-        /// <summary> The redirect URL assigned in the Square application dashboard. (i.e. http://localhost:2500). </summary>
+        /// <summary>
+        /// The redirect URL assigned in the Square application dashboard. (i.e. http://localhost:2500)
+        /// Serialized Name: SquareLinkedService.typeProperties.redirectUri
+        /// </summary>
         public BinaryData RedirectUri { get; set; }
-        /// <summary> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </summary>
+        /// <summary>
+        /// Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true.
+        /// Serialized Name: SquareLinkedService.typeProperties.useEncryptedEndpoints
+        /// </summary>
         public BinaryData UseEncryptedEndpoints { get; set; }
-        /// <summary> Specifies whether to require the host name in the server&apos;s certificate to match the host name of the server when connecting over SSL. The default value is true. </summary>
+        /// <summary>
+        /// Specifies whether to require the host name in the server&apos;s certificate to match the host name of the server when connecting over SSL. The default value is true.
+        /// Serialized Name: SquareLinkedService.typeProperties.useHostVerification
+        /// </summary>
         public BinaryData UseHostVerification { get; set; }
-        /// <summary> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. </summary>
+        /// <summary>
+        /// Specifies whether to verify the identity of the server when connecting over SSL. The default value is true.
+        /// Serialized Name: SquareLinkedService.typeProperties.usePeerVerification
+        /// </summary>
         public BinaryData UsePeerVerification { get; set; }
-        /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
+        /// Serialized Name: SquareLinkedService.typeProperties.encryptedCredential
+        /// </summary>
         public BinaryData EncryptedCredential { get; set; }
     }
 }

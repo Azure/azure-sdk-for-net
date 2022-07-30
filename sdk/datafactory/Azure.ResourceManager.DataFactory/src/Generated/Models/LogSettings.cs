@@ -9,11 +9,17 @@ using System;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Log settings. </summary>
+    /// <summary>
+    /// Log settings.
+    /// Serialized Name: LogSettings
+    /// </summary>
     public partial class LogSettings
     {
         /// <summary> Initializes a new instance of LogSettings. </summary>
-        /// <param name="logLocationSettings"> Log location settings customer needs to provide when enabling log. </param>
+        /// <param name="logLocationSettings">
+        /// Log location settings customer needs to provide when enabling log.
+        /// Serialized Name: LogSettings.logLocationSettings
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="logLocationSettings"/> is null. </exception>
         public LogSettings(LogLocationSettings logLocationSettings)
         {
@@ -26,9 +32,18 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of LogSettings. </summary>
-        /// <param name="enableCopyActivityLog"> Specifies whether to enable copy activity log. Type: boolean (or Expression with resultType boolean). </param>
-        /// <param name="copyActivityLogSettings"> Specifies settings for copy activity log. </param>
-        /// <param name="logLocationSettings"> Log location settings customer needs to provide when enabling log. </param>
+        /// <param name="enableCopyActivityLog">
+        /// Specifies whether to enable copy activity log. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: LogSettings.enableCopyActivityLog
+        /// </param>
+        /// <param name="copyActivityLogSettings">
+        /// Specifies settings for copy activity log.
+        /// Serialized Name: LogSettings.copyActivityLogSettings
+        /// </param>
+        /// <param name="logLocationSettings">
+        /// Log location settings customer needs to provide when enabling log.
+        /// Serialized Name: LogSettings.logLocationSettings
+        /// </param>
         internal LogSettings(BinaryData enableCopyActivityLog, CopyActivityLogSettings copyActivityLogSettings, LogLocationSettings logLocationSettings)
         {
             EnableCopyActivityLog = enableCopyActivityLog;
@@ -36,11 +51,20 @@ namespace Azure.ResourceManager.DataFactory.Models
             LogLocationSettings = logLocationSettings;
         }
 
-        /// <summary> Specifies whether to enable copy activity log. Type: boolean (or Expression with resultType boolean). </summary>
+        /// <summary>
+        /// Specifies whether to enable copy activity log. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: LogSettings.enableCopyActivityLog
+        /// </summary>
         public BinaryData EnableCopyActivityLog { get; set; }
-        /// <summary> Specifies settings for copy activity log. </summary>
+        /// <summary>
+        /// Specifies settings for copy activity log.
+        /// Serialized Name: LogSettings.copyActivityLogSettings
+        /// </summary>
         public CopyActivityLogSettings CopyActivityLogSettings { get; set; }
-        /// <summary> Log location settings customer needs to provide when enabling log. </summary>
+        /// <summary>
+        /// Log location settings customer needs to provide when enabling log.
+        /// Serialized Name: LogSettings.logLocationSettings
+        /// </summary>
         public LogLocationSettings LogLocationSettings { get; set; }
     }
 }

@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> SSIS properties for managed integration runtime. </summary>
+    /// <summary>
+    /// SSIS properties for managed integration runtime.
+    /// Serialized Name: IntegrationRuntimeSsisProperties
+    /// </summary>
     public partial class IntegrationRuntimeSsisProperties
     {
         /// <summary> Initializes a new instance of IntegrationRuntimeSsisProperties. </summary>
@@ -23,18 +26,40 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of IntegrationRuntimeSsisProperties. </summary>
-        /// <param name="catalogInfo"> Catalog information for managed dedicated integration runtime. </param>
-        /// <param name="licenseType"> License type for bringing your own license scenario. </param>
-        /// <param name="customSetupScriptProperties"> Custom setup script properties for a managed dedicated integration runtime. </param>
-        /// <param name="dataProxyProperties"> Data proxy properties for a managed dedicated integration runtime. </param>
-        /// <param name="edition"> The edition for the SSIS Integration Runtime. </param>
+        /// <param name="catalogInfo">
+        /// Catalog information for managed dedicated integration runtime.
+        /// Serialized Name: IntegrationRuntimeSsisProperties.catalogInfo
+        /// </param>
+        /// <param name="licenseType">
+        /// License type for bringing your own license scenario.
+        /// Serialized Name: IntegrationRuntimeSsisProperties.licenseType
+        /// </param>
+        /// <param name="customSetupScriptProperties">
+        /// Custom setup script properties for a managed dedicated integration runtime.
+        /// Serialized Name: IntegrationRuntimeSsisProperties.customSetupScriptProperties
+        /// </param>
+        /// <param name="dataProxyProperties">
+        /// Data proxy properties for a managed dedicated integration runtime.
+        /// Serialized Name: IntegrationRuntimeSsisProperties.dataProxyProperties
+        /// </param>
+        /// <param name="edition">
+        /// The edition for the SSIS Integration Runtime
+        /// Serialized Name: IntegrationRuntimeSsisProperties.edition
+        /// </param>
         /// <param name="expressCustomSetupProperties">
         /// Custom setup without script properties for a SSIS integration runtime.
+        /// Serialized Name: IntegrationRuntimeSsisProperties.expressCustomSetupProperties
         /// Please note <see cref="CustomSetupBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzPowerShellSetup"/>, <see cref="CmdkeySetup"/>, <see cref="ComponentSetup"/> and <see cref="EnvironmentVariableSetup"/>.
         /// </param>
-        /// <param name="packageStores"> Package stores for the SSIS Integration Runtime. </param>
-        /// <param name="credential"> The credential reference containing authentication information. </param>
+        /// <param name="packageStores">
+        /// Package stores for the SSIS Integration Runtime.
+        /// Serialized Name: IntegrationRuntimeSsisProperties.packageStores
+        /// </param>
+        /// <param name="credential">
+        /// The credential reference containing authentication information.
+        /// Serialized Name: IntegrationRuntimeSsisProperties.credential
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal IntegrationRuntimeSsisProperties(IntegrationRuntimeSsisCatalogInfo catalogInfo, IntegrationRuntimeLicenseType? licenseType, IntegrationRuntimeCustomSetupScriptProperties customSetupScriptProperties, IntegrationRuntimeDataProxyProperties dataProxyProperties, IntegrationRuntimeEdition? edition, IList<CustomSetupBase> expressCustomSetupProperties, IList<PackageStore> packageStores, CredentialReference credential, IDictionary<string, BinaryData> additionalProperties)
         {
@@ -49,25 +74,47 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = additionalProperties;
         }
 
-        /// <summary> Catalog information for managed dedicated integration runtime. </summary>
+        /// <summary>
+        /// Catalog information for managed dedicated integration runtime.
+        /// Serialized Name: IntegrationRuntimeSsisProperties.catalogInfo
+        /// </summary>
         public IntegrationRuntimeSsisCatalogInfo CatalogInfo { get; set; }
-        /// <summary> License type for bringing your own license scenario. </summary>
+        /// <summary>
+        /// License type for bringing your own license scenario.
+        /// Serialized Name: IntegrationRuntimeSsisProperties.licenseType
+        /// </summary>
         public IntegrationRuntimeLicenseType? LicenseType { get; set; }
-        /// <summary> Custom setup script properties for a managed dedicated integration runtime. </summary>
+        /// <summary>
+        /// Custom setup script properties for a managed dedicated integration runtime.
+        /// Serialized Name: IntegrationRuntimeSsisProperties.customSetupScriptProperties
+        /// </summary>
         public IntegrationRuntimeCustomSetupScriptProperties CustomSetupScriptProperties { get; set; }
-        /// <summary> Data proxy properties for a managed dedicated integration runtime. </summary>
+        /// <summary>
+        /// Data proxy properties for a managed dedicated integration runtime.
+        /// Serialized Name: IntegrationRuntimeSsisProperties.dataProxyProperties
+        /// </summary>
         public IntegrationRuntimeDataProxyProperties DataProxyProperties { get; set; }
-        /// <summary> The edition for the SSIS Integration Runtime. </summary>
+        /// <summary>
+        /// The edition for the SSIS Integration Runtime
+        /// Serialized Name: IntegrationRuntimeSsisProperties.edition
+        /// </summary>
         public IntegrationRuntimeEdition? Edition { get; set; }
         /// <summary>
         /// Custom setup without script properties for a SSIS integration runtime.
+        /// Serialized Name: IntegrationRuntimeSsisProperties.expressCustomSetupProperties
         /// Please note <see cref="CustomSetupBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzPowerShellSetup"/>, <see cref="CmdkeySetup"/>, <see cref="ComponentSetup"/> and <see cref="EnvironmentVariableSetup"/>.
         /// </summary>
         public IList<CustomSetupBase> ExpressCustomSetupProperties { get; }
-        /// <summary> Package stores for the SSIS Integration Runtime. </summary>
+        /// <summary>
+        /// Package stores for the SSIS Integration Runtime.
+        /// Serialized Name: IntegrationRuntimeSsisProperties.packageStores
+        /// </summary>
         public IList<PackageStore> PackageStores { get; }
-        /// <summary> The credential reference containing authentication information. </summary>
+        /// <summary>
+        /// The credential reference containing authentication information.
+        /// Serialized Name: IntegrationRuntimeSsisProperties.credential
+        /// </summary>
         public CredentialReference Credential { get; set; }
         /// <summary> Additional Properties. </summary>
         public IDictionary<string, BinaryData> AdditionalProperties { get; }

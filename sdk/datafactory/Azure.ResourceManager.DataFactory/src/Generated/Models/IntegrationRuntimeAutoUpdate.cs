@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The state of integration runtime auto update. </summary>
+    /// <summary>
+    /// The state of integration runtime auto update.
+    /// Serialized Name: IntegrationRuntimeAutoUpdate
+    /// </summary>
     public readonly partial struct IntegrationRuntimeAutoUpdate : IEquatable<IntegrationRuntimeAutoUpdate>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string OnValue = "On";
         private const string OffValue = "Off";
 
-        /// <summary> On. </summary>
+        /// <summary>
+        /// On
+        /// Serialized Name: IntegrationRuntimeAutoUpdate.On
+        /// </summary>
         public static IntegrationRuntimeAutoUpdate On { get; } = new IntegrationRuntimeAutoUpdate(OnValue);
-        /// <summary> Off. </summary>
+        /// <summary>
+        /// Off
+        /// Serialized Name: IntegrationRuntimeAutoUpdate.Off
+        /// </summary>
         public static IntegrationRuntimeAutoUpdate Off { get; } = new IntegrationRuntimeAutoUpdate(OffValue);
         /// <summary> Determines if two <see cref="IntegrationRuntimeAutoUpdate"/> values are the same. </summary>
         public static bool operator ==(IntegrationRuntimeAutoUpdate left, IntegrationRuntimeAutoUpdate right) => left.Equals(right);

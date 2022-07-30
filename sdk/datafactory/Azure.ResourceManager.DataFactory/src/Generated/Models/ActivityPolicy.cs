@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Execution policy for an activity. </summary>
+    /// <summary>
+    /// Execution policy for an activity.
+    /// Serialized Name: ActivityPolicy
+    /// </summary>
     public partial class ActivityPolicy
     {
         /// <summary> Initializes a new instance of ActivityPolicy. </summary>
@@ -21,11 +24,26 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of ActivityPolicy. </summary>
-        /// <param name="timeout"> Specifies the timeout for the activity to run. The default timeout is 7 days. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
-        /// <param name="retry"> Maximum ordinary retry attempts. Default is 0. Type: integer (or Expression with resultType integer), minimum: 0. </param>
-        /// <param name="retryIntervalInSeconds"> Interval between each retry attempt (in seconds). The default is 30 sec. </param>
-        /// <param name="secureInput"> When set to true, Input from activity is considered as secure and will not be logged to monitoring. </param>
-        /// <param name="secureOutput"> When set to true, Output from activity is considered as secure and will not be logged to monitoring. </param>
+        /// <param name="timeout">
+        /// Specifies the timeout for the activity to run. The default timeout is 7 days. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
+        /// Serialized Name: ActivityPolicy.timeout
+        /// </param>
+        /// <param name="retry">
+        /// Maximum ordinary retry attempts. Default is 0. Type: integer (or Expression with resultType integer), minimum: 0.
+        /// Serialized Name: ActivityPolicy.retry
+        /// </param>
+        /// <param name="retryIntervalInSeconds">
+        /// Interval between each retry attempt (in seconds). The default is 30 sec.
+        /// Serialized Name: ActivityPolicy.retryIntervalInSeconds
+        /// </param>
+        /// <param name="secureInput">
+        /// When set to true, Input from activity is considered as secure and will not be logged to monitoring.
+        /// Serialized Name: ActivityPolicy.secureInput
+        /// </param>
+        /// <param name="secureOutput">
+        /// When set to true, Output from activity is considered as secure and will not be logged to monitoring.
+        /// Serialized Name: ActivityPolicy.secureOutput
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal ActivityPolicy(BinaryData timeout, BinaryData retry, int? retryIntervalInSeconds, bool? secureInput, bool? secureOutput, IDictionary<string, BinaryData> additionalProperties)
         {
@@ -37,15 +55,30 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = additionalProperties;
         }
 
-        /// <summary> Specifies the timeout for the activity to run. The default timeout is 7 days. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </summary>
+        /// <summary>
+        /// Specifies the timeout for the activity to run. The default timeout is 7 days. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
+        /// Serialized Name: ActivityPolicy.timeout
+        /// </summary>
         public BinaryData Timeout { get; set; }
-        /// <summary> Maximum ordinary retry attempts. Default is 0. Type: integer (or Expression with resultType integer), minimum: 0. </summary>
+        /// <summary>
+        /// Maximum ordinary retry attempts. Default is 0. Type: integer (or Expression with resultType integer), minimum: 0.
+        /// Serialized Name: ActivityPolicy.retry
+        /// </summary>
         public BinaryData Retry { get; set; }
-        /// <summary> Interval between each retry attempt (in seconds). The default is 30 sec. </summary>
+        /// <summary>
+        /// Interval between each retry attempt (in seconds). The default is 30 sec.
+        /// Serialized Name: ActivityPolicy.retryIntervalInSeconds
+        /// </summary>
         public int? RetryIntervalInSeconds { get; set; }
-        /// <summary> When set to true, Input from activity is considered as secure and will not be logged to monitoring. </summary>
+        /// <summary>
+        /// When set to true, Input from activity is considered as secure and will not be logged to monitoring.
+        /// Serialized Name: ActivityPolicy.secureInput
+        /// </summary>
         public bool? SecureInput { get; set; }
-        /// <summary> When set to true, Output from activity is considered as secure and will not be logged to monitoring. </summary>
+        /// <summary>
+        /// When set to true, Output from activity is considered as secure and will not be logged to monitoring.
+        /// Serialized Name: ActivityPolicy.secureOutput
+        /// </summary>
         public bool? SecureOutput { get; set; }
         /// <summary> Additional Properties. </summary>
         public IDictionary<string, BinaryData> AdditionalProperties { get; }

@@ -11,11 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Script activity type. </summary>
+    /// <summary>
+    /// Script activity type.
+    /// Serialized Name: ScriptActivity
+    /// </summary>
     public partial class ScriptActivity : ExecutionActivity
     {
         /// <summary> Initializes a new instance of ScriptActivity. </summary>
-        /// <param name="name"> Activity name. </param>
+        /// <param name="name">
+        /// Activity name.
+        /// Serialized Name: Activity.name
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ScriptActivity(string name) : base(name)
         {
@@ -29,16 +35,43 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of ScriptActivity. </summary>
-        /// <param name="name"> Activity name. </param>
-        /// <param name="activityType"> Type of activity. </param>
-        /// <param name="description"> Activity description. </param>
-        /// <param name="dependsOn"> Activity depends on condition. </param>
-        /// <param name="userProperties"> Activity user properties. </param>
+        /// <param name="name">
+        /// Activity name.
+        /// Serialized Name: Activity.name
+        /// </param>
+        /// <param name="activityType">
+        /// Type of activity.
+        /// Serialized Name: Activity.type
+        /// </param>
+        /// <param name="description">
+        /// Activity description.
+        /// Serialized Name: Activity.description
+        /// </param>
+        /// <param name="dependsOn">
+        /// Activity depends on condition.
+        /// Serialized Name: Activity.dependsOn
+        /// </param>
+        /// <param name="userProperties">
+        /// Activity user properties.
+        /// Serialized Name: Activity.userProperties
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
-        /// <param name="policy"> Activity policy. </param>
-        /// <param name="scripts"> Array of script blocks. Type: array. </param>
-        /// <param name="logSettings"> Log settings of script activity. </param>
+        /// <param name="linkedServiceName">
+        /// Linked service reference.
+        /// Serialized Name: ExecutionActivity.linkedServiceName
+        /// </param>
+        /// <param name="policy">
+        /// Activity policy.
+        /// Serialized Name: ExecutionActivity.policy
+        /// </param>
+        /// <param name="scripts">
+        /// Array of script blocks. Type: array.
+        /// Serialized Name: ScriptActivity.typeProperties.scripts
+        /// </param>
+        /// <param name="logSettings">
+        /// Log settings of script activity.
+        /// Serialized Name: ScriptActivity.typeProperties.logSettings
+        /// </param>
         internal ScriptActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, IList<ScriptActivityScriptBlock> scripts, ScriptActivityTypePropertiesLogSettings logSettings) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             Scripts = scripts;
@@ -46,9 +79,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = activityType ?? "Script";
         }
 
-        /// <summary> Array of script blocks. Type: array. </summary>
+        /// <summary>
+        /// Array of script blocks. Type: array.
+        /// Serialized Name: ScriptActivity.typeProperties.scripts
+        /// </summary>
         public IList<ScriptActivityScriptBlock> Scripts { get; }
-        /// <summary> Log settings of script activity. </summary>
+        /// <summary>
+        /// Log settings of script activity.
+        /// Serialized Name: ScriptActivity.typeProperties.logSettings
+        /// </summary>
         public ScriptActivityTypePropertiesLogSettings LogSettings { get; set; }
     }
 }

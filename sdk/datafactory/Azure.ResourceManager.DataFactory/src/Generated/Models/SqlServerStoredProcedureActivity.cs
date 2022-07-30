@@ -10,12 +10,21 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> SQL stored procedure activity type. </summary>
+    /// <summary>
+    /// SQL stored procedure activity type.
+    /// Serialized Name: SqlServerStoredProcedureActivity
+    /// </summary>
     public partial class SqlServerStoredProcedureActivity : ExecutionActivity
     {
         /// <summary> Initializes a new instance of SqlServerStoredProcedureActivity. </summary>
-        /// <param name="name"> Activity name. </param>
-        /// <param name="storedProcedureName"> Stored procedure name. Type: string (or Expression with resultType string). </param>
+        /// <param name="name">
+        /// Activity name.
+        /// Serialized Name: Activity.name
+        /// </param>
+        /// <param name="storedProcedureName">
+        /// Stored procedure name. Type: string (or Expression with resultType string).
+        /// Serialized Name: SqlServerStoredProcedureActivity.typeProperties.storedProcedureName
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="storedProcedureName"/> is null. </exception>
         public SqlServerStoredProcedureActivity(string name, BinaryData storedProcedureName) : base(name)
         {
@@ -33,16 +42,43 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of SqlServerStoredProcedureActivity. </summary>
-        /// <param name="name"> Activity name. </param>
-        /// <param name="activityType"> Type of activity. </param>
-        /// <param name="description"> Activity description. </param>
-        /// <param name="dependsOn"> Activity depends on condition. </param>
-        /// <param name="userProperties"> Activity user properties. </param>
+        /// <param name="name">
+        /// Activity name.
+        /// Serialized Name: Activity.name
+        /// </param>
+        /// <param name="activityType">
+        /// Type of activity.
+        /// Serialized Name: Activity.type
+        /// </param>
+        /// <param name="description">
+        /// Activity description.
+        /// Serialized Name: Activity.description
+        /// </param>
+        /// <param name="dependsOn">
+        /// Activity depends on condition.
+        /// Serialized Name: Activity.dependsOn
+        /// </param>
+        /// <param name="userProperties">
+        /// Activity user properties.
+        /// Serialized Name: Activity.userProperties
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
-        /// <param name="policy"> Activity policy. </param>
-        /// <param name="storedProcedureName"> Stored procedure name. Type: string (or Expression with resultType string). </param>
-        /// <param name="storedProcedureParameters"> Value and type setting for stored procedure parameters. Example: &quot;{Parameter1: {value: &quot;1&quot;, type: &quot;int&quot;}}&quot;. </param>
+        /// <param name="linkedServiceName">
+        /// Linked service reference.
+        /// Serialized Name: ExecutionActivity.linkedServiceName
+        /// </param>
+        /// <param name="policy">
+        /// Activity policy.
+        /// Serialized Name: ExecutionActivity.policy
+        /// </param>
+        /// <param name="storedProcedureName">
+        /// Stored procedure name. Type: string (or Expression with resultType string).
+        /// Serialized Name: SqlServerStoredProcedureActivity.typeProperties.storedProcedureName
+        /// </param>
+        /// <param name="storedProcedureParameters">
+        /// Value and type setting for stored procedure parameters. Example: &quot;{Parameter1: {value: &quot;1&quot;, type: &quot;int&quot;}}&quot;.
+        /// Serialized Name: SqlServerStoredProcedureActivity.typeProperties.storedProcedureParameters
+        /// </param>
         internal SqlServerStoredProcedureActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, BinaryData storedProcedureName, BinaryData storedProcedureParameters) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             StoredProcedureName = storedProcedureName;
@@ -50,9 +86,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = activityType ?? "SqlServerStoredProcedure";
         }
 
-        /// <summary> Stored procedure name. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Stored procedure name. Type: string (or Expression with resultType string).
+        /// Serialized Name: SqlServerStoredProcedureActivity.typeProperties.storedProcedureName
+        /// </summary>
         public BinaryData StoredProcedureName { get; set; }
-        /// <summary> Value and type setting for stored procedure parameters. Example: &quot;{Parameter1: {value: &quot;1&quot;, type: &quot;int&quot;}}&quot;. </summary>
+        /// <summary>
+        /// Value and type setting for stored procedure parameters. Example: &quot;{Parameter1: {value: &quot;1&quot;, type: &quot;int&quot;}}&quot;.
+        /// Serialized Name: SqlServerStoredProcedureActivity.typeProperties.storedProcedureParameters
+        /// </summary>
         public BinaryData StoredProcedureParameters { get; set; }
     }
 }

@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Sql upsert option settings. </summary>
+    /// <summary>
+    /// Sql upsert option settings
+    /// Serialized Name: SqlUpsertSettings
+    /// </summary>
     public partial class SqlUpsertSettings
     {
         /// <summary> Initializes a new instance of SqlUpsertSettings. </summary>
@@ -18,9 +21,18 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of SqlUpsertSettings. </summary>
-        /// <param name="useTempDB"> Specifies whether to use temp db for upsert interim table. Type: boolean (or Expression with resultType boolean). </param>
-        /// <param name="interimSchemaName"> Schema name for interim table. Type: string (or Expression with resultType string). </param>
-        /// <param name="keys"> Key column names for unique row identification. Type: array of strings (or Expression with resultType array of strings). </param>
+        /// <param name="useTempDB">
+        /// Specifies whether to use temp db for upsert interim table. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: SqlUpsertSettings.useTempDB
+        /// </param>
+        /// <param name="interimSchemaName">
+        /// Schema name for interim table. Type: string (or Expression with resultType string).
+        /// Serialized Name: SqlUpsertSettings.interimSchemaName
+        /// </param>
+        /// <param name="keys">
+        /// Key column names for unique row identification. Type: array of strings (or Expression with resultType array of strings).
+        /// Serialized Name: SqlUpsertSettings.keys
+        /// </param>
         internal SqlUpsertSettings(BinaryData useTempDB, BinaryData interimSchemaName, BinaryData keys)
         {
             UseTempDB = useTempDB;
@@ -28,11 +40,20 @@ namespace Azure.ResourceManager.DataFactory.Models
             Keys = keys;
         }
 
-        /// <summary> Specifies whether to use temp db for upsert interim table. Type: boolean (or Expression with resultType boolean). </summary>
+        /// <summary>
+        /// Specifies whether to use temp db for upsert interim table. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: SqlUpsertSettings.useTempDB
+        /// </summary>
         public BinaryData UseTempDB { get; set; }
-        /// <summary> Schema name for interim table. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Schema name for interim table. Type: string (or Expression with resultType string).
+        /// Serialized Name: SqlUpsertSettings.interimSchemaName
+        /// </summary>
         public BinaryData InterimSchemaName { get; set; }
-        /// <summary> Key column names for unique row identification. Type: array of strings (or Expression with resultType array of strings). </summary>
+        /// <summary>
+        /// Key column names for unique row identification. Type: array of strings (or Expression with resultType array of strings).
+        /// Serialized Name: SqlUpsertSettings.keys
+        /// </summary>
         public BinaryData Keys { get; set; }
     }
 }

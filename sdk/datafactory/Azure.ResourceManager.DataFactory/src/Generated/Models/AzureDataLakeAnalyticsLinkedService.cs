@@ -10,12 +10,21 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Azure Data Lake Analytics linked service. </summary>
+    /// <summary>
+    /// Azure Data Lake Analytics linked service.
+    /// Serialized Name: AzureDataLakeAnalyticsLinkedService
+    /// </summary>
     public partial class AzureDataLakeAnalyticsLinkedService : LinkedService
     {
         /// <summary> Initializes a new instance of AzureDataLakeAnalyticsLinkedService. </summary>
-        /// <param name="accountName"> The Azure Data Lake Analytics account name. Type: string (or Expression with resultType string). </param>
-        /// <param name="tenant"> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </param>
+        /// <param name="accountName">
+        /// The Azure Data Lake Analytics account name. Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureDataLakeAnalyticsLinkedService.typeProperties.accountName
+        /// </param>
+        /// <param name="tenant">
+        /// The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureDataLakeAnalyticsLinkedService.typeProperties.tenant
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> or <paramref name="tenant"/> is null. </exception>
         public AzureDataLakeAnalyticsLinkedService(BinaryData accountName, BinaryData tenant)
         {
@@ -34,24 +43,61 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of AzureDataLakeAnalyticsLinkedService. </summary>
-        /// <param name="linkedServiceType"> Type of linked service. </param>
-        /// <param name="connectVia"> The integration runtime reference. </param>
-        /// <param name="description"> Linked service description. </param>
-        /// <param name="parameters"> Parameters for linked service. </param>
-        /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
+        /// <param name="linkedServiceType">
+        /// Type of linked service.
+        /// Serialized Name: LinkedService.type
+        /// </param>
+        /// <param name="connectVia">
+        /// The integration runtime reference.
+        /// Serialized Name: LinkedService.connectVia
+        /// </param>
+        /// <param name="description">
+        /// Linked service description.
+        /// Serialized Name: LinkedService.description
+        /// </param>
+        /// <param name="parameters">
+        /// Parameters for linked service.
+        /// Serialized Name: LinkedService.parameters
+        /// </param>
+        /// <param name="annotations">
+        /// List of tags that can be used for describing the linked service.
+        /// Serialized Name: LinkedService.annotations
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="accountName"> The Azure Data Lake Analytics account name. Type: string (or Expression with resultType string). </param>
-        /// <param name="servicePrincipalId"> The ID of the application used to authenticate against the Azure Data Lake Analytics account. Type: string (or Expression with resultType string). </param>
+        /// <param name="accountName">
+        /// The Azure Data Lake Analytics account name. Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureDataLakeAnalyticsLinkedService.typeProperties.accountName
+        /// </param>
+        /// <param name="servicePrincipalId">
+        /// The ID of the application used to authenticate against the Azure Data Lake Analytics account. Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureDataLakeAnalyticsLinkedService.typeProperties.servicePrincipalId
+        /// </param>
         /// <param name="servicePrincipalKey">
         /// The Key of the application used to authenticate against the Azure Data Lake Analytics account.
+        /// Serialized Name: AzureDataLakeAnalyticsLinkedService.typeProperties.servicePrincipalKey
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
-        /// <param name="tenant"> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </param>
-        /// <param name="subscriptionId"> Data Lake Analytics account subscription ID (if different from Data Factory account). Type: string (or Expression with resultType string). </param>
-        /// <param name="resourceGroupName"> Data Lake Analytics account resource group name (if different from Data Factory account). Type: string (or Expression with resultType string). </param>
-        /// <param name="dataLakeAnalyticsUri"> Azure Data Lake Analytics URI Type: string (or Expression with resultType string). </param>
-        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
+        /// <param name="tenant">
+        /// The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureDataLakeAnalyticsLinkedService.typeProperties.tenant
+        /// </param>
+        /// <param name="subscriptionId">
+        /// Data Lake Analytics account subscription ID (if different from Data Factory account). Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureDataLakeAnalyticsLinkedService.typeProperties.subscriptionId
+        /// </param>
+        /// <param name="resourceGroupName">
+        /// Data Lake Analytics account resource group name (if different from Data Factory account). Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureDataLakeAnalyticsLinkedService.typeProperties.resourceGroupName
+        /// </param>
+        /// <param name="dataLakeAnalyticsUri">
+        /// Azure Data Lake Analytics URI Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureDataLakeAnalyticsLinkedService.typeProperties.dataLakeAnalyticsUri
+        /// </param>
+        /// <param name="encryptedCredential">
+        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureDataLakeAnalyticsLinkedService.typeProperties.encryptedCredential
+        /// </param>
         internal AzureDataLakeAnalyticsLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData accountName, BinaryData servicePrincipalId, SecretBase servicePrincipalKey, BinaryData tenant, BinaryData subscriptionId, BinaryData resourceGroupName, BinaryData dataLakeAnalyticsUri, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             AccountName = accountName;
@@ -65,25 +111,47 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "AzureDataLakeAnalytics";
         }
 
-        /// <summary> The Azure Data Lake Analytics account name. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The Azure Data Lake Analytics account name. Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureDataLakeAnalyticsLinkedService.typeProperties.accountName
+        /// </summary>
         public BinaryData AccountName { get; set; }
-        /// <summary> The ID of the application used to authenticate against the Azure Data Lake Analytics account. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The ID of the application used to authenticate against the Azure Data Lake Analytics account. Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureDataLakeAnalyticsLinkedService.typeProperties.servicePrincipalId
+        /// </summary>
         public BinaryData ServicePrincipalId { get; set; }
         /// <summary>
         /// The Key of the application used to authenticate against the Azure Data Lake Analytics account.
+        /// Serialized Name: AzureDataLakeAnalyticsLinkedService.typeProperties.servicePrincipalKey
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
         public SecretBase ServicePrincipalKey { get; set; }
-        /// <summary> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureDataLakeAnalyticsLinkedService.typeProperties.tenant
+        /// </summary>
         public BinaryData Tenant { get; set; }
-        /// <summary> Data Lake Analytics account subscription ID (if different from Data Factory account). Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Data Lake Analytics account subscription ID (if different from Data Factory account). Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureDataLakeAnalyticsLinkedService.typeProperties.subscriptionId
+        /// </summary>
         public BinaryData SubscriptionId { get; set; }
-        /// <summary> Data Lake Analytics account resource group name (if different from Data Factory account). Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Data Lake Analytics account resource group name (if different from Data Factory account). Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureDataLakeAnalyticsLinkedService.typeProperties.resourceGroupName
+        /// </summary>
         public BinaryData ResourceGroupName { get; set; }
-        /// <summary> Azure Data Lake Analytics URI Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Azure Data Lake Analytics URI Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureDataLakeAnalyticsLinkedService.typeProperties.dataLakeAnalyticsUri
+        /// </summary>
         public BinaryData DataLakeAnalyticsUri { get; set; }
-        /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureDataLakeAnalyticsLinkedService.typeProperties.encryptedCredential
+        /// </summary>
         public BinaryData EncryptedCredential { get; set; }
     }
 }

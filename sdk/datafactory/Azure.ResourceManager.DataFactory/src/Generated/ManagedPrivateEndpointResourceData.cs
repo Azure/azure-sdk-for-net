@@ -17,7 +17,10 @@ namespace Azure.ResourceManager.DataFactory
     public partial class ManagedPrivateEndpointResourceData : ResourceData
     {
         /// <summary> Initializes a new instance of ManagedPrivateEndpointResourceData. </summary>
-        /// <param name="properties"> Managed private endpoint properties. </param>
+        /// <param name="properties">
+        /// Managed private endpoint properties.
+        /// Serialized Name: ManagedPrivateEndpointResource.properties
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public ManagedPrivateEndpointResourceData(ManagedPrivateEndpoint properties)
         {
@@ -34,17 +37,29 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Managed private endpoint properties. </param>
-        /// <param name="eTag"> Etag identifies change in the resource. </param>
+        /// <param name="properties">
+        /// Managed private endpoint properties.
+        /// Serialized Name: ManagedPrivateEndpointResource.properties
+        /// </param>
+        /// <param name="eTag">
+        /// Etag identifies change in the resource.
+        /// Serialized Name: SubResource.etag
+        /// </param>
         internal ManagedPrivateEndpointResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedPrivateEndpoint properties, ETag? eTag) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             ETag = eTag;
         }
 
-        /// <summary> Managed private endpoint properties. </summary>
+        /// <summary>
+        /// Managed private endpoint properties.
+        /// Serialized Name: ManagedPrivateEndpointResource.properties
+        /// </summary>
         public ManagedPrivateEndpoint Properties { get; set; }
-        /// <summary> Etag identifies change in the resource. </summary>
+        /// <summary>
+        /// Etag identifies change in the resource.
+        /// Serialized Name: SubResource.etag
+        /// </summary>
         public ETag? ETag { get; }
     }
 }

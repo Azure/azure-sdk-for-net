@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Parameter type. </summary>
+    /// <summary>
+    /// Parameter type.
+    /// Serialized Name: ParameterType
+    /// </summary>
     public readonly partial struct ParameterType : IEquatable<ParameterType>
     {
         private readonly string _value;
@@ -30,19 +33,40 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string ArrayValue = "Array";
         private const string SecureStringValue = "SecureString";
 
-        /// <summary> Object. </summary>
+        /// <summary>
+        /// Object
+        /// Serialized Name: ParameterType.Object
+        /// </summary>
         public static ParameterType Object { get; } = new ParameterType(ObjectValue);
-        /// <summary> String. </summary>
+        /// <summary>
+        /// String
+        /// Serialized Name: ParameterType.String
+        /// </summary>
         public static ParameterType String { get; } = new ParameterType(StringValue);
-        /// <summary> Int. </summary>
+        /// <summary>
+        /// Int
+        /// Serialized Name: ParameterType.Int
+        /// </summary>
         public static ParameterType Int { get; } = new ParameterType(IntValue);
-        /// <summary> Float. </summary>
+        /// <summary>
+        /// Float
+        /// Serialized Name: ParameterType.Float
+        /// </summary>
         public static ParameterType Float { get; } = new ParameterType(FloatValue);
-        /// <summary> Bool. </summary>
+        /// <summary>
+        /// Bool
+        /// Serialized Name: ParameterType.Bool
+        /// </summary>
         public static ParameterType Bool { get; } = new ParameterType(BoolValue);
-        /// <summary> Array. </summary>
+        /// <summary>
+        /// Array
+        /// Serialized Name: ParameterType.Array
+        /// </summary>
         public static ParameterType Array { get; } = new ParameterType(ArrayValue);
-        /// <summary> SecureString. </summary>
+        /// <summary>
+        /// SecureString
+        /// Serialized Name: ParameterType.SecureString
+        /// </summary>
         public static ParameterType SecureString { get; } = new ParameterType(SecureStringValue);
         /// <summary> Determines if two <see cref="ParameterType"/> values are the same. </summary>
         public static bool operator ==(ParameterType left, ParameterType right) => left.Equals(right);

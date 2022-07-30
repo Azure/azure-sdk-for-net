@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Defines the response of a trigger subscription operation. </summary>
+    /// <summary>
+    /// Defines the response of a trigger subscription operation.
+    /// Serialized Name: TriggerSubscriptionOperationStatus
+    /// </summary>
     public partial class TriggerSubscriptionOperationStatus
     {
         /// <summary> Initializes a new instance of TriggerSubscriptionOperationStatus. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of TriggerSubscriptionOperationStatus. </summary>
-        /// <param name="triggerName"> Trigger name. </param>
-        /// <param name="status"> Event Subscription Status. </param>
+        /// <param name="triggerName">
+        /// Trigger name.
+        /// Serialized Name: TriggerSubscriptionOperationStatus.triggerName
+        /// </param>
+        /// <param name="status">
+        /// Event Subscription Status.
+        /// Serialized Name: TriggerSubscriptionOperationStatus.status
+        /// </param>
         internal TriggerSubscriptionOperationStatus(string triggerName, EventSubscriptionStatus? status)
         {
             TriggerName = triggerName;
             Status = status;
         }
 
-        /// <summary> Trigger name. </summary>
+        /// <summary>
+        /// Trigger name.
+        /// Serialized Name: TriggerSubscriptionOperationStatus.triggerName
+        /// </summary>
         public string TriggerName { get; }
-        /// <summary> Event Subscription Status. </summary>
+        /// <summary>
+        /// Event Subscription Status.
+        /// Serialized Name: TriggerSubscriptionOperationStatus.status
+        /// </summary>
         public EventSubscriptionStatus? Status { get; }
     }
 }

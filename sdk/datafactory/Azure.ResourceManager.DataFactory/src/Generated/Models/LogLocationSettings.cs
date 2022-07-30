@@ -9,11 +9,17 @@ using System;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Log location settings. </summary>
+    /// <summary>
+    /// Log location settings.
+    /// Serialized Name: LogLocationSettings
+    /// </summary>
     public partial class LogLocationSettings
     {
         /// <summary> Initializes a new instance of LogLocationSettings. </summary>
-        /// <param name="linkedServiceName"> Log storage linked service reference. </param>
+        /// <param name="linkedServiceName">
+        /// Log storage linked service reference.
+        /// Serialized Name: LogLocationSettings.linkedServiceName
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public LogLocationSettings(LinkedServiceReference linkedServiceName)
         {
@@ -26,17 +32,29 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of LogLocationSettings. </summary>
-        /// <param name="linkedServiceName"> Log storage linked service reference. </param>
-        /// <param name="path"> The path to storage for storing detailed logs of activity execution. Type: string (or Expression with resultType string). </param>
+        /// <param name="linkedServiceName">
+        /// Log storage linked service reference.
+        /// Serialized Name: LogLocationSettings.linkedServiceName
+        /// </param>
+        /// <param name="path">
+        /// The path to storage for storing detailed logs of activity execution. Type: string (or Expression with resultType string).
+        /// Serialized Name: LogLocationSettings.path
+        /// </param>
         internal LogLocationSettings(LinkedServiceReference linkedServiceName, BinaryData path)
         {
             LinkedServiceName = linkedServiceName;
             Path = path;
         }
 
-        /// <summary> Log storage linked service reference. </summary>
+        /// <summary>
+        /// Log storage linked service reference.
+        /// Serialized Name: LogLocationSettings.linkedServiceName
+        /// </summary>
         public LinkedServiceReference LinkedServiceName { get; set; }
-        /// <summary> The path to storage for storing detailed logs of activity execution. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The path to storage for storing detailed logs of activity execution. Type: string (or Expression with resultType string).
+        /// Serialized Name: LogLocationSettings.path
+        /// </summary>
         public BinaryData Path { get; set; }
     }
 }

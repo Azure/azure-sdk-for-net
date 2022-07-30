@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> DW Copy Command settings. </summary>
+    /// <summary>
+    /// DW Copy Command settings.
+    /// Serialized Name: DWCopyCommandSettings
+    /// </summary>
     public partial class DWCopyCommandSettings
     {
         /// <summary> Initializes a new instance of DWCopyCommandSettings. </summary>
@@ -21,17 +24,29 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of DWCopyCommandSettings. </summary>
-        /// <param name="defaultValues"> Specifies the default values for each target column in SQL DW. The default values in the property overwrite the DEFAULT constraint set in the DB, and identity column cannot have a default value. Type: array of objects (or Expression with resultType array of objects). </param>
-        /// <param name="additionalOptions"> Additional options directly passed to SQL DW in Copy Command. Type: key value pairs (value should be string type) (or Expression with resultType object). Example: &quot;additionalOptions&quot;: { &quot;MAXERRORS&quot;: &quot;1000&quot;, &quot;DATEFORMAT&quot;: &quot;&apos;ymd&apos;&quot; }. </param>
+        /// <param name="defaultValues">
+        /// Specifies the default values for each target column in SQL DW. The default values in the property overwrite the DEFAULT constraint set in the DB, and identity column cannot have a default value. Type: array of objects (or Expression with resultType array of objects).
+        /// Serialized Name: DWCopyCommandSettings.defaultValues
+        /// </param>
+        /// <param name="additionalOptions">
+        /// Additional options directly passed to SQL DW in Copy Command. Type: key value pairs (value should be string type) (or Expression with resultType object). Example: &quot;additionalOptions&quot;: { &quot;MAXERRORS&quot;: &quot;1000&quot;, &quot;DATEFORMAT&quot;: &quot;&apos;ymd&apos;&quot; }
+        /// Serialized Name: DWCopyCommandSettings.additionalOptions
+        /// </param>
         internal DWCopyCommandSettings(IList<DWCopyCommandDefaultValue> defaultValues, IDictionary<string, string> additionalOptions)
         {
             DefaultValues = defaultValues;
             AdditionalOptions = additionalOptions;
         }
 
-        /// <summary> Specifies the default values for each target column in SQL DW. The default values in the property overwrite the DEFAULT constraint set in the DB, and identity column cannot have a default value. Type: array of objects (or Expression with resultType array of objects). </summary>
+        /// <summary>
+        /// Specifies the default values for each target column in SQL DW. The default values in the property overwrite the DEFAULT constraint set in the DB, and identity column cannot have a default value. Type: array of objects (or Expression with resultType array of objects).
+        /// Serialized Name: DWCopyCommandSettings.defaultValues
+        /// </summary>
         public IList<DWCopyCommandDefaultValue> DefaultValues { get; }
-        /// <summary> Additional options directly passed to SQL DW in Copy Command. Type: key value pairs (value should be string type) (or Expression with resultType object). Example: &quot;additionalOptions&quot;: { &quot;MAXERRORS&quot;: &quot;1000&quot;, &quot;DATEFORMAT&quot;: &quot;&apos;ymd&apos;&quot; }. </summary>
+        /// <summary>
+        /// Additional options directly passed to SQL DW in Copy Command. Type: key value pairs (value should be string type) (or Expression with resultType object). Example: &quot;additionalOptions&quot;: { &quot;MAXERRORS&quot;: &quot;1000&quot;, &quot;DATEFORMAT&quot;: &quot;&apos;ymd&apos;&quot; }
+        /// Serialized Name: DWCopyCommandSettings.additionalOptions
+        /// </summary>
         public IDictionary<string, string> AdditionalOptions { get; }
     }
 }

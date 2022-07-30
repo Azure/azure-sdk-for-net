@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Linked service reference type. </summary>
+    /// <summary>
+    /// Linked service reference type.
+    /// Serialized Name: LinkedServiceReferenceType
+    /// </summary>
     public readonly partial struct LinkedServiceReferenceType : IEquatable<LinkedServiceReferenceType>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         private const string LinkedServiceReferenceValue = "LinkedServiceReference";
 
-        /// <summary> LinkedServiceReference. </summary>
+        /// <summary>
+        /// LinkedServiceReference
+        /// Serialized Name: LinkedServiceReferenceType.LinkedServiceReference
+        /// </summary>
         public static LinkedServiceReferenceType LinkedServiceReference { get; } = new LinkedServiceReferenceType(LinkedServiceReferenceValue);
         /// <summary> Determines if two <see cref="LinkedServiceReferenceType"/> values are the same. </summary>
         public static bool operator ==(LinkedServiceReferenceType left, LinkedServiceReferenceType right) => left.Equals(right);

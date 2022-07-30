@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Pipeline reference type. </summary>
+    /// <summary>
+    /// Pipeline reference type.
+    /// Serialized Name: PipelineReferenceType
+    /// </summary>
     public readonly partial struct PipelineReferenceType : IEquatable<PipelineReferenceType>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         private const string PipelineReferenceValue = "PipelineReference";
 
-        /// <summary> PipelineReference. </summary>
+        /// <summary>
+        /// PipelineReference
+        /// Serialized Name: PipelineReferenceType.PipelineReference
+        /// </summary>
         public static PipelineReferenceType PipelineReference { get; } = new PipelineReferenceType(PipelineReferenceValue);
         /// <summary> Determines if two <see cref="PipelineReferenceType"/> values are the same. </summary>
         public static bool operator ==(PipelineReferenceType left, PipelineReferenceType right) => left.Equals(right);

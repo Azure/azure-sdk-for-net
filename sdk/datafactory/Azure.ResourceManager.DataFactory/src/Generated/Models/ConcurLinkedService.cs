@@ -10,12 +10,21 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Concur Service linked service. </summary>
+    /// <summary>
+    /// Concur Service linked service.
+    /// Serialized Name: ConcurLinkedService
+    /// </summary>
     public partial class ConcurLinkedService : LinkedService
     {
         /// <summary> Initializes a new instance of ConcurLinkedService. </summary>
-        /// <param name="clientId"> Application client_id supplied by Concur App Management. </param>
-        /// <param name="username"> The user name that you use to access Concur Service. </param>
+        /// <param name="clientId">
+        /// Application client_id supplied by Concur App Management.
+        /// Serialized Name: ConcurLinkedService.typeProperties.clientId
+        /// </param>
+        /// <param name="username">
+        /// The user name that you use to access Concur Service.
+        /// Serialized Name: ConcurLinkedService.typeProperties.username
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientId"/> or <paramref name="username"/> is null. </exception>
         public ConcurLinkedService(BinaryData clientId, BinaryData username)
         {
@@ -34,24 +43,61 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of ConcurLinkedService. </summary>
-        /// <param name="linkedServiceType"> Type of linked service. </param>
-        /// <param name="connectVia"> The integration runtime reference. </param>
-        /// <param name="description"> Linked service description. </param>
-        /// <param name="parameters"> Parameters for linked service. </param>
-        /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
+        /// <param name="linkedServiceType">
+        /// Type of linked service.
+        /// Serialized Name: LinkedService.type
+        /// </param>
+        /// <param name="connectVia">
+        /// The integration runtime reference.
+        /// Serialized Name: LinkedService.connectVia
+        /// </param>
+        /// <param name="description">
+        /// Linked service description.
+        /// Serialized Name: LinkedService.description
+        /// </param>
+        /// <param name="parameters">
+        /// Parameters for linked service.
+        /// Serialized Name: LinkedService.parameters
+        /// </param>
+        /// <param name="annotations">
+        /// List of tags that can be used for describing the linked service.
+        /// Serialized Name: LinkedService.annotations
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="connectionProperties"> Properties used to connect to Concur. It is mutually exclusive with any other properties in the linked service. Type: object. </param>
-        /// <param name="clientId"> Application client_id supplied by Concur App Management. </param>
-        /// <param name="username"> The user name that you use to access Concur Service. </param>
+        /// <param name="connectionProperties">
+        /// Properties used to connect to Concur. It is mutually exclusive with any other properties in the linked service. Type: object.
+        /// Serialized Name: ConcurLinkedService.typeProperties.connectionProperties
+        /// </param>
+        /// <param name="clientId">
+        /// Application client_id supplied by Concur App Management.
+        /// Serialized Name: ConcurLinkedService.typeProperties.clientId
+        /// </param>
+        /// <param name="username">
+        /// The user name that you use to access Concur Service.
+        /// Serialized Name: ConcurLinkedService.typeProperties.username
+        /// </param>
         /// <param name="password">
         /// The password corresponding to the user name that you provided in the username field.
+        /// Serialized Name: ConcurLinkedService.typeProperties.password
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
-        /// <param name="useEncryptedEndpoints"> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </param>
-        /// <param name="useHostVerification"> Specifies whether to require the host name in the server&apos;s certificate to match the host name of the server when connecting over SSL. The default value is true. </param>
-        /// <param name="usePeerVerification"> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. </param>
-        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
+        /// <param name="useEncryptedEndpoints">
+        /// Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true.
+        /// Serialized Name: ConcurLinkedService.typeProperties.useEncryptedEndpoints
+        /// </param>
+        /// <param name="useHostVerification">
+        /// Specifies whether to require the host name in the server&apos;s certificate to match the host name of the server when connecting over SSL. The default value is true.
+        /// Serialized Name: ConcurLinkedService.typeProperties.useHostVerification
+        /// </param>
+        /// <param name="usePeerVerification">
+        /// Specifies whether to verify the identity of the server when connecting over SSL. The default value is true.
+        /// Serialized Name: ConcurLinkedService.typeProperties.usePeerVerification
+        /// </param>
+        /// <param name="encryptedCredential">
+        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
+        /// Serialized Name: ConcurLinkedService.typeProperties.encryptedCredential
+        /// </param>
         internal ConcurLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData connectionProperties, BinaryData clientId, BinaryData username, SecretBase password, BinaryData useEncryptedEndpoints, BinaryData useHostVerification, BinaryData usePeerVerification, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             ConnectionProperties = connectionProperties;
@@ -65,25 +111,47 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "Concur";
         }
 
-        /// <summary> Properties used to connect to Concur. It is mutually exclusive with any other properties in the linked service. Type: object. </summary>
+        /// <summary>
+        /// Properties used to connect to Concur. It is mutually exclusive with any other properties in the linked service. Type: object.
+        /// Serialized Name: ConcurLinkedService.typeProperties.connectionProperties
+        /// </summary>
         public BinaryData ConnectionProperties { get; set; }
-        /// <summary> Application client_id supplied by Concur App Management. </summary>
+        /// <summary>
+        /// Application client_id supplied by Concur App Management.
+        /// Serialized Name: ConcurLinkedService.typeProperties.clientId
+        /// </summary>
         public BinaryData ClientId { get; set; }
-        /// <summary> The user name that you use to access Concur Service. </summary>
+        /// <summary>
+        /// The user name that you use to access Concur Service.
+        /// Serialized Name: ConcurLinkedService.typeProperties.username
+        /// </summary>
         public BinaryData Username { get; set; }
         /// <summary>
         /// The password corresponding to the user name that you provided in the username field.
+        /// Serialized Name: ConcurLinkedService.typeProperties.password
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
         public SecretBase Password { get; set; }
-        /// <summary> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </summary>
+        /// <summary>
+        /// Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true.
+        /// Serialized Name: ConcurLinkedService.typeProperties.useEncryptedEndpoints
+        /// </summary>
         public BinaryData UseEncryptedEndpoints { get; set; }
-        /// <summary> Specifies whether to require the host name in the server&apos;s certificate to match the host name of the server when connecting over SSL. The default value is true. </summary>
+        /// <summary>
+        /// Specifies whether to require the host name in the server&apos;s certificate to match the host name of the server when connecting over SSL. The default value is true.
+        /// Serialized Name: ConcurLinkedService.typeProperties.useHostVerification
+        /// </summary>
         public BinaryData UseHostVerification { get; set; }
-        /// <summary> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. </summary>
+        /// <summary>
+        /// Specifies whether to verify the identity of the server when connecting over SSL. The default value is true.
+        /// Serialized Name: ConcurLinkedService.typeProperties.usePeerVerification
+        /// </summary>
         public BinaryData UsePeerVerification { get; set; }
-        /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
+        /// Serialized Name: ConcurLinkedService.typeProperties.encryptedCredential
+        /// </summary>
         public BinaryData EncryptedCredential { get; set; }
     }
 }

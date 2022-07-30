@@ -9,11 +9,17 @@ using System;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Response body with a run identifier. </summary>
+    /// <summary>
+    /// Response body with a run identifier.
+    /// Serialized Name: CreateRunResponse
+    /// </summary>
     public partial class CreateRunResult
     {
         /// <summary> Initializes a new instance of CreateRunResult. </summary>
-        /// <param name="runId"> Identifier of a run. </param>
+        /// <param name="runId">
+        /// Identifier of a run.
+        /// Serialized Name: CreateRunResponse.runId
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
         internal CreateRunResult(string runId)
         {
@@ -25,7 +31,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             RunId = runId;
         }
 
-        /// <summary> Identifier of a run. </summary>
+        /// <summary>
+        /// Identifier of a run.
+        /// Serialized Name: CreateRunResponse.runId
+        /// </summary>
         public string RunId { get; }
     }
 }

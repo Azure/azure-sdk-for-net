@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Request body structure for starting data flow debug session. </summary>
+    /// <summary>
+    /// Request body structure for starting data flow debug session.
+    /// Serialized Name: DataFlowDebugPackage
+    /// </summary>
     public partial class DataFlowDebugPackage
     {
         /// <summary> Initializes a new instance of DataFlowDebugPackage. </summary>
@@ -23,19 +26,40 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> The ID of data flow debug session. </summary>
+        /// <summary>
+        /// The ID of data flow debug session.
+        /// Serialized Name: DataFlowDebugPackage.sessionId
+        /// </summary>
         public string SessionId { get; set; }
-        /// <summary> Data flow instance. </summary>
+        /// <summary>
+        /// Data flow instance.
+        /// Serialized Name: DataFlowDebugPackage.dataFlow
+        /// </summary>
         public DataFlowDebugResource DataFlow { get; set; }
-        /// <summary> List of Data flows. </summary>
+        /// <summary>
+        /// List of Data flows
+        /// Serialized Name: DataFlowDebugPackage.dataFlows
+        /// </summary>
         public IList<DataFlowDebugResource> DataFlows { get; }
-        /// <summary> List of datasets. </summary>
+        /// <summary>
+        /// List of datasets.
+        /// Serialized Name: DataFlowDebugPackage.datasets
+        /// </summary>
         public IList<DatasetDebugResource> Datasets { get; }
-        /// <summary> List of linked services. </summary>
+        /// <summary>
+        /// List of linked services.
+        /// Serialized Name: DataFlowDebugPackage.linkedServices
+        /// </summary>
         public IList<LinkedServiceDebugResource> LinkedServices { get; }
-        /// <summary> Staging info for debug session. </summary>
+        /// <summary>
+        /// Staging info for debug session.
+        /// Serialized Name: DataFlowDebugPackage.staging
+        /// </summary>
         public DataFlowStagingInfo Staging { get; set; }
-        /// <summary> Data flow debug settings. </summary>
+        /// <summary>
+        /// Data flow debug settings.
+        /// Serialized Name: DataFlowDebugPackage.debugSettings
+        /// </summary>
         public DataFlowDebugPackageDebugSettings DebugSettings { get; set; }
         /// <summary> Additional Properties. </summary>
         public IDictionary<string, BinaryData> AdditionalProperties { get; }

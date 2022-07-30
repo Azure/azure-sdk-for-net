@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Get Data Plane read only token response definition. </summary>
+    /// <summary>
+    /// Get Data Plane read only token response definition.
+    /// Serialized Name: AccessPolicyResponse
+    /// </summary>
     public partial class AccessPolicyResult
     {
         /// <summary> Initializes a new instance of AccessPolicyResult. </summary>
@@ -18,9 +21,18 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of AccessPolicyResult. </summary>
-        /// <param name="policy"> The user access policy. </param>
-        /// <param name="accessToken"> Data Plane read only access token. </param>
-        /// <param name="dataPlaneUri"> Data Plane service base URL. </param>
+        /// <param name="policy">
+        /// The user access policy.
+        /// Serialized Name: AccessPolicyResponse.policy
+        /// </param>
+        /// <param name="accessToken">
+        /// Data Plane read only access token.
+        /// Serialized Name: AccessPolicyResponse.accessToken
+        /// </param>
+        /// <param name="dataPlaneUri">
+        /// Data Plane service base URL.
+        /// Serialized Name: AccessPolicyResponse.dataPlaneUrl
+        /// </param>
         internal AccessPolicyResult(UserAccessPolicy policy, string accessToken, Uri dataPlaneUri)
         {
             Policy = policy;
@@ -28,11 +40,20 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataPlaneUri = dataPlaneUri;
         }
 
-        /// <summary> The user access policy. </summary>
+        /// <summary>
+        /// The user access policy.
+        /// Serialized Name: AccessPolicyResponse.policy
+        /// </summary>
         public UserAccessPolicy Policy { get; }
-        /// <summary> Data Plane read only access token. </summary>
+        /// <summary>
+        /// Data Plane read only access token.
+        /// Serialized Name: AccessPolicyResponse.accessToken
+        /// </summary>
         public string AccessToken { get; }
-        /// <summary> Data Plane service base URL. </summary>
+        /// <summary>
+        /// Data Plane service base URL.
+        /// Serialized Name: AccessPolicyResponse.dataPlaneUrl
+        /// </summary>
         public Uri DataPlaneUri { get; }
     }
 }

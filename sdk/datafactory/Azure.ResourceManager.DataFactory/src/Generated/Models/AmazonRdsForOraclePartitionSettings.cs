@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The settings that will be leveraged for AmazonRdsForOracle source partitioning. </summary>
+    /// <summary>
+    /// The settings that will be leveraged for AmazonRdsForOracle source partitioning.
+    /// Serialized Name: AmazonRdsForOraclePartitionSettings
+    /// </summary>
     public partial class AmazonRdsForOraclePartitionSettings
     {
         /// <summary> Initializes a new instance of AmazonRdsForOraclePartitionSettings. </summary>
@@ -18,10 +21,22 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of AmazonRdsForOraclePartitionSettings. </summary>
-        /// <param name="partitionNames"> Names of the physical partitions of AmazonRdsForOracle table. </param>
-        /// <param name="partitionColumnName"> The name of the column in integer type that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </param>
-        /// <param name="partitionUpperBound"> The maximum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </param>
-        /// <param name="partitionLowerBound"> The minimum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </param>
+        /// <param name="partitionNames">
+        /// Names of the physical partitions of AmazonRdsForOracle table. 
+        /// Serialized Name: AmazonRdsForOraclePartitionSettings.partitionNames
+        /// </param>
+        /// <param name="partitionColumnName">
+        /// The name of the column in integer type that will be used for proceeding range partitioning. Type: string (or Expression with resultType string).
+        /// Serialized Name: AmazonRdsForOraclePartitionSettings.partitionColumnName
+        /// </param>
+        /// <param name="partitionUpperBound">
+        /// The maximum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType string).
+        /// Serialized Name: AmazonRdsForOraclePartitionSettings.partitionUpperBound
+        /// </param>
+        /// <param name="partitionLowerBound">
+        /// The minimum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType string).
+        /// Serialized Name: AmazonRdsForOraclePartitionSettings.partitionLowerBound
+        /// </param>
         internal AmazonRdsForOraclePartitionSettings(BinaryData partitionNames, BinaryData partitionColumnName, BinaryData partitionUpperBound, BinaryData partitionLowerBound)
         {
             PartitionNames = partitionNames;
@@ -30,13 +45,25 @@ namespace Azure.ResourceManager.DataFactory.Models
             PartitionLowerBound = partitionLowerBound;
         }
 
-        /// <summary> Names of the physical partitions of AmazonRdsForOracle table. </summary>
+        /// <summary>
+        /// Names of the physical partitions of AmazonRdsForOracle table. 
+        /// Serialized Name: AmazonRdsForOraclePartitionSettings.partitionNames
+        /// </summary>
         public BinaryData PartitionNames { get; set; }
-        /// <summary> The name of the column in integer type that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The name of the column in integer type that will be used for proceeding range partitioning. Type: string (or Expression with resultType string).
+        /// Serialized Name: AmazonRdsForOraclePartitionSettings.partitionColumnName
+        /// </summary>
         public BinaryData PartitionColumnName { get; set; }
-        /// <summary> The maximum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The maximum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType string).
+        /// Serialized Name: AmazonRdsForOraclePartitionSettings.partitionUpperBound
+        /// </summary>
         public BinaryData PartitionUpperBound { get; set; }
-        /// <summary> The minimum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The minimum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType string).
+        /// Serialized Name: AmazonRdsForOraclePartitionSettings.partitionLowerBound
+        /// </summary>
         public BinaryData PartitionLowerBound { get; set; }
     }
 }

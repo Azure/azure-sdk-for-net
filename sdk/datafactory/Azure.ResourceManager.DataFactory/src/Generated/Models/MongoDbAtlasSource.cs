@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> A copy activity source for a MongoDB Atlas database. </summary>
+    /// <summary>
+    /// A copy activity source for a MongoDB Atlas database.
+    /// Serialized Name: MongoDbAtlasSource
+    /// </summary>
     public partial class MongoDbAtlasSource : CopySource
     {
         /// <summary> Initializes a new instance of MongoDbAtlasSource. </summary>
@@ -20,17 +23,47 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of MongoDbAtlasSource. </summary>
-        /// <param name="copySourceType"> Copy source type. </param>
-        /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
-        /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
-        /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
-        /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
+        /// <param name="copySourceType">
+        /// Copy source type.
+        /// Serialized Name: CopySource.type
+        /// </param>
+        /// <param name="sourceRetryCount">
+        /// Source retry count. Type: integer (or Expression with resultType integer).
+        /// Serialized Name: CopySource.sourceRetryCount
+        /// </param>
+        /// <param name="sourceRetryWait">
+        /// Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
+        /// Serialized Name: CopySource.sourceRetryWait
+        /// </param>
+        /// <param name="maxConcurrentConnections">
+        /// The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer).
+        /// Serialized Name: CopySource.maxConcurrentConnections
+        /// </param>
+        /// <param name="disableMetricsCollection">
+        /// If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: CopySource.disableMetricsCollection
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="filter"> Specifies selection filter using query operators. To return all documents in a collection, omit this parameter or pass an empty document ({}). Type: string (or Expression with resultType string). </param>
-        /// <param name="cursorMethods"> Cursor methods for Mongodb query. </param>
-        /// <param name="batchSize"> Specifies the number of documents to return in each batch of the response from MongoDB Atlas instance. In most cases, modifying the batch size will not affect the user or the application. This property&apos;s main purpose is to avoid hit the limitation of response size. Type: integer (or Expression with resultType integer). </param>
-        /// <param name="queryTimeout"> Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
-        /// <param name="additionalColumns"> Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects). </param>
+        /// <param name="filter">
+        /// Specifies selection filter using query operators. To return all documents in a collection, omit this parameter or pass an empty document ({}). Type: string (or Expression with resultType string).
+        /// Serialized Name: MongoDbAtlasSource.filter
+        /// </param>
+        /// <param name="cursorMethods">
+        /// Cursor methods for Mongodb query
+        /// Serialized Name: MongoDbAtlasSource.cursorMethods
+        /// </param>
+        /// <param name="batchSize">
+        /// Specifies the number of documents to return in each batch of the response from MongoDB Atlas instance. In most cases, modifying the batch size will not affect the user or the application. This property&apos;s main purpose is to avoid hit the limitation of response size. Type: integer (or Expression with resultType integer).
+        /// Serialized Name: MongoDbAtlasSource.batchSize
+        /// </param>
+        /// <param name="queryTimeout">
+        /// Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
+        /// Serialized Name: MongoDbAtlasSource.queryTimeout
+        /// </param>
+        /// <param name="additionalColumns">
+        /// Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects).
+        /// Serialized Name: MongoDbAtlasSource.additionalColumns
+        /// </param>
         internal MongoDbAtlasSource(string copySourceType, BinaryData sourceRetryCount, BinaryData sourceRetryWait, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, BinaryData filter, MongoDbCursorMethodsProperties cursorMethods, BinaryData batchSize, BinaryData queryTimeout, BinaryData additionalColumns) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             Filter = filter;
@@ -41,15 +74,30 @@ namespace Azure.ResourceManager.DataFactory.Models
             CopySourceType = copySourceType ?? "MongoDbAtlasSource";
         }
 
-        /// <summary> Specifies selection filter using query operators. To return all documents in a collection, omit this parameter or pass an empty document ({}). Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Specifies selection filter using query operators. To return all documents in a collection, omit this parameter or pass an empty document ({}). Type: string (or Expression with resultType string).
+        /// Serialized Name: MongoDbAtlasSource.filter
+        /// </summary>
         public BinaryData Filter { get; set; }
-        /// <summary> Cursor methods for Mongodb query. </summary>
+        /// <summary>
+        /// Cursor methods for Mongodb query
+        /// Serialized Name: MongoDbAtlasSource.cursorMethods
+        /// </summary>
         public MongoDbCursorMethodsProperties CursorMethods { get; set; }
-        /// <summary> Specifies the number of documents to return in each batch of the response from MongoDB Atlas instance. In most cases, modifying the batch size will not affect the user or the application. This property&apos;s main purpose is to avoid hit the limitation of response size. Type: integer (or Expression with resultType integer). </summary>
+        /// <summary>
+        /// Specifies the number of documents to return in each batch of the response from MongoDB Atlas instance. In most cases, modifying the batch size will not affect the user or the application. This property&apos;s main purpose is to avoid hit the limitation of response size. Type: integer (or Expression with resultType integer).
+        /// Serialized Name: MongoDbAtlasSource.batchSize
+        /// </summary>
         public BinaryData BatchSize { get; set; }
-        /// <summary> Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </summary>
+        /// <summary>
+        /// Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
+        /// Serialized Name: MongoDbAtlasSource.queryTimeout
+        /// </summary>
         public BinaryData QueryTimeout { get; set; }
-        /// <summary> Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects). </summary>
+        /// <summary>
+        /// Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects).
+        /// Serialized Name: MongoDbAtlasSource.additionalColumns
+        /// </summary>
         public BinaryData AdditionalColumns { get; set; }
     }
 }

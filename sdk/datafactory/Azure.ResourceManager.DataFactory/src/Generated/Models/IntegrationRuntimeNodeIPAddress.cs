@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The IP address of self-hosted integration runtime node. </summary>
+    /// <summary>
+    /// The IP address of self-hosted integration runtime node.
+    /// Serialized Name: IntegrationRuntimeNodeIpAddress
+    /// </summary>
     public partial class IntegrationRuntimeNodeIPAddress
     {
         /// <summary> Initializes a new instance of IntegrationRuntimeNodeIPAddress. </summary>
@@ -16,13 +19,19 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of IntegrationRuntimeNodeIPAddress. </summary>
-        /// <param name="ipAddress"> The IP address of self-hosted integration runtime node. </param>
+        /// <param name="ipAddress">
+        /// The IP address of self-hosted integration runtime node.
+        /// Serialized Name: IntegrationRuntimeNodeIpAddress.ipAddress
+        /// </param>
         internal IntegrationRuntimeNodeIPAddress(string ipAddress)
         {
             IPAddress = ipAddress;
         }
 
-        /// <summary> The IP address of self-hosted integration runtime node. </summary>
+        /// <summary>
+        /// The IP address of self-hosted integration runtime node.
+        /// Serialized Name: IntegrationRuntimeNodeIpAddress.ipAddress
+        /// </summary>
         public string IPAddress { get; }
     }
 }

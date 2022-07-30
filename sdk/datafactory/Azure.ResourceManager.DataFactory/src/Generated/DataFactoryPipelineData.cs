@@ -33,20 +33,48 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="description"> The description of the pipeline. </param>
+        /// <param name="description">
+        /// The description of the pipeline.
+        /// Serialized Name: PipelineResource.properties.description
+        /// </param>
         /// <param name="activities">
         /// List of activities in pipeline.
+        /// Serialized Name: PipelineResource.properties.activities
         /// Please note <see cref="DataFactoryPipelineActivity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AppendVariableActivity"/>, <see cref="AzureDataExplorerCommandActivity"/>, <see cref="AzureFunctionActivity"/>, <see cref="AzureMLBatchExecutionActivity"/>, <see cref="AzureMLExecutePipelineActivity"/>, <see cref="AzureMLUpdateResourceActivity"/>, <see cref="ControlActivity"/>, <see cref="CopyActivity"/>, <see cref="CustomActivity"/>, <see cref="DataLakeAnalyticsUsqlActivity"/>, <see cref="DatabricksNotebookActivity"/>, <see cref="DatabricksSparkJarActivity"/>, <see cref="DatabricksSparkPythonActivity"/>, <see cref="DeleteActivity"/>, <see cref="ExecuteDataFlowActivity"/>, <see cref="ExecutePipelineActivity"/>, <see cref="ExecuteSsisPackageActivity"/>, <see cref="ExecuteWranglingDataflowActivity"/>, <see cref="ExecutionActivity"/>, <see cref="FailActivity"/>, <see cref="FilterActivity"/>, <see cref="ForEachActivity"/>, <see cref="GetMetadataActivity"/>, <see cref="HDInsightHiveActivity"/>, <see cref="HDInsightMapReduceActivity"/>, <see cref="HDInsightPigActivity"/>, <see cref="HDInsightSparkActivity"/>, <see cref="HDInsightStreamingActivity"/>, <see cref="IfConditionActivity"/>, <see cref="LookupActivity"/>, <see cref="ScriptActivity"/>, <see cref="SetVariableActivity"/>, <see cref="SqlServerStoredProcedureActivity"/>, <see cref="SwitchActivity"/>, <see cref="UntilActivity"/>, <see cref="ValidationActivity"/>, <see cref="WaitActivity"/>, <see cref="WebActivity"/> and <see cref="WebHookActivity"/>.
         /// </param>
-        /// <param name="parameters"> List of parameters for pipeline. </param>
-        /// <param name="variables"> List of variables for pipeline. </param>
-        /// <param name="concurrency"> The max number of concurrent runs for the pipeline. </param>
-        /// <param name="annotations"> List of tags that can be used for describing the Pipeline. </param>
-        /// <param name="runDimensions"> Dimensions emitted by Pipeline. </param>
-        /// <param name="folder"> The folder that this Pipeline is in. If not specified, Pipeline will appear at the root level. </param>
-        /// <param name="policy"> Pipeline Policy. </param>
-        /// <param name="eTag"> Etag identifies change in the resource. </param>
+        /// <param name="parameters">
+        /// List of parameters for pipeline.
+        /// Serialized Name: PipelineResource.properties.parameters
+        /// </param>
+        /// <param name="variables">
+        /// List of variables for pipeline.
+        /// Serialized Name: PipelineResource.properties.variables
+        /// </param>
+        /// <param name="concurrency">
+        /// The max number of concurrent runs for the pipeline.
+        /// Serialized Name: PipelineResource.properties.concurrency
+        /// </param>
+        /// <param name="annotations">
+        /// List of tags that can be used for describing the Pipeline.
+        /// Serialized Name: PipelineResource.properties.annotations
+        /// </param>
+        /// <param name="runDimensions">
+        /// Dimensions emitted by Pipeline.
+        /// Serialized Name: PipelineResource.properties.runDimensions
+        /// </param>
+        /// <param name="folder">
+        /// The folder that this Pipeline is in. If not specified, Pipeline will appear at the root level.
+        /// Serialized Name: PipelineResource.properties.folder
+        /// </param>
+        /// <param name="policy">
+        /// Pipeline Policy.
+        /// Serialized Name: PipelineResource.properties.policy
+        /// </param>
+        /// <param name="eTag">
+        /// Etag identifies change in the resource.
+        /// Serialized Name: SubResource.etag
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal DataFactoryPipelineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, IList<DataFactoryPipelineActivity> activities, IDictionary<string, ParameterSpecification> parameters, IDictionary<string, VariableSpecification> variables, int? concurrency, IList<BinaryData> annotations, IDictionary<string, BinaryData> runDimensions, PipelineFolder folder, PipelinePolicy policy, ETag? eTag, IDictionary<string, BinaryData> additionalProperties) : base(id, name, resourceType, systemData)
         {
@@ -63,27 +91,52 @@ namespace Azure.ResourceManager.DataFactory
             AdditionalProperties = additionalProperties;
         }
 
-        /// <summary> The description of the pipeline. </summary>
+        /// <summary>
+        /// The description of the pipeline.
+        /// Serialized Name: PipelineResource.properties.description
+        /// </summary>
         public string Description { get; set; }
         /// <summary>
         /// List of activities in pipeline.
+        /// Serialized Name: PipelineResource.properties.activities
         /// Please note <see cref="DataFactoryPipelineActivity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AppendVariableActivity"/>, <see cref="AzureDataExplorerCommandActivity"/>, <see cref="AzureFunctionActivity"/>, <see cref="AzureMLBatchExecutionActivity"/>, <see cref="AzureMLExecutePipelineActivity"/>, <see cref="AzureMLUpdateResourceActivity"/>, <see cref="ControlActivity"/>, <see cref="CopyActivity"/>, <see cref="CustomActivity"/>, <see cref="DataLakeAnalyticsUsqlActivity"/>, <see cref="DatabricksNotebookActivity"/>, <see cref="DatabricksSparkJarActivity"/>, <see cref="DatabricksSparkPythonActivity"/>, <see cref="DeleteActivity"/>, <see cref="ExecuteDataFlowActivity"/>, <see cref="ExecutePipelineActivity"/>, <see cref="ExecuteSsisPackageActivity"/>, <see cref="ExecuteWranglingDataflowActivity"/>, <see cref="ExecutionActivity"/>, <see cref="FailActivity"/>, <see cref="FilterActivity"/>, <see cref="ForEachActivity"/>, <see cref="GetMetadataActivity"/>, <see cref="HDInsightHiveActivity"/>, <see cref="HDInsightMapReduceActivity"/>, <see cref="HDInsightPigActivity"/>, <see cref="HDInsightSparkActivity"/>, <see cref="HDInsightStreamingActivity"/>, <see cref="IfConditionActivity"/>, <see cref="LookupActivity"/>, <see cref="ScriptActivity"/>, <see cref="SetVariableActivity"/>, <see cref="SqlServerStoredProcedureActivity"/>, <see cref="SwitchActivity"/>, <see cref="UntilActivity"/>, <see cref="ValidationActivity"/>, <see cref="WaitActivity"/>, <see cref="WebActivity"/> and <see cref="WebHookActivity"/>.
         /// </summary>
         public IList<DataFactoryPipelineActivity> Activities { get; }
-        /// <summary> List of parameters for pipeline. </summary>
+        /// <summary>
+        /// List of parameters for pipeline.
+        /// Serialized Name: PipelineResource.properties.parameters
+        /// </summary>
         public IDictionary<string, ParameterSpecification> Parameters { get; }
-        /// <summary> List of variables for pipeline. </summary>
+        /// <summary>
+        /// List of variables for pipeline.
+        /// Serialized Name: PipelineResource.properties.variables
+        /// </summary>
         public IDictionary<string, VariableSpecification> Variables { get; }
-        /// <summary> The max number of concurrent runs for the pipeline. </summary>
+        /// <summary>
+        /// The max number of concurrent runs for the pipeline.
+        /// Serialized Name: PipelineResource.properties.concurrency
+        /// </summary>
         public int? Concurrency { get; set; }
-        /// <summary> List of tags that can be used for describing the Pipeline. </summary>
+        /// <summary>
+        /// List of tags that can be used for describing the Pipeline.
+        /// Serialized Name: PipelineResource.properties.annotations
+        /// </summary>
         public IList<BinaryData> Annotations { get; }
-        /// <summary> Dimensions emitted by Pipeline. </summary>
+        /// <summary>
+        /// Dimensions emitted by Pipeline.
+        /// Serialized Name: PipelineResource.properties.runDimensions
+        /// </summary>
         public IDictionary<string, BinaryData> RunDimensions { get; }
-        /// <summary> The folder that this Pipeline is in. If not specified, Pipeline will appear at the root level. </summary>
+        /// <summary>
+        /// The folder that this Pipeline is in. If not specified, Pipeline will appear at the root level.
+        /// Serialized Name: PipelineResource.properties.folder
+        /// </summary>
         internal PipelineFolder Folder { get; set; }
-        /// <summary> The name of the folder that this Pipeline is in. </summary>
+        /// <summary>
+        /// The name of the folder that this Pipeline is in.
+        /// Serialized Name: PipelineFolder.name
+        /// </summary>
         public string FolderName
         {
             get => Folder is null ? default : Folder.Name;
@@ -95,9 +148,15 @@ namespace Azure.ResourceManager.DataFactory
             }
         }
 
-        /// <summary> Pipeline Policy. </summary>
+        /// <summary>
+        /// Pipeline Policy.
+        /// Serialized Name: PipelineResource.properties.policy
+        /// </summary>
         internal PipelinePolicy Policy { get; set; }
-        /// <summary> TimeSpan value, after which an Azure Monitoring Metric is fired. </summary>
+        /// <summary>
+        /// TimeSpan value, after which an Azure Monitoring Metric is fired.
+        /// Serialized Name: PipelineElapsedTimeMetricPolicy.duration
+        /// </summary>
         public BinaryData ElapsedTimeMetricDuration
         {
             get => Policy is null ? default : Policy.ElapsedTimeMetricDuration;
@@ -109,7 +168,10 @@ namespace Azure.ResourceManager.DataFactory
             }
         }
 
-        /// <summary> Etag identifies change in the resource. </summary>
+        /// <summary>
+        /// Etag identifies change in the resource.
+        /// Serialized Name: SubResource.etag
+        /// </summary>
         public ETag? ETag { get; }
         /// <summary> Additional Properties. </summary>
         public IDictionary<string, BinaryData> AdditionalProperties { get; }

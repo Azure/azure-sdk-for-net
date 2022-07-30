@@ -10,11 +10,17 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> A Rest service dataset. </summary>
+    /// <summary>
+    /// A Rest service dataset.
+    /// Serialized Name: RestResourceDataset
+    /// </summary>
     public partial class RestResourceDataset : Dataset
     {
         /// <summary> Initializes a new instance of RestResourceDataset. </summary>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
+        /// <param name="linkedServiceName">
+        /// Linked service reference.
+        /// Serialized Name: Dataset.linkedServiceName
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public RestResourceDataset(LinkedServiceReference linkedServiceName) : base(linkedServiceName)
         {
@@ -27,20 +33,59 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of RestResourceDataset. </summary>
-        /// <param name="datasetType"> Type of dataset. </param>
-        /// <param name="description"> Dataset description. </param>
-        /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
-        /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
-        /// <param name="parameters"> Parameters for dataset. </param>
-        /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
-        /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
+        /// <param name="datasetType">
+        /// Type of dataset.
+        /// Serialized Name: Dataset.type
+        /// </param>
+        /// <param name="description">
+        /// Dataset description.
+        /// Serialized Name: Dataset.description
+        /// </param>
+        /// <param name="structure">
+        /// Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement.
+        /// Serialized Name: Dataset.structure
+        /// </param>
+        /// <param name="schema">
+        /// Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement.
+        /// Serialized Name: Dataset.schema
+        /// </param>
+        /// <param name="linkedServiceName">
+        /// Linked service reference.
+        /// Serialized Name: Dataset.linkedServiceName
+        /// </param>
+        /// <param name="parameters">
+        /// Parameters for dataset.
+        /// Serialized Name: Dataset.parameters
+        /// </param>
+        /// <param name="annotations">
+        /// List of tags that can be used for describing the Dataset.
+        /// Serialized Name: Dataset.annotations
+        /// </param>
+        /// <param name="folder">
+        /// The folder that this Dataset is in. If not specified, Dataset will appear at the root level.
+        /// Serialized Name: Dataset.folder
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="relativeUri"> The relative URL to the resource that the RESTful API provides. Type: string (or Expression with resultType string). </param>
-        /// <param name="requestMethod"> The HTTP method used to call the RESTful API. The default is GET. Type: string (or Expression with resultType string). </param>
-        /// <param name="requestBody"> The HTTP request body to the RESTful API if requestMethod is POST. Type: string (or Expression with resultType string). </param>
-        /// <param name="additionalHeaders"> The additional HTTP headers in the request to the RESTful API. Type: string (or Expression with resultType string). </param>
-        /// <param name="paginationRules"> The pagination rules to compose next page requests. Type: string (or Expression with resultType string). </param>
+        /// <param name="relativeUri">
+        /// The relative URL to the resource that the RESTful API provides. Type: string (or Expression with resultType string).
+        /// Serialized Name: RestResourceDataset.typeProperties.relativeUrl
+        /// </param>
+        /// <param name="requestMethod">
+        /// The HTTP method used to call the RESTful API. The default is GET. Type: string (or Expression with resultType string).
+        /// Serialized Name: RestResourceDataset.typeProperties.requestMethod
+        /// </param>
+        /// <param name="requestBody">
+        /// The HTTP request body to the RESTful API if requestMethod is POST. Type: string (or Expression with resultType string).
+        /// Serialized Name: RestResourceDataset.typeProperties.requestBody
+        /// </param>
+        /// <param name="additionalHeaders">
+        /// The additional HTTP headers in the request to the RESTful API. Type: string (or Expression with resultType string).
+        /// Serialized Name: RestResourceDataset.typeProperties.additionalHeaders
+        /// </param>
+        /// <param name="paginationRules">
+        /// The pagination rules to compose next page requests. Type: string (or Expression with resultType string).
+        /// Serialized Name: RestResourceDataset.typeProperties.paginationRules
+        /// </param>
         internal RestResourceDataset(string datasetType, string description, BinaryData structure, BinaryData schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData relativeUri, BinaryData requestMethod, BinaryData requestBody, BinaryData additionalHeaders, BinaryData paginationRules) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             RelativeUri = relativeUri;
@@ -51,15 +96,30 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = datasetType ?? "RestResource";
         }
 
-        /// <summary> The relative URL to the resource that the RESTful API provides. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The relative URL to the resource that the RESTful API provides. Type: string (or Expression with resultType string).
+        /// Serialized Name: RestResourceDataset.typeProperties.relativeUrl
+        /// </summary>
         public BinaryData RelativeUri { get; set; }
-        /// <summary> The HTTP method used to call the RESTful API. The default is GET. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The HTTP method used to call the RESTful API. The default is GET. Type: string (or Expression with resultType string).
+        /// Serialized Name: RestResourceDataset.typeProperties.requestMethod
+        /// </summary>
         public BinaryData RequestMethod { get; set; }
-        /// <summary> The HTTP request body to the RESTful API if requestMethod is POST. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The HTTP request body to the RESTful API if requestMethod is POST. Type: string (or Expression with resultType string).
+        /// Serialized Name: RestResourceDataset.typeProperties.requestBody
+        /// </summary>
         public BinaryData RequestBody { get; set; }
-        /// <summary> The additional HTTP headers in the request to the RESTful API. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The additional HTTP headers in the request to the RESTful API. Type: string (or Expression with resultType string).
+        /// Serialized Name: RestResourceDataset.typeProperties.additionalHeaders
+        /// </summary>
         public BinaryData AdditionalHeaders { get; set; }
-        /// <summary> The pagination rules to compose next page requests. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The pagination rules to compose next page requests. Type: string (or Expression with resultType string).
+        /// Serialized Name: RestResourceDataset.typeProperties.paginationRules
+        /// </summary>
         public BinaryData PaginationRules { get; set; }
     }
 }

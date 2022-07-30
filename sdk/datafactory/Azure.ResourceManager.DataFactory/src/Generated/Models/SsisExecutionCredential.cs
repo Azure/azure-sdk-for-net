@@ -9,13 +9,25 @@ using System;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> SSIS package execution credential. </summary>
+    /// <summary>
+    /// SSIS package execution credential.
+    /// Serialized Name: SsisExecutionCredential
+    /// </summary>
     public partial class SsisExecutionCredential
     {
         /// <summary> Initializes a new instance of SsisExecutionCredential. </summary>
-        /// <param name="domain"> Domain for windows authentication. </param>
-        /// <param name="userName"> UseName for windows authentication. </param>
-        /// <param name="password"> Password for windows authentication. </param>
+        /// <param name="domain">
+        /// Domain for windows authentication.
+        /// Serialized Name: SsisExecutionCredential.domain
+        /// </param>
+        /// <param name="userName">
+        /// UseName for windows authentication.
+        /// Serialized Name: SsisExecutionCredential.userName
+        /// </param>
+        /// <param name="password">
+        /// Password for windows authentication.
+        /// Serialized Name: SsisExecutionCredential.password
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="domain"/>, <paramref name="userName"/> or <paramref name="password"/> is null. </exception>
         public SsisExecutionCredential(BinaryData domain, BinaryData userName, SecureString password)
         {
@@ -37,11 +49,20 @@ namespace Azure.ResourceManager.DataFactory.Models
             Password = password;
         }
 
-        /// <summary> Domain for windows authentication. </summary>
+        /// <summary>
+        /// Domain for windows authentication.
+        /// Serialized Name: SsisExecutionCredential.domain
+        /// </summary>
         public BinaryData Domain { get; set; }
-        /// <summary> UseName for windows authentication. </summary>
+        /// <summary>
+        /// UseName for windows authentication.
+        /// Serialized Name: SsisExecutionCredential.userName
+        /// </summary>
         public BinaryData UserName { get; set; }
-        /// <summary> Password for windows authentication. </summary>
+        /// <summary>
+        /// Password for windows authentication.
+        /// Serialized Name: SsisExecutionCredential.password
+        /// </summary>
         public SecureString Password { get; set; }
     }
 }

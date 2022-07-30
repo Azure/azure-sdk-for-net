@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Parameters for updating a factory resource. </summary>
+    /// <summary>
+    /// Parameters for updating a factory resource.
+    /// Serialized Name: FactoryUpdateParameters
+    /// </summary>
     public partial class DataFactoryPatch
     {
         /// <summary> Initializes a new instance of DataFactoryPatch. </summary>
@@ -19,11 +22,20 @@ namespace Azure.ResourceManager.DataFactory.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> The resource tags. </summary>
+        /// <summary>
+        /// The resource tags.
+        /// Serialized Name: FactoryUpdateParameters.tags
+        /// </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> Managed service identity of the factory. </summary>
+        /// <summary>
+        /// Managed service identity of the factory.
+        /// Serialized Name: FactoryUpdateParameters.identity
+        /// </summary>
         public FactoryIdentity Identity { get; set; }
-        /// <summary> Whether or not public network access is allowed for the data factory. </summary>
+        /// <summary>
+        /// Whether or not public network access is allowed for the data factory.
+        /// Serialized Name: FactoryUpdateParameters.properties.publicNetworkAccess
+        /// </summary>
         public PublicNetworkAccess? PublicNetworkAccess { get; set; }
     }
 }

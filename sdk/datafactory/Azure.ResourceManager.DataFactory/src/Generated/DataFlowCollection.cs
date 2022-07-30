@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.DataFactory
     /// <summary>
     /// A class representing a collection of <see cref="DataFlowResource" /> and their operations.
     /// Each <see cref="DataFlowResource" /> in the collection will belong to the same instance of <see cref="DataFactoryResource" />.
-    /// To get a <see cref="DataFlowResourceCollection" /> instance call the GetDataFlowResources method from an instance of <see cref="DataFactoryResource" />.
+    /// To get a <see cref="DataFlowCollection" /> instance call the GetDataFlows method from an instance of <see cref="DataFactoryResource" />.
     /// </summary>
-    public partial class DataFlowResourceCollection : ArmCollection, IEnumerable<DataFlowResource>, IAsyncEnumerable<DataFlowResource>
+    public partial class DataFlowCollection : ArmCollection, IEnumerable<DataFlowResource>, IAsyncEnumerable<DataFlowResource>
     {
-        private readonly ClientDiagnostics _dataFlowResourceDataFlowsClientDiagnostics;
-        private readonly DataFlowsRestOperations _dataFlowResourceDataFlowsRestClient;
+        private readonly ClientDiagnostics _dataFlowClientDiagnostics;
+        private readonly DataFlowsRestOperations _dataFlowRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="DataFlowResourceCollection"/> class for mocking. </summary>
-        protected DataFlowResourceCollection()
+        /// <summary> Initializes a new instance of the <see cref="DataFlowCollection"/> class for mocking. </summary>
+        protected DataFlowCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DataFlowResourceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataFlowCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal DataFlowResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal DataFlowCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _dataFlowResourceDataFlowsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", DataFlowResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(DataFlowResource.ResourceType, out string dataFlowResourceDataFlowsApiVersion);
-            _dataFlowResourceDataFlowsRestClient = new DataFlowsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataFlowResourceDataFlowsApiVersion);
+            _dataFlowClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", DataFlowResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(DataFlowResource.ResourceType, out string dataFlowApiVersion);
+            _dataFlowRestClient = new DataFlowsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataFlowApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -65,16 +65,16 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="dataFlowName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataFlowName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<DataFlowResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string dataFlowName, DataFlowResourceData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DataFlowResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string dataFlowName, DataFlowData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dataFlowName, nameof(dataFlowName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _dataFlowResourceDataFlowsClientDiagnostics.CreateScope("DataFlowResourceCollection.CreateOrUpdate");
+            using var scope = _dataFlowClientDiagnostics.CreateScope("DataFlowCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _dataFlowResourceDataFlowsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataFlowName, data, ifMatch, cancellationToken).ConfigureAwait(false);
+                var response = await _dataFlowRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataFlowName, data, ifMatch, cancellationToken).ConfigureAwait(false);
                 var operation = new DataFactoryArmOperation<DataFlowResource>(Response.FromValue(new DataFlowResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -99,16 +99,16 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="dataFlowName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataFlowName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<DataFlowResource> CreateOrUpdate(WaitUntil waitUntil, string dataFlowName, DataFlowResourceData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DataFlowResource> CreateOrUpdate(WaitUntil waitUntil, string dataFlowName, DataFlowData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dataFlowName, nameof(dataFlowName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _dataFlowResourceDataFlowsClientDiagnostics.CreateScope("DataFlowResourceCollection.CreateOrUpdate");
+            using var scope = _dataFlowClientDiagnostics.CreateScope("DataFlowCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _dataFlowResourceDataFlowsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataFlowName, data, ifMatch, cancellationToken);
+                var response = _dataFlowRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataFlowName, data, ifMatch, cancellationToken);
                 var operation = new DataFactoryArmOperation<DataFlowResource>(Response.FromValue(new DataFlowResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
@@ -135,11 +135,11 @@ namespace Azure.ResourceManager.DataFactory
         {
             Argument.AssertNotNullOrEmpty(dataFlowName, nameof(dataFlowName));
 
-            using var scope = _dataFlowResourceDataFlowsClientDiagnostics.CreateScope("DataFlowResourceCollection.Get");
+            using var scope = _dataFlowClientDiagnostics.CreateScope("DataFlowCollection.Get");
             scope.Start();
             try
             {
-                var response = await _dataFlowResourceDataFlowsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataFlowName, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+                var response = await _dataFlowRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataFlowName, ifNoneMatch, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DataFlowResource(Client, response.Value), response.GetRawResponse());
@@ -165,11 +165,11 @@ namespace Azure.ResourceManager.DataFactory
         {
             Argument.AssertNotNullOrEmpty(dataFlowName, nameof(dataFlowName));
 
-            using var scope = _dataFlowResourceDataFlowsClientDiagnostics.CreateScope("DataFlowResourceCollection.Get");
+            using var scope = _dataFlowClientDiagnostics.CreateScope("DataFlowCollection.Get");
             scope.Start();
             try
             {
-                var response = _dataFlowResourceDataFlowsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataFlowName, ifNoneMatch, cancellationToken);
+                var response = _dataFlowRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataFlowName, ifNoneMatch, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DataFlowResource(Client, response.Value), response.GetRawResponse());
@@ -192,11 +192,11 @@ namespace Azure.ResourceManager.DataFactory
         {
             async Task<Page<DataFlowResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _dataFlowResourceDataFlowsClientDiagnostics.CreateScope("DataFlowResourceCollection.GetAll");
+                using var scope = _dataFlowClientDiagnostics.CreateScope("DataFlowCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _dataFlowResourceDataFlowsRestClient.ListByFactoryAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _dataFlowRestClient.ListByFactoryAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new DataFlowResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -207,11 +207,11 @@ namespace Azure.ResourceManager.DataFactory
             }
             async Task<Page<DataFlowResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _dataFlowResourceDataFlowsClientDiagnostics.CreateScope("DataFlowResourceCollection.GetAll");
+                using var scope = _dataFlowClientDiagnostics.CreateScope("DataFlowCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _dataFlowResourceDataFlowsRestClient.ListByFactoryNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _dataFlowRestClient.ListByFactoryNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new DataFlowResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -234,11 +234,11 @@ namespace Azure.ResourceManager.DataFactory
         {
             Page<DataFlowResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _dataFlowResourceDataFlowsClientDiagnostics.CreateScope("DataFlowResourceCollection.GetAll");
+                using var scope = _dataFlowClientDiagnostics.CreateScope("DataFlowCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _dataFlowResourceDataFlowsRestClient.ListByFactory(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _dataFlowRestClient.ListByFactory(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new DataFlowResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -249,11 +249,11 @@ namespace Azure.ResourceManager.DataFactory
             }
             Page<DataFlowResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _dataFlowResourceDataFlowsClientDiagnostics.CreateScope("DataFlowResourceCollection.GetAll");
+                using var scope = _dataFlowClientDiagnostics.CreateScope("DataFlowCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _dataFlowResourceDataFlowsRestClient.ListByFactoryNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _dataFlowRestClient.ListByFactoryNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new DataFlowResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -279,11 +279,11 @@ namespace Azure.ResourceManager.DataFactory
         {
             Argument.AssertNotNullOrEmpty(dataFlowName, nameof(dataFlowName));
 
-            using var scope = _dataFlowResourceDataFlowsClientDiagnostics.CreateScope("DataFlowResourceCollection.Exists");
+            using var scope = _dataFlowClientDiagnostics.CreateScope("DataFlowCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _dataFlowResourceDataFlowsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataFlowName, ifNoneMatch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _dataFlowRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataFlowName, ifNoneMatch, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -307,11 +307,11 @@ namespace Azure.ResourceManager.DataFactory
         {
             Argument.AssertNotNullOrEmpty(dataFlowName, nameof(dataFlowName));
 
-            using var scope = _dataFlowResourceDataFlowsClientDiagnostics.CreateScope("DataFlowResourceCollection.Exists");
+            using var scope = _dataFlowClientDiagnostics.CreateScope("DataFlowCollection.Exists");
             scope.Start();
             try
             {
-                var response = _dataFlowResourceDataFlowsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataFlowName, ifNoneMatch, cancellationToken: cancellationToken);
+                var response = _dataFlowRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataFlowName, ifNoneMatch, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)

@@ -10,7 +10,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> A request to approve or reject a private endpoint connection. </summary>
+    /// <summary>
+    /// A request to approve or reject a private endpoint connection
+    /// Serialized Name: PrivateLinkConnectionApprovalRequest
+    /// </summary>
     public partial class PrivateLinkConnectionApprovalRequest
     {
         /// <summary> Initializes a new instance of PrivateLinkConnectionApprovalRequest. </summary>
@@ -19,17 +22,29 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of PrivateLinkConnectionApprovalRequest. </summary>
-        /// <param name="privateLinkServiceConnectionState"> The state of a private link connection. </param>
-        /// <param name="privateEndpoint"> The resource of private endpoint. </param>
+        /// <param name="privateLinkServiceConnectionState">
+        /// The state of a private link connection
+        /// Serialized Name: PrivateLinkConnectionApprovalRequest.privateLinkServiceConnectionState
+        /// </param>
+        /// <param name="privateEndpoint">
+        /// The resource of private endpoint.
+        /// Serialized Name: PrivateLinkConnectionApprovalRequest.privateEndpoint
+        /// </param>
         internal PrivateLinkConnectionApprovalRequest(PrivateLinkConnectionState privateLinkServiceConnectionState, WritableSubResource privateEndpoint)
         {
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
             PrivateEndpoint = privateEndpoint;
         }
 
-        /// <summary> The state of a private link connection. </summary>
+        /// <summary>
+        /// The state of a private link connection
+        /// Serialized Name: PrivateLinkConnectionApprovalRequest.privateLinkServiceConnectionState
+        /// </summary>
         public PrivateLinkConnectionState PrivateLinkServiceConnectionState { get; set; }
-        /// <summary> The resource of private endpoint. </summary>
+        /// <summary>
+        /// The resource of private endpoint.
+        /// Serialized Name: PrivateLinkConnectionApprovalRequest.privateEndpoint
+        /// </summary>
         internal WritableSubResource PrivateEndpoint { get; set; }
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier PrivateEndpointId

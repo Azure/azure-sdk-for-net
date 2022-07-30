@@ -10,11 +10,17 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Google BigQuery service dataset. </summary>
+    /// <summary>
+    /// Google BigQuery service dataset.
+    /// Serialized Name: GoogleBigQueryObjectDataset
+    /// </summary>
     public partial class GoogleBigQueryObjectDataset : Dataset
     {
         /// <summary> Initializes a new instance of GoogleBigQueryObjectDataset. </summary>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
+        /// <param name="linkedServiceName">
+        /// Linked service reference.
+        /// Serialized Name: Dataset.linkedServiceName
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public GoogleBigQueryObjectDataset(LinkedServiceReference linkedServiceName) : base(linkedServiceName)
         {
@@ -27,18 +33,51 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of GoogleBigQueryObjectDataset. </summary>
-        /// <param name="datasetType"> Type of dataset. </param>
-        /// <param name="description"> Dataset description. </param>
-        /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
-        /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
-        /// <param name="parameters"> Parameters for dataset. </param>
-        /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
-        /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
+        /// <param name="datasetType">
+        /// Type of dataset.
+        /// Serialized Name: Dataset.type
+        /// </param>
+        /// <param name="description">
+        /// Dataset description.
+        /// Serialized Name: Dataset.description
+        /// </param>
+        /// <param name="structure">
+        /// Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement.
+        /// Serialized Name: Dataset.structure
+        /// </param>
+        /// <param name="schema">
+        /// Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement.
+        /// Serialized Name: Dataset.schema
+        /// </param>
+        /// <param name="linkedServiceName">
+        /// Linked service reference.
+        /// Serialized Name: Dataset.linkedServiceName
+        /// </param>
+        /// <param name="parameters">
+        /// Parameters for dataset.
+        /// Serialized Name: Dataset.parameters
+        /// </param>
+        /// <param name="annotations">
+        /// List of tags that can be used for describing the Dataset.
+        /// Serialized Name: Dataset.annotations
+        /// </param>
+        /// <param name="folder">
+        /// The folder that this Dataset is in. If not specified, Dataset will appear at the root level.
+        /// Serialized Name: Dataset.folder
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="tableName"> This property will be retired. Please consider using database + table properties instead. </param>
-        /// <param name="table"> The table name of the Google BigQuery. Type: string (or Expression with resultType string). </param>
-        /// <param name="dataset"> The database name of the Google BigQuery. Type: string (or Expression with resultType string). </param>
+        /// <param name="tableName">
+        /// This property will be retired. Please consider using database + table properties instead.
+        /// Serialized Name: GoogleBigQueryObjectDataset.typeProperties.tableName
+        /// </param>
+        /// <param name="table">
+        /// The table name of the Google BigQuery. Type: string (or Expression with resultType string).
+        /// Serialized Name: GoogleBigQueryObjectDataset.typeProperties.table
+        /// </param>
+        /// <param name="dataset">
+        /// The database name of the Google BigQuery. Type: string (or Expression with resultType string).
+        /// Serialized Name: GoogleBigQueryObjectDataset.typeProperties.dataset
+        /// </param>
         internal GoogleBigQueryObjectDataset(string datasetType, string description, BinaryData structure, BinaryData schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData tableName, BinaryData table, BinaryData dataset) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             TableName = tableName;
@@ -47,11 +86,20 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = datasetType ?? "GoogleBigQueryObject";
         }
 
-        /// <summary> This property will be retired. Please consider using database + table properties instead. </summary>
+        /// <summary>
+        /// This property will be retired. Please consider using database + table properties instead.
+        /// Serialized Name: GoogleBigQueryObjectDataset.typeProperties.tableName
+        /// </summary>
         public BinaryData TableName { get; set; }
-        /// <summary> The table name of the Google BigQuery. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The table name of the Google BigQuery. Type: string (or Expression with resultType string).
+        /// Serialized Name: GoogleBigQueryObjectDataset.typeProperties.table
+        /// </summary>
         public BinaryData Table { get; set; }
-        /// <summary> The database name of the Google BigQuery. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The database name of the Google BigQuery. Type: string (or Expression with resultType string).
+        /// Serialized Name: GoogleBigQueryObjectDataset.typeProperties.dataset
+        /// </summary>
         public BinaryData Dataset { get; set; }
     }
 }

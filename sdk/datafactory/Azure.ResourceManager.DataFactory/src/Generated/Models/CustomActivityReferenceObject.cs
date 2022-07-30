@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Reference objects for custom activity. </summary>
+    /// <summary>
+    /// Reference objects for custom activity
+    /// Serialized Name: CustomActivityReferenceObject
+    /// </summary>
     public partial class CustomActivityReferenceObject
     {
         /// <summary> Initializes a new instance of CustomActivityReferenceObject. </summary>
@@ -21,17 +24,29 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of CustomActivityReferenceObject. </summary>
-        /// <param name="linkedServices"> Linked service references. </param>
-        /// <param name="datasets"> Dataset references. </param>
+        /// <param name="linkedServices">
+        /// Linked service references.
+        /// Serialized Name: CustomActivityReferenceObject.linkedServices
+        /// </param>
+        /// <param name="datasets">
+        /// Dataset references.
+        /// Serialized Name: CustomActivityReferenceObject.datasets
+        /// </param>
         internal CustomActivityReferenceObject(IList<LinkedServiceReference> linkedServices, IList<DatasetReference> datasets)
         {
             LinkedServices = linkedServices;
             Datasets = datasets;
         }
 
-        /// <summary> Linked service references. </summary>
+        /// <summary>
+        /// Linked service references.
+        /// Serialized Name: CustomActivityReferenceObject.linkedServices
+        /// </summary>
         public IList<LinkedServiceReference> LinkedServices { get; }
-        /// <summary> Dataset references. </summary>
+        /// <summary>
+        /// Dataset references.
+        /// Serialized Name: CustomActivityReferenceObject.datasets
+        /// </summary>
         public IList<DatasetReference> Datasets { get; }
     }
 }

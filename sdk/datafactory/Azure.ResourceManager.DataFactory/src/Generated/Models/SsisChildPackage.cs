@@ -9,12 +9,21 @@ using System;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> SSIS embedded child package. </summary>
+    /// <summary>
+    /// SSIS embedded child package.
+    /// Serialized Name: SsisChildPackage
+    /// </summary>
     public partial class SsisChildPackage
     {
         /// <summary> Initializes a new instance of SsisChildPackage. </summary>
-        /// <param name="packagePath"> Path for embedded child package. Type: string (or Expression with resultType string). </param>
-        /// <param name="packageContent"> Content for embedded child package. Type: string (or Expression with resultType string). </param>
+        /// <param name="packagePath">
+        /// Path for embedded child package. Type: string (or Expression with resultType string).
+        /// Serialized Name: SsisChildPackage.packagePath
+        /// </param>
+        /// <param name="packageContent">
+        /// Content for embedded child package. Type: string (or Expression with resultType string).
+        /// Serialized Name: SsisChildPackage.packageContent
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="packagePath"/> or <paramref name="packageContent"/> is null. </exception>
         public SsisChildPackage(BinaryData packagePath, BinaryData packageContent)
         {
@@ -32,10 +41,22 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of SsisChildPackage. </summary>
-        /// <param name="packagePath"> Path for embedded child package. Type: string (or Expression with resultType string). </param>
-        /// <param name="packageName"> Name for embedded child package. </param>
-        /// <param name="packageContent"> Content for embedded child package. Type: string (or Expression with resultType string). </param>
-        /// <param name="packageLastModifiedDate"> Last modified date for embedded child package. </param>
+        /// <param name="packagePath">
+        /// Path for embedded child package. Type: string (or Expression with resultType string).
+        /// Serialized Name: SsisChildPackage.packagePath
+        /// </param>
+        /// <param name="packageName">
+        /// Name for embedded child package.
+        /// Serialized Name: SsisChildPackage.packageName
+        /// </param>
+        /// <param name="packageContent">
+        /// Content for embedded child package. Type: string (or Expression with resultType string).
+        /// Serialized Name: SsisChildPackage.packageContent
+        /// </param>
+        /// <param name="packageLastModifiedDate">
+        /// Last modified date for embedded child package.
+        /// Serialized Name: SsisChildPackage.packageLastModifiedDate
+        /// </param>
         internal SsisChildPackage(BinaryData packagePath, string packageName, BinaryData packageContent, string packageLastModifiedDate)
         {
             PackagePath = packagePath;
@@ -44,13 +65,25 @@ namespace Azure.ResourceManager.DataFactory.Models
             PackageLastModifiedDate = packageLastModifiedDate;
         }
 
-        /// <summary> Path for embedded child package. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Path for embedded child package. Type: string (or Expression with resultType string).
+        /// Serialized Name: SsisChildPackage.packagePath
+        /// </summary>
         public BinaryData PackagePath { get; set; }
-        /// <summary> Name for embedded child package. </summary>
+        /// <summary>
+        /// Name for embedded child package.
+        /// Serialized Name: SsisChildPackage.packageName
+        /// </summary>
         public string PackageName { get; set; }
-        /// <summary> Content for embedded child package. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Content for embedded child package. Type: string (or Expression with resultType string).
+        /// Serialized Name: SsisChildPackage.packageContent
+        /// </summary>
         public BinaryData PackageContent { get; set; }
-        /// <summary> Last modified date for embedded child package. </summary>
+        /// <summary>
+        /// Last modified date for embedded child package.
+        /// Serialized Name: SsisChildPackage.packageLastModifiedDate
+        /// </summary>
         public string PackageLastModifiedDate { get; set; }
     }
 }

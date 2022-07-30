@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Information about an activity run in a pipeline. </summary>
+    /// <summary>
+    /// Information about an activity run in a pipeline.
+    /// Serialized Name: ActivityRun
+    /// </summary>
     public partial class ActivityRun
     {
         /// <summary> Initializes a new instance of ActivityRun. </summary>
@@ -21,19 +24,58 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of ActivityRun. </summary>
-        /// <param name="pipelineName"> The name of the pipeline. </param>
-        /// <param name="pipelineRunId"> The id of the pipeline run. </param>
-        /// <param name="activityName"> The name of the activity. </param>
-        /// <param name="activityType"> The type of the activity. </param>
-        /// <param name="activityRunId"> The id of the activity run. </param>
-        /// <param name="linkedServiceName"> The name of the compute linked service. </param>
-        /// <param name="status"> The status of the activity run. </param>
-        /// <param name="activityRunStart"> The start time of the activity run in &apos;ISO 8601&apos; format. </param>
-        /// <param name="activityRunEnd"> The end time of the activity run in &apos;ISO 8601&apos; format. </param>
-        /// <param name="durationInMs"> The duration of the activity run. </param>
-        /// <param name="input"> The input for the activity. </param>
-        /// <param name="output"> The output for the activity. </param>
-        /// <param name="error"> The error if any from the activity run. </param>
+        /// <param name="pipelineName">
+        /// The name of the pipeline.
+        /// Serialized Name: ActivityRun.pipelineName
+        /// </param>
+        /// <param name="pipelineRunId">
+        /// The id of the pipeline run.
+        /// Serialized Name: ActivityRun.pipelineRunId
+        /// </param>
+        /// <param name="activityName">
+        /// The name of the activity.
+        /// Serialized Name: ActivityRun.activityName
+        /// </param>
+        /// <param name="activityType">
+        /// The type of the activity.
+        /// Serialized Name: ActivityRun.activityType
+        /// </param>
+        /// <param name="activityRunId">
+        /// The id of the activity run.
+        /// Serialized Name: ActivityRun.activityRunId
+        /// </param>
+        /// <param name="linkedServiceName">
+        /// The name of the compute linked service.
+        /// Serialized Name: ActivityRun.linkedServiceName
+        /// </param>
+        /// <param name="status">
+        /// The status of the activity run.
+        /// Serialized Name: ActivityRun.status
+        /// </param>
+        /// <param name="activityRunStart">
+        /// The start time of the activity run in &apos;ISO 8601&apos; format.
+        /// Serialized Name: ActivityRun.activityRunStart
+        /// </param>
+        /// <param name="activityRunEnd">
+        /// The end time of the activity run in &apos;ISO 8601&apos; format.
+        /// Serialized Name: ActivityRun.activityRunEnd
+        /// </param>
+        /// <param name="durationInMs">
+        /// The duration of the activity run.
+        /// Serialized Name: ActivityRun.durationInMs
+        /// </param>
+        /// <param name="input">
+        /// The input for the activity.
+        /// Serialized Name: ActivityRun.input
+        /// </param>
+        /// <param name="output">
+        /// The output for the activity.
+        /// Serialized Name: ActivityRun.output
+        /// </param>
+        /// <param name="error">
+        /// The error if any from the activity run.
+        /// Serialized Name: ActivityRun.error
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal ActivityRun(string pipelineName, string pipelineRunId, string activityName, string activityType, string activityRunId, string linkedServiceName, string status, DateTimeOffset? activityRunStart, DateTimeOffset? activityRunEnd, int? durationInMs, BinaryData input, BinaryData output, BinaryData error, IReadOnlyDictionary<string, BinaryData> additionalProperties)
         {
@@ -53,31 +95,70 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = additionalProperties;
         }
 
-        /// <summary> The name of the pipeline. </summary>
+        /// <summary>
+        /// The name of the pipeline.
+        /// Serialized Name: ActivityRun.pipelineName
+        /// </summary>
         public string PipelineName { get; }
-        /// <summary> The id of the pipeline run. </summary>
+        /// <summary>
+        /// The id of the pipeline run.
+        /// Serialized Name: ActivityRun.pipelineRunId
+        /// </summary>
         public string PipelineRunId { get; }
-        /// <summary> The name of the activity. </summary>
+        /// <summary>
+        /// The name of the activity.
+        /// Serialized Name: ActivityRun.activityName
+        /// </summary>
         public string ActivityName { get; }
-        /// <summary> The type of the activity. </summary>
+        /// <summary>
+        /// The type of the activity.
+        /// Serialized Name: ActivityRun.activityType
+        /// </summary>
         public string ActivityType { get; }
-        /// <summary> The id of the activity run. </summary>
+        /// <summary>
+        /// The id of the activity run.
+        /// Serialized Name: ActivityRun.activityRunId
+        /// </summary>
         public string ActivityRunId { get; }
-        /// <summary> The name of the compute linked service. </summary>
+        /// <summary>
+        /// The name of the compute linked service.
+        /// Serialized Name: ActivityRun.linkedServiceName
+        /// </summary>
         public string LinkedServiceName { get; }
-        /// <summary> The status of the activity run. </summary>
+        /// <summary>
+        /// The status of the activity run.
+        /// Serialized Name: ActivityRun.status
+        /// </summary>
         public string Status { get; }
-        /// <summary> The start time of the activity run in &apos;ISO 8601&apos; format. </summary>
+        /// <summary>
+        /// The start time of the activity run in &apos;ISO 8601&apos; format.
+        /// Serialized Name: ActivityRun.activityRunStart
+        /// </summary>
         public DateTimeOffset? ActivityRunStart { get; }
-        /// <summary> The end time of the activity run in &apos;ISO 8601&apos; format. </summary>
+        /// <summary>
+        /// The end time of the activity run in &apos;ISO 8601&apos; format.
+        /// Serialized Name: ActivityRun.activityRunEnd
+        /// </summary>
         public DateTimeOffset? ActivityRunEnd { get; }
-        /// <summary> The duration of the activity run. </summary>
+        /// <summary>
+        /// The duration of the activity run.
+        /// Serialized Name: ActivityRun.durationInMs
+        /// </summary>
         public int? DurationInMs { get; }
-        /// <summary> The input for the activity. </summary>
+        /// <summary>
+        /// The input for the activity.
+        /// Serialized Name: ActivityRun.input
+        /// </summary>
         public BinaryData Input { get; }
-        /// <summary> The output for the activity. </summary>
+        /// <summary>
+        /// The output for the activity.
+        /// Serialized Name: ActivityRun.output
+        /// </summary>
         public BinaryData Output { get; }
-        /// <summary> The error if any from the activity run. </summary>
+        /// <summary>
+        /// The error if any from the activity run.
+        /// Serialized Name: ActivityRun.error
+        /// </summary>
         public BinaryData Error { get; }
         /// <summary> Additional Properties. </summary>
         public IReadOnlyDictionary<string, BinaryData> AdditionalProperties { get; }

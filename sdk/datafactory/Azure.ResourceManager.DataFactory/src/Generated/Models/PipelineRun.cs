@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Information about a pipeline run. </summary>
+    /// <summary>
+    /// Information about a pipeline run.
+    /// Serialized Name: PipelineRun
+    /// </summary>
     public partial class PipelineRun
     {
         /// <summary> Initializes a new instance of PipelineRun. </summary>
@@ -23,19 +26,58 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of PipelineRun. </summary>
-        /// <param name="runId"> Identifier of a run. </param>
-        /// <param name="runGroupId"> Identifier that correlates all the recovery runs of a pipeline run. </param>
-        /// <param name="isLatest"> Indicates if the recovered pipeline run is the latest in its group. </param>
-        /// <param name="pipelineName"> The pipeline name. </param>
-        /// <param name="parameters"> The full or partial list of parameter name, value pair used in the pipeline run. </param>
-        /// <param name="runDimensions"> Run dimensions emitted by Pipeline run. </param>
-        /// <param name="invokedBy"> Entity that started the pipeline run. </param>
-        /// <param name="lastUpdated"> The last updated timestamp for the pipeline run event in ISO8601 format. </param>
-        /// <param name="runStart"> The start time of a pipeline run in ISO8601 format. </param>
-        /// <param name="runEnd"> The end time of a pipeline run in ISO8601 format. </param>
-        /// <param name="durationInMs"> The duration of a pipeline run. </param>
-        /// <param name="status"> The status of a pipeline run. Possible values: Queued, InProgress, Succeeded, Failed, Canceling, Cancelled. </param>
-        /// <param name="message"> The message from a pipeline run. </param>
+        /// <param name="runId">
+        /// Identifier of a run.
+        /// Serialized Name: PipelineRun.runId
+        /// </param>
+        /// <param name="runGroupId">
+        /// Identifier that correlates all the recovery runs of a pipeline run.
+        /// Serialized Name: PipelineRun.runGroupId
+        /// </param>
+        /// <param name="isLatest">
+        /// Indicates if the recovered pipeline run is the latest in its group.
+        /// Serialized Name: PipelineRun.isLatest
+        /// </param>
+        /// <param name="pipelineName">
+        /// The pipeline name.
+        /// Serialized Name: PipelineRun.pipelineName
+        /// </param>
+        /// <param name="parameters">
+        /// The full or partial list of parameter name, value pair used in the pipeline run.
+        /// Serialized Name: PipelineRun.parameters
+        /// </param>
+        /// <param name="runDimensions">
+        /// Run dimensions emitted by Pipeline run.
+        /// Serialized Name: PipelineRun.runDimensions
+        /// </param>
+        /// <param name="invokedBy">
+        /// Entity that started the pipeline run.
+        /// Serialized Name: PipelineRun.invokedBy
+        /// </param>
+        /// <param name="lastUpdated">
+        /// The last updated timestamp for the pipeline run event in ISO8601 format.
+        /// Serialized Name: PipelineRun.lastUpdated
+        /// </param>
+        /// <param name="runStart">
+        /// The start time of a pipeline run in ISO8601 format.
+        /// Serialized Name: PipelineRun.runStart
+        /// </param>
+        /// <param name="runEnd">
+        /// The end time of a pipeline run in ISO8601 format.
+        /// Serialized Name: PipelineRun.runEnd
+        /// </param>
+        /// <param name="durationInMs">
+        /// The duration of a pipeline run.
+        /// Serialized Name: PipelineRun.durationInMs
+        /// </param>
+        /// <param name="status">
+        /// The status of a pipeline run. Possible values: Queued, InProgress, Succeeded, Failed, Canceling, Cancelled
+        /// Serialized Name: PipelineRun.status
+        /// </param>
+        /// <param name="message">
+        /// The message from a pipeline run.
+        /// Serialized Name: PipelineRun.message
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal PipelineRun(string runId, string runGroupId, bool? isLatest, string pipelineName, IReadOnlyDictionary<string, string> parameters, IReadOnlyDictionary<string, string> runDimensions, PipelineRunInvokedBy invokedBy, DateTimeOffset? lastUpdated, DateTimeOffset? runStart, DateTimeOffset? runEnd, int? durationInMs, string status, string message, IReadOnlyDictionary<string, BinaryData> additionalProperties)
         {
@@ -55,31 +97,70 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = additionalProperties;
         }
 
-        /// <summary> Identifier of a run. </summary>
+        /// <summary>
+        /// Identifier of a run.
+        /// Serialized Name: PipelineRun.runId
+        /// </summary>
         public string RunId { get; }
-        /// <summary> Identifier that correlates all the recovery runs of a pipeline run. </summary>
+        /// <summary>
+        /// Identifier that correlates all the recovery runs of a pipeline run.
+        /// Serialized Name: PipelineRun.runGroupId
+        /// </summary>
         public string RunGroupId { get; }
-        /// <summary> Indicates if the recovered pipeline run is the latest in its group. </summary>
+        /// <summary>
+        /// Indicates if the recovered pipeline run is the latest in its group.
+        /// Serialized Name: PipelineRun.isLatest
+        /// </summary>
         public bool? IsLatest { get; }
-        /// <summary> The pipeline name. </summary>
+        /// <summary>
+        /// The pipeline name.
+        /// Serialized Name: PipelineRun.pipelineName
+        /// </summary>
         public string PipelineName { get; }
-        /// <summary> The full or partial list of parameter name, value pair used in the pipeline run. </summary>
+        /// <summary>
+        /// The full or partial list of parameter name, value pair used in the pipeline run.
+        /// Serialized Name: PipelineRun.parameters
+        /// </summary>
         public IReadOnlyDictionary<string, string> Parameters { get; }
-        /// <summary> Run dimensions emitted by Pipeline run. </summary>
+        /// <summary>
+        /// Run dimensions emitted by Pipeline run.
+        /// Serialized Name: PipelineRun.runDimensions
+        /// </summary>
         public IReadOnlyDictionary<string, string> RunDimensions { get; }
-        /// <summary> Entity that started the pipeline run. </summary>
+        /// <summary>
+        /// Entity that started the pipeline run.
+        /// Serialized Name: PipelineRun.invokedBy
+        /// </summary>
         public PipelineRunInvokedBy InvokedBy { get; }
-        /// <summary> The last updated timestamp for the pipeline run event in ISO8601 format. </summary>
+        /// <summary>
+        /// The last updated timestamp for the pipeline run event in ISO8601 format.
+        /// Serialized Name: PipelineRun.lastUpdated
+        /// </summary>
         public DateTimeOffset? LastUpdated { get; }
-        /// <summary> The start time of a pipeline run in ISO8601 format. </summary>
+        /// <summary>
+        /// The start time of a pipeline run in ISO8601 format.
+        /// Serialized Name: PipelineRun.runStart
+        /// </summary>
         public DateTimeOffset? RunStart { get; }
-        /// <summary> The end time of a pipeline run in ISO8601 format. </summary>
+        /// <summary>
+        /// The end time of a pipeline run in ISO8601 format.
+        /// Serialized Name: PipelineRun.runEnd
+        /// </summary>
         public DateTimeOffset? RunEnd { get; }
-        /// <summary> The duration of a pipeline run. </summary>
+        /// <summary>
+        /// The duration of a pipeline run.
+        /// Serialized Name: PipelineRun.durationInMs
+        /// </summary>
         public int? DurationInMs { get; }
-        /// <summary> The status of a pipeline run. Possible values: Queued, InProgress, Succeeded, Failed, Canceling, Cancelled. </summary>
+        /// <summary>
+        /// The status of a pipeline run. Possible values: Queued, InProgress, Succeeded, Failed, Canceling, Cancelled
+        /// Serialized Name: PipelineRun.status
+        /// </summary>
         public string Status { get; }
-        /// <summary> The message from a pipeline run. </summary>
+        /// <summary>
+        /// The message from a pipeline run.
+        /// Serialized Name: PipelineRun.message
+        /// </summary>
         public string Message { get; }
         /// <summary> Additional Properties. </summary>
         public IReadOnlyDictionary<string, BinaryData> AdditionalProperties { get; }

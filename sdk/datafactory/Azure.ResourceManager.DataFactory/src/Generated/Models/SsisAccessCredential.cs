@@ -9,14 +9,24 @@ using System;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> SSIS access credential. </summary>
+    /// <summary>
+    /// SSIS access credential.
+    /// Serialized Name: SsisAccessCredential
+    /// </summary>
     public partial class SsisAccessCredential
     {
         /// <summary> Initializes a new instance of SsisAccessCredential. </summary>
-        /// <param name="domain"> Domain for windows authentication. </param>
-        /// <param name="userName"> UseName for windows authentication. </param>
+        /// <param name="domain">
+        /// Domain for windows authentication.
+        /// Serialized Name: SsisAccessCredential.domain
+        /// </param>
+        /// <param name="userName">
+        /// UseName for windows authentication.
+        /// Serialized Name: SsisAccessCredential.userName
+        /// </param>
         /// <param name="password">
         /// Password for windows authentication.
+        /// Serialized Name: SsisAccessCredential.password
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
@@ -41,12 +51,19 @@ namespace Azure.ResourceManager.DataFactory.Models
             Password = password;
         }
 
-        /// <summary> Domain for windows authentication. </summary>
+        /// <summary>
+        /// Domain for windows authentication.
+        /// Serialized Name: SsisAccessCredential.domain
+        /// </summary>
         public BinaryData Domain { get; set; }
-        /// <summary> UseName for windows authentication. </summary>
+        /// <summary>
+        /// UseName for windows authentication.
+        /// Serialized Name: SsisAccessCredential.userName
+        /// </summary>
         public BinaryData UserName { get; set; }
         /// <summary>
         /// Password for windows authentication.
+        /// Serialized Name: SsisAccessCredential.password
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>

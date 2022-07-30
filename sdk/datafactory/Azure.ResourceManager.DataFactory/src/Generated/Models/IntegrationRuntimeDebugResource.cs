@@ -9,12 +9,16 @@ using System;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Integration runtime debug resource. </summary>
+    /// <summary>
+    /// Integration runtime debug resource.
+    /// Serialized Name: IntegrationRuntimeDebugResource
+    /// </summary>
     public partial class IntegrationRuntimeDebugResource : SubResourceDebugResource
     {
         /// <summary> Initializes a new instance of IntegrationRuntimeDebugResource. </summary>
         /// <param name="properties">
         /// Integration runtime properties.
+        /// Serialized Name: IntegrationRuntimeDebugResource.properties
         /// Please note <see cref="IntegrationRuntime"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ManagedIntegrationRuntime"/> and <see cref="SelfHostedIntegrationRuntime"/>.
         /// </param>
@@ -31,6 +35,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary>
         /// Integration runtime properties.
+        /// Serialized Name: IntegrationRuntimeDebugResource.properties
         /// Please note <see cref="IntegrationRuntime"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ManagedIntegrationRuntime"/> and <see cref="SelfHostedIntegrationRuntime"/>.
         /// </summary>

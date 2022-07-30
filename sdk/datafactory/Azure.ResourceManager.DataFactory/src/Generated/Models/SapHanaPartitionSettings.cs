@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The settings that will be leveraged for SAP HANA source partitioning. </summary>
+    /// <summary>
+    /// The settings that will be leveraged for SAP HANA source partitioning.
+    /// Serialized Name: SapHanaPartitionSettings
+    /// </summary>
     internal partial class SapHanaPartitionSettings
     {
         /// <summary> Initializes a new instance of SapHanaPartitionSettings. </summary>
@@ -18,13 +21,19 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of SapHanaPartitionSettings. </summary>
-        /// <param name="partitionColumnName"> The name of the column that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </param>
+        /// <param name="partitionColumnName">
+        /// The name of the column that will be used for proceeding range partitioning. Type: string (or Expression with resultType string).
+        /// Serialized Name: SapHanaPartitionSettings.partitionColumnName
+        /// </param>
         internal SapHanaPartitionSettings(BinaryData partitionColumnName)
         {
             PartitionColumnName = partitionColumnName;
         }
 
-        /// <summary> The name of the column that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The name of the column that will be used for proceeding range partitioning. Type: string (or Expression with resultType string).
+        /// Serialized Name: SapHanaPartitionSettings.partitionColumnName
+        /// </summary>
         public BinaryData PartitionColumnName { get; set; }
     }
 }

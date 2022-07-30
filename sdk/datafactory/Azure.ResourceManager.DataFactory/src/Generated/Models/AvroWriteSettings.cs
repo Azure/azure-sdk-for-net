@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Avro write settings. </summary>
+    /// <summary>
+    /// Avro write settings.
+    /// Serialized Name: AvroWriteSettings
+    /// </summary>
     public partial class AvroWriteSettings : FormatWriteSettings
     {
         /// <summary> Initializes a new instance of AvroWriteSettings. </summary>
@@ -20,12 +23,27 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of AvroWriteSettings. </summary>
-        /// <param name="formatWriteSettingsType"> The write setting type. </param>
+        /// <param name="formatWriteSettingsType">
+        /// The write setting type.
+        /// Serialized Name: FormatWriteSettings.type
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="recordName"> Top level record name in write result, which is required in AVRO spec. </param>
-        /// <param name="recordNamespace"> Record namespace in the write result. </param>
-        /// <param name="maxRowsPerFile"> Limit the written file&apos;s row count to be smaller than or equal to the specified count. Type: integer (or Expression with resultType integer). </param>
-        /// <param name="fileNamePrefix"> Specifies the file name pattern &lt;fileNamePrefix&gt;_&lt;fileIndex&gt;.&lt;fileExtension&gt; when copy from non-file based store without partitionOptions. Type: string (or Expression with resultType string). </param>
+        /// <param name="recordName">
+        /// Top level record name in write result, which is required in AVRO spec.
+        /// Serialized Name: AvroWriteSettings.recordName
+        /// </param>
+        /// <param name="recordNamespace">
+        /// Record namespace in the write result.
+        /// Serialized Name: AvroWriteSettings.recordNamespace
+        /// </param>
+        /// <param name="maxRowsPerFile">
+        /// Limit the written file&apos;s row count to be smaller than or equal to the specified count. Type: integer (or Expression with resultType integer).
+        /// Serialized Name: AvroWriteSettings.maxRowsPerFile
+        /// </param>
+        /// <param name="fileNamePrefix">
+        /// Specifies the file name pattern &lt;fileNamePrefix&gt;_&lt;fileIndex&gt;.&lt;fileExtension&gt; when copy from non-file based store without partitionOptions. Type: string (or Expression with resultType string).
+        /// Serialized Name: AvroWriteSettings.fileNamePrefix
+        /// </param>
         internal AvroWriteSettings(string formatWriteSettingsType, IDictionary<string, BinaryData> additionalProperties, string recordName, string recordNamespace, BinaryData maxRowsPerFile, BinaryData fileNamePrefix) : base(formatWriteSettingsType, additionalProperties)
         {
             RecordName = recordName;
@@ -35,13 +53,25 @@ namespace Azure.ResourceManager.DataFactory.Models
             FormatWriteSettingsType = formatWriteSettingsType ?? "AvroWriteSettings";
         }
 
-        /// <summary> Top level record name in write result, which is required in AVRO spec. </summary>
+        /// <summary>
+        /// Top level record name in write result, which is required in AVRO spec.
+        /// Serialized Name: AvroWriteSettings.recordName
+        /// </summary>
         public string RecordName { get; set; }
-        /// <summary> Record namespace in the write result. </summary>
+        /// <summary>
+        /// Record namespace in the write result.
+        /// Serialized Name: AvroWriteSettings.recordNamespace
+        /// </summary>
         public string RecordNamespace { get; set; }
-        /// <summary> Limit the written file&apos;s row count to be smaller than or equal to the specified count. Type: integer (or Expression with resultType integer). </summary>
+        /// <summary>
+        /// Limit the written file&apos;s row count to be smaller than or equal to the specified count. Type: integer (or Expression with resultType integer).
+        /// Serialized Name: AvroWriteSettings.maxRowsPerFile
+        /// </summary>
         public BinaryData MaxRowsPerFile { get; set; }
-        /// <summary> Specifies the file name pattern &lt;fileNamePrefix&gt;_&lt;fileIndex&gt;.&lt;fileExtension&gt; when copy from non-file based store without partitionOptions. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Specifies the file name pattern &lt;fileNamePrefix&gt;_&lt;fileIndex&gt;.&lt;fileExtension&gt; when copy from non-file based store without partitionOptions. Type: string (or Expression with resultType string).
+        /// Serialized Name: AvroWriteSettings.fileNamePrefix
+        /// </summary>
         public BinaryData FileNamePrefix { get; set; }
     }
 }

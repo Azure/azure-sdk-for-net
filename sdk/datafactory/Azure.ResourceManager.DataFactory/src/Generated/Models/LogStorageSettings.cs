@@ -11,11 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> (Deprecated. Please use LogSettings) Log storage settings. </summary>
+    /// <summary>
+    /// (Deprecated. Please use LogSettings) Log storage settings.
+    /// Serialized Name: LogStorageSettings
+    /// </summary>
     public partial class LogStorageSettings
     {
         /// <summary> Initializes a new instance of LogStorageSettings. </summary>
-        /// <param name="linkedServiceName"> Log storage linked service reference. </param>
+        /// <param name="linkedServiceName">
+        /// Log storage linked service reference.
+        /// Serialized Name: LogStorageSettings.linkedServiceName
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public LogStorageSettings(LinkedServiceReference linkedServiceName)
         {
@@ -29,10 +35,22 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of LogStorageSettings. </summary>
-        /// <param name="linkedServiceName"> Log storage linked service reference. </param>
-        /// <param name="path"> The path to storage for storing detailed logs of activity execution. Type: string (or Expression with resultType string). </param>
-        /// <param name="logLevel"> Gets or sets the log level, support: Info, Warning. Type: string (or Expression with resultType string). </param>
-        /// <param name="enableReliableLogging"> Specifies whether to enable reliable logging. Type: boolean (or Expression with resultType boolean). </param>
+        /// <param name="linkedServiceName">
+        /// Log storage linked service reference.
+        /// Serialized Name: LogStorageSettings.linkedServiceName
+        /// </param>
+        /// <param name="path">
+        /// The path to storage for storing detailed logs of activity execution. Type: string (or Expression with resultType string).
+        /// Serialized Name: LogStorageSettings.path
+        /// </param>
+        /// <param name="logLevel">
+        /// Gets or sets the log level, support: Info, Warning. Type: string (or Expression with resultType string).
+        /// Serialized Name: LogStorageSettings.logLevel
+        /// </param>
+        /// <param name="enableReliableLogging">
+        /// Specifies whether to enable reliable logging. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: LogStorageSettings.enableReliableLogging
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal LogStorageSettings(LinkedServiceReference linkedServiceName, BinaryData path, BinaryData logLevel, BinaryData enableReliableLogging, IDictionary<string, BinaryData> additionalProperties)
         {
@@ -43,13 +61,25 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = additionalProperties;
         }
 
-        /// <summary> Log storage linked service reference. </summary>
+        /// <summary>
+        /// Log storage linked service reference.
+        /// Serialized Name: LogStorageSettings.linkedServiceName
+        /// </summary>
         public LinkedServiceReference LinkedServiceName { get; set; }
-        /// <summary> The path to storage for storing detailed logs of activity execution. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The path to storage for storing detailed logs of activity execution. Type: string (or Expression with resultType string).
+        /// Serialized Name: LogStorageSettings.path
+        /// </summary>
         public BinaryData Path { get; set; }
-        /// <summary> Gets or sets the log level, support: Info, Warning. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Gets or sets the log level, support: Info, Warning. Type: string (or Expression with resultType string).
+        /// Serialized Name: LogStorageSettings.logLevel
+        /// </summary>
         public BinaryData LogLevel { get; set; }
-        /// <summary> Specifies whether to enable reliable logging. Type: boolean (or Expression with resultType boolean). </summary>
+        /// <summary>
+        /// Specifies whether to enable reliable logging. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: LogStorageSettings.enableReliableLogging
+        /// </summary>
         public BinaryData EnableReliableLogging { get; set; }
         /// <summary> Additional Properties. </summary>
         public IDictionary<string, BinaryData> AdditionalProperties { get; }

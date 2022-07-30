@@ -316,9 +316,9 @@ namespace Azure.ResourceManager.DataFactory
 
         /// <summary> Gets a collection of DataFlowResources in the DataFactory. </summary>
         /// <returns> An object representing collection of DataFlowResources and their operations over a DataFlowResource. </returns>
-        public virtual DataFlowResourceCollection GetDataFlowResources()
+        public virtual DataFlowCollection GetDataFlows()
         {
-            return GetCachedClient(Client => new DataFlowResourceCollection(Client, Id));
+            return GetCachedClient(Client => new DataFlowCollection(Client, Id));
         }
 
         /// <summary>
@@ -332,9 +332,9 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentException"> <paramref name="dataFlowName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataFlowName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DataFlowResource>> GetDataFlowResourceAsync(string dataFlowName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataFlowResource>> GetDataFlowAsync(string dataFlowName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            return await GetDataFlowResources().GetAsync(dataFlowName, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+            return await GetDataFlows().GetAsync(dataFlowName, ifNoneMatch, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -348,9 +348,9 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentException"> <paramref name="dataFlowName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataFlowName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DataFlowResource> GetDataFlowResource(string dataFlowName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual Response<DataFlowResource> GetDataFlow(string dataFlowName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            return GetDataFlowResources().Get(dataFlowName, ifNoneMatch, cancellationToken);
+            return GetDataFlows().Get(dataFlowName, ifNoneMatch, cancellationToken);
         }
 
         /// <summary> Gets a collection of ManagedVirtualNetworkResources in the DataFactory. </summary>

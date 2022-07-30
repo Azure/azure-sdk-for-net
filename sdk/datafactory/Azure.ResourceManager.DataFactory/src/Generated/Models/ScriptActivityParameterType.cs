@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The type of the parameter. </summary>
+    /// <summary>
+    /// The type of the parameter.
+    /// Serialized Name: ScriptActivityParameterType
+    /// </summary>
     public readonly partial struct ScriptActivityParameterType : IEquatable<ScriptActivityParameterType>
     {
         private readonly string _value;
@@ -35,29 +38,65 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string StringValue = "String";
         private const string TimespanValue = "Timespan";
 
-        /// <summary> Boolean. </summary>
+        /// <summary>
+        /// Boolean
+        /// Serialized Name: ScriptActivityParameterType.Boolean
+        /// </summary>
         public static ScriptActivityParameterType Boolean { get; } = new ScriptActivityParameterType(BooleanValue);
-        /// <summary> DateTime. </summary>
+        /// <summary>
+        /// DateTime
+        /// Serialized Name: ScriptActivityParameterType.DateTime
+        /// </summary>
         public static ScriptActivityParameterType DateTime { get; } = new ScriptActivityParameterType(DateTimeValue);
-        /// <summary> DateTimeOffset. </summary>
+        /// <summary>
+        /// DateTimeOffset
+        /// Serialized Name: ScriptActivityParameterType.DateTimeOffset
+        /// </summary>
         public static ScriptActivityParameterType DateTimeOffset { get; } = new ScriptActivityParameterType(DateTimeOffsetValue);
-        /// <summary> Decimal. </summary>
+        /// <summary>
+        /// Decimal
+        /// Serialized Name: ScriptActivityParameterType.Decimal
+        /// </summary>
         public static ScriptActivityParameterType Decimal { get; } = new ScriptActivityParameterType(DecimalValue);
-        /// <summary> Double. </summary>
+        /// <summary>
+        /// Double
+        /// Serialized Name: ScriptActivityParameterType.Double
+        /// </summary>
         public static ScriptActivityParameterType Double { get; } = new ScriptActivityParameterType(DoubleValue);
-        /// <summary> Guid. </summary>
+        /// <summary>
+        /// Guid
+        /// Serialized Name: ScriptActivityParameterType.Guid
+        /// </summary>
         public static ScriptActivityParameterType Guid { get; } = new ScriptActivityParameterType(GuidValue);
-        /// <summary> Int16. </summary>
+        /// <summary>
+        /// Int16
+        /// Serialized Name: ScriptActivityParameterType.Int16
+        /// </summary>
         public static ScriptActivityParameterType Int16 { get; } = new ScriptActivityParameterType(Int16Value);
-        /// <summary> Int32. </summary>
+        /// <summary>
+        /// Int32
+        /// Serialized Name: ScriptActivityParameterType.Int32
+        /// </summary>
         public static ScriptActivityParameterType Int32 { get; } = new ScriptActivityParameterType(Int32Value);
-        /// <summary> Int64. </summary>
+        /// <summary>
+        /// Int64
+        /// Serialized Name: ScriptActivityParameterType.Int64
+        /// </summary>
         public static ScriptActivityParameterType Int64 { get; } = new ScriptActivityParameterType(Int64Value);
-        /// <summary> Single. </summary>
+        /// <summary>
+        /// Single
+        /// Serialized Name: ScriptActivityParameterType.Single
+        /// </summary>
         public static ScriptActivityParameterType Single { get; } = new ScriptActivityParameterType(SingleValue);
-        /// <summary> String. </summary>
+        /// <summary>
+        /// String
+        /// Serialized Name: ScriptActivityParameterType.String
+        /// </summary>
         public static ScriptActivityParameterType String { get; } = new ScriptActivityParameterType(StringValue);
-        /// <summary> Timespan. </summary>
+        /// <summary>
+        /// Timespan
+        /// Serialized Name: ScriptActivityParameterType.Timespan
+        /// </summary>
         public static ScriptActivityParameterType Timespan { get; } = new ScriptActivityParameterType(TimespanValue);
         /// <summary> Determines if two <see cref="ScriptActivityParameterType"/> values are the same. </summary>
         public static bool operator ==(ScriptActivityParameterType left, ScriptActivityParameterType right) => left.Equals(right);

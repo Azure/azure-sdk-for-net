@@ -11,11 +11,17 @@ using System.Linq;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> A list of exposure control features. </summary>
+    /// <summary>
+    /// A list of exposure control features.
+    /// Serialized Name: ExposureControlBatchRequest
+    /// </summary>
     public partial class ExposureControlBatchContent
     {
         /// <summary> Initializes a new instance of ExposureControlBatchContent. </summary>
-        /// <param name="exposureControlRequests"> List of exposure control features. </param>
+        /// <param name="exposureControlRequests">
+        /// List of exposure control features.
+        /// Serialized Name: ExposureControlBatchRequest.exposureControlRequests
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="exposureControlRequests"/> is null. </exception>
         public ExposureControlBatchContent(IEnumerable<ExposureControlContent> exposureControlRequests)
         {
@@ -27,7 +33,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             ExposureControlRequests = exposureControlRequests.ToList();
         }
 
-        /// <summary> List of exposure control features. </summary>
+        /// <summary>
+        /// List of exposure control features.
+        /// Serialized Name: ExposureControlBatchRequest.exposureControlRequests
+        /// </summary>
         public IList<ExposureControlContent> ExposureControlRequests { get; }
     }
 }

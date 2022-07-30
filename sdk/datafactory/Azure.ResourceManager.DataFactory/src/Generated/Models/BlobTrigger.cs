@@ -10,13 +10,25 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Trigger that runs every time the selected Blob container changes. </summary>
+    /// <summary>
+    /// Trigger that runs every time the selected Blob container changes.
+    /// Serialized Name: BlobTrigger
+    /// </summary>
     public partial class BlobTrigger : MultiplePipelineTrigger
     {
         /// <summary> Initializes a new instance of BlobTrigger. </summary>
-        /// <param name="folderPath"> The path of the container/folder that will trigger the pipeline. </param>
-        /// <param name="maxConcurrency"> The max number of parallel files to handle when it is triggered. </param>
-        /// <param name="linkedService"> The Azure Storage linked service reference. </param>
+        /// <param name="folderPath">
+        /// The path of the container/folder that will trigger the pipeline.
+        /// Serialized Name: BlobTrigger.typeProperties.folderPath
+        /// </param>
+        /// <param name="maxConcurrency">
+        /// The max number of parallel files to handle when it is triggered.
+        /// Serialized Name: BlobTrigger.typeProperties.maxConcurrency
+        /// </param>
+        /// <param name="linkedService">
+        /// The Azure Storage linked service reference.
+        /// Serialized Name: BlobTrigger.typeProperties.linkedService
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="folderPath"/> or <paramref name="linkedService"/> is null. </exception>
         public BlobTrigger(string folderPath, int maxConcurrency, LinkedServiceReference linkedService)
         {
@@ -36,15 +48,39 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of BlobTrigger. </summary>
-        /// <param name="triggerType"> Trigger type. </param>
-        /// <param name="description"> Trigger description. </param>
-        /// <param name="runtimeState"> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </param>
-        /// <param name="annotations"> List of tags that can be used for describing the trigger. </param>
+        /// <param name="triggerType">
+        /// Trigger type.
+        /// Serialized Name: Trigger.type
+        /// </param>
+        /// <param name="description">
+        /// Trigger description.
+        /// Serialized Name: Trigger.description
+        /// </param>
+        /// <param name="runtimeState">
+        /// Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger.
+        /// Serialized Name: Trigger.runtimeState
+        /// </param>
+        /// <param name="annotations">
+        /// List of tags that can be used for describing the trigger.
+        /// Serialized Name: Trigger.annotations
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="pipelines"> Pipelines that need to be started. </param>
-        /// <param name="folderPath"> The path of the container/folder that will trigger the pipeline. </param>
-        /// <param name="maxConcurrency"> The max number of parallel files to handle when it is triggered. </param>
-        /// <param name="linkedService"> The Azure Storage linked service reference. </param>
+        /// <param name="pipelines">
+        /// Pipelines that need to be started.
+        /// Serialized Name: MultiplePipelineTrigger.pipelines
+        /// </param>
+        /// <param name="folderPath">
+        /// The path of the container/folder that will trigger the pipeline.
+        /// Serialized Name: BlobTrigger.typeProperties.folderPath
+        /// </param>
+        /// <param name="maxConcurrency">
+        /// The max number of parallel files to handle when it is triggered.
+        /// Serialized Name: BlobTrigger.typeProperties.maxConcurrency
+        /// </param>
+        /// <param name="linkedService">
+        /// The Azure Storage linked service reference.
+        /// Serialized Name: BlobTrigger.typeProperties.linkedService
+        /// </param>
         internal BlobTrigger(string triggerType, string description, TriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, IList<TriggerPipelineReference> pipelines, string folderPath, int maxConcurrency, LinkedServiceReference linkedService) : base(triggerType, description, runtimeState, annotations, additionalProperties, pipelines)
         {
             FolderPath = folderPath;
@@ -53,11 +89,20 @@ namespace Azure.ResourceManager.DataFactory.Models
             TriggerType = triggerType ?? "BlobTrigger";
         }
 
-        /// <summary> The path of the container/folder that will trigger the pipeline. </summary>
+        /// <summary>
+        /// The path of the container/folder that will trigger the pipeline.
+        /// Serialized Name: BlobTrigger.typeProperties.folderPath
+        /// </summary>
         public string FolderPath { get; set; }
-        /// <summary> The max number of parallel files to handle when it is triggered. </summary>
+        /// <summary>
+        /// The max number of parallel files to handle when it is triggered.
+        /// Serialized Name: BlobTrigger.typeProperties.maxConcurrency
+        /// </summary>
         public int MaxConcurrency { get; set; }
-        /// <summary> The Azure Storage linked service reference. </summary>
+        /// <summary>
+        /// The Azure Storage linked service reference.
+        /// Serialized Name: BlobTrigger.typeProperties.linkedService
+        /// </summary>
         public LinkedServiceReference LinkedService { get; set; }
     }
 }

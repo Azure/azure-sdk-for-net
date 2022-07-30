@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The list of HTTP methods supported by a AzureFunctionActivity. </summary>
+    /// <summary>
+    /// The list of HTTP methods supported by a AzureFunctionActivity.
+    /// Serialized Name: AzureFunctionActivityMethod
+    /// </summary>
     public readonly partial struct AzureFunctionActivityMethod : IEquatable<AzureFunctionActivityMethod>
     {
         private readonly string _value;
@@ -30,19 +33,40 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string HeadValue = "HEAD";
         private const string TraceValue = "TRACE";
 
-        /// <summary> GET. </summary>
+        /// <summary>
+        /// GET
+        /// Serialized Name: AzureFunctionActivityMethod.GET
+        /// </summary>
         public static AzureFunctionActivityMethod GET { get; } = new AzureFunctionActivityMethod(GETValue);
-        /// <summary> POST. </summary>
+        /// <summary>
+        /// POST
+        /// Serialized Name: AzureFunctionActivityMethod.POST
+        /// </summary>
         public static AzureFunctionActivityMethod Post { get; } = new AzureFunctionActivityMethod(PostValue);
-        /// <summary> PUT. </summary>
+        /// <summary>
+        /// PUT
+        /// Serialized Name: AzureFunctionActivityMethod.PUT
+        /// </summary>
         public static AzureFunctionActivityMethod PUT { get; } = new AzureFunctionActivityMethod(PUTValue);
-        /// <summary> DELETE. </summary>
+        /// <summary>
+        /// DELETE
+        /// Serialized Name: AzureFunctionActivityMethod.DELETE
+        /// </summary>
         public static AzureFunctionActivityMethod Delete { get; } = new AzureFunctionActivityMethod(DeleteValue);
-        /// <summary> OPTIONS. </summary>
+        /// <summary>
+        /// OPTIONS
+        /// Serialized Name: AzureFunctionActivityMethod.OPTIONS
+        /// </summary>
         public static AzureFunctionActivityMethod Options { get; } = new AzureFunctionActivityMethod(OptionsValue);
-        /// <summary> HEAD. </summary>
+        /// <summary>
+        /// HEAD
+        /// Serialized Name: AzureFunctionActivityMethod.HEAD
+        /// </summary>
         public static AzureFunctionActivityMethod Head { get; } = new AzureFunctionActivityMethod(HeadValue);
-        /// <summary> TRACE. </summary>
+        /// <summary>
+        /// TRACE
+        /// Serialized Name: AzureFunctionActivityMethod.TRACE
+        /// </summary>
         public static AzureFunctionActivityMethod Trace { get; } = new AzureFunctionActivityMethod(TraceValue);
         /// <summary> Determines if two <see cref="AzureFunctionActivityMethod"/> values are the same. </summary>
         public static bool operator ==(AzureFunctionActivityMethod left, AzureFunctionActivityMethod right) => left.Equals(right);

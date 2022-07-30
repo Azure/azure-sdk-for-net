@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> A copy activity source for an Office 365 service. </summary>
+    /// <summary>
+    /// A copy activity source for an Office 365 service.
+    /// Serialized Name: Office365Source
+    /// </summary>
     public partial class Office365Source : CopySource
     {
         /// <summary> Initializes a new instance of Office365Source. </summary>
@@ -20,18 +23,51 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of Office365Source. </summary>
-        /// <param name="copySourceType"> Copy source type. </param>
-        /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
-        /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
-        /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
-        /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
+        /// <param name="copySourceType">
+        /// Copy source type.
+        /// Serialized Name: CopySource.type
+        /// </param>
+        /// <param name="sourceRetryCount">
+        /// Source retry count. Type: integer (or Expression with resultType integer).
+        /// Serialized Name: CopySource.sourceRetryCount
+        /// </param>
+        /// <param name="sourceRetryWait">
+        /// Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
+        /// Serialized Name: CopySource.sourceRetryWait
+        /// </param>
+        /// <param name="maxConcurrentConnections">
+        /// The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer).
+        /// Serialized Name: CopySource.maxConcurrentConnections
+        /// </param>
+        /// <param name="disableMetricsCollection">
+        /// If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: CopySource.disableMetricsCollection
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="allowedGroups"> The groups containing all the users. Type: array of strings (or Expression with resultType array of strings). </param>
-        /// <param name="userScopeFilterUri"> The user scope uri. Type: string (or Expression with resultType string). </param>
-        /// <param name="dateFilterColumn"> The Column to apply the &lt;paramref name=&quot;StartTime&quot;/&gt; and &lt;paramref name=&quot;EndTime&quot;/&gt;. Type: string (or Expression with resultType string). </param>
-        /// <param name="startTime"> Start time of the requested range for this dataset. Type: string (or Expression with resultType string). </param>
-        /// <param name="endTime"> End time of the requested range for this dataset. Type: string (or Expression with resultType string). </param>
-        /// <param name="outputColumns"> The columns to be read out from the Office 365 table. Type: array of objects (or Expression with resultType array of objects). Example: [ { &quot;name&quot;: &quot;Id&quot; }, { &quot;name&quot;: &quot;CreatedDateTime&quot; } ]. </param>
+        /// <param name="allowedGroups">
+        /// The groups containing all the users. Type: array of strings (or Expression with resultType array of strings).
+        /// Serialized Name: Office365Source.allowedGroups
+        /// </param>
+        /// <param name="userScopeFilterUri">
+        /// The user scope uri. Type: string (or Expression with resultType string).
+        /// Serialized Name: Office365Source.userScopeFilterUri
+        /// </param>
+        /// <param name="dateFilterColumn">
+        /// The Column to apply the &lt;paramref name=&quot;StartTime&quot;/&gt; and &lt;paramref name=&quot;EndTime&quot;/&gt;. Type: string (or Expression with resultType string).
+        /// Serialized Name: Office365Source.dateFilterColumn
+        /// </param>
+        /// <param name="startTime">
+        /// Start time of the requested range for this dataset. Type: string (or Expression with resultType string).
+        /// Serialized Name: Office365Source.startTime
+        /// </param>
+        /// <param name="endTime">
+        /// End time of the requested range for this dataset. Type: string (or Expression with resultType string).
+        /// Serialized Name: Office365Source.endTime
+        /// </param>
+        /// <param name="outputColumns">
+        /// The columns to be read out from the Office 365 table. Type: array of objects (or Expression with resultType array of objects). Example: [ { &quot;name&quot;: &quot;Id&quot; }, { &quot;name&quot;: &quot;CreatedDateTime&quot; } ]
+        /// Serialized Name: Office365Source.outputColumns
+        /// </param>
         internal Office365Source(string copySourceType, BinaryData sourceRetryCount, BinaryData sourceRetryWait, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, BinaryData allowedGroups, BinaryData userScopeFilterUri, BinaryData dateFilterColumn, BinaryData startTime, BinaryData endTime, BinaryData outputColumns) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             AllowedGroups = allowedGroups;
@@ -43,17 +79,35 @@ namespace Azure.ResourceManager.DataFactory.Models
             CopySourceType = copySourceType ?? "Office365Source";
         }
 
-        /// <summary> The groups containing all the users. Type: array of strings (or Expression with resultType array of strings). </summary>
+        /// <summary>
+        /// The groups containing all the users. Type: array of strings (or Expression with resultType array of strings).
+        /// Serialized Name: Office365Source.allowedGroups
+        /// </summary>
         public BinaryData AllowedGroups { get; set; }
-        /// <summary> The user scope uri. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The user scope uri. Type: string (or Expression with resultType string).
+        /// Serialized Name: Office365Source.userScopeFilterUri
+        /// </summary>
         public BinaryData UserScopeFilterUri { get; set; }
-        /// <summary> The Column to apply the &lt;paramref name=&quot;StartTime&quot;/&gt; and &lt;paramref name=&quot;EndTime&quot;/&gt;. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The Column to apply the &lt;paramref name=&quot;StartTime&quot;/&gt; and &lt;paramref name=&quot;EndTime&quot;/&gt;. Type: string (or Expression with resultType string).
+        /// Serialized Name: Office365Source.dateFilterColumn
+        /// </summary>
         public BinaryData DateFilterColumn { get; set; }
-        /// <summary> Start time of the requested range for this dataset. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Start time of the requested range for this dataset. Type: string (or Expression with resultType string).
+        /// Serialized Name: Office365Source.startTime
+        /// </summary>
         public BinaryData StartTime { get; set; }
-        /// <summary> End time of the requested range for this dataset. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// End time of the requested range for this dataset. Type: string (or Expression with resultType string).
+        /// Serialized Name: Office365Source.endTime
+        /// </summary>
         public BinaryData EndTime { get; set; }
-        /// <summary> The columns to be read out from the Office 365 table. Type: array of objects (or Expression with resultType array of objects). Example: [ { &quot;name&quot;: &quot;Id&quot; }, { &quot;name&quot;: &quot;CreatedDateTime&quot; } ]. </summary>
+        /// <summary>
+        /// The columns to be read out from the Office 365 table. Type: array of objects (or Expression with resultType array of objects). Example: [ { &quot;name&quot;: &quot;Id&quot; }, { &quot;name&quot;: &quot;CreatedDateTime&quot; } ]
+        /// Serialized Name: Office365Source.outputColumns
+        /// </summary>
         public BinaryData OutputColumns { get; set; }
     }
 }

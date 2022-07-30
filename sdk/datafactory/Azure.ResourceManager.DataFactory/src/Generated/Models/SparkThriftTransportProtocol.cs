@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The transport protocol to use in the Thrift layer. </summary>
+    /// <summary>
+    /// The transport protocol to use in the Thrift layer.
+    /// Serialized Name: SparkThriftTransportProtocol
+    /// </summary>
     public readonly partial struct SparkThriftTransportProtocol : IEquatable<SparkThriftTransportProtocol>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string SaslValue = "SASL";
         private const string HttpValue = "HTTP ";
 
-        /// <summary> Binary. </summary>
+        /// <summary>
+        /// Binary
+        /// Serialized Name: SparkThriftTransportProtocol.Binary
+        /// </summary>
         public static SparkThriftTransportProtocol Binary { get; } = new SparkThriftTransportProtocol(BinaryValue);
-        /// <summary> SASL. </summary>
+        /// <summary>
+        /// SASL
+        /// Serialized Name: SparkThriftTransportProtocol.SASL
+        /// </summary>
         public static SparkThriftTransportProtocol Sasl { get; } = new SparkThriftTransportProtocol(SaslValue);
-        /// <summary> HTTP. </summary>
+        /// <summary>
+        /// HTTP 
+        /// Serialized Name: SparkThriftTransportProtocol.HTTP 
+        /// </summary>
         public static SparkThriftTransportProtocol Http { get; } = new SparkThriftTransportProtocol(HttpValue);
         /// <summary> Determines if two <see cref="SparkThriftTransportProtocol"/> values are the same. </summary>
         public static bool operator ==(SparkThriftTransportProtocol left, SparkThriftTransportProtocol right) => left.Equals(right);

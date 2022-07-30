@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> A copy activity source for SAP Table source. </summary>
+    /// <summary>
+    /// A copy activity source for SAP Table source.
+    /// Serialized Name: SapTableSource
+    /// </summary>
     public partial class SapTableSource : TabularSource
     {
         /// <summary> Initializes a new instance of SapTableSource. </summary>
@@ -20,23 +23,71 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of SapTableSource. </summary>
-        /// <param name="copySourceType"> Copy source type. </param>
-        /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
-        /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
-        /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
-        /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
+        /// <param name="copySourceType">
+        /// Copy source type.
+        /// Serialized Name: CopySource.type
+        /// </param>
+        /// <param name="sourceRetryCount">
+        /// Source retry count. Type: integer (or Expression with resultType integer).
+        /// Serialized Name: CopySource.sourceRetryCount
+        /// </param>
+        /// <param name="sourceRetryWait">
+        /// Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
+        /// Serialized Name: CopySource.sourceRetryWait
+        /// </param>
+        /// <param name="maxConcurrentConnections">
+        /// The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer).
+        /// Serialized Name: CopySource.maxConcurrentConnections
+        /// </param>
+        /// <param name="disableMetricsCollection">
+        /// If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: CopySource.disableMetricsCollection
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="queryTimeout"> Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
-        /// <param name="additionalColumns"> Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects). </param>
-        /// <param name="rowCount"> The number of rows to be retrieved. Type: integer(or Expression with resultType integer). </param>
-        /// <param name="rowSkips"> The number of rows that will be skipped. Type: integer (or Expression with resultType integer). </param>
-        /// <param name="rfcTableFields"> The fields of the SAP table that will be retrieved. For example, column0, column1. Type: string (or Expression with resultType string). </param>
-        /// <param name="rfcTableOptions"> The options for the filtering of the SAP Table. For example, COLUMN0 EQ SOME VALUE. Type: string (or Expression with resultType string). </param>
-        /// <param name="batchSize"> Specifies the maximum number of rows that will be retrieved at a time when retrieving data from SAP Table. Type: integer (or Expression with resultType integer). </param>
-        /// <param name="customRfcReadTableFunctionModule"> Specifies the custom RFC function module that will be used to read data from SAP Table. Type: string (or Expression with resultType string). </param>
-        /// <param name="sapDataColumnDelimiter"> The single character that will be used as delimiter passed to SAP RFC as well as splitting the output data retrieved. Type: string (or Expression with resultType string). </param>
-        /// <param name="partitionOption"> The partition mechanism that will be used for SAP table read in parallel. Possible values include: &quot;None&quot;, &quot;PartitionOnInt&quot;, &quot;PartitionOnCalendarYear&quot;, &quot;PartitionOnCalendarMonth&quot;, &quot;PartitionOnCalendarDate&quot;, &quot;PartitionOnTime&quot;. </param>
-        /// <param name="partitionSettings"> The settings that will be leveraged for SAP table source partitioning. </param>
+        /// <param name="queryTimeout">
+        /// Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
+        /// Serialized Name: TabularSource.queryTimeout
+        /// </param>
+        /// <param name="additionalColumns">
+        /// Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects).
+        /// Serialized Name: TabularSource.additionalColumns
+        /// </param>
+        /// <param name="rowCount">
+        /// The number of rows to be retrieved. Type: integer(or Expression with resultType integer).
+        /// Serialized Name: SapTableSource.rowCount
+        /// </param>
+        /// <param name="rowSkips">
+        /// The number of rows that will be skipped. Type: integer (or Expression with resultType integer).
+        /// Serialized Name: SapTableSource.rowSkips
+        /// </param>
+        /// <param name="rfcTableFields">
+        /// The fields of the SAP table that will be retrieved. For example, column0, column1. Type: string (or Expression with resultType string).
+        /// Serialized Name: SapTableSource.rfcTableFields
+        /// </param>
+        /// <param name="rfcTableOptions">
+        /// The options for the filtering of the SAP Table. For example, COLUMN0 EQ SOME VALUE. Type: string (or Expression with resultType string).
+        /// Serialized Name: SapTableSource.rfcTableOptions
+        /// </param>
+        /// <param name="batchSize">
+        /// Specifies the maximum number of rows that will be retrieved at a time when retrieving data from SAP Table. Type: integer (or Expression with resultType integer).
+        /// Serialized Name: SapTableSource.batchSize
+        /// </param>
+        /// <param name="customRfcReadTableFunctionModule">
+        /// Specifies the custom RFC function module that will be used to read data from SAP Table. Type: string (or Expression with resultType string).
+        /// Serialized Name: SapTableSource.customRfcReadTableFunctionModule
+        /// </param>
+        /// <param name="sapDataColumnDelimiter">
+        /// The single character that will be used as delimiter passed to SAP RFC as well as splitting the output data retrieved. Type: string (or Expression with resultType string).
+        /// Serialized Name: SapTableSource.sapDataColumnDelimiter
+        /// </param>
+        /// <param name="partitionOption">
+        /// The partition mechanism that will be used for SAP table read in parallel. Possible values include: &quot;None&quot;, &quot;PartitionOnInt&quot;, &quot;PartitionOnCalendarYear&quot;, &quot;PartitionOnCalendarMonth&quot;, &quot;PartitionOnCalendarDate&quot;, &quot;PartitionOnTime&quot;.
+        /// Serialized Name: SapTableSource.partitionOption
+        /// </param>
+        /// <param name="partitionSettings">
+        /// The settings that will be leveraged for SAP table source partitioning.
+        /// Serialized Name: SapTableSource.partitionSettings
+        /// </param>
         internal SapTableSource(string copySourceType, BinaryData sourceRetryCount, BinaryData sourceRetryWait, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, BinaryData queryTimeout, BinaryData additionalColumns, BinaryData rowCount, BinaryData rowSkips, BinaryData rfcTableFields, BinaryData rfcTableOptions, BinaryData batchSize, BinaryData customRfcReadTableFunctionModule, BinaryData sapDataColumnDelimiter, BinaryData partitionOption, SapTablePartitionSettings partitionSettings) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties, queryTimeout, additionalColumns)
         {
             RowCount = rowCount;
@@ -51,23 +102,50 @@ namespace Azure.ResourceManager.DataFactory.Models
             CopySourceType = copySourceType ?? "SapTableSource";
         }
 
-        /// <summary> The number of rows to be retrieved. Type: integer(or Expression with resultType integer). </summary>
+        /// <summary>
+        /// The number of rows to be retrieved. Type: integer(or Expression with resultType integer).
+        /// Serialized Name: SapTableSource.rowCount
+        /// </summary>
         public BinaryData RowCount { get; set; }
-        /// <summary> The number of rows that will be skipped. Type: integer (or Expression with resultType integer). </summary>
+        /// <summary>
+        /// The number of rows that will be skipped. Type: integer (or Expression with resultType integer).
+        /// Serialized Name: SapTableSource.rowSkips
+        /// </summary>
         public BinaryData RowSkips { get; set; }
-        /// <summary> The fields of the SAP table that will be retrieved. For example, column0, column1. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The fields of the SAP table that will be retrieved. For example, column0, column1. Type: string (or Expression with resultType string).
+        /// Serialized Name: SapTableSource.rfcTableFields
+        /// </summary>
         public BinaryData RfcTableFields { get; set; }
-        /// <summary> The options for the filtering of the SAP Table. For example, COLUMN0 EQ SOME VALUE. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The options for the filtering of the SAP Table. For example, COLUMN0 EQ SOME VALUE. Type: string (or Expression with resultType string).
+        /// Serialized Name: SapTableSource.rfcTableOptions
+        /// </summary>
         public BinaryData RfcTableOptions { get; set; }
-        /// <summary> Specifies the maximum number of rows that will be retrieved at a time when retrieving data from SAP Table. Type: integer (or Expression with resultType integer). </summary>
+        /// <summary>
+        /// Specifies the maximum number of rows that will be retrieved at a time when retrieving data from SAP Table. Type: integer (or Expression with resultType integer).
+        /// Serialized Name: SapTableSource.batchSize
+        /// </summary>
         public BinaryData BatchSize { get; set; }
-        /// <summary> Specifies the custom RFC function module that will be used to read data from SAP Table. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Specifies the custom RFC function module that will be used to read data from SAP Table. Type: string (or Expression with resultType string).
+        /// Serialized Name: SapTableSource.customRfcReadTableFunctionModule
+        /// </summary>
         public BinaryData CustomRfcReadTableFunctionModule { get; set; }
-        /// <summary> The single character that will be used as delimiter passed to SAP RFC as well as splitting the output data retrieved. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The single character that will be used as delimiter passed to SAP RFC as well as splitting the output data retrieved. Type: string (or Expression with resultType string).
+        /// Serialized Name: SapTableSource.sapDataColumnDelimiter
+        /// </summary>
         public BinaryData SapDataColumnDelimiter { get; set; }
-        /// <summary> The partition mechanism that will be used for SAP table read in parallel. Possible values include: &quot;None&quot;, &quot;PartitionOnInt&quot;, &quot;PartitionOnCalendarYear&quot;, &quot;PartitionOnCalendarMonth&quot;, &quot;PartitionOnCalendarDate&quot;, &quot;PartitionOnTime&quot;. </summary>
+        /// <summary>
+        /// The partition mechanism that will be used for SAP table read in parallel. Possible values include: &quot;None&quot;, &quot;PartitionOnInt&quot;, &quot;PartitionOnCalendarYear&quot;, &quot;PartitionOnCalendarMonth&quot;, &quot;PartitionOnCalendarDate&quot;, &quot;PartitionOnTime&quot;.
+        /// Serialized Name: SapTableSource.partitionOption
+        /// </summary>
         public BinaryData PartitionOption { get; set; }
-        /// <summary> The settings that will be leveraged for SAP table source partitioning. </summary>
+        /// <summary>
+        /// The settings that will be leveraged for SAP table source partitioning.
+        /// Serialized Name: SapTableSource.partitionSettings
+        /// </summary>
         public SapTablePartitionSettings PartitionSettings { get; set; }
     }
 }

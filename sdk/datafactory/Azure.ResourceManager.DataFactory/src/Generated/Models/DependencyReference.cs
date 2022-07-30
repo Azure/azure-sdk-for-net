@@ -9,6 +9,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary>
     /// Referenced dependency.
+    /// Serialized Name: DependencyReference
     /// Please note <see cref="DependencyReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="SelfDependencyTumblingWindowTriggerReference"/>, <see cref="TriggerDependencyReference"/> and <see cref="TumblingWindowTriggerDependencyReference"/>.
     /// </summary>
@@ -20,13 +21,19 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of DependencyReference. </summary>
-        /// <param name="dependencyReferenceType"> The type of dependency reference. </param>
+        /// <param name="dependencyReferenceType">
+        /// The type of dependency reference.
+        /// Serialized Name: DependencyReference.type
+        /// </param>
         internal DependencyReference(string dependencyReferenceType)
         {
             DependencyReferenceType = dependencyReferenceType;
         }
 
-        /// <summary> The type of dependency reference. </summary>
+        /// <summary>
+        /// The type of dependency reference.
+        /// Serialized Name: DependencyReference.type
+        /// </summary>
         internal string DependencyReferenceType { get; set; }
     }
 }

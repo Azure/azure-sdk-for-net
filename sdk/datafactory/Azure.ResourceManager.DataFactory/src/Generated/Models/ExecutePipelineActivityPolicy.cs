@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Execution policy for an execute pipeline activity. </summary>
+    /// <summary>
+    /// Execution policy for an execute pipeline activity.
+    /// Serialized Name: ExecutePipelineActivityPolicy
+    /// </summary>
     public partial class ExecutePipelineActivityPolicy
     {
         /// <summary> Initializes a new instance of ExecutePipelineActivityPolicy. </summary>
@@ -21,7 +24,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of ExecutePipelineActivityPolicy. </summary>
-        /// <param name="secureInput"> When set to true, Input from activity is considered as secure and will not be logged to monitoring. </param>
+        /// <param name="secureInput">
+        /// When set to true, Input from activity is considered as secure and will not be logged to monitoring.
+        /// Serialized Name: ExecutePipelineActivityPolicy.secureInput
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal ExecutePipelineActivityPolicy(bool? secureInput, IDictionary<string, BinaryData> additionalProperties)
         {
@@ -29,7 +35,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = additionalProperties;
         }
 
-        /// <summary> When set to true, Input from activity is considered as secure and will not be logged to monitoring. </summary>
+        /// <summary>
+        /// When set to true, Input from activity is considered as secure and will not be logged to monitoring.
+        /// Serialized Name: ExecutePipelineActivityPolicy.secureInput
+        /// </summary>
         public bool? SecureInput { get; set; }
         /// <summary> Additional Properties. </summary>
         public IDictionary<string, BinaryData> AdditionalProperties { get; }

@@ -13,6 +13,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary>
     /// Export command settings.
+    /// Serialized Name: ExportSettings
     /// Please note <see cref="ExportSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AzureDatabricksDeltaLakeExportCommand"/> and <see cref="SnowflakeExportCopyCommand"/>.
     /// </summary>
@@ -25,7 +26,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of ExportSettings. </summary>
-        /// <param name="exportSettingsType"> The export setting type. </param>
+        /// <param name="exportSettingsType">
+        /// The export setting type.
+        /// Serialized Name: ExportSettings.type
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal ExportSettings(string exportSettingsType, IDictionary<string, BinaryData> additionalProperties)
         {
@@ -33,7 +37,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = additionalProperties;
         }
 
-        /// <summary> The export setting type. </summary>
+        /// <summary>
+        /// The export setting type.
+        /// Serialized Name: ExportSettings.type
+        /// </summary>
         internal string ExportSettingsType { get; set; }
         /// <summary> Additional Properties. </summary>
         public IDictionary<string, BinaryData> AdditionalProperties { get; }

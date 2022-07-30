@@ -11,12 +11,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Custom activity type. </summary>
+    /// <summary>
+    /// Custom activity type.
+    /// Serialized Name: CustomActivity
+    /// </summary>
     public partial class CustomActivity : ExecutionActivity
     {
         /// <summary> Initializes a new instance of CustomActivity. </summary>
-        /// <param name="name"> Activity name. </param>
-        /// <param name="command"> Command for custom activity Type: string (or Expression with resultType string). </param>
+        /// <param name="name">
+        /// Activity name.
+        /// Serialized Name: Activity.name
+        /// </param>
+        /// <param name="command">
+        /// Command for custom activity Type: string (or Expression with resultType string).
+        /// Serialized Name: CustomActivity.typeProperties.command
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="command"/> is null. </exception>
         public CustomActivity(string name, BinaryData command) : base(name)
         {
@@ -35,21 +44,63 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of CustomActivity. </summary>
-        /// <param name="name"> Activity name. </param>
-        /// <param name="activityType"> Type of activity. </param>
-        /// <param name="description"> Activity description. </param>
-        /// <param name="dependsOn"> Activity depends on condition. </param>
-        /// <param name="userProperties"> Activity user properties. </param>
+        /// <param name="name">
+        /// Activity name.
+        /// Serialized Name: Activity.name
+        /// </param>
+        /// <param name="activityType">
+        /// Type of activity.
+        /// Serialized Name: Activity.type
+        /// </param>
+        /// <param name="description">
+        /// Activity description.
+        /// Serialized Name: Activity.description
+        /// </param>
+        /// <param name="dependsOn">
+        /// Activity depends on condition.
+        /// Serialized Name: Activity.dependsOn
+        /// </param>
+        /// <param name="userProperties">
+        /// Activity user properties.
+        /// Serialized Name: Activity.userProperties
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
-        /// <param name="policy"> Activity policy. </param>
-        /// <param name="command"> Command for custom activity Type: string (or Expression with resultType string). </param>
-        /// <param name="resourceLinkedService"> Resource linked service reference. </param>
-        /// <param name="folderPath"> Folder path for resource files Type: string (or Expression with resultType string). </param>
-        /// <param name="referenceObjects"> Reference objects. </param>
-        /// <param name="extendedProperties"> User defined property bag. There is no restriction on the keys or values that can be used. The user specified custom activity has the full responsibility to consume and interpret the content defined. </param>
-        /// <param name="retentionTimeInDays"> The retention time for the files submitted for custom activity. Type: double (or Expression with resultType double). </param>
-        /// <param name="autoUserSpecification"> Elevation level and scope for the user, default is nonadmin task. Type: string (or Expression with resultType double). </param>
+        /// <param name="linkedServiceName">
+        /// Linked service reference.
+        /// Serialized Name: ExecutionActivity.linkedServiceName
+        /// </param>
+        /// <param name="policy">
+        /// Activity policy.
+        /// Serialized Name: ExecutionActivity.policy
+        /// </param>
+        /// <param name="command">
+        /// Command for custom activity Type: string (or Expression with resultType string).
+        /// Serialized Name: CustomActivity.typeProperties.command
+        /// </param>
+        /// <param name="resourceLinkedService">
+        /// Resource linked service reference.
+        /// Serialized Name: CustomActivity.typeProperties.resourceLinkedService
+        /// </param>
+        /// <param name="folderPath">
+        /// Folder path for resource files Type: string (or Expression with resultType string).
+        /// Serialized Name: CustomActivity.typeProperties.folderPath
+        /// </param>
+        /// <param name="referenceObjects">
+        /// Reference objects
+        /// Serialized Name: CustomActivity.typeProperties.referenceObjects
+        /// </param>
+        /// <param name="extendedProperties">
+        /// User defined property bag. There is no restriction on the keys or values that can be used. The user specified custom activity has the full responsibility to consume and interpret the content defined.
+        /// Serialized Name: CustomActivity.typeProperties.extendedProperties
+        /// </param>
+        /// <param name="retentionTimeInDays">
+        /// The retention time for the files submitted for custom activity. Type: double (or Expression with resultType double).
+        /// Serialized Name: CustomActivity.typeProperties.retentionTimeInDays
+        /// </param>
+        /// <param name="autoUserSpecification">
+        /// Elevation level and scope for the user, default is nonadmin task. Type: string (or Expression with resultType double).
+        /// Serialized Name: CustomActivity.typeProperties.autoUserSpecification
+        /// </param>
         internal CustomActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, BinaryData command, LinkedServiceReference resourceLinkedService, BinaryData folderPath, CustomActivityReferenceObject referenceObjects, IDictionary<string, BinaryData> extendedProperties, BinaryData retentionTimeInDays, BinaryData autoUserSpecification) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             Command = command;
@@ -62,19 +113,40 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = activityType ?? "Custom";
         }
 
-        /// <summary> Command for custom activity Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Command for custom activity Type: string (or Expression with resultType string).
+        /// Serialized Name: CustomActivity.typeProperties.command
+        /// </summary>
         public BinaryData Command { get; set; }
-        /// <summary> Resource linked service reference. </summary>
+        /// <summary>
+        /// Resource linked service reference.
+        /// Serialized Name: CustomActivity.typeProperties.resourceLinkedService
+        /// </summary>
         public LinkedServiceReference ResourceLinkedService { get; set; }
-        /// <summary> Folder path for resource files Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Folder path for resource files Type: string (or Expression with resultType string).
+        /// Serialized Name: CustomActivity.typeProperties.folderPath
+        /// </summary>
         public BinaryData FolderPath { get; set; }
-        /// <summary> Reference objects. </summary>
+        /// <summary>
+        /// Reference objects
+        /// Serialized Name: CustomActivity.typeProperties.referenceObjects
+        /// </summary>
         public CustomActivityReferenceObject ReferenceObjects { get; set; }
-        /// <summary> User defined property bag. There is no restriction on the keys or values that can be used. The user specified custom activity has the full responsibility to consume and interpret the content defined. </summary>
+        /// <summary>
+        /// User defined property bag. There is no restriction on the keys or values that can be used. The user specified custom activity has the full responsibility to consume and interpret the content defined.
+        /// Serialized Name: CustomActivity.typeProperties.extendedProperties
+        /// </summary>
         public IDictionary<string, BinaryData> ExtendedProperties { get; }
-        /// <summary> The retention time for the files submitted for custom activity. Type: double (or Expression with resultType double). </summary>
+        /// <summary>
+        /// The retention time for the files submitted for custom activity. Type: double (or Expression with resultType double).
+        /// Serialized Name: CustomActivity.typeProperties.retentionTimeInDays
+        /// </summary>
         public BinaryData RetentionTimeInDays { get; set; }
-        /// <summary> Elevation level and scope for the user, default is nonadmin task. Type: string (or Expression with resultType double). </summary>
+        /// <summary>
+        /// Elevation level and scope for the user, default is nonadmin task. Type: string (or Expression with resultType double).
+        /// Serialized Name: CustomActivity.typeProperties.autoUserSpecification
+        /// </summary>
         public BinaryData AutoUserSpecification { get; set; }
     }
 }

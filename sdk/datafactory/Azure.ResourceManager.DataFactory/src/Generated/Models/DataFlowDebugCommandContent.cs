@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Request body structure for data flow debug command. </summary>
+    /// <summary>
+    /// Request body structure for data flow debug command.
+    /// Serialized Name: DataFlowDebugCommandRequest
+    /// </summary>
     public partial class DataFlowDebugCommandContent
     {
         /// <summary> Initializes a new instance of DataFlowDebugCommandContent. </summary>
@@ -15,11 +18,20 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
         }
 
-        /// <summary> The ID of data flow debug session. </summary>
+        /// <summary>
+        /// The ID of data flow debug session.
+        /// Serialized Name: DataFlowDebugCommandRequest.sessionId
+        /// </summary>
         public string SessionId { get; set; }
-        /// <summary> The command type. </summary>
+        /// <summary>
+        /// The command type.
+        /// Serialized Name: DataFlowDebugCommandRequest.command
+        /// </summary>
         public DataFlowDebugCommandType? Command { get; set; }
-        /// <summary> The command payload object. </summary>
+        /// <summary>
+        /// The command payload object.
+        /// Serialized Name: DataFlowDebugCommandRequest.commandPayload
+        /// </summary>
         public DataFlowDebugCommandPayload CommandPayload { get; set; }
     }
 }

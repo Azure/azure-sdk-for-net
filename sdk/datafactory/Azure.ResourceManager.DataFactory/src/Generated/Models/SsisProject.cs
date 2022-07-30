@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Ssis project. </summary>
+    /// <summary>
+    /// Ssis project.
+    /// Serialized Name: SsisProject
+    /// </summary>
     public partial class SsisProject : SsisObjectMetadata
     {
         /// <summary> Initializes a new instance of SsisProject. </summary>
@@ -22,14 +25,38 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of SsisProject. </summary>
-        /// <param name="metadataType"> Type of metadata. </param>
-        /// <param name="id"> Metadata id. </param>
-        /// <param name="name"> Metadata name. </param>
-        /// <param name="description"> Metadata description. </param>
-        /// <param name="folderId"> Folder id which contains project. </param>
-        /// <param name="version"> Project version. </param>
-        /// <param name="environmentRefs"> Environment reference in project. </param>
-        /// <param name="parameters"> Parameters in project. </param>
+        /// <param name="metadataType">
+        /// Type of metadata.
+        /// Serialized Name: SsisObjectMetadata.type
+        /// </param>
+        /// <param name="id">
+        /// Metadata id.
+        /// Serialized Name: SsisObjectMetadata.id
+        /// </param>
+        /// <param name="name">
+        /// Metadata name.
+        /// Serialized Name: SsisObjectMetadata.name
+        /// </param>
+        /// <param name="description">
+        /// Metadata description.
+        /// Serialized Name: SsisObjectMetadata.description
+        /// </param>
+        /// <param name="folderId">
+        /// Folder id which contains project.
+        /// Serialized Name: SsisProject.folderId
+        /// </param>
+        /// <param name="version">
+        /// Project version.
+        /// Serialized Name: SsisProject.version
+        /// </param>
+        /// <param name="environmentRefs">
+        /// Environment reference in project
+        /// Serialized Name: SsisProject.environmentRefs
+        /// </param>
+        /// <param name="parameters">
+        /// Parameters in project
+        /// Serialized Name: SsisProject.parameters
+        /// </param>
         internal SsisProject(SsisObjectMetadataType metadataType, long? id, string name, string description, long? folderId, long? version, IReadOnlyList<SsisEnvironmentReference> environmentRefs, IReadOnlyList<SsisParameter> parameters) : base(metadataType, id, name, description)
         {
             FolderId = folderId;
@@ -39,13 +66,25 @@ namespace Azure.ResourceManager.DataFactory.Models
             MetadataType = metadataType;
         }
 
-        /// <summary> Folder id which contains project. </summary>
+        /// <summary>
+        /// Folder id which contains project.
+        /// Serialized Name: SsisProject.folderId
+        /// </summary>
         public long? FolderId { get; }
-        /// <summary> Project version. </summary>
+        /// <summary>
+        /// Project version.
+        /// Serialized Name: SsisProject.version
+        /// </summary>
         public long? Version { get; }
-        /// <summary> Environment reference in project. </summary>
+        /// <summary>
+        /// Environment reference in project
+        /// Serialized Name: SsisProject.environmentRefs
+        /// </summary>
         public IReadOnlyList<SsisEnvironmentReference> EnvironmentRefs { get; }
-        /// <summary> Parameters in project. </summary>
+        /// <summary>
+        /// Parameters in project
+        /// Serialized Name: SsisProject.parameters
+        /// </summary>
         public IReadOnlyList<SsisParameter> Parameters { get; }
     }
 }

@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Default value. </summary>
+    /// <summary>
+    /// Default value.
+    /// Serialized Name: DWCopyCommandDefaultValue
+    /// </summary>
     public partial class DWCopyCommandDefaultValue
     {
         /// <summary> Initializes a new instance of DWCopyCommandDefaultValue. </summary>
@@ -18,17 +21,29 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of DWCopyCommandDefaultValue. </summary>
-        /// <param name="columnName"> Column name. Type: object (or Expression with resultType string). </param>
-        /// <param name="defaultValue"> The default value of the column. Type: object (or Expression with resultType string). </param>
+        /// <param name="columnName">
+        /// Column name. Type: object (or Expression with resultType string).
+        /// Serialized Name: DWCopyCommandDefaultValue.columnName
+        /// </param>
+        /// <param name="defaultValue">
+        /// The default value of the column. Type: object (or Expression with resultType string).
+        /// Serialized Name: DWCopyCommandDefaultValue.defaultValue
+        /// </param>
         internal DWCopyCommandDefaultValue(BinaryData columnName, BinaryData defaultValue)
         {
             ColumnName = columnName;
             DefaultValue = defaultValue;
         }
 
-        /// <summary> Column name. Type: object (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Column name. Type: object (or Expression with resultType string).
+        /// Serialized Name: DWCopyCommandDefaultValue.columnName
+        /// </summary>
         public BinaryData ColumnName { get; set; }
-        /// <summary> The default value of the column. Type: object (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The default value of the column. Type: object (or Expression with resultType string).
+        /// Serialized Name: DWCopyCommandDefaultValue.defaultValue
+        /// </summary>
         public BinaryData DefaultValue { get; set; }
     }
 }

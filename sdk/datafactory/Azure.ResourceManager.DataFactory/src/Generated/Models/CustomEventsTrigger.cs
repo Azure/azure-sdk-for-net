@@ -11,12 +11,21 @@ using System.Linq;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Trigger that runs every time a custom event is received. </summary>
+    /// <summary>
+    /// Trigger that runs every time a custom event is received.
+    /// Serialized Name: CustomEventsTrigger
+    /// </summary>
     public partial class CustomEventsTrigger : MultiplePipelineTrigger
     {
         /// <summary> Initializes a new instance of CustomEventsTrigger. </summary>
-        /// <param name="events"> The list of event types that cause this trigger to fire. </param>
-        /// <param name="scope"> The ARM resource ID of the Azure Event Grid Topic. </param>
+        /// <param name="events">
+        /// The list of event types that cause this trigger to fire.
+        /// Serialized Name: CustomEventsTrigger.typeProperties.events
+        /// </param>
+        /// <param name="scope">
+        /// The ARM resource ID of the Azure Event Grid Topic.
+        /// Serialized Name: CustomEventsTrigger.typeProperties.scope
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="events"/> or <paramref name="scope"/> is null. </exception>
         public CustomEventsTrigger(IEnumerable<BinaryData> events, string scope)
         {
@@ -35,16 +44,43 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of CustomEventsTrigger. </summary>
-        /// <param name="triggerType"> Trigger type. </param>
-        /// <param name="description"> Trigger description. </param>
-        /// <param name="runtimeState"> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </param>
-        /// <param name="annotations"> List of tags that can be used for describing the trigger. </param>
+        /// <param name="triggerType">
+        /// Trigger type.
+        /// Serialized Name: Trigger.type
+        /// </param>
+        /// <param name="description">
+        /// Trigger description.
+        /// Serialized Name: Trigger.description
+        /// </param>
+        /// <param name="runtimeState">
+        /// Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger.
+        /// Serialized Name: Trigger.runtimeState
+        /// </param>
+        /// <param name="annotations">
+        /// List of tags that can be used for describing the trigger.
+        /// Serialized Name: Trigger.annotations
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="pipelines"> Pipelines that need to be started. </param>
-        /// <param name="subjectBeginsWith"> The event subject must begin with the pattern provided for trigger to fire. At least one of these must be provided: subjectBeginsWith, subjectEndsWith. </param>
-        /// <param name="subjectEndsWith"> The event subject must end with the pattern provided for trigger to fire. At least one of these must be provided: subjectBeginsWith, subjectEndsWith. </param>
-        /// <param name="events"> The list of event types that cause this trigger to fire. </param>
-        /// <param name="scope"> The ARM resource ID of the Azure Event Grid Topic. </param>
+        /// <param name="pipelines">
+        /// Pipelines that need to be started.
+        /// Serialized Name: MultiplePipelineTrigger.pipelines
+        /// </param>
+        /// <param name="subjectBeginsWith">
+        /// The event subject must begin with the pattern provided for trigger to fire. At least one of these must be provided: subjectBeginsWith, subjectEndsWith.
+        /// Serialized Name: CustomEventsTrigger.typeProperties.subjectBeginsWith
+        /// </param>
+        /// <param name="subjectEndsWith">
+        /// The event subject must end with the pattern provided for trigger to fire. At least one of these must be provided: subjectBeginsWith, subjectEndsWith.
+        /// Serialized Name: CustomEventsTrigger.typeProperties.subjectEndsWith
+        /// </param>
+        /// <param name="events">
+        /// The list of event types that cause this trigger to fire.
+        /// Serialized Name: CustomEventsTrigger.typeProperties.events
+        /// </param>
+        /// <param name="scope">
+        /// The ARM resource ID of the Azure Event Grid Topic.
+        /// Serialized Name: CustomEventsTrigger.typeProperties.scope
+        /// </param>
         internal CustomEventsTrigger(string triggerType, string description, TriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, IList<TriggerPipelineReference> pipelines, string subjectBeginsWith, string subjectEndsWith, IList<BinaryData> events, string scope) : base(triggerType, description, runtimeState, annotations, additionalProperties, pipelines)
         {
             SubjectBeginsWith = subjectBeginsWith;
@@ -54,13 +90,25 @@ namespace Azure.ResourceManager.DataFactory.Models
             TriggerType = triggerType ?? "CustomEventsTrigger";
         }
 
-        /// <summary> The event subject must begin with the pattern provided for trigger to fire. At least one of these must be provided: subjectBeginsWith, subjectEndsWith. </summary>
+        /// <summary>
+        /// The event subject must begin with the pattern provided for trigger to fire. At least one of these must be provided: subjectBeginsWith, subjectEndsWith.
+        /// Serialized Name: CustomEventsTrigger.typeProperties.subjectBeginsWith
+        /// </summary>
         public string SubjectBeginsWith { get; set; }
-        /// <summary> The event subject must end with the pattern provided for trigger to fire. At least one of these must be provided: subjectBeginsWith, subjectEndsWith. </summary>
+        /// <summary>
+        /// The event subject must end with the pattern provided for trigger to fire. At least one of these must be provided: subjectBeginsWith, subjectEndsWith.
+        /// Serialized Name: CustomEventsTrigger.typeProperties.subjectEndsWith
+        /// </summary>
         public string SubjectEndsWith { get; set; }
-        /// <summary> The list of event types that cause this trigger to fire. </summary>
+        /// <summary>
+        /// The list of event types that cause this trigger to fire.
+        /// Serialized Name: CustomEventsTrigger.typeProperties.events
+        /// </summary>
         public IList<BinaryData> Events { get; }
-        /// <summary> The ARM resource ID of the Azure Event Grid Topic. </summary>
+        /// <summary>
+        /// The ARM resource ID of the Azure Event Grid Topic.
+        /// Serialized Name: CustomEventsTrigger.typeProperties.scope
+        /// </summary>
         public string Scope { get; set; }
     }
 }

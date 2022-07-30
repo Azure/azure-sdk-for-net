@@ -9,11 +9,17 @@ using System;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Self referenced tumbling window trigger dependency. </summary>
+    /// <summary>
+    /// Self referenced tumbling window trigger dependency.
+    /// Serialized Name: SelfDependencyTumblingWindowTriggerReference
+    /// </summary>
     public partial class SelfDependencyTumblingWindowTriggerReference : DependencyReference
     {
         /// <summary> Initializes a new instance of SelfDependencyTumblingWindowTriggerReference. </summary>
-        /// <param name="offset"> Timespan applied to the start time of a tumbling window when evaluating dependency. </param>
+        /// <param name="offset">
+        /// Timespan applied to the start time of a tumbling window when evaluating dependency.
+        /// Serialized Name: SelfDependencyTumblingWindowTriggerReference.offset
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="offset"/> is null. </exception>
         public SelfDependencyTumblingWindowTriggerReference(string offset)
         {
@@ -27,9 +33,18 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of SelfDependencyTumblingWindowTriggerReference. </summary>
-        /// <param name="dependencyReferenceType"> The type of dependency reference. </param>
-        /// <param name="offset"> Timespan applied to the start time of a tumbling window when evaluating dependency. </param>
-        /// <param name="size"> The size of the window when evaluating the dependency. If undefined the frequency of the tumbling window will be used. </param>
+        /// <param name="dependencyReferenceType">
+        /// The type of dependency reference.
+        /// Serialized Name: DependencyReference.type
+        /// </param>
+        /// <param name="offset">
+        /// Timespan applied to the start time of a tumbling window when evaluating dependency.
+        /// Serialized Name: SelfDependencyTumblingWindowTriggerReference.offset
+        /// </param>
+        /// <param name="size">
+        /// The size of the window when evaluating the dependency. If undefined the frequency of the tumbling window will be used.
+        /// Serialized Name: SelfDependencyTumblingWindowTriggerReference.size
+        /// </param>
         internal SelfDependencyTumblingWindowTriggerReference(string dependencyReferenceType, string offset, string size) : base(dependencyReferenceType)
         {
             Offset = offset;
@@ -37,9 +52,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             DependencyReferenceType = dependencyReferenceType ?? "SelfDependencyTumblingWindowTriggerReference";
         }
 
-        /// <summary> Timespan applied to the start time of a tumbling window when evaluating dependency. </summary>
+        /// <summary>
+        /// Timespan applied to the start time of a tumbling window when evaluating dependency.
+        /// Serialized Name: SelfDependencyTumblingWindowTriggerReference.offset
+        /// </summary>
         public string Offset { get; set; }
-        /// <summary> The size of the window when evaluating the dependency. If undefined the frequency of the tumbling window will be used. </summary>
+        /// <summary>
+        /// The size of the window when evaluating the dependency. If undefined the frequency of the tumbling window will be used.
+        /// Serialized Name: SelfDependencyTumblingWindowTriggerReference.size
+        /// </summary>
         public string Size { get; set; }
     }
 }

@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Self-hosted integration runtime status. </summary>
+    /// <summary>
+    /// Self-hosted integration runtime status.
+    /// Serialized Name: SelfHostedIntegrationRuntimeStatus
+    /// </summary>
     public partial class SelfHostedIntegrationRuntimeStatus : IntegrationRuntimeStatus
     {
         /// <summary> Initializes a new instance of SelfHostedIntegrationRuntimeStatus. </summary>
@@ -25,26 +28,83 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of SelfHostedIntegrationRuntimeStatus. </summary>
-        /// <param name="runtimeType"> Type of integration runtime. </param>
-        /// <param name="dataFactoryName"> The data factory name which the integration runtime belong to. </param>
-        /// <param name="state"> The state of integration runtime. </param>
+        /// <param name="runtimeType">
+        /// Type of integration runtime.
+        /// Serialized Name: IntegrationRuntimeStatus.type
+        /// </param>
+        /// <param name="dataFactoryName">
+        /// The data factory name which the integration runtime belong to.
+        /// Serialized Name: IntegrationRuntimeStatus.dataFactoryName
+        /// </param>
+        /// <param name="state">
+        /// The state of integration runtime.
+        /// Serialized Name: IntegrationRuntimeStatus.state
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="createOn"> The time at which the integration runtime was created, in ISO8601 format. </param>
-        /// <param name="taskQueueId"> The task queue id of the integration runtime. </param>
-        /// <param name="internalChannelEncryption"> It is used to set the encryption mode for node-node communication channel (when more than 2 self-hosted integration runtime nodes exist). </param>
-        /// <param name="version"> Version of the integration runtime. </param>
-        /// <param name="nodes"> The list of nodes for this integration runtime. </param>
-        /// <param name="scheduledUpdateOn"> The date at which the integration runtime will be scheduled to update, in ISO8601 format. </param>
-        /// <param name="updateDelayOffset"> The time in the date scheduled by service to update the integration runtime, e.g., PT03H is 3 hours. </param>
-        /// <param name="localTimeZoneOffset"> The local time zone offset in hours. </param>
-        /// <param name="capabilities"> Object with additional information about integration runtime capabilities. </param>
-        /// <param name="serviceUrls"> The URLs for the services used in integration runtime backend service. </param>
-        /// <param name="autoUpdate"> Whether Self-hosted integration runtime auto update has been turned on. </param>
-        /// <param name="versionStatus"> Status of the integration runtime version. </param>
-        /// <param name="links"> The list of linked integration runtimes that are created to share with this integration runtime. </param>
-        /// <param name="pushedVersion"> The version that the integration runtime is going to update to. </param>
-        /// <param name="latestVersion"> The latest version on download center. </param>
-        /// <param name="autoUpdateETA"> The estimated time when the self-hosted integration runtime will be updated. </param>
+        /// <param name="createOn">
+        /// The time at which the integration runtime was created, in ISO8601 format.
+        /// Serialized Name: SelfHostedIntegrationRuntimeStatus.typeProperties.createTime
+        /// </param>
+        /// <param name="taskQueueId">
+        /// The task queue id of the integration runtime.
+        /// Serialized Name: SelfHostedIntegrationRuntimeStatus.typeProperties.taskQueueId
+        /// </param>
+        /// <param name="internalChannelEncryption">
+        /// It is used to set the encryption mode for node-node communication channel (when more than 2 self-hosted integration runtime nodes exist).
+        /// Serialized Name: SelfHostedIntegrationRuntimeStatus.typeProperties.internalChannelEncryption
+        /// </param>
+        /// <param name="version">
+        /// Version of the integration runtime.
+        /// Serialized Name: SelfHostedIntegrationRuntimeStatus.typeProperties.version
+        /// </param>
+        /// <param name="nodes">
+        /// The list of nodes for this integration runtime.
+        /// Serialized Name: SelfHostedIntegrationRuntimeStatus.typeProperties.nodes
+        /// </param>
+        /// <param name="scheduledUpdateOn">
+        /// The date at which the integration runtime will be scheduled to update, in ISO8601 format.
+        /// Serialized Name: SelfHostedIntegrationRuntimeStatus.typeProperties.scheduledUpdateDate
+        /// </param>
+        /// <param name="updateDelayOffset">
+        /// The time in the date scheduled by service to update the integration runtime, e.g., PT03H is 3 hours
+        /// Serialized Name: SelfHostedIntegrationRuntimeStatus.typeProperties.updateDelayOffset
+        /// </param>
+        /// <param name="localTimeZoneOffset">
+        /// The local time zone offset in hours.
+        /// Serialized Name: SelfHostedIntegrationRuntimeStatus.typeProperties.localTimeZoneOffset
+        /// </param>
+        /// <param name="capabilities">
+        /// Object with additional information about integration runtime capabilities.
+        /// Serialized Name: SelfHostedIntegrationRuntimeStatus.typeProperties.capabilities
+        /// </param>
+        /// <param name="serviceUrls">
+        /// The URLs for the services used in integration runtime backend service.
+        /// Serialized Name: SelfHostedIntegrationRuntimeStatus.typeProperties.serviceUrls
+        /// </param>
+        /// <param name="autoUpdate">
+        /// Whether Self-hosted integration runtime auto update has been turned on.
+        /// Serialized Name: SelfHostedIntegrationRuntimeStatus.typeProperties.autoUpdate
+        /// </param>
+        /// <param name="versionStatus">
+        /// Status of the integration runtime version.
+        /// Serialized Name: SelfHostedIntegrationRuntimeStatus.typeProperties.versionStatus
+        /// </param>
+        /// <param name="links">
+        /// The list of linked integration runtimes that are created to share with this integration runtime.
+        /// Serialized Name: SelfHostedIntegrationRuntimeStatus.typeProperties.links
+        /// </param>
+        /// <param name="pushedVersion">
+        /// The version that the integration runtime is going to update to.
+        /// Serialized Name: SelfHostedIntegrationRuntimeStatus.typeProperties.pushedVersion
+        /// </param>
+        /// <param name="latestVersion">
+        /// The latest version on download center.
+        /// Serialized Name: SelfHostedIntegrationRuntimeStatus.typeProperties.latestVersion
+        /// </param>
+        /// <param name="autoUpdateETA">
+        /// The estimated time when the self-hosted integration runtime will be updated.
+        /// Serialized Name: SelfHostedIntegrationRuntimeStatus.typeProperties.autoUpdateETA
+        /// </param>
         internal SelfHostedIntegrationRuntimeStatus(IntegrationRuntimeType runtimeType, string dataFactoryName, IntegrationRuntimeState? state, IReadOnlyDictionary<string, BinaryData> additionalProperties, DateTimeOffset? createOn, string taskQueueId, IntegrationRuntimeInternalChannelEncryptionMode? internalChannelEncryption, string version, IReadOnlyList<SelfHostedIntegrationRuntimeNode> nodes, DateTimeOffset? scheduledUpdateOn, string updateDelayOffset, string localTimeZoneOffset, IReadOnlyDictionary<string, string> capabilities, IReadOnlyList<string> serviceUrls, IntegrationRuntimeAutoUpdate? autoUpdate, string versionStatus, IReadOnlyList<LinkedIntegrationRuntime> links, string pushedVersion, string latestVersion, DateTimeOffset? autoUpdateETA) : base(runtimeType, dataFactoryName, state, additionalProperties)
         {
             CreateOn = createOn;
@@ -66,37 +126,85 @@ namespace Azure.ResourceManager.DataFactory.Models
             RuntimeType = runtimeType;
         }
 
-        /// <summary> The time at which the integration runtime was created, in ISO8601 format. </summary>
+        /// <summary>
+        /// The time at which the integration runtime was created, in ISO8601 format.
+        /// Serialized Name: SelfHostedIntegrationRuntimeStatus.typeProperties.createTime
+        /// </summary>
         public DateTimeOffset? CreateOn { get; }
-        /// <summary> The task queue id of the integration runtime. </summary>
+        /// <summary>
+        /// The task queue id of the integration runtime.
+        /// Serialized Name: SelfHostedIntegrationRuntimeStatus.typeProperties.taskQueueId
+        /// </summary>
         public string TaskQueueId { get; }
-        /// <summary> It is used to set the encryption mode for node-node communication channel (when more than 2 self-hosted integration runtime nodes exist). </summary>
+        /// <summary>
+        /// It is used to set the encryption mode for node-node communication channel (when more than 2 self-hosted integration runtime nodes exist).
+        /// Serialized Name: SelfHostedIntegrationRuntimeStatus.typeProperties.internalChannelEncryption
+        /// </summary>
         public IntegrationRuntimeInternalChannelEncryptionMode? InternalChannelEncryption { get; }
-        /// <summary> Version of the integration runtime. </summary>
+        /// <summary>
+        /// Version of the integration runtime.
+        /// Serialized Name: SelfHostedIntegrationRuntimeStatus.typeProperties.version
+        /// </summary>
         public string Version { get; }
-        /// <summary> The list of nodes for this integration runtime. </summary>
+        /// <summary>
+        /// The list of nodes for this integration runtime.
+        /// Serialized Name: SelfHostedIntegrationRuntimeStatus.typeProperties.nodes
+        /// </summary>
         public IReadOnlyList<SelfHostedIntegrationRuntimeNode> Nodes { get; }
-        /// <summary> The date at which the integration runtime will be scheduled to update, in ISO8601 format. </summary>
+        /// <summary>
+        /// The date at which the integration runtime will be scheduled to update, in ISO8601 format.
+        /// Serialized Name: SelfHostedIntegrationRuntimeStatus.typeProperties.scheduledUpdateDate
+        /// </summary>
         public DateTimeOffset? ScheduledUpdateOn { get; }
-        /// <summary> The time in the date scheduled by service to update the integration runtime, e.g., PT03H is 3 hours. </summary>
+        /// <summary>
+        /// The time in the date scheduled by service to update the integration runtime, e.g., PT03H is 3 hours
+        /// Serialized Name: SelfHostedIntegrationRuntimeStatus.typeProperties.updateDelayOffset
+        /// </summary>
         public string UpdateDelayOffset { get; }
-        /// <summary> The local time zone offset in hours. </summary>
+        /// <summary>
+        /// The local time zone offset in hours.
+        /// Serialized Name: SelfHostedIntegrationRuntimeStatus.typeProperties.localTimeZoneOffset
+        /// </summary>
         public string LocalTimeZoneOffset { get; }
-        /// <summary> Object with additional information about integration runtime capabilities. </summary>
+        /// <summary>
+        /// Object with additional information about integration runtime capabilities.
+        /// Serialized Name: SelfHostedIntegrationRuntimeStatus.typeProperties.capabilities
+        /// </summary>
         public IReadOnlyDictionary<string, string> Capabilities { get; }
-        /// <summary> The URLs for the services used in integration runtime backend service. </summary>
+        /// <summary>
+        /// The URLs for the services used in integration runtime backend service.
+        /// Serialized Name: SelfHostedIntegrationRuntimeStatus.typeProperties.serviceUrls
+        /// </summary>
         public IReadOnlyList<string> ServiceUrls { get; }
-        /// <summary> Whether Self-hosted integration runtime auto update has been turned on. </summary>
+        /// <summary>
+        /// Whether Self-hosted integration runtime auto update has been turned on.
+        /// Serialized Name: SelfHostedIntegrationRuntimeStatus.typeProperties.autoUpdate
+        /// </summary>
         public IntegrationRuntimeAutoUpdate? AutoUpdate { get; }
-        /// <summary> Status of the integration runtime version. </summary>
+        /// <summary>
+        /// Status of the integration runtime version.
+        /// Serialized Name: SelfHostedIntegrationRuntimeStatus.typeProperties.versionStatus
+        /// </summary>
         public string VersionStatus { get; }
-        /// <summary> The list of linked integration runtimes that are created to share with this integration runtime. </summary>
+        /// <summary>
+        /// The list of linked integration runtimes that are created to share with this integration runtime.
+        /// Serialized Name: SelfHostedIntegrationRuntimeStatus.typeProperties.links
+        /// </summary>
         public IReadOnlyList<LinkedIntegrationRuntime> Links { get; }
-        /// <summary> The version that the integration runtime is going to update to. </summary>
+        /// <summary>
+        /// The version that the integration runtime is going to update to.
+        /// Serialized Name: SelfHostedIntegrationRuntimeStatus.typeProperties.pushedVersion
+        /// </summary>
         public string PushedVersion { get; }
-        /// <summary> The latest version on download center. </summary>
+        /// <summary>
+        /// The latest version on download center.
+        /// Serialized Name: SelfHostedIntegrationRuntimeStatus.typeProperties.latestVersion
+        /// </summary>
         public string LatestVersion { get; }
-        /// <summary> The estimated time when the self-hosted integration runtime will be updated. </summary>
+        /// <summary>
+        /// The estimated time when the self-hosted integration runtime will be updated.
+        /// Serialized Name: SelfHostedIntegrationRuntimeStatus.typeProperties.autoUpdateETA
+        /// </summary>
         public DateTimeOffset? AutoUpdateETA { get; }
     }
 }

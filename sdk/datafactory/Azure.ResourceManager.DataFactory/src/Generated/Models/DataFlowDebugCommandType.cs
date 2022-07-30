@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The command type. </summary>
+    /// <summary>
+    /// The command type.
+    /// Serialized Name: DataFlowDebugCommandType
+    /// </summary>
     public readonly partial struct DataFlowDebugCommandType : IEquatable<DataFlowDebugCommandType>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string ExecuteStatisticsQueryValue = "executeStatisticsQuery";
         private const string ExecuteExpressionQueryValue = "executeExpressionQuery";
 
-        /// <summary> executePreviewQuery. </summary>
+        /// <summary>
+        /// executePreviewQuery
+        /// Serialized Name: DataFlowDebugCommandType.executePreviewQuery
+        /// </summary>
         public static DataFlowDebugCommandType ExecutePreviewQuery { get; } = new DataFlowDebugCommandType(ExecutePreviewQueryValue);
-        /// <summary> executeStatisticsQuery. </summary>
+        /// <summary>
+        /// executeStatisticsQuery
+        /// Serialized Name: DataFlowDebugCommandType.executeStatisticsQuery
+        /// </summary>
         public static DataFlowDebugCommandType ExecuteStatisticsQuery { get; } = new DataFlowDebugCommandType(ExecuteStatisticsQueryValue);
-        /// <summary> executeExpressionQuery. </summary>
+        /// <summary>
+        /// executeExpressionQuery
+        /// Serialized Name: DataFlowDebugCommandType.executeExpressionQuery
+        /// </summary>
         public static DataFlowDebugCommandType ExecuteExpressionQuery { get; } = new DataFlowDebugCommandType(ExecuteExpressionQueryValue);
         /// <summary> Determines if two <see cref="DataFlowDebugCommandType"/> values are the same. </summary>
         public static bool operator ==(DataFlowDebugCommandType left, DataFlowDebugCommandType right) => left.Equals(right);

@@ -9,15 +9,33 @@ using System;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Factory&apos;s VSTS repo information. </summary>
+    /// <summary>
+    /// Factory&apos;s VSTS repo information.
+    /// Serialized Name: FactoryVstsConfiguration
+    /// </summary>
     public partial class FactoryVstsConfiguration : FactoryRepoConfiguration
     {
         /// <summary> Initializes a new instance of FactoryVstsConfiguration. </summary>
-        /// <param name="accountName"> Account name. </param>
-        /// <param name="repositoryName"> Repository name. </param>
-        /// <param name="collaborationBranch"> Collaboration branch. </param>
-        /// <param name="rootFolder"> Root folder. </param>
-        /// <param name="projectName"> VSTS project name. </param>
+        /// <param name="accountName">
+        /// Account name.
+        /// Serialized Name: FactoryRepoConfiguration.accountName
+        /// </param>
+        /// <param name="repositoryName">
+        /// Repository name.
+        /// Serialized Name: FactoryRepoConfiguration.repositoryName
+        /// </param>
+        /// <param name="collaborationBranch">
+        /// Collaboration branch.
+        /// Serialized Name: FactoryRepoConfiguration.collaborationBranch
+        /// </param>
+        /// <param name="rootFolder">
+        /// Root folder.
+        /// Serialized Name: FactoryRepoConfiguration.rootFolder
+        /// </param>
+        /// <param name="projectName">
+        /// VSTS project name.
+        /// Serialized Name: FactoryVstsConfiguration.projectName
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/>, <paramref name="repositoryName"/>, <paramref name="collaborationBranch"/>, <paramref name="rootFolder"/> or <paramref name="projectName"/> is null. </exception>
         public FactoryVstsConfiguration(string accountName, string repositoryName, string collaborationBranch, string rootFolder, string projectName) : base(accountName, repositoryName, collaborationBranch, rootFolder)
         {
@@ -47,14 +65,38 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of FactoryVstsConfiguration. </summary>
-        /// <param name="factoryRepoConfigurationType"> Type of repo configuration. </param>
-        /// <param name="accountName"> Account name. </param>
-        /// <param name="repositoryName"> Repository name. </param>
-        /// <param name="collaborationBranch"> Collaboration branch. </param>
-        /// <param name="rootFolder"> Root folder. </param>
-        /// <param name="lastCommitId"> Last commit id. </param>
-        /// <param name="projectName"> VSTS project name. </param>
-        /// <param name="tenantId"> VSTS tenant id. </param>
+        /// <param name="factoryRepoConfigurationType">
+        /// Type of repo configuration.
+        /// Serialized Name: FactoryRepoConfiguration.type
+        /// </param>
+        /// <param name="accountName">
+        /// Account name.
+        /// Serialized Name: FactoryRepoConfiguration.accountName
+        /// </param>
+        /// <param name="repositoryName">
+        /// Repository name.
+        /// Serialized Name: FactoryRepoConfiguration.repositoryName
+        /// </param>
+        /// <param name="collaborationBranch">
+        /// Collaboration branch.
+        /// Serialized Name: FactoryRepoConfiguration.collaborationBranch
+        /// </param>
+        /// <param name="rootFolder">
+        /// Root folder.
+        /// Serialized Name: FactoryRepoConfiguration.rootFolder
+        /// </param>
+        /// <param name="lastCommitId">
+        /// Last commit id.
+        /// Serialized Name: FactoryRepoConfiguration.lastCommitId
+        /// </param>
+        /// <param name="projectName">
+        /// VSTS project name.
+        /// Serialized Name: FactoryVstsConfiguration.projectName
+        /// </param>
+        /// <param name="tenantId">
+        /// VSTS tenant id.
+        /// Serialized Name: FactoryVstsConfiguration.tenantId
+        /// </param>
         internal FactoryVstsConfiguration(string factoryRepoConfigurationType, string accountName, string repositoryName, string collaborationBranch, string rootFolder, string lastCommitId, string projectName, Guid? tenantId) : base(factoryRepoConfigurationType, accountName, repositoryName, collaborationBranch, rootFolder, lastCommitId)
         {
             ProjectName = projectName;
@@ -62,9 +104,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             FactoryRepoConfigurationType = factoryRepoConfigurationType ?? "FactoryVSTSConfiguration";
         }
 
-        /// <summary> VSTS project name. </summary>
+        /// <summary>
+        /// VSTS project name.
+        /// Serialized Name: FactoryVstsConfiguration.projectName
+        /// </summary>
         public string ProjectName { get; set; }
-        /// <summary> VSTS tenant id. </summary>
+        /// <summary>
+        /// VSTS tenant id.
+        /// Serialized Name: FactoryVstsConfiguration.tenantId
+        /// </summary>
         public Guid? TenantId { get; set; }
     }
 }

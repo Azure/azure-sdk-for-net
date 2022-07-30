@@ -13,6 +13,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary>
     /// Integration runtime status.
+    /// Serialized Name: IntegrationRuntimeStatus
     /// Please note <see cref="IntegrationRuntimeStatus"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="ManagedIntegrationRuntimeStatus"/> and <see cref="SelfHostedIntegrationRuntimeStatus"/>.
     /// </summary>
@@ -25,9 +26,18 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of IntegrationRuntimeStatus. </summary>
-        /// <param name="runtimeType"> Type of integration runtime. </param>
-        /// <param name="dataFactoryName"> The data factory name which the integration runtime belong to. </param>
-        /// <param name="state"> The state of integration runtime. </param>
+        /// <param name="runtimeType">
+        /// Type of integration runtime.
+        /// Serialized Name: IntegrationRuntimeStatus.type
+        /// </param>
+        /// <param name="dataFactoryName">
+        /// The data factory name which the integration runtime belong to.
+        /// Serialized Name: IntegrationRuntimeStatus.dataFactoryName
+        /// </param>
+        /// <param name="state">
+        /// The state of integration runtime.
+        /// Serialized Name: IntegrationRuntimeStatus.state
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal IntegrationRuntimeStatus(IntegrationRuntimeType runtimeType, string dataFactoryName, IntegrationRuntimeState? state, IReadOnlyDictionary<string, BinaryData> additionalProperties)
         {
@@ -37,11 +47,20 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = additionalProperties;
         }
 
-        /// <summary> Type of integration runtime. </summary>
+        /// <summary>
+        /// Type of integration runtime.
+        /// Serialized Name: IntegrationRuntimeStatus.type
+        /// </summary>
         internal IntegrationRuntimeType RuntimeType { get; set; }
-        /// <summary> The data factory name which the integration runtime belong to. </summary>
+        /// <summary>
+        /// The data factory name which the integration runtime belong to.
+        /// Serialized Name: IntegrationRuntimeStatus.dataFactoryName
+        /// </summary>
         public string DataFactoryName { get; }
-        /// <summary> The state of integration runtime. </summary>
+        /// <summary>
+        /// The state of integration runtime.
+        /// Serialized Name: IntegrationRuntimeStatus.state
+        /// </summary>
         public IntegrationRuntimeState? State { get; }
         /// <summary> Additional Properties. </summary>
         public IReadOnlyDictionary<string, BinaryData> AdditionalProperties { get; }

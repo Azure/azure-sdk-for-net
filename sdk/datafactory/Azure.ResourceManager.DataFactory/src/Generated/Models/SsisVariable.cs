@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Ssis variable. </summary>
+    /// <summary>
+    /// Ssis variable.
+    /// Serialized Name: SsisVariable
+    /// </summary>
     public partial class SsisVariable
     {
         /// <summary> Initializes a new instance of SsisVariable. </summary>
@@ -16,13 +19,34 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of SsisVariable. </summary>
-        /// <param name="id"> Variable id. </param>
-        /// <param name="name"> Variable name. </param>
-        /// <param name="description"> Variable description. </param>
-        /// <param name="dataType"> Variable type. </param>
-        /// <param name="sensitive"> Whether variable is sensitive. </param>
-        /// <param name="value"> Variable value. </param>
-        /// <param name="sensitiveValue"> Variable sensitive value. </param>
+        /// <param name="id">
+        /// Variable id.
+        /// Serialized Name: SsisVariable.id
+        /// </param>
+        /// <param name="name">
+        /// Variable name.
+        /// Serialized Name: SsisVariable.name
+        /// </param>
+        /// <param name="description">
+        /// Variable description.
+        /// Serialized Name: SsisVariable.description
+        /// </param>
+        /// <param name="dataType">
+        /// Variable type.
+        /// Serialized Name: SsisVariable.dataType
+        /// </param>
+        /// <param name="sensitive">
+        /// Whether variable is sensitive.
+        /// Serialized Name: SsisVariable.sensitive
+        /// </param>
+        /// <param name="value">
+        /// Variable value.
+        /// Serialized Name: SsisVariable.value
+        /// </param>
+        /// <param name="sensitiveValue">
+        /// Variable sensitive value.
+        /// Serialized Name: SsisVariable.sensitiveValue
+        /// </param>
         internal SsisVariable(long? id, string name, string description, string dataType, bool? sensitive, string value, string sensitiveValue)
         {
             Id = id;
@@ -34,19 +58,40 @@ namespace Azure.ResourceManager.DataFactory.Models
             SensitiveValue = sensitiveValue;
         }
 
-        /// <summary> Variable id. </summary>
+        /// <summary>
+        /// Variable id.
+        /// Serialized Name: SsisVariable.id
+        /// </summary>
         public long? Id { get; }
-        /// <summary> Variable name. </summary>
+        /// <summary>
+        /// Variable name.
+        /// Serialized Name: SsisVariable.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> Variable description. </summary>
+        /// <summary>
+        /// Variable description.
+        /// Serialized Name: SsisVariable.description
+        /// </summary>
         public string Description { get; }
-        /// <summary> Variable type. </summary>
+        /// <summary>
+        /// Variable type.
+        /// Serialized Name: SsisVariable.dataType
+        /// </summary>
         public string DataType { get; }
-        /// <summary> Whether variable is sensitive. </summary>
+        /// <summary>
+        /// Whether variable is sensitive.
+        /// Serialized Name: SsisVariable.sensitive
+        /// </summary>
         public bool? Sensitive { get; }
-        /// <summary> Variable value. </summary>
+        /// <summary>
+        /// Variable value.
+        /// Serialized Name: SsisVariable.value
+        /// </summary>
         public string Value { get; }
-        /// <summary> Variable sensitive value. </summary>
+        /// <summary>
+        /// Variable sensitive value.
+        /// Serialized Name: SsisVariable.sensitiveValue
+        /// </summary>
         public string SensitiveValue { get; }
     }
 }

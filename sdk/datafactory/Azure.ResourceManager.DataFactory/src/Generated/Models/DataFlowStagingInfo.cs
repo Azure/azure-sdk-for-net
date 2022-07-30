@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Staging info for execute data flow activity. </summary>
+    /// <summary>
+    /// Staging info for execute data flow activity.
+    /// Serialized Name: DataFlowStagingInfo
+    /// </summary>
     public partial class DataFlowStagingInfo
     {
         /// <summary> Initializes a new instance of DataFlowStagingInfo. </summary>
@@ -18,17 +21,29 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of DataFlowStagingInfo. </summary>
-        /// <param name="linkedService"> Staging linked service reference. </param>
-        /// <param name="folderPath"> Folder path for staging blob. Type: string (or Expression with resultType string). </param>
+        /// <param name="linkedService">
+        /// Staging linked service reference.
+        /// Serialized Name: DataFlowStagingInfo.linkedService
+        /// </param>
+        /// <param name="folderPath">
+        /// Folder path for staging blob. Type: string (or Expression with resultType string)
+        /// Serialized Name: DataFlowStagingInfo.folderPath
+        /// </param>
         internal DataFlowStagingInfo(LinkedServiceReference linkedService, BinaryData folderPath)
         {
             LinkedService = linkedService;
             FolderPath = folderPath;
         }
 
-        /// <summary> Staging linked service reference. </summary>
+        /// <summary>
+        /// Staging linked service reference.
+        /// Serialized Name: DataFlowStagingInfo.linkedService
+        /// </summary>
         public LinkedServiceReference LinkedService { get; set; }
-        /// <summary> Folder path for staging blob. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Folder path for staging blob. Type: string (or Expression with resultType string)
+        /// Serialized Name: DataFlowStagingInfo.folderPath
+        /// </summary>
         public BinaryData FolderPath { get; set; }
     }
 }

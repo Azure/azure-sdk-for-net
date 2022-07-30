@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Error definition for managed integration runtime. </summary>
+    /// <summary>
+    /// Error definition for managed integration runtime.
+    /// Serialized Name: ManagedIntegrationRuntimeError
+    /// </summary>
     public partial class ManagedIntegrationRuntimeError
     {
         /// <summary> Initializes a new instance of ManagedIntegrationRuntimeError. </summary>
@@ -22,10 +25,22 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of ManagedIntegrationRuntimeError. </summary>
-        /// <param name="time"> The time when the error occurred. </param>
-        /// <param name="code"> Error code. </param>
-        /// <param name="parameters"> Managed integration runtime error parameters. </param>
-        /// <param name="message"> Error message. </param>
+        /// <param name="time">
+        /// The time when the error occurred.
+        /// Serialized Name: ManagedIntegrationRuntimeError.time
+        /// </param>
+        /// <param name="code">
+        /// Error code.
+        /// Serialized Name: ManagedIntegrationRuntimeError.code
+        /// </param>
+        /// <param name="parameters">
+        /// Managed integration runtime error parameters.
+        /// Serialized Name: ManagedIntegrationRuntimeError.parameters
+        /// </param>
+        /// <param name="message">
+        /// Error message.
+        /// Serialized Name: ManagedIntegrationRuntimeError.message
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal ManagedIntegrationRuntimeError(DateTimeOffset? time, string code, IReadOnlyList<string> parameters, string message, IReadOnlyDictionary<string, BinaryData> additionalProperties)
         {
@@ -36,13 +51,25 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = additionalProperties;
         }
 
-        /// <summary> The time when the error occurred. </summary>
+        /// <summary>
+        /// The time when the error occurred.
+        /// Serialized Name: ManagedIntegrationRuntimeError.time
+        /// </summary>
         public DateTimeOffset? Time { get; }
-        /// <summary> Error code. </summary>
+        /// <summary>
+        /// Error code.
+        /// Serialized Name: ManagedIntegrationRuntimeError.code
+        /// </summary>
         public string Code { get; }
-        /// <summary> Managed integration runtime error parameters. </summary>
+        /// <summary>
+        /// Managed integration runtime error parameters.
+        /// Serialized Name: ManagedIntegrationRuntimeError.parameters
+        /// </summary>
         public IReadOnlyList<string> Parameters { get; }
-        /// <summary> Error message. </summary>
+        /// <summary>
+        /// Error message.
+        /// Serialized Name: ManagedIntegrationRuntimeError.message
+        /// </summary>
         public string Message { get; }
         /// <summary> Additional Properties. </summary>
         public IReadOnlyDictionary<string, BinaryData> AdditionalProperties { get; }

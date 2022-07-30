@@ -10,11 +10,17 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Set value for a Variable. </summary>
+    /// <summary>
+    /// Set value for a Variable.
+    /// Serialized Name: SetVariableActivity
+    /// </summary>
     public partial class SetVariableActivity : ControlActivity
     {
         /// <summary> Initializes a new instance of SetVariableActivity. </summary>
-        /// <param name="name"> Activity name. </param>
+        /// <param name="name">
+        /// Activity name.
+        /// Serialized Name: Activity.name
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public SetVariableActivity(string name) : base(name)
         {
@@ -27,14 +33,35 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of SetVariableActivity. </summary>
-        /// <param name="name"> Activity name. </param>
-        /// <param name="activityType"> Type of activity. </param>
-        /// <param name="description"> Activity description. </param>
-        /// <param name="dependsOn"> Activity depends on condition. </param>
-        /// <param name="userProperties"> Activity user properties. </param>
+        /// <param name="name">
+        /// Activity name.
+        /// Serialized Name: Activity.name
+        /// </param>
+        /// <param name="activityType">
+        /// Type of activity.
+        /// Serialized Name: Activity.type
+        /// </param>
+        /// <param name="description">
+        /// Activity description.
+        /// Serialized Name: Activity.description
+        /// </param>
+        /// <param name="dependsOn">
+        /// Activity depends on condition.
+        /// Serialized Name: Activity.dependsOn
+        /// </param>
+        /// <param name="userProperties">
+        /// Activity user properties.
+        /// Serialized Name: Activity.userProperties
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="variableName"> Name of the variable whose value needs to be set. </param>
-        /// <param name="value"> Value to be set. Could be a static value or Expression. </param>
+        /// <param name="variableName">
+        /// Name of the variable whose value needs to be set.
+        /// Serialized Name: SetVariableActivity.typeProperties.variableName
+        /// </param>
+        /// <param name="value">
+        /// Value to be set. Could be a static value or Expression
+        /// Serialized Name: SetVariableActivity.typeProperties.value
+        /// </param>
         internal SetVariableActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, string variableName, BinaryData value) : base(name, activityType, description, dependsOn, userProperties, additionalProperties)
         {
             VariableName = variableName;
@@ -42,9 +69,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = activityType ?? "SetVariable";
         }
 
-        /// <summary> Name of the variable whose value needs to be set. </summary>
+        /// <summary>
+        /// Name of the variable whose value needs to be set.
+        /// Serialized Name: SetVariableActivity.typeProperties.variableName
+        /// </summary>
         public string VariableName { get; set; }
-        /// <summary> Value to be set. Could be a static value or Expression. </summary>
+        /// <summary>
+        /// Value to be set. Could be a static value or Expression
+        /// Serialized Name: SetVariableActivity.typeProperties.value
+        /// </summary>
         public BinaryData Value { get; set; }
     }
 }

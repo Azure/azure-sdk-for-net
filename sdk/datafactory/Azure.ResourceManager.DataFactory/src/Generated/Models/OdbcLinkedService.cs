@@ -10,11 +10,17 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Open Database Connectivity (ODBC) linked service. </summary>
+    /// <summary>
+    /// Open Database Connectivity (ODBC) linked service.
+    /// Serialized Name: OdbcLinkedService
+    /// </summary>
     public partial class OdbcLinkedService : LinkedService
     {
         /// <summary> Initializes a new instance of OdbcLinkedService. </summary>
-        /// <param name="connectionString"> The non-access credential portion of the connection string as well as an optional encrypted credential. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
+        /// <param name="connectionString">
+        /// The non-access credential portion of the connection string as well as an optional encrypted credential. Type: string, SecureString or AzureKeyVaultSecretReference.
+        /// Serialized Name: OdbcLinkedService.typeProperties.connectionString
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
         public OdbcLinkedService(BinaryData connectionString)
         {
@@ -28,26 +34,55 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of OdbcLinkedService. </summary>
-        /// <param name="linkedServiceType"> Type of linked service. </param>
-        /// <param name="connectVia"> The integration runtime reference. </param>
-        /// <param name="description"> Linked service description. </param>
-        /// <param name="parameters"> Parameters for linked service. </param>
-        /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
+        /// <param name="linkedServiceType">
+        /// Type of linked service.
+        /// Serialized Name: LinkedService.type
+        /// </param>
+        /// <param name="connectVia">
+        /// The integration runtime reference.
+        /// Serialized Name: LinkedService.connectVia
+        /// </param>
+        /// <param name="description">
+        /// Linked service description.
+        /// Serialized Name: LinkedService.description
+        /// </param>
+        /// <param name="parameters">
+        /// Parameters for linked service.
+        /// Serialized Name: LinkedService.parameters
+        /// </param>
+        /// <param name="annotations">
+        /// List of tags that can be used for describing the linked service.
+        /// Serialized Name: LinkedService.annotations
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="connectionString"> The non-access credential portion of the connection string as well as an optional encrypted credential. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
-        /// <param name="authenticationType"> Type of authentication used to connect to the ODBC data store. Possible values are: Anonymous and Basic. Type: string (or Expression with resultType string). </param>
+        /// <param name="connectionString">
+        /// The non-access credential portion of the connection string as well as an optional encrypted credential. Type: string, SecureString or AzureKeyVaultSecretReference.
+        /// Serialized Name: OdbcLinkedService.typeProperties.connectionString
+        /// </param>
+        /// <param name="authenticationType">
+        /// Type of authentication used to connect to the ODBC data store. Possible values are: Anonymous and Basic. Type: string (or Expression with resultType string).
+        /// Serialized Name: OdbcLinkedService.typeProperties.authenticationType
+        /// </param>
         /// <param name="credential">
         /// The access credential portion of the connection string specified in driver-specific property-value format.
+        /// Serialized Name: OdbcLinkedService.typeProperties.credential
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
-        /// <param name="userName"> User name for Basic authentication. Type: string (or Expression with resultType string). </param>
+        /// <param name="userName">
+        /// User name for Basic authentication. Type: string (or Expression with resultType string).
+        /// Serialized Name: OdbcLinkedService.typeProperties.userName
+        /// </param>
         /// <param name="password">
         /// Password for Basic authentication.
+        /// Serialized Name: OdbcLinkedService.typeProperties.password
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
-        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
+        /// <param name="encryptedCredential">
+        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
+        /// Serialized Name: OdbcLinkedService.typeProperties.encryptedCredential
+        /// </param>
         internal OdbcLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData connectionString, BinaryData authenticationType, SecretBase credential, BinaryData userName, SecretBase password, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             ConnectionString = connectionString;
@@ -59,25 +94,39 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "Odbc";
         }
 
-        /// <summary> The non-access credential portion of the connection string as well as an optional encrypted credential. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
+        /// <summary>
+        /// The non-access credential portion of the connection string as well as an optional encrypted credential. Type: string, SecureString or AzureKeyVaultSecretReference.
+        /// Serialized Name: OdbcLinkedService.typeProperties.connectionString
+        /// </summary>
         public BinaryData ConnectionString { get; set; }
-        /// <summary> Type of authentication used to connect to the ODBC data store. Possible values are: Anonymous and Basic. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Type of authentication used to connect to the ODBC data store. Possible values are: Anonymous and Basic. Type: string (or Expression with resultType string).
+        /// Serialized Name: OdbcLinkedService.typeProperties.authenticationType
+        /// </summary>
         public BinaryData AuthenticationType { get; set; }
         /// <summary>
         /// The access credential portion of the connection string specified in driver-specific property-value format.
+        /// Serialized Name: OdbcLinkedService.typeProperties.credential
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
         public SecretBase Credential { get; set; }
-        /// <summary> User name for Basic authentication. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// User name for Basic authentication. Type: string (or Expression with resultType string).
+        /// Serialized Name: OdbcLinkedService.typeProperties.userName
+        /// </summary>
         public BinaryData UserName { get; set; }
         /// <summary>
         /// Password for Basic authentication.
+        /// Serialized Name: OdbcLinkedService.typeProperties.password
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
         public SecretBase Password { get; set; }
-        /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
+        /// Serialized Name: OdbcLinkedService.typeProperties.encryptedCredential
+        /// </summary>
         public BinaryData EncryptedCredential { get; set; }
     }
 }

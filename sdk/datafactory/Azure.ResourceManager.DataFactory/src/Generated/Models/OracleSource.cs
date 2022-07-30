@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> A copy activity Oracle source. </summary>
+    /// <summary>
+    /// A copy activity Oracle source.
+    /// Serialized Name: OracleSource
+    /// </summary>
     public partial class OracleSource : CopySource
     {
         /// <summary> Initializes a new instance of OracleSource. </summary>
@@ -20,17 +23,47 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of OracleSource. </summary>
-        /// <param name="copySourceType"> Copy source type. </param>
-        /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
-        /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
-        /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
-        /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
+        /// <param name="copySourceType">
+        /// Copy source type.
+        /// Serialized Name: CopySource.type
+        /// </param>
+        /// <param name="sourceRetryCount">
+        /// Source retry count. Type: integer (or Expression with resultType integer).
+        /// Serialized Name: CopySource.sourceRetryCount
+        /// </param>
+        /// <param name="sourceRetryWait">
+        /// Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
+        /// Serialized Name: CopySource.sourceRetryWait
+        /// </param>
+        /// <param name="maxConcurrentConnections">
+        /// The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer).
+        /// Serialized Name: CopySource.maxConcurrentConnections
+        /// </param>
+        /// <param name="disableMetricsCollection">
+        /// If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: CopySource.disableMetricsCollection
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="oracleReaderQuery"> Oracle reader query. Type: string (or Expression with resultType string). </param>
-        /// <param name="queryTimeout"> Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
-        /// <param name="partitionOption"> The partition mechanism that will be used for Oracle read in parallel. Possible values include: &quot;None&quot;, &quot;PhysicalPartitionsOfTable&quot;, &quot;DynamicRange&quot;. </param>
-        /// <param name="partitionSettings"> The settings that will be leveraged for Oracle source partitioning. </param>
-        /// <param name="additionalColumns"> Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects). </param>
+        /// <param name="oracleReaderQuery">
+        /// Oracle reader query. Type: string (or Expression with resultType string).
+        /// Serialized Name: OracleSource.oracleReaderQuery
+        /// </param>
+        /// <param name="queryTimeout">
+        /// Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
+        /// Serialized Name: OracleSource.queryTimeout
+        /// </param>
+        /// <param name="partitionOption">
+        /// The partition mechanism that will be used for Oracle read in parallel. Possible values include: &quot;None&quot;, &quot;PhysicalPartitionsOfTable&quot;, &quot;DynamicRange&quot;.
+        /// Serialized Name: OracleSource.partitionOption
+        /// </param>
+        /// <param name="partitionSettings">
+        /// The settings that will be leveraged for Oracle source partitioning.
+        /// Serialized Name: OracleSource.partitionSettings
+        /// </param>
+        /// <param name="additionalColumns">
+        /// Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects).
+        /// Serialized Name: OracleSource.additionalColumns
+        /// </param>
         internal OracleSource(string copySourceType, BinaryData sourceRetryCount, BinaryData sourceRetryWait, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, BinaryData oracleReaderQuery, BinaryData queryTimeout, BinaryData partitionOption, OraclePartitionSettings partitionSettings, BinaryData additionalColumns) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             OracleReaderQuery = oracleReaderQuery;
@@ -41,15 +74,30 @@ namespace Azure.ResourceManager.DataFactory.Models
             CopySourceType = copySourceType ?? "OracleSource";
         }
 
-        /// <summary> Oracle reader query. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Oracle reader query. Type: string (or Expression with resultType string).
+        /// Serialized Name: OracleSource.oracleReaderQuery
+        /// </summary>
         public BinaryData OracleReaderQuery { get; set; }
-        /// <summary> Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </summary>
+        /// <summary>
+        /// Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
+        /// Serialized Name: OracleSource.queryTimeout
+        /// </summary>
         public BinaryData QueryTimeout { get; set; }
-        /// <summary> The partition mechanism that will be used for Oracle read in parallel. Possible values include: &quot;None&quot;, &quot;PhysicalPartitionsOfTable&quot;, &quot;DynamicRange&quot;. </summary>
+        /// <summary>
+        /// The partition mechanism that will be used for Oracle read in parallel. Possible values include: &quot;None&quot;, &quot;PhysicalPartitionsOfTable&quot;, &quot;DynamicRange&quot;.
+        /// Serialized Name: OracleSource.partitionOption
+        /// </summary>
         public BinaryData PartitionOption { get; set; }
-        /// <summary> The settings that will be leveraged for Oracle source partitioning. </summary>
+        /// <summary>
+        /// The settings that will be leveraged for Oracle source partitioning.
+        /// Serialized Name: OracleSource.partitionSettings
+        /// </summary>
         public OraclePartitionSettings PartitionSettings { get; set; }
-        /// <summary> Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects). </summary>
+        /// <summary>
+        /// Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects).
+        /// Serialized Name: OracleSource.additionalColumns
+        /// </summary>
         public BinaryData AdditionalColumns { get; set; }
     }
 }

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The type of SSIS object metadata. </summary>
+    /// <summary>
+    /// The type of SSIS object metadata.
+    /// Serialized Name: SsisObjectMetadataType
+    /// </summary>
     internal readonly partial struct SsisObjectMetadataType : IEquatable<SsisObjectMetadataType>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string PackageValue = "Package";
         private const string EnvironmentValue = "Environment";
 
-        /// <summary> Folder. </summary>
+        /// <summary>
+        /// Folder
+        /// Serialized Name: SsisObjectMetadataType.Folder
+        /// </summary>
         public static SsisObjectMetadataType Folder { get; } = new SsisObjectMetadataType(FolderValue);
-        /// <summary> Project. </summary>
+        /// <summary>
+        /// Project
+        /// Serialized Name: SsisObjectMetadataType.Project
+        /// </summary>
         public static SsisObjectMetadataType Project { get; } = new SsisObjectMetadataType(ProjectValue);
-        /// <summary> Package. </summary>
+        /// <summary>
+        /// Package
+        /// Serialized Name: SsisObjectMetadataType.Package
+        /// </summary>
         public static SsisObjectMetadataType Package { get; } = new SsisObjectMetadataType(PackageValue);
-        /// <summary> Environment. </summary>
+        /// <summary>
+        /// Environment
+        /// Serialized Name: SsisObjectMetadataType.Environment
+        /// </summary>
         public static SsisObjectMetadataType Environment { get; } = new SsisObjectMetadataType(EnvironmentValue);
         /// <summary> Determines if two <see cref="SsisObjectMetadataType"/> values are the same. </summary>
         public static bool operator ==(SsisObjectMetadataType left, SsisObjectMetadataType right) => left.Equals(right);

@@ -11,13 +11,25 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Execute SSIS package activity. </summary>
+    /// <summary>
+    /// Execute SSIS package activity.
+    /// Serialized Name: ExecuteSsisPackageActivity
+    /// </summary>
     public partial class ExecuteSsisPackageActivity : ExecutionActivity
     {
         /// <summary> Initializes a new instance of ExecuteSsisPackageActivity. </summary>
-        /// <param name="name"> Activity name. </param>
-        /// <param name="packageLocation"> SSIS package location. </param>
-        /// <param name="connectVia"> The integration runtime reference. </param>
+        /// <param name="name">
+        /// Activity name.
+        /// Serialized Name: Activity.name
+        /// </param>
+        /// <param name="packageLocation">
+        /// SSIS package location.
+        /// Serialized Name: ExecuteSsisPackageActivity.typeProperties.packageLocation
+        /// </param>
+        /// <param name="connectVia">
+        /// The integration runtime reference.
+        /// Serialized Name: ExecuteSsisPackageActivity.typeProperties.connectVia
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="packageLocation"/> or <paramref name="connectVia"/> is null. </exception>
         public ExecuteSsisPackageActivity(string name, SsisPackageLocation packageLocation, IntegrationRuntimeReference connectVia) : base(name)
         {
@@ -45,26 +57,83 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of ExecuteSsisPackageActivity. </summary>
-        /// <param name="name"> Activity name. </param>
-        /// <param name="activityType"> Type of activity. </param>
-        /// <param name="description"> Activity description. </param>
-        /// <param name="dependsOn"> Activity depends on condition. </param>
-        /// <param name="userProperties"> Activity user properties. </param>
+        /// <param name="name">
+        /// Activity name.
+        /// Serialized Name: Activity.name
+        /// </param>
+        /// <param name="activityType">
+        /// Type of activity.
+        /// Serialized Name: Activity.type
+        /// </param>
+        /// <param name="description">
+        /// Activity description.
+        /// Serialized Name: Activity.description
+        /// </param>
+        /// <param name="dependsOn">
+        /// Activity depends on condition.
+        /// Serialized Name: Activity.dependsOn
+        /// </param>
+        /// <param name="userProperties">
+        /// Activity user properties.
+        /// Serialized Name: Activity.userProperties
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
-        /// <param name="policy"> Activity policy. </param>
-        /// <param name="packageLocation"> SSIS package location. </param>
-        /// <param name="runtime"> Specifies the runtime to execute SSIS package. The value should be &quot;x86&quot; or &quot;x64&quot;. Type: string (or Expression with resultType string). </param>
-        /// <param name="loggingLevel"> The logging level of SSIS package execution. Type: string (or Expression with resultType string). </param>
-        /// <param name="environmentPath"> The environment path to execute the SSIS package. Type: string (or Expression with resultType string). </param>
-        /// <param name="executionCredential"> The package execution credential. </param>
-        /// <param name="connectVia"> The integration runtime reference. </param>
-        /// <param name="projectParameters"> The project level parameters to execute the SSIS package. </param>
-        /// <param name="packageParameters"> The package level parameters to execute the SSIS package. </param>
-        /// <param name="projectConnectionManagers"> The project level connection managers to execute the SSIS package. </param>
-        /// <param name="packageConnectionManagers"> The package level connection managers to execute the SSIS package. </param>
-        /// <param name="propertyOverrides"> The property overrides to execute the SSIS package. </param>
-        /// <param name="logLocation"> SSIS package execution log location. </param>
+        /// <param name="linkedServiceName">
+        /// Linked service reference.
+        /// Serialized Name: ExecutionActivity.linkedServiceName
+        /// </param>
+        /// <param name="policy">
+        /// Activity policy.
+        /// Serialized Name: ExecutionActivity.policy
+        /// </param>
+        /// <param name="packageLocation">
+        /// SSIS package location.
+        /// Serialized Name: ExecuteSsisPackageActivity.typeProperties.packageLocation
+        /// </param>
+        /// <param name="runtime">
+        /// Specifies the runtime to execute SSIS package. The value should be &quot;x86&quot; or &quot;x64&quot;. Type: string (or Expression with resultType string).
+        /// Serialized Name: ExecuteSsisPackageActivity.typeProperties.runtime
+        /// </param>
+        /// <param name="loggingLevel">
+        /// The logging level of SSIS package execution. Type: string (or Expression with resultType string).
+        /// Serialized Name: ExecuteSsisPackageActivity.typeProperties.loggingLevel
+        /// </param>
+        /// <param name="environmentPath">
+        /// The environment path to execute the SSIS package. Type: string (or Expression with resultType string).
+        /// Serialized Name: ExecuteSsisPackageActivity.typeProperties.environmentPath
+        /// </param>
+        /// <param name="executionCredential">
+        /// The package execution credential.
+        /// Serialized Name: ExecuteSsisPackageActivity.typeProperties.executionCredential
+        /// </param>
+        /// <param name="connectVia">
+        /// The integration runtime reference.
+        /// Serialized Name: ExecuteSsisPackageActivity.typeProperties.connectVia
+        /// </param>
+        /// <param name="projectParameters">
+        /// The project level parameters to execute the SSIS package.
+        /// Serialized Name: ExecuteSsisPackageActivity.typeProperties.projectParameters
+        /// </param>
+        /// <param name="packageParameters">
+        /// The package level parameters to execute the SSIS package.
+        /// Serialized Name: ExecuteSsisPackageActivity.typeProperties.packageParameters
+        /// </param>
+        /// <param name="projectConnectionManagers">
+        /// The project level connection managers to execute the SSIS package.
+        /// Serialized Name: ExecuteSsisPackageActivity.typeProperties.projectConnectionManagers
+        /// </param>
+        /// <param name="packageConnectionManagers">
+        /// The package level connection managers to execute the SSIS package.
+        /// Serialized Name: ExecuteSsisPackageActivity.typeProperties.packageConnectionManagers
+        /// </param>
+        /// <param name="propertyOverrides">
+        /// The property overrides to execute the SSIS package.
+        /// Serialized Name: ExecuteSsisPackageActivity.typeProperties.propertyOverrides
+        /// </param>
+        /// <param name="logLocation">
+        /// SSIS package execution log location.
+        /// Serialized Name: ExecuteSsisPackageActivity.typeProperties.logLocation
+        /// </param>
         internal ExecuteSsisPackageActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, SsisPackageLocation packageLocation, BinaryData runtime, BinaryData loggingLevel, BinaryData environmentPath, SsisExecutionCredential executionCredential, IntegrationRuntimeReference connectVia, IDictionary<string, SsisExecutionParameter> projectParameters, IDictionary<string, SsisExecutionParameter> packageParameters, IDictionary<string, IDictionary<string, SsisExecutionParameter>> projectConnectionManagers, IDictionary<string, IDictionary<string, SsisExecutionParameter>> packageConnectionManagers, IDictionary<string, SsisPropertyOverride> propertyOverrides, SsisLogLocation logLocation) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             PackageLocation = packageLocation;
@@ -82,29 +151,65 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = activityType ?? "ExecuteSSISPackage";
         }
 
-        /// <summary> SSIS package location. </summary>
+        /// <summary>
+        /// SSIS package location.
+        /// Serialized Name: ExecuteSsisPackageActivity.typeProperties.packageLocation
+        /// </summary>
         public SsisPackageLocation PackageLocation { get; set; }
-        /// <summary> Specifies the runtime to execute SSIS package. The value should be &quot;x86&quot; or &quot;x64&quot;. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Specifies the runtime to execute SSIS package. The value should be &quot;x86&quot; or &quot;x64&quot;. Type: string (or Expression with resultType string).
+        /// Serialized Name: ExecuteSsisPackageActivity.typeProperties.runtime
+        /// </summary>
         public BinaryData Runtime { get; set; }
-        /// <summary> The logging level of SSIS package execution. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The logging level of SSIS package execution. Type: string (or Expression with resultType string).
+        /// Serialized Name: ExecuteSsisPackageActivity.typeProperties.loggingLevel
+        /// </summary>
         public BinaryData LoggingLevel { get; set; }
-        /// <summary> The environment path to execute the SSIS package. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The environment path to execute the SSIS package. Type: string (or Expression with resultType string).
+        /// Serialized Name: ExecuteSsisPackageActivity.typeProperties.environmentPath
+        /// </summary>
         public BinaryData EnvironmentPath { get; set; }
-        /// <summary> The package execution credential. </summary>
+        /// <summary>
+        /// The package execution credential.
+        /// Serialized Name: ExecuteSsisPackageActivity.typeProperties.executionCredential
+        /// </summary>
         public SsisExecutionCredential ExecutionCredential { get; set; }
-        /// <summary> The integration runtime reference. </summary>
+        /// <summary>
+        /// The integration runtime reference.
+        /// Serialized Name: ExecuteSsisPackageActivity.typeProperties.connectVia
+        /// </summary>
         public IntegrationRuntimeReference ConnectVia { get; set; }
-        /// <summary> The project level parameters to execute the SSIS package. </summary>
+        /// <summary>
+        /// The project level parameters to execute the SSIS package.
+        /// Serialized Name: ExecuteSsisPackageActivity.typeProperties.projectParameters
+        /// </summary>
         public IDictionary<string, SsisExecutionParameter> ProjectParameters { get; }
-        /// <summary> The package level parameters to execute the SSIS package. </summary>
+        /// <summary>
+        /// The package level parameters to execute the SSIS package.
+        /// Serialized Name: ExecuteSsisPackageActivity.typeProperties.packageParameters
+        /// </summary>
         public IDictionary<string, SsisExecutionParameter> PackageParameters { get; }
-        /// <summary> The project level connection managers to execute the SSIS package. </summary>
+        /// <summary>
+        /// The project level connection managers to execute the SSIS package.
+        /// Serialized Name: ExecuteSsisPackageActivity.typeProperties.projectConnectionManagers
+        /// </summary>
         public IDictionary<string, IDictionary<string, SsisExecutionParameter>> ProjectConnectionManagers { get; }
-        /// <summary> The package level connection managers to execute the SSIS package. </summary>
+        /// <summary>
+        /// The package level connection managers to execute the SSIS package.
+        /// Serialized Name: ExecuteSsisPackageActivity.typeProperties.packageConnectionManagers
+        /// </summary>
         public IDictionary<string, IDictionary<string, SsisExecutionParameter>> PackageConnectionManagers { get; }
-        /// <summary> The property overrides to execute the SSIS package. </summary>
+        /// <summary>
+        /// The property overrides to execute the SSIS package.
+        /// Serialized Name: ExecuteSsisPackageActivity.typeProperties.propertyOverrides
+        /// </summary>
         public IDictionary<string, SsisPropertyOverride> PropertyOverrides { get; }
-        /// <summary> SSIS package execution log location. </summary>
+        /// <summary>
+        /// SSIS package execution log location.
+        /// Serialized Name: ExecuteSsisPackageActivity.typeProperties.logLocation
+        /// </summary>
         public SsisLogLocation LogLocation { get; set; }
     }
 }

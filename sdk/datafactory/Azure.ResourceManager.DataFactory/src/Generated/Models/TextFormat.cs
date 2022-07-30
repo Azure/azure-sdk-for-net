@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The data stored in text format. </summary>
+    /// <summary>
+    /// The data stored in text format.
+    /// Serialized Name: TextFormat
+    /// </summary>
     public partial class TextFormat : DatasetStorageFormat
     {
         /// <summary> Initializes a new instance of TextFormat. </summary>
@@ -20,19 +23,55 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of TextFormat. </summary>
-        /// <param name="datasetStorageFormatType"> Type of dataset storage format. </param>
-        /// <param name="serializer"> Serializer. Type: string (or Expression with resultType string). </param>
-        /// <param name="deserializer"> Deserializer. Type: string (or Expression with resultType string). </param>
+        /// <param name="datasetStorageFormatType">
+        /// Type of dataset storage format.
+        /// Serialized Name: DatasetStorageFormat.type
+        /// </param>
+        /// <param name="serializer">
+        /// Serializer. Type: string (or Expression with resultType string).
+        /// Serialized Name: DatasetStorageFormat.serializer
+        /// </param>
+        /// <param name="deserializer">
+        /// Deserializer. Type: string (or Expression with resultType string).
+        /// Serialized Name: DatasetStorageFormat.deserializer
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="columnDelimiter"> The column delimiter. Type: string (or Expression with resultType string). </param>
-        /// <param name="rowDelimiter"> The row delimiter. Type: string (or Expression with resultType string). </param>
-        /// <param name="escapeChar"> The escape character. Type: string (or Expression with resultType string). </param>
-        /// <param name="quoteChar"> The quote character. Type: string (or Expression with resultType string). </param>
-        /// <param name="nullValue"> The null value string. Type: string (or Expression with resultType string). </param>
-        /// <param name="encodingName"> The code page name of the preferred encoding. If miss, the default value is ΓÇ£utf-8ΓÇ¥, unless BOM denotes another Unicode encoding. Refer to the ΓÇ£NameΓÇ¥ column of the table in the following link to set supported values: https://msdn.microsoft.com/library/system.text.encoding.aspx. Type: string (or Expression with resultType string). </param>
-        /// <param name="treatEmptyAsNull"> Treat empty column values in the text file as null. The default value is true. Type: boolean (or Expression with resultType boolean). </param>
-        /// <param name="skipLineCount"> The number of lines/rows to be skipped when parsing text files. The default value is 0. Type: integer (or Expression with resultType integer). </param>
-        /// <param name="firstRowAsHeader"> When used as input, treat the first row of data as headers. When used as output,write the headers into the output as the first row of data. The default value is false. Type: boolean (or Expression with resultType boolean). </param>
+        /// <param name="columnDelimiter">
+        /// The column delimiter. Type: string (or Expression with resultType string).
+        /// Serialized Name: TextFormat.columnDelimiter
+        /// </param>
+        /// <param name="rowDelimiter">
+        /// The row delimiter. Type: string (or Expression with resultType string).
+        /// Serialized Name: TextFormat.rowDelimiter
+        /// </param>
+        /// <param name="escapeChar">
+        /// The escape character. Type: string (or Expression with resultType string).
+        /// Serialized Name: TextFormat.escapeChar
+        /// </param>
+        /// <param name="quoteChar">
+        /// The quote character. Type: string (or Expression with resultType string).
+        /// Serialized Name: TextFormat.quoteChar
+        /// </param>
+        /// <param name="nullValue">
+        /// The null value string. Type: string (or Expression with resultType string).
+        /// Serialized Name: TextFormat.nullValue
+        /// </param>
+        /// <param name="encodingName">
+        /// The code page name of the preferred encoding. If miss, the default value is ΓÇ£utf-8ΓÇ¥, unless BOM denotes another Unicode encoding. Refer to the ΓÇ£NameΓÇ¥ column of the table in the following link to set supported values: https://msdn.microsoft.com/library/system.text.encoding.aspx. Type: string (or Expression with resultType string).
+        /// Serialized Name: TextFormat.encodingName
+        /// </param>
+        /// <param name="treatEmptyAsNull">
+        /// Treat empty column values in the text file as null. The default value is true. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: TextFormat.treatEmptyAsNull
+        /// </param>
+        /// <param name="skipLineCount">
+        /// The number of lines/rows to be skipped when parsing text files. The default value is 0. Type: integer (or Expression with resultType integer).
+        /// Serialized Name: TextFormat.skipLineCount
+        /// </param>
+        /// <param name="firstRowAsHeader">
+        /// When used as input, treat the first row of data as headers. When used as output,write the headers into the output as the first row of data. The default value is false. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: TextFormat.firstRowAsHeader
+        /// </param>
         internal TextFormat(string datasetStorageFormatType, BinaryData serializer, BinaryData deserializer, IDictionary<string, BinaryData> additionalProperties, BinaryData columnDelimiter, BinaryData rowDelimiter, BinaryData escapeChar, BinaryData quoteChar, BinaryData nullValue, BinaryData encodingName, BinaryData treatEmptyAsNull, BinaryData skipLineCount, BinaryData firstRowAsHeader) : base(datasetStorageFormatType, serializer, deserializer, additionalProperties)
         {
             ColumnDelimiter = columnDelimiter;
@@ -47,23 +86,50 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetStorageFormatType = datasetStorageFormatType ?? "TextFormat";
         }
 
-        /// <summary> The column delimiter. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The column delimiter. Type: string (or Expression with resultType string).
+        /// Serialized Name: TextFormat.columnDelimiter
+        /// </summary>
         public BinaryData ColumnDelimiter { get; set; }
-        /// <summary> The row delimiter. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The row delimiter. Type: string (or Expression with resultType string).
+        /// Serialized Name: TextFormat.rowDelimiter
+        /// </summary>
         public BinaryData RowDelimiter { get; set; }
-        /// <summary> The escape character. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The escape character. Type: string (or Expression with resultType string).
+        /// Serialized Name: TextFormat.escapeChar
+        /// </summary>
         public BinaryData EscapeChar { get; set; }
-        /// <summary> The quote character. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The quote character. Type: string (or Expression with resultType string).
+        /// Serialized Name: TextFormat.quoteChar
+        /// </summary>
         public BinaryData QuoteChar { get; set; }
-        /// <summary> The null value string. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The null value string. Type: string (or Expression with resultType string).
+        /// Serialized Name: TextFormat.nullValue
+        /// </summary>
         public BinaryData NullValue { get; set; }
-        /// <summary> The code page name of the preferred encoding. If miss, the default value is ΓÇ£utf-8ΓÇ¥, unless BOM denotes another Unicode encoding. Refer to the ΓÇ£NameΓÇ¥ column of the table in the following link to set supported values: https://msdn.microsoft.com/library/system.text.encoding.aspx. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The code page name of the preferred encoding. If miss, the default value is ΓÇ£utf-8ΓÇ¥, unless BOM denotes another Unicode encoding. Refer to the ΓÇ£NameΓÇ¥ column of the table in the following link to set supported values: https://msdn.microsoft.com/library/system.text.encoding.aspx. Type: string (or Expression with resultType string).
+        /// Serialized Name: TextFormat.encodingName
+        /// </summary>
         public BinaryData EncodingName { get; set; }
-        /// <summary> Treat empty column values in the text file as null. The default value is true. Type: boolean (or Expression with resultType boolean). </summary>
+        /// <summary>
+        /// Treat empty column values in the text file as null. The default value is true. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: TextFormat.treatEmptyAsNull
+        /// </summary>
         public BinaryData TreatEmptyAsNull { get; set; }
-        /// <summary> The number of lines/rows to be skipped when parsing text files. The default value is 0. Type: integer (or Expression with resultType integer). </summary>
+        /// <summary>
+        /// The number of lines/rows to be skipped when parsing text files. The default value is 0. Type: integer (or Expression with resultType integer).
+        /// Serialized Name: TextFormat.skipLineCount
+        /// </summary>
         public BinaryData SkipLineCount { get; set; }
-        /// <summary> When used as input, treat the first row of data as headers. When used as output,write the headers into the output as the first row of data. The default value is false. Type: boolean (or Expression with resultType boolean). </summary>
+        /// <summary>
+        /// When used as input, treat the first row of data as headers. When used as output,write the headers into the output as the first row of data. The default value is false. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: TextFormat.firstRowAsHeader
+        /// </summary>
         public BinaryData FirstRowAsHeader { get; set; }
     }
 }

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Sorting order of the parameter. </summary>
+    /// <summary>
+    /// Sorting order of the parameter.
+    /// Serialized Name: RunQueryOrder
+    /// </summary>
     public readonly partial struct RunQueryOrder : IEquatable<RunQueryOrder>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string ASCValue = "ASC";
         private const string DescValue = "DESC";
 
-        /// <summary> ASC. </summary>
+        /// <summary>
+        /// ASC
+        /// Serialized Name: RunQueryOrder.ASC
+        /// </summary>
         public static RunQueryOrder ASC { get; } = new RunQueryOrder(ASCValue);
-        /// <summary> DESC. </summary>
+        /// <summary>
+        /// DESC
+        /// Serialized Name: RunQueryOrder.DESC
+        /// </summary>
         public static RunQueryOrder Desc { get; } = new RunQueryOrder(DescValue);
         /// <summary> Determines if two <see cref="RunQueryOrder"/> values are the same. </summary>
         public static bool operator ==(RunQueryOrder left, RunQueryOrder right) => left.Equals(right);

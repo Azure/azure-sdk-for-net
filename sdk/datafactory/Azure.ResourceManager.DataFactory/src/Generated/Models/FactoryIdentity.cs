@@ -11,11 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Identity properties of the factory resource. </summary>
+    /// <summary>
+    /// Identity properties of the factory resource.
+    /// Serialized Name: FactoryIdentity
+    /// </summary>
     public partial class FactoryIdentity
     {
         /// <summary> Initializes a new instance of FactoryIdentity. </summary>
-        /// <param name="identityType"> The identity type. </param>
+        /// <param name="identityType">
+        /// The identity type.
+        /// Serialized Name: FactoryIdentity.type
+        /// </param>
         public FactoryIdentity(FactoryIdentityType identityType)
         {
             IdentityType = identityType;
@@ -23,10 +29,22 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of FactoryIdentity. </summary>
-        /// <param name="identityType"> The identity type. </param>
-        /// <param name="principalId"> The principal id of the identity. </param>
-        /// <param name="tenantId"> The client tenant id of the identity. </param>
-        /// <param name="userAssignedIdentities"> List of user assigned identities for the factory. </param>
+        /// <param name="identityType">
+        /// The identity type.
+        /// Serialized Name: FactoryIdentity.type
+        /// </param>
+        /// <param name="principalId">
+        /// The principal id of the identity.
+        /// Serialized Name: FactoryIdentity.principalId
+        /// </param>
+        /// <param name="tenantId">
+        /// The client tenant id of the identity.
+        /// Serialized Name: FactoryIdentity.tenantId
+        /// </param>
+        /// <param name="userAssignedIdentities">
+        /// List of user assigned identities for the factory.
+        /// Serialized Name: FactoryIdentity.userAssignedIdentities
+        /// </param>
         internal FactoryIdentity(FactoryIdentityType identityType, Guid? principalId, Guid? tenantId, IDictionary<string, BinaryData> userAssignedIdentities)
         {
             IdentityType = identityType;
@@ -35,13 +53,25 @@ namespace Azure.ResourceManager.DataFactory.Models
             UserAssignedIdentities = userAssignedIdentities;
         }
 
-        /// <summary> The identity type. </summary>
+        /// <summary>
+        /// The identity type.
+        /// Serialized Name: FactoryIdentity.type
+        /// </summary>
         public FactoryIdentityType IdentityType { get; set; }
-        /// <summary> The principal id of the identity. </summary>
+        /// <summary>
+        /// The principal id of the identity.
+        /// Serialized Name: FactoryIdentity.principalId
+        /// </summary>
         public Guid? PrincipalId { get; }
-        /// <summary> The client tenant id of the identity. </summary>
+        /// <summary>
+        /// The client tenant id of the identity.
+        /// Serialized Name: FactoryIdentity.tenantId
+        /// </summary>
         public Guid? TenantId { get; }
-        /// <summary> List of user assigned identities for the factory. </summary>
+        /// <summary>
+        /// List of user assigned identities for the factory.
+        /// Serialized Name: FactoryIdentity.userAssignedIdentities
+        /// </summary>
         public IDictionary<string, BinaryData> UserAssignedIdentities { get; }
     }
 }

@@ -9,28 +9,46 @@ using System;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Definition of a single variable for a Pipeline. </summary>
+    /// <summary>
+    /// Definition of a single variable for a Pipeline.
+    /// Serialized Name: VariableSpecification
+    /// </summary>
     public partial class VariableSpecification
     {
         /// <summary> Initializes a new instance of VariableSpecification. </summary>
-        /// <param name="variableType"> Variable type. </param>
+        /// <param name="variableType">
+        /// Variable type.
+        /// Serialized Name: VariableSpecification.type
+        /// </param>
         public VariableSpecification(VariableType variableType)
         {
             VariableType = variableType;
         }
 
         /// <summary> Initializes a new instance of VariableSpecification. </summary>
-        /// <param name="variableType"> Variable type. </param>
-        /// <param name="defaultValue"> Default value of variable. </param>
+        /// <param name="variableType">
+        /// Variable type.
+        /// Serialized Name: VariableSpecification.type
+        /// </param>
+        /// <param name="defaultValue">
+        /// Default value of variable.
+        /// Serialized Name: VariableSpecification.defaultValue
+        /// </param>
         internal VariableSpecification(VariableType variableType, BinaryData defaultValue)
         {
             VariableType = variableType;
             DefaultValue = defaultValue;
         }
 
-        /// <summary> Variable type. </summary>
+        /// <summary>
+        /// Variable type.
+        /// Serialized Name: VariableSpecification.type
+        /// </summary>
         public VariableType VariableType { get; set; }
-        /// <summary> Default value of variable. </summary>
+        /// <summary>
+        /// Default value of variable.
+        /// Serialized Name: VariableSpecification.defaultValue
+        /// </summary>
         public BinaryData DefaultValue { get; set; }
     }
 }

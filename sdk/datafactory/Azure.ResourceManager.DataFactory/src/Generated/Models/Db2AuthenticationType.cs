@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> AuthenticationType to be used for connection. It is mutually exclusive with connectionString property. </summary>
+    /// <summary>
+    /// AuthenticationType to be used for connection. It is mutually exclusive with connectionString property.
+    /// Serialized Name: Db2AuthenticationType
+    /// </summary>
     public readonly partial struct Db2AuthenticationType : IEquatable<Db2AuthenticationType>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         private const string BasicValue = "Basic";
 
-        /// <summary> Basic. </summary>
+        /// <summary>
+        /// Basic
+        /// Serialized Name: Db2AuthenticationType.Basic
+        /// </summary>
         public static Db2AuthenticationType Basic { get; } = new Db2AuthenticationType(BasicValue);
         /// <summary> Determines if two <see cref="Db2AuthenticationType"/> values are the same. </summary>
         public static bool operator ==(Db2AuthenticationType left, Db2AuthenticationType right) => left.Equals(right);

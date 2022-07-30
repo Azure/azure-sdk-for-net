@@ -10,15 +10,28 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> SharePoint Online List linked service. </summary>
+    /// <summary>
+    /// SharePoint Online List linked service.
+    /// Serialized Name: SharePointOnlineListLinkedService
+    /// </summary>
     public partial class SharePointOnlineListLinkedService : LinkedService
     {
         /// <summary> Initializes a new instance of SharePointOnlineListLinkedService. </summary>
-        /// <param name="siteUri"> The URL of the SharePoint Online site. For example, https://contoso.sharepoint.com/sites/siteName. Type: string (or Expression with resultType string). </param>
-        /// <param name="tenantId"> The tenant ID under which your application resides. You can find it from Azure portal Active Directory overview page. Type: string (or Expression with resultType string). </param>
-        /// <param name="servicePrincipalId"> The application (client) ID of your application registered in Azure Active Directory. Make sure to grant SharePoint site permission to this application. Type: string (or Expression with resultType string). </param>
+        /// <param name="siteUri">
+        /// The URL of the SharePoint Online site. For example, https://contoso.sharepoint.com/sites/siteName. Type: string (or Expression with resultType string).
+        /// Serialized Name: SharePointOnlineListLinkedService.typeProperties.siteUrl
+        /// </param>
+        /// <param name="tenantId">
+        /// The tenant ID under which your application resides. You can find it from Azure portal Active Directory overview page. Type: string (or Expression with resultType string).
+        /// Serialized Name: SharePointOnlineListLinkedService.typeProperties.tenantId
+        /// </param>
+        /// <param name="servicePrincipalId">
+        /// The application (client) ID of your application registered in Azure Active Directory. Make sure to grant SharePoint site permission to this application. Type: string (or Expression with resultType string).
+        /// Serialized Name: SharePointOnlineListLinkedService.typeProperties.servicePrincipalId
+        /// </param>
         /// <param name="servicePrincipalKey">
         /// The client secret of your application registered in Azure Active Directory. Type: string (or Expression with resultType string).
+        /// Serialized Name: SharePointOnlineListLinkedService.typeProperties.servicePrincipalKey
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
@@ -50,21 +63,49 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of SharePointOnlineListLinkedService. </summary>
-        /// <param name="linkedServiceType"> Type of linked service. </param>
-        /// <param name="connectVia"> The integration runtime reference. </param>
-        /// <param name="description"> Linked service description. </param>
-        /// <param name="parameters"> Parameters for linked service. </param>
-        /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
+        /// <param name="linkedServiceType">
+        /// Type of linked service.
+        /// Serialized Name: LinkedService.type
+        /// </param>
+        /// <param name="connectVia">
+        /// The integration runtime reference.
+        /// Serialized Name: LinkedService.connectVia
+        /// </param>
+        /// <param name="description">
+        /// Linked service description.
+        /// Serialized Name: LinkedService.description
+        /// </param>
+        /// <param name="parameters">
+        /// Parameters for linked service.
+        /// Serialized Name: LinkedService.parameters
+        /// </param>
+        /// <param name="annotations">
+        /// List of tags that can be used for describing the linked service.
+        /// Serialized Name: LinkedService.annotations
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="siteUri"> The URL of the SharePoint Online site. For example, https://contoso.sharepoint.com/sites/siteName. Type: string (or Expression with resultType string). </param>
-        /// <param name="tenantId"> The tenant ID under which your application resides. You can find it from Azure portal Active Directory overview page. Type: string (or Expression with resultType string). </param>
-        /// <param name="servicePrincipalId"> The application (client) ID of your application registered in Azure Active Directory. Make sure to grant SharePoint site permission to this application. Type: string (or Expression with resultType string). </param>
+        /// <param name="siteUri">
+        /// The URL of the SharePoint Online site. For example, https://contoso.sharepoint.com/sites/siteName. Type: string (or Expression with resultType string).
+        /// Serialized Name: SharePointOnlineListLinkedService.typeProperties.siteUrl
+        /// </param>
+        /// <param name="tenantId">
+        /// The tenant ID under which your application resides. You can find it from Azure portal Active Directory overview page. Type: string (or Expression with resultType string).
+        /// Serialized Name: SharePointOnlineListLinkedService.typeProperties.tenantId
+        /// </param>
+        /// <param name="servicePrincipalId">
+        /// The application (client) ID of your application registered in Azure Active Directory. Make sure to grant SharePoint site permission to this application. Type: string (or Expression with resultType string).
+        /// Serialized Name: SharePointOnlineListLinkedService.typeProperties.servicePrincipalId
+        /// </param>
         /// <param name="servicePrincipalKey">
         /// The client secret of your application registered in Azure Active Directory. Type: string (or Expression with resultType string).
+        /// Serialized Name: SharePointOnlineListLinkedService.typeProperties.servicePrincipalKey
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
-        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
+        /// <param name="encryptedCredential">
+        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
+        /// Serialized Name: SharePointOnlineListLinkedService.typeProperties.encryptedCredential
+        /// </param>
         internal SharePointOnlineListLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData siteUri, BinaryData tenantId, BinaryData servicePrincipalId, SecretBase servicePrincipalKey, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             SiteUri = siteUri;
@@ -75,19 +116,32 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "SharePointOnlineList";
         }
 
-        /// <summary> The URL of the SharePoint Online site. For example, https://contoso.sharepoint.com/sites/siteName. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The URL of the SharePoint Online site. For example, https://contoso.sharepoint.com/sites/siteName. Type: string (or Expression with resultType string).
+        /// Serialized Name: SharePointOnlineListLinkedService.typeProperties.siteUrl
+        /// </summary>
         public BinaryData SiteUri { get; set; }
-        /// <summary> The tenant ID under which your application resides. You can find it from Azure portal Active Directory overview page. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The tenant ID under which your application resides. You can find it from Azure portal Active Directory overview page. Type: string (or Expression with resultType string).
+        /// Serialized Name: SharePointOnlineListLinkedService.typeProperties.tenantId
+        /// </summary>
         public BinaryData TenantId { get; set; }
-        /// <summary> The application (client) ID of your application registered in Azure Active Directory. Make sure to grant SharePoint site permission to this application. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The application (client) ID of your application registered in Azure Active Directory. Make sure to grant SharePoint site permission to this application. Type: string (or Expression with resultType string).
+        /// Serialized Name: SharePointOnlineListLinkedService.typeProperties.servicePrincipalId
+        /// </summary>
         public BinaryData ServicePrincipalId { get; set; }
         /// <summary>
         /// The client secret of your application registered in Azure Active Directory. Type: string (or Expression with resultType string).
+        /// Serialized Name: SharePointOnlineListLinkedService.typeProperties.servicePrincipalKey
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
         public SecretBase ServicePrincipalKey { get; set; }
-        /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
+        /// Serialized Name: SharePointOnlineListLinkedService.typeProperties.encryptedCredential
+        /// </summary>
         public BinaryData EncryptedCredential { get; set; }
     }
 }

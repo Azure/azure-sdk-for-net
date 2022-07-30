@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The type of SSIS package location. </summary>
+    /// <summary>
+    /// The type of SSIS package location.
+    /// Serialized Name: SsisPackageLocationType
+    /// </summary>
     public readonly partial struct SsisPackageLocationType : IEquatable<SsisPackageLocationType>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string InlinePackageValue = "InlinePackage";
         private const string PackageStoreValue = "PackageStore";
 
-        /// <summary> SSISDB. </summary>
+        /// <summary>
+        /// SSISDB
+        /// Serialized Name: SsisPackageLocationType.SSISDB
+        /// </summary>
         public static SsisPackageLocationType Ssisdb { get; } = new SsisPackageLocationType(SsisdbValue);
-        /// <summary> File. </summary>
+        /// <summary>
+        /// File
+        /// Serialized Name: SsisPackageLocationType.File
+        /// </summary>
         public static SsisPackageLocationType File { get; } = new SsisPackageLocationType(FileValue);
-        /// <summary> InlinePackage. </summary>
+        /// <summary>
+        /// InlinePackage
+        /// Serialized Name: SsisPackageLocationType.InlinePackage
+        /// </summary>
         public static SsisPackageLocationType InlinePackage { get; } = new SsisPackageLocationType(InlinePackageValue);
-        /// <summary> PackageStore. </summary>
+        /// <summary>
+        /// PackageStore
+        /// Serialized Name: SsisPackageLocationType.PackageStore
+        /// </summary>
         public static SsisPackageLocationType PackageStore { get; } = new SsisPackageLocationType(PackageStoreValue);
         /// <summary> Determines if two <see cref="SsisPackageLocationType"/> values are the same. </summary>
         public static bool operator ==(SsisPackageLocationType left, SsisPackageLocationType right) => left.Equals(right);

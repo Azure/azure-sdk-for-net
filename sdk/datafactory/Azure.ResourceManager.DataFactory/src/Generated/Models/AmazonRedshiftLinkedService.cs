@@ -10,12 +10,21 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Linked service for Amazon Redshift. </summary>
+    /// <summary>
+    /// Linked service for Amazon Redshift.
+    /// Serialized Name: AmazonRedshiftLinkedService
+    /// </summary>
     public partial class AmazonRedshiftLinkedService : LinkedService
     {
         /// <summary> Initializes a new instance of AmazonRedshiftLinkedService. </summary>
-        /// <param name="server"> The name of the Amazon Redshift server. Type: string (or Expression with resultType string). </param>
-        /// <param name="database"> The database name of the Amazon Redshift source. Type: string (or Expression with resultType string). </param>
+        /// <param name="server">
+        /// The name of the Amazon Redshift server. Type: string (or Expression with resultType string).
+        /// Serialized Name: AmazonRedshiftLinkedService.typeProperties.server
+        /// </param>
+        /// <param name="database">
+        /// The database name of the Amazon Redshift source. Type: string (or Expression with resultType string).
+        /// Serialized Name: AmazonRedshiftLinkedService.typeProperties.database
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="server"/> or <paramref name="database"/> is null. </exception>
         public AmazonRedshiftLinkedService(BinaryData server, BinaryData database)
         {
@@ -34,22 +43,53 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of AmazonRedshiftLinkedService. </summary>
-        /// <param name="linkedServiceType"> Type of linked service. </param>
-        /// <param name="connectVia"> The integration runtime reference. </param>
-        /// <param name="description"> Linked service description. </param>
-        /// <param name="parameters"> Parameters for linked service. </param>
-        /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
+        /// <param name="linkedServiceType">
+        /// Type of linked service.
+        /// Serialized Name: LinkedService.type
+        /// </param>
+        /// <param name="connectVia">
+        /// The integration runtime reference.
+        /// Serialized Name: LinkedService.connectVia
+        /// </param>
+        /// <param name="description">
+        /// Linked service description.
+        /// Serialized Name: LinkedService.description
+        /// </param>
+        /// <param name="parameters">
+        /// Parameters for linked service.
+        /// Serialized Name: LinkedService.parameters
+        /// </param>
+        /// <param name="annotations">
+        /// List of tags that can be used for describing the linked service.
+        /// Serialized Name: LinkedService.annotations
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="server"> The name of the Amazon Redshift server. Type: string (or Expression with resultType string). </param>
-        /// <param name="username"> The username of the Amazon Redshift source. Type: string (or Expression with resultType string). </param>
+        /// <param name="server">
+        /// The name of the Amazon Redshift server. Type: string (or Expression with resultType string).
+        /// Serialized Name: AmazonRedshiftLinkedService.typeProperties.server
+        /// </param>
+        /// <param name="username">
+        /// The username of the Amazon Redshift source. Type: string (or Expression with resultType string).
+        /// Serialized Name: AmazonRedshiftLinkedService.typeProperties.username
+        /// </param>
         /// <param name="password">
         /// The password of the Amazon Redshift source.
+        /// Serialized Name: AmazonRedshiftLinkedService.typeProperties.password
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
-        /// <param name="database"> The database name of the Amazon Redshift source. Type: string (or Expression with resultType string). </param>
-        /// <param name="port"> The TCP port number that the Amazon Redshift server uses to listen for client connections. The default value is 5439. Type: integer (or Expression with resultType integer). </param>
-        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
+        /// <param name="database">
+        /// The database name of the Amazon Redshift source. Type: string (or Expression with resultType string).
+        /// Serialized Name: AmazonRedshiftLinkedService.typeProperties.database
+        /// </param>
+        /// <param name="port">
+        /// The TCP port number that the Amazon Redshift server uses to listen for client connections. The default value is 5439. Type: integer (or Expression with resultType integer).
+        /// Serialized Name: AmazonRedshiftLinkedService.typeProperties.port
+        /// </param>
+        /// <param name="encryptedCredential">
+        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
+        /// Serialized Name: AmazonRedshiftLinkedService.typeProperties.encryptedCredential
+        /// </param>
         internal AmazonRedshiftLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData server, BinaryData username, SecretBase password, BinaryData database, BinaryData port, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             Server = server;
@@ -61,21 +101,37 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "AmazonRedshift";
         }
 
-        /// <summary> The name of the Amazon Redshift server. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The name of the Amazon Redshift server. Type: string (or Expression with resultType string).
+        /// Serialized Name: AmazonRedshiftLinkedService.typeProperties.server
+        /// </summary>
         public BinaryData Server { get; set; }
-        /// <summary> The username of the Amazon Redshift source. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The username of the Amazon Redshift source. Type: string (or Expression with resultType string).
+        /// Serialized Name: AmazonRedshiftLinkedService.typeProperties.username
+        /// </summary>
         public BinaryData Username { get; set; }
         /// <summary>
         /// The password of the Amazon Redshift source.
+        /// Serialized Name: AmazonRedshiftLinkedService.typeProperties.password
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
         public SecretBase Password { get; set; }
-        /// <summary> The database name of the Amazon Redshift source. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The database name of the Amazon Redshift source. Type: string (or Expression with resultType string).
+        /// Serialized Name: AmazonRedshiftLinkedService.typeProperties.database
+        /// </summary>
         public BinaryData Database { get; set; }
-        /// <summary> The TCP port number that the Amazon Redshift server uses to listen for client connections. The default value is 5439. Type: integer (or Expression with resultType integer). </summary>
+        /// <summary>
+        /// The TCP port number that the Amazon Redshift server uses to listen for client connections. The default value is 5439. Type: integer (or Expression with resultType integer).
+        /// Serialized Name: AmazonRedshiftLinkedService.typeProperties.port
+        /// </summary>
         public BinaryData Port { get; set; }
-        /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
+        /// Serialized Name: AmazonRedshiftLinkedService.typeProperties.encryptedCredential
+        /// </summary>
         public BinaryData EncryptedCredential { get; set; }
     }
 }

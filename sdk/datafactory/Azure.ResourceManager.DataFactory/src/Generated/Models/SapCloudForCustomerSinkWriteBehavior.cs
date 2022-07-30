@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The write behavior for the operation. Default is &apos;Insert&apos;. </summary>
+    /// <summary>
+    /// The write behavior for the operation. Default is &apos;Insert&apos;.
+    /// Serialized Name: SapCloudForCustomerSinkWriteBehavior
+    /// </summary>
     public readonly partial struct SapCloudForCustomerSinkWriteBehavior : IEquatable<SapCloudForCustomerSinkWriteBehavior>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string InsertValue = "Insert";
         private const string UpdateValue = "Update";
 
-        /// <summary> Insert. </summary>
+        /// <summary>
+        /// Insert
+        /// Serialized Name: SapCloudForCustomerSinkWriteBehavior.Insert
+        /// </summary>
         public static SapCloudForCustomerSinkWriteBehavior Insert { get; } = new SapCloudForCustomerSinkWriteBehavior(InsertValue);
-        /// <summary> Update. </summary>
+        /// <summary>
+        /// Update
+        /// Serialized Name: SapCloudForCustomerSinkWriteBehavior.Update
+        /// </summary>
         public static SapCloudForCustomerSinkWriteBehavior Update { get; } = new SapCloudForCustomerSinkWriteBehavior(UpdateValue);
         /// <summary> Determines if two <see cref="SapCloudForCustomerSinkWriteBehavior"/> values are the same. </summary>
         public static bool operator ==(SapCloudForCustomerSinkWriteBehavior left, SapCloudForCustomerSinkWriteBehavior right) => left.Equals(right);

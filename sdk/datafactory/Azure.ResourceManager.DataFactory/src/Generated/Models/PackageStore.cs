@@ -9,12 +9,21 @@ using System;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Package store for the SSIS integration runtime. </summary>
+    /// <summary>
+    /// Package store for the SSIS integration runtime.
+    /// Serialized Name: PackageStore
+    /// </summary>
     public partial class PackageStore
     {
         /// <summary> Initializes a new instance of PackageStore. </summary>
-        /// <param name="name"> The name of the package store. </param>
-        /// <param name="packageStoreLinkedService"> The package store linked service reference. </param>
+        /// <param name="name">
+        /// The name of the package store
+        /// Serialized Name: PackageStore.name
+        /// </param>
+        /// <param name="packageStoreLinkedService">
+        /// The package store linked service reference.
+        /// Serialized Name: PackageStore.packageStoreLinkedService
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="packageStoreLinkedService"/> is null. </exception>
         public PackageStore(string name, EntityReference packageStoreLinkedService)
         {
@@ -31,9 +40,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             PackageStoreLinkedService = packageStoreLinkedService;
         }
 
-        /// <summary> The name of the package store. </summary>
+        /// <summary>
+        /// The name of the package store
+        /// Serialized Name: PackageStore.name
+        /// </summary>
         public string Name { get; set; }
-        /// <summary> The package store linked service reference. </summary>
+        /// <summary>
+        /// The package store linked service reference.
+        /// Serialized Name: PackageStore.packageStoreLinkedService
+        /// </summary>
         public EntityReference PackageStoreLinkedService { get; set; }
     }
 }

@@ -9,6 +9,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary>
     /// The base definition of the custom setup.
+    /// Serialized Name: CustomSetupBase
     /// Please note <see cref="CustomSetupBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AzPowerShellSetup"/>, <see cref="CmdkeySetup"/>, <see cref="ComponentSetup"/> and <see cref="EnvironmentVariableSetup"/>.
     /// </summary>
@@ -20,13 +21,19 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of CustomSetupBase. </summary>
-        /// <param name="customSetupBaseType"> The type of custom setup. </param>
+        /// <param name="customSetupBaseType">
+        /// The type of custom setup.
+        /// Serialized Name: CustomSetupBase.type
+        /// </param>
         internal CustomSetupBase(string customSetupBaseType)
         {
             CustomSetupBaseType = customSetupBaseType;
         }
 
-        /// <summary> The type of custom setup. </summary>
+        /// <summary>
+        /// The type of custom setup.
+        /// Serialized Name: CustomSetupBase.type
+        /// </summary>
         internal string CustomSetupBaseType { get; set; }
     }
 }

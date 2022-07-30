@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Properties of managed integration runtime operation result. </summary>
+    /// <summary>
+    /// Properties of managed integration runtime operation result.
+    /// Serialized Name: ManagedIntegrationRuntimeOperationResult
+    /// </summary>
     public partial class ManagedIntegrationRuntimeOperationResult
     {
         /// <summary> Initializes a new instance of ManagedIntegrationRuntimeOperationResult. </summary>
@@ -22,12 +25,30 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of ManagedIntegrationRuntimeOperationResult. </summary>
-        /// <param name="managedIntegrationRuntimeOperationResultType"> The operation type. Could be start or stop. </param>
-        /// <param name="startOn"> The start time of the operation. </param>
-        /// <param name="result"> The operation result. </param>
-        /// <param name="errorCode"> The error code. </param>
-        /// <param name="parameters"> Managed integration runtime error parameters. </param>
-        /// <param name="activityId"> The activity id for the operation request. </param>
+        /// <param name="managedIntegrationRuntimeOperationResultType">
+        /// The operation type. Could be start or stop.
+        /// Serialized Name: ManagedIntegrationRuntimeOperationResult.type
+        /// </param>
+        /// <param name="startOn">
+        /// The start time of the operation.
+        /// Serialized Name: ManagedIntegrationRuntimeOperationResult.startTime
+        /// </param>
+        /// <param name="result">
+        /// The operation result.
+        /// Serialized Name: ManagedIntegrationRuntimeOperationResult.result
+        /// </param>
+        /// <param name="errorCode">
+        /// The error code.
+        /// Serialized Name: ManagedIntegrationRuntimeOperationResult.errorCode
+        /// </param>
+        /// <param name="parameters">
+        /// Managed integration runtime error parameters.
+        /// Serialized Name: ManagedIntegrationRuntimeOperationResult.parameters
+        /// </param>
+        /// <param name="activityId">
+        /// The activity id for the operation request.
+        /// Serialized Name: ManagedIntegrationRuntimeOperationResult.activityId
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal ManagedIntegrationRuntimeOperationResult(string managedIntegrationRuntimeOperationResultType, DateTimeOffset? startOn, string result, string errorCode, IReadOnlyList<string> parameters, string activityId, IReadOnlyDictionary<string, BinaryData> additionalProperties)
         {
@@ -40,17 +61,35 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = additionalProperties;
         }
 
-        /// <summary> The operation type. Could be start or stop. </summary>
+        /// <summary>
+        /// The operation type. Could be start or stop.
+        /// Serialized Name: ManagedIntegrationRuntimeOperationResult.type
+        /// </summary>
         public string ManagedIntegrationRuntimeOperationResultType { get; }
-        /// <summary> The start time of the operation. </summary>
+        /// <summary>
+        /// The start time of the operation.
+        /// Serialized Name: ManagedIntegrationRuntimeOperationResult.startTime
+        /// </summary>
         public DateTimeOffset? StartOn { get; }
-        /// <summary> The operation result. </summary>
+        /// <summary>
+        /// The operation result.
+        /// Serialized Name: ManagedIntegrationRuntimeOperationResult.result
+        /// </summary>
         public string Result { get; }
-        /// <summary> The error code. </summary>
+        /// <summary>
+        /// The error code.
+        /// Serialized Name: ManagedIntegrationRuntimeOperationResult.errorCode
+        /// </summary>
         public string ErrorCode { get; }
-        /// <summary> Managed integration runtime error parameters. </summary>
+        /// <summary>
+        /// Managed integration runtime error parameters.
+        /// Serialized Name: ManagedIntegrationRuntimeOperationResult.parameters
+        /// </summary>
         public IReadOnlyList<string> Parameters { get; }
-        /// <summary> The activity id for the operation request. </summary>
+        /// <summary>
+        /// The activity id for the operation request.
+        /// Serialized Name: ManagedIntegrationRuntimeOperationResult.activityId
+        /// </summary>
         public string ActivityId { get; }
         /// <summary> Additional Properties. </summary>
         public IReadOnlyDictionary<string, BinaryData> AdditionalProperties { get; }

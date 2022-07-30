@@ -9,11 +9,17 @@ using System;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> A WebLinkedService that uses anonymous authentication to communicate with an HTTP endpoint. </summary>
+    /// <summary>
+    /// A WebLinkedService that uses anonymous authentication to communicate with an HTTP endpoint.
+    /// Serialized Name: WebAnonymousAuthentication
+    /// </summary>
     public partial class WebAnonymousAuthentication : WebLinkedServiceTypeProperties
     {
         /// <summary> Initializes a new instance of WebAnonymousAuthentication. </summary>
-        /// <param name="uri"> The URL of the web service endpoint, e.g. http://www.microsoft.com . Type: string (or Expression with resultType string). </param>
+        /// <param name="uri">
+        /// The URL of the web service endpoint, e.g. http://www.microsoft.com . Type: string (or Expression with resultType string).
+        /// Serialized Name: WebLinkedServiceTypeProperties.url
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
         public WebAnonymousAuthentication(BinaryData uri) : base(uri)
         {
@@ -26,8 +32,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of WebAnonymousAuthentication. </summary>
-        /// <param name="uri"> The URL of the web service endpoint, e.g. http://www.microsoft.com . Type: string (or Expression with resultType string). </param>
-        /// <param name="authenticationType"> Type of authentication used to connect to the web table source. </param>
+        /// <param name="uri">
+        /// The URL of the web service endpoint, e.g. http://www.microsoft.com . Type: string (or Expression with resultType string).
+        /// Serialized Name: WebLinkedServiceTypeProperties.url
+        /// </param>
+        /// <param name="authenticationType">
+        /// Type of authentication used to connect to the web table source.
+        /// Serialized Name: WebLinkedServiceTypeProperties.authenticationType
+        /// </param>
         internal WebAnonymousAuthentication(BinaryData uri, WebAuthenticationType authenticationType) : base(uri, authenticationType)
         {
             AuthenticationType = authenticationType;

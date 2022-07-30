@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The consistency level specifies how many Cassandra servers must respond to a read request before returning data to the client application. Cassandra checks the specified number of Cassandra servers for data to satisfy the read request. Must be one of cassandraSourceReadConsistencyLevels. The default value is &apos;ONE&apos;. It is case-insensitive. </summary>
+    /// <summary>
+    /// The consistency level specifies how many Cassandra servers must respond to a read request before returning data to the client application. Cassandra checks the specified number of Cassandra servers for data to satisfy the read request. Must be one of cassandraSourceReadConsistencyLevels. The default value is &apos;ONE&apos;. It is case-insensitive.
+    /// Serialized Name: CassandraSourceReadConsistencyLevels
+    /// </summary>
     public readonly partial struct CassandraSourceReadConsistencyLevel : IEquatable<CassandraSourceReadConsistencyLevel>
     {
         private readonly string _value;
@@ -33,25 +36,55 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string SerialValue = "SERIAL";
         private const string LocalSerialValue = "LOCAL_SERIAL";
 
-        /// <summary> ALL. </summary>
+        /// <summary>
+        /// ALL
+        /// Serialized Name: CassandraSourceReadConsistencyLevels.ALL
+        /// </summary>
         public static CassandraSourceReadConsistencyLevel ALL { get; } = new CassandraSourceReadConsistencyLevel(ALLValue);
-        /// <summary> EACH_QUORUM. </summary>
+        /// <summary>
+        /// EACH_QUORUM
+        /// Serialized Name: CassandraSourceReadConsistencyLevels.EACH_QUORUM
+        /// </summary>
         public static CassandraSourceReadConsistencyLevel EachQuorum { get; } = new CassandraSourceReadConsistencyLevel(EachQuorumValue);
-        /// <summary> QUORUM. </summary>
+        /// <summary>
+        /// QUORUM
+        /// Serialized Name: CassandraSourceReadConsistencyLevels.QUORUM
+        /// </summary>
         public static CassandraSourceReadConsistencyLevel Quorum { get; } = new CassandraSourceReadConsistencyLevel(QuorumValue);
-        /// <summary> LOCAL_QUORUM. </summary>
+        /// <summary>
+        /// LOCAL_QUORUM
+        /// Serialized Name: CassandraSourceReadConsistencyLevels.LOCAL_QUORUM
+        /// </summary>
         public static CassandraSourceReadConsistencyLevel LocalQuorum { get; } = new CassandraSourceReadConsistencyLevel(LocalQuorumValue);
-        /// <summary> ONE. </summary>
+        /// <summary>
+        /// ONE
+        /// Serialized Name: CassandraSourceReadConsistencyLevels.ONE
+        /// </summary>
         public static CassandraSourceReadConsistencyLevel ONE { get; } = new CassandraSourceReadConsistencyLevel(ONEValue);
-        /// <summary> TWO. </summary>
+        /// <summary>
+        /// TWO
+        /// Serialized Name: CassandraSourceReadConsistencyLevels.TWO
+        /// </summary>
         public static CassandraSourceReadConsistencyLevel TWO { get; } = new CassandraSourceReadConsistencyLevel(TWOValue);
-        /// <summary> THREE. </summary>
+        /// <summary>
+        /// THREE
+        /// Serialized Name: CassandraSourceReadConsistencyLevels.THREE
+        /// </summary>
         public static CassandraSourceReadConsistencyLevel Three { get; } = new CassandraSourceReadConsistencyLevel(ThreeValue);
-        /// <summary> LOCAL_ONE. </summary>
+        /// <summary>
+        /// LOCAL_ONE
+        /// Serialized Name: CassandraSourceReadConsistencyLevels.LOCAL_ONE
+        /// </summary>
         public static CassandraSourceReadConsistencyLevel LocalONE { get; } = new CassandraSourceReadConsistencyLevel(LocalONEValue);
-        /// <summary> SERIAL. </summary>
+        /// <summary>
+        /// SERIAL
+        /// Serialized Name: CassandraSourceReadConsistencyLevels.SERIAL
+        /// </summary>
         public static CassandraSourceReadConsistencyLevel Serial { get; } = new CassandraSourceReadConsistencyLevel(SerialValue);
-        /// <summary> LOCAL_SERIAL. </summary>
+        /// <summary>
+        /// LOCAL_SERIAL
+        /// Serialized Name: CassandraSourceReadConsistencyLevels.LOCAL_SERIAL
+        /// </summary>
         public static CassandraSourceReadConsistencyLevel LocalSerial { get; } = new CassandraSourceReadConsistencyLevel(LocalSerialValue);
         /// <summary> Determines if two <see cref="CassandraSourceReadConsistencyLevel"/> values are the same. </summary>
         public static bool operator ==(CassandraSourceReadConsistencyLevel left, CassandraSourceReadConsistencyLevel right) => left.Equals(right);

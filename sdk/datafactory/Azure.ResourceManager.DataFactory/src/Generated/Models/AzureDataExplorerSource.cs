@@ -10,11 +10,17 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> A copy activity Azure Data Explorer (Kusto) source. </summary>
+    /// <summary>
+    /// A copy activity Azure Data Explorer (Kusto) source.
+    /// Serialized Name: AzureDataExplorerSource
+    /// </summary>
     public partial class AzureDataExplorerSource : CopySource
     {
         /// <summary> Initializes a new instance of AzureDataExplorerSource. </summary>
-        /// <param name="query"> Database query. Should be a Kusto Query Language (KQL) query. Type: string (or Expression with resultType string). </param>
+        /// <param name="query">
+        /// Database query. Should be a Kusto Query Language (KQL) query. Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureDataExplorerSource.query
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="query"/> is null. </exception>
         public AzureDataExplorerSource(BinaryData query)
         {
@@ -28,16 +34,43 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of AzureDataExplorerSource. </summary>
-        /// <param name="copySourceType"> Copy source type. </param>
-        /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
-        /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
-        /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
-        /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
+        /// <param name="copySourceType">
+        /// Copy source type.
+        /// Serialized Name: CopySource.type
+        /// </param>
+        /// <param name="sourceRetryCount">
+        /// Source retry count. Type: integer (or Expression with resultType integer).
+        /// Serialized Name: CopySource.sourceRetryCount
+        /// </param>
+        /// <param name="sourceRetryWait">
+        /// Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
+        /// Serialized Name: CopySource.sourceRetryWait
+        /// </param>
+        /// <param name="maxConcurrentConnections">
+        /// The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer).
+        /// Serialized Name: CopySource.maxConcurrentConnections
+        /// </param>
+        /// <param name="disableMetricsCollection">
+        /// If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: CopySource.disableMetricsCollection
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="query"> Database query. Should be a Kusto Query Language (KQL) query. Type: string (or Expression with resultType string). </param>
-        /// <param name="noTruncation"> The name of the Boolean option that controls whether truncation is applied to result-sets that go beyond a certain row-count limit. </param>
-        /// <param name="queryTimeout"> Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).. </param>
-        /// <param name="additionalColumns"> Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects). </param>
+        /// <param name="query">
+        /// Database query. Should be a Kusto Query Language (KQL) query. Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureDataExplorerSource.query
+        /// </param>
+        /// <param name="noTruncation">
+        /// The name of the Boolean option that controls whether truncation is applied to result-sets that go beyond a certain row-count limit.
+        /// Serialized Name: AzureDataExplorerSource.noTruncation
+        /// </param>
+        /// <param name="queryTimeout">
+        /// Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9]))..
+        /// Serialized Name: AzureDataExplorerSource.queryTimeout
+        /// </param>
+        /// <param name="additionalColumns">
+        /// Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects).
+        /// Serialized Name: AzureDataExplorerSource.additionalColumns
+        /// </param>
         internal AzureDataExplorerSource(string copySourceType, BinaryData sourceRetryCount, BinaryData sourceRetryWait, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, BinaryData query, BinaryData noTruncation, BinaryData queryTimeout, BinaryData additionalColumns) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             Query = query;
@@ -47,13 +80,25 @@ namespace Azure.ResourceManager.DataFactory.Models
             CopySourceType = copySourceType ?? "AzureDataExplorerSource";
         }
 
-        /// <summary> Database query. Should be a Kusto Query Language (KQL) query. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Database query. Should be a Kusto Query Language (KQL) query. Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureDataExplorerSource.query
+        /// </summary>
         public BinaryData Query { get; set; }
-        /// <summary> The name of the Boolean option that controls whether truncation is applied to result-sets that go beyond a certain row-count limit. </summary>
+        /// <summary>
+        /// The name of the Boolean option that controls whether truncation is applied to result-sets that go beyond a certain row-count limit.
+        /// Serialized Name: AzureDataExplorerSource.noTruncation
+        /// </summary>
         public BinaryData NoTruncation { get; set; }
-        /// <summary> Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).. </summary>
+        /// <summary>
+        /// Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9]))..
+        /// Serialized Name: AzureDataExplorerSource.queryTimeout
+        /// </summary>
         public BinaryData QueryTimeout { get; set; }
-        /// <summary> Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects). </summary>
+        /// <summary>
+        /// Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects).
+        /// Serialized Name: AzureDataExplorerSource.additionalColumns
+        /// </summary>
         public BinaryData AdditionalColumns { get; set; }
     }
 }

@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The recurrence schedule occurrence. </summary>
+    /// <summary>
+    /// The recurrence schedule occurrence.
+    /// Serialized Name: RecurrenceScheduleOccurrence
+    /// </summary>
     public partial class RecurrenceScheduleOccurrence
     {
         /// <summary> Initializes a new instance of RecurrenceScheduleOccurrence. </summary>
@@ -21,8 +24,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of RecurrenceScheduleOccurrence. </summary>
-        /// <param name="day"> The day of the week. </param>
-        /// <param name="occurrence"> The occurrence. </param>
+        /// <param name="day">
+        /// The day of the week.
+        /// Serialized Name: RecurrenceScheduleOccurrence.day
+        /// </param>
+        /// <param name="occurrence">
+        /// The occurrence.
+        /// Serialized Name: RecurrenceScheduleOccurrence.occurrence
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal RecurrenceScheduleOccurrence(DayOfWeek? day, int? occurrence, IDictionary<string, BinaryData> additionalProperties)
         {
@@ -31,9 +40,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = additionalProperties;
         }
 
-        /// <summary> The day of the week. </summary>
+        /// <summary>
+        /// The day of the week.
+        /// Serialized Name: RecurrenceScheduleOccurrence.day
+        /// </summary>
         public DayOfWeek? Day { get; set; }
-        /// <summary> The occurrence. </summary>
+        /// <summary>
+        /// The occurrence.
+        /// Serialized Name: RecurrenceScheduleOccurrence.occurrence
+        /// </summary>
         public int? Occurrence { get; set; }
         /// <summary> Additional Properties. </summary>
         public IDictionary<string, BinaryData> AdditionalProperties { get; }

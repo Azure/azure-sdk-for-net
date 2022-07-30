@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> AuthenticationType to be used for connection. </summary>
+    /// <summary>
+    /// AuthenticationType to be used for connection.
+    /// Serialized Name: SybaseAuthenticationType
+    /// </summary>
     public readonly partial struct SybaseAuthenticationType : IEquatable<SybaseAuthenticationType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string BasicValue = "Basic";
         private const string WindowsValue = "Windows";
 
-        /// <summary> Basic. </summary>
+        /// <summary>
+        /// Basic
+        /// Serialized Name: SybaseAuthenticationType.Basic
+        /// </summary>
         public static SybaseAuthenticationType Basic { get; } = new SybaseAuthenticationType(BasicValue);
-        /// <summary> Windows. </summary>
+        /// <summary>
+        /// Windows
+        /// Serialized Name: SybaseAuthenticationType.Windows
+        /// </summary>
         public static SybaseAuthenticationType Windows { get; } = new SybaseAuthenticationType(WindowsValue);
         /// <summary> Determines if two <see cref="SybaseAuthenticationType"/> values are the same. </summary>
         public static bool operator ==(SybaseAuthenticationType left, SybaseAuthenticationType right) => left.Equals(right);

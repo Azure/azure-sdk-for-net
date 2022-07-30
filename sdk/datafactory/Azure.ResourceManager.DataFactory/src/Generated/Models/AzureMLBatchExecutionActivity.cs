@@ -11,11 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Azure ML Batch Execution activity. </summary>
+    /// <summary>
+    /// Azure ML Batch Execution activity.
+    /// Serialized Name: AzureMLBatchExecutionActivity
+    /// </summary>
     public partial class AzureMLBatchExecutionActivity : ExecutionActivity
     {
         /// <summary> Initializes a new instance of AzureMLBatchExecutionActivity. </summary>
-        /// <param name="name"> Activity name. </param>
+        /// <param name="name">
+        /// Activity name.
+        /// Serialized Name: Activity.name
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public AzureMLBatchExecutionActivity(string name) : base(name)
         {
@@ -31,17 +37,47 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of AzureMLBatchExecutionActivity. </summary>
-        /// <param name="name"> Activity name. </param>
-        /// <param name="activityType"> Type of activity. </param>
-        /// <param name="description"> Activity description. </param>
-        /// <param name="dependsOn"> Activity depends on condition. </param>
-        /// <param name="userProperties"> Activity user properties. </param>
+        /// <param name="name">
+        /// Activity name.
+        /// Serialized Name: Activity.name
+        /// </param>
+        /// <param name="activityType">
+        /// Type of activity.
+        /// Serialized Name: Activity.type
+        /// </param>
+        /// <param name="description">
+        /// Activity description.
+        /// Serialized Name: Activity.description
+        /// </param>
+        /// <param name="dependsOn">
+        /// Activity depends on condition.
+        /// Serialized Name: Activity.dependsOn
+        /// </param>
+        /// <param name="userProperties">
+        /// Activity user properties.
+        /// Serialized Name: Activity.userProperties
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
-        /// <param name="policy"> Activity policy. </param>
-        /// <param name="globalParameters"> Key,Value pairs to be passed to the Azure ML Batch Execution Service endpoint. Keys must match the names of web service parameters defined in the published Azure ML web service. Values will be passed in the GlobalParameters property of the Azure ML batch execution request. </param>
-        /// <param name="webServiceOutputs"> Key,Value pairs, mapping the names of Azure ML endpoint&apos;s Web Service Outputs to AzureMLWebServiceFile objects specifying the output Blob locations. This information will be passed in the WebServiceOutputs property of the Azure ML batch execution request. </param>
-        /// <param name="webServiceInputs"> Key,Value pairs, mapping the names of Azure ML endpoint&apos;s Web Service Inputs to AzureMLWebServiceFile objects specifying the input Blob locations.. This information will be passed in the WebServiceInputs property of the Azure ML batch execution request. </param>
+        /// <param name="linkedServiceName">
+        /// Linked service reference.
+        /// Serialized Name: ExecutionActivity.linkedServiceName
+        /// </param>
+        /// <param name="policy">
+        /// Activity policy.
+        /// Serialized Name: ExecutionActivity.policy
+        /// </param>
+        /// <param name="globalParameters">
+        /// Key,Value pairs to be passed to the Azure ML Batch Execution Service endpoint. Keys must match the names of web service parameters defined in the published Azure ML web service. Values will be passed in the GlobalParameters property of the Azure ML batch execution request.
+        /// Serialized Name: AzureMLBatchExecutionActivity.typeProperties.globalParameters
+        /// </param>
+        /// <param name="webServiceOutputs">
+        /// Key,Value pairs, mapping the names of Azure ML endpoint&apos;s Web Service Outputs to AzureMLWebServiceFile objects specifying the output Blob locations. This information will be passed in the WebServiceOutputs property of the Azure ML batch execution request.
+        /// Serialized Name: AzureMLBatchExecutionActivity.typeProperties.webServiceOutputs
+        /// </param>
+        /// <param name="webServiceInputs">
+        /// Key,Value pairs, mapping the names of Azure ML endpoint&apos;s Web Service Inputs to AzureMLWebServiceFile objects specifying the input Blob locations.. This information will be passed in the WebServiceInputs property of the Azure ML batch execution request.
+        /// Serialized Name: AzureMLBatchExecutionActivity.typeProperties.webServiceInputs
+        /// </param>
         internal AzureMLBatchExecutionActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, IDictionary<string, BinaryData> globalParameters, IDictionary<string, AzureMLWebServiceFile> webServiceOutputs, IDictionary<string, AzureMLWebServiceFile> webServiceInputs) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             GlobalParameters = globalParameters;
@@ -50,11 +86,20 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = activityType ?? "AzureMLBatchExecution";
         }
 
-        /// <summary> Key,Value pairs to be passed to the Azure ML Batch Execution Service endpoint. Keys must match the names of web service parameters defined in the published Azure ML web service. Values will be passed in the GlobalParameters property of the Azure ML batch execution request. </summary>
+        /// <summary>
+        /// Key,Value pairs to be passed to the Azure ML Batch Execution Service endpoint. Keys must match the names of web service parameters defined in the published Azure ML web service. Values will be passed in the GlobalParameters property of the Azure ML batch execution request.
+        /// Serialized Name: AzureMLBatchExecutionActivity.typeProperties.globalParameters
+        /// </summary>
         public IDictionary<string, BinaryData> GlobalParameters { get; }
-        /// <summary> Key,Value pairs, mapping the names of Azure ML endpoint&apos;s Web Service Outputs to AzureMLWebServiceFile objects specifying the output Blob locations. This information will be passed in the WebServiceOutputs property of the Azure ML batch execution request. </summary>
+        /// <summary>
+        /// Key,Value pairs, mapping the names of Azure ML endpoint&apos;s Web Service Outputs to AzureMLWebServiceFile objects specifying the output Blob locations. This information will be passed in the WebServiceOutputs property of the Azure ML batch execution request.
+        /// Serialized Name: AzureMLBatchExecutionActivity.typeProperties.webServiceOutputs
+        /// </summary>
         public IDictionary<string, AzureMLWebServiceFile> WebServiceOutputs { get; }
-        /// <summary> Key,Value pairs, mapping the names of Azure ML endpoint&apos;s Web Service Inputs to AzureMLWebServiceFile objects specifying the input Blob locations.. This information will be passed in the WebServiceInputs property of the Azure ML batch execution request. </summary>
+        /// <summary>
+        /// Key,Value pairs, mapping the names of Azure ML endpoint&apos;s Web Service Inputs to AzureMLWebServiceFile objects specifying the input Blob locations.. This information will be passed in the WebServiceInputs property of the Azure ML batch execution request.
+        /// Serialized Name: AzureMLBatchExecutionActivity.typeProperties.webServiceInputs
+        /// </summary>
         public IDictionary<string, AzureMLWebServiceFile> WebServiceInputs { get; }
     }
 }

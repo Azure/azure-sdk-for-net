@@ -9,10 +9,16 @@ csharp: true
 library-name: DataFactory
 namespace: Azure.ResourceManager.DataFactory
 require: https://github.com/Azure/azure-rest-api-specs/blob/de400f7204d30d25543ac967636180728d52a88f/specification/datafactory/resource-manager/readme.md
+tag: package-2018-06
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
- 
+modelerfour:
+  flatten-payloads: false
+
+mgmt-debug: 
+  show-serialized-names: true
+
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
@@ -45,6 +51,7 @@ rename-rules:
   Etag: ETag|etag
 
 rename-mapping:
+  DataFlowResource: FactoryDataFlow
   DatasetDataElement.name: ColumnName
   DatasetDataElement.type: columnType
   DatasetSchemaDataElement.name: schemaColumnName
@@ -70,6 +77,9 @@ rename-mapping:
   Trigger: DataFactoryTriggerProperties
   Activity: DataFactoryPipelineActivity
 
+# prepend-rp-prefix:
+#  - DataFlowDefinition
+
 override-operation-name:
   ActivityRuns_QueryByPipelineRun: GetActivityRunsByPipelineRun
   PipelineRuns_QueryByFactory: GetPipelineRuns
@@ -86,4 +96,8 @@ directive:
       $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/addDataFlowToDebugSession'].post.parameters[4].name = 'content';
       $['/subscriptions/{subscriptionId}/providers/Microsoft.DataFactory/locations/{locationId}/getFeatureValue'].post.parameters[3].name = 'content';
       $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/getFeatureValue'].post.parameters[4].name = 'content';
+  - from: DataFlow.json
+    where: $.definitions
+    transform: >
+      $.DataFlow['x-ms-client-name'] = 'FactoryDataFlowDefinition';
 ```

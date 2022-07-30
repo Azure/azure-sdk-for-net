@@ -12,11 +12,17 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> A list of dataset resources. </summary>
+    /// <summary>
+    /// A list of dataset resources.
+    /// Serialized Name: DatasetListResponse
+    /// </summary>
     internal partial class DatasetListResponse
     {
         /// <summary> Initializes a new instance of DatasetListResponse. </summary>
-        /// <param name="value"> List of datasets. </param>
+        /// <param name="value">
+        /// List of datasets.
+        /// Serialized Name: DatasetListResponse.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DatasetListResponse(IEnumerable<DatasetResourceData> value)
         {
@@ -29,17 +35,29 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of DatasetListResponse. </summary>
-        /// <param name="value"> List of datasets. </param>
-        /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
+        /// <param name="value">
+        /// List of datasets.
+        /// Serialized Name: DatasetListResponse.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link to the next page of results, if any remaining results exist.
+        /// Serialized Name: DatasetListResponse.nextLink
+        /// </param>
         internal DatasetListResponse(IReadOnlyList<DatasetResourceData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> List of datasets. </summary>
+        /// <summary>
+        /// List of datasets.
+        /// Serialized Name: DatasetListResponse.value
+        /// </summary>
         public IReadOnlyList<DatasetResourceData> Value { get; }
-        /// <summary> The link to the next page of results, if any remaining results exist. </summary>
+        /// <summary>
+        /// The link to the next page of results, if any remaining results exist.
+        /// Serialized Name: DatasetListResponse.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The name of the authentication key to regenerate. </summary>
+    /// <summary>
+    /// The name of the authentication key to regenerate.
+    /// Serialized Name: IntegrationRuntimeAuthKeyName
+    /// </summary>
     public readonly partial struct IntegrationRuntimeAuthKeyName : IEquatable<IntegrationRuntimeAuthKeyName>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string AuthKey1Value = "authKey1";
         private const string AuthKey2Value = "authKey2";
 
-        /// <summary> authKey1. </summary>
+        /// <summary>
+        /// authKey1
+        /// Serialized Name: IntegrationRuntimeAuthKeyName.authKey1
+        /// </summary>
         public static IntegrationRuntimeAuthKeyName AuthKey1 { get; } = new IntegrationRuntimeAuthKeyName(AuthKey1Value);
-        /// <summary> authKey2. </summary>
+        /// <summary>
+        /// authKey2
+        /// Serialized Name: IntegrationRuntimeAuthKeyName.authKey2
+        /// </summary>
         public static IntegrationRuntimeAuthKeyName AuthKey2 { get; } = new IntegrationRuntimeAuthKeyName(AuthKey2Value);
         /// <summary> Determines if two <see cref="IntegrationRuntimeAuthKeyName"/> values are the same. </summary>
         public static bool operator ==(IntegrationRuntimeAuthKeyName left, IntegrationRuntimeAuthKeyName right) => left.Equals(right);

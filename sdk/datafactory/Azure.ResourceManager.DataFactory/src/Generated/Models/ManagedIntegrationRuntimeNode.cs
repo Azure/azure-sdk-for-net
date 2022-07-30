@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Properties of integration runtime node. </summary>
+    /// <summary>
+    /// Properties of integration runtime node.
+    /// Serialized Name: ManagedIntegrationRuntimeNode
+    /// </summary>
     public partial class ManagedIntegrationRuntimeNode
     {
         /// <summary> Initializes a new instance of ManagedIntegrationRuntimeNode. </summary>
@@ -22,9 +25,18 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of ManagedIntegrationRuntimeNode. </summary>
-        /// <param name="nodeId"> The managed integration runtime node id. </param>
-        /// <param name="status"> The managed integration runtime node status. </param>
-        /// <param name="errors"> The errors that occurred on this integration runtime node. </param>
+        /// <param name="nodeId">
+        /// The managed integration runtime node id.
+        /// Serialized Name: ManagedIntegrationRuntimeNode.nodeId
+        /// </param>
+        /// <param name="status">
+        /// The managed integration runtime node status.
+        /// Serialized Name: ManagedIntegrationRuntimeNode.status
+        /// </param>
+        /// <param name="errors">
+        /// The errors that occurred on this integration runtime node.
+        /// Serialized Name: ManagedIntegrationRuntimeNode.errors
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal ManagedIntegrationRuntimeNode(string nodeId, ManagedIntegrationRuntimeNodeStatus? status, IReadOnlyList<ManagedIntegrationRuntimeError> errors, IReadOnlyDictionary<string, BinaryData> additionalProperties)
         {
@@ -34,11 +46,20 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = additionalProperties;
         }
 
-        /// <summary> The managed integration runtime node id. </summary>
+        /// <summary>
+        /// The managed integration runtime node id.
+        /// Serialized Name: ManagedIntegrationRuntimeNode.nodeId
+        /// </summary>
         public string NodeId { get; }
-        /// <summary> The managed integration runtime node status. </summary>
+        /// <summary>
+        /// The managed integration runtime node status.
+        /// Serialized Name: ManagedIntegrationRuntimeNode.status
+        /// </summary>
         public ManagedIntegrationRuntimeNodeStatus? Status { get; }
-        /// <summary> The errors that occurred on this integration runtime node. </summary>
+        /// <summary>
+        /// The errors that occurred on this integration runtime node.
+        /// Serialized Name: ManagedIntegrationRuntimeNode.errors
+        /// </summary>
         public IReadOnlyList<ManagedIntegrationRuntimeError> Errors { get; }
         /// <summary> Additional Properties. </summary>
         public IReadOnlyDictionary<string, BinaryData> AdditionalProperties { get; }

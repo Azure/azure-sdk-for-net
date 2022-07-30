@@ -11,13 +11,25 @@ using System.Linq;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Query filter option for listing runs. </summary>
+    /// <summary>
+    /// Query filter option for listing runs.
+    /// Serialized Name: RunQueryFilter
+    /// </summary>
     public partial class RunQueryFilter
     {
         /// <summary> Initializes a new instance of RunQueryFilter. </summary>
-        /// <param name="operand"> Parameter name to be used for filter. The allowed operands to query pipeline runs are PipelineName, RunStart, RunEnd and Status; to query activity runs are ActivityName, ActivityRunStart, ActivityRunEnd, ActivityType and Status, and to query trigger runs are TriggerName, TriggerRunTimestamp and Status. </param>
-        /// <param name="operator"> Operator to be used for filter. </param>
-        /// <param name="values"> List of filter values. </param>
+        /// <param name="operand">
+        /// Parameter name to be used for filter. The allowed operands to query pipeline runs are PipelineName, RunStart, RunEnd and Status; to query activity runs are ActivityName, ActivityRunStart, ActivityRunEnd, ActivityType and Status, and to query trigger runs are TriggerName, TriggerRunTimestamp and Status.
+        /// Serialized Name: RunQueryFilter.operand
+        /// </param>
+        /// <param name="operator">
+        /// Operator to be used for filter.
+        /// Serialized Name: RunQueryFilter.operator
+        /// </param>
+        /// <param name="values">
+        /// List of filter values.
+        /// Serialized Name: RunQueryFilter.values
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="values"/> is null. </exception>
         public RunQueryFilter(RunQueryFilterOperand operand, RunQueryFilterOperator @operator, IEnumerable<string> values)
         {
@@ -31,11 +43,20 @@ namespace Azure.ResourceManager.DataFactory.Models
             Values = values.ToList();
         }
 
-        /// <summary> Parameter name to be used for filter. The allowed operands to query pipeline runs are PipelineName, RunStart, RunEnd and Status; to query activity runs are ActivityName, ActivityRunStart, ActivityRunEnd, ActivityType and Status, and to query trigger runs are TriggerName, TriggerRunTimestamp and Status. </summary>
+        /// <summary>
+        /// Parameter name to be used for filter. The allowed operands to query pipeline runs are PipelineName, RunStart, RunEnd and Status; to query activity runs are ActivityName, ActivityRunStart, ActivityRunEnd, ActivityType and Status, and to query trigger runs are TriggerName, TriggerRunTimestamp and Status.
+        /// Serialized Name: RunQueryFilter.operand
+        /// </summary>
         public RunQueryFilterOperand Operand { get; }
-        /// <summary> Operator to be used for filter. </summary>
+        /// <summary>
+        /// Operator to be used for filter.
+        /// Serialized Name: RunQueryFilter.operator
+        /// </summary>
         public RunQueryFilterOperator Operator { get; }
-        /// <summary> List of filter values. </summary>
+        /// <summary>
+        /// List of filter values.
+        /// Serialized Name: RunQueryFilter.values
+        /// </summary>
         public IList<string> Values { get; }
     }
 }

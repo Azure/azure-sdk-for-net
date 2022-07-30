@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> A copy activity SQL Data Warehouse sink. </summary>
+    /// <summary>
+    /// A copy activity SQL Data Warehouse sink.
+    /// Serialized Name: SqlDWSink
+    /// </summary>
     public partial class SqlDWSink : CopySink
     {
         /// <summary> Initializes a new instance of SqlDWSink. </summary>
@@ -20,23 +23,71 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of SqlDWSink. </summary>
-        /// <param name="copySinkType"> Copy sink type. </param>
-        /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
-        /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
-        /// <param name="sinkRetryCount"> Sink retry count. Type: integer (or Expression with resultType integer). </param>
-        /// <param name="sinkRetryWait"> Sink retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
-        /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the sink data store. Type: integer (or Expression with resultType integer). </param>
-        /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
+        /// <param name="copySinkType">
+        /// Copy sink type.
+        /// Serialized Name: CopySink.type
+        /// </param>
+        /// <param name="writeBatchSize">
+        /// Write batch size. Type: integer (or Expression with resultType integer), minimum: 0.
+        /// Serialized Name: CopySink.writeBatchSize
+        /// </param>
+        /// <param name="writeBatchTimeout">
+        /// Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
+        /// Serialized Name: CopySink.writeBatchTimeout
+        /// </param>
+        /// <param name="sinkRetryCount">
+        /// Sink retry count. Type: integer (or Expression with resultType integer).
+        /// Serialized Name: CopySink.sinkRetryCount
+        /// </param>
+        /// <param name="sinkRetryWait">
+        /// Sink retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
+        /// Serialized Name: CopySink.sinkRetryWait
+        /// </param>
+        /// <param name="maxConcurrentConnections">
+        /// The maximum concurrent connection count for the sink data store. Type: integer (or Expression with resultType integer).
+        /// Serialized Name: CopySink.maxConcurrentConnections
+        /// </param>
+        /// <param name="disableMetricsCollection">
+        /// If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: CopySink.disableMetricsCollection
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="preCopyScript"> SQL pre-copy script. Type: string (or Expression with resultType string). </param>
-        /// <param name="allowPolyBase"> Indicates to use PolyBase to copy data into SQL Data Warehouse when applicable. Type: boolean (or Expression with resultType boolean). </param>
-        /// <param name="polyBaseSettings"> Specifies PolyBase-related settings when allowPolyBase is true. </param>
-        /// <param name="allowCopyCommand"> Indicates to use Copy Command to copy data into SQL Data Warehouse. Type: boolean (or Expression with resultType boolean). </param>
-        /// <param name="copyCommandSettings"> Specifies Copy Command related settings when allowCopyCommand is true. </param>
-        /// <param name="tableOption"> The option to handle sink table, such as autoCreate. For now only &apos;autoCreate&apos; value is supported. Type: string (or Expression with resultType string). </param>
-        /// <param name="sqlWriterUseTableLock"> Whether to use table lock during bulk copy. Type: boolean (or Expression with resultType boolean). </param>
-        /// <param name="writeBehavior"> Write behavior when copying data into azure SQL DW. Type: SqlDWWriteBehaviorEnum (or Expression with resultType SqlDWWriteBehaviorEnum). </param>
-        /// <param name="upsertSettings"> SQL DW upsert settings. </param>
+        /// <param name="preCopyScript">
+        /// SQL pre-copy script. Type: string (or Expression with resultType string).
+        /// Serialized Name: SqlDWSink.preCopyScript
+        /// </param>
+        /// <param name="allowPolyBase">
+        /// Indicates to use PolyBase to copy data into SQL Data Warehouse when applicable. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: SqlDWSink.allowPolyBase
+        /// </param>
+        /// <param name="polyBaseSettings">
+        /// Specifies PolyBase-related settings when allowPolyBase is true.
+        /// Serialized Name: SqlDWSink.polyBaseSettings
+        /// </param>
+        /// <param name="allowCopyCommand">
+        /// Indicates to use Copy Command to copy data into SQL Data Warehouse. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: SqlDWSink.allowCopyCommand
+        /// </param>
+        /// <param name="copyCommandSettings">
+        /// Specifies Copy Command related settings when allowCopyCommand is true.
+        /// Serialized Name: SqlDWSink.copyCommandSettings
+        /// </param>
+        /// <param name="tableOption">
+        /// The option to handle sink table, such as autoCreate. For now only &apos;autoCreate&apos; value is supported. Type: string (or Expression with resultType string).
+        /// Serialized Name: SqlDWSink.tableOption
+        /// </param>
+        /// <param name="sqlWriterUseTableLock">
+        /// Whether to use table lock during bulk copy. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: SqlDWSink.sqlWriterUseTableLock
+        /// </param>
+        /// <param name="writeBehavior">
+        /// Write behavior when copying data into azure SQL DW. Type: SqlDWWriteBehaviorEnum (or Expression with resultType SqlDWWriteBehaviorEnum)
+        /// Serialized Name: SqlDWSink.writeBehavior
+        /// </param>
+        /// <param name="upsertSettings">
+        /// SQL DW upsert settings.
+        /// Serialized Name: SqlDWSink.upsertSettings
+        /// </param>
         internal SqlDWSink(string copySinkType, BinaryData writeBatchSize, BinaryData writeBatchTimeout, BinaryData sinkRetryCount, BinaryData sinkRetryWait, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, BinaryData preCopyScript, BinaryData allowPolyBase, PolybaseSettings polyBaseSettings, BinaryData allowCopyCommand, DWCopyCommandSettings copyCommandSettings, BinaryData tableOption, BinaryData sqlWriterUseTableLock, BinaryData writeBehavior, SqlDWUpsertSettings upsertSettings) : base(copySinkType, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             PreCopyScript = preCopyScript;
@@ -51,23 +102,50 @@ namespace Azure.ResourceManager.DataFactory.Models
             CopySinkType = copySinkType ?? "SqlDWSink";
         }
 
-        /// <summary> SQL pre-copy script. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// SQL pre-copy script. Type: string (or Expression with resultType string).
+        /// Serialized Name: SqlDWSink.preCopyScript
+        /// </summary>
         public BinaryData PreCopyScript { get; set; }
-        /// <summary> Indicates to use PolyBase to copy data into SQL Data Warehouse when applicable. Type: boolean (or Expression with resultType boolean). </summary>
+        /// <summary>
+        /// Indicates to use PolyBase to copy data into SQL Data Warehouse when applicable. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: SqlDWSink.allowPolyBase
+        /// </summary>
         public BinaryData AllowPolyBase { get; set; }
-        /// <summary> Specifies PolyBase-related settings when allowPolyBase is true. </summary>
+        /// <summary>
+        /// Specifies PolyBase-related settings when allowPolyBase is true.
+        /// Serialized Name: SqlDWSink.polyBaseSettings
+        /// </summary>
         public PolybaseSettings PolyBaseSettings { get; set; }
-        /// <summary> Indicates to use Copy Command to copy data into SQL Data Warehouse. Type: boolean (or Expression with resultType boolean). </summary>
+        /// <summary>
+        /// Indicates to use Copy Command to copy data into SQL Data Warehouse. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: SqlDWSink.allowCopyCommand
+        /// </summary>
         public BinaryData AllowCopyCommand { get; set; }
-        /// <summary> Specifies Copy Command related settings when allowCopyCommand is true. </summary>
+        /// <summary>
+        /// Specifies Copy Command related settings when allowCopyCommand is true.
+        /// Serialized Name: SqlDWSink.copyCommandSettings
+        /// </summary>
         public DWCopyCommandSettings CopyCommandSettings { get; set; }
-        /// <summary> The option to handle sink table, such as autoCreate. For now only &apos;autoCreate&apos; value is supported. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The option to handle sink table, such as autoCreate. For now only &apos;autoCreate&apos; value is supported. Type: string (or Expression with resultType string).
+        /// Serialized Name: SqlDWSink.tableOption
+        /// </summary>
         public BinaryData TableOption { get; set; }
-        /// <summary> Whether to use table lock during bulk copy. Type: boolean (or Expression with resultType boolean). </summary>
+        /// <summary>
+        /// Whether to use table lock during bulk copy. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: SqlDWSink.sqlWriterUseTableLock
+        /// </summary>
         public BinaryData SqlWriterUseTableLock { get; set; }
-        /// <summary> Write behavior when copying data into azure SQL DW. Type: SqlDWWriteBehaviorEnum (or Expression with resultType SqlDWWriteBehaviorEnum). </summary>
+        /// <summary>
+        /// Write behavior when copying data into azure SQL DW. Type: SqlDWWriteBehaviorEnum (or Expression with resultType SqlDWWriteBehaviorEnum)
+        /// Serialized Name: SqlDWSink.writeBehavior
+        /// </summary>
         public BinaryData WriteBehavior { get; set; }
-        /// <summary> SQL DW upsert settings. </summary>
+        /// <summary>
+        /// SQL DW upsert settings.
+        /// Serialized Name: SqlDWSink.upsertSettings
+        /// </summary>
         public SqlDWUpsertSettings UpsertSettings { get; set; }
     }
 }

@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Map Power Query mashup query to sink dataset(s). </summary>
+    /// <summary>
+    /// Map Power Query mashup query to sink dataset(s).
+    /// Serialized Name: PowerQuerySinkMapping
+    /// </summary>
     public partial class PowerQuerySinkMapping
     {
         /// <summary> Initializes a new instance of PowerQuerySinkMapping. </summary>
@@ -20,17 +23,29 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of PowerQuerySinkMapping. </summary>
-        /// <param name="queryName"> Name of the query in Power Query mashup document. </param>
-        /// <param name="dataflowSinks"> List of sinks mapped to Power Query mashup query. </param>
+        /// <param name="queryName">
+        /// Name of the query in Power Query mashup document.
+        /// Serialized Name: PowerQuerySinkMapping.queryName
+        /// </param>
+        /// <param name="dataflowSinks">
+        /// List of sinks mapped to Power Query mashup query.
+        /// Serialized Name: PowerQuerySinkMapping.dataflowSinks
+        /// </param>
         internal PowerQuerySinkMapping(string queryName, IList<PowerQuerySink> dataflowSinks)
         {
             QueryName = queryName;
             DataflowSinks = dataflowSinks;
         }
 
-        /// <summary> Name of the query in Power Query mashup document. </summary>
+        /// <summary>
+        /// Name of the query in Power Query mashup document.
+        /// Serialized Name: PowerQuerySinkMapping.queryName
+        /// </summary>
         public string QueryName { get; set; }
-        /// <summary> List of sinks mapped to Power Query mashup query. </summary>
+        /// <summary>
+        /// List of sinks mapped to Power Query mashup query.
+        /// Serialized Name: PowerQuerySinkMapping.dataflowSinks
+        /// </summary>
         public IList<PowerQuerySink> DataflowSinks { get; }
     }
 }

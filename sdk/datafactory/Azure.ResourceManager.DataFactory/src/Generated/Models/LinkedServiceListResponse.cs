@@ -12,11 +12,17 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> A list of linked service resources. </summary>
+    /// <summary>
+    /// A list of linked service resources.
+    /// Serialized Name: LinkedServiceListResponse
+    /// </summary>
     internal partial class LinkedServiceListResponse
     {
         /// <summary> Initializes a new instance of LinkedServiceListResponse. </summary>
-        /// <param name="value"> List of linked services. </param>
+        /// <param name="value">
+        /// List of linked services.
+        /// Serialized Name: LinkedServiceListResponse.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal LinkedServiceListResponse(IEnumerable<LinkedServiceResourceData> value)
         {
@@ -29,17 +35,29 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of LinkedServiceListResponse. </summary>
-        /// <param name="value"> List of linked services. </param>
-        /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
+        /// <param name="value">
+        /// List of linked services.
+        /// Serialized Name: LinkedServiceListResponse.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link to the next page of results, if any remaining results exist.
+        /// Serialized Name: LinkedServiceListResponse.nextLink
+        /// </param>
         internal LinkedServiceListResponse(IReadOnlyList<LinkedServiceResourceData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> List of linked services. </summary>
+        /// <summary>
+        /// List of linked services.
+        /// Serialized Name: LinkedServiceListResponse.value
+        /// </summary>
         public IReadOnlyList<LinkedServiceResourceData> Value { get; }
-        /// <summary> The link to the next page of results, if any remaining results exist. </summary>
+        /// <summary>
+        /// The link to the next page of results, if any remaining results exist.
+        /// Serialized Name: LinkedServiceListResponse.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

@@ -9,12 +9,21 @@ using System;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Azure Data Factory expression definition. </summary>
+    /// <summary>
+    /// Azure Data Factory expression definition.
+    /// Serialized Name: Expression
+    /// </summary>
     public partial class Expression
     {
         /// <summary> Initializes a new instance of Expression. </summary>
-        /// <param name="expressionType"> Expression type. </param>
-        /// <param name="value"> Expression value. </param>
+        /// <param name="expressionType">
+        /// Expression type.
+        /// Serialized Name: Expression.type
+        /// </param>
+        /// <param name="value">
+        /// Expression value.
+        /// Serialized Name: Expression.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public Expression(ExpressionType expressionType, string value)
         {
@@ -27,9 +36,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             Value = value;
         }
 
-        /// <summary> Expression type. </summary>
+        /// <summary>
+        /// Expression type.
+        /// Serialized Name: Expression.type
+        /// </summary>
         public ExpressionType ExpressionType { get; set; }
-        /// <summary> Expression value. </summary>
+        /// <summary>
+        /// Expression value.
+        /// Serialized Name: Expression.value
+        /// </summary>
         public string Value { get; set; }
     }
 }

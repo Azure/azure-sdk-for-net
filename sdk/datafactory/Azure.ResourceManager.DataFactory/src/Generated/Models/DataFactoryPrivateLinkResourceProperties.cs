@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Properties of a private link resource. </summary>
+    /// <summary>
+    /// Properties of a private link resource
+    /// Serialized Name: PrivateLinkResourceProperties
+    /// </summary>
     public partial class DataFactoryPrivateLinkResourceProperties
     {
         /// <summary> Initializes a new instance of DataFactoryPrivateLinkResourceProperties. </summary>
@@ -21,9 +24,18 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of DataFactoryPrivateLinkResourceProperties. </summary>
-        /// <param name="groupId"> GroupId of a private link resource. </param>
-        /// <param name="requiredMembers"> RequiredMembers of a private link resource. </param>
-        /// <param name="requiredZoneNames"> RequiredZoneNames of a private link resource. </param>
+        /// <param name="groupId">
+        /// GroupId of a private link resource
+        /// Serialized Name: PrivateLinkResourceProperties.groupId
+        /// </param>
+        /// <param name="requiredMembers">
+        /// RequiredMembers of a private link resource
+        /// Serialized Name: PrivateLinkResourceProperties.requiredMembers
+        /// </param>
+        /// <param name="requiredZoneNames">
+        /// RequiredZoneNames of a private link resource
+        /// Serialized Name: PrivateLinkResourceProperties.requiredZoneNames
+        /// </param>
         internal DataFactoryPrivateLinkResourceProperties(string groupId, IReadOnlyList<string> requiredMembers, IReadOnlyList<string> requiredZoneNames)
         {
             GroupId = groupId;
@@ -31,11 +43,20 @@ namespace Azure.ResourceManager.DataFactory.Models
             RequiredZoneNames = requiredZoneNames;
         }
 
-        /// <summary> GroupId of a private link resource. </summary>
+        /// <summary>
+        /// GroupId of a private link resource
+        /// Serialized Name: PrivateLinkResourceProperties.groupId
+        /// </summary>
         public string GroupId { get; }
-        /// <summary> RequiredMembers of a private link resource. </summary>
+        /// <summary>
+        /// RequiredMembers of a private link resource
+        /// Serialized Name: PrivateLinkResourceProperties.requiredMembers
+        /// </summary>
         public IReadOnlyList<string> RequiredMembers { get; }
-        /// <summary> RequiredZoneNames of a private link resource. </summary>
+        /// <summary>
+        /// RequiredZoneNames of a private link resource
+        /// Serialized Name: PrivateLinkResourceProperties.requiredZoneNames
+        /// </summary>
         public IReadOnlyList<string> RequiredZoneNames { get; }
     }
 }

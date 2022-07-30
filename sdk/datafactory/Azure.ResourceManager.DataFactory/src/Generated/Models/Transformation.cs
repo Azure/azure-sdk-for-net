@@ -9,11 +9,17 @@ using System;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> A data flow transformation. </summary>
+    /// <summary>
+    /// A data flow transformation.
+    /// Serialized Name: Transformation
+    /// </summary>
     public partial class Transformation
     {
         /// <summary> Initializes a new instance of Transformation. </summary>
-        /// <param name="name"> Transformation name. </param>
+        /// <param name="name">
+        /// Transformation name.
+        /// Serialized Name: Transformation.name
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public Transformation(string name)
         {
@@ -26,11 +32,26 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of Transformation. </summary>
-        /// <param name="name"> Transformation name. </param>
-        /// <param name="description"> Transformation description. </param>
-        /// <param name="dataset"> Dataset reference. </param>
-        /// <param name="linkedService"> Linked service reference. </param>
-        /// <param name="flowlet"> Flowlet Reference. </param>
+        /// <param name="name">
+        /// Transformation name.
+        /// Serialized Name: Transformation.name
+        /// </param>
+        /// <param name="description">
+        /// Transformation description.
+        /// Serialized Name: Transformation.description
+        /// </param>
+        /// <param name="dataset">
+        /// Dataset reference.
+        /// Serialized Name: Transformation.dataset
+        /// </param>
+        /// <param name="linkedService">
+        /// Linked service reference.
+        /// Serialized Name: Transformation.linkedService
+        /// </param>
+        /// <param name="flowlet">
+        /// Flowlet Reference
+        /// Serialized Name: Transformation.flowlet
+        /// </param>
         internal Transformation(string name, string description, DatasetReference dataset, LinkedServiceReference linkedService, DataFlowReference flowlet)
         {
             Name = name;
@@ -40,15 +61,30 @@ namespace Azure.ResourceManager.DataFactory.Models
             Flowlet = flowlet;
         }
 
-        /// <summary> Transformation name. </summary>
+        /// <summary>
+        /// Transformation name.
+        /// Serialized Name: Transformation.name
+        /// </summary>
         public string Name { get; set; }
-        /// <summary> Transformation description. </summary>
+        /// <summary>
+        /// Transformation description.
+        /// Serialized Name: Transformation.description
+        /// </summary>
         public string Description { get; set; }
-        /// <summary> Dataset reference. </summary>
+        /// <summary>
+        /// Dataset reference.
+        /// Serialized Name: Transformation.dataset
+        /// </summary>
         public DatasetReference Dataset { get; set; }
-        /// <summary> Linked service reference. </summary>
+        /// <summary>
+        /// Linked service reference.
+        /// Serialized Name: Transformation.linkedService
+        /// </summary>
         public LinkedServiceReference LinkedService { get; set; }
-        /// <summary> Flowlet Reference. </summary>
+        /// <summary>
+        /// Flowlet Reference
+        /// Serialized Name: Transformation.flowlet
+        /// </summary>
         public DataFlowReference Flowlet { get; set; }
     }
 }

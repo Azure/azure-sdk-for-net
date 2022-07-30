@@ -10,7 +10,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> A remote private endpoint connection. </summary>
+    /// <summary>
+    /// A remote private endpoint connection
+    /// Serialized Name: RemotePrivateEndpointConnection
+    /// </summary>
     public partial class RemotePrivateEndpointConnection
     {
         /// <summary> Initializes a new instance of RemotePrivateEndpointConnection. </summary>
@@ -19,9 +22,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of RemotePrivateEndpointConnection. </summary>
-        /// <param name="provisioningState"></param>
-        /// <param name="privateEndpoint"> PrivateEndpoint of a remote private endpoint connection. </param>
-        /// <param name="privateLinkServiceConnectionState"> The state of a private link connection. </param>
+        /// <param name="provisioningState"> Serialized Name: RemotePrivateEndpointConnection.provisioningState. </param>
+        /// <param name="privateEndpoint">
+        /// PrivateEndpoint of a remote private endpoint connection
+        /// Serialized Name: RemotePrivateEndpointConnection.privateEndpoint
+        /// </param>
+        /// <param name="privateLinkServiceConnectionState">
+        /// The state of a private link connection
+        /// Serialized Name: RemotePrivateEndpointConnection.privateLinkServiceConnectionState
+        /// </param>
         internal RemotePrivateEndpointConnection(string provisioningState, SubResource privateEndpoint, PrivateLinkConnectionState privateLinkServiceConnectionState)
         {
             ProvisioningState = provisioningState;
@@ -29,9 +38,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
         }
 
-        /// <summary> Gets the provisioning state. </summary>
+        /// <summary> Serialized Name: RemotePrivateEndpointConnection.provisioningState. </summary>
         public string ProvisioningState { get; }
-        /// <summary> PrivateEndpoint of a remote private endpoint connection. </summary>
+        /// <summary>
+        /// PrivateEndpoint of a remote private endpoint connection
+        /// Serialized Name: RemotePrivateEndpointConnection.privateEndpoint
+        /// </summary>
         internal SubResource PrivateEndpoint { get; set; }
         /// <summary> Gets Id. </summary>
         public ResourceIdentifier PrivateEndpointId
@@ -39,7 +51,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             get => PrivateEndpoint is null ? default : PrivateEndpoint.Id;
         }
 
-        /// <summary> The state of a private link connection. </summary>
+        /// <summary>
+        /// The state of a private link connection
+        /// Serialized Name: RemotePrivateEndpointConnection.privateLinkServiceConnectionState
+        /// </summary>
         public PrivateLinkConnectionState PrivateLinkServiceConnectionState { get; set; }
     }
 }

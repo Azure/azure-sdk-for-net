@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> SAP Table Linked Service. </summary>
+    /// <summary>
+    /// SAP Table Linked Service.
+    /// Serialized Name: SapTableLinkedService
+    /// </summary>
     public partial class SapTableLinkedService : LinkedService
     {
         /// <summary> Initializes a new instance of SapTableLinkedService. </summary>
@@ -20,32 +23,93 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of SapTableLinkedService. </summary>
-        /// <param name="linkedServiceType"> Type of linked service. </param>
-        /// <param name="connectVia"> The integration runtime reference. </param>
-        /// <param name="description"> Linked service description. </param>
-        /// <param name="parameters"> Parameters for linked service. </param>
-        /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
+        /// <param name="linkedServiceType">
+        /// Type of linked service.
+        /// Serialized Name: LinkedService.type
+        /// </param>
+        /// <param name="connectVia">
+        /// The integration runtime reference.
+        /// Serialized Name: LinkedService.connectVia
+        /// </param>
+        /// <param name="description">
+        /// Linked service description.
+        /// Serialized Name: LinkedService.description
+        /// </param>
+        /// <param name="parameters">
+        /// Parameters for linked service.
+        /// Serialized Name: LinkedService.parameters
+        /// </param>
+        /// <param name="annotations">
+        /// List of tags that can be used for describing the linked service.
+        /// Serialized Name: LinkedService.annotations
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="server"> Host name of the SAP instance where the table is located. Type: string (or Expression with resultType string). </param>
-        /// <param name="systemNumber"> System number of the SAP system where the table is located. (Usually a two-digit decimal number represented as a string.) Type: string (or Expression with resultType string). </param>
-        /// <param name="clientId"> Client ID of the client on the SAP system where the table is located. (Usually a three-digit decimal number represented as a string) Type: string (or Expression with resultType string). </param>
-        /// <param name="language"> Language of the SAP system where the table is located. The default value is EN. Type: string (or Expression with resultType string). </param>
-        /// <param name="systemId"> SystemID of the SAP system where the table is located. Type: string (or Expression with resultType string). </param>
-        /// <param name="userName"> Username to access the SAP server where the table is located. Type: string (or Expression with resultType string). </param>
+        /// <param name="server">
+        /// Host name of the SAP instance where the table is located. Type: string (or Expression with resultType string).
+        /// Serialized Name: SapTableLinkedService.typeProperties.server
+        /// </param>
+        /// <param name="systemNumber">
+        /// System number of the SAP system where the table is located. (Usually a two-digit decimal number represented as a string.) Type: string (or Expression with resultType string).
+        /// Serialized Name: SapTableLinkedService.typeProperties.systemNumber
+        /// </param>
+        /// <param name="clientId">
+        /// Client ID of the client on the SAP system where the table is located. (Usually a three-digit decimal number represented as a string) Type: string (or Expression with resultType string).
+        /// Serialized Name: SapTableLinkedService.typeProperties.clientId
+        /// </param>
+        /// <param name="language">
+        /// Language of the SAP system where the table is located. The default value is EN. Type: string (or Expression with resultType string).
+        /// Serialized Name: SapTableLinkedService.typeProperties.language
+        /// </param>
+        /// <param name="systemId">
+        /// SystemID of the SAP system where the table is located. Type: string (or Expression with resultType string).
+        /// Serialized Name: SapTableLinkedService.typeProperties.systemId
+        /// </param>
+        /// <param name="userName">
+        /// Username to access the SAP server where the table is located. Type: string (or Expression with resultType string).
+        /// Serialized Name: SapTableLinkedService.typeProperties.userName
+        /// </param>
         /// <param name="password">
         /// Password to access the SAP server where the table is located.
+        /// Serialized Name: SapTableLinkedService.typeProperties.password
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
-        /// <param name="messageServer"> The hostname of the SAP Message Server. Type: string (or Expression with resultType string). </param>
-        /// <param name="messageServerService"> The service name or port number of the Message Server. Type: string (or Expression with resultType string). </param>
-        /// <param name="sncMode"> SNC activation indicator to access the SAP server where the table is located. Must be either 0 (off) or 1 (on). Type: string (or Expression with resultType string). </param>
-        /// <param name="sncMyName"> Initiator&apos;s SNC name to access the SAP server where the table is located. Type: string (or Expression with resultType string). </param>
-        /// <param name="sncPartnerName"> Communication partner&apos;s SNC name to access the SAP server where the table is located. Type: string (or Expression with resultType string). </param>
-        /// <param name="sncLibraryPath"> External security product&apos;s library to access the SAP server where the table is located. Type: string (or Expression with resultType string). </param>
-        /// <param name="sncQop"> SNC Quality of Protection. Allowed value include: 1, 2, 3, 8, 9. Type: string (or Expression with resultType string). </param>
-        /// <param name="logonGroup"> The Logon Group for the SAP System. Type: string (or Expression with resultType string). </param>
-        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
+        /// <param name="messageServer">
+        /// The hostname of the SAP Message Server. Type: string (or Expression with resultType string).
+        /// Serialized Name: SapTableLinkedService.typeProperties.messageServer
+        /// </param>
+        /// <param name="messageServerService">
+        /// The service name or port number of the Message Server. Type: string (or Expression with resultType string).
+        /// Serialized Name: SapTableLinkedService.typeProperties.messageServerService
+        /// </param>
+        /// <param name="sncMode">
+        /// SNC activation indicator to access the SAP server where the table is located. Must be either 0 (off) or 1 (on). Type: string (or Expression with resultType string).
+        /// Serialized Name: SapTableLinkedService.typeProperties.sncMode
+        /// </param>
+        /// <param name="sncMyName">
+        /// Initiator&apos;s SNC name to access the SAP server where the table is located. Type: string (or Expression with resultType string).
+        /// Serialized Name: SapTableLinkedService.typeProperties.sncMyName
+        /// </param>
+        /// <param name="sncPartnerName">
+        /// Communication partner&apos;s SNC name to access the SAP server where the table is located. Type: string (or Expression with resultType string).
+        /// Serialized Name: SapTableLinkedService.typeProperties.sncPartnerName
+        /// </param>
+        /// <param name="sncLibraryPath">
+        /// External security product&apos;s library to access the SAP server where the table is located. Type: string (or Expression with resultType string).
+        /// Serialized Name: SapTableLinkedService.typeProperties.sncLibraryPath
+        /// </param>
+        /// <param name="sncQop">
+        /// SNC Quality of Protection. Allowed value include: 1, 2, 3, 8, 9. Type: string (or Expression with resultType string).
+        /// Serialized Name: SapTableLinkedService.typeProperties.sncQop
+        /// </param>
+        /// <param name="logonGroup">
+        /// The Logon Group for the SAP System. Type: string (or Expression with resultType string).
+        /// Serialized Name: SapTableLinkedService.typeProperties.logonGroup
+        /// </param>
+        /// <param name="encryptedCredential">
+        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
+        /// Serialized Name: SapTableLinkedService.typeProperties.encryptedCredential
+        /// </param>
         internal SapTableLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData server, BinaryData systemNumber, BinaryData clientId, BinaryData language, BinaryData systemId, BinaryData userName, SecretBase password, BinaryData messageServer, BinaryData messageServerService, BinaryData sncMode, BinaryData sncMyName, BinaryData sncPartnerName, BinaryData sncLibraryPath, BinaryData sncQop, BinaryData logonGroup, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             Server = server;
@@ -67,41 +131,87 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "SapTable";
         }
 
-        /// <summary> Host name of the SAP instance where the table is located. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Host name of the SAP instance where the table is located. Type: string (or Expression with resultType string).
+        /// Serialized Name: SapTableLinkedService.typeProperties.server
+        /// </summary>
         public BinaryData Server { get; set; }
-        /// <summary> System number of the SAP system where the table is located. (Usually a two-digit decimal number represented as a string.) Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// System number of the SAP system where the table is located. (Usually a two-digit decimal number represented as a string.) Type: string (or Expression with resultType string).
+        /// Serialized Name: SapTableLinkedService.typeProperties.systemNumber
+        /// </summary>
         public BinaryData SystemNumber { get; set; }
-        /// <summary> Client ID of the client on the SAP system where the table is located. (Usually a three-digit decimal number represented as a string) Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Client ID of the client on the SAP system where the table is located. (Usually a three-digit decimal number represented as a string) Type: string (or Expression with resultType string).
+        /// Serialized Name: SapTableLinkedService.typeProperties.clientId
+        /// </summary>
         public BinaryData ClientId { get; set; }
-        /// <summary> Language of the SAP system where the table is located. The default value is EN. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Language of the SAP system where the table is located. The default value is EN. Type: string (or Expression with resultType string).
+        /// Serialized Name: SapTableLinkedService.typeProperties.language
+        /// </summary>
         public BinaryData Language { get; set; }
-        /// <summary> SystemID of the SAP system where the table is located. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// SystemID of the SAP system where the table is located. Type: string (or Expression with resultType string).
+        /// Serialized Name: SapTableLinkedService.typeProperties.systemId
+        /// </summary>
         public BinaryData SystemId { get; set; }
-        /// <summary> Username to access the SAP server where the table is located. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Username to access the SAP server where the table is located. Type: string (or Expression with resultType string).
+        /// Serialized Name: SapTableLinkedService.typeProperties.userName
+        /// </summary>
         public BinaryData UserName { get; set; }
         /// <summary>
         /// Password to access the SAP server where the table is located.
+        /// Serialized Name: SapTableLinkedService.typeProperties.password
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
         public SecretBase Password { get; set; }
-        /// <summary> The hostname of the SAP Message Server. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The hostname of the SAP Message Server. Type: string (or Expression with resultType string).
+        /// Serialized Name: SapTableLinkedService.typeProperties.messageServer
+        /// </summary>
         public BinaryData MessageServer { get; set; }
-        /// <summary> The service name or port number of the Message Server. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The service name or port number of the Message Server. Type: string (or Expression with resultType string).
+        /// Serialized Name: SapTableLinkedService.typeProperties.messageServerService
+        /// </summary>
         public BinaryData MessageServerService { get; set; }
-        /// <summary> SNC activation indicator to access the SAP server where the table is located. Must be either 0 (off) or 1 (on). Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// SNC activation indicator to access the SAP server where the table is located. Must be either 0 (off) or 1 (on). Type: string (or Expression with resultType string).
+        /// Serialized Name: SapTableLinkedService.typeProperties.sncMode
+        /// </summary>
         public BinaryData SncMode { get; set; }
-        /// <summary> Initiator&apos;s SNC name to access the SAP server where the table is located. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Initiator&apos;s SNC name to access the SAP server where the table is located. Type: string (or Expression with resultType string).
+        /// Serialized Name: SapTableLinkedService.typeProperties.sncMyName
+        /// </summary>
         public BinaryData SncMyName { get; set; }
-        /// <summary> Communication partner&apos;s SNC name to access the SAP server where the table is located. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Communication partner&apos;s SNC name to access the SAP server where the table is located. Type: string (or Expression with resultType string).
+        /// Serialized Name: SapTableLinkedService.typeProperties.sncPartnerName
+        /// </summary>
         public BinaryData SncPartnerName { get; set; }
-        /// <summary> External security product&apos;s library to access the SAP server where the table is located. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// External security product&apos;s library to access the SAP server where the table is located. Type: string (or Expression with resultType string).
+        /// Serialized Name: SapTableLinkedService.typeProperties.sncLibraryPath
+        /// </summary>
         public BinaryData SncLibraryPath { get; set; }
-        /// <summary> SNC Quality of Protection. Allowed value include: 1, 2, 3, 8, 9. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// SNC Quality of Protection. Allowed value include: 1, 2, 3, 8, 9. Type: string (or Expression with resultType string).
+        /// Serialized Name: SapTableLinkedService.typeProperties.sncQop
+        /// </summary>
         public BinaryData SncQop { get; set; }
-        /// <summary> The Logon Group for the SAP System. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The Logon Group for the SAP System. Type: string (or Expression with resultType string).
+        /// Serialized Name: SapTableLinkedService.typeProperties.logonGroup
+        /// </summary>
         public BinaryData LogonGroup { get; set; }
-        /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
+        /// Serialized Name: SapTableLinkedService.typeProperties.encryptedCredential
+        /// </summary>
         public BinaryData EncryptedCredential { get; set; }
     }
 }

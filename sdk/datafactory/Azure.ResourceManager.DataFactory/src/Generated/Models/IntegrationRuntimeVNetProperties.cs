@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> VNet properties for managed integration runtime. </summary>
+    /// <summary>
+    /// VNet properties for managed integration runtime.
+    /// Serialized Name: IntegrationRuntimeVNetProperties
+    /// </summary>
     public partial class IntegrationRuntimeVNetProperties
     {
         /// <summary> Initializes a new instance of IntegrationRuntimeVNetProperties. </summary>
@@ -22,10 +25,22 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of IntegrationRuntimeVNetProperties. </summary>
-        /// <param name="vNetId"> The ID of the VNet that this integration runtime will join. </param>
-        /// <param name="subnet"> The name of the subnet this integration runtime will join. </param>
-        /// <param name="publicIPs"> Resource IDs of the public IP addresses that this integration runtime will use. </param>
-        /// <param name="subnetId"> The ID of subnet, to which this Azure-SSIS integration runtime will be joined. </param>
+        /// <param name="vNetId">
+        /// The ID of the VNet that this integration runtime will join.
+        /// Serialized Name: IntegrationRuntimeVNetProperties.vNetId
+        /// </param>
+        /// <param name="subnet">
+        /// The name of the subnet this integration runtime will join.
+        /// Serialized Name: IntegrationRuntimeVNetProperties.subnet
+        /// </param>
+        /// <param name="publicIPs">
+        /// Resource IDs of the public IP addresses that this integration runtime will use.
+        /// Serialized Name: IntegrationRuntimeVNetProperties.publicIPs
+        /// </param>
+        /// <param name="subnetId">
+        /// The ID of subnet, to which this Azure-SSIS integration runtime will be joined.
+        /// Serialized Name: IntegrationRuntimeVNetProperties.subnetId
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal IntegrationRuntimeVNetProperties(string vNetId, string subnet, IList<string> publicIPs, string subnetId, IDictionary<string, BinaryData> additionalProperties)
         {
@@ -36,13 +51,25 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = additionalProperties;
         }
 
-        /// <summary> The ID of the VNet that this integration runtime will join. </summary>
+        /// <summary>
+        /// The ID of the VNet that this integration runtime will join.
+        /// Serialized Name: IntegrationRuntimeVNetProperties.vNetId
+        /// </summary>
         public string VNetId { get; set; }
-        /// <summary> The name of the subnet this integration runtime will join. </summary>
+        /// <summary>
+        /// The name of the subnet this integration runtime will join.
+        /// Serialized Name: IntegrationRuntimeVNetProperties.subnet
+        /// </summary>
         public string Subnet { get; set; }
-        /// <summary> Resource IDs of the public IP addresses that this integration runtime will use. </summary>
+        /// <summary>
+        /// Resource IDs of the public IP addresses that this integration runtime will use.
+        /// Serialized Name: IntegrationRuntimeVNetProperties.publicIPs
+        /// </summary>
         public IList<string> PublicIPs { get; }
-        /// <summary> The ID of subnet, to which this Azure-SSIS integration runtime will be joined. </summary>
+        /// <summary>
+        /// The ID of subnet, to which this Azure-SSIS integration runtime will be joined.
+        /// Serialized Name: IntegrationRuntimeVNetProperties.subnetId
+        /// </summary>
         public string SubnetId { get; set; }
         /// <summary> Additional Properties. </summary>
         public IDictionary<string, BinaryData> AdditionalProperties { get; }

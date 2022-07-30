@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The authentication method used to access the Spark server. </summary>
+    /// <summary>
+    /// The authentication method used to access the Spark server.
+    /// Serialized Name: SparkAuthenticationType
+    /// </summary>
     public readonly partial struct SparkAuthenticationType : IEquatable<SparkAuthenticationType>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string UsernameAndPasswordValue = "UsernameAndPassword";
         private const string WindowsAzureHDInsightServiceValue = "WindowsAzureHDInsightService";
 
-        /// <summary> Anonymous. </summary>
+        /// <summary>
+        /// Anonymous
+        /// Serialized Name: SparkAuthenticationType.Anonymous
+        /// </summary>
         public static SparkAuthenticationType Anonymous { get; } = new SparkAuthenticationType(AnonymousValue);
-        /// <summary> Username. </summary>
+        /// <summary>
+        /// Username
+        /// Serialized Name: SparkAuthenticationType.Username
+        /// </summary>
         public static SparkAuthenticationType Username { get; } = new SparkAuthenticationType(UsernameValue);
-        /// <summary> UsernameAndPassword. </summary>
+        /// <summary>
+        /// UsernameAndPassword
+        /// Serialized Name: SparkAuthenticationType.UsernameAndPassword
+        /// </summary>
         public static SparkAuthenticationType UsernameAndPassword { get; } = new SparkAuthenticationType(UsernameAndPasswordValue);
-        /// <summary> WindowsAzureHDInsightService. </summary>
+        /// <summary>
+        /// WindowsAzureHDInsightService
+        /// Serialized Name: SparkAuthenticationType.WindowsAzureHDInsightService
+        /// </summary>
         public static SparkAuthenticationType WindowsAzureHDInsightService { get; } = new SparkAuthenticationType(WindowsAzureHDInsightServiceValue);
         /// <summary> Determines if two <see cref="SparkAuthenticationType"/> values are the same. </summary>
         public static bool operator ==(SparkAuthenticationType left, SparkAuthenticationType right) => left.Equals(right);

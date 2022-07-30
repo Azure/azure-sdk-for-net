@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> A copy activity snowflake source. </summary>
+    /// <summary>
+    /// A copy activity snowflake source.
+    /// Serialized Name: SnowflakeSource
+    /// </summary>
     public partial class SnowflakeSource : CopySource
     {
         /// <summary> Initializes a new instance of SnowflakeSource. </summary>
@@ -20,14 +23,35 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of SnowflakeSource. </summary>
-        /// <param name="copySourceType"> Copy source type. </param>
-        /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
-        /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
-        /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
-        /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
+        /// <param name="copySourceType">
+        /// Copy source type.
+        /// Serialized Name: CopySource.type
+        /// </param>
+        /// <param name="sourceRetryCount">
+        /// Source retry count. Type: integer (or Expression with resultType integer).
+        /// Serialized Name: CopySource.sourceRetryCount
+        /// </param>
+        /// <param name="sourceRetryWait">
+        /// Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
+        /// Serialized Name: CopySource.sourceRetryWait
+        /// </param>
+        /// <param name="maxConcurrentConnections">
+        /// The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer).
+        /// Serialized Name: CopySource.maxConcurrentConnections
+        /// </param>
+        /// <param name="disableMetricsCollection">
+        /// If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: CopySource.disableMetricsCollection
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="query"> Snowflake Sql query. Type: string (or Expression with resultType string). </param>
-        /// <param name="exportSettings"> Snowflake export settings. </param>
+        /// <param name="query">
+        /// Snowflake Sql query. Type: string (or Expression with resultType string).
+        /// Serialized Name: SnowflakeSource.query
+        /// </param>
+        /// <param name="exportSettings">
+        /// Snowflake export settings.
+        /// Serialized Name: SnowflakeSource.exportSettings
+        /// </param>
         internal SnowflakeSource(string copySourceType, BinaryData sourceRetryCount, BinaryData sourceRetryWait, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, BinaryData query, SnowflakeExportCopyCommand exportSettings) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             Query = query;
@@ -35,9 +59,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             CopySourceType = copySourceType ?? "SnowflakeSource";
         }
 
-        /// <summary> Snowflake Sql query. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Snowflake Sql query. Type: string (or Expression with resultType string).
+        /// Serialized Name: SnowflakeSource.query
+        /// </summary>
         public BinaryData Query { get; set; }
-        /// <summary> Snowflake export settings. </summary>
+        /// <summary>
+        /// Snowflake export settings.
+        /// Serialized Name: SnowflakeSource.exportSettings
+        /// </summary>
         public SnowflakeExportCopyCommand ExportSettings { get; set; }
     }
 }

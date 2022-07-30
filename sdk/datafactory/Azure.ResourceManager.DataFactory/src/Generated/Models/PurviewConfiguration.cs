@@ -9,7 +9,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Purview configuration. </summary>
+    /// <summary>
+    /// Purview configuration.
+    /// Serialized Name: PurviewConfiguration
+    /// </summary>
     internal partial class PurviewConfiguration
     {
         /// <summary> Initializes a new instance of PurviewConfiguration. </summary>
@@ -18,13 +21,19 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of PurviewConfiguration. </summary>
-        /// <param name="purviewResourceId"> Purview resource id. </param>
+        /// <param name="purviewResourceId">
+        /// Purview resource id.
+        /// Serialized Name: PurviewConfiguration.purviewResourceId
+        /// </param>
         internal PurviewConfiguration(ResourceIdentifier purviewResourceId)
         {
             PurviewResourceId = purviewResourceId;
         }
 
-        /// <summary> Purview resource id. </summary>
+        /// <summary>
+        /// Purview resource id.
+        /// Serialized Name: PurviewConfiguration.purviewResourceId
+        /// </summary>
         public ResourceIdentifier PurviewResourceId { get; set; }
     }
 }

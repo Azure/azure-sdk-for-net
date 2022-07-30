@@ -25,17 +25,29 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Core resource properties. </param>
-        /// <param name="eTag"> Etag identifies change in the resource. </param>
+        /// <param name="properties">
+        /// Core resource properties
+        /// Serialized Name: PrivateEndpointConnectionResource.properties
+        /// </param>
+        /// <param name="eTag">
+        /// Etag identifies change in the resource.
+        /// Serialized Name: SubResource.etag
+        /// </param>
         internal DataFactoryPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RemotePrivateEndpointConnection properties, ETag? eTag) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             ETag = eTag;
         }
 
-        /// <summary> Core resource properties. </summary>
+        /// <summary>
+        /// Core resource properties
+        /// Serialized Name: PrivateEndpointConnectionResource.properties
+        /// </summary>
         public RemotePrivateEndpointConnection Properties { get; set; }
-        /// <summary> Etag identifies change in the resource. </summary>
+        /// <summary>
+        /// Etag identifies change in the resource.
+        /// Serialized Name: SubResource.etag
+        /// </summary>
         public ETag? ETag { get; }
     }
 }

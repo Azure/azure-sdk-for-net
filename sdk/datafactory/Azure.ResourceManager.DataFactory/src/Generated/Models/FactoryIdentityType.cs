@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The identity type. </summary>
+    /// <summary>
+    /// The identity type.
+    /// Serialized Name: FactoryIdentityType
+    /// </summary>
     public readonly partial struct FactoryIdentityType : IEquatable<FactoryIdentityType>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string UserAssignedValue = "UserAssigned";
         private const string SystemAssignedUserAssignedValue = "SystemAssigned,UserAssigned";
 
-        /// <summary> SystemAssigned. </summary>
+        /// <summary>
+        /// SystemAssigned
+        /// Serialized Name: FactoryIdentityType.SystemAssigned
+        /// </summary>
         public static FactoryIdentityType SystemAssigned { get; } = new FactoryIdentityType(SystemAssignedValue);
-        /// <summary> UserAssigned. </summary>
+        /// <summary>
+        /// UserAssigned
+        /// Serialized Name: FactoryIdentityType.UserAssigned
+        /// </summary>
         public static FactoryIdentityType UserAssigned { get; } = new FactoryIdentityType(UserAssignedValue);
-        /// <summary> SystemAssigned,UserAssigned. </summary>
+        /// <summary>
+        /// SystemAssigned,UserAssigned
+        /// Serialized Name: FactoryIdentityType.SystemAssigned,UserAssigned
+        /// </summary>
         public static FactoryIdentityType SystemAssignedUserAssigned { get; } = new FactoryIdentityType(SystemAssignedUserAssignedValue);
         /// <summary> Determines if two <see cref="FactoryIdentityType"/> values are the same. </summary>
         public static bool operator ==(FactoryIdentityType left, FactoryIdentityType right) => left.Equals(right);

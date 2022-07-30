@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Get GitHub access token response definition. </summary>
+    /// <summary>
+    /// Get GitHub access token response definition.
+    /// Serialized Name: GitHubAccessTokenResponse
+    /// </summary>
     public partial class GitHubAccessTokenResult
     {
         /// <summary> Initializes a new instance of GitHubAccessTokenResult. </summary>
@@ -16,13 +19,19 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of GitHubAccessTokenResult. </summary>
-        /// <param name="gitHubAccessToken"> GitHub access token. </param>
+        /// <param name="gitHubAccessToken">
+        /// GitHub access token.
+        /// Serialized Name: GitHubAccessTokenResponse.gitHubAccessToken
+        /// </param>
         internal GitHubAccessTokenResult(string gitHubAccessToken)
         {
             GitHubAccessToken = gitHubAccessToken;
         }
 
-        /// <summary> GitHub access token. </summary>
+        /// <summary>
+        /// GitHub access token.
+        /// Serialized Name: GitHubAccessTokenResponse.gitHubAccessToken
+        /// </summary>
         public string GitHubAccessToken { get; }
     }
 }

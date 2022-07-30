@@ -10,11 +10,17 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Xml dataset. </summary>
+    /// <summary>
+    /// Xml dataset.
+    /// Serialized Name: XmlDataset
+    /// </summary>
     public partial class XmlDataset : Dataset
     {
         /// <summary> Initializes a new instance of XmlDataset. </summary>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
+        /// <param name="linkedServiceName">
+        /// Linked service reference.
+        /// Serialized Name: Dataset.linkedServiceName
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public XmlDataset(LinkedServiceReference linkedServiceName) : base(linkedServiceName)
         {
@@ -27,23 +33,57 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of XmlDataset. </summary>
-        /// <param name="datasetType"> Type of dataset. </param>
-        /// <param name="description"> Dataset description. </param>
-        /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
-        /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
-        /// <param name="parameters"> Parameters for dataset. </param>
-        /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
-        /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
+        /// <param name="datasetType">
+        /// Type of dataset.
+        /// Serialized Name: Dataset.type
+        /// </param>
+        /// <param name="description">
+        /// Dataset description.
+        /// Serialized Name: Dataset.description
+        /// </param>
+        /// <param name="structure">
+        /// Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement.
+        /// Serialized Name: Dataset.structure
+        /// </param>
+        /// <param name="schema">
+        /// Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement.
+        /// Serialized Name: Dataset.schema
+        /// </param>
+        /// <param name="linkedServiceName">
+        /// Linked service reference.
+        /// Serialized Name: Dataset.linkedServiceName
+        /// </param>
+        /// <param name="parameters">
+        /// Parameters for dataset.
+        /// Serialized Name: Dataset.parameters
+        /// </param>
+        /// <param name="annotations">
+        /// List of tags that can be used for describing the Dataset.
+        /// Serialized Name: Dataset.annotations
+        /// </param>
+        /// <param name="folder">
+        /// The folder that this Dataset is in. If not specified, Dataset will appear at the root level.
+        /// Serialized Name: Dataset.folder
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="location">
         /// The location of the json data storage.
+        /// Serialized Name: XmlDataset.typeProperties.location
         /// Please note <see cref="DatasetLocation"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AmazonS3CompatibleLocation"/>, <see cref="AmazonS3Location"/>, <see cref="AzureBlobFSLocation"/>, <see cref="AzureBlobStorageLocation"/>, <see cref="AzureDataLakeStoreLocation"/>, <see cref="AzureFileStorageLocation"/>, <see cref="FileServerLocation"/>, <see cref="FtpServerLocation"/>, <see cref="GoogleCloudStorageLocation"/>, <see cref="HdfsLocation"/>, <see cref="HttpServerLocation"/>, <see cref="OracleCloudStorageLocation"/> and <see cref="SftpLocation"/>.
         /// </param>
-        /// <param name="encodingName"> The code page name of the preferred encoding. If not specified, the default value is UTF-8, unless BOM denotes another Unicode encoding. Refer to the name column of the table in the following link to set supported values: https://msdn.microsoft.com/library/system.text.encoding.aspx. Type: string (or Expression with resultType string). </param>
-        /// <param name="nullValue"> The null value string. Type: string (or Expression with resultType string). </param>
-        /// <param name="compression"> The data compression method used for the json dataset. </param>
+        /// <param name="encodingName">
+        /// The code page name of the preferred encoding. If not specified, the default value is UTF-8, unless BOM denotes another Unicode encoding. Refer to the name column of the table in the following link to set supported values: https://msdn.microsoft.com/library/system.text.encoding.aspx. Type: string (or Expression with resultType string).
+        /// Serialized Name: XmlDataset.typeProperties.encodingName
+        /// </param>
+        /// <param name="nullValue">
+        /// The null value string. Type: string (or Expression with resultType string).
+        /// Serialized Name: XmlDataset.typeProperties.nullValue
+        /// </param>
+        /// <param name="compression">
+        /// The data compression method used for the json dataset.
+        /// Serialized Name: XmlDataset.typeProperties.compression
+        /// </param>
         internal XmlDataset(string datasetType, string description, BinaryData structure, BinaryData schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DatasetLocation location, BinaryData encodingName, BinaryData nullValue, DatasetCompression compression) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             Location = location;
@@ -55,15 +95,25 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary>
         /// The location of the json data storage.
+        /// Serialized Name: XmlDataset.typeProperties.location
         /// Please note <see cref="DatasetLocation"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AmazonS3CompatibleLocation"/>, <see cref="AmazonS3Location"/>, <see cref="AzureBlobFSLocation"/>, <see cref="AzureBlobStorageLocation"/>, <see cref="AzureDataLakeStoreLocation"/>, <see cref="AzureFileStorageLocation"/>, <see cref="FileServerLocation"/>, <see cref="FtpServerLocation"/>, <see cref="GoogleCloudStorageLocation"/>, <see cref="HdfsLocation"/>, <see cref="HttpServerLocation"/>, <see cref="OracleCloudStorageLocation"/> and <see cref="SftpLocation"/>.
         /// </summary>
         public DatasetLocation Location { get; set; }
-        /// <summary> The code page name of the preferred encoding. If not specified, the default value is UTF-8, unless BOM denotes another Unicode encoding. Refer to the name column of the table in the following link to set supported values: https://msdn.microsoft.com/library/system.text.encoding.aspx. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The code page name of the preferred encoding. If not specified, the default value is UTF-8, unless BOM denotes another Unicode encoding. Refer to the name column of the table in the following link to set supported values: https://msdn.microsoft.com/library/system.text.encoding.aspx. Type: string (or Expression with resultType string).
+        /// Serialized Name: XmlDataset.typeProperties.encodingName
+        /// </summary>
         public BinaryData EncodingName { get; set; }
-        /// <summary> The null value string. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The null value string. Type: string (or Expression with resultType string).
+        /// Serialized Name: XmlDataset.typeProperties.nullValue
+        /// </summary>
         public BinaryData NullValue { get; set; }
-        /// <summary> The data compression method used for the json dataset. </summary>
+        /// <summary>
+        /// The data compression method used for the json dataset.
+        /// Serialized Name: XmlDataset.typeProperties.compression
+        /// </summary>
         public DatasetCompression Compression { get; set; }
     }
 }

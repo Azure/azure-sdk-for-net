@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The azure blob storage linked service. </summary>
+    /// <summary>
+    /// The azure blob storage linked service.
+    /// Serialized Name: AzureBlobStorageLinkedService
+    /// </summary>
     public partial class AzureBlobStorageLinkedService : LinkedService
     {
         /// <summary> Initializes a new instance of AzureBlobStorageLinkedService. </summary>
@@ -20,28 +23,77 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of AzureBlobStorageLinkedService. </summary>
-        /// <param name="linkedServiceType"> Type of linked service. </param>
-        /// <param name="connectVia"> The integration runtime reference. </param>
-        /// <param name="description"> Linked service description. </param>
-        /// <param name="parameters"> Parameters for linked service. </param>
-        /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
+        /// <param name="linkedServiceType">
+        /// Type of linked service.
+        /// Serialized Name: LinkedService.type
+        /// </param>
+        /// <param name="connectVia">
+        /// The integration runtime reference.
+        /// Serialized Name: LinkedService.connectVia
+        /// </param>
+        /// <param name="description">
+        /// Linked service description.
+        /// Serialized Name: LinkedService.description
+        /// </param>
+        /// <param name="parameters">
+        /// Parameters for linked service.
+        /// Serialized Name: LinkedService.parameters
+        /// </param>
+        /// <param name="annotations">
+        /// List of tags that can be used for describing the linked service.
+        /// Serialized Name: LinkedService.annotations
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="connectionString"> The connection string. It is mutually exclusive with sasUri, serviceEndpoint property. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
-        /// <param name="accountKey"> The Azure key vault secret reference of accountKey in connection string. </param>
-        /// <param name="sasUri"> SAS URI of the Azure Blob Storage resource. It is mutually exclusive with connectionString, serviceEndpoint property. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
-        /// <param name="sasToken"> The Azure key vault secret reference of sasToken in sas uri. </param>
-        /// <param name="serviceEndpoint"> Blob service endpoint of the Azure Blob Storage resource. It is mutually exclusive with connectionString, sasUri property. </param>
-        /// <param name="servicePrincipalId"> The ID of the service principal used to authenticate against Azure SQL Data Warehouse. Type: string (or Expression with resultType string). </param>
+        /// <param name="connectionString">
+        /// The connection string. It is mutually exclusive with sasUri, serviceEndpoint property. Type: string, SecureString or AzureKeyVaultSecretReference.
+        /// Serialized Name: AzureBlobStorageLinkedService.typeProperties.connectionString
+        /// </param>
+        /// <param name="accountKey">
+        /// The Azure key vault secret reference of accountKey in connection string.
+        /// Serialized Name: AzureBlobStorageLinkedService.typeProperties.accountKey
+        /// </param>
+        /// <param name="sasUri">
+        /// SAS URI of the Azure Blob Storage resource. It is mutually exclusive with connectionString, serviceEndpoint property. Type: string, SecureString or AzureKeyVaultSecretReference.
+        /// Serialized Name: AzureBlobStorageLinkedService.typeProperties.sasUri
+        /// </param>
+        /// <param name="sasToken">
+        /// The Azure key vault secret reference of sasToken in sas uri.
+        /// Serialized Name: AzureBlobStorageLinkedService.typeProperties.sasToken
+        /// </param>
+        /// <param name="serviceEndpoint">
+        /// Blob service endpoint of the Azure Blob Storage resource. It is mutually exclusive with connectionString, sasUri property.
+        /// Serialized Name: AzureBlobStorageLinkedService.typeProperties.serviceEndpoint
+        /// </param>
+        /// <param name="servicePrincipalId">
+        /// The ID of the service principal used to authenticate against Azure SQL Data Warehouse. Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureBlobStorageLinkedService.typeProperties.servicePrincipalId
+        /// </param>
         /// <param name="servicePrincipalKey">
         /// The key of the service principal used to authenticate against Azure SQL Data Warehouse.
+        /// Serialized Name: AzureBlobStorageLinkedService.typeProperties.servicePrincipalKey
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
-        /// <param name="tenant"> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </param>
-        /// <param name="azureCloudType"> Indicates the azure cloud type of the service principle auth. Allowed values are AzurePublic, AzureChina, AzureUsGovernment, AzureGermany. Default value is the data factory regions’ cloud type. Type: string (or Expression with resultType string). </param>
-        /// <param name="accountKind"> Specify the kind of your storage account. Allowed values are: Storage (general purpose v1), StorageV2 (general purpose v2), BlobStorage, or BlockBlobStorage. Type: string (or Expression with resultType string). </param>
-        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        /// <param name="credential"> The credential reference containing authentication information. </param>
+        /// <param name="tenant">
+        /// The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureBlobStorageLinkedService.typeProperties.tenant
+        /// </param>
+        /// <param name="azureCloudType">
+        /// Indicates the azure cloud type of the service principle auth. Allowed values are AzurePublic, AzureChina, AzureUsGovernment, AzureGermany. Default value is the data factory regions’ cloud type. Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureBlobStorageLinkedService.typeProperties.azureCloudType
+        /// </param>
+        /// <param name="accountKind">
+        /// Specify the kind of your storage account. Allowed values are: Storage (general purpose v1), StorageV2 (general purpose v2), BlobStorage, or BlockBlobStorage. Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureBlobStorageLinkedService.typeProperties.accountKind
+        /// </param>
+        /// <param name="encryptedCredential">
+        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureBlobStorageLinkedService.typeProperties.encryptedCredential
+        /// </param>
+        /// <param name="credential">
+        /// The credential reference containing authentication information.
+        /// Serialized Name: AzureBlobStorageLinkedService.typeProperties.credential
+        /// </param>
         internal AzureBlobStorageLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData connectionString, AzureKeyVaultSecretReference accountKey, BinaryData sasUri, AzureKeyVaultSecretReference sasToken, string serviceEndpoint, BinaryData servicePrincipalId, SecretBase servicePrincipalKey, BinaryData tenant, BinaryData azureCloudType, string accountKind, string encryptedCredential, CredentialReference credential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             ConnectionString = connectionString;
@@ -59,33 +111,67 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "AzureBlobStorage";
         }
 
-        /// <summary> The connection string. It is mutually exclusive with sasUri, serviceEndpoint property. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
+        /// <summary>
+        /// The connection string. It is mutually exclusive with sasUri, serviceEndpoint property. Type: string, SecureString or AzureKeyVaultSecretReference.
+        /// Serialized Name: AzureBlobStorageLinkedService.typeProperties.connectionString
+        /// </summary>
         public BinaryData ConnectionString { get; set; }
-        /// <summary> The Azure key vault secret reference of accountKey in connection string. </summary>
+        /// <summary>
+        /// The Azure key vault secret reference of accountKey in connection string.
+        /// Serialized Name: AzureBlobStorageLinkedService.typeProperties.accountKey
+        /// </summary>
         public AzureKeyVaultSecretReference AccountKey { get; set; }
-        /// <summary> SAS URI of the Azure Blob Storage resource. It is mutually exclusive with connectionString, serviceEndpoint property. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
+        /// <summary>
+        /// SAS URI of the Azure Blob Storage resource. It is mutually exclusive with connectionString, serviceEndpoint property. Type: string, SecureString or AzureKeyVaultSecretReference.
+        /// Serialized Name: AzureBlobStorageLinkedService.typeProperties.sasUri
+        /// </summary>
         public BinaryData SasUri { get; set; }
-        /// <summary> The Azure key vault secret reference of sasToken in sas uri. </summary>
+        /// <summary>
+        /// The Azure key vault secret reference of sasToken in sas uri.
+        /// Serialized Name: AzureBlobStorageLinkedService.typeProperties.sasToken
+        /// </summary>
         public AzureKeyVaultSecretReference SasToken { get; set; }
-        /// <summary> Blob service endpoint of the Azure Blob Storage resource. It is mutually exclusive with connectionString, sasUri property. </summary>
+        /// <summary>
+        /// Blob service endpoint of the Azure Blob Storage resource. It is mutually exclusive with connectionString, sasUri property.
+        /// Serialized Name: AzureBlobStorageLinkedService.typeProperties.serviceEndpoint
+        /// </summary>
         public string ServiceEndpoint { get; set; }
-        /// <summary> The ID of the service principal used to authenticate against Azure SQL Data Warehouse. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The ID of the service principal used to authenticate against Azure SQL Data Warehouse. Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureBlobStorageLinkedService.typeProperties.servicePrincipalId
+        /// </summary>
         public BinaryData ServicePrincipalId { get; set; }
         /// <summary>
         /// The key of the service principal used to authenticate against Azure SQL Data Warehouse.
+        /// Serialized Name: AzureBlobStorageLinkedService.typeProperties.servicePrincipalKey
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
         public SecretBase ServicePrincipalKey { get; set; }
-        /// <summary> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureBlobStorageLinkedService.typeProperties.tenant
+        /// </summary>
         public BinaryData Tenant { get; set; }
-        /// <summary> Indicates the azure cloud type of the service principle auth. Allowed values are AzurePublic, AzureChina, AzureUsGovernment, AzureGermany. Default value is the data factory regions’ cloud type. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Indicates the azure cloud type of the service principle auth. Allowed values are AzurePublic, AzureChina, AzureUsGovernment, AzureGermany. Default value is the data factory regions’ cloud type. Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureBlobStorageLinkedService.typeProperties.azureCloudType
+        /// </summary>
         public BinaryData AzureCloudType { get; set; }
-        /// <summary> Specify the kind of your storage account. Allowed values are: Storage (general purpose v1), StorageV2 (general purpose v2), BlobStorage, or BlockBlobStorage. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Specify the kind of your storage account. Allowed values are: Storage (general purpose v1), StorageV2 (general purpose v2), BlobStorage, or BlockBlobStorage. Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureBlobStorageLinkedService.typeProperties.accountKind
+        /// </summary>
         public string AccountKind { get; set; }
-        /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureBlobStorageLinkedService.typeProperties.encryptedCredential
+        /// </summary>
         public string EncryptedCredential { get; set; }
-        /// <summary> The credential reference containing authentication information. </summary>
+        /// <summary>
+        /// The credential reference containing authentication information.
+        /// Serialized Name: AzureBlobStorageLinkedService.typeProperties.credential
+        /// </summary>
         public CredentialReference Credential { get; set; }
     }
 }

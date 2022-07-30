@@ -11,11 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Structure of command payload. </summary>
+    /// <summary>
+    /// Structure of command payload.
+    /// Serialized Name: DataFlowDebugCommandPayload
+    /// </summary>
     public partial class DataFlowDebugCommandPayload
     {
         /// <summary> Initializes a new instance of DataFlowDebugCommandPayload. </summary>
-        /// <param name="streamName"> The stream name which is used for preview. </param>
+        /// <param name="streamName">
+        /// The stream name which is used for preview.
+        /// Serialized Name: DataFlowDebugCommandPayload.streamName
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="streamName"/> is null. </exception>
         public DataFlowDebugCommandPayload(string streamName)
         {
@@ -28,13 +34,25 @@ namespace Azure.ResourceManager.DataFactory.Models
             Columns = new ChangeTrackingList<string>();
         }
 
-        /// <summary> The stream name which is used for preview. </summary>
+        /// <summary>
+        /// The stream name which is used for preview.
+        /// Serialized Name: DataFlowDebugCommandPayload.streamName
+        /// </summary>
         public string StreamName { get; }
-        /// <summary> Row limits for preview response. </summary>
+        /// <summary>
+        /// Row limits for preview response.
+        /// Serialized Name: DataFlowDebugCommandPayload.rowLimits
+        /// </summary>
         public int? RowLimits { get; set; }
-        /// <summary> Array of column names. </summary>
+        /// <summary>
+        /// Array of column names.
+        /// Serialized Name: DataFlowDebugCommandPayload.columns
+        /// </summary>
         public IList<string> Columns { get; }
-        /// <summary> The expression which is used for preview. </summary>
+        /// <summary>
+        /// The expression which is used for preview.
+        /// Serialized Name: DataFlowDebugCommandPayload.expression
+        /// </summary>
         public string Expression { get; set; }
     }
 }

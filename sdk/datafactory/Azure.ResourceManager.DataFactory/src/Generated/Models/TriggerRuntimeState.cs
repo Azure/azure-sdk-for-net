@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Enumerates possible state of Triggers. </summary>
+    /// <summary>
+    /// Enumerates possible state of Triggers.
+    /// Serialized Name: TriggerRuntimeState
+    /// </summary>
     public readonly partial struct TriggerRuntimeState : IEquatable<TriggerRuntimeState>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string StoppedValue = "Stopped";
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Started. </summary>
+        /// <summary>
+        /// Started
+        /// Serialized Name: TriggerRuntimeState.Started
+        /// </summary>
         public static TriggerRuntimeState Started { get; } = new TriggerRuntimeState(StartedValue);
-        /// <summary> Stopped. </summary>
+        /// <summary>
+        /// Stopped
+        /// Serialized Name: TriggerRuntimeState.Stopped
+        /// </summary>
         public static TriggerRuntimeState Stopped { get; } = new TriggerRuntimeState(StoppedValue);
-        /// <summary> Disabled. </summary>
+        /// <summary>
+        /// Disabled
+        /// Serialized Name: TriggerRuntimeState.Disabled
+        /// </summary>
         public static TriggerRuntimeState Disabled { get; } = new TriggerRuntimeState(DisabledValue);
         /// <summary> Determines if two <see cref="TriggerRuntimeState"/> values are the same. </summary>
         public static bool operator ==(TriggerRuntimeState left, TriggerRuntimeState right) => left.Equals(right);

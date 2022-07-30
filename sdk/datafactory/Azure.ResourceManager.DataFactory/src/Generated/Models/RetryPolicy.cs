@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Execution policy for an activity. </summary>
+    /// <summary>
+    /// Execution policy for an activity.
+    /// Serialized Name: RetryPolicy
+    /// </summary>
     public partial class RetryPolicy
     {
         /// <summary> Initializes a new instance of RetryPolicy. </summary>
@@ -18,17 +21,29 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of RetryPolicy. </summary>
-        /// <param name="count"> Maximum ordinary retry attempts. Default is 0. Type: integer (or Expression with resultType integer), minimum: 0. </param>
-        /// <param name="intervalInSeconds"> Interval between retries in seconds. Default is 30. </param>
+        /// <param name="count">
+        /// Maximum ordinary retry attempts. Default is 0. Type: integer (or Expression with resultType integer), minimum: 0.
+        /// Serialized Name: RetryPolicy.count
+        /// </param>
+        /// <param name="intervalInSeconds">
+        /// Interval between retries in seconds. Default is 30.
+        /// Serialized Name: RetryPolicy.intervalInSeconds
+        /// </param>
         internal RetryPolicy(BinaryData count, int? intervalInSeconds)
         {
             Count = count;
             IntervalInSeconds = intervalInSeconds;
         }
 
-        /// <summary> Maximum ordinary retry attempts. Default is 0. Type: integer (or Expression with resultType integer), minimum: 0. </summary>
+        /// <summary>
+        /// Maximum ordinary retry attempts. Default is 0. Type: integer (or Expression with resultType integer), minimum: 0.
+        /// Serialized Name: RetryPolicy.count
+        /// </summary>
         public BinaryData Count { get; set; }
-        /// <summary> Interval between retries in seconds. Default is 30. </summary>
+        /// <summary>
+        /// Interval between retries in seconds. Default is 30.
+        /// Serialized Name: RetryPolicy.intervalInSeconds
+        /// </summary>
         public int? IntervalInSeconds { get; set; }
     }
 }

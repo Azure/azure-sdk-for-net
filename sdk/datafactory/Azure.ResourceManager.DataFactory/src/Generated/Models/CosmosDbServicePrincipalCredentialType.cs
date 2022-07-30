@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The service principal credential type to use in Server-To-Server authentication. &apos;ServicePrincipalKey&apos; for key/secret, &apos;ServicePrincipalCert&apos; for certificate. Type: string (or Expression with resultType string). </summary>
+    /// <summary>
+    /// The service principal credential type to use in Server-To-Server authentication. &apos;ServicePrincipalKey&apos; for key/secret, &apos;ServicePrincipalCert&apos; for certificate. Type: string (or Expression with resultType string).
+    /// Serialized Name: CosmosDbServicePrincipalCredentialType
+    /// </summary>
     public readonly partial struct CosmosDbServicePrincipalCredentialType : IEquatable<CosmosDbServicePrincipalCredentialType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         private const string ServicePrincipalKeyValue = "ServicePrincipalKey";
         private const string ServicePrincipalCertValue = "ServicePrincipalCert";
 
-        /// <summary> ServicePrincipalKey. </summary>
+        /// <summary>
+        /// ServicePrincipalKey
+        /// Serialized Name: CosmosDbServicePrincipalCredentialType.ServicePrincipalKey
+        /// </summary>
         public static CosmosDbServicePrincipalCredentialType ServicePrincipalKey { get; } = new CosmosDbServicePrincipalCredentialType(ServicePrincipalKeyValue);
-        /// <summary> ServicePrincipalCert. </summary>
+        /// <summary>
+        /// ServicePrincipalCert
+        /// Serialized Name: CosmosDbServicePrincipalCredentialType.ServicePrincipalCert
+        /// </summary>
         public static CosmosDbServicePrincipalCredentialType ServicePrincipalCert { get; } = new CosmosDbServicePrincipalCredentialType(ServicePrincipalCertValue);
         /// <summary> Determines if two <see cref="CosmosDbServicePrincipalCredentialType"/> values are the same. </summary>
         public static bool operator ==(CosmosDbServicePrincipalCredentialType left, CosmosDbServicePrincipalCredentialType right) => left.Equals(right);

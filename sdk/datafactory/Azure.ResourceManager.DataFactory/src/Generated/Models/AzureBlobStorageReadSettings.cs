@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Azure blob read settings. </summary>
+    /// <summary>
+    /// Azure blob read settings.
+    /// Serialized Name: AzureBlobStorageReadSettings
+    /// </summary>
     public partial class AzureBlobStorageReadSettings : StoreReadSettings
     {
         /// <summary> Initializes a new instance of AzureBlobStorageReadSettings. </summary>
@@ -20,20 +23,59 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of AzureBlobStorageReadSettings. </summary>
-        /// <param name="storeReadSettingsType"> The read setting type. </param>
-        /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
-        /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
+        /// <param name="storeReadSettingsType">
+        /// The read setting type.
+        /// Serialized Name: StoreReadSettings.type
+        /// </param>
+        /// <param name="maxConcurrentConnections">
+        /// The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer).
+        /// Serialized Name: StoreReadSettings.maxConcurrentConnections
+        /// </param>
+        /// <param name="disableMetricsCollection">
+        /// If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: StoreReadSettings.disableMetricsCollection
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="recursive"> If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean). </param>
-        /// <param name="wildcardFolderPath"> Azure blob wildcardFolderPath. Type: string (or Expression with resultType string). </param>
-        /// <param name="wildcardFileName"> Azure blob wildcardFileName. Type: string (or Expression with resultType string). </param>
-        /// <param name="prefix"> The prefix filter for the Azure Blob name. Type: string (or Expression with resultType string). </param>
-        /// <param name="fileListPath"> Point to a text file that lists each file (relative path to the path configured in the dataset) that you want to copy. Type: string (or Expression with resultType string). </param>
-        /// <param name="enablePartitionDiscovery"> Indicates whether to enable partition discovery. </param>
-        /// <param name="partitionRootPath"> Specify the root path where partition discovery starts from. Type: string (or Expression with resultType string). </param>
-        /// <param name="deleteFilesAfterCompletion"> Indicates whether the source files need to be deleted after copy completion. Default is false. Type: boolean (or Expression with resultType boolean). </param>
-        /// <param name="modifiedDatetimeStart"> The start of file&apos;s modified datetime. Type: string (or Expression with resultType string). </param>
-        /// <param name="modifiedDatetimeEnd"> The end of file&apos;s modified datetime. Type: string (or Expression with resultType string). </param>
+        /// <param name="recursive">
+        /// If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: AzureBlobStorageReadSettings.recursive
+        /// </param>
+        /// <param name="wildcardFolderPath">
+        /// Azure blob wildcardFolderPath. Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureBlobStorageReadSettings.wildcardFolderPath
+        /// </param>
+        /// <param name="wildcardFileName">
+        /// Azure blob wildcardFileName. Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureBlobStorageReadSettings.wildcardFileName
+        /// </param>
+        /// <param name="prefix">
+        /// The prefix filter for the Azure Blob name. Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureBlobStorageReadSettings.prefix
+        /// </param>
+        /// <param name="fileListPath">
+        /// Point to a text file that lists each file (relative path to the path configured in the dataset) that you want to copy. Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureBlobStorageReadSettings.fileListPath
+        /// </param>
+        /// <param name="enablePartitionDiscovery">
+        /// Indicates whether to enable partition discovery.
+        /// Serialized Name: AzureBlobStorageReadSettings.enablePartitionDiscovery
+        /// </param>
+        /// <param name="partitionRootPath">
+        /// Specify the root path where partition discovery starts from. Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureBlobStorageReadSettings.partitionRootPath
+        /// </param>
+        /// <param name="deleteFilesAfterCompletion">
+        /// Indicates whether the source files need to be deleted after copy completion. Default is false. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: AzureBlobStorageReadSettings.deleteFilesAfterCompletion
+        /// </param>
+        /// <param name="modifiedDatetimeStart">
+        /// The start of file&apos;s modified datetime. Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureBlobStorageReadSettings.modifiedDatetimeStart
+        /// </param>
+        /// <param name="modifiedDatetimeEnd">
+        /// The end of file&apos;s modified datetime. Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureBlobStorageReadSettings.modifiedDatetimeEnd
+        /// </param>
         internal AzureBlobStorageReadSettings(string storeReadSettingsType, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, BinaryData recursive, BinaryData wildcardFolderPath, BinaryData wildcardFileName, BinaryData prefix, BinaryData fileListPath, bool? enablePartitionDiscovery, BinaryData partitionRootPath, BinaryData deleteFilesAfterCompletion, BinaryData modifiedDatetimeStart, BinaryData modifiedDatetimeEnd) : base(storeReadSettingsType, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             Recursive = recursive;
@@ -49,25 +91,55 @@ namespace Azure.ResourceManager.DataFactory.Models
             StoreReadSettingsType = storeReadSettingsType ?? "AzureBlobStorageReadSettings";
         }
 
-        /// <summary> If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean). </summary>
+        /// <summary>
+        /// If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: AzureBlobStorageReadSettings.recursive
+        /// </summary>
         public BinaryData Recursive { get; set; }
-        /// <summary> Azure blob wildcardFolderPath. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Azure blob wildcardFolderPath. Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureBlobStorageReadSettings.wildcardFolderPath
+        /// </summary>
         public BinaryData WildcardFolderPath { get; set; }
-        /// <summary> Azure blob wildcardFileName. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Azure blob wildcardFileName. Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureBlobStorageReadSettings.wildcardFileName
+        /// </summary>
         public BinaryData WildcardFileName { get; set; }
-        /// <summary> The prefix filter for the Azure Blob name. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The prefix filter for the Azure Blob name. Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureBlobStorageReadSettings.prefix
+        /// </summary>
         public BinaryData Prefix { get; set; }
-        /// <summary> Point to a text file that lists each file (relative path to the path configured in the dataset) that you want to copy. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Point to a text file that lists each file (relative path to the path configured in the dataset) that you want to copy. Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureBlobStorageReadSettings.fileListPath
+        /// </summary>
         public BinaryData FileListPath { get; set; }
-        /// <summary> Indicates whether to enable partition discovery. </summary>
+        /// <summary>
+        /// Indicates whether to enable partition discovery.
+        /// Serialized Name: AzureBlobStorageReadSettings.enablePartitionDiscovery
+        /// </summary>
         public bool? EnablePartitionDiscovery { get; set; }
-        /// <summary> Specify the root path where partition discovery starts from. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Specify the root path where partition discovery starts from. Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureBlobStorageReadSettings.partitionRootPath
+        /// </summary>
         public BinaryData PartitionRootPath { get; set; }
-        /// <summary> Indicates whether the source files need to be deleted after copy completion. Default is false. Type: boolean (or Expression with resultType boolean). </summary>
+        /// <summary>
+        /// Indicates whether the source files need to be deleted after copy completion. Default is false. Type: boolean (or Expression with resultType boolean).
+        /// Serialized Name: AzureBlobStorageReadSettings.deleteFilesAfterCompletion
+        /// </summary>
         public BinaryData DeleteFilesAfterCompletion { get; set; }
-        /// <summary> The start of file&apos;s modified datetime. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The start of file&apos;s modified datetime. Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureBlobStorageReadSettings.modifiedDatetimeStart
+        /// </summary>
         public BinaryData ModifiedDatetimeStart { get; set; }
-        /// <summary> The end of file&apos;s modified datetime. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The end of file&apos;s modified datetime. Type: string (or Expression with resultType string).
+        /// Serialized Name: AzureBlobStorageReadSettings.modifiedDatetimeEnd
+        /// </summary>
         public BinaryData ModifiedDatetimeEnd { get; set; }
     }
 }

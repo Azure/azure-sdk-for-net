@@ -11,11 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The compression method used on a dataset. </summary>
+    /// <summary>
+    /// The compression method used on a dataset.
+    /// Serialized Name: DatasetCompression
+    /// </summary>
     public partial class DatasetCompression
     {
         /// <summary> Initializes a new instance of DatasetCompression. </summary>
-        /// <param name="datasetCompressionType"> Type of dataset compression. Type: string (or Expression with resultType string). </param>
+        /// <param name="datasetCompressionType">
+        /// Type of dataset compression. Type: string (or Expression with resultType string).
+        /// Serialized Name: DatasetCompression.type
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="datasetCompressionType"/> is null. </exception>
         public DatasetCompression(BinaryData datasetCompressionType)
         {
@@ -29,8 +35,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of DatasetCompression. </summary>
-        /// <param name="datasetCompressionType"> Type of dataset compression. Type: string (or Expression with resultType string). </param>
-        /// <param name="level"> The dataset compression level. Type: string (or Expression with resultType string). </param>
+        /// <param name="datasetCompressionType">
+        /// Type of dataset compression. Type: string (or Expression with resultType string).
+        /// Serialized Name: DatasetCompression.type
+        /// </param>
+        /// <param name="level">
+        /// The dataset compression level. Type: string (or Expression with resultType string).
+        /// Serialized Name: DatasetCompression.level
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal DatasetCompression(BinaryData datasetCompressionType, BinaryData level, IDictionary<string, BinaryData> additionalProperties)
         {
@@ -39,9 +51,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = additionalProperties;
         }
 
-        /// <summary> Type of dataset compression. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Type of dataset compression. Type: string (or Expression with resultType string).
+        /// Serialized Name: DatasetCompression.type
+        /// </summary>
         public BinaryData DatasetCompressionType { get; set; }
-        /// <summary> The dataset compression level. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The dataset compression level. Type: string (or Expression with resultType string).
+        /// Serialized Name: DatasetCompression.level
+        /// </summary>
         public BinaryData Level { get; set; }
         /// <summary> Additional Properties. </summary>
         public IDictionary<string, BinaryData> AdditionalProperties { get; }

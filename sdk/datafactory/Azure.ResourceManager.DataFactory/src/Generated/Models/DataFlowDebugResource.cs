@@ -9,17 +9,21 @@ using System;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Data flow debug resource. </summary>
+    /// <summary>
+    /// Data flow debug resource.
+    /// Serialized Name: DataFlowDebugResource
+    /// </summary>
     public partial class DataFlowDebugResource : SubResourceDebugResource
     {
         /// <summary> Initializes a new instance of DataFlowDebugResource. </summary>
         /// <param name="properties">
         /// Data flow properties.
-        /// Please note <see cref="DataFlow"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Serialized Name: DataFlowDebugResource.properties
+        /// Please note <see cref="DataFlowDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Flowlet"/>, <see cref="MappingDataFlow"/> and <see cref="WranglingDataFlow"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public DataFlowDebugResource(DataFlow properties)
+        public DataFlowDebugResource(DataFlowDefinition properties)
         {
             if (properties == null)
             {
@@ -31,9 +35,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary>
         /// Data flow properties.
-        /// Please note <see cref="DataFlow"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Serialized Name: DataFlowDebugResource.properties
+        /// Please note <see cref="DataFlowDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Flowlet"/>, <see cref="MappingDataFlow"/> and <see cref="WranglingDataFlow"/>.
         /// </summary>
-        public DataFlow Properties { get; }
+        public DataFlowDefinition Properties { get; }
     }
 }

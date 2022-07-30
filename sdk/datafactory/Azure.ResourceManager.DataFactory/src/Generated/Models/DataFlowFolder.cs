@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The folder that this data flow is in. If not specified, Data flow will appear at the root level. </summary>
+    /// <summary>
+    /// The folder that this data flow is in. If not specified, Data flow will appear at the root level.
+    /// Serialized Name: DataFlowFolder
+    /// </summary>
     internal partial class DataFlowFolder
     {
         /// <summary> Initializes a new instance of DataFlowFolder. </summary>
@@ -16,13 +19,19 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of DataFlowFolder. </summary>
-        /// <param name="name"> The name of the folder that this data flow is in. </param>
+        /// <param name="name">
+        /// The name of the folder that this data flow is in.
+        /// Serialized Name: DataFlowFolder.name
+        /// </param>
         internal DataFlowFolder(string name)
         {
             Name = name;
         }
 
-        /// <summary> The name of the folder that this data flow is in. </summary>
+        /// <summary>
+        /// The name of the folder that this data flow is in.
+        /// Serialized Name: DataFlowFolder.name
+        /// </summary>
         public string Name { get; set; }
     }
 }
