@@ -1,0 +1,51 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <AssemblyTitle>Microsoft Azure.Storage.Blobs.DataMovement client library tests</AssemblyTitle>
+    <DefineConstants>BlobDataMovementSDK;$(DefineConstants)</DefineConstants>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\src\Azure.Storage.Blobs.DataMovement.csproj" />
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Blobs\src\Azure.Storage.Blobs.csproj" />
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.DataMovement\src\Azure.Storage.DataMovement.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)AppContextSwitchHelper.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)ContentTypeUtilities.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)NoBodyResponseOfT.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)HttpMessageSanitizer.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)DiagnosticScopeFactory.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="Shared\Core" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(AzureStorageSharedSources)Constants.cs" LinkBase="Shared\Storage" />
+    <Compile Include="$(AzureStorageSharedSources)Errors.cs" LinkBase="Shared\Storage" />
+    <Compile Include="$(AzureStorageSharedSources)Errors.Clients.cs" LinkBase="Shared\Storage" />
+    <Compile Include="$(AzureStorageSharedSources)SharedAccessSignatureCredentials.cs" LinkBase="Shared\Storage" />
+    <Compile Include="$(AzureStorageSharedSources)StorageConnectionString.cs" LinkBase="Shared\Storage" />
+    <Compile Include="$(AzureStorageSharedSources)StorageVersionExtensions.cs" LinkBase="Shared\Storage" />
+    <Compile Include="$(AzureStorageSharedSources)StorageExceptionExtensions.cs" LinkBase="SharedStorage" />
+    <Compile Include="$(AzureStorageSharedSources)UriQueryParamsCollection.cs" LinkBase="Shared\Storage" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(AzureStorageDataMovementTestSharedSources)DataMovementTestBase.cs" LinkBase="Shared\DataMovmement" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(AzureStorageSharedTestSources)\**\*.cs" LinkBase="Shared" />
+    <Compile Remove="$(AzureStorageSharedTestSources)\AzuriteFixture.cs" />
+    <Compile Remove="$(AzureStorageSharedTestSources)\AzuriteNUnitFixture.cs" />
+    <Compile Remove="$(AzureStorageSharedTestSources)\ClientSideEncryptionTestExtensions.cs" />
+    <None Include="$(AzureStorageSharedTestSources)\*.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="$(AzureStorageSharedTestSources)\azurite_cert.pem" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+    <ItemGroup> 
+    <Content Include="Resources\**"> 
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory> 
+    </Content> 
+  </ItemGroup>
+</Project>

@@ -98,7 +98,7 @@
     <MicrosoftAzureWebJobsExtensionsClientsSources>$(MSBuildThisFileDirectory)..\extensions\Microsoft.Azure.WebJobs.Extensions.Clients\src\Shared\</MicrosoftAzureWebJobsExtensionsClientsSources>
     <AzureStorageBlobsSharedSources>$(MSBuildThisFileDirectory)\Azure.Storage.Blobs\src\Shared\</AzureStorageBlobsSharedSources>
     <AzureStorageBlobsSharedTestSources>$(MSBuildThisFileDirectory)\Azure.Storage.Blobs\tests\Shared\</AzureStorageBlobsSharedTestSources>
-    <AzureStorageExperimentalSharedSources>$(MSBuildThisFileDirectory)\Azure.Storage.Experimental\src\Shared\</AzureStorageExperimentalSharedSources>
-    <AzureStorageExperimentalTestSharedSources>$(MSBuildThisFileDirectory)\Azure.Storage.Experimental\tests\Shared\</AzureStorageExperimentalTestSharedSources>
+    <AzureStorageDataMovementSharedSources>$(MSBuildThisFileDirectory)\Azure.Storage.DataMovement\src\Shared\</AzureStorageDataMovementSharedSources>
+    <AzureStorageDataMovementTestSharedSources>$(MSBuildThisFileDirectory)\Azure.Storage.DataMovement\tests\Shared\</AzureStorageDataMovementTestSharedSources>
   </PropertyGroup>
 </Project>

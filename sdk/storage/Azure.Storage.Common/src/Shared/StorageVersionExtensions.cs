@@ -16,7 +16,7 @@ using ServiceVersion =
     Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion;
 #elif ChangeFeedSDK
     Azure.Storage.Blobs.BlobClientOptions.ServiceVersion;
-#elif BlobExperimentalSDK
+#elif BlobDataMovementSDK
     Azure.Storage.Blobs.BlobClientOptions.ServiceVersion;
 #else
     // If you see this error, you've included this shared source file from a
@@ -37,7 +37,7 @@ namespace Azure.Storage
         /// Gets the latest version of the service supported by this SDK.
         /// </summary>
         public const ServiceVersion LatestVersion =
-#if BlobSDK || QueueSDK || FileSDK || DataLakeSDK || ChangeFeedSDK || BlobExperimentalSDK
+#if BlobSDK || QueueSDK || FileSDK || DataLakeSDK || ChangeFeedSDK || BlobDataMovementSDK
             ServiceVersion.V2021_08_06;
 #else
             ERROR_STORAGE_SERVICE_NOT_DEFINED;
@@ -47,7 +47,7 @@ namespace Azure.Storage
         /// Gets the latest version of the service supported by this SDK.
         /// </summary>
         internal const ServiceVersion MaxVersion =
-#if BlobSDK || QueueSDK || FileSDK || DataLakeSDK || ChangeFeedSDK || BlobExperimentalSDK
+#if BlobSDK || QueueSDK || FileSDK || DataLakeSDK || ChangeFeedSDK || BlobDataMovementSDK
             ServiceVersion.V2021_08_06;
 #else
             ERROR_STORAGE_SERVICE_NOT_DEFINED;
