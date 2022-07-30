@@ -1,10 +1,10 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>This library simplifies uploading resource files for use by tasks in the Microsoft Azure Batch service.
       Visit our home page for more detail - http://azure.microsoft.com/services/batch/.
       For technical overview, see http://azure.microsoft.com/documentation/articles/batch-technical-overview/.
       API reference can be found at http://go.microsoft.com/fwlink/?LinkId=717949.</Description>
-    <Version>8.4.0-preview.1</Version>
+    <Version>9.0.0</Version>
     <DefineConstants>$(DefineConstants);CODESIGN</DefineConstants>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <AssemblyTitle>Microsoft.Azure.Batch.FileStaging</AssemblyTitle>
@@ -22,25 +22,6 @@
   <ItemGroup>
     <PackageReference Include="System.Text.Encodings.Web" VersionOverride="4.7.2" />
     <PackageReference Include="Microsoft.Azure.Batch" />
+    <PackageReference Include="Azure.Storage.Blobs" VersionOverride="12.12.0" />
   </ItemGroup>
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
-    <Reference Include="System.Web" />
-    <Reference Include="System" />
-    <Reference Include="Microsoft.CSharp" />
-  </ItemGroup>
-  <ItemGroup Condition="'$(TargetFramework)' == 'net461'">
-    <PackageReference Include="Azure.Storage.Blobs" VersionOverride="12.12.0">
-    </PackageReference>
-  </ItemGroup>
-  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
-    <PackageReference Include="Azure.Storage.Blobs" VersionOverride="12.12.0">
-    </PackageReference>
-  </ItemGroup>
-  <!--<ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.4' ">
-    <ProjectReference Include="..\..\..\DataPlane\Tools\ConfigureAwaitAnalyzer\ConfigureAwaitAnalyzer\ConfigureAwaitAnalyzer.csproj">
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-      <Private>False</Private>
-    </ProjectReference>
-    <Analyzer Include="..\..\..\DataPlane\Tools\ConfigureAwaitAnalyzer\ConfigureAwaitAnalyzer\bin\Debug\netstandard1.4\ConfigureAwaitAnalyzer.dll" />
-  </ItemGroup>-->
 </Project>
