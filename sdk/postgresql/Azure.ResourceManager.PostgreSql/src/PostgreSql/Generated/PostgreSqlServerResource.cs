@@ -625,7 +625,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// <param name="value"> The parameters for updating a list of server configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public virtual async Task<ArmOperation<PostgreSqlConfigurationListResult>> UpdateConfigurationsAsync(WaitUntil waitUntil, PostgreSqlConfigurationListResult value, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<PostgreSqlConfigurationList>> UpdateConfigurationsAsync(WaitUntil waitUntil, PostgreSqlConfigurationList value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -634,7 +634,7 @@ namespace Azure.ResourceManager.PostgreSql
             try
             {
                 var response = await _serverParametersRestClient.ListUpdateConfigurationsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, value, cancellationToken).ConfigureAwait(false);
-                var operation = new PostgreSqlArmOperation<PostgreSqlConfigurationListResult>(new PostgreSqlConfigurationListResultOperationSource(), _serverParametersClientDiagnostics, Pipeline, _serverParametersRestClient.CreateListUpdateConfigurationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, value).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new PostgreSqlArmOperation<PostgreSqlConfigurationList>(new PostgreSqlConfigurationListOperationSource(), _serverParametersClientDiagnostics, Pipeline, _serverParametersRestClient.CreateListUpdateConfigurationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, value).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -655,7 +655,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// <param name="value"> The parameters for updating a list of server configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public virtual ArmOperation<PostgreSqlConfigurationListResult> UpdateConfigurations(WaitUntil waitUntil, PostgreSqlConfigurationListResult value, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<PostgreSqlConfigurationList> UpdateConfigurations(WaitUntil waitUntil, PostgreSqlConfigurationList value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -664,7 +664,7 @@ namespace Azure.ResourceManager.PostgreSql
             try
             {
                 var response = _serverParametersRestClient.ListUpdateConfigurations(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, value, cancellationToken);
-                var operation = new PostgreSqlArmOperation<PostgreSqlConfigurationListResult>(new PostgreSqlConfigurationListResultOperationSource(), _serverParametersClientDiagnostics, Pipeline, _serverParametersRestClient.CreateListUpdateConfigurationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, value).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new PostgreSqlArmOperation<PostgreSqlConfigurationList>(new PostgreSqlConfigurationListOperationSource(), _serverParametersClientDiagnostics, Pipeline, _serverParametersRestClient.CreateListUpdateConfigurationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, value).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

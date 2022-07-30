@@ -497,8 +497,8 @@ namespace Azure.ResourceManager.MySql
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> StopAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MySql.MySqlServerResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.MySql.Models.MySqlServerPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MySql.MySqlServerResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MySql.Models.MySqlServerPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MySql.Models.MySqlConfigurationListResult> UpdateConfigurations(Azure.WaitUntil waitUntil, Azure.ResourceManager.MySql.Models.MySqlConfigurationListResult value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MySql.Models.MySqlConfigurationListResult>> UpdateConfigurationsAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MySql.Models.MySqlConfigurationListResult value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MySql.Models.MySqlConfigurationList> UpdateConfigurations(Azure.WaitUntil waitUntil, Azure.ResourceManager.MySql.Models.MySqlConfigurationList value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MySql.Models.MySqlConfigurationList>> UpdateConfigurationsAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MySql.Models.MySqlConfigurationList value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Upgrade(Azure.WaitUntil waitUntil, Azure.ResourceManager.MySql.Models.MySqlServerUpgradeContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> UpgradeAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MySql.Models.MySqlServerUpgradeContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -1314,9 +1314,9 @@ namespace Azure.ResourceManager.MySql.Models
         public static bool operator !=(Azure.ResourceManager.MySql.Models.MySqlAdministratorType left, Azure.ResourceManager.MySql.Models.MySqlAdministratorType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class MySqlConfigurationListResult
+    public partial class MySqlConfigurationList
     {
-        public MySqlConfigurationListResult() { }
+        public MySqlConfigurationList() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.MySql.MySqlConfigurationData> Value { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

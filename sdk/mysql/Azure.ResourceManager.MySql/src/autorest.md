@@ -76,7 +76,6 @@ prepend-rp-prefix:
   - AdministratorType
   - AdvisorResultList
   - ConfigurationListContent
-  - ConfigurationListResult
   - CreateMode
   - DatabaseListResult
   - FirewallRuleListResult
@@ -139,6 +138,7 @@ rename-mapping:
   PerformanceTierServiceLevelObjectives.minStorageMB: MinStorageInMB
   NameAvailability: MySqlNameAvailabilityResult
   PerformanceTierProperties: MySqlPerformanceTier
+  ConfigurationListResult: MySqlConfigurationList
 
 override-operation-name:
   ServerParameters_ListUpdateConfigurations: UpdateConfigurations

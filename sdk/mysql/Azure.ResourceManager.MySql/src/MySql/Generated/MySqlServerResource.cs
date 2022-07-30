@@ -781,7 +781,7 @@ namespace Azure.ResourceManager.MySql
         /// <param name="value"> The parameters for updating a list of server configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public virtual async Task<ArmOperation<MySqlConfigurationListResult>> UpdateConfigurationsAsync(WaitUntil waitUntil, MySqlConfigurationListResult value, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MySqlConfigurationList>> UpdateConfigurationsAsync(WaitUntil waitUntil, MySqlConfigurationList value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -790,7 +790,7 @@ namespace Azure.ResourceManager.MySql
             try
             {
                 var response = await _serverParametersRestClient.ListUpdateConfigurationsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, value, cancellationToken).ConfigureAwait(false);
-                var operation = new MySqlArmOperation<MySqlConfigurationListResult>(new MySqlConfigurationListResultOperationSource(), _serverParametersClientDiagnostics, Pipeline, _serverParametersRestClient.CreateListUpdateConfigurationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, value).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new MySqlArmOperation<MySqlConfigurationList>(new MySqlConfigurationListOperationSource(), _serverParametersClientDiagnostics, Pipeline, _serverParametersRestClient.CreateListUpdateConfigurationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, value).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -811,7 +811,7 @@ namespace Azure.ResourceManager.MySql
         /// <param name="value"> The parameters for updating a list of server configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public virtual ArmOperation<MySqlConfigurationListResult> UpdateConfigurations(WaitUntil waitUntil, MySqlConfigurationListResult value, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MySqlConfigurationList> UpdateConfigurations(WaitUntil waitUntil, MySqlConfigurationList value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -820,7 +820,7 @@ namespace Azure.ResourceManager.MySql
             try
             {
                 var response = _serverParametersRestClient.ListUpdateConfigurations(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, value, cancellationToken);
-                var operation = new MySqlArmOperation<MySqlConfigurationListResult>(new MySqlConfigurationListResultOperationSource(), _serverParametersClientDiagnostics, Pipeline, _serverParametersRestClient.CreateListUpdateConfigurationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, value).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new MySqlArmOperation<MySqlConfigurationList>(new MySqlConfigurationListOperationSource(), _serverParametersClientDiagnostics, Pipeline, _serverParametersRestClient.CreateListUpdateConfigurationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, value).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

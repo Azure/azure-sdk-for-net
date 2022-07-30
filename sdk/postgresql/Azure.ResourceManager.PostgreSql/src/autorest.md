@@ -69,7 +69,6 @@ prepend-rp-prefix:
   - VirtualNetworkRule
   - AdministratorType
   - ConfigurationListContent
-  - ConfigurationListResult
   - CreateMode
   - DatabaseListResult
   - FirewallRuleListResult
@@ -120,6 +119,7 @@ rename-mapping:
   PerformanceTierServiceLevelObjectives.maxStorageMB: MaxStorageInMB
   PerformanceTierServiceLevelObjectives.minStorageMB: MinStorageInMB
   NameAvailability: PostgreSqlNameAvailabilityResult
+  ConfigurationListResult: PostgreSqlConfigurationList
 override-operation-name:
   ServerParameters_ListUpdateConfigurations: UpdateConfigurations
   CheckNameAvailability_Execute: CheckPostgreSqlNameAvailability
