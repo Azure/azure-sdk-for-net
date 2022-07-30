@@ -12,11 +12,27 @@ using Azure.ResourceManager.MySql;
 
 namespace Azure.ResourceManager.MySql.Models
 {
-    public partial class MySqlConfigurationListResult
+    public partial class MySqlConfigurationList : IUtf8JsonSerializable
     {
-        internal static MySqlConfigurationListResult DeserializeMySqlConfigurationListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
-            Optional<IReadOnlyList<MySqlConfigurationData>> value = default;
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value");
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static MySqlConfigurationList DeserializeMySqlConfigurationList(JsonElement element)
+        {
+            Optional<IList<MySqlConfigurationData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -35,7 +51,7 @@ namespace Azure.ResourceManager.MySql.Models
                     continue;
                 }
             }
-            return new MySqlConfigurationListResult(Optional.ToList(value));
+            return new MySqlConfigurationList(Optional.ToList(value));
         }
     }
 }

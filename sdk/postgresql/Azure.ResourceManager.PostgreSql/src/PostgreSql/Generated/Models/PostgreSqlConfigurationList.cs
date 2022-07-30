@@ -12,12 +12,19 @@ using Azure.ResourceManager.PostgreSql;
 namespace Azure.ResourceManager.PostgreSql.Models
 {
     /// <summary> A list of server configurations. </summary>
-    public partial class PostgreSqlConfigurationListContent
+    public partial class PostgreSqlConfigurationList
     {
-        /// <summary> Initializes a new instance of PostgreSqlConfigurationListContent. </summary>
-        public PostgreSqlConfigurationListContent()
+        /// <summary> Initializes a new instance of PostgreSqlConfigurationList. </summary>
+        public PostgreSqlConfigurationList()
         {
             Value = new ChangeTrackingList<PostgreSqlConfigurationData>();
+        }
+
+        /// <summary> Initializes a new instance of PostgreSqlConfigurationList. </summary>
+        /// <param name="value"> The list of server configurations. </param>
+        internal PostgreSqlConfigurationList(IList<PostgreSqlConfigurationData> value)
+        {
+            Value = value;
         }
 
         /// <summary> The list of server configurations. </summary>

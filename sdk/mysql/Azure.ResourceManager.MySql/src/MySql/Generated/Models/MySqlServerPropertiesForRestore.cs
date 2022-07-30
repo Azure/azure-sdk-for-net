@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.MySql.Models
     {
         /// <summary> Initializes a new instance of MySqlServerPropertiesForRestore. </summary>
         /// <param name="sourceServerId"> The source server id to restore from. </param>
-        /// <param name="restorePointInOn"> Restore point creation time (ISO8601 format), specifying the time to restore from. </param>
+        /// <param name="restorePointInTime"> Restore point creation time (ISO8601 format), specifying the time to restore from. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceServerId"/> is null. </exception>
-        public MySqlServerPropertiesForRestore(ResourceIdentifier sourceServerId, DateTimeOffset restorePointInOn)
+        public MySqlServerPropertiesForRestore(ResourceIdentifier sourceServerId, DateTimeOffset restorePointInTime)
         {
             if (sourceServerId == null)
             {
@@ -25,13 +25,13 @@ namespace Azure.ResourceManager.MySql.Models
             }
 
             SourceServerId = sourceServerId;
-            RestorePointInOn = restorePointInOn;
+            RestorePointInTime = restorePointInTime;
             CreateMode = MySqlCreateMode.PointInTimeRestore;
         }
 
         /// <summary> The source server id to restore from. </summary>
         public ResourceIdentifier SourceServerId { get; }
         /// <summary> Restore point creation time (ISO8601 format), specifying the time to restore from. </summary>
-        public DateTimeOffset RestorePointInOn { get; }
+        public DateTimeOffset RestorePointInTime { get; }
     }
 }

@@ -70,8 +70,8 @@ namespace Azure.ResourceManager.DataFactory.Tests
                 AccessTier = StorageAccountAccessTier.Hot,
             };
             var storage = await resourceGroup.GetStorageAccounts().CreateOrUpdateAsync(WaitUntil.Completed, storageAccountName, data);
-            var keylist = await storage.Value.GetKeysAsync();
-            return keylist.Value.Keys.FirstOrDefault().Value;
+            var key = await storage.Value.GetKeysAsync().FirstOrDefaultAsync(_ => true);
+            return key.Value;
         }
     }
 }
