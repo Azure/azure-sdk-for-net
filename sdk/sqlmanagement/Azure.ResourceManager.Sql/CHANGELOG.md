@@ -1,17 +1,5 @@
 # Release History
 
-## 1.1.0-beta.2 (Unreleased)
-
-### Features Added
-
-Generated latest client based on API 2022-02-01-preview
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
