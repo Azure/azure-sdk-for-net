@@ -28,13 +28,27 @@ namespace Azure.ResourceManager.ApiManagement
             }
             if (Optional.IsDefined(AuthenticationSettings))
             {
-                writer.WritePropertyName("authenticationSettings");
-                writer.WriteObjectValue(AuthenticationSettings);
+                if (AuthenticationSettings != null)
+                {
+                    writer.WritePropertyName("authenticationSettings");
+                    writer.WriteObjectValue(AuthenticationSettings);
+                }
+                else
+                {
+                    writer.WriteNull("authenticationSettings");
+                }
             }
             if (Optional.IsDefined(SubscriptionKeyParameterNames))
             {
-                writer.WritePropertyName("subscriptionKeyParameterNames");
-                writer.WriteObjectValue(SubscriptionKeyParameterNames);
+                if (SubscriptionKeyParameterNames != null)
+                {
+                    writer.WritePropertyName("subscriptionKeyParameterNames");
+                    writer.WriteObjectValue(SubscriptionKeyParameterNames);
+                }
+                else
+                {
+                    writer.WriteNull("subscriptionKeyParameterNames");
+                }
             }
             if (Optional.IsDefined(ApiType))
             {
@@ -202,7 +216,7 @@ namespace Azure.ResourceManager.ApiManagement
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                authenticationSettings = null;
                                 continue;
                             }
                             authenticationSettings = AuthenticationSettingsContract.DeserializeAuthenticationSettingsContract(property0.Value);
@@ -212,7 +226,7 @@ namespace Azure.ResourceManager.ApiManagement
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                subscriptionKeyParameterNames = null;
                                 continue;
                             }
                             subscriptionKeyParameterNames = SubscriptionKeyParameterNamesContract.DeserializeSubscriptionKeyParameterNamesContract(property0.Value);

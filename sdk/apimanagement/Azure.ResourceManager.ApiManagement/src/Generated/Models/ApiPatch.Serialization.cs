@@ -24,13 +24,27 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             if (Optional.IsDefined(AuthenticationSettings))
             {
-                writer.WritePropertyName("authenticationSettings");
-                writer.WriteObjectValue(AuthenticationSettings);
+                if (AuthenticationSettings != null)
+                {
+                    writer.WritePropertyName("authenticationSettings");
+                    writer.WriteObjectValue(AuthenticationSettings);
+                }
+                else
+                {
+                    writer.WriteNull("authenticationSettings");
+                }
             }
             if (Optional.IsDefined(SubscriptionKeyParameterNames))
             {
-                writer.WritePropertyName("subscriptionKeyParameterNames");
-                writer.WriteObjectValue(SubscriptionKeyParameterNames);
+                if (SubscriptionKeyParameterNames != null)
+                {
+                    writer.WritePropertyName("subscriptionKeyParameterNames");
+                    writer.WriteObjectValue(SubscriptionKeyParameterNames);
+                }
+                else
+                {
+                    writer.WriteNull("subscriptionKeyParameterNames");
+                }
             }
             if (Optional.IsDefined(ApiType))
             {

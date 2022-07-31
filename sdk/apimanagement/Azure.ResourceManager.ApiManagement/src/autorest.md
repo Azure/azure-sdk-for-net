@@ -272,7 +272,11 @@ directive:
                   }
               }
           }
-        }
+        };
+      $.AuthenticationSettingsContract.properties.oAuth2["x-nullable"] = true;
+      $.AuthenticationSettingsContract.properties.openid["x-nullable"] = true;
+      $.ApiEntityBaseContract.properties.authenticationSettings["x-nullable"] = true;
+      $.ApiEntityBaseContract.properties.subscriptionKeyParameterNames["x-nullable"] = true;
   - from: apimdeployment.json
     where: $.definitions
     transform: >

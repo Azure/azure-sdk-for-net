@@ -17,13 +17,27 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(OAuth2))
             {
-                writer.WritePropertyName("oAuth2");
-                writer.WriteObjectValue(OAuth2);
+                if (OAuth2 != null)
+                {
+                    writer.WritePropertyName("oAuth2");
+                    writer.WriteObjectValue(OAuth2);
+                }
+                else
+                {
+                    writer.WriteNull("oAuth2");
+                }
             }
             if (Optional.IsDefined(OpenId))
             {
-                writer.WritePropertyName("openid");
-                writer.WriteObjectValue(OpenId);
+                if (OpenId != null)
+                {
+                    writer.WritePropertyName("openid");
+                    writer.WriteObjectValue(OpenId);
+                }
+                else
+                {
+                    writer.WriteNull("openid");
+                }
             }
             writer.WriteEndObject();
         }
@@ -38,7 +52,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        oAuth2 = null;
                         continue;
                     }
                     oAuth2 = OAuth2AuthenticationSettingsContract.DeserializeOAuth2AuthenticationSettingsContract(property.Value);
@@ -48,7 +62,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        openid = null;
                         continue;
                     }
                     openid = OpenIdAuthenticationSettingsContract.DeserializeOpenIdAuthenticationSettingsContract(property.Value);
