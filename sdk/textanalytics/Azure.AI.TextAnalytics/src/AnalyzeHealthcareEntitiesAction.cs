@@ -5,7 +5,7 @@ namespace Azure.AI.TextAnalytics
 {
     /// <summary>
     /// Configurations that allow callers to specify details about how to execute
-    /// a Recognize Entities action in a set of documents.
+    /// an Analyze Healthcare Entities action in a set of documents.
     /// For example, set model version and disable service logging.
     /// </summary>
     public class AnalyzeHealthcareEntitiesAction
