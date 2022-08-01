@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
 
         private async Task<DataFactoryDatasetResource> CreateDefaultDataset(string datasetName)
         {
-            LinkedServiceReference linkedServiceReference = new LinkedServiceReference(LinkedServiceReferenceType.LinkedServiceReference, _linkedServiceName);
+            FactoryLinkedServiceReference linkedServiceReference = new FactoryLinkedServiceReference(FactoryLinkedServiceReferenceType.LinkedServiceReference, _linkedServiceName);
             FactoryDatasetDefinition properties = new FactoryDatasetDefinition(linkedServiceReference);
             DataFactoryDatasetData data = new DataFactoryDatasetData(properties);
             var dataset = await _dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
