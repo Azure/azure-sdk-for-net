@@ -40,7 +40,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
         [Test]
         public async Task SendEmptyListShouldNotThrow()
         {
-            var mock = new Mock<ServiceBusSender>("fake", ServiceBusTestUtilities.CreateMockConnection().Object)
+            var mock = new Mock<ServiceBusSender>("fake", ServiceBusTestUtilities.CreateMockConnection().Object, new ServiceBusSenderOptions())
             {
                 CallBase = true
             };
@@ -51,7 +51,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
         [Test]
         public async Task SendSingleDelegatesToSendList()
         {
-           var mock = new Mock<ServiceBusSender>("fake", ServiceBusTestUtilities.CreateMockConnection().Object)
+           var mock = new Mock<ServiceBusSender>("fake", ServiceBusTestUtilities.CreateMockConnection().Object, new ServiceBusSenderOptions())
             {
                 CallBase = true
             };
@@ -99,7 +99,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
         [Test]
         public async Task ScheduleEmptyListShouldNotThrow()
         {
-            var mock = new Mock<ServiceBusSender>("fake", ServiceBusTestUtilities.CreateMockConnection().Object)
+            var mock = new Mock<ServiceBusSender>("fake", ServiceBusTestUtilities.CreateMockConnection().Object, new ServiceBusSenderOptions())
             {
                 CallBase = true
             };
