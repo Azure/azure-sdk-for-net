@@ -95,7 +95,7 @@ directive:
     transform: $["x-ms-client-name"] = "DnsPtrdName";
   - from: swagger-document
     where: $.definitions.RecordSetProperties.properties.TTL
-    transform: $["x-ms-client-name"] = "Ttl";
+    transform: $["x-ms-client-name"] = "TtlInSeconds";
   - from: swagger-document
     where: $.definitions.TxtRecord.properties.value
     transform: $["x-ms-client-name"] = "values";
