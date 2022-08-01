@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Dns
 
         /// <summary> Gets a collection of RecordSetAResources in the DnsZone. </summary>
         /// <returns> An object representing collection of RecordSetAResources and their operations over a RecordSetAResource. </returns>
-        public virtual RecordSetACollection GetRecordSetACollections()
+        public virtual RecordSetACollection GetRecordSetACollection()
         {
             return GetCachedClient(Client => new RecordSetACollection(Client, Id));
         }
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Dns
         [ForwardsClientCalls]
         public virtual async Task<Response<RecordSetAResource>> GetRecordSetAAsync(string relativeRecordSetName, CancellationToken cancellationToken = default)
         {
-            return await GetRecordSetACollections().GetAsync(relativeRecordSetName, cancellationToken).ConfigureAwait(false);
+            return await GetRecordSetACollection().GetAsync(relativeRecordSetName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Dns
         [ForwardsClientCalls]
         public virtual Response<RecordSetAResource> GetRecordSetA(string relativeRecordSetName, CancellationToken cancellationToken = default)
         {
-            return GetRecordSetACollections().Get(relativeRecordSetName, cancellationToken);
+            return GetRecordSetACollection().Get(relativeRecordSetName, cancellationToken);
         }
 
         /// <summary> Gets a collection of RecordSetAaaaResources in the DnsZone. </summary>
