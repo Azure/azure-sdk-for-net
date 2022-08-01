@@ -5,6 +5,7 @@ namespace Azure.Search.Documents.Tests.Samples
 {
     public partial class HelloWorld
     {
+#if !SNIPPET
         // Rather than store these in a file and fix EOL to be \n in the root .gitattributes (making this less portable)
         // define a string literal with \n for new lines to be used in the sample to normalize line endings across test platforms.
         private static readonly string CountriesSolrSynonymMap =
@@ -257,5 +258,6 @@ namespace Azure.Search.Documents.Tests.Samples
             "Yemen,YE,YEM\n" +
             "Zambia,ZM,ZMB\n" +
             "Zimbabwe,ZW,ZWE\n";
+#endif
     }
 }
