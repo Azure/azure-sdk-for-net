@@ -32,8 +32,8 @@ namespace Azure.Storage.Files.Shares.Tests
         protected override async Task<IDisposingContainer<ShareClient>> GetDisposingContainerAsync(
             ShareServiceClient service = null,
             string containerName = null,
-            UploadTransferValidationOptions uploadTransferValidationOptions = default,
-            DownloadTransferValidationOptions downloadTransferValidationOptions = default)
+            StorageChecksumAlgorithm uploadAlgorithm = StorageChecksumAlgorithm.None,
+            StorageChecksumAlgorithm downloadAlgorithm = StorageChecksumAlgorithm.None)
             => await ClientBuilder.GetTestShareAsync(service: service, shareName: containerName);
 
         protected override async Task<ShareFileClient> GetResourceClientAsync(
@@ -41,17 +41,17 @@ namespace Azure.Storage.Files.Shares.Tests
             int resourceLength = default,
             bool createResource = default,
             string resourceName = null,
-            UploadTransferValidationOptions uploadTransferValidationOptions = default,
-            DownloadTransferValidationOptions downloadTransferValidationOptions = default,
+            StorageChecksumAlgorithm uploadAlgorithm = StorageChecksumAlgorithm.None,
+            StorageChecksumAlgorithm downloadAlgorithm = StorageChecksumAlgorithm.None,
             ShareClientOptions options = null)
         {
             options ??= ClientBuilder.GetOptions();
 
-            AssertSupportsHashAlgorithm(uploadTransferValidationOptions?.Algorithm ?? default);
-            AssertSupportsHashAlgorithm(downloadTransferValidationOptions?.Algorithm ?? default);
+            AssertSupportsHashAlgorithm(uploadAlgorithm);
+            AssertSupportsHashAlgorithm(downloadAlgorithm);
 
-            options.UploadTransferValidationOptions = uploadTransferValidationOptions;
-            options.DownloadTransferValidationOptions = downloadTransferValidationOptions;
+            options.TransferValidation.Upload.ChecksumAlgorithm = uploadAlgorithm;
+            options.TransferValidation.Download.ChecksumAlgorithm = downloadAlgorithm;
 
             container = InstrumentClient(new ShareClient(container.Uri, Tenants.GetNewSharedKeyCredentials(), options));
             var file = InstrumentClient(container.GetRootDirectoryClient().GetFileClient(resourceName ?? GetNewResourceName()));
@@ -62,9 +62,9 @@ namespace Azure.Storage.Files.Shares.Tests
             return file;
         }
 
-        private void AssertSupportsHashAlgorithm(ValidationAlgorithm algorithm)
+        private void AssertSupportsHashAlgorithm(StorageChecksumAlgorithm algorithm)
         {
-            if (algorithm.ResolveAuto() == ValidationAlgorithm.StorageCrc64)
+            if (algorithm.ResolveAuto() == StorageChecksumAlgorithm.StorageCrc64)
             {
                 TestHelper.AssertInconclusiveRecordingFriendly(Recording.Mode, "Azure File Share does not support CRC64.");
             }
@@ -72,7 +72,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
         protected override async Task<Response> UploadPartitionAsync(ShareFileClient client, Stream source, UploadTransferValidationOptions hashingOptions)
         {
-            AssertSupportsHashAlgorithm(hashingOptions?.Algorithm ?? default);
+            AssertSupportsHashAlgorithm(hashingOptions?.ChecksumAlgorithm ?? default);
 
             return (await client.UploadRangeAsync(new HttpRange(0, source.Length), source, new ShareFileUploadRangeOptions
             {
@@ -82,7 +82,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
         protected override async Task<Response> DownloadPartitionAsync(ShareFileClient client, Stream destination, DownloadTransferValidationOptions hashingOptions, HttpRange range = default)
         {
-            AssertSupportsHashAlgorithm(hashingOptions?.Algorithm ?? default);
+            AssertSupportsHashAlgorithm(hashingOptions?.ChecksumAlgorithm ?? default);
 
             var response = await client.DownloadAsync(new ShareFileDownloadOptions
             {
@@ -95,7 +95,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
         protected override async Task ParallelUploadAsync(ShareFileClient client, Stream source, UploadTransferValidationOptions hashingOptions, StorageTransferOptions transferOptions)
         {
-            AssertSupportsHashAlgorithm(hashingOptions?.Algorithm ?? default);
+            AssertSupportsHashAlgorithm(hashingOptions?.ChecksumAlgorithm ?? default);
 
             await client.UploadAsync(source, new ShareFileUploadOptions
             {
@@ -106,7 +106,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
         protected override Task ParallelDownloadAsync(ShareFileClient client, Stream destination, DownloadTransferValidationOptions hashingOptions, StorageTransferOptions transferOptions)
         {
-            AssertSupportsHashAlgorithm(hashingOptions?.Algorithm ?? default);
+            AssertSupportsHashAlgorithm(hashingOptions?.ChecksumAlgorithm ?? default);
 
             /* Need to rerecord? Azure.Core framework won't record inconclusive tests.
              * Change this to pass for recording and revert when done. */
@@ -116,7 +116,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
         protected override async Task<Stream> OpenWriteAsync(ShareFileClient client, UploadTransferValidationOptions hashingOptions, int internalBufferSize)
         {
-            AssertSupportsHashAlgorithm(hashingOptions?.Algorithm ?? default);
+            AssertSupportsHashAlgorithm(hashingOptions?.ChecksumAlgorithm ?? default);
 
             return await client.OpenWriteAsync(false, 0, new ShareFileOpenWriteOptions
             {
@@ -127,7 +127,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
         protected override async Task<Stream> OpenReadAsync(ShareFileClient client, DownloadTransferValidationOptions hashingOptions, int internalBufferSize)
         {
-            AssertSupportsHashAlgorithm(hashingOptions?.Algorithm ?? default);
+            AssertSupportsHashAlgorithm(hashingOptions?.ChecksumAlgorithm ?? default);
 
             return await client.OpenReadAsync(new ShareFileOpenReadOptions(false)
             {
@@ -147,8 +147,8 @@ namespace Azure.Storage.Files.Shares.Tests
         public override void TestAutoResolve()
         {
             Assert.AreEqual(
-                ValidationAlgorithm.MD5,
-                TransferValidationOptionsExtensions.ResolveAuto(ValidationAlgorithm.Auto));
+                StorageChecksumAlgorithm.MD5,
+                TransferValidationOptionsExtensions.ResolveAuto(StorageChecksumAlgorithm.Auto));
         }
     }
 }
