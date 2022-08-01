@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The JSON schema. </summary>
@@ -18,7 +20,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> Initializes a new instance of LogicJsonSchema. </summary>
         /// <param name="title"> The JSON title. </param>
         /// <param name="content"> The JSON content. </param>
-        internal LogicJsonSchema(string title, string content)
+        internal LogicJsonSchema(string title, BinaryData content)
         {
             Title = title;
             Content = content;
@@ -27,6 +29,6 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> The JSON title. </summary>
         public string Title { get; }
         /// <summary> The JSON content. </summary>
-        public string Content { get; }
+        public BinaryData Content { get; }
     }
 }

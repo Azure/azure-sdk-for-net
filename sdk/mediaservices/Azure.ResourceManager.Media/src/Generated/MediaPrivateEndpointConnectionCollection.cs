@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Media
 {
     /// <summary>
     /// A class representing a collection of <see cref="MediaPrivateEndpointConnectionResource" /> and their operations.
-    /// Each <see cref="MediaPrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="MediaserviceResource" />.
-    /// To get a <see cref="MediaPrivateEndpointConnectionCollection" /> instance call the GetMediaPrivateEndpointConnections method from an instance of <see cref="MediaserviceResource" />.
+    /// Each <see cref="MediaPrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="MediaServiceResource" />.
+    /// To get a <see cref="MediaPrivateEndpointConnectionCollection" /> instance call the GetMediaPrivateEndpointConnections method from an instance of <see cref="MediaServiceResource" />.
     /// </summary>
     public partial class MediaPrivateEndpointConnectionCollection : ArmCollection, IEnumerable<MediaPrivateEndpointConnectionResource>, IAsyncEnumerable<MediaPrivateEndpointConnectionResource>
     {
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.Media
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != MediaserviceResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, MediaserviceResource.ResourceType), nameof(id));
+            if (id.ResourceType != MediaServiceResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, MediaServiceResource.ResourceType), nameof(id));
         }
 
         /// <summary>

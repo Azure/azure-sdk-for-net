@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="ipAddressType"> The ip address type that this capability describes. </param>
         /// <param name="gpu"> The GPU sku that this capability describes. </param>
         /// <param name="capabilities"> The supported capabilities. </param>
-        internal ContainerInstanceCapabilities(string resourceType, string osType, AzureLocation? location, string ipAddressType, string gpu, Capabilities capabilities)
+        internal ContainerInstanceCapabilities(string resourceType, string osType, AzureLocation? location, string ipAddressType, string gpu, ContainerInstanceSupportedCapabilities capabilities)
         {
             ResourceType = resourceType;
             OSType = osType;
@@ -45,6 +45,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> The GPU sku that this capability describes. </summary>
         public string Gpu { get; }
         /// <summary> The supported capabilities. </summary>
-        public Capabilities Capabilities { get; }
+        public ContainerInstanceSupportedCapabilities Capabilities { get; }
     }
 }

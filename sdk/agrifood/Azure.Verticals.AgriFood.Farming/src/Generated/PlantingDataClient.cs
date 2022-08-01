@@ -325,47 +325,47 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// var data = new {
         ///     avgPlantingRate = new {
-        ///         unit = "<MeasureUnit>",
-        ///         value = 1234,
+        ///         unit = "<unit>",
+        ///         value = 123.45d,
         ///     },
         ///     totalMaterial = new {
-        ///         unit = "<MeasureUnit>",
-        ///         value = 1234,
+        ///         unit = "<unit>",
+        ///         value = 123.45d,
         ///     },
         ///     avgMaterial = new {
-        ///         unit = "<MeasureUnit>",
-        ///         value = 1234,
+        ///         unit = "<unit>",
+        ///         value = 123.45d,
         ///     },
         ///     plantingProductDetails = new[] {
         ///         new {
-        ///             productName = "<PlantingProductDetailProductName>",
+        ///             productName = "<productName>",
         ///             area = new {
-        ///                 unit = "<MeasureUnit>",
-        ///                 value = 1234,
+        ///                 unit = "<unit>",
+        ///                 value = 123.45d,
         ///             },
         ///             totalMaterial = new {
-        ///                 unit = "<MeasureUnit>",
-        ///                 value = 1234,
+        ///                 unit = "<unit>",
+        ///                 value = 123.45d,
         ///             },
         ///             avgMaterial = new {
-        ///                 unit = "<MeasureUnit>",
-        ///                 value = 1234,
+        ///                 unit = "<unit>",
+        ///                 value = 123.45d,
         ///             },
         ///         }
         ///     },
         ///     area = new {
-        ///         unit = "<MeasureUnit>",
-        ///         value = 1234,
+        ///         unit = "<unit>",
+        ///         value = 123.45d,
         ///     },
-        ///     source = "<PlantingDataSource>",
-        ///     operationModifiedDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     operationStartDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     operationEndDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     associatedBoundaryId = "<PlantingDataAssociatedBoundaryId>",
-        ///     operationBoundaryId = "<PlantingDataOperationBoundaryId>",
-        ///     status = "<PlantingDataStatus>",
-        ///     name = "<PlantingDataName>",
-        ///     description = "<PlantingDataDescription>",
+        ///     source = "<source>",
+        ///     operationModifiedDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     operationStartDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     operationEndDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     associatedBoundaryId = "<associatedBoundaryId>",
+        ///     operationBoundaryId = "<operationBoundaryId>",
+        ///     status = "<status>",
+        ///     name = "<name>",
+        ///     description = "<description>",
         ///     properties = new {
         ///         key = new {},
         ///     },
@@ -545,47 +545,47 @@ namespace Azure.Verticals.AgriFood.Farming
         /// 
         /// var data = new {
         ///     avgPlantingRate = new {
-        ///         unit = "<MeasureUnit>",
-        ///         value = 1234,
+        ///         unit = "<unit>",
+        ///         value = 123.45d,
         ///     },
         ///     totalMaterial = new {
-        ///         unit = "<MeasureUnit>",
-        ///         value = 1234,
+        ///         unit = "<unit>",
+        ///         value = 123.45d,
         ///     },
         ///     avgMaterial = new {
-        ///         unit = "<MeasureUnit>",
-        ///         value = 1234,
+        ///         unit = "<unit>",
+        ///         value = 123.45d,
         ///     },
         ///     plantingProductDetails = new[] {
         ///         new {
-        ///             productName = "<PlantingProductDetailProductName>",
+        ///             productName = "<productName>",
         ///             area = new {
-        ///                 unit = "<MeasureUnit>",
-        ///                 value = 1234,
+        ///                 unit = "<unit>",
+        ///                 value = 123.45d,
         ///             },
         ///             totalMaterial = new {
-        ///                 unit = "<MeasureUnit>",
-        ///                 value = 1234,
+        ///                 unit = "<unit>",
+        ///                 value = 123.45d,
         ///             },
         ///             avgMaterial = new {
-        ///                 unit = "<MeasureUnit>",
-        ///                 value = 1234,
+        ///                 unit = "<unit>",
+        ///                 value = 123.45d,
         ///             },
         ///         }
         ///     },
         ///     area = new {
-        ///         unit = "<MeasureUnit>",
-        ///         value = 1234,
+        ///         unit = "<unit>",
+        ///         value = 123.45d,
         ///     },
-        ///     source = "<PlantingDataSource>",
-        ///     operationModifiedDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     operationStartDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     operationEndDateTime = "<2022-05-10T14:57:31.2311892-04:00>",
-        ///     associatedBoundaryId = "<PlantingDataAssociatedBoundaryId>",
-        ///     operationBoundaryId = "<PlantingDataOperationBoundaryId>",
-        ///     status = "<PlantingDataStatus>",
-        ///     name = "<PlantingDataName>",
-        ///     description = "<PlantingDataDescription>",
+        ///     source = "<source>",
+        ///     operationModifiedDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     operationStartDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     operationEndDateTime = "2022-05-10T18:57:31.2311892Z",
+        ///     associatedBoundaryId = "<associatedBoundaryId>",
+        ///     operationBoundaryId = "<operationBoundaryId>",
+        ///     status = "<status>",
+        ///     name = "<name>",
+        ///     description = "<description>",
         ///     properties = new {
         ///         key = new {},
         ///     },

@@ -103,9 +103,9 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>RoleDefinitionsListResponse</c>:
+        /// Schema for <c>SynapseRoleDefinition</c>:
         /// <code>{
-        ///   id: SynapseRoleDefinitionId, # Optional. Role Definition ID
+        ///   id: Guid, # Optional. Role Definition ID
         ///   name: string, # Optional. Name of the Synapse role
         ///   isBuiltIn: boolean, # Optional. Is a built-in role or not
         ///   description: string, # Optional. Description for the Synapse role
@@ -183,9 +183,9 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>RoleDefinitionsListResponse</c>:
+        /// Schema for <c>SynapseRoleDefinition</c>:
         /// <code>{
-        ///   id: SynapseRoleDefinitionId, # Optional. Role Definition ID
+        ///   id: Guid, # Optional. Role Definition ID
         ///   name: string, # Optional. Name of the Synapse role
         ///   isBuiltIn: boolean, # Optional. Is a built-in role or not
         ///   description: string, # Optional. Description for the Synapse role
@@ -255,7 +255,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// 
         /// Schema for <c>SynapseRoleDefinition</c>:
         /// <code>{
-        ///   id: SynapseRoleDefinitionId, # Optional. Role Definition ID
+        ///   id: Guid, # Optional. Role Definition ID
         ///   name: string, # Optional. Name of the Synapse role
         ///   isBuiltIn: boolean, # Optional. Is a built-in role or not
         ///   description: string, # Optional. Description for the Synapse role
@@ -327,7 +327,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// 
         /// Schema for <c>SynapseRoleDefinition</c>:
         /// <code>{
-        ///   id: SynapseRoleDefinitionId, # Optional. Role Definition ID
+        ///   id: Guid, # Optional. Role Definition ID
         ///   name: string, # Optional. Name of the Synapse role
         ///   isBuiltIn: boolean, # Optional. Is a built-in role or not
         ///   description: string, # Optional. Description for the Synapse role

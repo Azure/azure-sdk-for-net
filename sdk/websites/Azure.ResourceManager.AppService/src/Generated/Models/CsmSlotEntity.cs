@@ -14,9 +14,9 @@ namespace Azure.ResourceManager.AppService.Models
     {
         /// <summary> Initializes a new instance of CsmSlotEntity. </summary>
         /// <param name="targetSlot"> Destination deployment slot during swap operation. </param>
-        /// <param name="isPreserveVnet"> &lt;code&gt;true&lt;/code&gt; to preserve Virtual Network to the slot during swap; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="preserveVnet"> &lt;code&gt;true&lt;/code&gt; to preserve Virtual Network to the slot during swap; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetSlot"/> is null. </exception>
-        public CsmSlotEntity(string targetSlot, bool isPreserveVnet)
+        public CsmSlotEntity(string targetSlot, bool preserveVnet)
         {
             if (targetSlot == null)
             {
@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             TargetSlot = targetSlot;
-            IsPreserveVnet = isPreserveVnet;
+            PreserveVnet = preserveVnet;
         }
 
         /// <summary> Destination deployment slot during swap operation. </summary>
         public string TargetSlot { get; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; to preserve Virtual Network to the slot during swap; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
-        public bool IsPreserveVnet { get; }
+        public bool PreserveVnet { get; }
     }
 }

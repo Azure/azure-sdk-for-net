@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <summary> Initializes a new instance of ReservationsListResult. </summary>
         internal ReservationsListResult()
         {
-            Value = new ChangeTrackingList<ReservationResponseData>();
+            Value = new ChangeTrackingList<ReservationDetailData>();
         }
 
         /// <summary> Initializes a new instance of ReservationsListResult. </summary>
         /// <param name="value"> The list of reservations. </param>
         /// <param name="nextLink"> The link (url) to the next page of results. </param>
         /// <param name="summary"> The roll out count summary of the reservations. </param>
-        internal ReservationsListResult(IReadOnlyList<ReservationResponseData> value, string nextLink, ReservationSummary summary)
+        internal ReservationsListResult(IReadOnlyList<ReservationDetailData> value, string nextLink, ReservationSummary summary)
         {
             Value = value;
             NextLink = nextLink;
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Reservations.Models
         }
 
         /// <summary> The list of reservations. </summary>
-        public IReadOnlyList<ReservationResponseData> Value { get; }
+        public IReadOnlyList<ReservationDetailData> Value { get; }
         /// <summary> The link (url) to the next page of results. </summary>
         public string NextLink { get; }
         /// <summary> The roll out count summary of the reservations. </summary>

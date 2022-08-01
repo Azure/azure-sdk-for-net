@@ -11,12 +11,12 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public class SingleLabelClassifyActionResult : TextAnalyticsActionResult
     {
-        private readonly SingleLabelClassifyResultCollection _documentsResults;
+        private readonly ClassifyDocumentResultCollection _documentsResults;
 
         /// <summary>
         /// Successful action.
         /// </summary>
-        internal SingleLabelClassifyActionResult(SingleLabelClassifyResultCollection result, string actionName, DateTimeOffset completedOn)
+        internal SingleLabelClassifyActionResult(ClassifyDocumentResultCollection result, string actionName, DateTimeOffset completedOn)
             : base(actionName, completedOn)
         {
             _documentsResults = result;
@@ -31,7 +31,7 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Gets the result of the execution of a <see cref="SingleLabelClassifyAction"/> per each input document.
         /// </summary>
-        public SingleLabelClassifyResultCollection DocumentsResults
+        public ClassifyDocumentResultCollection DocumentsResults
         {
             get
             {

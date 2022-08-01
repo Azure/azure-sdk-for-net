@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary> The hardware profile. </summary>
+    /// <summary>
+    /// The hardware profile.
+    /// Serialized Name: HardwareProfile
+    /// </summary>
     internal partial class HardwareProfile
     {
         /// <summary> Initializes a new instance of HardwareProfile. </summary>
@@ -16,13 +19,19 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of HardwareProfile. </summary>
-        /// <param name="vmSize"> The size of the VM. </param>
+        /// <param name="vmSize">
+        /// The size of the VM
+        /// Serialized Name: HardwareProfile.vmSize
+        /// </param>
         internal HardwareProfile(string vmSize)
         {
             VmSize = vmSize;
         }
 
-        /// <summary> The size of the VM. </summary>
+        /// <summary>
+        /// The size of the VM
+        /// Serialized Name: HardwareProfile.vmSize
+        /// </summary>
         public string VmSize { get; set; }
     }
 }

@@ -11,27 +11,42 @@ using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary> Result of the request to list cluster Applications. It contains a list of operations and a URL link to get the next set of results. </summary>
+    /// <summary>
+    /// Result of the request to list cluster Applications. It contains a list of operations and a URL link to get the next set of results.
+    /// Serialized Name: ApplicationListResult
+    /// </summary>
     internal partial class ApplicationListResult
     {
         /// <summary> Initializes a new instance of ApplicationListResult. </summary>
         internal ApplicationListResult()
         {
-            Value = new ChangeTrackingList<ApplicationData>();
+            Value = new ChangeTrackingList<HDInsightApplicationData>();
         }
 
         /// <summary> Initializes a new instance of ApplicationListResult. </summary>
-        /// <param name="value"> The list of HDInsight applications installed on HDInsight cluster. </param>
-        /// <param name="nextLink"> The URL to get the next set of operation list results if there are any. </param>
-        internal ApplicationListResult(IReadOnlyList<ApplicationData> value, string nextLink)
+        /// <param name="value">
+        /// The list of HDInsight applications installed on HDInsight cluster.
+        /// Serialized Name: ApplicationListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The URL to get the next set of operation list results if there are any.
+        /// Serialized Name: ApplicationListResult.nextLink
+        /// </param>
+        internal ApplicationListResult(IReadOnlyList<HDInsightApplicationData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> The list of HDInsight applications installed on HDInsight cluster. </summary>
-        public IReadOnlyList<ApplicationData> Value { get; }
-        /// <summary> The URL to get the next set of operation list results if there are any. </summary>
+        /// <summary>
+        /// The list of HDInsight applications installed on HDInsight cluster.
+        /// Serialized Name: ApplicationListResult.value
+        /// </summary>
+        public IReadOnlyList<HDInsightApplicationData> Value { get; }
+        /// <summary>
+        /// The URL to get the next set of operation list results if there are any.
+        /// Serialized Name: ApplicationListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

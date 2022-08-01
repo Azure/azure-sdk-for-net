@@ -41,7 +41,8 @@ namespace Azure.Storage.Files.DataLake
                     Metadata = containerProperties.Metadata,
                     DeletedOn = containerProperties.DeletedOn,
                     RemainingRetentionDays = containerProperties.RemainingRetentionDays,
-                    DefaultEncryptionScope = containerProperties.DefaultEncryptionScope
+                    DefaultEncryptionScope = containerProperties.DefaultEncryptionScope,
+                    PreventEncryptionScopeOverride = containerProperties.PreventEncryptionScopeOverride
                 };
 
         internal static FileDownloadDetails ToFileDownloadDetails(this BlobDownloadDetails blobDownloadProperties) =>
@@ -904,6 +905,7 @@ namespace Azure.Storage.Files.DataLake
             return new BlobContainerEncryptionScopeOptions
             {
                 DefaultEncryptionScope = encryptionScopeOptions.DefaultEncryptionScope,
+                PreventEncryptionScopeOverride = encryptionScopeOptions.PreventEncryptionScopeOverride
             };
         }
 

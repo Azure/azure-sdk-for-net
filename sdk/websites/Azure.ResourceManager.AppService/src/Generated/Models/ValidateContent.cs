@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Name of the target SKU for the App Service plan. </summary>
         public string SkuName { get; set; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if App Service plan is for Linux workers; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
-        public bool? IsNeedLinuxWorkers { get; set; }
+        public bool? NeedLinuxWorkers { get; set; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if App Service plan is for Spot instances; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         public bool? IsSpot { get; set; }
         /// <summary> Target capacity of the App Service plan (number of VMs). </summary>

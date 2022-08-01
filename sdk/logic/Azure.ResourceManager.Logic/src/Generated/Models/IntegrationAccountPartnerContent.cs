@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> Initializes a new instance of IntegrationAccountPartnerContent. </summary>
-        /// <param name="b2B"> The B2B partner content. </param>
-        internal IntegrationAccountPartnerContent(B2BPartnerContent b2B)
+        /// <param name="b2b"> The B2B partner content. </param>
+        internal IntegrationAccountPartnerContent(B2BPartnerContent b2b)
         {
-            B2B = b2B;
+            B2B = b2b;
         }
 
         /// <summary> The B2B partner content. </summary>

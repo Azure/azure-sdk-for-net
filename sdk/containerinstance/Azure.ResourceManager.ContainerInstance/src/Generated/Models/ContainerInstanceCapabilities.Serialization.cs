@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             Optional<AzureLocation> location = default;
             Optional<string> ipAddressType = default;
             Optional<string> gpu = default;
-            Optional<Capabilities> capabilities = default;
+            Optional<ContainerInstanceSupportedCapabilities> capabilities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"))
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    capabilities = Capabilities.DeserializeCapabilities(property.Value);
+                    capabilities = ContainerInstanceSupportedCapabilities.DeserializeContainerInstanceSupportedCapabilities(property.Value);
                     continue;
                 }
             }

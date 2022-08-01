@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="sku"> The SKU of the container registry. </param>
         /// <param name="identity"> The identity of the container registry. </param>
         /// <param name="loginServer"> The URL that can be used to log into the container registry. </param>
-        /// <param name="creationOn"> The creation date of the container registry in ISO8601 format. </param>
+        /// <param name="createdOn"> The creation date of the container registry in ISO8601 format. </param>
         /// <param name="provisioningState"> The provisioning state of the container registry at the time the operation was called. </param>
         /// <param name="status"> The status of the container registry at the time the operation was called. </param>
         /// <param name="adminUserEnabled"> The value that indicates whether the admin user is enabled. </param>
@@ -55,12 +55,12 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for the container registry. </param>
         /// <param name="networkRuleBypassOptions"> Whether to allow trusted Azure services to access a network restricted registry. </param>
         /// <param name="zoneRedundancy"> Whether or not zone redundancy is enabled for this container registry. </param>
-        internal RegistryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ContainerRegistrySku sku, IdentityProperties identity, string loginServer, DateTimeOffset? creationOn, ProvisioningState? provisioningState, Status status, bool? adminUserEnabled, NetworkRuleSet networkRuleSet, Policies policies, EncryptionProperty encryption, bool? dataEndpointEnabled, IReadOnlyList<string> dataEndpointHostNames, IReadOnlyList<ContainerRegistryPrivateEndpointConnectionData> privateEndpointConnections, PublicNetworkAccess? publicNetworkAccess, NetworkRuleBypassOption? networkRuleBypassOptions, ZoneRedundancy? zoneRedundancy) : base(id, name, resourceType, systemData, tags, location)
+        internal RegistryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ContainerRegistrySku sku, IdentityProperties identity, string loginServer, DateTimeOffset? createdOn, ProvisioningState? provisioningState, Status status, bool? adminUserEnabled, NetworkRuleSet networkRuleSet, Policies policies, EncryptionProperty encryption, bool? dataEndpointEnabled, IReadOnlyList<string> dataEndpointHostNames, IReadOnlyList<ContainerRegistryPrivateEndpointConnectionData> privateEndpointConnections, PublicNetworkAccess? publicNetworkAccess, NetworkRuleBypassOption? networkRuleBypassOptions, ZoneRedundancy? zoneRedundancy) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Identity = identity;
             LoginServer = loginServer;
-            CreationOn = creationOn;
+            CreatedOn = createdOn;
             ProvisioningState = provisioningState;
             Status = status;
             AdminUserEnabled = adminUserEnabled;
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <summary> The URL that can be used to log into the container registry. </summary>
         public string LoginServer { get; }
         /// <summary> The creation date of the container registry in ISO8601 format. </summary>
-        public DateTimeOffset? CreationOn { get; }
+        public DateTimeOffset? CreatedOn { get; }
         /// <summary> The provisioning state of the container registry at the time the operation was called. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> The status of the container registry at the time the operation was called. </summary>

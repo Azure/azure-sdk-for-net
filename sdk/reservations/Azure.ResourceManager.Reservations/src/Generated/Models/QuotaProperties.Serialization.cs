@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Reservations.Models
             Optional<int> limit = default;
             Optional<int> currentValue = default;
             Optional<string> unit = default;
-            Optional<ResourceName> name = default;
+            Optional<ReservationResourceName> name = default;
             Optional<ResourceTypeName> resourceType = default;
             Optional<string> quotaPeriod = default;
             Optional<BinaryData> properties = default;
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    name = ResourceName.DeserializeResourceName(property.Value);
+                    name = ReservationResourceName.DeserializeReservationResourceName(property.Value);
                     continue;
                 }
                 if (property.NameEquals("resourceType"))

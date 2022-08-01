@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="error"> If the JobOutput is in the Error state, it contains the details of the error. </param>
         /// <param name="presetOverride">
         /// A preset used to override the preset in the corresponding transform output.
-        /// Please note <see cref="Preset"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="MediaPreset"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AudioAnalyzerPreset"/>, <see cref="BuiltInStandardEncoderPreset"/>, <see cref="FaceDetectorPreset"/>, <see cref="StandardEncoderPreset"/> and <see cref="VideoAnalyzerPreset"/>.
         /// </param>
         /// <param name="state"> Describes the state of the JobOutput. </param>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="startOn"> The UTC date and time at which this Job Output began processing. </param>
         /// <param name="endOn"> The UTC date and time at which this Job Output finished processing. </param>
         /// <param name="assetName"> The name of the output Asset. </param>
-        internal JobOutputAsset(string odataType, JobError error, Preset presetOverride, JobState? state, int? progress, string label, DateTimeOffset? startOn, DateTimeOffset? endOn, string assetName) : base(odataType, error, presetOverride, state, progress, label, startOn, endOn)
+        internal JobOutputAsset(string odataType, JobError error, MediaPreset presetOverride, JobState? state, int? progress, string label, DateTimeOffset? startOn, DateTimeOffset? endOn, string assetName) : base(odataType, error, presetOverride, state, progress, label, startOn, endOn)
         {
             AssetName = assetName;
             OdataType = odataType ?? "#Microsoft.Media.JobOutputAsset";

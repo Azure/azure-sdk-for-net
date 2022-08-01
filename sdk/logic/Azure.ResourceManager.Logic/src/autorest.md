@@ -62,6 +62,7 @@ rename-mapping:
   DayOfWeek: LogicWorkflowDayOfWeek
   EdifactAcknowledgementSettings.batchFunctionalAcknowledgements: BatchFunctionalAcknowledgement
   EdifactAcknowledgementSettings.batchTechnicalAcknowledgements: BatchTechnicalAcknowledgement
+  EncryptionAlgorithm: AS2EncryptionAlgorithm
   ErrorInfo: LogicErrorInfo
   ErrorResponse: LogicErrorResponse
   ErrorResponseCode: IntegrationServiceErrorCode
@@ -70,7 +71,8 @@ rename-mapping:
   Expression: LogicExpression
   ExpressionRoot: LogicExpressionRoot
   GetCallbackUrlParameters: ListOperationCallbackUrlParameterInfo
-  HashingAlgorithm: AS2MdnHashingAlgorithm
+  HashingAlgorithm: AS2HashingAlgorithm
+  IntegrationServiceEnvironmentManagedApi.properties.runtimeUrls: runtimeUris
   IpAddress: FlowEndpointIPAddress
   IpAddressRange: FlowAccessControlIPAddressRange
   JsonSchema: LogicJsonSchema
@@ -78,15 +80,18 @@ rename-mapping:
   KeyVaultReference: IntegrationAccountKeyVaultNameReference
   KeyVaultKeyCollection: IntegrationAccountKeyVaultKeyList
   KeyVaultKey: IntegrationAccountKeyVaultKey
+  KeyVaultKey.kid: KeyId
   KeyVaultKey.attributes.enabled: IsEnabled
-  KeyVaultKey.attributes.created: CreatedOn
-  KeyVaultKey.attributes.updated: Updated
+  KeyVaultKey.attributes.created: CreatedOnInTicks
+  KeyVaultKey.attributes.updated: UpdatedOnInTicks
   KeyVaultKeyReference: IntegrationAccountKeyVaultKeyReference
   KeyVaultKeyReference.keyVault.id: ResourceId
   KeyVaultKeyReference.keyVault.name: ResourceName
   ListKeyVaultKeysDefinition: IntegrationAccountListKeyVaultKeyContent
   MapType: IntegrationAccountMapType
   NetworkConfiguration: IntegrationServiceNetworkConfiguration
+  RunActionCorrelation: LogicWorkflowRunActionCorrelation
+  RunCorrelation: LogicWorkflowRunCorrelation
   ParameterType: LogicWorkflowParameterType
   PartnerContent: IntegrationAccountPartnerContent
   PartnerType: IntegrationAccountPartnerType
@@ -100,8 +105,24 @@ rename-mapping:
   Request: LogicWorkflowRequest
   Response: LogicWorkflowResponse
   RetryHistory: LogicWorkRetryHistory
-  RunActionCorrelation: LogicWorkflowRunActionCorrelation
-  RunCorrelation: LogicWorkflowRunCorrelation
+  ResourceReference: LogicResourceReference
+  RepetitionIndex: LogicWorkflowRepetitionIndex
+  SchemaType: IntegrationAccountSchemaType
+  SetTriggerStateActionDefinition: LogicWorkflowTriggerStateActionContent
+  Sku: LogicSku
+  SkuName: LogicSkuName
+  SigningAlgorithm: AS2SigningAlgorithm
+  StatusAnnotation: LogicApiOperationAnnotationStatus
+  SwaggerCustomDynamicTreeParameter: SwaggerCustomDynamicTreeParameterInfo
+  SwaggerSchema.required: requiredProperties
+  SwaggerSchema.ref: Reference
+  SwaggerSchema.readOnly: IsReadOnly
+  SwaggerSchema.notificationUrlExtension: IsNotificationUrlExtension
+  TrackingEventsDefinition: IntegrationAccountTrackingEventsContent
+  TrackingEvent: IntegrationAccountTrackingEvent
+  TrackingRecordType: IntegrationAccountTrackingRecordType
+  TrackEventsOperationOptions: IntegrationAccountTrackEventOperationOption
+  TrackingEventErrorInfo: IntegrationAccountTrackingEventErrorInfo
   Workflow: LogicWorkflow
   WorkflowListResult: LogicWorkflowListResult
   WorkflowRunAction: LogicWorkflowRunAction
@@ -131,19 +152,6 @@ rename-mapping:
   WorkflowRunActionListResult: LogicWorkflowRunActionListResult
   WsdlService: LogicWsdlService
   WsdlImportMethod: LogicWsdlImportMethod
-  Sku: LogicSku
-  SkuName: LogicSkuName
-  IntegrationServiceEnvironmentManagedApi.properties.runtimeUrls: runtimeUris
-  ResourceReference: LogicResourceReference
-  RepetitionIndex: LogicWorkflowRepetitionIndex
-  SetTriggerStateActionDefinition: LogicWorkflowTriggerStateActionContent
-  StatusAnnotation: LogicApiOperationAnnotationStatus
-  SwaggerCustomDynamicTreeParameter: SwaggerCustomDynamicTreeParameterInfo
-  TrackingEventsDefinition: IntegrationAccountTrackingEventsContent
-  TrackingEvent: IntegrationAccountTrackingEvent
-  TrackingRecordType: IntegrationAccountTrackingRecordType
-  TrackEventsOperationOptions: IntegrationAccountTrackEventOperationOption
-  TrackingEventErrorInfo: IntegrationAccountTrackingEventErrorInfo
   X12AcknowledgementSettings.batchTechnicalAcknowledgements: BatchTechnicalAcknowledgement
   X12AcknowledgementSettings.batchFunctionalAcknowledgements: BatchFunctionalAcknowledgement
   X12AcknowledgementSettings.batchImplementationAcknowledgements: BatchImplementationAcknowledgement
@@ -155,6 +163,9 @@ format-by-name-rules:
   'trackingId': 'uuid'
   'actionTrackingId': 'uuid'
   'PublicCertificate': 'any'
+  'content': 'any'
+  'contentType': 'content-type'
+  'MessageContentType': 'content-type'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
@@ -195,6 +206,7 @@ rename-rules:
   SQL: Sql
   SSL: Ssl
   UTF8: Utf8
+  B2B: B2B|b2b
 
 directive:
   - from: logic.json
@@ -213,5 +225,14 @@ directive:
       $.WorkflowTriggerRecurrence.properties.startTime['format'] = 'date-time';
       $.WorkflowTriggerRecurrence.properties.endTime['format'] = 'date-time';
       $.RecurrenceSchedule.properties.weekDays.items['x-ms-enum']['name'] = 'DayOfWeek';
+      $.CallbackUrl.properties.value['x-ms-client-name'] = 'url';
 
+  # TODO: change ManagedServiceIdentity to common identity type(ManagedServiceIdentity)
+  - from: logic.json
+    where: $.definitions
+    transform: >
+      $.ManagedServiceIdentity.properties.type.enum.push('SystemAssigned, UserAssigned');
+      $.Workflow.properties.identity['description'] = 'Managed service identity properties. Current supported identity types: SystemAssigned, UserAssigned, None.';
+      $.IntegrationServiceEnvironment.properties.identity['description'] = 'Managed service identity properties. Current supported identity types: SystemAssigned, UserAssigned, None.';
+    reason: Temporary workaround to match with common type.
 ```

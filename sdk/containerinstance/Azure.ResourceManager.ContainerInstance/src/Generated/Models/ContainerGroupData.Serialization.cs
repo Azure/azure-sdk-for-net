@@ -142,13 +142,13 @@ namespace Azure.ResourceManager.ContainerInstance
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> provisioningState = default;
-            IList<ContainerInstanceContainer> containers = default;
+            IList<Models.ContainerInstance> containers = default;
             Optional<IList<ImageRegistryCredential>> imageRegistryCredentials = default;
             Optional<ContainerGroupRestartPolicy> restartPolicy = default;
-            Optional<IPAddress> ipAddress = default;
+            Optional<ContainerGroupIPAddress> ipAddress = default;
             OperatingSystemType osType = default;
             Optional<IList<ContainerInstanceVolume>> volumes = default;
-            Optional<ContainerGroupPropertiesInstanceView> instanceView = default;
+            Optional<ContainerGroupInstanceView> instanceView = default;
             Optional<ContainerGroupDiagnostics> diagnostics = default;
             Optional<IList<ContainerGroupSubnetId>> subnetIds = default;
             Optional<DnsConfiguration> dnsConfig = default;
@@ -243,10 +243,10 @@ namespace Azure.ResourceManager.ContainerInstance
                         }
                         if (property0.NameEquals("containers"))
                         {
-                            List<ContainerInstanceContainer> array = new List<ContainerInstanceContainer>();
+                            List<Models.ContainerInstance> array = new List<Models.ContainerInstance>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ContainerInstanceContainer.DeserializeContainerInstanceContainer(item));
+                                array.Add(Models.ContainerInstance.DeserializeContainerInstance(item));
                             }
                             containers = array;
                             continue;
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.ContainerInstance
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            ipAddress = IPAddress.DeserializeIPAddress(property0.Value);
+                            ipAddress = ContainerGroupIPAddress.DeserializeContainerGroupIPAddress(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("osType"))
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.ContainerInstance
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            instanceView = ContainerGroupPropertiesInstanceView.DeserializeContainerGroupPropertiesInstanceView(property0.Value);
+                            instanceView = ContainerGroupInstanceView.DeserializeContainerGroupInstanceView(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("diagnostics"))

@@ -20,12 +20,10 @@ namespace Azure.ResourceManager.Reservations
     /// <summary> A class to add extension methods to TenantResource. </summary>
     internal partial class TenantResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _reservationResponseReservationClientDiagnostics;
-        private ReservationRestOperations _reservationResponseReservationRestClient;
-        private ClientDiagnostics _reservationOrderResponseReservationOrderClientDiagnostics;
-        private ReservationOrderRestOperations _reservationOrderResponseReservationOrderRestClient;
-        private ClientDiagnostics _operationClientDiagnostics;
-        private OperationRestOperations _operationRestClient;
+        private ClientDiagnostics _reservationDetailReservationClientDiagnostics;
+        private ReservationRestOperations _reservationDetailReservationRestClient;
+        private ClientDiagnostics _reservationOrderClientDiagnostics;
+        private ReservationOrderRestOperations _reservationOrderRestClient;
         private ClientDiagnostics _calculateExchangeClientDiagnostics;
         private CalculateExchangeRestOperations _calculateExchangeRestClient;
         private ClientDiagnostics _exchangeClientDiagnostics;
@@ -43,12 +41,10 @@ namespace Azure.ResourceManager.Reservations
         {
         }
 
-        private ClientDiagnostics ReservationResponseReservationClientDiagnostics => _reservationResponseReservationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Reservations", ReservationResponseResource.ResourceType.Namespace, Diagnostics);
-        private ReservationRestOperations ReservationResponseReservationRestClient => _reservationResponseReservationRestClient ??= new ReservationRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ReservationResponseResource.ResourceType));
-        private ClientDiagnostics ReservationOrderResponseReservationOrderClientDiagnostics => _reservationOrderResponseReservationOrderClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Reservations", ReservationOrderResponseResource.ResourceType.Namespace, Diagnostics);
-        private ReservationOrderRestOperations ReservationOrderResponseReservationOrderRestClient => _reservationOrderResponseReservationOrderRestClient ??= new ReservationOrderRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ReservationOrderResponseResource.ResourceType));
-        private ClientDiagnostics OperationClientDiagnostics => _operationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Reservations", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private OperationRestOperations OperationRestClient => _operationRestClient ??= new OperationRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics ReservationDetailReservationClientDiagnostics => _reservationDetailReservationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Reservations", ReservationDetailResource.ResourceType.Namespace, Diagnostics);
+        private ReservationRestOperations ReservationDetailReservationRestClient => _reservationDetailReservationRestClient ??= new ReservationRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ReservationDetailResource.ResourceType));
+        private ClientDiagnostics ReservationOrderClientDiagnostics => _reservationOrderClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Reservations", ReservationOrderResource.ResourceType.Namespace, Diagnostics);
+        private ReservationOrderRestOperations ReservationOrderRestClient => _reservationOrderRestClient ??= new ReservationOrderRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ReservationOrderResource.ResourceType));
         private ClientDiagnostics CalculateExchangeClientDiagnostics => _calculateExchangeClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Reservations", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private CalculateExchangeRestOperations CalculateExchangeRestClient => _calculateExchangeRestClient ??= new CalculateExchangeRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics ExchangeClientDiagnostics => _exchangeClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Reservations", ProviderConstants.DefaultProviderNamespace, Diagnostics);
@@ -60,11 +56,11 @@ namespace Azure.ResourceManager.Reservations
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of ReservationOrderResponseResources in the TenantResource. </summary>
-        /// <returns> An object representing collection of ReservationOrderResponseResources and their operations over a ReservationOrderResponseResource. </returns>
-        public virtual ReservationOrderResponseCollection GetReservationOrderResponses()
+        /// <summary> Gets a collection of ReservationOrderResources in the TenantResource. </summary>
+        /// <returns> An object representing collection of ReservationOrderResources and their operations over a ReservationOrderResource. </returns>
+        public virtual ReservationOrderCollection GetReservationOrders()
         {
-            return GetCachedClient(Client => new ReservationOrderResponseCollection(Client, Id));
+            return GetCachedClient(Client => new ReservationOrderCollection(Client, Id));
         }
 
         /// <summary>
@@ -79,17 +75,17 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="selectedState"> The selected provisioning state. </param>
         /// <param name="take"> To number of reservations to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ReservationResponseResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ReservationResponseResource> GetReservationResponsesAsync(string filter = null, string orderby = null, string refreshSummary = null, float? skiptoken = null, string selectedState = null, float? take = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ReservationDetailResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ReservationDetailResource> GetReservationDetailsAsync(string filter = null, string orderby = null, string refreshSummary = null, float? skiptoken = null, string selectedState = null, float? take = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ReservationResponseResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ReservationDetailResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ReservationResponseReservationClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetReservationResponses");
+                using var scope = ReservationDetailReservationClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetReservationDetails");
                 scope.Start();
                 try
                 {
-                    var response = await ReservationResponseReservationRestClient.ListAllAsync(filter, orderby, refreshSummary, skiptoken, selectedState, take, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ReservationResponseResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await ReservationDetailReservationRestClient.ListAllAsync(filter, orderby, refreshSummary, skiptoken, selectedState, take, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ReservationDetailResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -97,14 +93,14 @@ namespace Azure.ResourceManager.Reservations
                     throw;
                 }
             }
-            async Task<Page<ReservationResponseResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ReservationDetailResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = ReservationResponseReservationClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetReservationResponses");
+                using var scope = ReservationDetailReservationClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetReservationDetails");
                 scope.Start();
                 try
                 {
-                    var response = await ReservationResponseReservationRestClient.ListAllNextPageAsync(nextLink, filter, orderby, refreshSummary, skiptoken, selectedState, take, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ReservationResponseResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await ReservationDetailReservationRestClient.ListAllNextPageAsync(nextLink, filter, orderby, refreshSummary, skiptoken, selectedState, take, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ReservationDetailResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -127,17 +123,17 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="selectedState"> The selected provisioning state. </param>
         /// <param name="take"> To number of reservations to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ReservationResponseResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ReservationResponseResource> GetReservationResponses(string filter = null, string orderby = null, string refreshSummary = null, float? skiptoken = null, string selectedState = null, float? take = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ReservationDetailResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ReservationDetailResource> GetReservationDetails(string filter = null, string orderby = null, string refreshSummary = null, float? skiptoken = null, string selectedState = null, float? take = null, CancellationToken cancellationToken = default)
         {
-            Page<ReservationResponseResource> FirstPageFunc(int? pageSizeHint)
+            Page<ReservationDetailResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ReservationResponseReservationClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetReservationResponses");
+                using var scope = ReservationDetailReservationClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetReservationDetails");
                 scope.Start();
                 try
                 {
-                    var response = ReservationResponseReservationRestClient.ListAll(filter, orderby, refreshSummary, skiptoken, selectedState, take, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ReservationResponseResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = ReservationDetailReservationRestClient.ListAll(filter, orderby, refreshSummary, skiptoken, selectedState, take, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ReservationDetailResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -145,14 +141,14 @@ namespace Azure.ResourceManager.Reservations
                     throw;
                 }
             }
-            Page<ReservationResponseResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ReservationDetailResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = ReservationResponseReservationClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetReservationResponses");
+                using var scope = ReservationDetailReservationClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetReservationDetails");
                 scope.Start();
                 try
                 {
-                    var response = ReservationResponseReservationRestClient.ListAllNextPage(nextLink, filter, orderby, refreshSummary, skiptoken, selectedState, take, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ReservationResponseResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = ReservationDetailReservationRestClient.ListAllNextPage(nextLink, filter, orderby, refreshSummary, skiptoken, selectedState, take, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ReservationDetailResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -170,13 +166,13 @@ namespace Azure.ResourceManager.Reservations
         /// </summary>
         /// <param name="content"> Information needed for calculate or purchase reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CalculatePriceResponse>> CalculateReservationOrderAsync(PurchaseRequestContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CalculatePriceResult>> CalculateReservationOrderAsync(ReservationPurchaseContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = ReservationOrderResponseReservationOrderClientDiagnostics.CreateScope("TenantResourceExtensionClient.CalculateReservationOrder");
+            using var scope = ReservationOrderClientDiagnostics.CreateScope("TenantResourceExtensionClient.CalculateReservationOrder");
             scope.Start();
             try
             {
-                var response = await ReservationOrderResponseReservationOrderRestClient.CalculateAsync(content, cancellationToken).ConfigureAwait(false);
+                var response = await ReservationOrderRestClient.CalculateAsync(content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -193,13 +189,13 @@ namespace Azure.ResourceManager.Reservations
         /// </summary>
         /// <param name="content"> Information needed for calculate or purchase reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CalculatePriceResponse> CalculateReservationOrder(PurchaseRequestContent content, CancellationToken cancellationToken = default)
+        public virtual Response<CalculatePriceResult> CalculateReservationOrder(ReservationPurchaseContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = ReservationOrderResponseReservationOrderClientDiagnostics.CreateScope("TenantResourceExtensionClient.CalculateReservationOrder");
+            using var scope = ReservationOrderClientDiagnostics.CreateScope("TenantResourceExtensionClient.CalculateReservationOrder");
             scope.Start();
             try
             {
-                var response = ReservationOrderResponseReservationOrderRestClient.Calculate(content, cancellationToken);
+                var response = ReservationOrderRestClient.Calculate(content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -207,90 +203,6 @@ namespace Azure.ResourceManager.Reservations
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// List all the operations.
-        /// Request Path: /providers/Microsoft.Capacity/operations
-        /// Operation Id: Operation_List
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OperationResponse" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<OperationResponse> GetOperationsAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<OperationResponse>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = OperationClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetOperations");
-                scope.Start();
-                try
-                {
-                    var response = await OperationRestClient.ListAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<OperationResponse>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = OperationClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetOperations");
-                scope.Start();
-                try
-                {
-                    var response = await OperationRestClient.ListNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary>
-        /// List all the operations.
-        /// Request Path: /providers/Microsoft.Capacity/operations
-        /// Operation Id: Operation_List
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OperationResponse" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<OperationResponse> GetOperations(CancellationToken cancellationToken = default)
-        {
-            Page<OperationResponse> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = OperationClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetOperations");
-                scope.Start();
-                try
-                {
-                    var response = OperationRestClient.List(cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<OperationResponse> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = OperationClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetOperations");
-                scope.Start();
-                try
-                {
-                    var response = OperationRestClient.ListNextPage(nextLink, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary>
@@ -302,14 +214,14 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> Request containing purchases and refunds that need to be executed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<CalculateExchangeOperationResultResponse>> PostCalculateExchangeAsync(WaitUntil waitUntil, CalculateExchangeContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CalculateExchangeResult>> CalculateReservationExchangeAsync(WaitUntil waitUntil, CalculateExchangeContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = CalculateExchangeClientDiagnostics.CreateScope("TenantResourceExtensionClient.PostCalculateExchange");
+            using var scope = CalculateExchangeClientDiagnostics.CreateScope("TenantResourceExtensionClient.CalculateReservationExchange");
             scope.Start();
             try
             {
                 var response = await CalculateExchangeRestClient.PostAsync(content, cancellationToken).ConfigureAwait(false);
-                var operation = new ReservationsArmOperation<CalculateExchangeOperationResultResponse>(new CalculateExchangeOperationResultResponseOperationSource(), CalculateExchangeClientDiagnostics, Pipeline, CalculateExchangeRestClient.CreatePostRequest(content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ReservationsArmOperation<CalculateExchangeResult>(new CalculateExchangeResultOperationSource(), CalculateExchangeClientDiagnostics, Pipeline, CalculateExchangeRestClient.CreatePostRequest(content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -330,14 +242,14 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> Request containing purchases and refunds that need to be executed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<CalculateExchangeOperationResultResponse> PostCalculateExchange(WaitUntil waitUntil, CalculateExchangeContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CalculateExchangeResult> CalculateReservationExchange(WaitUntil waitUntil, CalculateExchangeContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = CalculateExchangeClientDiagnostics.CreateScope("TenantResourceExtensionClient.PostCalculateExchange");
+            using var scope = CalculateExchangeClientDiagnostics.CreateScope("TenantResourceExtensionClient.CalculateReservationExchange");
             scope.Start();
             try
             {
                 var response = CalculateExchangeRestClient.Post(content, cancellationToken);
-                var operation = new ReservationsArmOperation<CalculateExchangeOperationResultResponse>(new CalculateExchangeOperationResultResponseOperationSource(), CalculateExchangeClientDiagnostics, Pipeline, CalculateExchangeRestClient.CreatePostRequest(content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ReservationsArmOperation<CalculateExchangeResult>(new CalculateExchangeResultOperationSource(), CalculateExchangeClientDiagnostics, Pipeline, CalculateExchangeRestClient.CreatePostRequest(content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -358,14 +270,14 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> Request containing the refunds and purchases that need to be executed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<ExchangeOperationResultResponse>> PostExchangeAsync(WaitUntil waitUntil, ExchangeContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ExchangeResult>> ExchangeAsync(WaitUntil waitUntil, ExchangeContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = ExchangeClientDiagnostics.CreateScope("TenantResourceExtensionClient.PostExchange");
+            using var scope = ExchangeClientDiagnostics.CreateScope("TenantResourceExtensionClient.Exchange");
             scope.Start();
             try
             {
                 var response = await ExchangeRestClient.PostAsync(content, cancellationToken).ConfigureAwait(false);
-                var operation = new ReservationsArmOperation<ExchangeOperationResultResponse>(new ExchangeOperationResultResponseOperationSource(), ExchangeClientDiagnostics, Pipeline, ExchangeRestClient.CreatePostRequest(content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ReservationsArmOperation<ExchangeResult>(new ExchangeResultOperationSource(), ExchangeClientDiagnostics, Pipeline, ExchangeRestClient.CreatePostRequest(content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -386,14 +298,14 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> Request containing the refunds and purchases that need to be executed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<ExchangeOperationResultResponse> PostExchange(WaitUntil waitUntil, ExchangeContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ExchangeResult> Exchange(WaitUntil waitUntil, ExchangeContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = ExchangeClientDiagnostics.CreateScope("TenantResourceExtensionClient.PostExchange");
+            using var scope = ExchangeClientDiagnostics.CreateScope("TenantResourceExtensionClient.Exchange");
             scope.Start();
             try
             {
                 var response = ExchangeRestClient.Post(content, cancellationToken);
-                var operation = new ReservationsArmOperation<ExchangeOperationResultResponse>(new ExchangeOperationResultResponseOperationSource(), ExchangeClientDiagnostics, Pipeline, ExchangeRestClient.CreatePostRequest(content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ReservationsArmOperation<ExchangeResult>(new ExchangeResultOperationSource(), ExchangeClientDiagnostics, Pipeline, ExchangeRestClient.CreatePostRequest(content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

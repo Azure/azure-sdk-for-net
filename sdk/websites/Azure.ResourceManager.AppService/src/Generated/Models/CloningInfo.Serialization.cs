@@ -22,20 +22,20 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("correlationId");
                 writer.WriteStringValue(CorrelationId.Value);
             }
-            if (Optional.IsDefined(IsOverwrite))
+            if (Optional.IsDefined(Overwrite))
             {
                 writer.WritePropertyName("overwrite");
-                writer.WriteBooleanValue(IsOverwrite.Value);
+                writer.WriteBooleanValue(Overwrite.Value);
             }
-            if (Optional.IsDefined(IsCloneCustomHostNames))
+            if (Optional.IsDefined(CloneCustomHostNames))
             {
                 writer.WritePropertyName("cloneCustomHostNames");
-                writer.WriteBooleanValue(IsCloneCustomHostNames.Value);
+                writer.WriteBooleanValue(CloneCustomHostNames.Value);
             }
-            if (Optional.IsDefined(IsCloneSourceControl))
+            if (Optional.IsDefined(CloneSourceControl))
             {
                 writer.WritePropertyName("cloneSourceControl");
-                writer.WriteBooleanValue(IsCloneSourceControl.Value);
+                writer.WriteBooleanValue(CloneSourceControl.Value);
             }
             writer.WritePropertyName("sourceWebAppId");
             writer.WriteStringValue(SourceWebAppId);
@@ -60,10 +60,10 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(IsConfigureLoadBalancing))
+            if (Optional.IsDefined(ConfigureLoadBalancing))
             {
                 writer.WritePropertyName("configureLoadBalancing");
-                writer.WriteBooleanValue(IsConfigureLoadBalancing.Value);
+                writer.WriteBooleanValue(ConfigureLoadBalancing.Value);
             }
             if (Optional.IsDefined(TrafficManagerProfileId))
             {

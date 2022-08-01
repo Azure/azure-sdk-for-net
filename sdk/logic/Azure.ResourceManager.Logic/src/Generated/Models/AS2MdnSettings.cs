@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <param name="signOutboundMdnIfOptional"> The value indicating whether to sign the outbound MDN if optional. </param>
         /// <param name="sendInboundMdnToMessageBox"> The value indicating whether to send inbound MDN to message box. </param>
         /// <param name="micHashingAlgorithm"> The signing or hashing algorithm. </param>
-        public AS2MdnSettings(bool needMdn, bool signMdn, bool sendMdnAsynchronously, bool signOutboundMdnIfOptional, bool sendInboundMdnToMessageBox, AS2MdnHashingAlgorithm micHashingAlgorithm)
+        public AS2MdnSettings(bool needMdn, bool signMdn, bool sendMdnAsynchronously, bool signOutboundMdnIfOptional, bool sendInboundMdnToMessageBox, AS2HashingAlgorithm micHashingAlgorithm)
         {
             NeedMdn = needMdn;
             SignMdn = signMdn;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <param name="mdnText"> The MDN text. </param>
         /// <param name="sendInboundMdnToMessageBox"> The value indicating whether to send inbound MDN to message box. </param>
         /// <param name="micHashingAlgorithm"> The signing or hashing algorithm. </param>
-        internal AS2MdnSettings(bool needMdn, bool signMdn, bool sendMdnAsynchronously, Uri receiptDeliveryUri, string dispositionNotificationTo, bool signOutboundMdnIfOptional, string mdnText, bool sendInboundMdnToMessageBox, AS2MdnHashingAlgorithm micHashingAlgorithm)
+        internal AS2MdnSettings(bool needMdn, bool signMdn, bool sendMdnAsynchronously, Uri receiptDeliveryUri, string dispositionNotificationTo, bool signOutboundMdnIfOptional, string mdnText, bool sendInboundMdnToMessageBox, AS2HashingAlgorithm micHashingAlgorithm)
         {
             NeedMdn = needMdn;
             SignMdn = signMdn;
@@ -69,6 +69,6 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> The value indicating whether to send inbound MDN to message box. </summary>
         public bool SendInboundMdnToMessageBox { get; set; }
         /// <summary> The signing or hashing algorithm. </summary>
-        public AS2MdnHashingAlgorithm MicHashingAlgorithm { get; set; }
+        public AS2HashingAlgorithm MicHashingAlgorithm { get; set; }
     }
 }

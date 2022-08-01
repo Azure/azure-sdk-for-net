@@ -253,7 +253,7 @@ namespace Azure.Security.ConfidentialLedger
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     contents = "<LedgerEntryContents>",
+        ///     contents = "<contents>",
         /// };
         /// 
         /// Response response = await client.CreateLedgerEntryAsync(RequestContent.Create(data));
@@ -268,7 +268,7 @@ namespace Azure.Security.ConfidentialLedger
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     contents = "<LedgerEntryContents>",
+        ///     contents = "<contents>",
         /// };
         /// 
         /// Response response = await client.CreateLedgerEntryAsync(RequestContent.Create(data), "<collectionId>");
@@ -334,7 +334,7 @@ namespace Azure.Security.ConfidentialLedger
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     contents = "<LedgerEntryContents>",
+        ///     contents = "<contents>",
         /// };
         /// 
         /// Response response = client.CreateLedgerEntry(RequestContent.Create(data));
@@ -349,7 +349,7 @@ namespace Azure.Security.ConfidentialLedger
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     contents = "<LedgerEntryContents>",
+        ///     contents = "<contents>",
         /// };
         /// 
         /// Response response = client.CreateLedgerEntry(RequestContent.Create(data), "<collectionId>");
@@ -1125,7 +1125,7 @@ namespace Azure.Security.ConfidentialLedger
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     assignedRole = "<Administrator>",
+        ///     assignedRole = "Administrator",
         /// };
         /// 
         /// Response response = await client.CreateOrUpdateUserAsync("<userId>", RequestContent.Create(data));
@@ -1193,7 +1193,7 @@ namespace Azure.Security.ConfidentialLedger
         /// var client = new ConfidentialLedgerClient(endpoint, credential);
         /// 
         /// var data = new {
-        ///     assignedRole = "<Administrator>",
+        ///     assignedRole = "Administrator",
         /// };
         /// 
         /// Response response = client.CreateOrUpdateUser("<userId>", RequestContent.Create(data));

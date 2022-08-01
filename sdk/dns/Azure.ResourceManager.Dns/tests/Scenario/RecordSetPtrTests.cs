@@ -56,6 +56,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             string name = "ptr";
             var recordSetPtrResource = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, new PtrRecordSetData() { });
             Assert.IsNotNull(recordSetPtrResource);
+            Assert.IsNotNull(recordSetPtrResource.Value.Data.ETag);
             Assert.AreEqual(name, recordSetPtrResource.Value.Data.Name);
             Assert.AreEqual("Succeeded", recordSetPtrResource.Value.Data.ProvisioningState);
             Assert.AreEqual("dnszones/PTR", recordSetPtrResource.Value.Data.ResourceType.Type);
@@ -103,6 +104,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             Assert.AreEqual(name, recordSetPtrResource.Value.Data.Name);
             Assert.AreEqual("Succeeded", recordSetPtrResource.Value.Data.ProvisioningState);
             Assert.AreEqual("dnszones/PTR", recordSetPtrResource.Value.Data.ResourceType.Type);
+            Assert.AreEqual(300, recordSetPtrResource.Value.Data.TtlInSeconds);
         }
 
         [Test]

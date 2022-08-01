@@ -11,7 +11,10 @@ using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary> A list of private link resources. </summary>
+    /// <summary>
+    /// A list of private link resources
+    /// Serialized Name: PrivateLinkResourceListResult
+    /// </summary>
     internal partial class HDInsightPrivateLinkResourceListResult
     {
         /// <summary> Initializes a new instance of HDInsightPrivateLinkResourceListResult. </summary>
@@ -21,13 +24,19 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of HDInsightPrivateLinkResourceListResult. </summary>
-        /// <param name="value"> Array of private link resources. </param>
+        /// <param name="value">
+        /// Array of private link resources
+        /// Serialized Name: PrivateLinkResourceListResult.value
+        /// </param>
         internal HDInsightPrivateLinkResourceListResult(IReadOnlyList<HDInsightPrivateLinkResourceData> value)
         {
             Value = value;
         }
 
-        /// <summary> Array of private link resources. </summary>
+        /// <summary>
+        /// Array of private link resources
+        /// Serialized Name: PrivateLinkResourceListResult.value
+        /// </summary>
         public IReadOnlyList<HDInsightPrivateLinkResourceData> Value { get; }
     }
 }

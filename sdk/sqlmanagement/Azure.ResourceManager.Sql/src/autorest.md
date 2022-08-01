@@ -306,26 +306,6 @@ directive:
       transform: >
           $.format = "duration";
     - from: swagger-document
-      where: $.definitions..creationDate
-      transform: >
-          if ($.format === 'date-time')
-              $['x-ms-client-name'] = 'createdOn';
-    - from: swagger-document
-      where: $.definitions..creationTime
-      transform: >
-          if ($.format === 'date-time')
-              $['x-ms-client-name'] = 'createdOn';
-    - from: swagger-document
-      where: $.definitions..deletionDate
-      transform: >
-          if ($.format === 'date-time')
-              $['x-ms-client-name'] = 'deletedOn';
-    - from: swagger-document
-      where: $.definitions..deletionTime
-      transform: >
-          if ($.format === 'date-time')
-              $['x-ms-client-name'] = 'deletedOn';
-    - from: swagger-document
       where: $.definitions..backupExpirationTime
       transform: >
           if ($.format === 'date-time')
