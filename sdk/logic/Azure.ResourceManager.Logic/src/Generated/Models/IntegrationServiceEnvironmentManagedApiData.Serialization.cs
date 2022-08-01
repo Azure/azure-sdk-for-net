@@ -58,17 +58,17 @@ namespace Azure.ResourceManager.Logic
             Optional<SystemData> systemData = default;
             Optional<string> name0 = default;
             Optional<IReadOnlyDictionary<string, BinaryData>> connectionParameters = default;
-            Optional<ApiResourceMetadata> metadata = default;
-            Optional<IReadOnlyList<string>> runtimeUrls = default;
-            Optional<ApiResourceGeneralInformation> generalInformation = default;
+            Optional<LogicApiResourceMetadata> metadata = default;
+            Optional<IReadOnlyList<Uri>> runtimeUrls = default;
+            Optional<LogicApiResourceGeneralInformation> generalInformation = default;
             Optional<IReadOnlyList<string>> capabilities = default;
-            Optional<ApiResourceBackendService> backendService = default;
-            Optional<ApiResourcePolicies> policies = default;
+            Optional<LogicApiResourceBackendService> backendService = default;
+            Optional<LogicApiResourcePolicies> policies = default;
             Optional<Uri> apiDefinitionUrl = default;
-            Optional<ApiResourceDefinitions> apiDefinitions = default;
-            Optional<ResourceReference> integrationServiceEnvironment = default;
-            Optional<WorkflowProvisioningState> provisioningState = default;
-            Optional<ApiTier> category = default;
+            Optional<LogicApiResourceDefinitions> apiDefinitions = default;
+            Optional<LogicResourceReference> integrationServiceEnvironment = default;
+            Optional<LogicWorkflowProvisioningState> provisioningState = default;
+            Optional<LogicApiTier> category = default;
             Optional<IntegrationServiceEnvironmentManagedApiDeploymentParameters> deploymentParameters = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Logic
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            metadata = ApiResourceMetadata.DeserializeApiResourceMetadata(property0.Value);
+                            metadata = LogicApiResourceMetadata.DeserializeLogicApiResourceMetadata(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("runtimeUrls"))
@@ -163,10 +163,10 @@ namespace Azure.ResourceManager.Logic
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<string> array = new List<string>();
+                            List<Uri> array = new List<Uri>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(item.GetString());
+                                array.Add(new Uri(item.GetString()));
                             }
                             runtimeUrls = array;
                             continue;
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Logic
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            generalInformation = ApiResourceGeneralInformation.DeserializeApiResourceGeneralInformation(property0.Value);
+                            generalInformation = LogicApiResourceGeneralInformation.DeserializeLogicApiResourceGeneralInformation(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("capabilities"))
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Logic
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            backendService = ApiResourceBackendService.DeserializeApiResourceBackendService(property0.Value);
+                            backendService = LogicApiResourceBackendService.DeserializeLogicApiResourceBackendService(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("policies"))
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Logic
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            policies = ApiResourcePolicies.DeserializeApiResourcePolicies(property0.Value);
+                            policies = LogicApiResourcePolicies.DeserializeLogicApiResourcePolicies(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("apiDefinitionUrl"))
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Logic
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            apiDefinitions = ApiResourceDefinitions.DeserializeApiResourceDefinitions(property0.Value);
+                            apiDefinitions = LogicApiResourceDefinitions.DeserializeLogicApiResourceDefinitions(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("integrationServiceEnvironment"))
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Logic
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            integrationServiceEnvironment = ResourceReference.DeserializeResourceReference(property0.Value);
+                            integrationServiceEnvironment = LogicResourceReference.DeserializeLogicResourceReference(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Logic
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new WorkflowProvisioningState(property0.Value.GetString());
+                            provisioningState = new LogicWorkflowProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("category"))
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Logic
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            category = new ApiTier(property0.Value.GetString());
+                            category = new LogicApiTier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("deploymentParameters"))

@@ -784,14 +784,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     public partial class RegistrationInfo
     {
         public RegistrationInfo() { }
-        public System.DateTimeOffset? ExpirationOn { get { throw null; } set { } }
+        public System.DateTimeOffset? ExpireOn { get { throw null; } set { } }
         public Azure.ResourceManager.DesktopVirtualization.Models.RegistrationTokenOperation? RegistrationTokenOperation { get { throw null; } set { } }
         public string Token { get { throw null; } set { } }
     }
     public partial class RegistrationInfoPatch
     {
         public RegistrationInfoPatch() { }
-        public System.DateTimeOffset? ExpirationOn { get { throw null; } set { } }
+        public System.DateTimeOffset? ExpireOn { get { throw null; } set { } }
         public Azure.ResourceManager.DesktopVirtualization.Models.RegistrationTokenOperation? RegistrationTokenOperation { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

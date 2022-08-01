@@ -17,10 +17,10 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Media
 {
     /// <summary>
-    /// A Class representing a MediaPrivateLinkResource along with the instance operations that can be performed on it.
+    /// A Class representing a MediaPrivateLink along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MediaPrivateLinkResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetMediaPrivateLinkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MediaserviceResource" /> using the GetMediaPrivateLinkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MediaServiceResource" /> using the GetMediaPrivateLink method.
     /// </summary>
     public partial class MediaPrivateLinkResource : ArmResource
     {
@@ -31,9 +31,9 @@ namespace Azure.ResourceManager.Media
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _mediaPrivateLinkResourcePrivateLinkResourcesClientDiagnostics;
-        private readonly PrivateLinkResourcesRestOperations _mediaPrivateLinkResourcePrivateLinkResourcesRestClient;
-        private readonly MediaPrivateLinkResourceData _data;
+        private readonly ClientDiagnostics _mediaPrivateLinkPrivateLinkResourcesClientDiagnostics;
+        private readonly PrivateLinkResourcesRestOperations _mediaPrivateLinkPrivateLinkResourcesRestClient;
+        private readonly MediaPrivateLinkData _data;
 
         /// <summary> Initializes a new instance of the <see cref="MediaPrivateLinkResource"/> class for mocking. </summary>
         protected MediaPrivateLinkResource()
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Media
         /// <summary> Initializes a new instance of the <see cref = "MediaPrivateLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal MediaPrivateLinkResource(ArmClient client, MediaPrivateLinkResourceData data) : this(client, data.Id)
+        internal MediaPrivateLinkResource(ArmClient client, MediaPrivateLinkData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -54,9 +54,9 @@ namespace Azure.ResourceManager.Media
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MediaPrivateLinkResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _mediaPrivateLinkResourcePrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Media", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string mediaPrivateLinkResourcePrivateLinkResourcesApiVersion);
-            _mediaPrivateLinkResourcePrivateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, mediaPrivateLinkResourcePrivateLinkResourcesApiVersion);
+            _mediaPrivateLinkPrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Media", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string mediaPrivateLinkPrivateLinkResourcesApiVersion);
+            _mediaPrivateLinkPrivateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, mediaPrivateLinkPrivateLinkResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Media
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual MediaPrivateLinkResourceData Data
+        public virtual MediaPrivateLinkData Data
         {
             get
             {
@@ -94,11 +94,11 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<MediaPrivateLinkResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _mediaPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("MediaPrivateLinkResource.Get");
+            using var scope = _mediaPrivateLinkPrivateLinkResourcesClientDiagnostics.CreateScope("MediaPrivateLinkResource.Get");
             scope.Start();
             try
             {
-                var response = await _mediaPrivateLinkResourcePrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _mediaPrivateLinkPrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new MediaPrivateLinkResource(Client, response.Value), response.GetRawResponse());
@@ -118,11 +118,11 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<MediaPrivateLinkResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _mediaPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("MediaPrivateLinkResource.Get");
+            using var scope = _mediaPrivateLinkPrivateLinkResourcesClientDiagnostics.CreateScope("MediaPrivateLinkResource.Get");
             scope.Start();
             try
             {
-                var response = _mediaPrivateLinkResourcePrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _mediaPrivateLinkPrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new MediaPrivateLinkResource(Client, response.Value), response.GetRawResponse());

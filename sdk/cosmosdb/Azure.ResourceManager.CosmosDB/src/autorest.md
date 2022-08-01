@@ -59,7 +59,15 @@ operation-id-mappings:
   CosmosDBSqlDatabaseThroughputSetting:
       accountName: Microsoft.DocumentDB/databaseAccounts
       databaseName: Microsoft.DocumentDB/databaseAccounts/sqlDatabases
-no-property-type-replacement: CosmosDBSqlDatabaseResourceInfo;MongoDBDatabaseResourceInfo;CosmosDBTableResourceInfo;CassandraKeyspaceResourceInfo;CassandraColumn;GremlinDatabaseResourceInfo;PrivateEndpointProperty
+
+no-property-type-replacement:
+- CosmosDBSqlDatabaseResourceInfo
+- MongoDBDatabaseResourceInfo
+- CosmosDBTableResourceInfo
+- CassandraKeyspaceResourceInfo
+- CassandraColumn
+- GremlinDatabaseResourceInfo
+- PrivateEndpointProperty
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -116,7 +124,6 @@ rename-mapping:
   GremlinGraphPropertiesOptions: GremlinGraphPropertiesConfig
   MongoDBCollectionPropertiesOptions: MongoDBCollectionPropertiesConfig
   MongoDBDatabasePropertiesOptions: MongoDBDatabasePropertiesConfig
-  MongoIndexOptions: MongoIndexConfig
   CosmosDBSqlContainerPropertiesOptions: CosmosDBSqlContainerPropertiesConfig
   CosmosDBSqlDatabasePropertiesOptions: CosmosDBSqlDatabasePropertiesConfig
   CosmosDBSqlDatabasePropertiesResource: ExtendedCosmosDBSqlDatabaseResourceInfo
@@ -229,7 +236,14 @@ rename-mapping:
   DatabaseAccountCreateUpdateParameters.properties.enableAnalyticalStorage: IsAnalyticalStorageEnabled
   DatabaseAccountUpdateParameters.properties.enableFreeTier: IsFreeTierEnabled
   DatabaseAccountUpdateParameters.properties.enableAnalyticalStorage: IsAnalyticalStorageEnabled
-  LocationProperties.supportsAvailabilityZone: DoesSupportsAvailabilityZone
+  LocationProperties.supportsAvailabilityZone: DoesSupportAvailabilityZone
+  DataCenterResourceProperties.availabilityZone: DoesSupportAvailabilityZone
+  ManagedCassandraProvisioningState: CassandraProvisioningState
+  ManagedCassandraReaperStatus: CassandraReaperStatus
+  MongoIndex: MongoDBIndex
+  MongoIndexOptions: MongoDBIndexConfig
+  BackupStorageRedundancy: CosmosDBBackupStorageRedundancy
+  PrimaryAggregationType: CosmosDBMetricPrimaryAggregationType
 
 prepend-rp-prefix:
 - UniqueKey
@@ -256,6 +270,14 @@ prepend-rp-prefix:
 - VirtualNetworkRule
 - FailoverPolicies
 - FailoverPolicy
+- BackupInformation
+- ContainerPartitionKey
+- CompositePath
+- PartitionKind
+- PercentileMetric
+- PublicNetworkAccess
+- SpatialType
+- ContainerPartitionKey
 
 directive:
 # The notebook is offline due to security issues
@@ -302,14 +324,6 @@ directive:
     $.responses['202'] = {
         'description': 'Creation of notebook workspace will complete asynchronously.'
     };
-- from: swagger-document
-  where: $.definitions..creationTime
-  transform: >
-    $['x-ms-client-name'] = 'CreatedOn';
-- from: swagger-document
-  where: $.definitions..deletionTime
-  transform: >
-    $['x-ms-client-name'] = 'DeletedOn';
 - from: rbac.json
   where: $.definitions
   transform: >

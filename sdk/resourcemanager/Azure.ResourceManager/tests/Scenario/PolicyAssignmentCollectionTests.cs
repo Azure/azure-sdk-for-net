@@ -112,6 +112,7 @@ namespace Azure.ResourceManager.Tests
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetPolicyAssignments().GetAsync(null));
         }
 
+#pragma warning disable CS0618 // This type is obsolete and will be removed in a future release.
         [TestCase]
         [RecordedTest]
         public async Task TestManagedIdentity()
@@ -127,6 +128,7 @@ namespace Azure.ResourceManager.Tests
                 Identity = new SystemAssignedServiceIdentity(SystemAssignedServiceIdentityType.SystemAssigned),
                 Location = AzureLocation.WestUS
             };
+            Assert.AreEqual(SystemAssignedServiceIdentityType.SystemAssigned, input.Identity.SystemAssignedServiceIdentityType);
             Assert.AreEqual(ManagedServiceIdentityType.SystemAssigned, input.ManagedIdentity.ManagedServiceIdentityType);
             ArmOperation<PolicyAssignmentResource> lro = await rg.GetPolicyAssignments().CreateOrUpdateAsync(WaitUntil.Completed, policyAssignmentName, input);
             PolicyAssignmentResource policyAssignment = lro.Value;
@@ -179,5 +181,6 @@ namespace Azure.ResourceManager.Tests
                 }
             }
         }
+#pragma warning restore CS0618 // This type is obsolete and will be removed in a future release.
     }
 }

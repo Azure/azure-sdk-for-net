@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Media
     /// A Class representing an AssetFilter along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AssetFilterResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetAssetFilterResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AssetResource" /> using the GetAssetFilter method.
+    /// Otherwise you can get one from its parent resource <see cref="MediaAssetResource" /> using the GetAssetFilter method.
     /// </summary>
     public partial class AssetFilterResource : ArmResource
     {

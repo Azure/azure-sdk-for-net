@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> codeVersion = default;
-            Optional<string> supportExpiryUtc = default;
+            Optional<DateTimeOffset> supportExpiryUtc = default;
             Optional<ClusterEnvironment> environment = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -65,7 +66,12 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                         }
                         if (property0.NameEquals("supportExpiryUtc"))
                         {
-                            supportExpiryUtc = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            supportExpiryUtc = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("environment"))
@@ -82,7 +88,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     continue;
                 }
             }
-            return new ClusterCodeVersionsResult(id, name, type, systemData.Value, codeVersion.Value, supportExpiryUtc.Value, Optional.ToNullable(environment));
+            return new ClusterCodeVersionsResult(id, name, type, systemData.Value, codeVersion.Value, Optional.ToNullable(supportExpiryUtc), Optional.ToNullable(environment));
         }
     }
 }

@@ -56,9 +56,9 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static SyslogDataSource DeserializeSyslogDataSource(JsonElement element)
         {
-            Optional<IList<KnownSyslogDataSourceStream>> streams = default;
-            Optional<IList<KnownSyslogDataSourceFacilityName>> facilityNames = default;
-            Optional<IList<KnownSyslogDataSourceLogLevel>> logLevels = default;
+            Optional<IList<SyslogDataSourceStream>> streams = default;
+            Optional<IList<SyslogDataSourceFacilityName>> facilityNames = default;
+            Optional<IList<SyslogDataSourceLogLevel>> logLevels = default;
             Optional<string> name = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.Monitor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<KnownSyslogDataSourceStream> array = new List<KnownSyslogDataSourceStream>();
+                    List<SyslogDataSourceStream> array = new List<SyslogDataSourceStream>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new KnownSyslogDataSourceStream(item.GetString()));
+                        array.Add(new SyslogDataSourceStream(item.GetString()));
                     }
                     streams = array;
                     continue;
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Monitor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<KnownSyslogDataSourceFacilityName> array = new List<KnownSyslogDataSourceFacilityName>();
+                    List<SyslogDataSourceFacilityName> array = new List<SyslogDataSourceFacilityName>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new KnownSyslogDataSourceFacilityName(item.GetString()));
+                        array.Add(new SyslogDataSourceFacilityName(item.GetString()));
                     }
                     facilityNames = array;
                     continue;
@@ -99,10 +99,10 @@ namespace Azure.ResourceManager.Monitor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<KnownSyslogDataSourceLogLevel> array = new List<KnownSyslogDataSourceLogLevel>();
+                    List<SyslogDataSourceLogLevel> array = new List<SyslogDataSourceLogLevel>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new KnownSyslogDataSourceLogLevel(item.GetString()));
+                        array.Add(new SyslogDataSourceLogLevel(item.GetString()));
                     }
                     logLevels = array;
                     continue;

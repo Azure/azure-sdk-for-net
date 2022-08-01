@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"></param>
         /// <param name="displayName"></param>
         /// <param name="internalName"></param>
-        /// <param name="toBeExportedForShoebox"></param>
-        internal Dimension(string name, string displayName, string internalName, bool? toBeExportedForShoebox)
+        /// <param name="isToBeExportedForShoebox"></param>
+        internal Dimension(string name, string displayName, string internalName, bool? isToBeExportedForShoebox)
         {
             Name = name;
             DisplayName = displayName;
             InternalName = internalName;
-            ToBeExportedForShoebox = toBeExportedForShoebox;
+            IsToBeExportedForShoebox = isToBeExportedForShoebox;
         }
 
         /// <summary> Gets the name. </summary>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppService.Models
         public string DisplayName { get; }
         /// <summary> Gets the internal name. </summary>
         public string InternalName { get; }
-        /// <summary> Gets the to be exported for shoebox. </summary>
-        public bool? ToBeExportedForShoebox { get; }
+        /// <summary> Gets the is to be exported for shoebox. </summary>
+        public bool? IsToBeExportedForShoebox { get; }
     }
 }

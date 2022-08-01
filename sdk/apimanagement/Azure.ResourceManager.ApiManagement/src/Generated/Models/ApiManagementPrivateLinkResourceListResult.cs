@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of ApiManagementPrivateLinkResourceListResult. </summary>
         internal ApiManagementPrivateLinkResourceListResult()
         {
-            Value = new ChangeTrackingList<ApiManagementPrivateLinkResourceData>();
+            Value = new ChangeTrackingList<ApiManagementPrivateLinkData>();
         }
 
         /// <summary> Initializes a new instance of ApiManagementPrivateLinkResourceListResult. </summary>
         /// <param name="value"> Array of private link resources. </param>
-        internal ApiManagementPrivateLinkResourceListResult(IReadOnlyList<ApiManagementPrivateLinkResourceData> value)
+        internal ApiManagementPrivateLinkResourceListResult(IReadOnlyList<ApiManagementPrivateLinkData> value)
         {
             Value = value;
         }
 
         /// <summary> Array of private link resources. </summary>
-        public IReadOnlyList<ApiManagementPrivateLinkResourceData> Value { get; }
+        public IReadOnlyList<ApiManagementPrivateLinkData> Value { get; }
     }
 }

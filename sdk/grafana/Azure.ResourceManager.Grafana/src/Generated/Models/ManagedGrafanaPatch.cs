@@ -20,9 +20,11 @@ namespace Azure.ResourceManager.Grafana.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> The managed identity of the grafana resource. Current supported identity types: None, SystemAssigned. </summary>
+        /// <summary> The managed identity of the grafana resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The new tags of the grafana resource. </summary>
         public IDictionary<string, string> Tags { get; }
+        /// <summary> Properties specific to the managed grafana resource. </summary>
+        public ManagedGrafanaPatchProperties Properties { get; set; }
     }
 }

@@ -27,10 +27,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 #endif
             using var stream = new FileStream(filePath, FileMode.Open);
 
-            AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentAsync("prebuilt-read", stream);
-
-            await operation.WaitForCompletionAsync();
-
+            AnalyzeDocumentOperation operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-read", stream);
             AnalyzeResult result = operation.Value;
 
             Console.WriteLine("Detected languages:");

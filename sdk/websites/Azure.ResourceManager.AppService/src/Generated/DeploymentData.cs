@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="authorEmail"> Author email. </param>
         /// <param name="startOn"> Start time. </param>
         /// <param name="endOn"> End time. </param>
-        /// <param name="active"> True if deployment is currently active, false if completed and null if not started. </param>
+        /// <param name="isActive"> True if deployment is currently active, false if completed and null if not started. </param>
         /// <param name="details"> Details on deployment. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal DeploymentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? status, string message, string author, string deployer, string authorEmail, DateTimeOffset? startOn, DateTimeOffset? endOn, bool? active, string details, string kind) : base(id, name, resourceType, systemData)
+        internal DeploymentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? status, string message, string author, string deployer, string authorEmail, DateTimeOffset? startOn, DateTimeOffset? endOn, bool? isActive, string details, string kind) : base(id, name, resourceType, systemData)
         {
             Status = status;
             Message = message;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AppService
             AuthorEmail = authorEmail;
             StartOn = startOn;
             EndOn = endOn;
-            Active = active;
+            IsActive = isActive;
             Details = details;
             Kind = kind;
         }
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> End time. </summary>
         public DateTimeOffset? EndOn { get; set; }
         /// <summary> True if deployment is currently active, false if completed and null if not started. </summary>
-        public bool? Active { get; set; }
+        public bool? IsActive { get; set; }
         /// <summary> Details on deployment. </summary>
         public string Details { get; set; }
         /// <summary> Kind of resource. </summary>

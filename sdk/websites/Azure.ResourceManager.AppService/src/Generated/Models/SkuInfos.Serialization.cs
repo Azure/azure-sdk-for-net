@@ -15,13 +15,18 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static SkuInfos DeserializeSkuInfos(JsonElement element)
         {
-            Optional<string> resourceType = default;
+            Optional<ResourceType> resourceType = default;
             Optional<IReadOnlyList<GlobalCsmSkuDescription>> skus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"))
                 {
-                    resourceType = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    resourceType = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("skus"))
@@ -40,7 +45,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new SkuInfos(resourceType.Value, Optional.ToList(skus));
+            return new SkuInfos(Optional.ToNullable(resourceType), Optional.ToList(skus));
         }
     }
 }

@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.Grafana
         /// <param name="location"> The location. </param>
         /// <param name="sku"> The Sku of the grafana resource. </param>
         /// <param name="properties"> Properties specific to the grafana resource. </param>
-        /// <param name="identity"> The managed identity of the grafana resource. Current supported identity types: None, SystemAssigned. </param>
-        internal ManagedGrafanaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceSku sku, ManagedGrafanaProperties properties, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="identity"> The managed identity of the grafana resource. </param>
+        internal ManagedGrafanaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedGrafanaSku sku, ManagedGrafanaProperties properties, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Properties = properties;
@@ -39,17 +39,17 @@ namespace Azure.ResourceManager.Grafana
         }
 
         /// <summary> The Sku of the grafana resource. </summary>
-        internal ResourceSku Sku { get; set; }
+        internal ManagedGrafanaSku Sku { get; set; }
         /// <summary> Gets or sets the sku name. </summary>
         public string SkuName
         {
             get => Sku is null ? default : Sku.Name;
-            set => Sku = new ResourceSku(value);
+            set => Sku = new ManagedGrafanaSku(value);
         }
 
         /// <summary> Properties specific to the grafana resource. </summary>
         public ManagedGrafanaProperties Properties { get; set; }
-        /// <summary> The managed identity of the grafana resource. Current supported identity types: None, SystemAssigned. </summary>
+        /// <summary> The managed identity of the grafana resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
     }
 }

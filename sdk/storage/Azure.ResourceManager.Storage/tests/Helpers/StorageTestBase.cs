@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
             Assert.NotNull(account.Id.Name);
             Assert.NotNull(account.Data.Location);
             Assert.NotNull(account.Data);
-            Assert.NotNull(account.Data.CreateOn);
+            Assert.NotNull(account.Data.CreatedOn);
             Assert.NotNull(account.Data.Sku);
             Assert.NotNull(account.Data.Sku.Name);
             Assert.NotNull(account.Data.Sku.Tier);

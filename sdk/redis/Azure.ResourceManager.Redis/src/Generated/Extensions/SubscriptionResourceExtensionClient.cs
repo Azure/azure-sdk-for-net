@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Redis
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _redisRedisClientDiagnostics;
-        private RedisRestOperations _redisRedisRestClient;
+        private ClientDiagnostics _redisClientDiagnostics;
+        private RedisRestOperations _redisRestClient;
         private ClientDiagnostics _asyncOperationStatusClientDiagnostics;
         private AsyncOperationStatusRestOperations _asyncOperationStatusRestClient;
 
@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.Redis
         {
         }
 
-        private ClientDiagnostics RedisRedisClientDiagnostics => _redisRedisClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Redis", RedisResource.ResourceType.Namespace, Diagnostics);
-        private RedisRestOperations RedisRedisRestClient => _redisRedisRestClient ??= new RedisRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(RedisResource.ResourceType));
+        private ClientDiagnostics RedisClientDiagnostics => _redisClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Redis", RedisResource.ResourceType.Namespace, Diagnostics);
+        private RedisRestOperations RedisRestClient => _redisRestClient ??= new RedisRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(RedisResource.ResourceType));
         private ClientDiagnostics AsyncOperationStatusClientDiagnostics => _asyncOperationStatusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Redis", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private AsyncOperationStatusRestOperations AsyncOperationStatusRestClient => _asyncOperationStatusRestClient ??= new AsyncOperationStatusRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
@@ -55,13 +55,13 @@ namespace Azure.ResourceManager.Redis
         /// </summary>
         /// <param name="content"> Parameters supplied to the CheckNameAvailability Redis operation. The only supported resource type is &apos;Microsoft.Cache/redis&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> CheckRedisNameAvailabilityAsync(CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> CheckRedisNameAvailabilityAsync(RedisNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = RedisRedisClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckRedisNameAvailability");
+            using var scope = RedisClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckRedisNameAvailability");
             scope.Start();
             try
             {
-                var response = await RedisRedisRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
+                var response = await RedisRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -78,13 +78,13 @@ namespace Azure.ResourceManager.Redis
         /// </summary>
         /// <param name="content"> Parameters supplied to the CheckNameAvailability Redis operation. The only supported resource type is &apos;Microsoft.Cache/redis&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response CheckRedisNameAvailability(CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response CheckRedisNameAvailability(RedisNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = RedisRedisClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckRedisNameAvailability");
+            using var scope = RedisClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckRedisNameAvailability");
             scope.Start();
             try
             {
-                var response = RedisRedisRestClient.CheckNameAvailability(Id.SubscriptionId, content, cancellationToken);
+                var response = RedisRestClient.CheckNameAvailability(Id.SubscriptionId, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -101,15 +101,15 @@ namespace Azure.ResourceManager.Redis
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="RedisResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RedisResource> GetRedisAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<RedisResource> GetAllRedisAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<RedisResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = RedisRedisClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRedis");
+                using var scope = RedisClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAllRedis");
                 scope.Start();
                 try
                 {
-                    var response = await RedisRedisRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await RedisRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new RedisResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -120,11 +120,11 @@ namespace Azure.ResourceManager.Redis
             }
             async Task<Page<RedisResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = RedisRedisClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRedis");
+                using var scope = RedisClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAllRedis");
                 scope.Start();
                 try
                 {
-                    var response = await RedisRedisRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await RedisRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new RedisResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -143,15 +143,15 @@ namespace Azure.ResourceManager.Redis
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RedisResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RedisResource> GetRedis(CancellationToken cancellationToken = default)
+        public virtual Pageable<RedisResource> GetAllRedis(CancellationToken cancellationToken = default)
         {
             Page<RedisResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = RedisRedisClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRedis");
+                using var scope = RedisClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAllRedis");
                 scope.Start();
                 try
                 {
-                    var response = RedisRedisRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    var response = RedisRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new RedisResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -162,11 +162,11 @@ namespace Azure.ResourceManager.Redis
             }
             Page<RedisResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = RedisRedisClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRedis");
+                using var scope = RedisClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAllRedis");
                 scope.Start();
                 try
                 {
-                    var response = RedisRedisRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    var response = RedisRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new RedisResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Redis
         /// <param name="location"> The location at which operation was triggered. </param>
         /// <param name="operationId"> The ID of asynchronous operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<OperationStatus>> GetAsyncOperationStatusAsync(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RedisOperationStatus>> GetAsyncOperationStatusAsync(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
         {
             using var scope = AsyncOperationStatusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAsyncOperationStatus");
             scope.Start();
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Redis
         /// <param name="location"> The location at which operation was triggered. </param>
         /// <param name="operationId"> The ID of asynchronous operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<OperationStatus> GetAsyncOperationStatus(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
+        public virtual Response<RedisOperationStatus> GetAsyncOperationStatus(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
         {
             using var scope = AsyncOperationStatusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAsyncOperationStatus");
             scope.Start();

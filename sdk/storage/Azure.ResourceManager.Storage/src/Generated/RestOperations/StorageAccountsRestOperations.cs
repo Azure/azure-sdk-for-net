@@ -606,7 +606,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<StorageAccountListKeysResult>> ListKeysAsync(string subscriptionId, string resourceGroupName, string accountName, StorageListKeyExpand? expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<StorageAccountGetKeysResult>> ListKeysAsync(string subscriptionId, string resourceGroupName, string accountName, StorageListKeyExpand? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -618,9 +618,9 @@ namespace Azure.ResourceManager.Storage
             {
                 case 200:
                     {
-                        StorageAccountListKeysResult value = default;
+                        StorageAccountGetKeysResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = StorageAccountListKeysResult.DeserializeStorageAccountListKeysResult(document.RootElement);
+                        value = StorageAccountGetKeysResult.DeserializeStorageAccountGetKeysResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -636,7 +636,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<StorageAccountListKeysResult> ListKeys(string subscriptionId, string resourceGroupName, string accountName, StorageListKeyExpand? expand = null, CancellationToken cancellationToken = default)
+        public Response<StorageAccountGetKeysResult> ListKeys(string subscriptionId, string resourceGroupName, string accountName, StorageListKeyExpand? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -648,9 +648,9 @@ namespace Azure.ResourceManager.Storage
             {
                 case 200:
                     {
-                        StorageAccountListKeysResult value = default;
+                        StorageAccountGetKeysResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = StorageAccountListKeysResult.DeserializeStorageAccountListKeysResult(document.RootElement);
+                        value = StorageAccountGetKeysResult.DeserializeStorageAccountGetKeysResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -691,7 +691,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<StorageAccountListKeysResult>> RegenerateKeyAsync(string subscriptionId, string resourceGroupName, string accountName, StorageAccountRegenerateKeyContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<StorageAccountGetKeysResult>> RegenerateKeyAsync(string subscriptionId, string resourceGroupName, string accountName, StorageAccountRegenerateKeyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -704,9 +704,9 @@ namespace Azure.ResourceManager.Storage
             {
                 case 200:
                     {
-                        StorageAccountListKeysResult value = default;
+                        StorageAccountGetKeysResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = StorageAccountListKeysResult.DeserializeStorageAccountListKeysResult(document.RootElement);
+                        value = StorageAccountGetKeysResult.DeserializeStorageAccountGetKeysResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -722,7 +722,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<StorageAccountListKeysResult> RegenerateKey(string subscriptionId, string resourceGroupName, string accountName, StorageAccountRegenerateKeyContent content, CancellationToken cancellationToken = default)
+        public Response<StorageAccountGetKeysResult> RegenerateKey(string subscriptionId, string resourceGroupName, string accountName, StorageAccountRegenerateKeyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -735,9 +735,9 @@ namespace Azure.ResourceManager.Storage
             {
                 case 200:
                     {
-                        StorageAccountListKeysResult value = default;
+                        StorageAccountGetKeysResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = StorageAccountListKeysResult.DeserializeStorageAccountListKeysResult(document.RootElement);
+                        value = StorageAccountGetKeysResult.DeserializeStorageAccountGetKeysResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -778,7 +778,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ListAccountSasResponse>> ListAccountSasAsync(string subscriptionId, string resourceGroupName, string accountName, AccountSasContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<GetAccountSasResult>> ListAccountSasAsync(string subscriptionId, string resourceGroupName, string accountName, AccountSasContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -791,9 +791,9 @@ namespace Azure.ResourceManager.Storage
             {
                 case 200:
                     {
-                        ListAccountSasResponse value = default;
+                        GetAccountSasResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ListAccountSasResponse.DeserializeListAccountSasResponse(document.RootElement);
+                        value = GetAccountSasResult.DeserializeGetAccountSasResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -809,7 +809,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ListAccountSasResponse> ListAccountSas(string subscriptionId, string resourceGroupName, string accountName, AccountSasContent content, CancellationToken cancellationToken = default)
+        public Response<GetAccountSasResult> ListAccountSas(string subscriptionId, string resourceGroupName, string accountName, AccountSasContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -822,9 +822,9 @@ namespace Azure.ResourceManager.Storage
             {
                 case 200:
                     {
-                        ListAccountSasResponse value = default;
+                        GetAccountSasResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ListAccountSasResponse.DeserializeListAccountSasResponse(document.RootElement);
+                        value = GetAccountSasResult.DeserializeGetAccountSasResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -865,7 +865,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ListServiceSasResponse>> ListServiceSasAsync(string subscriptionId, string resourceGroupName, string accountName, ServiceSasContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<GetServiceSasResult>> ListServiceSasAsync(string subscriptionId, string resourceGroupName, string accountName, ServiceSasContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -878,9 +878,9 @@ namespace Azure.ResourceManager.Storage
             {
                 case 200:
                     {
-                        ListServiceSasResponse value = default;
+                        GetServiceSasResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ListServiceSasResponse.DeserializeListServiceSasResponse(document.RootElement);
+                        value = GetServiceSasResult.DeserializeGetServiceSasResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -896,7 +896,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ListServiceSasResponse> ListServiceSas(string subscriptionId, string resourceGroupName, string accountName, ServiceSasContent content, CancellationToken cancellationToken = default)
+        public Response<GetServiceSasResult> ListServiceSas(string subscriptionId, string resourceGroupName, string accountName, ServiceSasContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -909,9 +909,9 @@ namespace Azure.ResourceManager.Storage
             {
                 case 200:
                     {
-                        ListServiceSasResponse value = default;
+                        GetServiceSasResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ListServiceSasResponse.DeserializeListServiceSasResponse(document.RootElement);
+                        value = GetServiceSasResult.DeserializeGetServiceSasResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

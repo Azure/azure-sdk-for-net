@@ -1,12 +1,8 @@
 # Release History
 
-## 1.1.0 (Unreleased)
+## 1.2.0-beta.1 (Unreleased)
 
 ### Features Added
-- Added support to build a custom Teams endpoint using Microsoft 365 Teams identities:
-    - Added `GetTokenForTeamsUser(GetTokenForTeamsUserOptions options, CancellationToken cancellationToken = default)` method that provides the ability to exchange an Azure AD access token of a Teams user for a Communication Identity access token to `CommunicationIdentityClient`.
-- Removed `ServiceVersion.V2021_10_31_preview`
-- Added a new API version `ServiceVersion.V2022_06_01` that is now the default API version
 
 ### Breaking Changes
 
@@ -14,8 +10,16 @@
 
 ### Other Changes
 
+## 1.1.0 (2022-07-19)
+
+### Features Added
+- Added support to integrate communication as Teams user with Azure Communication Services:
+    - Added `GetTokenForTeamsUser(GetTokenForTeamsUserOptions options, CancellationToken cancellationToken = default)` method that provides the ability to exchange an Azure AD access token of a Teams user for a Communication Identity access token to `CommunicationIdentityClient`.
+- Removed `ServiceVersion.V2021_10_31_preview`
+- Added a new API version `ServiceVersion.V2022_06_01` that is now the default API version
+
 ## 1.1.0-beta.1 (2021-10-29)
-- Updated version of Identity API to enable to build custom Teams endpoint using M365 Teams identities
+- Updated version of Identity API to enable to to integrate communication as Teams user with Azure Communication Services
 
 ## 1.0.1 (2021-05-25)
 - Dependency versions updated.

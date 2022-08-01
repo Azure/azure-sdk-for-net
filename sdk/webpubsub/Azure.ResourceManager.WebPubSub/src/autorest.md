@@ -50,6 +50,10 @@ rename-rules:
 
 override-operation-name:
   WebPubSub_CheckNameAvailability: CheckWebPubSubNameAvailability
+
+rename-mapping:
+  RegenerateKeyParameters: WebPubSubRegenerateKeyContent
+
 directive:
   - rename-model:
       from: PrivateLinkResource

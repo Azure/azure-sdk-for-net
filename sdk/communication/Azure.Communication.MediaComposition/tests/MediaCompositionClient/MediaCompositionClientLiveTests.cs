@@ -302,7 +302,7 @@ namespace Azure.Communication.MediaComposition.Tests
                 Resolution = new(1920, 1080),
                 Grid = gridLayoutOptions
             };
-            var response = await mediaCompositionClient.UpdateAsync(mediaCompositionId, updatedLayout);
+            var response = await mediaCompositionClient.UpdateLayoutAsync(mediaCompositionId, updatedLayout);
             Assert.AreEqual(response.Value.Layout.Grid.Columns, updatedLayout.Grid.Columns);
             Assert.AreEqual(response.Value.Layout.Grid.Rows, updatedLayout.Grid.Rows);
             Assert.AreEqual(response.Value.Layout.Grid.InputIds.Count, 1);
@@ -321,7 +321,7 @@ namespace Azure.Communication.MediaComposition.Tests
             try
             {
                 var mediaCompositionClient = CreateClient();
-                var response = await mediaCompositionClient.UpdateAsync("nonexistentMediaCompositionId");
+                var response = await mediaCompositionClient.UpdateLayoutAsync("nonexistentMediaCompositionId", null);
             }
             catch (RequestFailedException ex)
             {
@@ -331,6 +331,199 @@ namespace Azure.Communication.MediaComposition.Tests
                 return;
             }
             Assert.Fail("An exception should have been thrown trying to update a non-existent media composition.");
+        }
+
+        [Test]
+        public async Task UpsertInputsMediaCompositionAsync()
+        {
+            var mediaCompositionClient = CreateClient();
+            await CreateMediaCompositionHelper(mediaCompositionClient);
+            var inputsToUpsert = new Dictionary<string, MediaInput>()
+            {
+                ["james"] = new()
+                {
+                    Participant = new(
+                        id: new() { MicrosoftTeamsUser = new("f3ba9014-6dca-4456-8ec0-fa03cfa2b70p") },
+                        call: "teamsMeeting")
+                    {
+                        PlaceholderImageUri = "https://imageendpoint"
+                    }
+                }
+            };
+            var response = await mediaCompositionClient.UpsertInputsAsync(mediaCompositionId, inputsToUpsert);
+            Assert.AreEqual(response.Value.Id, mediaCompositionId);
+            response.Value.Inputs.TryGetValue("james", out var james);
+            Assert.IsNotNull(james);
+            response.Value.Inputs.TryGetValue("presenter", out var presenter);
+            Assert.IsNotNull(presenter);
+            await mediaCompositionClient.DeleteAsync(mediaCompositionId);
+        }
+
+        [Test]
+        public async Task UpsertInputsMediaCompositionAsyncUpdateExistingInput()
+        {
+            var mediaCompositionClient = CreateClient();
+            await CreateMediaCompositionHelper(mediaCompositionClient);
+            var updatedUserId = "f3ba9014-6dca-4456-8ec0-fa03cfa2b7b8";
+            var inputsToUpsert = new Dictionary<string, MediaInput>()
+            {
+                ["presenter"] = new()
+                {
+                    Participant = new(
+                       id: new() { MicrosoftTeamsUser = new(updatedUserId) },
+                       call: "teamsMeeting")
+                    {
+                        PlaceholderImageUri = "https://imageendpoint"
+                    }
+                },
+            };
+            var response = await mediaCompositionClient.UpsertInputsAsync(mediaCompositionId, inputsToUpsert);
+            Assert.AreEqual(response.Value.Id, mediaCompositionId);
+            response.Value.Inputs.TryGetValue("presenter", out var presenter);
+            Assert.IsNotNull(presenter);
+            Assert.AreEqual(presenter?.Participant.Id.MicrosoftTeamsUser.UserId, updatedUserId);
+            await mediaCompositionClient.DeleteAsync(mediaCompositionId);
+        }
+
+        [Test]
+        public async Task RemoveInputsMediaCompositionAsync()
+        {
+            var mediaCompositionClient = CreateClient();
+            await CreateMediaCompositionHelper(mediaCompositionClient);
+            var gridLayoutOptions = new GridLayoutOptions(2, 2);
+            gridLayoutOptions.InputIds.Add(new List<string> { "teamsMeeting" });
+            var updatedLayout = new MediaCompositionLayout()
+            {
+                Resolution = new(1920, 1080),
+                Grid = gridLayoutOptions
+            };
+            await mediaCompositionClient.UpdateLayoutAsync(mediaCompositionId, updatedLayout);
+            var inputIdsToRemove = new List<string>()
+            {
+                "presenter", "support"
+            };
+            var response = await mediaCompositionClient.RemoveInputsAsync(mediaCompositionId, inputIdsToRemove);
+            Assert.AreEqual(response.Value.Id, mediaCompositionId);
+            response.Value.Inputs.TryGetValue("presenter", out var presenter);
+            Assert.IsNull(presenter);
+            response.Value.Inputs.TryGetValue("support", out var support);
+            Assert.IsNull(support);
+            await mediaCompositionClient.DeleteAsync(mediaCompositionId);
+        }
+
+        [Test]
+        public async Task RemoveTeamsMeetingInputShouldThrow()
+        {
+            try
+            {
+                var mediaCompositionClient = CreateClient();
+                await CreateMediaCompositionHelper(mediaCompositionClient);
+                var inputIdsToRemove = new List<string>()
+                {
+                    "teamsMeeting"
+                };
+                var response = await mediaCompositionClient.RemoveInputsAsync(mediaCompositionId, inputIdsToRemove);
+            }
+            catch (RequestFailedException ex)
+            {
+                Assert.NotNull(ex.Message);
+                Assert.AreEqual(ex.Status, 400);
+                Console.WriteLine(ex.Message);
+                return;
+            }
+            Assert.Fail("An exception should have been thrown trying to update a non-existent media composition.");
+        }
+
+        [Test]
+        public async Task UpsertInputsForNonExistentMediaCompositionShouldThrow()
+        {
+            try
+            {
+                var mediaCompositionClient = CreateClient();
+                var inputsToUpsert = new Dictionary<string, MediaInput>()
+                {
+                    ["james"] = new()
+                    {
+                        Participant = new(
+                       id: new() { MicrosoftTeamsUser = new("f3ba9014-6dca-4456-8ec0-fa03cfa2b70p") },
+                       call: "teamsMeeting")
+                        {
+                            PlaceholderImageUri = "https://imageendpoint"
+                        }
+                    }
+                };
+                var response = await mediaCompositionClient.UpsertInputsAsync("nonexistentMediaCompositionId", inputsToUpsert);
+            }
+            catch (RequestFailedException ex)
+            {
+                Assert.NotNull(ex.Message);
+                Assert.AreEqual(ex.Status, 404);
+                Console.WriteLine(ex.Message);
+                return;
+            }
+            Assert.Fail("An exception should have been thrown trying to add inputs to a non-existent media composition.");
+        }
+
+        [Test]
+        public async Task UpsertOutputsMediaCompositionAsync()
+        {
+            var mediaCompositionClient = CreateClient();
+            await CreateMediaCompositionHelper(mediaCompositionClient);
+            var outputsToUpsert = new Dictionary<string, MediaOutput>()
+            {
+                {
+                    "youtube",
+                    new()
+                    {
+                        Rtmp = new("key", new(1920, 1080), "rtmp://a.rtmp.youtube.com/live2")
+                    }
+                }
+            };
+            var response = await mediaCompositionClient.UpsertOutputsAsync(mediaCompositionId, outputsToUpsert);
+            Assert.AreEqual(response.Value.Id, mediaCompositionId);
+            response.Value.Outputs.TryGetValue("youtube", out var youtube);
+            Assert.IsNotNull(youtube);
+            response.Value.Outputs.TryGetValue("acsGroupCall", out var acsGroupCall);
+            Assert.IsNotNull(acsGroupCall);
+            await mediaCompositionClient.DeleteAsync(mediaCompositionId);
+        }
+
+        [Test]
+        public async Task RemoveOutputsMediaCompositionAsync()
+        {
+            var mediaCompositionClient = CreateClient();
+            await CreateMediaCompositionHelper(mediaCompositionClient);
+            var outputIdsToRemove = new List<string>()
+            {
+                "acsGroupCall"
+            };
+            var response = await mediaCompositionClient.RemoveOutputsAsync(mediaCompositionId, outputIdsToRemove);
+            Assert.AreEqual(response.Value.Id, mediaCompositionId);
+            response.Value.Outputs.TryGetValue("acsGroupCall", out var acsGroupCall);
+            Assert.IsNull(acsGroupCall);
+            await mediaCompositionClient.DeleteAsync(mediaCompositionId);
+        }
+
+        [Test]
+        public async Task RemoveOutputsForNonExistentMediaCompositionShouldThrow()
+        {
+            try
+            {
+                var mediaCompositionClient = CreateClient();
+                var outputIdsToRemove = new List<string>()
+                {
+                    "acsGroupCall"
+                };
+                var response = await mediaCompositionClient.RemoveOutputsAsync("nonexistentMediaCompositionId", outputIdsToRemove);
+            }
+            catch (RequestFailedException ex)
+            {
+                Assert.NotNull(ex.Message);
+                Assert.AreEqual(ex.Status, 404);
+                Console.WriteLine(ex.Message);
+                return;
+            }
+            Assert.Fail("An exception should have been thrown trying to remove outputs from a non-existent media composition.");
         }
 
         [Test]

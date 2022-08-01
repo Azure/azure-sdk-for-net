@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.Media
         /// <param name="manifestName"> The manifest file name. If not provided, the service will generate one automatically. </param>
         /// <param name="hls"> HTTP Live Streaming (HLS) packing setting for the live output. </param>
         /// <param name="outputSnapTime"> The initial timestamp that the live output will start at, any content before this value will not be archived. </param>
-        /// <param name="created"> The creation time the live output. </param>
-        /// <param name="lastModified"> The time the live output was last modified. </param>
+        /// <param name="createdOn"> The creation time the live output. </param>
+        /// <param name="lastModifiedOn"> The time the live output was last modified. </param>
         /// <param name="provisioningState"> The provisioning state of the live output. </param>
         /// <param name="resourceState"> The resource state of the live output. </param>
-        internal LiveOutputData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string assetName, TimeSpan? archiveWindowLength, string manifestName, Hls hls, long? outputSnapTime, DateTimeOffset? created, DateTimeOffset? lastModified, string provisioningState, LiveOutputResourceState? resourceState) : base(id, name, resourceType, systemData)
+        internal LiveOutputData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string assetName, TimeSpan? archiveWindowLength, string manifestName, Hls hls, long? outputSnapTime, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string provisioningState, LiveOutputResourceState? resourceState) : base(id, name, resourceType, systemData)
         {
             Description = description;
             AssetName = assetName;
@@ -43,8 +43,8 @@ namespace Azure.ResourceManager.Media
             ManifestName = manifestName;
             Hls = hls;
             OutputSnapTime = outputSnapTime;
-            Created = created;
-            LastModified = lastModified;
+            CreatedOn = createdOn;
+            LastModifiedOn = lastModifiedOn;
             ProvisioningState = provisioningState;
             ResourceState = resourceState;
         }
@@ -74,9 +74,9 @@ namespace Azure.ResourceManager.Media
         /// <summary> The initial timestamp that the live output will start at, any content before this value will not be archived. </summary>
         public long? OutputSnapTime { get; set; }
         /// <summary> The creation time the live output. </summary>
-        public DateTimeOffset? Created { get; }
+        public DateTimeOffset? CreatedOn { get; }
         /// <summary> The time the live output was last modified. </summary>
-        public DateTimeOffset? LastModified { get; }
+        public DateTimeOffset? LastModifiedOn { get; }
         /// <summary> The provisioning state of the live output. </summary>
         public string ProvisioningState { get; }
         /// <summary> The resource state of the live output. </summary>

@@ -58,17 +58,40 @@ namespace Azure.ResourceManager.Resources
         /// <summary> The location of the policy assignment. Only required when utilizing managed identity. </summary>
         public AzureLocation? Location { get; set; }
 
+#pragma warning disable CS0618 // This type is obsolete and will be removed in a future release.
         private SystemAssignedServiceIdentity _identity;
         /// <summary> The managed identity associated with the policy assignment. </summary>
+        [Obsolete("This property is obsolete and will be removed in a future release. Please use ManagedIdentity.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public SystemAssignedServiceIdentity Identity
         {
-            get => _identity ??= ManagedIdentity == null ? null : new SystemAssignedServiceIdentity(ManagedIdentity.PrincipalId, ManagedIdentity.TenantId, ManagedIdentity.ManagedServiceIdentityType.ToString());
-            set { _identity = value; ManagedIdentity = value == null ? null : new ManagedServiceIdentity(value.SystemAssignedServiceIdentityType.ToString()); }
+            get => _identity;
+            set
+            {
+                _identity = value;
+                _managedIdentity = value == null ? null : _identity.Identity;
+            }
         }
 
+        private ManagedServiceIdentity _managedIdentity;
         /// <summary> The managed identity associated with the policy assignment. </summary>
-        public ManagedServiceIdentity ManagedIdentity { get; set; }
+        public ManagedServiceIdentity ManagedIdentity
+        {
+            get => _managedIdentity;
+            set
+            {
+                _managedIdentity = value;
+                if (value == null)
+                    _identity = null;
+                else
+                {
+                    if (_identity == null)
+                        _identity = new SystemAssignedServiceIdentity(value.PrincipalId, value.TenantId, value.ManagedServiceIdentityType.ToString());
+                    _identity.Identity = value;
+                }
+            }
+        }
+#pragma warning restore CS0618 // This type is obsolete and will be removed in a future release.
 
         /// <summary> The display name of the policy assignment. </summary>
         public string DisplayName { get; set; }

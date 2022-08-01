@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="providerId"/> or <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerId"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<QuotaRequestDetailsData>> GetAsync(string subscriptionId, string providerId, AzureLocation location, string id, CancellationToken cancellationToken = default)
+        public async Task<Response<QuotaRequestDetailData>> GetAsync(string subscriptionId, string providerId, AzureLocation location, string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(providerId, nameof(providerId));
@@ -79,13 +79,13 @@ namespace Azure.ResourceManager.Reservations
             {
                 case 200:
                     {
-                        QuotaRequestDetailsData value = default;
+                        QuotaRequestDetailData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = QuotaRequestDetailsData.DeserializeQuotaRequestDetailsData(document.RootElement);
+                        value = QuotaRequestDetailData.DeserializeQuotaRequestDetailData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((QuotaRequestDetailsData)null, message.Response);
+                    return Response.FromValue((QuotaRequestDetailData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="providerId"/> or <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerId"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<QuotaRequestDetailsData> Get(string subscriptionId, string providerId, AzureLocation location, string id, CancellationToken cancellationToken = default)
+        public Response<QuotaRequestDetailData> Get(string subscriptionId, string providerId, AzureLocation location, string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(providerId, nameof(providerId));
@@ -111,13 +111,13 @@ namespace Azure.ResourceManager.Reservations
             {
                 case 200:
                     {
-                        QuotaRequestDetailsData value = default;
+                        QuotaRequestDetailData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = QuotaRequestDetailsData.DeserializeQuotaRequestDetailsData(document.RootElement);
+                        value = QuotaRequestDetailData.DeserializeQuotaRequestDetailData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((QuotaRequestDetailsData)null, message.Response);
+                    return Response.FromValue((QuotaRequestDetailData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

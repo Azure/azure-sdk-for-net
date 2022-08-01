@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ContainerServicePrivateLinkServiceConnectionState DeserializeContainerServicePrivateLinkServiceConnectionState(JsonElement element)
         {
-            Optional<ConnectionStatus> status = default;
+            Optional<ContainerServicePrivateLinkServiceConnectionStatus> status = default;
             Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = new ConnectionStatus(property.Value.GetString());
+                    status = new ContainerServicePrivateLinkServiceConnectionStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("description"))
