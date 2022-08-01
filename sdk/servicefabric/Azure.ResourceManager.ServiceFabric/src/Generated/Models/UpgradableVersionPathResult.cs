@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    /// <summary> The list of intermediate cluster code versions for an upgrade or downgrade. Or minimum and maximum upgradable version if no target was given. </summary>
+    /// <summary>
+    /// The list of intermediate cluster code versions for an upgrade or downgrade. Or minimum and maximum upgradable version if no target was given
+    /// Serialized Name: UpgradableVersionPathResult
+    /// </summary>
     public partial class UpgradableVersionPathResult
     {
         /// <summary> Initializes a new instance of UpgradableVersionPathResult. </summary>
@@ -20,13 +23,13 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         }
 
         /// <summary> Initializes a new instance of UpgradableVersionPathResult. </summary>
-        /// <param name="supportedPath"></param>
+        /// <param name="supportedPath"> Serialized Name: UpgradableVersionPathResult.supportedPath. </param>
         internal UpgradableVersionPathResult(IReadOnlyList<string> supportedPath)
         {
             SupportedPath = supportedPath;
         }
 
-        /// <summary> Gets the supported path. </summary>
+        /// <summary> Serialized Name: UpgradableVersionPathResult.supportedPath. </summary>
         public IReadOnlyList<string> SupportedPath { get; }
     }
 }

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary>
     /// Describes the basic properties of all codecs.
     /// Please note <see cref="CodecBasicProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AacAudio"/>, <see cref="AudiocommonProperties"/>, <see cref="CopyAudio"/>, <see cref="CopyVideo"/>, <see cref="H264Video"/>, <see cref="H265Video"/>, <see cref="ImageBasicProperties"/>, <see cref="JpgImage"/>, <see cref="PngImage"/> and <see cref="InputVideoEncodingProperties"/>.
+    /// The available derived classes include <see cref="AacAudio"/>, <see cref="AudioCommonProperties"/>, <see cref="CopyAudio"/>, <see cref="CopyVideo"/>, <see cref="H264Video"/>, <see cref="H265Video"/>, <see cref="ImageBasicProperties"/>, <see cref="JpgImage"/>, <see cref="PngImage"/> and <see cref="InputVideoEncodingProperties"/>.
     /// </summary>
     public partial class CodecBasicProperties
     {

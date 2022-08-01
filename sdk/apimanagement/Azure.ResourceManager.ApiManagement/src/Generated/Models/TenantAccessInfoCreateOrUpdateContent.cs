@@ -22,6 +22,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Secondary access key. This property will not be filled on &apos;GET&apos; operations! Use &apos;/listSecrets&apos; POST request to get the value. </summary>
         public string SecondaryKey { get; set; }
         /// <summary> Determines whether direct access is enabled. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
     }
 }

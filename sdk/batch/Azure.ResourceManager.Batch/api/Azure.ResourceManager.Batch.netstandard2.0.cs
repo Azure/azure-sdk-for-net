@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.Batch
         public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.ApplicationPackageReference> ApplicationPackages { get { throw null; } }
         public Azure.ResourceManager.Batch.Models.AutoScaleRun AutoScaleRun { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Batch.Models.CertificateReference> Certificates { get { throw null; } }
-        public System.DateTimeOffset? CreationOn { get { throw null; } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public int? CurrentDedicatedNodes { get { throw null; } }
         public int? CurrentLowPriorityNodes { get { throw null; } }
         public Azure.ResourceManager.Batch.Models.DeploymentConfiguration DeploymentConfiguration { get { throw null; } set { } }
