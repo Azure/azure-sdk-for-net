@@ -45,10 +45,8 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="expand"> May be used to expand the planInformation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ReservationOrderResource>> GetReservationOrderAsync(this TenantResource tenantResource, string reservationOrderId, string expand = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<ReservationOrderResource>> GetReservationOrderAsync(this TenantResource tenantResource, Guid reservationOrderId, string expand = null, CancellationToken cancellationToken = default)
         {
             return await tenantResource.GetReservationOrders().GetAsync(reservationOrderId, expand, cancellationToken).ConfigureAwait(false);
         }
@@ -62,10 +60,8 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="expand"> May be used to expand the planInformation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ReservationOrderResource> GetReservationOrder(this TenantResource tenantResource, string reservationOrderId, string expand = null, CancellationToken cancellationToken = default)
+        public static Response<ReservationOrderResource> GetReservationOrder(this TenantResource tenantResource, Guid reservationOrderId, string expand = null, CancellationToken cancellationToken = default)
         {
             return tenantResource.GetReservationOrders().Get(reservationOrderId, expand, cancellationToken);
         }
@@ -117,7 +113,7 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="content"> Information needed for calculate or purchase reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<Response<CalculatePriceResult>> CalculateReservationOrderAsync(this TenantResource tenantResource, PurchaseRequestContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<CalculatePriceResult>> CalculateReservationOrderAsync(this TenantResource tenantResource, ReservationPurchaseContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -133,7 +129,7 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="content"> Information needed for calculate or purchase reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static Response<CalculatePriceResult> CalculateReservationOrder(this TenantResource tenantResource, PurchaseRequestContent content, CancellationToken cancellationToken = default)
+        public static Response<CalculatePriceResult> CalculateReservationOrder(this TenantResource tenantResource, ReservationPurchaseContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -221,18 +217,18 @@ namespace Azure.ResourceManager.Reservations
             );
         }
 
-        /// <summary> Gets a collection of ReservationQuotumResources in the SubscriptionResource. </summary>
+        /// <summary> Gets a collection of ReservationQuotaResources in the SubscriptionResource. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="providerId"> Azure resource provider ID. </param>
         /// <param name="location"> Azure region. </param>
         /// <exception cref="ArgumentException"> <paramref name="providerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="providerId"/> is null. </exception>
-        /// <returns> An object representing collection of ReservationQuotumResources and their operations over a ReservationQuotumResource. </returns>
-        public static ReservationQuotumCollection GetReservationQuota(this SubscriptionResource subscriptionResource, string providerId, AzureLocation location)
+        /// <returns> An object representing collection of ReservationQuotaResources and their operations over a ReservationQuotaResource. </returns>
+        public static ReservationQuotaCollection GetAllReservationQuota(this SubscriptionResource subscriptionResource, string providerId, AzureLocation location)
         {
             Argument.AssertNotNullOrEmpty(providerId, nameof(providerId));
 
-            return GetExtensionClient(subscriptionResource).GetReservationQuota(providerId, location);
+            return GetExtensionClient(subscriptionResource).GetAllReservationQuota(providerId, location);
         }
 
         /// <summary>
@@ -248,9 +244,9 @@ namespace Azure.ResourceManager.Reservations
         /// <exception cref="ArgumentException"> <paramref name="providerId"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="providerId"/> or <paramref name="resourceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ReservationQuotumResource>> GetReservationQuotumAsync(this SubscriptionResource subscriptionResource, string providerId, AzureLocation location, string resourceName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ReservationQuotaResource>> GetReservationQuotaAsync(this SubscriptionResource subscriptionResource, string providerId, AzureLocation location, string resourceName, CancellationToken cancellationToken = default)
         {
-            return await subscriptionResource.GetReservationQuota(providerId, location).GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
+            return await subscriptionResource.GetAllReservationQuota(providerId, location).GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -266,9 +262,9 @@ namespace Azure.ResourceManager.Reservations
         /// <exception cref="ArgumentException"> <paramref name="providerId"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="providerId"/> or <paramref name="resourceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ReservationQuotumResource> GetReservationQuotum(this SubscriptionResource subscriptionResource, string providerId, AzureLocation location, string resourceName, CancellationToken cancellationToken = default)
+        public static Response<ReservationQuotaResource> GetReservationQuota(this SubscriptionResource subscriptionResource, string providerId, AzureLocation location, string resourceName, CancellationToken cancellationToken = default)
         {
-            return subscriptionResource.GetReservationQuota(providerId, location).Get(resourceName, cancellationToken);
+            return subscriptionResource.GetAllReservationQuota(providerId, location).Get(resourceName, cancellationToken);
         }
 
         /// <summary> Gets a collection of QuotaRequestDetailResources in the SubscriptionResource. </summary>
@@ -295,10 +291,10 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="location"> Azure region. </param>
         /// <param name="id"> Quota Request ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="providerId"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="providerId"/> or <paramref name="id"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="providerId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="providerId"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<QuotaRequestDetailResource>> GetQuotaRequestDetailAsync(this SubscriptionResource subscriptionResource, string providerId, AzureLocation location, string id, CancellationToken cancellationToken = default)
+        public static async Task<Response<QuotaRequestDetailResource>> GetQuotaRequestDetailAsync(this SubscriptionResource subscriptionResource, string providerId, AzureLocation location, Guid id, CancellationToken cancellationToken = default)
         {
             return await subscriptionResource.GetQuotaRequestDetails(providerId, location).GetAsync(id, cancellationToken).ConfigureAwait(false);
         }
@@ -313,10 +309,10 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="location"> Azure region. </param>
         /// <param name="id"> Quota Request ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="providerId"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="providerId"/> or <paramref name="id"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="providerId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="providerId"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<QuotaRequestDetailResource> GetQuotaRequestDetail(this SubscriptionResource subscriptionResource, string providerId, AzureLocation location, string id, CancellationToken cancellationToken = default)
+        public static Response<QuotaRequestDetailResource> GetQuotaRequestDetail(this SubscriptionResource subscriptionResource, string providerId, AzureLocation location, Guid id, CancellationToken cancellationToken = default)
         {
             return subscriptionResource.GetQuotaRequestDetails(providerId, location).Get(id, cancellationToken);
         }
@@ -364,7 +360,7 @@ namespace Azure.ResourceManager.Reservations
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response<AppliedReservationsData>> GetAppliedReservationsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static async Task<Response<AppliedReservationData>> GetAppliedReservationsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return await GetExtensionClient(subscriptionResource).GetAppliedReservationsAsync(cancellationToken).ConfigureAwait(false);
         }
@@ -376,7 +372,7 @@ namespace Azure.ResourceManager.Reservations
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response<AppliedReservationsData> GetAppliedReservations(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Response<AppliedReservationData> GetAppliedReservations(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetAppliedReservations(cancellationToken);
         }
@@ -419,20 +415,20 @@ namespace Azure.ResourceManager.Reservations
         }
         #endregion
 
-        #region ReservationQuotumResource
+        #region ReservationQuotaResource
         /// <summary>
-        /// Gets an object representing a <see cref="ReservationQuotumResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ReservationQuotumResource.CreateResourceIdentifier" /> to create a <see cref="ReservationQuotumResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ReservationQuotaResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ReservationQuotaResource.CreateResourceIdentifier" /> to create a <see cref="ReservationQuotaResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ReservationQuotumResource" /> object. </returns>
-        public static ReservationQuotumResource GetReservationQuotumResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ReservationQuotaResource" /> object. </returns>
+        public static ReservationQuotaResource GetReservationQuotaResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ReservationQuotumResource.ValidateResourceId(id);
-                return new ReservationQuotumResource(client, id);
+                ReservationQuotaResource.ValidateResourceId(id);
+                return new ReservationQuotaResource(client, id);
             }
             );
         }

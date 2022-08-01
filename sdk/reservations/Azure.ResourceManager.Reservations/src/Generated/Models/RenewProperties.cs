@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <param name="purchaseProperties"></param>
         /// <param name="pricingCurrencyTotal"> Amount that Microsoft uses for record. Used during refund for calculating refund limit. Tax is not included. This is locked price 30 days before expiry. </param>
         /// <param name="billingCurrencyTotal"> Currency and amount that customer will be charged in customer&apos;s local currency for renewal purchase. Tax is not included. </param>
-        internal RenewProperties(PurchaseRequestContent purchaseProperties, RenewPropertiesPricingCurrencyTotal pricingCurrencyTotal, RenewPropertiesBillingCurrencyTotal billingCurrencyTotal)
+        internal RenewProperties(ReservationPurchaseContent purchaseProperties, RenewPropertiesPricingCurrencyTotal pricingCurrencyTotal, RenewPropertiesBillingCurrencyTotal billingCurrencyTotal)
         {
             PurchaseProperties = purchaseProperties;
             PricingCurrencyTotal = pricingCurrencyTotal;
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Reservations.Models
         }
 
         /// <summary> Gets the purchase properties. </summary>
-        public PurchaseRequestContent PurchaseProperties { get; }
+        public ReservationPurchaseContent PurchaseProperties { get; }
         /// <summary> Amount that Microsoft uses for record. Used during refund for calculating refund limit. Tax is not included. This is locked price 30 days before expiry. </summary>
         public RenewPropertiesPricingCurrencyTotal PricingCurrencyTotal { get; }
         /// <summary> Currency and amount that customer will be charged in customer&apos;s local currency for renewal purchase. Tax is not included. </summary>

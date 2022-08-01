@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Reservations.Models
             Optional<int> quantity = default;
             Optional<PurchasePrice> billingRefundAmount = default;
             Optional<BillingInformation> billingInformation = default;
-            Optional<OperationStatus> status = default;
+            Optional<ReservationOperationStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("reservationId"))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = new OperationStatus(property.Value.GetString());
+                    status = new ReservationOperationStatus(property.Value.GetString());
                     continue;
                 }
             }

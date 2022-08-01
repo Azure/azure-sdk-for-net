@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Reservations
     public partial class ReservationOrderResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ReservationOrderResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string reservationOrderId)
+        public static ResourceIdentifier CreateResourceIdentifier(Guid reservationOrderId)
         {
             var resourceId = $"/providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}";
             return new ResourceIdentifier(resourceId);
@@ -109,10 +109,8 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="reservationId"> Id of the Reservation Item. </param>
         /// <param name="expand"> Supported value of this query is renewProperties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="reservationId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ReservationDetailResource>> GetReservationDetailAsync(string reservationId, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ReservationDetailResource>> GetReservationDetailAsync(Guid reservationId, string expand = null, CancellationToken cancellationToken = default)
         {
             return await GetReservationDetails().GetAsync(reservationId, expand, cancellationToken).ConfigureAwait(false);
         }
@@ -125,10 +123,8 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="reservationId"> Id of the Reservation Item. </param>
         /// <param name="expand"> Supported value of this query is renewProperties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="reservationId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ReservationDetailResource> GetReservationDetail(string reservationId, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<ReservationDetailResource> GetReservationDetail(Guid reservationId, string expand = null, CancellationToken cancellationToken = default)
         {
             return GetReservationDetails().Get(reservationId, expand, cancellationToken);
         }
@@ -146,7 +142,7 @@ namespace Azure.ResourceManager.Reservations
             scope.Start();
             try
             {
-                var response = await _reservationOrderRestClient.GetAsync(Id.Name, expand, cancellationToken).ConfigureAwait(false);
+                var response = await _reservationOrderRestClient.GetAsync(Guid.Parse(Id.Name), expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ReservationOrderResource(Client, response.Value), response.GetRawResponse());
@@ -171,7 +167,7 @@ namespace Azure.ResourceManager.Reservations
             scope.Start();
             try
             {
-                var response = _reservationOrderRestClient.Get(Id.Name, expand, cancellationToken);
+                var response = _reservationOrderRestClient.Get(Guid.Parse(Id.Name), expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ReservationOrderResource(Client, response.Value), response.GetRawResponse());
@@ -192,7 +188,7 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="content"> Information needed for calculate or purchase reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<ReservationOrderResource>> UpdateAsync(WaitUntil waitUntil, PurchaseRequestContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ReservationOrderResource>> UpdateAsync(WaitUntil waitUntil, ReservationPurchaseContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -200,8 +196,8 @@ namespace Azure.ResourceManager.Reservations
             scope.Start();
             try
             {
-                var response = await _reservationOrderRestClient.PurchaseAsync(Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new ReservationsArmOperation<ReservationOrderResource>(new ReservationOrderOperationSource(Client), _reservationOrderClientDiagnostics, Pipeline, _reservationOrderRestClient.CreatePurchaseRequest(Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = await _reservationOrderRestClient.PurchaseAsync(Guid.Parse(Id.Name), content, cancellationToken).ConfigureAwait(false);
+                var operation = new ReservationsArmOperation<ReservationOrderResource>(new ReservationOrderOperationSource(Client), _reservationOrderClientDiagnostics, Pipeline, _reservationOrderRestClient.CreatePurchaseRequest(Guid.Parse(Id.Name), content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -222,7 +218,7 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="content"> Information needed for calculate or purchase reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<ReservationOrderResource> Update(WaitUntil waitUntil, PurchaseRequestContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ReservationOrderResource> Update(WaitUntil waitUntil, ReservationPurchaseContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -230,8 +226,8 @@ namespace Azure.ResourceManager.Reservations
             scope.Start();
             try
             {
-                var response = _reservationOrderRestClient.Purchase(Id.Name, content, cancellationToken);
-                var operation = new ReservationsArmOperation<ReservationOrderResource>(new ReservationOrderOperationSource(Client), _reservationOrderClientDiagnostics, Pipeline, _reservationOrderRestClient.CreatePurchaseRequest(Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = _reservationOrderRestClient.Purchase(Guid.Parse(Id.Name), content, cancellationToken);
+                var operation = new ReservationsArmOperation<ReservationOrderResource>(new ReservationOrderOperationSource(Client), _reservationOrderClientDiagnostics, Pipeline, _reservationOrderRestClient.CreatePurchaseRequest(Guid.Parse(Id.Name), content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -260,8 +256,8 @@ namespace Azure.ResourceManager.Reservations
             scope.Start();
             try
             {
-                var response = await _reservationDetailReservationRestClient.SplitAsync(Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new ReservationsArmOperation<IList<ReservationDetailData>>(new IListOperationSource(), _reservationDetailReservationClientDiagnostics, Pipeline, _reservationDetailReservationRestClient.CreateSplitRequest(Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = await _reservationDetailReservationRestClient.SplitAsync(Guid.Parse(Id.Name), content, cancellationToken).ConfigureAwait(false);
+                var operation = new ReservationsArmOperation<IList<ReservationDetailData>>(new IListOperationSource(), _reservationDetailReservationClientDiagnostics, Pipeline, _reservationDetailReservationRestClient.CreateSplitRequest(Guid.Parse(Id.Name), content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -290,8 +286,8 @@ namespace Azure.ResourceManager.Reservations
             scope.Start();
             try
             {
-                var response = _reservationDetailReservationRestClient.Split(Id.Name, content, cancellationToken);
-                var operation = new ReservationsArmOperation<IList<ReservationDetailData>>(new IListOperationSource(), _reservationDetailReservationClientDiagnostics, Pipeline, _reservationDetailReservationRestClient.CreateSplitRequest(Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = _reservationDetailReservationRestClient.Split(Guid.Parse(Id.Name), content, cancellationToken);
+                var operation = new ReservationsArmOperation<IList<ReservationDetailData>>(new IListOperationSource(), _reservationDetailReservationClientDiagnostics, Pipeline, _reservationDetailReservationRestClient.CreateSplitRequest(Guid.Parse(Id.Name), content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -320,8 +316,8 @@ namespace Azure.ResourceManager.Reservations
             scope.Start();
             try
             {
-                var response = await _reservationDetailReservationRestClient.MergeAsync(Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new ReservationsArmOperation<IList<ReservationDetailData>>(new IListOperationSource(), _reservationDetailReservationClientDiagnostics, Pipeline, _reservationDetailReservationRestClient.CreateMergeRequest(Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = await _reservationDetailReservationRestClient.MergeAsync(Guid.Parse(Id.Name), content, cancellationToken).ConfigureAwait(false);
+                var operation = new ReservationsArmOperation<IList<ReservationDetailData>>(new IListOperationSource(), _reservationDetailReservationClientDiagnostics, Pipeline, _reservationDetailReservationRestClient.CreateMergeRequest(Guid.Parse(Id.Name), content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -350,8 +346,8 @@ namespace Azure.ResourceManager.Reservations
             scope.Start();
             try
             {
-                var response = _reservationDetailReservationRestClient.Merge(Id.Name, content, cancellationToken);
-                var operation = new ReservationsArmOperation<IList<ReservationDetailData>>(new IListOperationSource(), _reservationDetailReservationClientDiagnostics, Pipeline, _reservationDetailReservationRestClient.CreateMergeRequest(Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = _reservationDetailReservationRestClient.Merge(Guid.Parse(Id.Name), content, cancellationToken);
+                var operation = new ReservationsArmOperation<IList<ReservationDetailData>>(new IListOperationSource(), _reservationDetailReservationClientDiagnostics, Pipeline, _reservationDetailReservationRestClient.CreateMergeRequest(Guid.Parse(Id.Name), content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -379,7 +375,7 @@ namespace Azure.ResourceManager.Reservations
             scope.Start();
             try
             {
-                var response = await _reservationOrderRestClient.ChangeDirectoryAsync(Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var response = await _reservationOrderRestClient.ChangeDirectoryAsync(Guid.Parse(Id.Name), content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -405,7 +401,7 @@ namespace Azure.ResourceManager.Reservations
             scope.Start();
             try
             {
-                var response = _reservationOrderRestClient.ChangeDirectory(Id.Name, content, cancellationToken);
+                var response = _reservationOrderRestClient.ChangeDirectory(Guid.Parse(Id.Name), content, cancellationToken);
                 return response;
             }
             catch (Exception e)

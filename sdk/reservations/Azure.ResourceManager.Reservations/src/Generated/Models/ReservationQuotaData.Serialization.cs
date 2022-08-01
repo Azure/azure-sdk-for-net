@@ -8,20 +8,42 @@
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Reservations.Models;
 
-namespace Azure.ResourceManager.Reservations.Models
+namespace Azure.ResourceManager.Reservations
 {
-    public partial class AppliedReservationsData
+    public partial class ReservationQuotaData : IUtf8JsonSerializable
     {
-        internal static AppliedReservationsData DeserializeAppliedReservationsData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties");
+                writer.WriteObjectValue(Properties);
+            }
+            writer.WriteEndObject();
+        }
+
+        internal static ReservationQuotaData DeserializeReservationQuotaData(JsonElement element)
+        {
+            Optional<QuotaProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<AppliedReservationList> reservationOrderIds = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    properties = QuotaProperties.DeserializeQuotaProperties(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("id"))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -47,30 +69,8 @@ namespace Azure.ResourceManager.Reservations.Models
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
-                if (property.NameEquals("properties"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("reservationOrderIds"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            reservationOrderIds = AppliedReservationList.DeserializeAppliedReservationList(property0.Value);
-                            continue;
-                        }
-                    }
-                    continue;
-                }
             }
-            return new AppliedReservationsData(id, name, type, systemData.Value, reservationOrderIds.Value);
+            return new ReservationQuotaData(id, name, type, systemData.Value, properties.Value);
         }
     }
 }

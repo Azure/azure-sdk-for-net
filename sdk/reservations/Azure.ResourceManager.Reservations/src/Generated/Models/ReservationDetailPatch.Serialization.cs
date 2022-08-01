@@ -42,10 +42,10 @@ namespace Azure.ResourceManager.Reservations.Models
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Renew))
+            if (Optional.IsDefined(IsRenewEnabled))
             {
                 writer.WritePropertyName("renew");
-                writer.WriteBooleanValue(Renew.Value);
+                writer.WriteBooleanValue(IsRenewEnabled.Value);
             }
             if (Optional.IsDefined(RenewProperties))
             {
