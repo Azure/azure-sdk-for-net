@@ -1,7 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using NUnit.Framework;
 
@@ -22,7 +24,7 @@ namespace Azure.AI.Personalizer.Tests
                     features:
                     new List<object>() { new { videoType = "documentary", videoLength = 35, director = "CarlSagan" }, new { mostWatchedByAge = "30-35" } }
             ));
-            DecisionContext decisionContext = new DecisionContext(contextFeatures, actions);
+            DecisionContext decisionContext = new DecisionContext(contextFeatures.Select(f => BinaryData.FromObjectAsJson(f)).ToList(), actions);
             Assert.AreEqual(decisionContext.ContextFeatures.Count, 1);
             Assert.AreEqual(decisionContext.Documents.Count, 1);
             Assert.AreEqual(decisionContext.Documents[0].ActionFeatures.Count, 2);

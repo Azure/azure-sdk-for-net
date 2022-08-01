@@ -15,9 +15,9 @@ namespace Azure.AI.Personalizer
         /// <summary>
         /// Convert PersonalizerRankOptions object to a json context string for Rl.Net
         /// </summary>
-        public static string ConvertToContextJson(IEnumerable<object> contextFeatures, List<PersonalizerRankableAction> rankableActions)
+        public static string ConvertToContextJson(IList<BinaryData> contextFeatures, List<PersonalizerRankableAction> rankableActions)
         {
-            DecisionContext decisionContext = new DecisionContext(contextFeatures.Select(f => BinaryData.FromObjectAsJson(f)).ToList(), rankableActions);
+            DecisionContext decisionContext = new DecisionContext(contextFeatures, rankableActions);
             var jsonSerializerOptions = new JsonSerializerOptions
             {
                 Converters =
