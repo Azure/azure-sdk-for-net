@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             Optional<IList<string>> command = default;
             Optional<IList<EnvironmentVariable>> environmentVariables = default;
             Optional<InitContainerPropertiesDefinitionInstanceView> instanceView = default;
-            Optional<IList<VolumeMount>> volumeMounts = default;
+            Optional<IList<ContainerInstanceVolumeMount>> volumeMounts = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -135,10 +135,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<VolumeMount> array = new List<VolumeMount>();
+                            List<ContainerInstanceVolumeMount> array = new List<ContainerInstanceVolumeMount>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VolumeMount.DeserializeVolumeMount(item));
+                                array.Add(ContainerInstanceVolumeMount.DeserializeContainerInstanceVolumeMount(item));
                             }
                             volumeMounts = array;
                             continue;

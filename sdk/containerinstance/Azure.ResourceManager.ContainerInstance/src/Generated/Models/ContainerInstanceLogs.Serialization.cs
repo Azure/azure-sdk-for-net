@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    public partial class ContainerLogs
+    public partial class ContainerInstanceLogs
     {
-        internal static ContainerLogs DeserializeContainerLogs(JsonElement element)
+        internal static ContainerInstanceLogs DeserializeContainerInstanceLogs(JsonElement element)
         {
             Optional<string> content = default;
             foreach (var property in element.EnumerateObject())
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     continue;
                 }
             }
-            return new ContainerLogs(content.Value);
+            return new ContainerInstanceLogs(content.Value);
         }
     }
 }

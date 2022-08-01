@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             Name = name;
             Command = new ChangeTrackingList<string>();
             EnvironmentVariables = new ChangeTrackingList<EnvironmentVariable>();
-            VolumeMounts = new ChangeTrackingList<VolumeMount>();
+            VolumeMounts = new ChangeTrackingList<ContainerInstanceVolumeMount>();
         }
 
         /// <summary> Initializes a new instance of InitContainerDefinitionContent. </summary>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="environmentVariables"> The environment variables to set in the init container. </param>
         /// <param name="instanceView"> The instance view of the init container. Only valid in response. </param>
         /// <param name="volumeMounts"> The volume mounts available to the init container. </param>
-        internal InitContainerDefinitionContent(string name, string image, IList<string> command, IList<EnvironmentVariable> environmentVariables, InitContainerPropertiesDefinitionInstanceView instanceView, IList<VolumeMount> volumeMounts)
+        internal InitContainerDefinitionContent(string name, string image, IList<string> command, IList<EnvironmentVariable> environmentVariables, InitContainerPropertiesDefinitionInstanceView instanceView, IList<ContainerInstanceVolumeMount> volumeMounts)
         {
             Name = name;
             Image = image;
@@ -58,6 +58,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> The instance view of the init container. Only valid in response. </summary>
         public InitContainerPropertiesDefinitionInstanceView InstanceView { get; }
         /// <summary> The volume mounts available to the init container. </summary>
-        public IList<VolumeMount> VolumeMounts { get; }
+        public IList<ContainerInstanceVolumeMount> VolumeMounts { get; }
     }
 }

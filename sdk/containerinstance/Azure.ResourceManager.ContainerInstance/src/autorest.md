@@ -53,14 +53,15 @@ override-operation-name:
   Containers_ListLogs: GetContainerLogs
 
 prepend-rp-prefix:
-  - Container
   - Volume
+  - VolumeMount
   - Capabilities
   - CapabilitiesListResult
   - Scheme
 
 rename-mapping:
-  Logs: ContainerLogs
+  Container: ContainerInstance
+  Logs: ContainerInstanceLogs
   Event: ContainerEvent
   AzureFileVolume.readOnly: IsReadOnly
   VolumeMount.readOnly: IsReadOnly

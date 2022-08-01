@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    public partial class ContainerInstanceContainer : IUtf8JsonSerializable
+    public partial class ContainerInstance : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             writer.WriteEndObject();
         }
 
-        internal static ContainerInstanceContainer DeserializeContainerInstanceContainer(JsonElement element)
+        internal static ContainerInstance DeserializeContainerInstance(JsonElement element)
         {
             string name = default;
             string image = default;
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             Optional<IList<EnvironmentVariable>> environmentVariables = default;
             Optional<ContainerInstanceView> instanceView = default;
             ResourceRequirements resources = default;
-            Optional<IList<VolumeMount>> volumeMounts = default;
+            Optional<IList<ContainerInstanceVolumeMount>> volumeMounts = default;
             Optional<ContainerProbe> livenessProbe = default;
             Optional<ContainerProbe> readinessProbe = default;
             foreach (var property in element.EnumerateObject())
@@ -178,10 +178,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<VolumeMount> array = new List<VolumeMount>();
+                            List<ContainerInstanceVolumeMount> array = new List<ContainerInstanceVolumeMount>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VolumeMount.DeserializeVolumeMount(item));
+                                array.Add(ContainerInstanceVolumeMount.DeserializeContainerInstanceVolumeMount(item));
                             }
                             volumeMounts = array;
                             continue;
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     continue;
                 }
             }
-            return new ContainerInstanceContainer(name, image, Optional.ToList(command), Optional.ToList(ports), Optional.ToList(environmentVariables), instanceView.Value, resources, Optional.ToList(volumeMounts), livenessProbe.Value, readinessProbe.Value);
+            return new ContainerInstance(name, image, Optional.ToList(command), Optional.ToList(ports), Optional.ToList(environmentVariables), instanceView.Value, resources, Optional.ToList(volumeMounts), livenessProbe.Value, readinessProbe.Value);
         }
     }
 }
