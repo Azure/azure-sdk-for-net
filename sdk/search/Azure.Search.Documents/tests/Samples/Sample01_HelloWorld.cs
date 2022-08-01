@@ -208,7 +208,7 @@ namespace Azure.Search.Documents.Tests.Samples
                     synonyms = new SynonymMap(synonymMapName, file);
                 }
 #else
-                synonyms = new SynonymMap(synonymMapName, CountriesSolrSynonymMap);
+                synonyms = new SynonymMap(synonymMapName, HelloWorldData.CountriesSolrSynonymMap);
 #endif
 
                 await indexClient.CreateSynonymMapAsync(synonyms);
