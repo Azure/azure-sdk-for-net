@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Text.Json;
-using Rl.Net;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
@@ -17,7 +17,7 @@ namespace Azure.AI.Personalizer
         /// </summary>
         public static string ConvertToContextJson(IEnumerable<object> contextFeatures, List<PersonalizerRankableAction> rankableActions)
         {
-            DecisionContext decisionContext = new DecisionContext(contextFeatures, rankableActions);
+            DecisionContext decisionContext = new DecisionContext(contextFeatures.Select(f => BinaryData.FromObjectAsJson(f)).ToList(), rankableActions);
             var jsonSerializerOptions = new JsonSerializerOptions
             {
                 Converters =

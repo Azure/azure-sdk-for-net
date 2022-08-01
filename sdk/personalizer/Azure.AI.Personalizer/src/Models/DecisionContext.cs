@@ -19,9 +19,9 @@ namespace Azure.AI.Personalizer
         /// <summary> Initializes a new instance of DecisionContext. </summary>
         /// <param name="contextFeatures"> The context feature </param>
         /// <param name="rankableActions"> Rankable actions </param>
-        public DecisionContext(IEnumerable<object> contextFeatures, List<PersonalizerRankableAction> rankableActions)
+        public DecisionContext(IList<BinaryData> contextFeatures, List<PersonalizerRankableAction> rankableActions)
         {
-            this.ContextFeatures = contextFeatures.Select(f => BinaryData.FromObjectAsJson(f)).ToList();
+            this.ContextFeatures = contextFeatures;
             this.Documents = rankableActions
                 .Select(action =>
                 {
