@@ -91,6 +91,8 @@ rename-mapping:
   ScopeProperties.valid: IsValid
   SubRequest: SubContent
   OperationStatus: ReservationOperationStatus
+  ReservationToReturn.reservationId: -|arm-id
+  ResourceName: ReservationResourceName
   
 directive:
   - from: quota.json
@@ -106,9 +108,10 @@ directive:
     transform: >
       delete $.Location;
       $.ReservationResponse.properties.etag['x-ms-client-name'] = 'version';
+      $.ReservationResponse.properties.kind['x-ms-enum'].name = 'ReservationKind';
       $.ReservationOrderResponse.properties.etag['x-ms-client-name'] = 'version';
       $.Price['x-ms-client-name'] = 'PurchasePrice';
-      $.Catalog.properties.resourceType['x-ms-client-name'] = 'reservedResourceType';
+      $.Catalog.properties.resourceType['x-ms-client-name'] = 'AppliedResourceType';
       $.Catalog.properties.name['x-ms-client-name'] = 'SkuName';
       $.Catalog['x-ms-client-name'] = 'ReservationCatalog';
       $.CalculateExchangeOperationResultResponse.properties.id['x-ms-format'] = 'arm-id';
@@ -120,6 +123,7 @@ directive:
       $.ReservationToPurchaseExchange.properties.reservationOrderId['x-ms-format'] = 'arm-id';
       $.ReservationToReturnForExchange.properties.reservationId['x-ms-format'] = 'arm-id';
       $.SplitProperties.properties.reservationId['x-ms-format'] = 'arm-id';
+      $.ReservationsProperties.properties.renew['x-ms-client-name'] = 'IsRenewEnabled';
   - from: reservations.json
     where: $.parameters
     transform: >

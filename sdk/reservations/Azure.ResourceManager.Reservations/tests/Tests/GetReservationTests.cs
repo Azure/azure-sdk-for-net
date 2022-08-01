@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -37,12 +38,12 @@ namespace Azure.ResourceManager.Reservations.Tests
         [RecordedTest]
         public async Task TestGetSingleReservation()
         {
-            var response = await Collection.GetAsync("545d132c-6066-47ad-9f39-e67e542caef2");
+            var response = await Collection.GetAsync(Guid.Parse("545d132c-6066-47ad-9f39-e67e542caef2"));
             TestReservationOrderReponse(response);
 
             var fullyQualifiedId = response.Value.Data.Reservations[0].Id.ToString();
-            var reservationId = fullyQualifiedId.Substring(fullyQualifiedId.LastIndexOf("/"));
-            var reservationResponse = await response.Value.GetReservationDetails().GetAsync(reservationId);
+            var reservationId = fullyQualifiedId.Substring(fullyQualifiedId.LastIndexOf("/") + 1);
+            var reservationResponse = await response.Value.GetReservationDetails().GetAsync(Guid.Parse(reservationId));
             var reservation = reservationResponse.Value;
 
             TestReservationReponse(reservation.Data);
@@ -52,7 +53,7 @@ namespace Azure.ResourceManager.Reservations.Tests
         [RecordedTest]
         public async Task TestListReservations()
         {
-            var response = await Collection.GetAsync("545d132c-6066-47ad-9f39-e67e542caef2");
+            var response = await Collection.GetAsync(Guid.Parse("545d132c-6066-47ad-9f39-e67e542caef2"));
             TestReservationOrderReponse(response);
 
             var fullyQualifiedId = response.Value.Data.Reservations[0].Id.ToString();
