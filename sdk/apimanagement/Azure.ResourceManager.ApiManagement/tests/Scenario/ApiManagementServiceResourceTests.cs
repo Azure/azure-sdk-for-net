@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
     public class ApiManagementServiceResourceTests : ApiManagementManagementTestBase
     {
         public ApiManagementServiceResourceTests(bool isAsync)
-                    : base(isAsync, RecordedTestMode.Record)
+                    : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -25,27 +25,6 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             var resourceGroup = await DefaultSubscription.GetResourceGroups().GetAsync("sdktestrg");
             var collection = resourceGroup.Value.GetApiManagementServices();
             return (await collection.GetAsync("sdktestapi")).Value;
-        }
-
-        [Test]
-        public async Task TagOperation()
-        {
-            // Please create the resource first.
-            var apiManagementService = await GetApiManagementServiceAsync();
-            await apiManagementService.AddTagAsync("testkey", "testvalue");
-            apiManagementService = (await apiManagementService.GetAsync()).Value;
-            Assert.AreEqual(apiManagementService.Data.Tags.FirstOrDefault().Key, "testkey");
-            Assert.AreEqual(apiManagementService.Data.Tags.FirstOrDefault().Value, "testvalue");
-
-            var tags = new Dictionary<string, string>() { { "newkey", "newvalue" } };
-            await apiManagementService.SetTagsAsync(tags);
-            apiManagementService = (await apiManagementService.GetAsync()).Value;
-            Assert.AreEqual(apiManagementService.Data.Tags.FirstOrDefault().Key, "newkey");
-            Assert.AreEqual(apiManagementService.Data.Tags.FirstOrDefault().Value, "newvalue");
-
-            await apiManagementService.RemoveTagAsync("newkey");
-            apiManagementService = (await apiManagementService.GetAsync()).Value;
-            Assert.AreEqual(apiManagementService.Data.Tags.Count, 0);
         }
 
         [Test]

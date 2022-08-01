@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,12 +20,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStringValue(HostnameType.ToString());
             writer.WritePropertyName("hostName");
             writer.WriteStringValue(HostName);
-            if (Optional.IsDefined(KeyVaultId))
+            if (Optional.IsDefined(KeyVaultSecretUri))
             {
-                if (KeyVaultId != null)
+                if (KeyVaultSecretUri != null)
                 {
                     writer.WritePropertyName("keyVaultId");
-                    writer.WriteStringValue(KeyVaultId);
+                    writer.WriteStringValue(KeyVaultSecretUri.AbsoluteUri);
                 }
                 else
                 {
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
             HostnameType type = default;
             string hostName = default;
-            Optional<string> keyVaultId = default;
+            Optional<Uri> keyVaultId = default;
             Optional<string> identityClientId = default;
             Optional<string> encodedCertificate = default;
             Optional<string> certificatePassword = default;
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         keyVaultId = null;
                         continue;
                     }
-                    keyVaultId = property.Value.GetString();
+                    keyVaultId = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("identityClientId"))

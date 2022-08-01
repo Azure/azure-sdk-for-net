@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.ApiManagement
             Optional<IList<HostnameConfiguration>> hostnameConfigurations = default;
             Optional<IReadOnlyList<IPAddress>> publicIPAddresses = default;
             Optional<IReadOnlyList<IPAddress>> privateIPAddresses = default;
-            Optional<string> publicIPAddressId = default;
+            Optional<ResourceIdentifier> publicIPAddressId = default;
             Optional<PublicNetworkAccess> publicNetworkAccess = default;
             Optional<VirtualNetworkConfiguration> virtualNetworkConfiguration = default;
             Optional<IList<AdditionalLocation>> additionalLocations = default;
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.ApiManagement
                                 publicIPAddressId = null;
                                 continue;
                             }
-                            publicIPAddressId = property0.Value.GetString();
+                            publicIPAddressId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("publicNetworkAccess"))

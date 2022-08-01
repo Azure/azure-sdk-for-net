@@ -2,9 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.ApiManagement.Models;
+using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.ApiManagement.Tests
@@ -16,44 +20,40 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         {
         }
 
-        // For playback
-        private async Task<ApiManagementServiceResource> GetApiManagementServiceAsync()
+        private ResourceGroupResource ResourceGroup { get; set; }
+
+        private ApiManagementServiceCollection ApiServiceCollection { get; set; }
+
+        private ApiManagementServiceResource ApiServiceResource { get; set; }
+
+        private async Task SetCollectionsAsync()
         {
-            var resourceGroup = await DefaultSubscription.GetResourceGroups().GetAsync("sdktestrg");
-            var collection = resourceGroup.Value.GetApiManagementServices();
-            return (await collection.GetAsync("sdktestapi")).Value;
+            ResourceGroup = await CreateResourceGroupAsync();
+            ApiServiceCollection = ResourceGroup.GetApiManagementServices();
+        }
+
+        private async Task CreateApiService()
+        {
+            // Create vnet First
+            await SetCollectionsAsync();
+            var apiName = Recording.GenerateAssetName("testapi-");
+            var data = new ApiManagementServiceData(AzureLocation.EastUS, new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.Developer, 1), "Sample@Sample.com", "sample")
+            {
+                Identity = new ApiManagementServiceIdentity(ApimIdentityType.SystemAssigned)
+            };
+            ApiServiceResource = (await ApiServiceCollection.CreateOrUpdateAsync(WaitUntil.Completed, apiName, data)).Value;
         }
 
         [Test]
-        public async Task CreateOrUpdate_GetAll_Get_Delete ()
+        public async Task CreateOrUpdate_GetAll_Get_Exists_Delete ()
         {
             // Please create the resource first.
-            var apiManagementService = await GetApiManagementServiceAsync();
-            var collection = apiManagementService.GetApis();
-
-            var list = await collection.GetAllAsync().ToEnumerableAsync();
-            if (list.Count != 0)
-            {
-                foreach (var item in list)
-                {
-                    var newitem = (await item.GetAsync()).Value;
-                    Assert.NotNull(newitem.Data.DisplayName);
-                    await newitem.DeleteAsync(WaitUntil.Completed, "*");
-                }
-            }
-
+            await CreateApiService();
+            var collection = ApiServiceResource.GetApis();
             var apiName = Recording.GenerateAssetName("testapi-");
             var data = new ApiCreateOrUpdateContent()
             {
                 Description = "apidescription5200",
-                //AuthenticationSettings = new AuthenticationSettingsContract()
-                //{
-                //    OAuth2 = new OAuth2AuthenticationSettingsContract()
-                //    {
-                //        AuthorizationServerId = "authorizationServerId2283",
-                //        Scope = "oauth2scope2580"
-                //    }
-                //},
                 SubscriptionKeyParameterNames = new SubscriptionKeyParameterNamesContract()
                 {
                     Header = "header4520",
@@ -67,6 +67,21 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             var result = (await collection.CreateOrUpdateAsync(WaitUntil.Completed, apiName, data)).Value;
             Assert.AreEqual(result.Data.Name, apiName);
             Assert.AreEqual(result.Data.Path, "newapiPath");
+            var resultTrue = await collection.ExistsAsync(apiName);
+            var resultFalse = await collection.ExistsAsync("foo");
+            Assert.IsTrue(resultTrue);
+            Assert.IsFalse(resultFalse);
+
+            var list = await collection.GetAllAsync().ToEnumerableAsync();
+            if (list.Count != 0)
+            {
+                foreach (var item in list)
+                {
+                    var newitem = (await item.GetAsync()).Value;
+                    Assert.NotNull(newitem.Data.DisplayName);
+                    await newitem.DeleteAsync(WaitUntil.Completed, "*");
+                }
+            }
         }
     }
 }
