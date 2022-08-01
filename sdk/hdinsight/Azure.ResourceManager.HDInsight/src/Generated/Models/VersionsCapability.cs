@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary> The version capability. </summary>
+    /// <summary>
+    /// The version capability.
+    /// Serialized Name: VersionsCapability
+    /// </summary>
     public partial class VersionsCapability
     {
         /// <summary> Initializes a new instance of VersionsCapability. </summary>
@@ -20,13 +23,19 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of VersionsCapability. </summary>
-        /// <param name="available"> The list of version capabilities. </param>
+        /// <param name="available">
+        /// The list of version capabilities.
+        /// Serialized Name: VersionsCapability.available
+        /// </param>
         internal VersionsCapability(IReadOnlyList<VersionSpec> available)
         {
             Available = available;
         }
 
-        /// <summary> The list of version capabilities. </summary>
+        /// <summary>
+        /// The list of version capabilities.
+        /// Serialized Name: VersionsCapability.available
+        /// </summary>
         public IReadOnlyList<VersionSpec> Available { get; }
     }
 }

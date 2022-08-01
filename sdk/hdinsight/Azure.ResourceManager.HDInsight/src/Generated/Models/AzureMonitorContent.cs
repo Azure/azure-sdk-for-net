@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary> The azure monitor parameters. </summary>
+    /// <summary>
+    /// The azure monitor parameters.
+    /// Serialized Name: AzureMonitorRequest
+    /// </summary>
     public partial class AzureMonitorContent
     {
         /// <summary> Initializes a new instance of AzureMonitorContent. </summary>
@@ -15,11 +18,20 @@ namespace Azure.ResourceManager.HDInsight.Models
         {
         }
 
-        /// <summary> The Log Analytics workspace ID. </summary>
+        /// <summary>
+        /// The Log Analytics workspace ID.
+        /// Serialized Name: AzureMonitorRequest.workspaceId
+        /// </summary>
         public string WorkspaceId { get; set; }
-        /// <summary> The Log Analytics workspace key. </summary>
+        /// <summary>
+        /// The Log Analytics workspace key.
+        /// Serialized Name: AzureMonitorRequest.primaryKey
+        /// </summary>
         public string PrimaryKey { get; set; }
-        /// <summary> The selected configurations. </summary>
+        /// <summary>
+        /// The selected configurations.
+        /// Serialized Name: AzureMonitorRequest.selectedConfigurations
+        /// </summary>
         public AzureMonitorSelectedConfigurations SelectedConfigurations { get; set; }
     }
 }

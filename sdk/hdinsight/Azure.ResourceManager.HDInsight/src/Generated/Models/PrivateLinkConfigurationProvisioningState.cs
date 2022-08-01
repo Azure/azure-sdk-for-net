@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary> The private link configuration provisioning state, which only appears in the response. </summary>
+    /// <summary>
+    /// The private link configuration provisioning state, which only appears in the response.
+    /// Serialized Name: PrivateLinkConfigurationProvisioningState
+    /// </summary>
     public readonly partial struct PrivateLinkConfigurationProvisioningState : IEquatable<PrivateLinkConfigurationProvisioningState>
     {
         private readonly string _value;
@@ -28,15 +31,30 @@ namespace Azure.ResourceManager.HDInsight.Models
         private const string CanceledValue = "Canceled";
         private const string DeletingValue = "Deleting";
 
-        /// <summary> InProgress. </summary>
+        /// <summary>
+        /// InProgress
+        /// Serialized Name: PrivateLinkConfigurationProvisioningState.InProgress
+        /// </summary>
         public static PrivateLinkConfigurationProvisioningState InProgress { get; } = new PrivateLinkConfigurationProvisioningState(InProgressValue);
-        /// <summary> Failed. </summary>
+        /// <summary>
+        /// Failed
+        /// Serialized Name: PrivateLinkConfigurationProvisioningState.Failed
+        /// </summary>
         public static PrivateLinkConfigurationProvisioningState Failed { get; } = new PrivateLinkConfigurationProvisioningState(FailedValue);
-        /// <summary> Succeeded. </summary>
+        /// <summary>
+        /// Succeeded
+        /// Serialized Name: PrivateLinkConfigurationProvisioningState.Succeeded
+        /// </summary>
         public static PrivateLinkConfigurationProvisioningState Succeeded { get; } = new PrivateLinkConfigurationProvisioningState(SucceededValue);
-        /// <summary> Canceled. </summary>
+        /// <summary>
+        /// Canceled
+        /// Serialized Name: PrivateLinkConfigurationProvisioningState.Canceled
+        /// </summary>
         public static PrivateLinkConfigurationProvisioningState Canceled { get; } = new PrivateLinkConfigurationProvisioningState(CanceledValue);
-        /// <summary> Deleting. </summary>
+        /// <summary>
+        /// Deleting
+        /// Serialized Name: PrivateLinkConfigurationProvisioningState.Deleting
+        /// </summary>
         public static PrivateLinkConfigurationProvisioningState Deleting { get; } = new PrivateLinkConfigurationProvisioningState(DeletingValue);
         /// <summary> Determines if two <see cref="PrivateLinkConfigurationProvisioningState"/> values are the same. </summary>
         public static bool operator ==(PrivateLinkConfigurationProvisioningState left, PrivateLinkConfigurationProvisioningState right) => left.Equals(right);

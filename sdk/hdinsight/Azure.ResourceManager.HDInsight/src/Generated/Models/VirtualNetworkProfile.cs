@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary> The virtual network properties. </summary>
+    /// <summary>
+    /// The virtual network properties.
+    /// Serialized Name: VirtualNetworkProfile
+    /// </summary>
     public partial class VirtualNetworkProfile
     {
         /// <summary> Initializes a new instance of VirtualNetworkProfile. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of VirtualNetworkProfile. </summary>
-        /// <param name="id"> The ID of the virtual network. </param>
-        /// <param name="subnet"> The name of the subnet. </param>
+        /// <param name="id">
+        /// The ID of the virtual network.
+        /// Serialized Name: VirtualNetworkProfile.id
+        /// </param>
+        /// <param name="subnet">
+        /// The name of the subnet.
+        /// Serialized Name: VirtualNetworkProfile.subnet
+        /// </param>
         internal VirtualNetworkProfile(string id, string subnet)
         {
             Id = id;
             Subnet = subnet;
         }
 
-        /// <summary> The ID of the virtual network. </summary>
+        /// <summary>
+        /// The ID of the virtual network.
+        /// Serialized Name: VirtualNetworkProfile.id
+        /// </summary>
         public string Id { get; set; }
-        /// <summary> The name of the subnet. </summary>
+        /// <summary>
+        /// The name of the subnet.
+        /// Serialized Name: VirtualNetworkProfile.subnet
+        /// </summary>
         public string Subnet { get; set; }
     }
 }

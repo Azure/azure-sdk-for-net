@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary> The error message associated with the cluster creation. </summary>
+    /// <summary>
+    /// The error message associated with the cluster creation.
+    /// Serialized Name: Errors
+    /// </summary>
     public partial class Errors
     {
         /// <summary> Initializes a new instance of Errors. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of Errors. </summary>
-        /// <param name="code"> The error code. </param>
-        /// <param name="message"> The error message. </param>
+        /// <param name="code">
+        /// The error code.
+        /// Serialized Name: Errors.code
+        /// </param>
+        /// <param name="message">
+        /// The error message.
+        /// Serialized Name: Errors.message
+        /// </param>
         internal Errors(string code, string message)
         {
             Code = code;
             Message = message;
         }
 
-        /// <summary> The error code. </summary>
+        /// <summary>
+        /// The error code.
+        /// Serialized Name: Errors.code
+        /// </summary>
         public string Code { get; set; }
-        /// <summary> The error message. </summary>
+        /// <summary>
+        /// The error message.
+        /// Serialized Name: Errors.message
+        /// </summary>
         public string Message { get; set; }
     }
 }

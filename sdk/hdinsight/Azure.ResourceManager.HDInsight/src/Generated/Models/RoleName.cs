@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary> The RoleName. </summary>
+    /// <summary>
+    /// The RoleName.
+    /// Serialized Name: RoleName
+    /// </summary>
     public readonly partial struct RoleName : IEquatable<RoleName>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         private const string WorkernodeValue = "workernode";
 
-        /// <summary> workernode. </summary>
+        /// <summary>
+        /// workernode
+        /// Serialized Name: RoleName.workernode
+        /// </summary>
         public static RoleName Workernode { get; } = new RoleName(WorkernodeValue);
         /// <summary> Determines if two <see cref="RoleName"/> values are the same. </summary>
         public static bool operator ==(RoleName left, RoleName right) => left.Equals(right);

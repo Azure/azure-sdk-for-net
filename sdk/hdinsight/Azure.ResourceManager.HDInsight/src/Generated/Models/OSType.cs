@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary> The type of operating system. </summary>
+    /// <summary>
+    /// The type of operating system.
+    /// Serialized Name: OSType
+    /// </summary>
     public readonly partial struct OSType : IEquatable<OSType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.HDInsight.Models
         private const string WindowsValue = "Windows";
         private const string LinuxValue = "Linux";
 
-        /// <summary> Windows. </summary>
+        /// <summary>
+        /// Windows
+        /// Serialized Name: OSType.Windows
+        /// </summary>
         public static OSType Windows { get; } = new OSType(WindowsValue);
-        /// <summary> Linux. </summary>
+        /// <summary>
+        /// Linux
+        /// Serialized Name: OSType.Linux
+        /// </summary>
         public static OSType Linux { get; } = new OSType(LinuxValue);
         /// <summary> Determines if two <see cref="OSType"/> values are the same. </summary>
         public static bool operator ==(OSType left, OSType right) => left.Equals(right);

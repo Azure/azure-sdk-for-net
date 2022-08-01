@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary> The network properties. </summary>
+    /// <summary>
+    /// The network properties.
+    /// Serialized Name: NetworkProperties
+    /// </summary>
     public partial class NetworkProperties
     {
         /// <summary> Initializes a new instance of NetworkProperties. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of NetworkProperties. </summary>
-        /// <param name="resourceProviderConnection"> The direction for the resource provider connection. </param>
-        /// <param name="privateLink"> Indicates whether or not private link is enabled. </param>
+        /// <param name="resourceProviderConnection">
+        /// The direction for the resource provider connection.
+        /// Serialized Name: NetworkProperties.resourceProviderConnection
+        /// </param>
+        /// <param name="privateLink">
+        /// Indicates whether or not private link is enabled.
+        /// Serialized Name: NetworkProperties.privateLink
+        /// </param>
         internal NetworkProperties(ResourceProviderConnection? resourceProviderConnection, PrivateLink? privateLink)
         {
             ResourceProviderConnection = resourceProviderConnection;
             PrivateLink = privateLink;
         }
 
-        /// <summary> The direction for the resource provider connection. </summary>
+        /// <summary>
+        /// The direction for the resource provider connection.
+        /// Serialized Name: NetworkProperties.resourceProviderConnection
+        /// </summary>
         public ResourceProviderConnection? ResourceProviderConnection { get; set; }
-        /// <summary> Indicates whether or not private link is enabled. </summary>
+        /// <summary>
+        /// Indicates whether or not private link is enabled.
+        /// Serialized Name: NetworkProperties.privateLink
+        /// </summary>
         public PrivateLink? PrivateLink { get; set; }
     }
 }

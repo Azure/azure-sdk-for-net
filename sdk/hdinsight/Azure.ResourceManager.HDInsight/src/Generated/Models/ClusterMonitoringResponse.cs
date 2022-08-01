@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary> The cluster monitoring status response. </summary>
+    /// <summary>
+    /// The cluster monitoring status response.
+    /// Serialized Name: ClusterMonitoringResponse
+    /// </summary>
     public partial class ClusterMonitoringResponse
     {
         /// <summary> Initializes a new instance of ClusterMonitoringResponse. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of ClusterMonitoringResponse. </summary>
-        /// <param name="clusterMonitoringEnabled"> The status of the monitor on the HDInsight cluster. </param>
-        /// <param name="workspaceId"> The workspace ID of the monitor on the HDInsight cluster. </param>
+        /// <param name="clusterMonitoringEnabled">
+        /// The status of the monitor on the HDInsight cluster.
+        /// Serialized Name: ClusterMonitoringResponse.clusterMonitoringEnabled
+        /// </param>
+        /// <param name="workspaceId">
+        /// The workspace ID of the monitor on the HDInsight cluster.
+        /// Serialized Name: ClusterMonitoringResponse.workspaceId
+        /// </param>
         internal ClusterMonitoringResponse(bool? clusterMonitoringEnabled, string workspaceId)
         {
             ClusterMonitoringEnabled = clusterMonitoringEnabled;
             WorkspaceId = workspaceId;
         }
 
-        /// <summary> The status of the monitor on the HDInsight cluster. </summary>
+        /// <summary>
+        /// The status of the monitor on the HDInsight cluster.
+        /// Serialized Name: ClusterMonitoringResponse.clusterMonitoringEnabled
+        /// </summary>
         public bool? ClusterMonitoringEnabled { get; }
-        /// <summary> The workspace ID of the monitor on the HDInsight cluster. </summary>
+        /// <summary>
+        /// The workspace ID of the monitor on the HDInsight cluster.
+        /// Serialized Name: ClusterMonitoringResponse.workspaceId
+        /// </summary>
         public string WorkspaceId { get; }
     }
 }

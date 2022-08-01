@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary> The encryption-in-transit properties. </summary>
+    /// <summary>
+    /// The encryption-in-transit properties.
+    /// Serialized Name: EncryptionInTransitProperties
+    /// </summary>
     internal partial class EncryptionInTransitProperties
     {
         /// <summary> Initializes a new instance of EncryptionInTransitProperties. </summary>
@@ -16,13 +19,19 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of EncryptionInTransitProperties. </summary>
-        /// <param name="isEncryptionInTransitEnabled"> Indicates whether or not inter cluster node communication is encrypted in transit. </param>
+        /// <param name="isEncryptionInTransitEnabled">
+        /// Indicates whether or not inter cluster node communication is encrypted in transit.
+        /// Serialized Name: EncryptionInTransitProperties.isEncryptionInTransitEnabled
+        /// </param>
         internal EncryptionInTransitProperties(bool? isEncryptionInTransitEnabled)
         {
             IsEncryptionInTransitEnabled = isEncryptionInTransitEnabled;
         }
 
-        /// <summary> Indicates whether or not inter cluster node communication is encrypted in transit. </summary>
+        /// <summary>
+        /// Indicates whether or not inter cluster node communication is encrypted in transit.
+        /// Serialized Name: EncryptionInTransitProperties.isEncryptionInTransitEnabled
+        /// </summary>
         public bool? IsEncryptionInTransitEnabled { get; set; }
     }
 }

@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary> The compute isolation properties. </summary>
+    /// <summary>
+    /// The compute isolation properties.
+    /// Serialized Name: ComputeIsolationProperties
+    /// </summary>
     public partial class ComputeIsolationProperties
     {
         /// <summary> Initializes a new instance of ComputeIsolationProperties. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of ComputeIsolationProperties. </summary>
-        /// <param name="enableComputeIsolation"> The flag indicates whether enable compute isolation or not. </param>
-        /// <param name="hostSku"> The host sku. </param>
+        /// <param name="enableComputeIsolation">
+        /// The flag indicates whether enable compute isolation or not.
+        /// Serialized Name: ComputeIsolationProperties.enableComputeIsolation
+        /// </param>
+        /// <param name="hostSku">
+        /// The host sku.
+        /// Serialized Name: ComputeIsolationProperties.hostSku
+        /// </param>
         internal ComputeIsolationProperties(bool? enableComputeIsolation, string hostSku)
         {
             EnableComputeIsolation = enableComputeIsolation;
             HostSku = hostSku;
         }
 
-        /// <summary> The flag indicates whether enable compute isolation or not. </summary>
+        /// <summary>
+        /// The flag indicates whether enable compute isolation or not.
+        /// Serialized Name: ComputeIsolationProperties.enableComputeIsolation
+        /// </summary>
         public bool? EnableComputeIsolation { get; set; }
-        /// <summary> The host sku. </summary>
+        /// <summary>
+        /// The host sku.
+        /// Serialized Name: ComputeIsolationProperties.hostSku
+        /// </summary>
         public string HostSku { get; set; }
     }
 }

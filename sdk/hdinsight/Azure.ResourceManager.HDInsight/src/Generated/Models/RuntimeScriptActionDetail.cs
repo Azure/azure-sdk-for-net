@@ -11,13 +11,25 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary> The execution details of a script action. </summary>
+    /// <summary>
+    /// The execution details of a script action.
+    /// Serialized Name: RuntimeScriptActionDetail
+    /// </summary>
     public partial class RuntimeScriptActionDetail : RuntimeScriptAction
     {
         /// <summary> Initializes a new instance of RuntimeScriptActionDetail. </summary>
-        /// <param name="name"> The name of the script action. </param>
-        /// <param name="uri"> The URI to the script. </param>
-        /// <param name="roles"> The list of roles where script will be executed. </param>
+        /// <param name="name">
+        /// The name of the script action.
+        /// Serialized Name: RuntimeScriptAction.name
+        /// </param>
+        /// <param name="uri">
+        /// The URI to the script.
+        /// Serialized Name: RuntimeScriptAction.uri
+        /// </param>
+        /// <param name="roles">
+        /// The list of roles where script will be executed.
+        /// Serialized Name: RuntimeScriptAction.roles
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="uri"/> or <paramref name="roles"/> is null. </exception>
         public RuntimeScriptActionDetail(string name, Uri uri, IEnumerable<string> roles) : base(name, uri, roles)
         {
@@ -38,18 +50,54 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of RuntimeScriptActionDetail. </summary>
-        /// <param name="name"> The name of the script action. </param>
-        /// <param name="uri"> The URI to the script. </param>
-        /// <param name="parameters"> The parameters for the script. </param>
-        /// <param name="roles"> The list of roles where script will be executed. </param>
-        /// <param name="applicationName"> The application name of the script action, if any. </param>
-        /// <param name="scriptExecutionId"> The execution id of the script action. </param>
-        /// <param name="startTime"> The start time of script action execution. </param>
-        /// <param name="endTime"> The end time of script action execution. </param>
-        /// <param name="status"> The current execution status of the script action. </param>
-        /// <param name="operation"> The reason why the script action was executed. </param>
-        /// <param name="executionSummary"> The summary of script action execution result. </param>
-        /// <param name="debugInformation"> The script action execution debug information. </param>
+        /// <param name="name">
+        /// The name of the script action.
+        /// Serialized Name: RuntimeScriptAction.name
+        /// </param>
+        /// <param name="uri">
+        /// The URI to the script.
+        /// Serialized Name: RuntimeScriptAction.uri
+        /// </param>
+        /// <param name="parameters">
+        /// The parameters for the script
+        /// Serialized Name: RuntimeScriptAction.parameters
+        /// </param>
+        /// <param name="roles">
+        /// The list of roles where script will be executed.
+        /// Serialized Name: RuntimeScriptAction.roles
+        /// </param>
+        /// <param name="applicationName">
+        /// The application name of the script action, if any.
+        /// Serialized Name: RuntimeScriptAction.applicationName
+        /// </param>
+        /// <param name="scriptExecutionId">
+        /// The execution id of the script action.
+        /// Serialized Name: RuntimeScriptActionDetail.scriptExecutionId
+        /// </param>
+        /// <param name="startTime">
+        /// The start time of script action execution.
+        /// Serialized Name: RuntimeScriptActionDetail.startTime
+        /// </param>
+        /// <param name="endTime">
+        /// The end time of script action execution.
+        /// Serialized Name: RuntimeScriptActionDetail.endTime
+        /// </param>
+        /// <param name="status">
+        /// The current execution status of the script action.
+        /// Serialized Name: RuntimeScriptActionDetail.status
+        /// </param>
+        /// <param name="operation">
+        /// The reason why the script action was executed.
+        /// Serialized Name: RuntimeScriptActionDetail.operation
+        /// </param>
+        /// <param name="executionSummary">
+        /// The summary of script action execution result.
+        /// Serialized Name: RuntimeScriptActionDetail.executionSummary
+        /// </param>
+        /// <param name="debugInformation">
+        /// The script action execution debug information.
+        /// Serialized Name: RuntimeScriptActionDetail.debugInformation
+        /// </param>
         internal RuntimeScriptActionDetail(string name, Uri uri, string parameters, IList<string> roles, string applicationName, long? scriptExecutionId, string startTime, string endTime, string status, string operation, IReadOnlyList<ScriptActionExecutionSummary> executionSummary, string debugInformation) : base(name, uri, parameters, roles, applicationName)
         {
             ScriptExecutionId = scriptExecutionId;
@@ -61,19 +109,40 @@ namespace Azure.ResourceManager.HDInsight.Models
             DebugInformation = debugInformation;
         }
 
-        /// <summary> The execution id of the script action. </summary>
+        /// <summary>
+        /// The execution id of the script action.
+        /// Serialized Name: RuntimeScriptActionDetail.scriptExecutionId
+        /// </summary>
         public long? ScriptExecutionId { get; }
-        /// <summary> The start time of script action execution. </summary>
+        /// <summary>
+        /// The start time of script action execution.
+        /// Serialized Name: RuntimeScriptActionDetail.startTime
+        /// </summary>
         public string StartTime { get; }
-        /// <summary> The end time of script action execution. </summary>
+        /// <summary>
+        /// The end time of script action execution.
+        /// Serialized Name: RuntimeScriptActionDetail.endTime
+        /// </summary>
         public string EndTime { get; }
-        /// <summary> The current execution status of the script action. </summary>
+        /// <summary>
+        /// The current execution status of the script action.
+        /// Serialized Name: RuntimeScriptActionDetail.status
+        /// </summary>
         public string Status { get; }
-        /// <summary> The reason why the script action was executed. </summary>
+        /// <summary>
+        /// The reason why the script action was executed.
+        /// Serialized Name: RuntimeScriptActionDetail.operation
+        /// </summary>
         public string Operation { get; }
-        /// <summary> The summary of script action execution result. </summary>
+        /// <summary>
+        /// The summary of script action execution result.
+        /// Serialized Name: RuntimeScriptActionDetail.executionSummary
+        /// </summary>
         public IReadOnlyList<ScriptActionExecutionSummary> ExecutionSummary { get; }
-        /// <summary> The script action execution debug information. </summary>
+        /// <summary>
+        /// The script action execution debug information.
+        /// Serialized Name: RuntimeScriptActionDetail.debugInformation
+        /// </summary>
         public string DebugInformation { get; }
     }
 }

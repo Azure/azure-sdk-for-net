@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary> The list of SSH public keys. </summary>
+    /// <summary>
+    /// The list of SSH public keys.
+    /// Serialized Name: SshProfile
+    /// </summary>
     internal partial class SshProfile
     {
         /// <summary> Initializes a new instance of SshProfile. </summary>
@@ -20,13 +23,19 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of SshProfile. </summary>
-        /// <param name="publicKeys"> The list of SSH public keys. </param>
+        /// <param name="publicKeys">
+        /// The list of SSH public keys.
+        /// Serialized Name: SshProfile.publicKeys
+        /// </param>
         internal SshProfile(IList<SshPublicKey> publicKeys)
         {
             PublicKeys = publicKeys;
         }
 
-        /// <summary> The list of SSH public keys. </summary>
+        /// <summary>
+        /// The list of SSH public keys.
+        /// Serialized Name: SshProfile.publicKeys
+        /// </summary>
         public IList<SshPublicKey> PublicKeys { get; }
     }
 }

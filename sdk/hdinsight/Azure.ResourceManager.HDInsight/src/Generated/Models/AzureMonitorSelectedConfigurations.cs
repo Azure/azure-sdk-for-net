@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary> The selected configurations for azure monitor. </summary>
+    /// <summary>
+    /// The selected configurations for azure monitor.
+    /// Serialized Name: AzureMonitorSelectedConfigurations
+    /// </summary>
     public partial class AzureMonitorSelectedConfigurations
     {
         /// <summary> Initializes a new instance of AzureMonitorSelectedConfigurations. </summary>
@@ -21,9 +24,18 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of AzureMonitorSelectedConfigurations. </summary>
-        /// <param name="configurationVersion"> The configuration version. </param>
-        /// <param name="globalConfigurations"> The global configurations of selected configurations. </param>
-        /// <param name="tableList"> The table list. </param>
+        /// <param name="configurationVersion">
+        /// The configuration version.
+        /// Serialized Name: AzureMonitorSelectedConfigurations.configurationVersion
+        /// </param>
+        /// <param name="globalConfigurations">
+        /// The global configurations of selected configurations.
+        /// Serialized Name: AzureMonitorSelectedConfigurations.globalConfigurations
+        /// </param>
+        /// <param name="tableList">
+        /// The table list.
+        /// Serialized Name: AzureMonitorSelectedConfigurations.tableList
+        /// </param>
         internal AzureMonitorSelectedConfigurations(string configurationVersion, IDictionary<string, string> globalConfigurations, IList<AzureMonitorTableConfiguration> tableList)
         {
             ConfigurationVersion = configurationVersion;
@@ -31,11 +43,20 @@ namespace Azure.ResourceManager.HDInsight.Models
             TableList = tableList;
         }
 
-        /// <summary> The configuration version. </summary>
+        /// <summary>
+        /// The configuration version.
+        /// Serialized Name: AzureMonitorSelectedConfigurations.configurationVersion
+        /// </summary>
         public string ConfigurationVersion { get; set; }
-        /// <summary> The global configurations of selected configurations. </summary>
+        /// <summary>
+        /// The global configurations of selected configurations.
+        /// Serialized Name: AzureMonitorSelectedConfigurations.globalConfigurations
+        /// </summary>
         public IDictionary<string, string> GlobalConfigurations { get; }
-        /// <summary> The table list. </summary>
+        /// <summary>
+        /// The table list.
+        /// Serialized Name: AzureMonitorSelectedConfigurations.tableList
+        /// </summary>
         public IList<AzureMonitorTableConfiguration> TableList { get; }
     }
 }

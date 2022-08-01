@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary> The concrete private link service connection. </summary>
+    /// <summary>
+    /// The concrete private link service connection.
+    /// Serialized Name: PrivateLinkServiceConnectionStatus
+    /// </summary>
     public readonly partial struct PrivateLinkServiceConnectionStatus : IEquatable<PrivateLinkServiceConnectionStatus>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.HDInsight.Models
         private const string PendingValue = "Pending";
         private const string RemovedValue = "Removed";
 
-        /// <summary> Approved. </summary>
+        /// <summary>
+        /// Approved
+        /// Serialized Name: PrivateLinkServiceConnectionStatus.Approved
+        /// </summary>
         public static PrivateLinkServiceConnectionStatus Approved { get; } = new PrivateLinkServiceConnectionStatus(ApprovedValue);
-        /// <summary> Rejected. </summary>
+        /// <summary>
+        /// Rejected
+        /// Serialized Name: PrivateLinkServiceConnectionStatus.Rejected
+        /// </summary>
         public static PrivateLinkServiceConnectionStatus Rejected { get; } = new PrivateLinkServiceConnectionStatus(RejectedValue);
-        /// <summary> Pending. </summary>
+        /// <summary>
+        /// Pending
+        /// Serialized Name: PrivateLinkServiceConnectionStatus.Pending
+        /// </summary>
         public static PrivateLinkServiceConnectionStatus Pending { get; } = new PrivateLinkServiceConnectionStatus(PendingValue);
-        /// <summary> Removed. </summary>
+        /// <summary>
+        /// Removed
+        /// Serialized Name: PrivateLinkServiceConnectionStatus.Removed
+        /// </summary>
         public static PrivateLinkServiceConnectionStatus Removed { get; } = new PrivateLinkServiceConnectionStatus(RemovedValue);
         /// <summary> Determines if two <see cref="PrivateLinkServiceConnectionStatus"/> values are the same. </summary>
         public static bool operator ==(PrivateLinkServiceConnectionStatus left, PrivateLinkServiceConnectionStatus right) => left.Equals(right);

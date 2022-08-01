@@ -11,13 +11,25 @@ using System.Linq;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary> The private link configuration. </summary>
+    /// <summary>
+    /// The private link configuration.
+    /// Serialized Name: PrivateLinkConfiguration
+    /// </summary>
     public partial class PrivateLinkConfiguration
     {
         /// <summary> Initializes a new instance of PrivateLinkConfiguration. </summary>
-        /// <param name="name"> The name of private link configuration. </param>
-        /// <param name="groupId"> The HDInsight private linkable sub-resource name to apply the private link configuration to. For example, &apos;headnode&apos;, &apos;gateway&apos;, &apos;edgenode&apos;. </param>
-        /// <param name="ipConfigurations"> The IP configurations for the private link service. </param>
+        /// <param name="name">
+        /// The name of private link configuration.
+        /// Serialized Name: PrivateLinkConfiguration.name
+        /// </param>
+        /// <param name="groupId">
+        /// The HDInsight private linkable sub-resource name to apply the private link configuration to. For example, &apos;headnode&apos;, &apos;gateway&apos;, &apos;edgenode&apos;.
+        /// Serialized Name: PrivateLinkConfiguration.properties.groupId
+        /// </param>
+        /// <param name="ipConfigurations">
+        /// The IP configurations for the private link service.
+        /// Serialized Name: PrivateLinkConfiguration.properties.ipConfigurations
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="groupId"/> or <paramref name="ipConfigurations"/> is null. </exception>
         public PrivateLinkConfiguration(string name, string groupId, IEnumerable<IPConfiguration> ipConfigurations)
         {
@@ -40,12 +52,30 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of PrivateLinkConfiguration. </summary>
-        /// <param name="id"> The private link configuration id. </param>
-        /// <param name="name"> The name of private link configuration. </param>
-        /// <param name="resourceType"> The type of the private link configuration. </param>
-        /// <param name="groupId"> The HDInsight private linkable sub-resource name to apply the private link configuration to. For example, &apos;headnode&apos;, &apos;gateway&apos;, &apos;edgenode&apos;. </param>
-        /// <param name="provisioningState"> The private link configuration provisioning state, which only appears in the response. </param>
-        /// <param name="ipConfigurations"> The IP configurations for the private link service. </param>
+        /// <param name="id">
+        /// The private link configuration id.
+        /// Serialized Name: PrivateLinkConfiguration.id
+        /// </param>
+        /// <param name="name">
+        /// The name of private link configuration.
+        /// Serialized Name: PrivateLinkConfiguration.name
+        /// </param>
+        /// <param name="resourceType">
+        /// The type of the private link configuration.
+        /// Serialized Name: PrivateLinkConfiguration.type
+        /// </param>
+        /// <param name="groupId">
+        /// The HDInsight private linkable sub-resource name to apply the private link configuration to. For example, &apos;headnode&apos;, &apos;gateway&apos;, &apos;edgenode&apos;.
+        /// Serialized Name: PrivateLinkConfiguration.properties.groupId
+        /// </param>
+        /// <param name="provisioningState">
+        /// The private link configuration provisioning state, which only appears in the response.
+        /// Serialized Name: PrivateLinkConfiguration.properties.provisioningState
+        /// </param>
+        /// <param name="ipConfigurations">
+        /// The IP configurations for the private link service.
+        /// Serialized Name: PrivateLinkConfiguration.properties.ipConfigurations
+        /// </param>
         internal PrivateLinkConfiguration(string id, string name, string resourceType, string groupId, PrivateLinkConfigurationProvisioningState? provisioningState, IList<IPConfiguration> ipConfigurations)
         {
             Id = id;
@@ -56,17 +86,35 @@ namespace Azure.ResourceManager.HDInsight.Models
             IPConfigurations = ipConfigurations;
         }
 
-        /// <summary> The private link configuration id. </summary>
+        /// <summary>
+        /// The private link configuration id.
+        /// Serialized Name: PrivateLinkConfiguration.id
+        /// </summary>
         public string Id { get; }
-        /// <summary> The name of private link configuration. </summary>
+        /// <summary>
+        /// The name of private link configuration.
+        /// Serialized Name: PrivateLinkConfiguration.name
+        /// </summary>
         public string Name { get; set; }
-        /// <summary> The type of the private link configuration. </summary>
+        /// <summary>
+        /// The type of the private link configuration.
+        /// Serialized Name: PrivateLinkConfiguration.type
+        /// </summary>
         public string ResourceType { get; }
-        /// <summary> The HDInsight private linkable sub-resource name to apply the private link configuration to. For example, &apos;headnode&apos;, &apos;gateway&apos;, &apos;edgenode&apos;. </summary>
+        /// <summary>
+        /// The HDInsight private linkable sub-resource name to apply the private link configuration to. For example, &apos;headnode&apos;, &apos;gateway&apos;, &apos;edgenode&apos;.
+        /// Serialized Name: PrivateLinkConfiguration.properties.groupId
+        /// </summary>
         public string GroupId { get; set; }
-        /// <summary> The private link configuration provisioning state, which only appears in the response. </summary>
+        /// <summary>
+        /// The private link configuration provisioning state, which only appears in the response.
+        /// Serialized Name: PrivateLinkConfiguration.properties.provisioningState
+        /// </summary>
         public PrivateLinkConfigurationProvisioningState? ProvisioningState { get; }
-        /// <summary> The IP configurations for the private link service. </summary>
+        /// <summary>
+        /// The IP configurations for the private link service.
+        /// Serialized Name: PrivateLinkConfiguration.properties.ipConfigurations
+        /// </summary>
         public IList<IPConfiguration> IPConfigurations { get; }
     }
 }
