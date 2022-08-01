@@ -105,6 +105,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             Assert.AreEqual(name, recordSetAResource.Value.Data.Name);
             Assert.AreEqual("Succeeded", recordSetAResource.Value.Data.ProvisioningState);
             Assert.AreEqual("dnszones/A", recordSetAResource.Value.Data.ResourceType.Type);
+            Assert.AreEqual(300, recordSetAResource.Value.Data.TtlInSenconds);
         }
 
         [Test]
