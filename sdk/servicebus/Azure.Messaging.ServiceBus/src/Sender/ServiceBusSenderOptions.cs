@@ -1,55 +1,21 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.ComponentModel;
-using Azure.Core;
 
 namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
-    /// The set of options that can be specified when creating a <see cref="ServiceBusReceiver"/>
+    /// The set of options that can be specified when creating a <see cref="ServiceBusSender"/>
     /// to configure its behavior.
     /// </summary>
-    public class ServiceBusReceiverOptions
+    public class ServiceBusSenderOptions
     {
         /// <summary>
-        /// Gets or sets the number of messages that will be eagerly requested from Queues or Subscriptions and queued locally without regard to
-        /// whether the receiver is actively receiving, intended to help maximize throughput by allowing the receiver to receive
-        /// from a local cache rather than waiting on a service request.
-        /// </summary>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///   A negative value is attempted to be set for the property.
-        /// </exception>
-        public int PrefetchCount
-        {
-            get
-            {
-                return _prefetchCount;
-            }
-            set
-            {
-                Argument.AssertAtLeast(value, 0, nameof(PrefetchCount));
-                _prefetchCount = value;
-            }
-        }
-        private int _prefetchCount;
-
-        /// <summary>
-        /// Gets or sets the <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.
-        /// </summary>
-        public ServiceBusReceiveMode ReceiveMode { get; set; } = ServiceBusReceiveMode.PeekLock;
-
-        /// <summary>
-        /// A property used to set the <see cref="ServiceBusReceiver"/> ID to identify the client. This can be used to correlate logs
+        /// A property used to set the <see cref="ServiceBusSender"/> ID to identify the client. This can be used to correlate logs
         /// and exceptions. If <c>null</c> or empty, a random unique value will be used.
         /// </summary>
         public string Identifier { get; set; }
-
-        /// <summary>
-        /// Gets or sets the subqueue to connect the receiver to. By default, the receiver will not connect to a subqueue.
-        /// </summary>
-        public SubQueue SubQueue { get; set; } = SubQueue.None;
 
         /// <summary>
         /// Determines whether the specified <see cref="System.Object" /> is equal to this instance.
@@ -84,12 +50,9 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <returns>A new copy of <see cref="ServiceBusReceiverOptions" />.</returns>
-        internal ServiceBusReceiverOptions Clone() =>
-            new ServiceBusReceiverOptions
+        internal ServiceBusSenderOptions Clone() =>
+            new ServiceBusSenderOptions
             {
-                ReceiveMode = ReceiveMode,
-                PrefetchCount = PrefetchCount,
-                SubQueue = SubQueue,
                 Identifier = Identifier
             };
     }
