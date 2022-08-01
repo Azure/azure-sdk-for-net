@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Managed integration runtime, including managed elastic and managed dedicated integration runtimes.
     /// Serialized Name: ManagedIntegrationRuntime
     /// </summary>
-    public partial class ManagedIntegrationRuntime : IntegrationRuntime
+    public partial class ManagedIntegrationRuntime : IntegrationRuntimeDefinition
     {
         /// <summary> Initializes a new instance of ManagedIntegrationRuntime. </summary>
         public ManagedIntegrationRuntime()

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// A copy activity source for Microsoft Access.
     /// Serialized Name: MicrosoftAccessSource
     /// </summary>
-    public partial class MicrosoftAccessSource : CopySource
+    public partial class MicrosoftAccessSource : CopyActivitySource
     {
         /// <summary> Initializes a new instance of MicrosoftAccessSource. </summary>
         public MicrosoftAccessSource()

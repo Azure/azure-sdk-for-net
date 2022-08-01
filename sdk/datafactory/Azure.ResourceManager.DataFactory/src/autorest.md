@@ -49,43 +49,69 @@ rename-rules:
   URI: Uri
   MWS: Mws
   Etag: ETag|etag
+  Db: DB|db
 
 rename-mapping:
-  DatasetDataElement.name: ColumnName
-  DatasetDataElement.type: columnType
-  DatasetSchemaDataElement.name: schemaColumnName
-  DatasetSchemaDataElement.type: schemaColumnType
-  DatasetCompression.type: datasetCompressionType
   AccessPolicyResponse: FactoryDataPlaneAccessAccessPolicyResult
-  Activity: DataFactoryPipelineActivity
+  Activity: PipelineActivityInfo
   ActivityDependency: PipelineActivityDependencyInfo
   ActivityPolicy: PipelineActivityPolicyInfo
   ActivityRun: PipelineActivityRunInfo
   ActivityRunsQueryResponse: PipelineActivityRunsQueryResult
-  AddDataFlowToDebugSessionResponse: FactoryDataFlowLinkDebugSessionResult
-  CreateDataFlowDebugSessionResponse: CreateDataFlowDebugSessionResult
+  AppendVariableActivity: PipelineActivityAppendVariableInfo
+  CopySource: CopyActivitySource
   CreateRunResponse: CreateRunResult
-  DataFlow: FactoryDataFlowDefinition
-  DataFlowDebugCommandResponse: DataFlowDebugCommandResult
-  DataFlowResource: DataFactoryDataFlow
-  DatasetResource: DataFactoryDataset
+  EncryptionConfiguration: FactoryEncryptionConfiguration
   ExposureControlBatchResponse: ExposureControlBatchResult
   ExposureControlResponse: ExposureControlResult
   ExposureControlRequest: ExposureControlContent
   Factory: DataFactory
   GitHubAccessTokenResponse: GitHubAccessTokenResult
-  GlobalParameterResource: DataFactoryGlobalParameter
   IntegrationRuntimeResource: DataFactoryIntegrationRuntime
   LinkedServiceResource: DataFactoryLinkedService
   ManagedPrivateEndpointResource: DataFactoryPrivateEndpoint
   ManagedVirtualNetworkResource: DataFactoryVirtualNetwork
   PipelineResource: DataFactoryPipeline
   PrivateEndpointConnectionResource: DataFactoryPrivateEndpointConnection
+  PublicNetworkAccess: FactoryPublicNetworkAccess
+  PurviewConfiguration: FactoryPurviewConfiguration
   RunFilterParameters: RunFilterContent
   SsisObjectMetadataStatusResponse: SsisObjectMetadataStatusResult
   TriggerResource: DataFactoryTrigger
   Trigger: DataFactoryTriggerProperties
   IntegrationRuntimeStatusResponse: IntegrationRuntimeStatusResult
+  # Dataset
+  DatasetDataElement.name: ColumnName
+  DatasetDataElement.type: columnType
+  DatasetSchemaDataElement.name: schemaColumnName
+  DatasetSchemaDataElement.type: schemaColumnType
+  DatasetCompression.type: datasetCompressionType
+  Dataset: FactoryDatasetDefinition
+  DatasetResource: DataFactoryDataset
+  HttpDataset: HttpFileDataset
+  # DataFlow
+  DataFlow: FactoryDataFlowDefinition
+  DataFlowResource: DataFactoryDataFlow
+  Flowlet: FactoryFlowletDefinition
+  MappingDataFlow: FactoryMappingDataFlowDefinition
+  WranglingDataFlow: FactoryWranglingDataFlowDefinition
+  # Debug resource
+  AddDataFlowToDebugSessionResponse: FactoryDataFlowDebugSessionStartResult
+  CreateDataFlowDebugSessionRequest: FactoryDataFlowDebugSessionContent
+  CreateDataFlowDebugSessionResponse: FactoryDataFlowDebugSessionCreateResult
+  DataFlowDebugResource: FactoryDataFlowDebugInfo
+  DataFlowDebugCommandResponse: FactoryDataFlowDebugCommandResult
+  DataFlowDebugPackage: FactoryDataFlowDebugPackageContent
+  DatasetDebugResource: FactoryDatasetDebugInfo
+  IntegrationRuntimeDebugResource: FactoryIntegrationRuntimeDebugInfo
+  LinkedServiceDebugResource: FactoryLinkedServiceDebugInfo
+  SubResourceDebugResource: FactoryDebugInfo
+  # GlobalParameter
+  GlobalParameterResource: DataFactoryGlobalParameter
+  GlobalParameterSpecification: FactoryGlobalParameterSpecification
+  GlobalParameterType: FactoryGlobalParameterType
+  # IntegrationRuntime
+  IntegrationRuntime: IntegrationRuntimeDefinition
   
 # prepend-rp-prefix:
 #  - DataFlowDefinition

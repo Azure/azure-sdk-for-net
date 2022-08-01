@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Jira Service dataset.
     /// Serialized Name: JiraObjectDataset
     /// </summary>
-    public partial class JiraObjectDataset : Dataset
+    public partial class JiraObjectDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of JiraObjectDataset. </summary>
         /// <param name="linkedServiceName">

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// A copy activity file system source.
     /// Serialized Name: FileSystemSource
     /// </summary>
-    public partial class FileSystemSource : CopySource
+    public partial class FileSystemSource : CopyActivitySource
     {
         /// <summary> Initializes a new instance of FileSystemSource. </summary>
         public FileSystemSource()

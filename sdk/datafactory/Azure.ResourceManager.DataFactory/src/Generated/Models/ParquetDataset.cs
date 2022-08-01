@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Parquet dataset.
     /// Serialized Name: ParquetDataset
     /// </summary>
-    public partial class ParquetDataset : Dataset
+    public partial class ParquetDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of ParquetDataset. </summary>
         /// <param name="linkedServiceName">

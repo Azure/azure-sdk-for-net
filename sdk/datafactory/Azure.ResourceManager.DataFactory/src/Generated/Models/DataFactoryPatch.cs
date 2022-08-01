@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Whether or not public network access is allowed for the data factory.
         /// Serialized Name: FactoryUpdateParameters.properties.publicNetworkAccess
         /// </summary>
-        public PublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public FactoryPublicNetworkAccess? PublicNetworkAccess { get; set; }
     }
 }

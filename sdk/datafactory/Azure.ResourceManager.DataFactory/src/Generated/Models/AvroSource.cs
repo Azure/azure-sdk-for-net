@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// A copy activity Avro source.
     /// Serialized Name: AvroSource
     /// </summary>
-    public partial class AvroSource : CopySource
+    public partial class AvroSource : CopyActivitySource
     {
         /// <summary> Initializes a new instance of AvroSource. </summary>
         public AvroSource()

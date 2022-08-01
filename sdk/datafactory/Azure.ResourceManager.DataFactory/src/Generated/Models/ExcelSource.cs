@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// A copy activity excel source.
     /// Serialized Name: ExcelSource
     /// </summary>
-    public partial class ExcelSource : CopySource
+    public partial class ExcelSource : CopyActivitySource
     {
         /// <summary> Initializes a new instance of ExcelSource. </summary>
         public ExcelSource()

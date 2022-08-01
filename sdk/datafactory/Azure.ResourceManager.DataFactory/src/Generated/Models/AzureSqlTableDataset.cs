@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// The Azure SQL Server database dataset.
     /// Serialized Name: AzureSqlTableDataset
     /// </summary>
-    public partial class AzureSqlTableDataset : Dataset
+    public partial class AzureSqlTableDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of AzureSqlTableDataset. </summary>
         /// <param name="linkedServiceName">

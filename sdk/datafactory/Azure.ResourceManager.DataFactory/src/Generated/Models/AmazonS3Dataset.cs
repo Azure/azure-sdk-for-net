@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// A single Amazon Simple Storage Service (S3) object or a set of S3 objects.
     /// Serialized Name: AmazonS3Dataset
     /// </summary>
-    public partial class AmazonS3Dataset : Dataset
+    public partial class AmazonS3Dataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of AmazonS3Dataset. </summary>
         /// <param name="linkedServiceName">

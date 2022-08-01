@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// A Rest service dataset.
     /// Serialized Name: RestResourceDataset
     /// </summary>
-    public partial class RestResourceDataset : Dataset
+    public partial class RestResourceDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of RestResourceDataset. </summary>
         /// <param name="linkedServiceName">

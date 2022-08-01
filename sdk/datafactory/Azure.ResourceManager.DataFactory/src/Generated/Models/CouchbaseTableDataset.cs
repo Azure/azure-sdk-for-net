@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Couchbase server dataset.
     /// Serialized Name: CouchbaseTableDataset
     /// </summary>
-    public partial class CouchbaseTableDataset : Dataset
+    public partial class CouchbaseTableDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of CouchbaseTableDataset. </summary>
         /// <param name="linkedServiceName">

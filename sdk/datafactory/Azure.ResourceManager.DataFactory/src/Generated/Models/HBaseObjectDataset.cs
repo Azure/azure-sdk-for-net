@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// HBase server dataset.
     /// Serialized Name: HBaseObjectDataset
     /// </summary>
-    public partial class HBaseObjectDataset : Dataset
+    public partial class HBaseObjectDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of HBaseObjectDataset. </summary>
         /// <param name="linkedServiceName">

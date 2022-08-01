@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// The Office365 account.
     /// Serialized Name: Office365Dataset
     /// </summary>
-    public partial class Office365Dataset : Dataset
+    public partial class Office365Dataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of Office365Dataset. </summary>
         /// <param name="linkedServiceName">

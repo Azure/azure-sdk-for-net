@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DataFactory
         /// Data flow properties.
         /// Serialized Name: DataFlowResource.properties
         /// Please note <see cref="FactoryDataFlowDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Flowlet"/>, <see cref="MappingDataFlow"/> and <see cref="WranglingDataFlow"/>.
+        /// The available derived classes include <see cref="FactoryFlowletDefinition"/>, <see cref="FactoryMappingDataFlowDefinition"/> and <see cref="FactoryWranglingDataFlowDefinition"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public DataFactoryDataFlowData(FactoryDataFlowDefinition properties)
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataFactory
         /// Data flow properties.
         /// Serialized Name: DataFlowResource.properties
         /// Please note <see cref="FactoryDataFlowDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Flowlet"/>, <see cref="MappingDataFlow"/> and <see cref="WranglingDataFlow"/>.
+        /// The available derived classes include <see cref="FactoryFlowletDefinition"/>, <see cref="FactoryMappingDataFlowDefinition"/> and <see cref="FactoryWranglingDataFlowDefinition"/>.
         /// </param>
         /// <param name="eTag">
         /// Etag identifies change in the resource.
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataFactory
         /// Data flow properties.
         /// Serialized Name: DataFlowResource.properties
         /// Please note <see cref="FactoryDataFlowDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Flowlet"/>, <see cref="MappingDataFlow"/> and <see cref="WranglingDataFlow"/>.
+        /// The available derived classes include <see cref="FactoryFlowletDefinition"/>, <see cref="FactoryMappingDataFlowDefinition"/> and <see cref="FactoryWranglingDataFlowDefinition"/>.
         /// </summary>
         public FactoryDataFlowDefinition Properties { get; set; }
         /// <summary>

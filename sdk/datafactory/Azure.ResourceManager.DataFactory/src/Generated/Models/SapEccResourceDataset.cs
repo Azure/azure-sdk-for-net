@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// The path of the SAP ECC OData entity.
     /// Serialized Name: SapEccResourceDataset
     /// </summary>
-    public partial class SapEccResourceDataset : Dataset
+    public partial class SapEccResourceDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of SapEccResourceDataset. </summary>
         /// <param name="linkedServiceName">

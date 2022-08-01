@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Azure Databricks Delta Lake dataset.
     /// Serialized Name: AzureDatabricksDeltaLakeDataset
     /// </summary>
-    public partial class AzureDatabricksDeltaLakeDataset : Dataset
+    public partial class AzureDatabricksDeltaLakeDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of AzureDatabricksDeltaLakeDataset. </summary>
         /// <param name="linkedServiceName">

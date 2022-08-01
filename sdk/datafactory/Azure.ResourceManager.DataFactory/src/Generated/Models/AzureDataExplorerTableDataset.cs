@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// The Azure Data Explorer (Kusto) dataset.
     /// Serialized Name: AzureDataExplorerTableDataset
     /// </summary>
-    public partial class AzureDataExplorerTableDataset : Dataset
+    public partial class AzureDataExplorerTableDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of AzureDataExplorerTableDataset. </summary>
         /// <param name="linkedServiceName">

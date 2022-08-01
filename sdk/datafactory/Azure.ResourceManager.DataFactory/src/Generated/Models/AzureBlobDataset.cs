@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// The Azure Blob storage.
     /// Serialized Name: AzureBlobDataset
     /// </summary>
-    public partial class AzureBlobDataset : Dataset
+    public partial class AzureBlobDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of AzureBlobDataset. </summary>
         /// <param name="linkedServiceName">

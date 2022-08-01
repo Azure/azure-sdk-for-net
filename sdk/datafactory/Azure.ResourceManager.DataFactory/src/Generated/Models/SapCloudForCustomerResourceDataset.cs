@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// The path of the SAP Cloud for Customer OData entity.
     /// Serialized Name: SapCloudForCustomerResourceDataset
     /// </summary>
-    public partial class SapCloudForCustomerResourceDataset : Dataset
+    public partial class SapCloudForCustomerResourceDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of SapCloudForCustomerResourceDataset. </summary>
         /// <param name="linkedServiceName">

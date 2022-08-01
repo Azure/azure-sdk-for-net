@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// The SAP BW cube dataset.
     /// Serialized Name: SapBwCubeDataset
     /// </summary>
-    public partial class SapBwCubeDataset : Dataset
+    public partial class SapBwCubeDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of SapBwCubeDataset. </summary>
         /// <param name="linkedServiceName">

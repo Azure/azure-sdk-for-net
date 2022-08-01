@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Responsys dataset.
     /// Serialized Name: ResponsysObjectDataset
     /// </summary>
-    public partial class ResponsysObjectDataset : Dataset
+    public partial class ResponsysObjectDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of ResponsysObjectDataset. </summary>
         /// <param name="linkedServiceName">

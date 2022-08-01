@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataFactory
 
         internal static DataFactoryGlobalParameterData DeserializeDataFactoryGlobalParameterData(JsonElement element)
         {
-            IDictionary<string, GlobalParameterSpecification> properties = default;
+            IDictionary<string, FactoryGlobalParameterSpecification> properties = default;
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -42,10 +42,10 @@ namespace Azure.ResourceManager.DataFactory
             {
                 if (property.NameEquals("properties"))
                 {
-                    Dictionary<string, GlobalParameterSpecification> dictionary = new Dictionary<string, GlobalParameterSpecification>();
+                    Dictionary<string, FactoryGlobalParameterSpecification> dictionary = new Dictionary<string, FactoryGlobalParameterSpecification>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, GlobalParameterSpecification.DeserializeGlobalParameterSpecification(property0.Value));
+                        dictionary.Add(property0.Name, FactoryGlobalParameterSpecification.DeserializeFactoryGlobalParameterSpecification(property0.Value));
                     }
                     properties = dictionary;
                     continue;

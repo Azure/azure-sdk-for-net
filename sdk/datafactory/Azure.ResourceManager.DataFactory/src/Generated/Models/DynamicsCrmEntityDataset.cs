@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// The Dynamics CRM entity dataset.
     /// Serialized Name: DynamicsCrmEntityDataset
     /// </summary>
-    public partial class DynamicsCrmEntityDataset : Dataset
+    public partial class DynamicsCrmEntityDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of DynamicsCrmEntityDataset. </summary>
         /// <param name="linkedServiceName">

@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IList<UserProperty>> userProperties = default;
             Expression expression = default;
             Optional<BinaryData> timeout = default;
-            IList<DataFactoryPipelineActivity> activities = default;
+            IList<PipelineActivityInfo> activities = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,10 +164,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         if (property0.NameEquals("activities"))
                         {
-                            List<DataFactoryPipelineActivity> array = new List<DataFactoryPipelineActivity>();
+                            List<PipelineActivityInfo> array = new List<PipelineActivityInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeserializeDataFactoryPipelineActivity(item));
+                                array.Add(DeserializePipelineActivityInfo(item));
                             }
                             activities = array;
                             continue;

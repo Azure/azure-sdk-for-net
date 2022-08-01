@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// The custom dataset.
     /// Serialized Name: CustomDataset
     /// </summary>
-    public partial class CustomDataset : Dataset
+    public partial class CustomDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of CustomDataset. </summary>
         /// <param name="linkedServiceName">

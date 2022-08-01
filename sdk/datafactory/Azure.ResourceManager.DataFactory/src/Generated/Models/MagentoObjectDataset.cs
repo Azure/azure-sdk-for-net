@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Magento server dataset.
     /// Serialized Name: MagentoObjectDataset
     /// </summary>
-    public partial class MagentoObjectDataset : Dataset
+    public partial class MagentoObjectDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of MagentoObjectDataset. </summary>
         /// <param name="linkedServiceName">

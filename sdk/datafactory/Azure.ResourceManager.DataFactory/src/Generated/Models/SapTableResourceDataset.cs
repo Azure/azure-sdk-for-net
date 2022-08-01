@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// SAP Table Resource properties.
     /// Serialized Name: SapTableResourceDataset
     /// </summary>
-    public partial class SapTableResourceDataset : Dataset
+    public partial class SapTableResourceDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of SapTableResourceDataset. </summary>
         /// <param name="linkedServiceName">

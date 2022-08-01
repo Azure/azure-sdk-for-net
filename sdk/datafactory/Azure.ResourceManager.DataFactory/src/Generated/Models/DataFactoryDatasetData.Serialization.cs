@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataFactory
 
         internal static DataFactoryDatasetData DeserializeDataFactoryDatasetData(JsonElement element)
         {
-            Dataset properties = default;
+            FactoryDatasetDefinition properties = default;
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataFactory
             {
                 if (property.NameEquals("properties"))
                 {
-                    properties = Dataset.DeserializeDataset(property.Value);
+                    properties = FactoryDatasetDefinition.DeserializeFactoryDatasetDefinition(property.Value);
                     continue;
                 }
                 if (property.NameEquals("etag"))

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// A copy activity HDFS source.
     /// Serialized Name: HdfsSource
     /// </summary>
-    public partial class HdfsSource : CopySource
+    public partial class HdfsSource : CopyActivitySource
     {
         /// <summary> Initializes a new instance of HdfsSource. </summary>
         public HdfsSource()

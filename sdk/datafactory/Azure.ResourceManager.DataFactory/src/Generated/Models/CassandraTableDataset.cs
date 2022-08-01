@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// The Cassandra database dataset.
     /// Serialized Name: CassandraTableDataset
     /// </summary>
-    public partial class CassandraTableDataset : Dataset
+    public partial class CassandraTableDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of CassandraTableDataset. </summary>
         /// <param name="linkedServiceName">

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Netezza dataset.
     /// Serialized Name: NetezzaTableDataset
     /// </summary>
-    public partial class NetezzaTableDataset : Dataset
+    public partial class NetezzaTableDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of NetezzaTableDataset. </summary>
         /// <param name="linkedServiceName">

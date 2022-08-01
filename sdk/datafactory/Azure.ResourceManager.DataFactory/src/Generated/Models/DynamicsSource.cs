@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// A copy activity Dynamics source.
     /// Serialized Name: DynamicsSource
     /// </summary>
-    public partial class DynamicsSource : CopySource
+    public partial class DynamicsSource : CopyActivitySource
     {
         /// <summary> Initializes a new instance of DynamicsSource. </summary>
         public DynamicsSource()

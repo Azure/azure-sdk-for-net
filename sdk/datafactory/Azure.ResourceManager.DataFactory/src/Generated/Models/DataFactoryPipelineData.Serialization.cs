@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DataFactory
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> description = default;
-            Optional<IList<DataFactoryPipelineActivity>> activities = default;
+            Optional<IList<PipelineActivityInfo>> activities = default;
             Optional<IDictionary<string, ParameterSpecification>> parameters = default;
             Optional<IDictionary<string, VariableSpecification>> variables = default;
             Optional<int> concurrency = default;
@@ -192,10 +192,10 @@ namespace Azure.ResourceManager.DataFactory
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<DataFactoryPipelineActivity> array = new List<DataFactoryPipelineActivity>();
+                            List<PipelineActivityInfo> array = new List<PipelineActivityInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataFactoryPipelineActivity.DeserializeDataFactoryPipelineActivity(item));
+                                array.Add(PipelineActivityInfo.DeserializePipelineActivityInfo(item));
                             }
                             activities = array;
                             continue;

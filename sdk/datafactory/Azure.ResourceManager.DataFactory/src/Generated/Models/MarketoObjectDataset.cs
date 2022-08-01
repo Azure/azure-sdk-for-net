@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Marketo server dataset.
     /// Serialized Name: MarketoObjectDataset
     /// </summary>
-    public partial class MarketoObjectDataset : Dataset
+    public partial class MarketoObjectDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of MarketoObjectDataset. </summary>
         /// <param name="linkedServiceName">

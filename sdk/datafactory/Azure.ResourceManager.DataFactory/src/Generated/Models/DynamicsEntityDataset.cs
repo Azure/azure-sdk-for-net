@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// The Dynamics entity dataset.
     /// Serialized Name: DynamicsEntityDataset
     /// </summary>
-    public partial class DynamicsEntityDataset : Dataset
+    public partial class DynamicsEntityDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of DynamicsEntityDataset. </summary>
         /// <param name="linkedServiceName">

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// The path of the Dynamics AX OData entity.
     /// Serialized Name: DynamicsAXResourceDataset
     /// </summary>
-    public partial class DynamicsAXResourceDataset : Dataset
+    public partial class DynamicsAXResourceDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of DynamicsAXResourceDataset. </summary>
         /// <param name="linkedServiceName">

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         internal static SwitchCase DeserializeSwitchCase(JsonElement element)
         {
             Optional<string> value = default;
-            Optional<IList<DataFactoryPipelineActivity>> activities = default;
+            Optional<IList<PipelineActivityInfo>> activities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -52,10 +52,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DataFactoryPipelineActivity> array = new List<DataFactoryPipelineActivity>();
+                    List<PipelineActivityInfo> array = new List<PipelineActivityInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataFactoryPipelineActivity.DeserializeDataFactoryPipelineActivity(item));
+                        array.Add(PipelineActivityInfo.DeserializePipelineActivityInfo(item));
                     }
                     activities = array;
                     continue;

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Azure Data Lake Store dataset.
     /// Serialized Name: AzureDataLakeStoreDataset
     /// </summary>
-    public partial class AzureDataLakeStoreDataset : Dataset
+    public partial class AzureDataLakeStoreDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of AzureDataLakeStoreDataset. </summary>
         /// <param name="linkedServiceName">

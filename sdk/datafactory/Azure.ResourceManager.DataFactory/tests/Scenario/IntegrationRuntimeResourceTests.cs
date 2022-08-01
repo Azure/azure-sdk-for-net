@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
 
         private async Task<DataFactoryIntegrationRuntimeResource> CreateDefaultIntegrationRuntime(string integrationRuntimeName)
         {
-            IntegrationRuntime properties = new IntegrationRuntime()
+            IntegrationRuntimeDefinition properties = new IntegrationRuntimeDefinition()
             {
                 RuntimeType = "SelfHosted"
             };

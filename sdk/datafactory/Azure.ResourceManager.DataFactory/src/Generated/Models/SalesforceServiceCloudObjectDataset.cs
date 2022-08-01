@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// The Salesforce Service Cloud object dataset.
     /// Serialized Name: SalesforceServiceCloudObjectDataset
     /// </summary>
-    public partial class SalesforceServiceCloudObjectDataset : Dataset
+    public partial class SalesforceServiceCloudObjectDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of SalesforceServiceCloudObjectDataset. </summary>
         /// <param name="linkedServiceName">

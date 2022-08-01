@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataFactory
         /// Serialized Name: GlobalParameterResource.properties
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public DataFactoryGlobalParameterData(IDictionary<string, GlobalParameterSpecification> properties)
+        public DataFactoryGlobalParameterData(IDictionary<string, FactoryGlobalParameterSpecification> properties)
         {
             if (properties == null)
             {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataFactory
         /// Etag identifies change in the resource.
         /// Serialized Name: SubResource.etag
         /// </param>
-        internal DataFactoryGlobalParameterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, GlobalParameterSpecification> properties, ETag? eTag) : base(id, name, resourceType, systemData)
+        internal DataFactoryGlobalParameterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, FactoryGlobalParameterSpecification> properties, ETag? eTag) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             ETag = eTag;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataFactory
         /// Properties of the global parameter.
         /// Serialized Name: GlobalParameterResource.properties
         /// </summary>
-        public IDictionary<string, GlobalParameterSpecification> Properties { get; }
+        public IDictionary<string, FactoryGlobalParameterSpecification> Properties { get; }
         /// <summary>
         /// Etag identifies change in the resource.
         /// Serialized Name: SubResource.etag

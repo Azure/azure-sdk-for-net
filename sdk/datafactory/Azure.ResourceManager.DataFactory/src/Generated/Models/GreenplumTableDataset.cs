@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Greenplum Database dataset.
     /// Serialized Name: GreenplumTableDataset
     /// </summary>
-    public partial class GreenplumTableDataset : Dataset
+    public partial class GreenplumTableDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of GreenplumTableDataset. </summary>
         /// <param name="linkedServiceName">

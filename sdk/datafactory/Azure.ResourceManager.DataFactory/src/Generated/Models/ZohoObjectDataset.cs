@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Zoho server dataset.
     /// Serialized Name: ZohoObjectDataset
     /// </summary>
-    public partial class ZohoObjectDataset : Dataset
+    public partial class ZohoObjectDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of ZohoObjectDataset. </summary>
         /// <param name="linkedServiceName">

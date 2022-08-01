@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// A copy activity Rest service source.
     /// Serialized Name: RestSource
     /// </summary>
-    public partial class RestSource : CopySource
+    public partial class RestSource : CopyActivitySource
     {
         /// <summary> Initializes a new instance of RestSource. </summary>
         public RestSource()

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// The Azure Search Index.
     /// Serialized Name: AzureSearchIndexDataset
     /// </summary>
-    public partial class AzureSearchIndexDataset : Dataset
+    public partial class AzureSearchIndexDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of AzureSearchIndexDataset. </summary>
         /// <param name="linkedServiceName">

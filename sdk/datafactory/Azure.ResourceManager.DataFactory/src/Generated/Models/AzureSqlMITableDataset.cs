@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// The Azure SQL Managed Instance dataset.
     /// Serialized Name: AzureSqlMITableDataset
     /// </summary>
-    public partial class AzureSqlMITableDataset : Dataset
+    public partial class AzureSqlMITableDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of AzureSqlMITableDataset. </summary>
         /// <param name="linkedServiceName">

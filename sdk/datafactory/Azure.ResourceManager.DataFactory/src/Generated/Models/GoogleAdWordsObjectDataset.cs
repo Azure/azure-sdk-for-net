@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Google AdWords service dataset.
     /// Serialized Name: GoogleAdWordsObjectDataset
     /// </summary>
-    public partial class GoogleAdWordsObjectDataset : Dataset
+    public partial class GoogleAdWordsObjectDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of GoogleAdWordsObjectDataset. </summary>
         /// <param name="linkedServiceName">

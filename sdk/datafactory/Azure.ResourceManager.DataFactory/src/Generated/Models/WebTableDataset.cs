@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// The dataset points to a HTML table in the web page.
     /// Serialized Name: WebTableDataset
     /// </summary>
-    public partial class WebTableDataset : Dataset
+    public partial class WebTableDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of WebTableDataset. </summary>
         /// <param name="linkedServiceName">

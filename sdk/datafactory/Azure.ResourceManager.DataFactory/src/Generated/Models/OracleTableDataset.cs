@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// The on-premises Oracle database dataset.
     /// Serialized Name: OracleTableDataset
     /// </summary>
-    public partial class OracleTableDataset : Dataset
+    public partial class OracleTableDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of OracleTableDataset. </summary>
         /// <param name="linkedServiceName">

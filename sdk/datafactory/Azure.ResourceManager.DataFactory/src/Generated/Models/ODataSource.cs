@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// A copy activity source for OData source.
     /// Serialized Name: ODataSource
     /// </summary>
-    public partial class ODataSource : CopySource
+    public partial class ODataSource : CopyActivitySource
     {
         /// <summary> Initializes a new instance of ODataSource. </summary>
         public ODataSource()

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Hubspot Service dataset.
     /// Serialized Name: HubspotObjectDataset
     /// </summary>
-    public partial class HubspotObjectDataset : Dataset
+    public partial class HubspotObjectDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of HubspotObjectDataset. </summary>
         /// <param name="linkedServiceName">

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// A copy activity Azure BlobFS source.
     /// Serialized Name: AzureBlobFSSource
     /// </summary>
-    public partial class AzureBlobFSSource : CopySource
+    public partial class AzureBlobFSSource : CopyActivitySource
     {
         /// <summary> Initializes a new instance of AzureBlobFSSource. </summary>
         public AzureBlobFSSource()

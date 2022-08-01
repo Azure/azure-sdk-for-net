@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// A copy activity Oracle source.
     /// Serialized Name: OracleSource
     /// </summary>
-    public partial class OracleSource : CopySource
+    public partial class OracleSource : CopyActivitySource
     {
         /// <summary> Initializes a new instance of OracleSource. </summary>
         public OracleSource()

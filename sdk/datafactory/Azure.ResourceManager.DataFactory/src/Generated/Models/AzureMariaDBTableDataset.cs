@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Azure Database for MariaDB dataset.
     /// Serialized Name: AzureMariaDBTableDataset
     /// </summary>
-    public partial class AzureMariaDBTableDataset : Dataset
+    public partial class AzureMariaDBTableDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of AzureMariaDBTableDataset. </summary>
         /// <param name="linkedServiceName">

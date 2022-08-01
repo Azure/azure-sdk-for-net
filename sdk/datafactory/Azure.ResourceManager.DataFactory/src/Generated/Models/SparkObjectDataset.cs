@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Spark Server dataset.
     /// Serialized Name: SparkObjectDataset
     /// </summary>
-    public partial class SparkObjectDataset : Dataset
+    public partial class SparkObjectDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of SparkObjectDataset. </summary>
         /// <param name="linkedServiceName">

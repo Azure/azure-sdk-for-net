@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Json dataset.
     /// Serialized Name: JsonDataset
     /// </summary>
-    public partial class JsonDataset : Dataset
+    public partial class JsonDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of JsonDataset. </summary>
         /// <param name="linkedServiceName">

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// The Informix table dataset.
     /// Serialized Name: InformixTableDataset
     /// </summary>
-    public partial class InformixTableDataset : Dataset
+    public partial class InformixTableDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of InformixTableDataset. </summary>
         /// <param name="linkedServiceName">

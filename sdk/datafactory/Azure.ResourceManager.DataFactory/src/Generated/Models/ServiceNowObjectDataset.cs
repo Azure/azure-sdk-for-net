@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// ServiceNow server dataset.
     /// Serialized Name: ServiceNowObjectDataset
     /// </summary>
-    public partial class ServiceNowObjectDataset : Dataset
+    public partial class ServiceNowObjectDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of ServiceNowObjectDataset. </summary>
         /// <param name="linkedServiceName">

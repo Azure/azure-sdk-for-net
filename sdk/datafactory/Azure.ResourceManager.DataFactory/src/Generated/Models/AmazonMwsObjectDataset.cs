@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Amazon Marketplace Web Service dataset.
     /// Serialized Name: AmazonMWSObjectDataset
     /// </summary>
-    public partial class AmazonMwsObjectDataset : Dataset
+    public partial class AmazonMwsObjectDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of AmazonMwsObjectDataset. </summary>
         /// <param name="linkedServiceName">

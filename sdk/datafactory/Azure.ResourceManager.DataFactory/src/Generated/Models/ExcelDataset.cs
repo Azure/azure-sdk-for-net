@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Excel dataset.
     /// Serialized Name: ExcelDataset
     /// </summary>
-    public partial class ExcelDataset : Dataset
+    public partial class ExcelDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of ExcelDataset. </summary>
         /// <param name="linkedServiceName">

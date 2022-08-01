@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// QuickBooks server dataset.
     /// Serialized Name: QuickBooksObjectDataset
     /// </summary>
-    public partial class QuickBooksObjectDataset : Dataset
+    public partial class QuickBooksObjectDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of QuickBooksObjectDataset. </summary>
         /// <param name="linkedServiceName">

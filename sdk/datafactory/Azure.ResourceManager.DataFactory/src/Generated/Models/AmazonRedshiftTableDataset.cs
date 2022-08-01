@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// The Amazon Redshift table dataset.
     /// Serialized Name: AmazonRedshiftTableDataset
     /// </summary>
-    public partial class AmazonRedshiftTableDataset : Dataset
+    public partial class AmazonRedshiftTableDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of AmazonRedshiftTableDataset. </summary>
         /// <param name="linkedServiceName">

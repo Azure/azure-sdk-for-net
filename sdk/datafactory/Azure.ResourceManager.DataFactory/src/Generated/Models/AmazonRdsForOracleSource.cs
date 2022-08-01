@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// A copy activity AmazonRdsForOracle source.
     /// Serialized Name: AmazonRdsForOracleSource
     /// </summary>
-    public partial class AmazonRdsForOracleSource : CopySource
+    public partial class AmazonRdsForOracleSource : CopyActivitySource
     {
         /// <summary> Initializes a new instance of AmazonRdsForOracleSource. </summary>
         public AmazonRdsForOracleSource()

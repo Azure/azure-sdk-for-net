@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// A copy activity source for an HTTP file.
     /// Serialized Name: HttpSource
     /// </summary>
-    public partial class HttpSource : CopySource
+    public partial class HttpSource : CopyActivitySource
     {
         /// <summary> Initializes a new instance of HttpSource. </summary>
         public HttpSource()

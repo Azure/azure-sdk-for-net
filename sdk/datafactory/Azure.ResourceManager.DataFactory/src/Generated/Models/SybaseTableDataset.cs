@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// The Sybase table dataset.
     /// Serialized Name: SybaseTableDataset
     /// </summary>
-    public partial class SybaseTableDataset : Dataset
+    public partial class SybaseTableDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of SybaseTableDataset. </summary>
         /// <param name="linkedServiceName">

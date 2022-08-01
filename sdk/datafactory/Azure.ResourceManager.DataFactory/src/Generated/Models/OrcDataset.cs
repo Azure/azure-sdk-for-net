@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// ORC dataset.
     /// Serialized Name: OrcDataset
     /// </summary>
-    public partial class OrcDataset : Dataset
+    public partial class OrcDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of OrcDataset. </summary>
         /// <param name="linkedServiceName">

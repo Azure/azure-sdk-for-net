@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Sap Business Warehouse Open Hub Destination Table properties.
     /// Serialized Name: SapOpenHubTableDataset
     /// </summary>
-    public partial class SapOpenHubTableDataset : Dataset
+    public partial class SapOpenHubTableDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of SapOpenHubTableDataset. </summary>
         /// <param name="linkedServiceName">

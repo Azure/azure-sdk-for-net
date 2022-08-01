@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Square Service dataset.
     /// Serialized Name: SquareObjectDataset
     /// </summary>
-    public partial class SquareObjectDataset : Dataset
+    public partial class SquareObjectDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of SquareObjectDataset. </summary>
         /// <param name="linkedServiceName">

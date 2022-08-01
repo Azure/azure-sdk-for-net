@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// The Db2 table dataset.
     /// Serialized Name: Db2TableDataset
     /// </summary>
-    public partial class Db2TableDataset : Dataset
+    public partial class Db2TableDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of Db2TableDataset. </summary>
         /// <param name="linkedServiceName">

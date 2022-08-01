@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Oracle Service Cloud dataset.
     /// Serialized Name: OracleServiceCloudObjectDataset
     /// </summary>
-    public partial class OracleServiceCloudObjectDataset : Dataset
+    public partial class OracleServiceCloudObjectDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of OracleServiceCloudObjectDataset. </summary>
         /// <param name="linkedServiceName">

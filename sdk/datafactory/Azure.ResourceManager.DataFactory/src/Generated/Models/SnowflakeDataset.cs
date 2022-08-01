@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// The snowflake dataset.
     /// Serialized Name: SnowflakeDataset
     /// </summary>
-    public partial class SnowflakeDataset : Dataset
+    public partial class SnowflakeDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of SnowflakeDataset. </summary>
         /// <param name="linkedServiceName">

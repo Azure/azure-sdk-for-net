@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Xero Service dataset.
     /// Serialized Name: XeroObjectDataset
     /// </summary>
-    public partial class XeroObjectDataset : Dataset
+    public partial class XeroObjectDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of XeroObjectDataset. </summary>
         /// <param name="linkedServiceName">

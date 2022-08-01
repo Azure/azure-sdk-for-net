@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Avro dataset.
     /// Serialized Name: AvroDataset
     /// </summary>
-    public partial class AvroDataset : Dataset
+    public partial class AvroDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of AvroDataset. </summary>
         /// <param name="linkedServiceName">

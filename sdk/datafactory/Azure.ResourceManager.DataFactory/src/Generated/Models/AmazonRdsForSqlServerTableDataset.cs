@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// The Amazon RDS for SQL Server dataset.
     /// Serialized Name: AmazonRdsForSqlServerTableDataset
     /// </summary>
-    public partial class AmazonRdsForSqlServerTableDataset : Dataset
+    public partial class AmazonRdsForSqlServerTableDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of AmazonRdsForSqlServerTableDataset. </summary>
         /// <param name="linkedServiceName">

@@ -105,8 +105,8 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "Cassandra": return CassandraLinkedService.DeserializeCassandraLinkedService(element);
                     case "CommonDataServiceForApps": return CommonDataServiceForAppsLinkedService.DeserializeCommonDataServiceForAppsLinkedService(element);
                     case "Concur": return ConcurLinkedService.DeserializeConcurLinkedService(element);
-                    case "CosmosDb": return CosmosDbLinkedService.DeserializeCosmosDbLinkedService(element);
-                    case "CosmosDbMongoDbApi": return CosmosDbMongoDbApiLinkedService.DeserializeCosmosDbMongoDbApiLinkedService(element);
+                    case "CosmosDb": return CosmosDBLinkedService.DeserializeCosmosDBLinkedService(element);
+                    case "CosmosDbMongoDbApi": return CosmosDBMongoDBApiLinkedService.DeserializeCosmosDBMongoDBApiLinkedService(element);
                     case "Couchbase": return CouchbaseLinkedService.DeserializeCouchbaseLinkedService(element);
                     case "CustomDataSource": return CustomDataSourceLinkedService.DeserializeCustomDataSourceLinkedService(element);
                     case "Dataworld": return DataworldLinkedService.DeserializeDataworldLinkedService(element);
@@ -136,9 +136,9 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "MariaDB": return MariaDBLinkedService.DeserializeMariaDBLinkedService(element);
                     case "Marketo": return MarketoLinkedService.DeserializeMarketoLinkedService(element);
                     case "MicrosoftAccess": return MicrosoftAccessLinkedService.DeserializeMicrosoftAccessLinkedService(element);
-                    case "MongoDb": return MongoDbLinkedService.DeserializeMongoDbLinkedService(element);
-                    case "MongoDbAtlas": return MongoDbAtlasLinkedService.DeserializeMongoDbAtlasLinkedService(element);
-                    case "MongoDbV2": return MongoDbV2LinkedService.DeserializeMongoDbV2LinkedService(element);
+                    case "MongoDb": return MongoDBLinkedService.DeserializeMongoDBLinkedService(element);
+                    case "MongoDbAtlas": return MongoDBAtlasLinkedService.DeserializeMongoDBAtlasLinkedService(element);
+                    case "MongoDbV2": return MongoDBV2LinkedService.DeserializeMongoDBV2LinkedService(element);
                     case "MySql": return MySqlLinkedService.DeserializeMySqlLinkedService(element);
                     case "Netezza": return NetezzaLinkedService.DeserializeNetezzaLinkedService(element);
                     case "OData": return ODataLinkedService.DeserializeODataLinkedService(element);

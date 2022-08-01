@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Vertica dataset.
     /// Serialized Name: VerticaTableDataset
     /// </summary>
-    public partial class VerticaTableDataset : Dataset
+    public partial class VerticaTableDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of VerticaTableDataset. </summary>
         /// <param name="linkedServiceName">

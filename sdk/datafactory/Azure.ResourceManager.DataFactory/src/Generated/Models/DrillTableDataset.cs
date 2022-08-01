@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Drill server dataset.
     /// Serialized Name: DrillTableDataset
     /// </summary>
-    public partial class DrillTableDataset : Dataset
+    public partial class DrillTableDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of DrillTableDataset. </summary>
         /// <param name="linkedServiceName">

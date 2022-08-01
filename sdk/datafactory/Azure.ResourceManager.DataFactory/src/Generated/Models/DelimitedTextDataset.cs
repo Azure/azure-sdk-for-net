@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Delimited text dataset.
     /// Serialized Name: DelimitedTextDataset
     /// </summary>
-    public partial class DelimitedTextDataset : Dataset
+    public partial class DelimitedTextDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of DelimitedTextDataset. </summary>
         /// <param name="linkedServiceName">

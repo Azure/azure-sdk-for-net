@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Hive Server dataset.
     /// Serialized Name: HiveObjectDataset
     /// </summary>
-    public partial class HiveObjectDataset : Dataset
+    public partial class HiveObjectDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of HiveObjectDataset. </summary>
         /// <param name="linkedServiceName">

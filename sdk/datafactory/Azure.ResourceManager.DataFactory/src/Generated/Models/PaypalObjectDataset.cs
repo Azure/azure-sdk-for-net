@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Paypal Service dataset.
     /// Serialized Name: PaypalObjectDataset
     /// </summary>
-    public partial class PaypalObjectDataset : Dataset
+    public partial class PaypalObjectDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of PaypalObjectDataset. </summary>
         /// <param name="linkedServiceName">

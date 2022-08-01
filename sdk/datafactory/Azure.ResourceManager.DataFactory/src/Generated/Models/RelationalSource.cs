@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// A copy activity source for various relational databases.
     /// Serialized Name: RelationalSource
     /// </summary>
-    public partial class RelationalSource : CopySource
+    public partial class RelationalSource : CopyActivitySource
     {
         /// <summary> Initializes a new instance of RelationalSource. </summary>
         public RelationalSource()

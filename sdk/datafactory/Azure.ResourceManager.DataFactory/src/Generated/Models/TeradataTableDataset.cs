@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// The Teradata database dataset.
     /// Serialized Name: TeradataTableDataset
     /// </summary>
-    public partial class TeradataTableDataset : Dataset
+    public partial class TeradataTableDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of TeradataTableDataset. </summary>
         /// <param name="linkedServiceName">

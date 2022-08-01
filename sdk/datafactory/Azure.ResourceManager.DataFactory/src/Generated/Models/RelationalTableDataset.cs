@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// The relational table dataset.
     /// Serialized Name: RelationalTableDataset
     /// </summary>
-    public partial class RelationalTableDataset : Dataset
+    public partial class RelationalTableDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of RelationalTableDataset. </summary>
         /// <param name="linkedServiceName">

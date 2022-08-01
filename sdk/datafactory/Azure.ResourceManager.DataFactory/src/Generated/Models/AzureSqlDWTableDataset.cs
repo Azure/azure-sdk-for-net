@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// The Azure SQL Data Warehouse dataset.
     /// Serialized Name: AzureSqlDWTableDataset
     /// </summary>
-    public partial class AzureSqlDWTableDataset : Dataset
+    public partial class AzureSqlDWTableDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of AzureSqlDWTableDataset. </summary>
         /// <param name="linkedServiceName">

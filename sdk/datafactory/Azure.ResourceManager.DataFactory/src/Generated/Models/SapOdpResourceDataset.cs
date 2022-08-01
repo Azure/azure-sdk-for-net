@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// SAP ODP Resource properties.
     /// Serialized Name: SapOdpResourceDataset
     /// </summary>
-    public partial class SapOdpResourceDataset : Dataset
+    public partial class SapOdpResourceDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of SapOdpResourceDataset. </summary>
         /// <param name="linkedServiceName">

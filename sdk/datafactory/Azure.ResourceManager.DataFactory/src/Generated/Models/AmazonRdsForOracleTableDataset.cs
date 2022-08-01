@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// The AmazonRdsForOracle database dataset.
     /// Serialized Name: AmazonRdsForOracleTableDataset
     /// </summary>
-    public partial class AmazonRdsForOracleTableDataset : Dataset
+    public partial class AmazonRdsForOracleTableDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of AmazonRdsForOracleTableDataset. </summary>
         /// <param name="linkedServiceName">

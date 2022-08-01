@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Concur Service dataset.
     /// Serialized Name: ConcurObjectDataset
     /// </summary>
-    public partial class ConcurObjectDataset : Dataset
+    public partial class ConcurObjectDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of ConcurObjectDataset. </summary>
         /// <param name="linkedServiceName">

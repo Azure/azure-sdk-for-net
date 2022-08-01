@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="location"> The location. </param>
         public DataFactoryData(AzureLocation location) : base(location)
         {
-            GlobalParameters = new ChangeTrackingDictionary<string, GlobalParameterSpecification>();
+            GlobalParameters = new ChangeTrackingDictionary<string, FactoryGlobalParameterSpecification>();
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DataFactory
         /// Serialized Name: Resource.eTag
         /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal DataFactoryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, FactoryIdentity identity, string provisioningState, DateTimeOffset? createOn, string version, PurviewConfiguration purviewConfiguration, FactoryRepoConfiguration repoConfiguration, IDictionary<string, GlobalParameterSpecification> globalParameters, EncryptionConfiguration encryption, PublicNetworkAccess? publicNetworkAccess, ETag? eTag, IDictionary<string, BinaryData> additionalProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal DataFactoryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, FactoryIdentity identity, string provisioningState, DateTimeOffset? createOn, string version, FactoryPurviewConfiguration purviewConfiguration, FactoryRepoConfiguration repoConfiguration, IDictionary<string, FactoryGlobalParameterSpecification> globalParameters, FactoryEncryptionConfiguration encryption, FactoryPublicNetworkAccess? publicNetworkAccess, ETag? eTag, IDictionary<string, BinaryData> additionalProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             ProvisioningState = provisioningState;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.DataFactory
         /// Purview information of the factory.
         /// Serialized Name: Factory.properties.purviewConfiguration
         /// </summary>
-        internal PurviewConfiguration PurviewConfiguration { get; set; }
+        internal FactoryPurviewConfiguration PurviewConfiguration { get; set; }
         /// <summary>
         /// Purview resource id.
         /// Serialized Name: PurviewConfiguration.purviewResourceId
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.DataFactory
             set
             {
                 if (PurviewConfiguration is null)
-                    PurviewConfiguration = new PurviewConfiguration();
+                    PurviewConfiguration = new FactoryPurviewConfiguration();
                 PurviewConfiguration.PurviewResourceId = value;
             }
         }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.DataFactory
         /// List of parameters for factory.
         /// Serialized Name: Factory.properties.globalParameters
         /// </summary>
-        public IDictionary<string, GlobalParameterSpecification> GlobalParameters { get; }
+        public IDictionary<string, FactoryGlobalParameterSpecification> GlobalParameters { get; }
         /// <summary>
         /// Properties to enable Customer Managed Key for the factory.
         /// Serialized Name: Factory.properties.encryption
         /// </summary>
-        public EncryptionConfiguration Encryption { get; set; }
+        public FactoryEncryptionConfiguration Encryption { get; set; }
         /// <summary>
         /// Whether or not public network access is allowed for the data factory.
         /// Serialized Name: Factory.properties.publicNetworkAccess
         /// </summary>
-        public PublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public FactoryPublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary>
         /// Etag identifies change in the resource.
         /// Serialized Name: Resource.eTag

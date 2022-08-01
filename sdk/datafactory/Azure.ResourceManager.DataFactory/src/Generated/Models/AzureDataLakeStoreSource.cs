@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// A copy activity Azure Data Lake source.
     /// Serialized Name: AzureDataLakeStoreSource
     /// </summary>
-    public partial class AzureDataLakeStoreSource : CopySource
+    public partial class AzureDataLakeStoreSource : CopyActivitySource
     {
         /// <summary> Initializes a new instance of AzureDataLakeStoreSource. </summary>
         public AzureDataLakeStoreSource()

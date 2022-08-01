@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Salesforce Marketing Cloud dataset.
     /// Serialized Name: SalesforceMarketingCloudObjectDataset
     /// </summary>
-    public partial class SalesforceMarketingCloudObjectDataset : Dataset
+    public partial class SalesforceMarketingCloudObjectDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of SalesforceMarketingCloudObjectDataset. </summary>
         /// <param name="linkedServiceName">

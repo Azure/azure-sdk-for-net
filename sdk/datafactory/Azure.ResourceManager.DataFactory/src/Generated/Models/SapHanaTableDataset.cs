@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// SAP HANA Table properties.
     /// Serialized Name: SapHanaTableDataset
     /// </summary>
-    public partial class SapHanaTableDataset : Dataset
+    public partial class SapHanaTableDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of SapHanaTableDataset. </summary>
         /// <param name="linkedServiceName">

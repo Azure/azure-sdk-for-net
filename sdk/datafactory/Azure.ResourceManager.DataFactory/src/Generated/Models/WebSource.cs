@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// A copy activity source for web page table.
     /// Serialized Name: WebSource
     /// </summary>
-    public partial class WebSource : CopySource
+    public partial class WebSource : CopyActivitySource
     {
         /// <summary> Initializes a new instance of WebSource. </summary>
         public WebSource()

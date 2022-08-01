@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// The sharepoint online list resource dataset.
     /// Serialized Name: SharePointOnlineListResourceDataset
     /// </summary>
-    public partial class SharePointOnlineListResourceDataset : Dataset
+    public partial class SharePointOnlineListResourceDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of SharePointOnlineListResourceDataset. </summary>
         /// <param name="linkedServiceName">

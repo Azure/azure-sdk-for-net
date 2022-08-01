@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Phoenix server dataset.
     /// Serialized Name: PhoenixObjectDataset
     /// </summary>
-    public partial class PhoenixObjectDataset : Dataset
+    public partial class PhoenixObjectDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of PhoenixObjectDataset. </summary>
         /// <param name="linkedServiceName">

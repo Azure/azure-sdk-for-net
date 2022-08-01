@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// A copy activity snowflake source.
     /// Serialized Name: SnowflakeSource
     /// </summary>
-    public partial class SnowflakeSource : CopySource
+    public partial class SnowflakeSource : CopyActivitySource
     {
         /// <summary> Initializes a new instance of SnowflakeSource. </summary>
         public SnowflakeSource()

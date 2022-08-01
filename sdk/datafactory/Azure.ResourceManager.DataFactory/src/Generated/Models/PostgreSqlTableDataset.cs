@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// The PostgreSQL table dataset.
     /// Serialized Name: PostgreSqlTableDataset
     /// </summary>
-    public partial class PostgreSqlTableDataset : Dataset
+    public partial class PostgreSqlTableDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of PostgreSqlTableDataset. </summary>
         /// <param name="linkedServiceName">

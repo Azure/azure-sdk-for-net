@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Google BigQuery service dataset.
     /// Serialized Name: GoogleBigQueryObjectDataset
     /// </summary>
-    public partial class GoogleBigQueryObjectDataset : Dataset
+    public partial class GoogleBigQueryObjectDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of GoogleBigQueryObjectDataset. </summary>
         /// <param name="linkedServiceName">

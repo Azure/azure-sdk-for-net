@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Eloqua server dataset.
     /// Serialized Name: EloquaObjectDataset
     /// </summary>
-    public partial class EloquaObjectDataset : Dataset
+    public partial class EloquaObjectDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of EloquaObjectDataset. </summary>
         /// <param name="linkedServiceName">

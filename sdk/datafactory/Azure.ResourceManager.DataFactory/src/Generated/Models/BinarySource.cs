@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// A copy activity Binary source.
     /// Serialized Name: BinarySource
     /// </summary>
-    public partial class BinarySource : CopySource
+    public partial class BinarySource : CopyActivitySource
     {
         /// <summary> Initializes a new instance of BinarySource. </summary>
         public BinarySource()

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// The Azure Data Lake Storage Gen2 storage.
     /// Serialized Name: AzureBlobFSDataset
     /// </summary>
-    public partial class AzureBlobFSDataset : Dataset
+    public partial class AzureBlobFSDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of AzureBlobFSDataset. </summary>
         /// <param name="linkedServiceName">

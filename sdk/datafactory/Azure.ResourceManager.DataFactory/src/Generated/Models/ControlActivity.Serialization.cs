@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AppendVariable": return AppendVariableActivity.DeserializeAppendVariableActivity(element);
+                    case "AppendVariable": return PipelineActivityAppendVariableInfo.DeserializePipelineActivityAppendVariableInfo(element);
                     case "ExecutePipeline": return ExecutePipelineActivity.DeserializeExecutePipelineActivity(element);
                     case "Fail": return FailActivity.DeserializeFailActivity(element);
                     case "Filter": return FilterActivity.DeserializeFilterActivity(element);

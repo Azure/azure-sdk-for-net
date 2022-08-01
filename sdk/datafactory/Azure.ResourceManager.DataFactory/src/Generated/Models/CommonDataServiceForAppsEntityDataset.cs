@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// The Common Data Service for Apps entity dataset.
     /// Serialized Name: CommonDataServiceForAppsEntityDataset
     /// </summary>
-    public partial class CommonDataServiceForAppsEntityDataset : Dataset
+    public partial class CommonDataServiceForAppsEntityDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of CommonDataServiceForAppsEntityDataset. </summary>
         /// <param name="linkedServiceName">

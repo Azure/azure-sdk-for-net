@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Self-hosted integration runtime.
     /// Serialized Name: SelfHostedIntegrationRuntime
     /// </summary>
-    public partial class SelfHostedIntegrationRuntime : IntegrationRuntime
+    public partial class SelfHostedIntegrationRuntime : IntegrationRuntimeDefinition
     {
         /// <summary> Initializes a new instance of SelfHostedIntegrationRuntime. </summary>
         public SelfHostedIntegrationRuntime()

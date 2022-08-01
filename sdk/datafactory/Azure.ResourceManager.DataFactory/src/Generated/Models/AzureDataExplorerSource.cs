@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// A copy activity Azure Data Explorer (Kusto) source.
     /// Serialized Name: AzureDataExplorerSource
     /// </summary>
-    public partial class AzureDataExplorerSource : CopySource
+    public partial class AzureDataExplorerSource : CopyActivitySource
     {
         /// <summary> Initializes a new instance of AzureDataExplorerSource. </summary>
         /// <param name="query">

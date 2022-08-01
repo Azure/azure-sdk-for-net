@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Presto server dataset.
     /// Serialized Name: PrestoObjectDataset
     /// </summary>
-    public partial class PrestoObjectDataset : Dataset
+    public partial class PrestoObjectDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of PrestoObjectDataset. </summary>
         /// <param name="linkedServiceName">

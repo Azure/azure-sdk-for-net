@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// An on-premises file system dataset.
     /// Serialized Name: FileShareDataset
     /// </summary>
-    public partial class FileShareDataset : Dataset
+    public partial class FileShareDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of FileShareDataset. </summary>
         /// <param name="linkedServiceName">

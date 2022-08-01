@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// A copy activity source for an Office 365 service.
     /// Serialized Name: Office365Source
     /// </summary>
-    public partial class Office365Source : CopySource
+    public partial class Office365Source : CopyActivitySource
     {
         /// <summary> Initializes a new instance of Office365Source. </summary>
         public Office365Source()

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// A copy activity Parquet source.
     /// Serialized Name: ParquetSource
     /// </summary>
-    public partial class ParquetSource : CopySource
+    public partial class ParquetSource : CopyActivitySource
     {
         /// <summary> Initializes a new instance of ParquetSource. </summary>
         public ParquetSource()

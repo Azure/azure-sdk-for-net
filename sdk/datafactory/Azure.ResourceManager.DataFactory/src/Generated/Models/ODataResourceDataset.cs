@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// The Open Data Protocol (OData) resource dataset.
     /// Serialized Name: ODataResourceDataset
     /// </summary>
-    public partial class ODataResourceDataset : Dataset
+    public partial class ODataResourceDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of ODataResourceDataset. </summary>
         /// <param name="linkedServiceName">

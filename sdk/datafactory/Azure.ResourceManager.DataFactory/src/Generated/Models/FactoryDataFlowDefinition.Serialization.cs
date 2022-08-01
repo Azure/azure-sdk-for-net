@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Flowlet": return Flowlet.DeserializeFlowlet(element);
-                    case "MappingDataFlow": return MappingDataFlow.DeserializeMappingDataFlow(element);
-                    case "WranglingDataFlow": return WranglingDataFlow.DeserializeWranglingDataFlow(element);
+                    case "Flowlet": return FactoryFlowletDefinition.DeserializeFactoryFlowletDefinition(element);
+                    case "MappingDataFlow": return FactoryMappingDataFlowDefinition.DeserializeFactoryMappingDataFlowDefinition(element);
+                    case "WranglingDataFlow": return FactoryWranglingDataFlowDefinition.DeserializeFactoryWranglingDataFlowDefinition(element);
                 }
             }
             string type = default;

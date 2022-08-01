@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// The Azure MySQL database dataset.
     /// Serialized Name: AzureMySqlTableDataset
     /// </summary>
-    public partial class AzureMySqlTableDataset : Dataset
+    public partial class AzureMySqlTableDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of AzureMySqlTableDataset. </summary>
         /// <param name="linkedServiceName">

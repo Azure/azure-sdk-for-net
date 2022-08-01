@@ -43,8 +43,8 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
 
         private async Task<DataFactoryGlobalParameterResource> CreateOrUpdateGlobalParameter(DataFactoryResource dataFactory)
         {
-            var parameters = new Dictionary<string, GlobalParameterSpecification>();
-            parameters.Add("test", new GlobalParameterSpecification(GlobalParameterType.Int, new BinaryData("5")));
+            var parameters = new Dictionary<string, FactoryGlobalParameterSpecification>();
+            parameters.Add("test", new FactoryGlobalParameterSpecification(FactoryGlobalParameterType.Int, new BinaryData("5")));
             DataFactoryGlobalParameterData data = new DataFactoryGlobalParameterData(parameters);
             var globalParameters = await dataFactory.GetDataFactoryGlobalParameters().CreateOrUpdateAsync(WaitUntil.Completed, _globalParameterName, data);
             return globalParameters.Value;

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Binary dataset.
     /// Serialized Name: BinaryDataset
     /// </summary>
-    public partial class BinaryDataset : Dataset
+    public partial class BinaryDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of BinaryDataset. </summary>
         /// <param name="linkedServiceName">

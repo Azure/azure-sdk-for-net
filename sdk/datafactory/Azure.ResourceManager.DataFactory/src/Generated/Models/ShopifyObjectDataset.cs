@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Shopify Service dataset.
     /// Serialized Name: ShopifyObjectDataset
     /// </summary>
-    public partial class ShopifyObjectDataset : Dataset
+    public partial class ShopifyObjectDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of ShopifyObjectDataset. </summary>
         /// <param name="linkedServiceName">

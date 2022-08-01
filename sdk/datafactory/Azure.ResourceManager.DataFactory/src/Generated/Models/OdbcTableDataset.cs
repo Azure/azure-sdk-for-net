@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// The ODBC table dataset.
     /// Serialized Name: OdbcTableDataset
     /// </summary>
-    public partial class OdbcTableDataset : Dataset
+    public partial class OdbcTableDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of OdbcTableDataset. </summary>
         /// <param name="linkedServiceName">

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// A copy activity ORC source.
     /// Serialized Name: OrcSource
     /// </summary>
-    public partial class OrcSource : CopySource
+    public partial class OrcSource : CopyActivitySource
     {
         /// <summary> Initializes a new instance of OrcSource. </summary>
         public OrcSource()

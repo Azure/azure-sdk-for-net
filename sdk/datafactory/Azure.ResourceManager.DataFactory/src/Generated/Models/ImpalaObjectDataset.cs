@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Impala server dataset.
     /// Serialized Name: ImpalaObjectDataset
     /// </summary>
-    public partial class ImpalaObjectDataset : Dataset
+    public partial class ImpalaObjectDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of ImpalaObjectDataset. </summary>
         /// <param name="linkedServiceName">

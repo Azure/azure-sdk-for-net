@@ -20,11 +20,11 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="properties">
         /// Integration runtime properties.
         /// Serialized Name: IntegrationRuntimeResource.properties
-        /// Please note <see cref="IntegrationRuntime"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="IntegrationRuntimeDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ManagedIntegrationRuntime"/> and <see cref="SelfHostedIntegrationRuntime"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public DataFactoryIntegrationRuntimeData(IntegrationRuntime properties)
+        public DataFactoryIntegrationRuntimeData(IntegrationRuntimeDefinition properties)
         {
             if (properties == null)
             {
@@ -42,14 +42,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="properties">
         /// Integration runtime properties.
         /// Serialized Name: IntegrationRuntimeResource.properties
-        /// Please note <see cref="IntegrationRuntime"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="IntegrationRuntimeDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ManagedIntegrationRuntime"/> and <see cref="SelfHostedIntegrationRuntime"/>.
         /// </param>
         /// <param name="eTag">
         /// Etag identifies change in the resource.
         /// Serialized Name: SubResource.etag
         /// </param>
-        internal DataFactoryIntegrationRuntimeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IntegrationRuntime properties, ETag? eTag) : base(id, name, resourceType, systemData)
+        internal DataFactoryIntegrationRuntimeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IntegrationRuntimeDefinition properties, ETag? eTag) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             ETag = eTag;
@@ -58,10 +58,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <summary>
         /// Integration runtime properties.
         /// Serialized Name: IntegrationRuntimeResource.properties
-        /// Please note <see cref="IntegrationRuntime"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="IntegrationRuntimeDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ManagedIntegrationRuntime"/> and <see cref="SelfHostedIntegrationRuntime"/>.
         /// </summary>
-        public IntegrationRuntime Properties { get; set; }
+        public IntegrationRuntimeDefinition Properties { get; set; }
         /// <summary>
         /// Etag identifies change in the resource.
         /// Serialized Name: SubResource.etag

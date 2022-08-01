@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// The Microsoft Access table dataset.
     /// Serialized Name: MicrosoftAccessTableDataset
     /// </summary>
-    public partial class MicrosoftAccessTableDataset : Dataset
+    public partial class MicrosoftAccessTableDataset : FactoryDatasetDefinition
     {
         /// <summary> Initializes a new instance of MicrosoftAccessTableDataset. </summary>
         /// <param name="linkedServiceName">

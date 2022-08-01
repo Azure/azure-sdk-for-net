@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> description = default;
             Optional<IList<PipelineActivityDependencyInfo>> dependsOn = default;
             Optional<IList<UserProperty>> userProperties = default;
-            CopySource source = default;
+            CopyActivitySource source = default;
             DatasetReference dataset = default;
             Optional<BinaryData> firstRowOnly = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("source"))
                         {
-                            source = CopySource.DeserializeCopySource(property0.Value);
+                            source = CopyActivitySource.DeserializeCopyActivitySource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("dataset"))

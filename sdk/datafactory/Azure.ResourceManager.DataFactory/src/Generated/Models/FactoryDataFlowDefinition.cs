@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Azure Data Factory nested object which contains a flow with data movements and transformations.
     /// Serialized Name: DataFlow
     /// Please note <see cref="FactoryDataFlowDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="Flowlet"/>, <see cref="MappingDataFlow"/> and <see cref="WranglingDataFlow"/>.
+    /// The available derived classes include <see cref="FactoryFlowletDefinition"/>, <see cref="FactoryMappingDataFlowDefinition"/> and <see cref="FactoryWranglingDataFlowDefinition"/>.
     /// </summary>
     public partial class FactoryDataFlowDefinition
     {
