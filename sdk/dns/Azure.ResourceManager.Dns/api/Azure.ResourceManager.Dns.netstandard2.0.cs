@@ -549,7 +549,7 @@ namespace Azure.ResourceManager.Dns.Models
     public partial class DnsNSRecord
     {
         public DnsNSRecord() { }
-        public string DnsNsDomainName { get { throw null; } set { } }
+        public string DnsNSDomainName { get { throw null; } set { } }
     }
     public partial class DnsPtrRecord
     {
