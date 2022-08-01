@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of ManagedVirtualNetwork. </summary>
-        /// <param name="vNetId">
+        /// <param name="vnetId">
         /// Managed Virtual Network ID.
         /// Serialized Name: ManagedVirtualNetwork.vNetId
         /// </param>
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Serialized Name: ManagedVirtualNetwork.alias
         /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal ManagedVirtualNetwork(string vNetId, string @alias, IDictionary<string, BinaryData> additionalProperties)
+        internal ManagedVirtualNetwork(Guid? vnetId, string @alias, IDictionary<string, BinaryData> additionalProperties)
         {
-            VNetId = vNetId;
+            VnetId = vnetId;
             Alias = @alias;
             AdditionalProperties = additionalProperties;
         }
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Managed Virtual Network ID.
         /// Serialized Name: ManagedVirtualNetwork.vNetId
         /// </summary>
-        public string VNetId { get; }
+        public Guid? VnetId { get; }
         /// <summary>
         /// Managed Virtual Network alias.
         /// Serialized Name: ManagedVirtualNetwork.alias

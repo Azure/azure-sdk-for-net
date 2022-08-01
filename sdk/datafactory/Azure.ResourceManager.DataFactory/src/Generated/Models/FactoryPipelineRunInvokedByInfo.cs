@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary>
@@ -39,7 +41,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The run id of the pipeline that triggered the run, if any.
         /// Serialized Name: PipelineRunInvokedBy.pipelineRunId
         /// </param>
-        internal FactoryPipelineRunInvokedByInfo(string name, string id, string invokedByType, string pipelineName, string pipelineRunId)
+        internal FactoryPipelineRunInvokedByInfo(string name, string id, string invokedByType, string pipelineName, Guid? pipelineRunId)
         {
             Name = name;
             Id = id;
@@ -72,6 +74,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The run id of the pipeline that triggered the run, if any.
         /// Serialized Name: PipelineRunInvokedBy.pipelineRunId
         /// </summary>
-        public string PipelineRunId { get; }
+        public Guid? PipelineRunId { get; }
     }
 }

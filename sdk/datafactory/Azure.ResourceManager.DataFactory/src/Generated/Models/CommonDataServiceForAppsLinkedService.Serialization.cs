@@ -177,10 +177,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<BinaryData> organizationName = default;
             BinaryData authenticationType = default;
             Optional<BinaryData> username = default;
-            Optional<SecretBase> password = default;
+            Optional<FactorySecretBaseDefinition> password = default;
             Optional<BinaryData> servicePrincipalId = default;
             Optional<BinaryData> servicePrincipalCredentialType = default;
-            Optional<SecretBase> servicePrincipalCredential = default;
+            Optional<FactorySecretBaseDefinition> servicePrincipalCredential = default;
             Optional<BinaryData> encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            password = SecretBase.DeserializeSecretBase(property0.Value);
+                            password = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("servicePrincipalId"))
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            servicePrincipalCredential = SecretBase.DeserializeSecretBase(property0.Value);
+                            servicePrincipalCredential = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"))

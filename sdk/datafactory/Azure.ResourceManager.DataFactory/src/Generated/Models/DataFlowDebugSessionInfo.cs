@@ -48,20 +48,20 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The ID of data flow debug session.
         /// Serialized Name: DataFlowDebugSessionInfo.sessionId
         /// </param>
-        /// <param name="startTime">
+        /// <param name="startOn">
         /// Start time of data flow debug session.
         /// Serialized Name: DataFlowDebugSessionInfo.startTime
         /// </param>
-        /// <param name="timeToLiveInMinutes">
+        /// <param name="ttlInMinutes">
         /// Compute type of the cluster.
         /// Serialized Name: DataFlowDebugSessionInfo.timeToLiveInMinutes
         /// </param>
-        /// <param name="lastActivityTime">
+        /// <param name="lastActivityOn">
         /// Last activity time of data flow debug session.
         /// Serialized Name: DataFlowDebugSessionInfo.lastActivityTime
         /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal DataFlowDebugSessionInfo(string dataFlowName, string computeType, int? coreCount, int? nodeCount, string integrationRuntimeName, string sessionId, string startTime, int? timeToLiveInMinutes, string lastActivityTime, IReadOnlyDictionary<string, BinaryData> additionalProperties)
+        internal DataFlowDebugSessionInfo(string dataFlowName, string computeType, int? coreCount, int? nodeCount, string integrationRuntimeName, Guid? sessionId, string startOn, int? ttlInMinutes, DateTimeOffset? lastActivityOn, IReadOnlyDictionary<string, BinaryData> additionalProperties)
         {
             DataFlowName = dataFlowName;
             ComputeType = computeType;
@@ -69,9 +69,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             NodeCount = nodeCount;
             IntegrationRuntimeName = integrationRuntimeName;
             SessionId = sessionId;
-            StartTime = startTime;
-            TimeToLiveInMinutes = timeToLiveInMinutes;
-            LastActivityTime = lastActivityTime;
+            StartOn = startOn;
+            TtlInMinutes = ttlInMinutes;
+            LastActivityOn = lastActivityOn;
             AdditionalProperties = additionalProperties;
         }
 
@@ -104,22 +104,22 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The ID of data flow debug session.
         /// Serialized Name: DataFlowDebugSessionInfo.sessionId
         /// </summary>
-        public string SessionId { get; }
+        public Guid? SessionId { get; }
         /// <summary>
         /// Start time of data flow debug session.
         /// Serialized Name: DataFlowDebugSessionInfo.startTime
         /// </summary>
-        public string StartTime { get; }
+        public string StartOn { get; }
         /// <summary>
         /// Compute type of the cluster.
         /// Serialized Name: DataFlowDebugSessionInfo.timeToLiveInMinutes
         /// </summary>
-        public int? TimeToLiveInMinutes { get; }
+        public int? TtlInMinutes { get; }
         /// <summary>
         /// Last activity time of data flow debug session.
         /// Serialized Name: DataFlowDebugSessionInfo.lastActivityTime
         /// </summary>
-        public string LastActivityTime { get; }
+        public DateTimeOffset? LastActivityOn { get; }
         /// <summary> Additional Properties. </summary>
         public IReadOnlyDictionary<string, BinaryData> AdditionalProperties { get; }
     }

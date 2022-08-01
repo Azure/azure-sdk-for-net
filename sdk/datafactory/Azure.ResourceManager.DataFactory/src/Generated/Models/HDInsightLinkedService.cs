@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="password">
         /// HDInsight cluster password.
         /// Serialized Name: HDInsightLinkedService.typeProperties.password
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="linkedServiceName">
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Specify the FileSystem if the main storage for the HDInsight is ADLS Gen2. Type: string (or Expression with resultType string).
         /// Serialized Name: HDInsightLinkedService.typeProperties.fileSystem
         /// </param>
-        internal HDInsightLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData clusterUri, BinaryData userName, SecretBase password, FactoryLinkedServiceReference linkedServiceName, FactoryLinkedServiceReference hcatalogLinkedServiceName, BinaryData encryptedCredential, BinaryData isEspEnabled, BinaryData fileSystem) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal HDInsightLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData clusterUri, BinaryData userName, FactorySecretBaseDefinition password, FactoryLinkedServiceReference linkedServiceName, FactoryLinkedServiceReference hcatalogLinkedServiceName, BinaryData encryptedCredential, BinaryData isEspEnabled, BinaryData fileSystem) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             ClusterUri = clusterUri;
             UserName = userName;
@@ -115,10 +115,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary>
         /// HDInsight cluster password.
         /// Serialized Name: HDInsightLinkedService.typeProperties.password
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
-        public SecretBase Password { get; set; }
+        public FactorySecretBaseDefinition Password { get; set; }
         /// <summary>
         /// The Azure Storage linked service reference.
         /// Serialized Name: HDInsightLinkedService.typeProperties.linkedServiceName

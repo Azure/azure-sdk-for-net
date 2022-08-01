@@ -149,9 +149,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<BinaryData> endpoint = default;
             Optional<BinaryData> companyId = default;
             Optional<BinaryData> consumerKey = default;
-            Optional<SecretBase> consumerSecret = default;
-            Optional<SecretBase> accessToken = default;
-            Optional<SecretBase> accessTokenSecret = default;
+            Optional<FactorySecretBaseDefinition> consumerSecret = default;
+            Optional<FactorySecretBaseDefinition> accessToken = default;
+            Optional<FactorySecretBaseDefinition> accessTokenSecret = default;
             Optional<BinaryData> useEncryptedEndpoints = default;
             Optional<BinaryData> encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            consumerSecret = SecretBase.DeserializeSecretBase(property0.Value);
+                            consumerSecret = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("accessToken"))
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            accessToken = SecretBase.DeserializeSecretBase(property0.Value);
+                            accessToken = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("accessTokenSecret"))
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            accessTokenSecret = SecretBase.DeserializeSecretBase(property0.Value);
+                            accessTokenSecret = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("useEncryptedEndpoints"))

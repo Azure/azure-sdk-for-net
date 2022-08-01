@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of IntegrationRuntimeVNetProperties. </summary>
-        /// <param name="vNetId">
+        /// <param name="vnetId">
         /// The ID of the VNet that this integration runtime will join.
         /// Serialized Name: IntegrationRuntimeVNetProperties.vNetId
         /// </param>
@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Serialized Name: IntegrationRuntimeVNetProperties.subnetId
         /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal IntegrationRuntimeVNetProperties(string vNetId, string subnet, IList<string> publicIPs, string subnetId, IDictionary<string, BinaryData> additionalProperties)
+        internal IntegrationRuntimeVNetProperties(Guid? vnetId, string subnet, IList<string> publicIPs, ResourceIdentifier subnetId, IDictionary<string, BinaryData> additionalProperties)
         {
-            VNetId = vNetId;
+            VnetId = vnetId;
             Subnet = subnet;
             PublicIPs = publicIPs;
             SubnetId = subnetId;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The ID of the VNet that this integration runtime will join.
         /// Serialized Name: IntegrationRuntimeVNetProperties.vNetId
         /// </summary>
-        public string VNetId { get; set; }
+        public Guid? VnetId { get; set; }
         /// <summary>
         /// The name of the subnet this integration runtime will join.
         /// Serialized Name: IntegrationRuntimeVNetProperties.subnet
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The ID of subnet, to which this Azure-SSIS integration runtime will be joined.
         /// Serialized Name: IntegrationRuntimeVNetProperties.subnetId
         /// </summary>
-        public string SubnetId { get; set; }
+        public ResourceIdentifier SubnetId { get; set; }
         /// <summary> Additional Properties. </summary>
         public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -91,7 +92,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The ID of subnet to which Azure-SSIS integration runtime will join.
         /// Serialized Name: IntegrationRuntimeCustomerVirtualNetwork.subnetId
         /// </summary>
-        public string CustomerVirtualNetworkSubnetId
+        public ResourceIdentifier CustomerVirtualNetworkSubnetId
         {
             get => CustomerVirtualNetwork is null ? default : CustomerVirtualNetwork.SubnetId;
             set

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -14,12 +15,12 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         internal static PipelineCreateRunResult DeserializePipelineCreateRunResult(JsonElement element)
         {
-            string runId = default;
+            Guid runId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("runId"))
                 {
-                    runId = property.Value.GetString();
+                    runId = property.Value.GetGuid();
                     continue;
                 }
             }

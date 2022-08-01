@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<BinaryData> port = default;
             Optional<FtpAuthenticationType> authenticationType = default;
             Optional<BinaryData> userName = default;
-            Optional<SecretBase> password = default;
+            Optional<FactorySecretBaseDefinition> password = default;
             Optional<BinaryData> encryptedCredential = default;
             Optional<BinaryData> enableSsl = default;
             Optional<BinaryData> enableServerCertificateValidation = default;
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            password = SecretBase.DeserializeSecretBase(property0.Value);
+                            password = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"))

@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataFactory
             }
         }
 
-        internal HttpMessage CreateConfigureFactoryRepoRequest(string subscriptionId, string locationId, FactoryRepoUpdate factoryRepoUpdate)
+        internal HttpMessage CreateConfigureFactoryRepoRequest(string subscriptionId, ResourceIdentifier locationId, FactoryRepoUpdate factoryRepoUpdate)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -133,11 +133,11 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="factoryRepoUpdate"> Update factory repo request definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationId"/> or <paramref name="factoryRepoUpdate"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DataFactoryData>> ConfigureFactoryRepoAsync(string subscriptionId, string locationId, FactoryRepoUpdate factoryRepoUpdate, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<DataFactoryData>> ConfigureFactoryRepoAsync(string subscriptionId, ResourceIdentifier locationId, FactoryRepoUpdate factoryRepoUpdate, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(locationId, nameof(locationId));
+            Argument.AssertNotNull(locationId, nameof(locationId));
             Argument.AssertNotNull(factoryRepoUpdate, nameof(factoryRepoUpdate));
 
             using var message = CreateConfigureFactoryRepoRequest(subscriptionId, locationId, factoryRepoUpdate);
@@ -162,11 +162,11 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="factoryRepoUpdate"> Update factory repo request definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationId"/> or <paramref name="factoryRepoUpdate"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DataFactoryData> ConfigureFactoryRepo(string subscriptionId, string locationId, FactoryRepoUpdate factoryRepoUpdate, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<DataFactoryData> ConfigureFactoryRepo(string subscriptionId, ResourceIdentifier locationId, FactoryRepoUpdate factoryRepoUpdate, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(locationId, nameof(locationId));
+            Argument.AssertNotNull(locationId, nameof(locationId));
             Argument.AssertNotNull(factoryRepoUpdate, nameof(factoryRepoUpdate));
 
             using var message = CreateConfigureFactoryRepoRequest(subscriptionId, locationId, factoryRepoUpdate);

@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="servicePrincipalKey">
         /// The key of the service principal used to authenticate against the endpoint of a published Azure ML Service pipeline.
         /// Serialized Name: AzureMLServiceLinkedService.typeProperties.servicePrincipalKey
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="tenant">
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
         /// Serialized Name: AzureMLServiceLinkedService.typeProperties.encryptedCredential
         /// </param>
-        internal AzureMLServiceLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData subscriptionId, BinaryData resourceGroupName, BinaryData mlWorkspaceName, BinaryData servicePrincipalId, SecretBase servicePrincipalKey, BinaryData tenant, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal AzureMLServiceLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData subscriptionId, BinaryData resourceGroupName, BinaryData mlWorkspaceName, BinaryData servicePrincipalId, FactorySecretBaseDefinition servicePrincipalKey, BinaryData tenant, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             SubscriptionId = subscriptionId;
             ResourceGroupName = resourceGroupName;
@@ -138,10 +138,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary>
         /// The key of the service principal used to authenticate against the endpoint of a published Azure ML Service pipeline.
         /// Serialized Name: AzureMLServiceLinkedService.typeProperties.servicePrincipalKey
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
-        public SecretBase ServicePrincipalKey { get; set; }
+        public FactorySecretBaseDefinition ServicePrincipalKey { get; set; }
         /// <summary>
         /// The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string).
         /// Serialized Name: AzureMLServiceLinkedService.typeProperties.tenant

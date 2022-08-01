@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> id = default;
             Optional<string> invokedByType = default;
             Optional<string> pipelineName = default;
-            Optional<string> pipelineRunId = default;
+            Optional<Guid> pipelineRunId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -43,11 +44,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (property.NameEquals("pipelineRunId"))
                 {
-                    pipelineRunId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    pipelineRunId = property.Value.GetGuid();
                     continue;
                 }
             }
-            return new FactoryPipelineRunInvokedByInfo(name.Value, id.Value, invokedByType.Value, pipelineName.Value, pipelineRunId.Value);
+            return new FactoryPipelineRunInvokedByInfo(name.Value, id.Value, invokedByType.Value, pipelineName.Value, Optional.ToNullable(pipelineRunId));
         }
     }
 }

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary>
@@ -23,7 +25,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The ID of subnet to which Azure-SSIS integration runtime will join.
         /// Serialized Name: IntegrationRuntimeCustomerVirtualNetwork.subnetId
         /// </param>
-        internal IntegrationRuntimeCustomerVirtualNetwork(string subnetId)
+        internal IntegrationRuntimeCustomerVirtualNetwork(ResourceIdentifier subnetId)
         {
             SubnetId = subnetId;
         }
@@ -32,6 +34,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The ID of subnet to which Azure-SSIS integration runtime will join.
         /// Serialized Name: IntegrationRuntimeCustomerVirtualNetwork.subnetId
         /// </summary>
-        public string SubnetId { get; set; }
+        public ResourceIdentifier SubnetId { get; set; }
     }
 }

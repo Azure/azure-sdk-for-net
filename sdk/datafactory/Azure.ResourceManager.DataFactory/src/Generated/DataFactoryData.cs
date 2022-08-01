@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataFactory
         /// Factory provisioning state, example Succeeded.
         /// Serialized Name: Factory.properties.provisioningState
         /// </param>
-        /// <param name="createOn">
+        /// <param name="createdOn">
         /// Time the factory was created in ISO8601 format.
         /// Serialized Name: Factory.properties.createTime
         /// </param>
@@ -75,11 +75,11 @@ namespace Azure.ResourceManager.DataFactory
         /// Serialized Name: Resource.eTag
         /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal DataFactoryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, FactoryIdentity identity, string provisioningState, DateTimeOffset? createOn, string version, FactoryPurviewConfiguration purviewConfiguration, FactoryRepoConfiguration repoConfiguration, IDictionary<string, FactoryGlobalParameterSpecification> globalParameters, FactoryEncryptionConfiguration encryption, FactoryPublicNetworkAccess? publicNetworkAccess, ETag? eTag, IDictionary<string, BinaryData> additionalProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal DataFactoryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, FactoryIdentity identity, string provisioningState, DateTimeOffset? createdOn, string version, FactoryPurviewConfiguration purviewConfiguration, FactoryRepoConfiguration repoConfiguration, IDictionary<string, FactoryGlobalParameterSpecification> globalParameters, FactoryEncryptionConfiguration encryption, FactoryPublicNetworkAccess? publicNetworkAccess, ETag? eTag, IDictionary<string, BinaryData> additionalProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             ProvisioningState = provisioningState;
-            CreateOn = createOn;
+            CreatedOn = createdOn;
             Version = version;
             PurviewConfiguration = purviewConfiguration;
             RepoConfiguration = repoConfiguration;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataFactory
         /// Time the factory was created in ISO8601 format.
         /// Serialized Name: Factory.properties.createTime
         /// </summary>
-        public DateTimeOffset? CreateOn { get; }
+        public DateTimeOffset? CreatedOn { get; }
         /// <summary>
         /// Version of the factory.
         /// Serialized Name: Factory.properties.version

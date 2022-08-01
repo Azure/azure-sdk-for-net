@@ -170,9 +170,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<BinaryData> additionalProjects = default;
             Optional<BinaryData> requestGoogleDriveScope = default;
             GoogleBigQueryAuthenticationType authenticationType = default;
-            Optional<SecretBase> refreshToken = default;
+            Optional<FactorySecretBaseDefinition> refreshToken = default;
             Optional<BinaryData> clientId = default;
-            Optional<SecretBase> clientSecret = default;
+            Optional<FactorySecretBaseDefinition> clientSecret = default;
             Optional<BinaryData> email = default;
             Optional<BinaryData> keyFilePath = default;
             Optional<BinaryData> trustedCertPath = default;
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            refreshToken = SecretBase.DeserializeSecretBase(property0.Value);
+                            refreshToken = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("clientId"))
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            clientSecret = SecretBase.DeserializeSecretBase(property0.Value);
+                            clientSecret = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("email"))

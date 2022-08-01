@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="accessToken">
         /// The API access token that can be used to access Shopify’s data. The token won&apos;t expire if it is offline mode.
         /// Serialized Name: ShopifyLinkedService.typeProperties.accessToken
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="useEncryptedEndpoints">
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
         /// Serialized Name: ShopifyLinkedService.typeProperties.encryptedCredential
         /// </param>
-        internal ShopifyLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData host, SecretBase accessToken, BinaryData useEncryptedEndpoints, BinaryData useHostVerification, BinaryData usePeerVerification, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal ShopifyLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData host, FactorySecretBaseDefinition accessToken, BinaryData useEncryptedEndpoints, BinaryData useHostVerification, BinaryData usePeerVerification, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             Host = host;
             AccessToken = accessToken;
@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary>
         /// The API access token that can be used to access Shopify’s data. The token won&apos;t expire if it is offline mode.
         /// Serialized Name: ShopifyLinkedService.typeProperties.accessToken
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
-        public SecretBase AccessToken { get; set; }
+        public FactorySecretBaseDefinition AccessToken { get; set; }
         /// <summary>
         /// Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true.
         /// Serialized Name: ShopifyLinkedService.typeProperties.useEncryptedEndpoints

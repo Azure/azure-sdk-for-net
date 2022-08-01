@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary>
@@ -22,7 +24,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The factory resource id.
         /// Serialized Name: FactoryRepoUpdate.factoryResourceId
         /// </summary>
-        public string FactoryResourceId { get; set; }
+        public ResourceIdentifier FactoryResourceId { get; set; }
         /// <summary>
         /// Git repo information of the factory.
         /// Serialized Name: FactoryRepoUpdate.repoConfiguration

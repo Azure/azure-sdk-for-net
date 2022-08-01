@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Azure Data Factory secure string definition. The string value will be masked with asterisks &apos;*&apos; during Get or List API calls.
     /// Serialized Name: SecureString
     /// </summary>
-    public partial class SecureString : SecretBase
+    public partial class SecureString : FactorySecretBaseDefinition
     {
         /// <summary> Initializes a new instance of SecureString. </summary>
         /// <param name="value">

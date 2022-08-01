@@ -63,19 +63,19 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="consumerSecret">
         /// The consumer secret for OAuth 1.0 authentication.
         /// Serialized Name: QuickBooksLinkedService.typeProperties.consumerSecret
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="accessToken">
         /// The access token for OAuth 1.0 authentication.
         /// Serialized Name: QuickBooksLinkedService.typeProperties.accessToken
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="accessTokenSecret">
         /// The access token secret for OAuth 1.0 authentication.
         /// Serialized Name: QuickBooksLinkedService.typeProperties.accessTokenSecret
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="useEncryptedEndpoints">
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
         /// Serialized Name: QuickBooksLinkedService.typeProperties.encryptedCredential
         /// </param>
-        internal QuickBooksLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData connectionProperties, BinaryData endpoint, BinaryData companyId, BinaryData consumerKey, SecretBase consumerSecret, SecretBase accessToken, SecretBase accessTokenSecret, BinaryData useEncryptedEndpoints, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal QuickBooksLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData connectionProperties, BinaryData endpoint, BinaryData companyId, BinaryData consumerKey, FactorySecretBaseDefinition consumerSecret, FactorySecretBaseDefinition accessToken, FactorySecretBaseDefinition accessTokenSecret, BinaryData useEncryptedEndpoints, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             ConnectionProperties = connectionProperties;
             Endpoint = endpoint;
@@ -123,24 +123,24 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary>
         /// The consumer secret for OAuth 1.0 authentication.
         /// Serialized Name: QuickBooksLinkedService.typeProperties.consumerSecret
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
-        public SecretBase ConsumerSecret { get; set; }
+        public FactorySecretBaseDefinition ConsumerSecret { get; set; }
         /// <summary>
         /// The access token for OAuth 1.0 authentication.
         /// Serialized Name: QuickBooksLinkedService.typeProperties.accessToken
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
-        public SecretBase AccessToken { get; set; }
+        public FactorySecretBaseDefinition AccessToken { get; set; }
         /// <summary>
         /// The access token secret for OAuth 1.0 authentication.
         /// Serialized Name: QuickBooksLinkedService.typeProperties.accessTokenSecret
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
-        public SecretBase AccessTokenSecret { get; set; }
+        public FactorySecretBaseDefinition AccessTokenSecret { get; set; }
         /// <summary>
         /// Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true.
         /// Serialized Name: QuickBooksLinkedService.typeProperties.useEncryptedEndpoints

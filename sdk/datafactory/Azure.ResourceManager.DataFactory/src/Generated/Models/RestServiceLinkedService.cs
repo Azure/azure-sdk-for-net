@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="password">
         /// The password used in Basic authentication type.
         /// Serialized Name: RestServiceLinkedService.typeProperties.password
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="authHeaders">
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="servicePrincipalKey">
         /// The application&apos;s key used in AadServicePrincipal authentication type.
         /// Serialized Name: RestServiceLinkedService.typeProperties.servicePrincipalKey
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="tenant">
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="clientSecret">
         /// The client secret associated with your application.
         /// Serialized Name: RestServiceLinkedService.typeProperties.clientSecret
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="tokenEndpoint">
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The scope of the access required. It describes what kind of access will be requested. Type: string (or Expression with resultType string).
         /// Serialized Name: RestServiceLinkedService.typeProperties.scope
         /// </param>
-        internal RestServiceLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData uri, BinaryData enableServerCertificateValidation, RestServiceAuthenticationType authenticationType, BinaryData userName, SecretBase password, BinaryData authHeaders, BinaryData servicePrincipalId, SecretBase servicePrincipalKey, BinaryData tenant, BinaryData azureCloudType, BinaryData aadResourceId, BinaryData encryptedCredential, CredentialReference credential, BinaryData clientId, SecretBase clientSecret, BinaryData tokenEndpoint, BinaryData resource, BinaryData scope) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal RestServiceLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData uri, BinaryData enableServerCertificateValidation, RestServiceAuthenticationType authenticationType, BinaryData userName, FactorySecretBaseDefinition password, BinaryData authHeaders, BinaryData servicePrincipalId, FactorySecretBaseDefinition servicePrincipalKey, BinaryData tenant, BinaryData azureCloudType, BinaryData aadResourceId, BinaryData encryptedCredential, CredentialReference credential, BinaryData clientId, FactorySecretBaseDefinition clientSecret, BinaryData tokenEndpoint, BinaryData resource, BinaryData scope) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             Uri = uri;
             EnableServerCertificateValidation = enableServerCertificateValidation;
@@ -184,10 +184,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary>
         /// The password used in Basic authentication type.
         /// Serialized Name: RestServiceLinkedService.typeProperties.password
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
-        public SecretBase Password { get; set; }
+        public FactorySecretBaseDefinition Password { get; set; }
         /// <summary>
         /// The additional HTTP headers in the request to RESTful API used for authorization. Type: object (or Expression with resultType object).
         /// Serialized Name: RestServiceLinkedService.typeProperties.authHeaders
@@ -201,10 +201,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary>
         /// The application&apos;s key used in AadServicePrincipal authentication type.
         /// Serialized Name: RestServiceLinkedService.typeProperties.servicePrincipalKey
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
-        public SecretBase ServicePrincipalKey { get; set; }
+        public FactorySecretBaseDefinition ServicePrincipalKey { get; set; }
         /// <summary>
         /// The tenant information (domain name or tenant ID) used in AadServicePrincipal authentication type under which your application resides.
         /// Serialized Name: RestServiceLinkedService.typeProperties.tenant
@@ -238,10 +238,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary>
         /// The client secret associated with your application.
         /// Serialized Name: RestServiceLinkedService.typeProperties.clientSecret
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
-        public SecretBase ClientSecret { get; set; }
+        public FactorySecretBaseDefinition ClientSecret { get; set; }
         /// <summary>
         /// The token endpoint of the authorization server to acquire access token. Type: string (or Expression with resultType string).
         /// Serialized Name: RestServiceLinkedService.typeProperties.tokenEndpoint

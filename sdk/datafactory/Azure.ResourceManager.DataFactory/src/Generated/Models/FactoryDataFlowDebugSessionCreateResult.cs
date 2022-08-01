@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary>
@@ -27,7 +29,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The ID of data flow debug session.
         /// Serialized Name: CreateDataFlowDebugSessionResponse.sessionId
         /// </param>
-        internal FactoryDataFlowDebugSessionCreateResult(string status, string sessionId)
+        internal FactoryDataFlowDebugSessionCreateResult(string status, Guid? sessionId)
         {
             Status = status;
             SessionId = sessionId;
@@ -42,6 +44,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The ID of data flow debug session.
         /// Serialized Name: CreateDataFlowDebugSessionResponse.sessionId
         /// </summary>
-        public string SessionId { get; }
+        public Guid? SessionId { get; }
     }
 }

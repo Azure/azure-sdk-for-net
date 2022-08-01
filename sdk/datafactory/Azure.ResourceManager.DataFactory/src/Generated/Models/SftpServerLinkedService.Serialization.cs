@@ -160,11 +160,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<BinaryData> port = default;
             Optional<SftpAuthenticationType> authenticationType = default;
             Optional<BinaryData> userName = default;
-            Optional<SecretBase> password = default;
+            Optional<FactorySecretBaseDefinition> password = default;
             Optional<BinaryData> encryptedCredential = default;
             Optional<BinaryData> privateKeyPath = default;
-            Optional<SecretBase> privateKeyContent = default;
-            Optional<SecretBase> passPhrase = default;
+            Optional<FactorySecretBaseDefinition> privateKeyContent = default;
+            Optional<FactorySecretBaseDefinition> passPhrase = default;
             Optional<BinaryData> skipHostKeyValidation = default;
             Optional<BinaryData> hostKeyFingerprint = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            password = SecretBase.DeserializeSecretBase(property0.Value);
+                            password = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"))
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            privateKeyContent = SecretBase.DeserializeSecretBase(property0.Value);
+                            privateKeyContent = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("passPhrase"))
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            passPhrase = SecretBase.DeserializeSecretBase(property0.Value);
+                            passPhrase = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("skipHostKeyValidation"))

@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="servicePrincipalKey">
         /// The key of the service principal used to authenticate against Azure SQL Data Warehouse.
         /// Serialized Name: AzureBlobStorageLinkedService.typeProperties.servicePrincipalKey
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="tenant">
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The credential reference containing authentication information.
         /// Serialized Name: AzureBlobStorageLinkedService.typeProperties.credential
         /// </param>
-        internal AzureBlobStorageLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData connectionString, AzureKeyVaultSecretReference accountKey, BinaryData sasUri, AzureKeyVaultSecretReference sasToken, string serviceEndpoint, BinaryData servicePrincipalId, SecretBase servicePrincipalKey, BinaryData tenant, BinaryData azureCloudType, string accountKind, string encryptedCredential, CredentialReference credential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal AzureBlobStorageLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData connectionString, AzureKeyVaultSecretReference accountKey, BinaryData sasUri, AzureKeyVaultSecretReference sasToken, string serviceEndpoint, BinaryData servicePrincipalId, FactorySecretBaseDefinition servicePrincipalKey, BinaryData tenant, BinaryData azureCloudType, string accountKind, BinaryData encryptedCredential, CredentialReference credential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             ConnectionString = connectionString;
             AccountKey = accountKey;
@@ -144,10 +144,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary>
         /// The key of the service principal used to authenticate against Azure SQL Data Warehouse.
         /// Serialized Name: AzureBlobStorageLinkedService.typeProperties.servicePrincipalKey
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
-        public SecretBase ServicePrincipalKey { get; set; }
+        public FactorySecretBaseDefinition ServicePrincipalKey { get; set; }
         /// <summary>
         /// The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string).
         /// Serialized Name: AzureBlobStorageLinkedService.typeProperties.tenant
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
         /// Serialized Name: AzureBlobStorageLinkedService.typeProperties.encryptedCredential
         /// </summary>
-        public string EncryptedCredential { get; set; }
+        public BinaryData EncryptedCredential { get; set; }
         /// <summary>
         /// The credential reference containing authentication information.
         /// Serialized Name: AzureBlobStorageLinkedService.typeProperties.credential

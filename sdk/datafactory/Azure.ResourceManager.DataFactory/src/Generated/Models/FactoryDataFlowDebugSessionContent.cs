@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Time to live setting of the cluster in minutes.
         /// Serialized Name: CreateDataFlowDebugSessionRequest.timeToLive
         /// </summary>
-        public int? TimeToLive { get; set; }
+        public int? TtlInMinutes { get; set; }
         /// <summary>
         /// Set to use integration runtime setting for data flow debug session.
         /// Serialized Name: CreateDataFlowDebugSessionRequest.integrationRuntime

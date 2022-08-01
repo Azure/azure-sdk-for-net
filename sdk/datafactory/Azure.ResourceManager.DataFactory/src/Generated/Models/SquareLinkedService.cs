@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="clientSecret">
         /// The client secret associated with your Square application.
         /// Serialized Name: SquareLinkedService.typeProperties.clientSecret
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="redirectUri">
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
         /// Serialized Name: SquareLinkedService.typeProperties.encryptedCredential
         /// </param>
-        internal SquareLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData connectionProperties, BinaryData host, BinaryData clientId, SecretBase clientSecret, BinaryData redirectUri, BinaryData useEncryptedEndpoints, BinaryData useHostVerification, BinaryData usePeerVerification, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal SquareLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData connectionProperties, BinaryData host, BinaryData clientId, FactorySecretBaseDefinition clientSecret, BinaryData redirectUri, BinaryData useEncryptedEndpoints, BinaryData useHostVerification, BinaryData usePeerVerification, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             ConnectionProperties = connectionProperties;
             Host = host;
@@ -114,10 +114,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary>
         /// The client secret associated with your Square application.
         /// Serialized Name: SquareLinkedService.typeProperties.clientSecret
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
-        public SecretBase ClientSecret { get; set; }
+        public FactorySecretBaseDefinition ClientSecret { get; set; }
         /// <summary>
         /// The redirect URL assigned in the Square application dashboard. (i.e. http://localhost:2500)
         /// Serialized Name: SquareLinkedService.typeProperties.redirectUri

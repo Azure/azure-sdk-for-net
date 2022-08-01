@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory
 
         internal static FactoryPrivateEndpointConnectionData DeserializeFactoryPrivateEndpointConnectionData(JsonElement element)
         {
-            Optional<RemotePrivateEndpointConnection> properties = default;
+            Optional<FactoryPrivateEndpointProperties> properties = default;
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataFactory
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = RemotePrivateEndpointConnection.DeserializeRemotePrivateEndpointConnection(property.Value);
+                    properties = FactoryPrivateEndpointProperties.DeserializeFactoryPrivateEndpointProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("etag"))

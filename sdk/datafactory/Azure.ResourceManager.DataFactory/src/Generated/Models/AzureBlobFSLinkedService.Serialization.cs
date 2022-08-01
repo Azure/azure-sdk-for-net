@@ -154,13 +154,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             BinaryData url = default;
             Optional<BinaryData> accountKey = default;
             Optional<BinaryData> servicePrincipalId = default;
-            Optional<SecretBase> servicePrincipalKey = default;
+            Optional<FactorySecretBaseDefinition> servicePrincipalKey = default;
             Optional<BinaryData> tenant = default;
             Optional<BinaryData> azureCloudType = default;
             Optional<BinaryData> encryptedCredential = default;
             Optional<CredentialReference> credential = default;
             Optional<BinaryData> servicePrincipalCredentialType = default;
-            Optional<SecretBase> servicePrincipalCredential = default;
+            Optional<FactorySecretBaseDefinition> servicePrincipalCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            servicePrincipalKey = SecretBase.DeserializeSecretBase(property0.Value);
+                            servicePrincipalKey = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("tenant"))
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            servicePrincipalCredential = SecretBase.DeserializeSecretBase(property0.Value);
+                            servicePrincipalCredential = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                     }

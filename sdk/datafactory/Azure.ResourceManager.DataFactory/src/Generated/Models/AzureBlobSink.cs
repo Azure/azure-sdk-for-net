@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of AzureBlobSink. </summary>
         public AzureBlobSink()
         {
-            Metadata = new ChangeTrackingList<MetadataItem>();
+            Metadata = new ChangeTrackingList<FactoryMetadataItemInfo>();
             CopySinkType = "BlobSink";
         }
 
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Specify the custom metadata to be added to sink data. Type: array of objects (or Expression with resultType array of objects).
         /// Serialized Name: BlobSink.metadata
         /// </param>
-        internal AzureBlobSink(string copySinkType, BinaryData writeBatchSize, BinaryData writeBatchTimeout, BinaryData sinkRetryCount, BinaryData sinkRetryWait, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, BinaryData blobWriterOverwriteFiles, BinaryData blobWriterDateTimeFormat, BinaryData blobWriterAddHeader, BinaryData copyBehavior, IList<MetadataItem> metadata) : base(copySinkType, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
+        internal AzureBlobSink(string copySinkType, BinaryData writeBatchSize, BinaryData writeBatchTimeout, BinaryData sinkRetryCount, BinaryData sinkRetryWait, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, BinaryData blobWriterOverwriteFiles, BinaryData blobWriterDateTimeFormat, BinaryData blobWriterAddHeader, BinaryData copyBehavior, IList<FactoryMetadataItemInfo> metadata) : base(copySinkType, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             BlobWriterOverwriteFiles = blobWriterOverwriteFiles;
             BlobWriterDateTimeFormat = blobWriterDateTimeFormat;
@@ -108,6 +108,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Specify the custom metadata to be added to sink data. Type: array of objects (or Expression with resultType array of objects).
         /// Serialized Name: BlobSink.metadata
         /// </summary>
-        public IList<MetadataItem> Metadata { get; }
+        public IList<FactoryMetadataItemInfo> Metadata { get; }
     }
 }

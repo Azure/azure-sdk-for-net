@@ -64,9 +64,9 @@ namespace Azure.ResourceManager.DataFactory.Models
 #endif
             writer.WritePropertyName("timeToLive");
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(TimeToLive);
+				writer.WriteRawValue(TtlExpression);
 #else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(TimeToLive.ToString()).RootElement);
+            JsonSerializer.Serialize(writer, JsonDocument.Parse(TtlExpression.ToString()).RootElement);
 #endif
             writer.WritePropertyName("version");
 #if NET6_0_OR_GREATER
@@ -345,14 +345,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             FactoryLinkedServiceReference linkedServiceName = default;
             BinaryData hostSubscriptionId = default;
             Optional<BinaryData> servicePrincipalId = default;
-            Optional<SecretBase> servicePrincipalKey = default;
+            Optional<FactorySecretBaseDefinition> servicePrincipalKey = default;
             BinaryData tenant = default;
             BinaryData clusterResourceGroup = default;
             Optional<BinaryData> clusterNamePrefix = default;
             Optional<BinaryData> clusterUserName = default;
-            Optional<SecretBase> clusterPassword = default;
+            Optional<FactorySecretBaseDefinition> clusterPassword = default;
             Optional<BinaryData> clusterSshUserName = default;
-            Optional<SecretBase> clusterSshPassword = default;
+            Optional<FactorySecretBaseDefinition> clusterSshPassword = default;
             Optional<IList<FactoryLinkedServiceReference>> additionalLinkedServiceNames = default;
             Optional<FactoryLinkedServiceReference> hcatalogLinkedServiceName = default;
             Optional<BinaryData> clusterType = default;
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            servicePrincipalKey = SecretBase.DeserializeSecretBase(property0.Value);
+                            servicePrincipalKey = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("tenant"))
@@ -518,7 +518,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            clusterPassword = SecretBase.DeserializeSecretBase(property0.Value);
+                            clusterPassword = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("clusterSshUserName"))
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            clusterSshPassword = SecretBase.DeserializeSecretBase(property0.Value);
+                            clusterSshPassword = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("additionalLinkedServiceNames"))

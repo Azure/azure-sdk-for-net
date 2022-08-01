@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IList<BinaryData>> annotations = default;
             BinaryData server = default;
             Optional<BinaryData> username = default;
-            Optional<SecretBase> password = default;
+            Optional<FactorySecretBaseDefinition> password = default;
             BinaryData database = default;
             Optional<BinaryData> port = default;
             Optional<BinaryData> encryptedCredential = default;
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            password = SecretBase.DeserializeSecretBase(property0.Value);
+                            password = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("database"))

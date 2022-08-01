@@ -178,16 +178,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             BinaryData url = default;
             Optional<ODataAuthenticationType> authenticationType = default;
             Optional<BinaryData> userName = default;
-            Optional<SecretBase> password = default;
+            Optional<FactorySecretBaseDefinition> password = default;
             Optional<BinaryData> authHeaders = default;
             Optional<BinaryData> tenant = default;
             Optional<BinaryData> servicePrincipalId = default;
             Optional<BinaryData> azureCloudType = default;
             Optional<BinaryData> aadResourceId = default;
             Optional<ODataAadServicePrincipalCredentialType> aadServicePrincipalCredentialType = default;
-            Optional<SecretBase> servicePrincipalKey = default;
-            Optional<SecretBase> servicePrincipalEmbeddedCert = default;
-            Optional<SecretBase> servicePrincipalEmbeddedCertPassword = default;
+            Optional<FactorySecretBaseDefinition> servicePrincipalKey = default;
+            Optional<FactorySecretBaseDefinition> servicePrincipalEmbeddedCert = default;
+            Optional<FactorySecretBaseDefinition> servicePrincipalEmbeddedCertPassword = default;
             Optional<BinaryData> encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            password = SecretBase.DeserializeSecretBase(property0.Value);
+                            password = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("authHeaders"))
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            servicePrincipalKey = SecretBase.DeserializeSecretBase(property0.Value);
+                            servicePrincipalKey = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("servicePrincipalEmbeddedCert"))
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            servicePrincipalEmbeddedCert = SecretBase.DeserializeSecretBase(property0.Value);
+                            servicePrincipalEmbeddedCert = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("servicePrincipalEmbeddedCertPassword"))
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            servicePrincipalEmbeddedCertPassword = SecretBase.DeserializeSecretBase(property0.Value);
+                            servicePrincipalEmbeddedCertPassword = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"))

@@ -28,11 +28,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="password">
         /// The password corresponding to the user name that you provided in the username key.
         /// Serialized Name: OracleServiceCloudLinkedService.typeProperties.password
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="host"/>, <paramref name="username"/> or <paramref name="password"/> is null. </exception>
-        public OracleServiceCloudLinkedService(BinaryData host, BinaryData username, SecretBase password)
+        public OracleServiceCloudLinkedService(BinaryData host, BinaryData username, FactorySecretBaseDefinition password)
         {
             if (host == null)
             {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="password">
         /// The password corresponding to the user name that you provided in the username key.
         /// Serialized Name: OracleServiceCloudLinkedService.typeProperties.password
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="useEncryptedEndpoints">
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
         /// Serialized Name: OracleServiceCloudLinkedService.typeProperties.encryptedCredential
         /// </param>
-        internal OracleServiceCloudLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData host, BinaryData username, SecretBase password, BinaryData useEncryptedEndpoints, BinaryData useHostVerification, BinaryData usePeerVerification, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal OracleServiceCloudLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData host, BinaryData username, FactorySecretBaseDefinition password, BinaryData useEncryptedEndpoints, BinaryData useHostVerification, BinaryData usePeerVerification, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             Host = host;
             Username = username;
@@ -130,10 +130,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary>
         /// The password corresponding to the user name that you provided in the username key.
         /// Serialized Name: OracleServiceCloudLinkedService.typeProperties.password
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
-        public SecretBase Password { get; set; }
+        public FactorySecretBaseDefinition Password { get; set; }
         /// <summary>
         /// Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. Type: boolean (or Expression with resultType boolean).
         /// Serialized Name: OracleServiceCloudLinkedService.typeProperties.useEncryptedEndpoints

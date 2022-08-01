@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Specify the name and value of custom metadata item.
     /// Serialized Name: MetadataItem
     /// </summary>
-    public partial class MetadataItem
+    public partial class FactoryMetadataItemInfo
     {
-        /// <summary> Initializes a new instance of MetadataItem. </summary>
-        public MetadataItem()
+        /// <summary> Initializes a new instance of FactoryMetadataItemInfo. </summary>
+        public FactoryMetadataItemInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of MetadataItem. </summary>
+        /// <summary> Initializes a new instance of FactoryMetadataItemInfo. </summary>
         /// <param name="name">
         /// Metadata item key name. Type: string (or Expression with resultType string).
         /// Serialized Name: MetadataItem.name
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Metadata item value. Type: string (or Expression with resultType string).
         /// Serialized Name: MetadataItem.value
         /// </param>
-        internal MetadataItem(BinaryData name, BinaryData value)
+        internal FactoryMetadataItemInfo(BinaryData name, BinaryData value)
         {
             Name = name;
             Value = value;

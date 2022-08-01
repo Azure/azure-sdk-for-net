@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataFactory
         /// Etag identifies change in the resource.
         /// Serialized Name: SubResource.etag
         /// </param>
-        internal FactoryPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RemotePrivateEndpointConnection properties, ETag? eTag) : base(id, name, resourceType, systemData)
+        internal FactoryPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, FactoryPrivateEndpointProperties properties, ETag? eTag) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             ETag = eTag;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataFactory
         /// Core resource properties
         /// Serialized Name: PrivateEndpointConnectionResource.properties
         /// </summary>
-        public RemotePrivateEndpointConnection Properties { get; set; }
+        public FactoryPrivateEndpointProperties Properties { get; set; }
         /// <summary>
         /// Etag identifies change in the resource.
         /// Serialized Name: SubResource.etag

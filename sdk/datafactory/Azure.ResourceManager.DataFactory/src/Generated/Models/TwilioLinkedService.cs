@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="password">
         /// The auth token of Twilio service.
         /// Serialized Name: TwilioLinkedService.typeProperties.password
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userName"/> or <paramref name="password"/> is null. </exception>
-        public TwilioLinkedService(BinaryData userName, SecretBase password)
+        public TwilioLinkedService(BinaryData userName, FactorySecretBaseDefinition password)
         {
             if (userName == null)
             {
@@ -73,10 +73,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="password">
         /// The auth token of Twilio service.
         /// Serialized Name: TwilioLinkedService.typeProperties.password
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
-        internal TwilioLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData userName, SecretBase password) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal TwilioLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData userName, FactorySecretBaseDefinition password) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             UserName = userName;
             Password = password;
@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary>
         /// The auth token of Twilio service.
         /// Serialized Name: TwilioLinkedService.typeProperties.password
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
-        public SecretBase Password { get; set; }
+        public FactorySecretBaseDefinition Password { get; set; }
     }
 }

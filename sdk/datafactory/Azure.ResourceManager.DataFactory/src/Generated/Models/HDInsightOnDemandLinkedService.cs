@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Number of worker/data nodes in the cluster. Suggestion value: 4. Type: string (or Expression with resultType string).
         /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.clusterSize
         /// </param>
-        /// <param name="timeToLive">
+        /// <param name="ttlExpression">
         /// The allowed idle time for the on-demand HDInsight cluster. Specifies how long the on-demand HDInsight cluster stays alive after completion of an activity run if there are no other active jobs in the cluster. The minimum value is 5 mins. Type: string (or Expression with resultType string).
         /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.timeToLive
         /// </param>
@@ -46,16 +46,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The resource group where the cluster belongs. Type: string (or Expression with resultType string).
         /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.clusterResourceGroup
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clusterSize"/>, <paramref name="timeToLive"/>, <paramref name="version"/>, <paramref name="linkedServiceName"/>, <paramref name="hostSubscriptionId"/>, <paramref name="tenant"/> or <paramref name="clusterResourceGroup"/> is null. </exception>
-        public HDInsightOnDemandLinkedService(BinaryData clusterSize, BinaryData timeToLive, BinaryData version, FactoryLinkedServiceReference linkedServiceName, BinaryData hostSubscriptionId, BinaryData tenant, BinaryData clusterResourceGroup)
+        /// <exception cref="ArgumentNullException"> <paramref name="clusterSize"/>, <paramref name="ttlExpression"/>, <paramref name="version"/>, <paramref name="linkedServiceName"/>, <paramref name="hostSubscriptionId"/>, <paramref name="tenant"/> or <paramref name="clusterResourceGroup"/> is null. </exception>
+        public HDInsightOnDemandLinkedService(BinaryData clusterSize, BinaryData ttlExpression, BinaryData version, FactoryLinkedServiceReference linkedServiceName, BinaryData hostSubscriptionId, BinaryData tenant, BinaryData clusterResourceGroup)
         {
             if (clusterSize == null)
             {
                 throw new ArgumentNullException(nameof(clusterSize));
             }
-            if (timeToLive == null)
+            if (ttlExpression == null)
             {
-                throw new ArgumentNullException(nameof(timeToLive));
+                throw new ArgumentNullException(nameof(ttlExpression));
             }
             if (version == null)
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             ClusterSize = clusterSize;
-            TimeToLive = timeToLive;
+            TtlExpression = ttlExpression;
             Version = version;
             LinkedServiceName = linkedServiceName;
             HostSubscriptionId = hostSubscriptionId;
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Number of worker/data nodes in the cluster. Suggestion value: 4. Type: string (or Expression with resultType string).
         /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.clusterSize
         /// </param>
-        /// <param name="timeToLive">
+        /// <param name="ttlExpression">
         /// The allowed idle time for the on-demand HDInsight cluster. Specifies how long the on-demand HDInsight cluster stays alive after completion of an activity run if there are no other active jobs in the cluster. The minimum value is 5 mins. Type: string (or Expression with resultType string).
         /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.timeToLive
         /// </param>
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="servicePrincipalKey">
         /// The key for the service principal id.
         /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.servicePrincipalKey
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="tenant">
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="clusterPassword">
         /// The password to access the cluster.
         /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.clusterPassword
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="clusterSshUserName">
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="clusterSshPassword">
         /// The password to SSH remotely connect cluster’s node (for Linux).
         /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.clusterSshPassword
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="additionalLinkedServiceNames">
@@ -254,10 +254,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The credential reference containing authentication information.
         /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.credential
         /// </param>
-        internal HDInsightOnDemandLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData clusterSize, BinaryData timeToLive, BinaryData version, FactoryLinkedServiceReference linkedServiceName, BinaryData hostSubscriptionId, BinaryData servicePrincipalId, SecretBase servicePrincipalKey, BinaryData tenant, BinaryData clusterResourceGroup, BinaryData clusterNamePrefix, BinaryData clusterUserName, SecretBase clusterPassword, BinaryData clusterSshUserName, SecretBase clusterSshPassword, IList<FactoryLinkedServiceReference> additionalLinkedServiceNames, FactoryLinkedServiceReference hcatalogLinkedServiceName, BinaryData clusterType, BinaryData sparkVersion, BinaryData coreConfiguration, BinaryData hBaseConfiguration, BinaryData hdfsConfiguration, BinaryData hiveConfiguration, BinaryData mapReduceConfiguration, BinaryData oozieConfiguration, BinaryData stormConfiguration, BinaryData yarnConfiguration, BinaryData encryptedCredential, BinaryData headNodeSize, BinaryData dataNodeSize, BinaryData zookeeperNodeSize, IList<ScriptAction> scriptActions, BinaryData virtualNetworkId, BinaryData subnetName, CredentialReference credential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal HDInsightOnDemandLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData clusterSize, BinaryData ttlExpression, BinaryData version, FactoryLinkedServiceReference linkedServiceName, BinaryData hostSubscriptionId, BinaryData servicePrincipalId, FactorySecretBaseDefinition servicePrincipalKey, BinaryData tenant, BinaryData clusterResourceGroup, BinaryData clusterNamePrefix, BinaryData clusterUserName, FactorySecretBaseDefinition clusterPassword, BinaryData clusterSshUserName, FactorySecretBaseDefinition clusterSshPassword, IList<FactoryLinkedServiceReference> additionalLinkedServiceNames, FactoryLinkedServiceReference hcatalogLinkedServiceName, BinaryData clusterType, BinaryData sparkVersion, BinaryData coreConfiguration, BinaryData hBaseConfiguration, BinaryData hdfsConfiguration, BinaryData hiveConfiguration, BinaryData mapReduceConfiguration, BinaryData oozieConfiguration, BinaryData stormConfiguration, BinaryData yarnConfiguration, BinaryData encryptedCredential, BinaryData headNodeSize, BinaryData dataNodeSize, BinaryData zookeeperNodeSize, IList<ScriptAction> scriptActions, BinaryData virtualNetworkId, BinaryData subnetName, CredentialReference credential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             ClusterSize = clusterSize;
-            TimeToLive = timeToLive;
+            TtlExpression = ttlExpression;
             Version = version;
             LinkedServiceName = linkedServiceName;
             HostSubscriptionId = hostSubscriptionId;
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The allowed idle time for the on-demand HDInsight cluster. Specifies how long the on-demand HDInsight cluster stays alive after completion of an activity run if there are no other active jobs in the cluster. The minimum value is 5 mins. Type: string (or Expression with resultType string).
         /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.timeToLive
         /// </summary>
-        public BinaryData TimeToLive { get; set; }
+        public BinaryData TtlExpression { get; set; }
         /// <summary>
         /// Version of the HDInsight cluster.  Type: string (or Expression with resultType string).
         /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.version
@@ -326,10 +326,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary>
         /// The key for the service principal id.
         /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.servicePrincipalKey
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
-        public SecretBase ServicePrincipalKey { get; set; }
+        public FactorySecretBaseDefinition ServicePrincipalKey { get; set; }
         /// <summary>
         /// The Tenant id/name to which the service principal belongs. Type: string (or Expression with resultType string).
         /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.tenant
@@ -353,10 +353,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary>
         /// The password to access the cluster.
         /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.clusterPassword
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
-        public SecretBase ClusterPassword { get; set; }
+        public FactorySecretBaseDefinition ClusterPassword { get; set; }
         /// <summary>
         /// The username to SSH remotely connect to cluster’s node (for Linux). Type: string (or Expression with resultType string).
         /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.clusterSshUserName
@@ -365,10 +365,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary>
         /// The password to SSH remotely connect cluster’s node (for Linux).
         /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.clusterSshPassword
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
-        public SecretBase ClusterSshPassword { get; set; }
+        public FactorySecretBaseDefinition ClusterSshPassword { get; set; }
         /// <summary>
         /// Specifies additional storage accounts for the HDInsight linked service so that the Data Factory service can register them on your behalf.
         /// Serialized Name: HDInsightOnDemandLinkedService.typeProperties.additionalLinkedServiceNames

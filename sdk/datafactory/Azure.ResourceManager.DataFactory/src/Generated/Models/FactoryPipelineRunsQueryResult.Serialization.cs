@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    internal partial class PipelineRunsQueryResponse
+    internal partial class FactoryPipelineRunsQueryResult
     {
-        internal static PipelineRunsQueryResponse DeserializePipelineRunsQueryResponse(JsonElement element)
+        internal static FactoryPipelineRunsQueryResult DeserializeFactoryPipelineRunsQueryResult(JsonElement element)
         {
             IReadOnlyList<FactoryPipelineRunInfo> value = default;
             Optional<string> continuationToken = default;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     continue;
                 }
             }
-            return new PipelineRunsQueryResponse(value, continuationToken.Value);
+            return new FactoryPipelineRunsQueryResult(value, continuationToken.Value);
         }
     }
 }

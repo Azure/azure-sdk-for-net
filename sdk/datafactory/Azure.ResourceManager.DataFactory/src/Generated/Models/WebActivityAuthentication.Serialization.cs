@@ -69,9 +69,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         internal static WebActivityAuthentication DeserializeWebActivityAuthentication(JsonElement element)
         {
             Optional<string> type = default;
-            Optional<SecretBase> pfx = default;
+            Optional<FactorySecretBaseDefinition> pfx = default;
             Optional<BinaryData> username = default;
-            Optional<SecretBase> password = default;
+            Optional<FactorySecretBaseDefinition> password = default;
             Optional<BinaryData> resource = default;
             Optional<BinaryData> userTenant = default;
             Optional<CredentialReference> credential = default;
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    pfx = SecretBase.DeserializeSecretBase(property.Value);
+                    pfx = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property.Value);
                     continue;
                 }
                 if (property.NameEquals("username"))
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    password = SecretBase.DeserializeSecretBase(property.Value);
+                    password = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property.Value);
                     continue;
                 }
                 if (property.NameEquals("resource"))

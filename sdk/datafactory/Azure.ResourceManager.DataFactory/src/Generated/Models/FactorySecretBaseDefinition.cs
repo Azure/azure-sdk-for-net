@@ -10,22 +10,22 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary>
     /// The base definition of a secret type.
     /// Serialized Name: SecretBase
-    /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
     /// </summary>
-    public partial class SecretBase
+    public partial class FactorySecretBaseDefinition
     {
-        /// <summary> Initializes a new instance of SecretBase. </summary>
-        public SecretBase()
+        /// <summary> Initializes a new instance of FactorySecretBaseDefinition. </summary>
+        public FactorySecretBaseDefinition()
         {
         }
 
-        /// <summary> Initializes a new instance of SecretBase. </summary>
+        /// <summary> Initializes a new instance of FactorySecretBaseDefinition. </summary>
         /// <param name="secretBaseType">
         /// Type of the secret.
         /// Serialized Name: SecretBase.type
         /// </param>
-        internal SecretBase(string secretBaseType)
+        internal FactorySecretBaseDefinition(string secretBaseType)
         {
             SecretBaseType = secretBaseType;
         }

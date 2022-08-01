@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Azure Key Vault secret reference.
     /// Serialized Name: AzureKeyVaultSecretReference
     /// </summary>
-    public partial class AzureKeyVaultSecretReference : SecretBase
+    public partial class AzureKeyVaultSecretReference : FactorySecretBaseDefinition
     {
         /// <summary> Initializes a new instance of AzureKeyVaultSecretReference. </summary>
         /// <param name="store">

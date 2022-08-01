@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         internal static FactoryDataFlowDebugSessionCreateResult DeserializeFactoryDataFlowDebugSessionCreateResult(JsonElement element)
         {
             Optional<string> status = default;
-            Optional<string> sessionId = default;
+            Optional<Guid> sessionId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"))
@@ -25,11 +26,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (property.NameEquals("sessionId"))
                 {
-                    sessionId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    sessionId = property.Value.GetGuid();
                     continue;
                 }
             }
-            return new FactoryDataFlowDebugSessionCreateResult(status.Value, sessionId.Value);
+            return new FactoryDataFlowDebugSessionCreateResult(status.Value, Optional.ToNullable(sessionId));
         }
     }
 }

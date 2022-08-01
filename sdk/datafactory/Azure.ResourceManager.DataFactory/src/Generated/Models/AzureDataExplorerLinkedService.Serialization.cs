@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IList<BinaryData>> annotations = default;
             BinaryData endpoint = default;
             Optional<BinaryData> servicePrincipalId = default;
-            Optional<SecretBase> servicePrincipalKey = default;
+            Optional<FactorySecretBaseDefinition> servicePrincipalKey = default;
             BinaryData database = default;
             Optional<BinaryData> tenant = default;
             Optional<CredentialReference> credential = default;
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            servicePrincipalKey = SecretBase.DeserializeSecretBase(property0.Value);
+                            servicePrincipalKey = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("database"))

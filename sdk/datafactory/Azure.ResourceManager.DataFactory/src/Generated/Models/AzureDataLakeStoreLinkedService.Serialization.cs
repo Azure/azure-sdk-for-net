@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IList<BinaryData>> annotations = default;
             BinaryData dataLakeStoreUri = default;
             Optional<BinaryData> servicePrincipalId = default;
-            Optional<SecretBase> servicePrincipalKey = default;
+            Optional<FactorySecretBaseDefinition> servicePrincipalKey = default;
             Optional<BinaryData> tenant = default;
             Optional<BinaryData> azureCloudType = default;
             Optional<BinaryData> accountName = default;
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            servicePrincipalKey = SecretBase.DeserializeSecretBase(property0.Value);
+                            servicePrincipalKey = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("tenant"))

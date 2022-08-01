@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
             Optional<IList<BinaryData>> annotations = default;
             BinaryData domain = default;
-            Optional<SecretBase> accessToken = default;
+            Optional<FactorySecretBaseDefinition> accessToken = default;
             Optional<BinaryData> clusterId = default;
             Optional<BinaryData> encryptedCredential = default;
             Optional<CredentialReference> credential = default;
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            accessToken = SecretBase.DeserializeSecretBase(property0.Value);
+                            accessToken = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("clusterId"))

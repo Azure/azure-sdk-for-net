@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="accessToken">
         /// Access token for databricks REST API. Refer to https://docs.azuredatabricks.net/api/latest/authentication.html. Type: string (or Expression with resultType string).
         /// Serialized Name: AzureDatabricksLinkedService.typeProperties.accessToken
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="authentication">
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The credential reference containing authentication information.
         /// Serialized Name: AzureDatabricksLinkedService.typeProperties.credential
         /// </param>
-        internal AzureDatabricksLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData domain, SecretBase accessToken, BinaryData authentication, BinaryData workspaceResourceId, BinaryData existingClusterId, BinaryData instancePoolId, BinaryData newClusterVersion, BinaryData newClusterNumOfWorker, BinaryData newClusterNodeType, IDictionary<string, BinaryData> newClusterSparkConf, IDictionary<string, BinaryData> newClusterSparkEnvVars, IDictionary<string, BinaryData> newClusterCustomTags, BinaryData newClusterLogDestination, BinaryData newClusterDriverNodeType, BinaryData newClusterInitScripts, BinaryData newClusterEnableElasticDisk, BinaryData encryptedCredential, BinaryData policyId, CredentialReference credential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal AzureDatabricksLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData domain, FactorySecretBaseDefinition accessToken, BinaryData authentication, BinaryData workspaceResourceId, BinaryData existingClusterId, BinaryData instancePoolId, BinaryData newClusterVersion, BinaryData newClusterNumOfWorker, BinaryData newClusterNodeType, IDictionary<string, BinaryData> newClusterSparkConf, IDictionary<string, BinaryData> newClusterSparkEnvVars, IDictionary<string, BinaryData> newClusterCustomTags, BinaryData newClusterLogDestination, BinaryData newClusterDriverNodeType, BinaryData newClusterInitScripts, BinaryData newClusterEnableElasticDisk, BinaryData encryptedCredential, BinaryData policyId, CredentialReference credential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             Domain = domain;
             AccessToken = accessToken;
@@ -169,10 +169,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary>
         /// Access token for databricks REST API. Refer to https://docs.azuredatabricks.net/api/latest/authentication.html. Type: string (or Expression with resultType string).
         /// Serialized Name: AzureDatabricksLinkedService.typeProperties.accessToken
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
-        public SecretBase AccessToken { get; set; }
+        public FactorySecretBaseDefinition AccessToken { get; set; }
         /// <summary>
         /// Required to specify MSI, if using Workspace resource id for databricks REST API. Type: string (or Expression with resultType string).
         /// Serialized Name: AzureDatabricksLinkedService.typeProperties.authentication

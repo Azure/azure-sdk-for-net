@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="pfx">
         /// Base64-encoded contents of a PFX file or Certificate when used for ServicePrincipal
         /// Serialized Name: WebActivityAuthentication.pfx
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="username">
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="password">
         /// Password for the PFX file or basic authentication / Secret when used for ServicePrincipal
         /// Serialized Name: WebActivityAuthentication.password
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="resource">
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The credential reference containing authentication information.
         /// Serialized Name: WebActivityAuthentication.credential
         /// </param>
-        internal WebActivityAuthentication(string webActivityAuthenticationType, SecretBase pfx, BinaryData username, SecretBase password, BinaryData resource, BinaryData userTenant, CredentialReference credential)
+        internal WebActivityAuthentication(string webActivityAuthenticationType, FactorySecretBaseDefinition pfx, BinaryData username, FactorySecretBaseDefinition password, BinaryData resource, BinaryData userTenant, CredentialReference credential)
         {
             WebActivityAuthenticationType = webActivityAuthenticationType;
             Pfx = pfx;
@@ -72,10 +72,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary>
         /// Base64-encoded contents of a PFX file or Certificate when used for ServicePrincipal
         /// Serialized Name: WebActivityAuthentication.pfx
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
-        public SecretBase Pfx { get; set; }
+        public FactorySecretBaseDefinition Pfx { get; set; }
         /// <summary>
         /// Web activity authentication user name for basic authentication or ClientID when used for ServicePrincipal. Type: string (or Expression with resultType string).
         /// Serialized Name: WebActivityAuthentication.username
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary>
         /// Password for the PFX file or basic authentication / Secret when used for ServicePrincipal
         /// Serialized Name: WebActivityAuthentication.password
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
-        public SecretBase Password { get; set; }
+        public FactorySecretBaseDefinition Password { get; set; }
         /// <summary>
         /// Resource for which Azure Auth token will be requested when using MSI Authentication. Type: string (or Expression with resultType string).
         /// Serialized Name: WebActivityAuthentication.resource

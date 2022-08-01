@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         internal static ActivityRunInfo DeserializeActivityRunInfo(JsonElement element)
         {
             Optional<string> pipelineName = default;
-            Optional<string> pipelineRunId = default;
+            Optional<Guid> pipelineRunId = default;
             Optional<string> activityName = default;
             Optional<string> activityType = default;
-            Optional<string> activityRunId = default;
+            Optional<Guid> activityRunId = default;
             Optional<string> linkedServiceName = default;
             Optional<string> status = default;
             Optional<DateTimeOffset> activityRunStart = default;
@@ -40,7 +40,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (property.NameEquals("pipelineRunId"))
                 {
-                    pipelineRunId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    pipelineRunId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("activityName"))
@@ -55,7 +60,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (property.NameEquals("activityRunId"))
                 {
-                    activityRunId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    activityRunId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("linkedServiceName"))
@@ -131,7 +141,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ActivityRunInfo(pipelineName.Value, pipelineRunId.Value, activityName.Value, activityType.Value, activityRunId.Value, linkedServiceName.Value, status.Value, Optional.ToNullable(activityRunStart), Optional.ToNullable(activityRunEnd), Optional.ToNullable(durationInMs), input.Value, output.Value, error.Value, additionalProperties);
+            return new ActivityRunInfo(pipelineName.Value, Optional.ToNullable(pipelineRunId), activityName.Value, activityType.Value, Optional.ToNullable(activityRunId), linkedServiceName.Value, status.Value, Optional.ToNullable(activityRunStart), Optional.ToNullable(activityRunEnd), Optional.ToNullable(durationInMs), input.Value, output.Value, error.Value, additionalProperties);
         }
     }
 }

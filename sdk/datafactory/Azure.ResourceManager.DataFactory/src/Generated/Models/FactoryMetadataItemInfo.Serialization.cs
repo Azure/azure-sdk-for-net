@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class MetadataItem : IUtf8JsonSerializable
+    public partial class FactoryMetadataItemInfo : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static MetadataItem DeserializeMetadataItem(JsonElement element)
+        internal static FactoryMetadataItemInfo DeserializeFactoryMetadataItemInfo(JsonElement element)
         {
             Optional<BinaryData> name = default;
             Optional<BinaryData> value = default;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     continue;
                 }
             }
-            return new MetadataItem(name.Value, value.Value);
+            return new FactoryMetadataItemInfo(name.Value, value.Value);
         }
     }
 }

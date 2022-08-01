@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
             Optional<IList<BinaryData>> annotations = default;
             BinaryData accountName = default;
-            Optional<SecretBase> accessKey = default;
+            Optional<FactorySecretBaseDefinition> accessKey = default;
             BinaryData batchUri = default;
             BinaryData poolName = default;
             FactoryLinkedServiceReference linkedServiceName = default;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            accessKey = SecretBase.DeserializeSecretBase(property0.Value);
+                            accessKey = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("batchUri"))

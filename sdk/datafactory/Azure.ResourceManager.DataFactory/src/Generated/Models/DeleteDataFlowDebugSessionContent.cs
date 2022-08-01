@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary>
@@ -22,6 +24,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The ID of data flow debug session.
         /// Serialized Name: DeleteDataFlowDebugSessionRequest.sessionId
         /// </summary>
-        public string SessionId { get; set; }
+        public Guid? SessionId { get; set; }
     }
 }

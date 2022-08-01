@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         internal static FactoryPipelineRunInfo DeserializeFactoryPipelineRunInfo(JsonElement element)
         {
-            Optional<string> runId = default;
+            Optional<Guid> runId = default;
             Optional<string> runGroupId = default;
             Optional<bool> isLatest = default;
             Optional<string> pipelineName = default;
@@ -35,7 +35,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (property.NameEquals("runId"))
                 {
-                    runId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    runId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("runGroupId"))
@@ -151,7 +156,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new FactoryPipelineRunInfo(runId.Value, runGroupId.Value, Optional.ToNullable(isLatest), pipelineName.Value, Optional.ToDictionary(parameters), Optional.ToDictionary(runDimensions), invokedBy.Value, Optional.ToNullable(lastUpdated), Optional.ToNullable(runStart), Optional.ToNullable(runEnd), Optional.ToNullable(durationInMs), status.Value, message.Value, additionalProperties);
+            return new FactoryPipelineRunInfo(Optional.ToNullable(runId), runGroupId.Value, Optional.ToNullable(isLatest), pipelineName.Value, Optional.ToDictionary(parameters), Optional.ToDictionary(runDimensions), invokedBy.Value, Optional.ToNullable(lastUpdated), Optional.ToNullable(runStart), Optional.ToNullable(runEnd), Optional.ToNullable(durationInMs), status.Value, message.Value, additionalProperties);
         }
     }
 }

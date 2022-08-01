@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="password">
         /// Password for authentication.
         /// Serialized Name: MongoDbLinkedService.typeProperties.password
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="authSource">
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
         /// Serialized Name: MongoDbLinkedService.typeProperties.encryptedCredential
         /// </param>
-        internal MongoDBLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData server, MongoDBAuthenticationType? authenticationType, BinaryData databaseName, BinaryData username, SecretBase password, BinaryData authSource, BinaryData port, BinaryData enableSsl, BinaryData allowSelfSignedServerCert, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal MongoDBLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData server, MongoDBAuthenticationType? authenticationType, BinaryData databaseName, BinaryData username, FactorySecretBaseDefinition password, BinaryData authSource, BinaryData port, BinaryData enableSsl, BinaryData allowSelfSignedServerCert, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             Server = server;
             AuthenticationType = authenticationType;
@@ -144,10 +144,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary>
         /// Password for authentication.
         /// Serialized Name: MongoDbLinkedService.typeProperties.password
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
-        public SecretBase Password { get; set; }
+        public FactorySecretBaseDefinition Password { get; set; }
         /// <summary>
         /// Database to verify the username and password. Type: string (or Expression with resultType string).
         /// Serialized Name: MongoDbLinkedService.typeProperties.authSource

@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The start time of the activity run in &apos;ISO 8601&apos; format.
         /// Serialized Name: ActivityRun.activityRunStart
         /// </param>
-        /// <param name="activityRunEnd">
+        /// <param name="endOn">
         /// The end time of the activity run in &apos;ISO 8601&apos; format.
         /// Serialized Name: ActivityRun.activityRunEnd
         /// </param>
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Serialized Name: ActivityRun.error
         /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal ActivityRunInfo(string pipelineName, string pipelineRunId, string activityName, string activityType, string activityRunId, string linkedServiceName, string status, DateTimeOffset? activityRunStart, DateTimeOffset? activityRunEnd, int? durationInMs, BinaryData input, BinaryData output, BinaryData error, IReadOnlyDictionary<string, BinaryData> additionalProperties)
+        internal ActivityRunInfo(string pipelineName, Guid? pipelineRunId, string activityName, string activityType, Guid? activityRunId, string linkedServiceName, string status, DateTimeOffset? activityRunStart, DateTimeOffset? endOn, int? durationInMs, BinaryData input, BinaryData output, BinaryData error, IReadOnlyDictionary<string, BinaryData> additionalProperties)
         {
             PipelineName = pipelineName;
             PipelineRunId = pipelineRunId;
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceName = linkedServiceName;
             Status = status;
             ActivityRunStart = activityRunStart;
-            ActivityRunEnd = activityRunEnd;
+            EndOn = endOn;
             DurationInMs = durationInMs;
             Input = input;
             Output = output;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The id of the pipeline run.
         /// Serialized Name: ActivityRun.pipelineRunId
         /// </summary>
-        public string PipelineRunId { get; }
+        public Guid? PipelineRunId { get; }
         /// <summary>
         /// The name of the activity.
         /// Serialized Name: ActivityRun.activityName
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The id of the activity run.
         /// Serialized Name: ActivityRun.activityRunId
         /// </summary>
-        public string ActivityRunId { get; }
+        public Guid? ActivityRunId { get; }
         /// <summary>
         /// The name of the compute linked service.
         /// Serialized Name: ActivityRun.linkedServiceName
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The end time of the activity run in &apos;ISO 8601&apos; format.
         /// Serialized Name: ActivityRun.activityRunEnd
         /// </summary>
-        public DateTimeOffset? ActivityRunEnd { get; }
+        public DateTimeOffset? EndOn { get; }
         /// <summary>
         /// The duration of the activity run.
         /// Serialized Name: ActivityRun.durationInMs

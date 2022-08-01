@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<BinaryData> database = default;
             Optional<Db2AuthenticationType> authenticationType = default;
             Optional<BinaryData> username = default;
-            Optional<SecretBase> password = default;
+            Optional<FactorySecretBaseDefinition> password = default;
             Optional<BinaryData> packageCollection = default;
             Optional<BinaryData> certificateCommonName = default;
             Optional<BinaryData> encryptedCredential = default;
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            password = SecretBase.DeserializeSecretBase(property0.Value);
+                            password = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("packageCollection"))

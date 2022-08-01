@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.DataFactory
         /// TimeSpan value, after which an Azure Monitoring Metric is fired.
         /// Serialized Name: PipelineElapsedTimeMetricPolicy.duration
         /// </summary>
-        public BinaryData ElapsedTimeMetricDuration
+        public TimeSpan? ElapsedTimeMetricDuration
         {
             get => Policy is null ? default : Policy.ElapsedTimeMetricDuration;
             set

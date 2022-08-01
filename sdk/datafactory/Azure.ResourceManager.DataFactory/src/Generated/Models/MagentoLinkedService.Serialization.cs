@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
             Optional<IList<BinaryData>> annotations = default;
             BinaryData host = default;
-            Optional<SecretBase> accessToken = default;
+            Optional<FactorySecretBaseDefinition> accessToken = default;
             Optional<BinaryData> useEncryptedEndpoints = default;
             Optional<BinaryData> useHostVerification = default;
             Optional<BinaryData> usePeerVerification = default;
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            accessToken = SecretBase.DeserializeSecretBase(property0.Value);
+                            accessToken = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("useEncryptedEndpoints"))

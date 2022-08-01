@@ -133,8 +133,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IList<BinaryData>> annotations = default;
             Optional<BinaryData> environmentUrl = default;
             Optional<BinaryData> username = default;
-            Optional<SecretBase> password = default;
-            Optional<SecretBase> securityToken = default;
+            Optional<FactorySecretBaseDefinition> password = default;
+            Optional<FactorySecretBaseDefinition> securityToken = default;
             Optional<BinaryData> apiVersion = default;
             Optional<BinaryData> extendedProperties = default;
             Optional<BinaryData> encryptedCredential = default;
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            password = SecretBase.DeserializeSecretBase(property0.Value);
+                            password = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("securityToken"))
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            securityToken = SecretBase.DeserializeSecretBase(property0.Value);
+                            securityToken = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("apiVersion"))

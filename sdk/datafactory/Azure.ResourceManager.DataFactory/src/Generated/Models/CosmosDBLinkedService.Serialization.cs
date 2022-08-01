@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<BinaryData> connectionString = default;
             Optional<BinaryData> accountEndpoint = default;
             Optional<BinaryData> database = default;
-            Optional<SecretBase> accountKey = default;
+            Optional<FactorySecretBaseDefinition> accountKey = default;
             Optional<BinaryData> servicePrincipalId = default;
             Optional<CosmosDBServicePrincipalCredentialType> servicePrincipalCredentialType = default;
-            Optional<SecretBase> servicePrincipalCredential = default;
+            Optional<FactorySecretBaseDefinition> servicePrincipalCredential = default;
             Optional<BinaryData> tenant = default;
             Optional<BinaryData> azureCloudType = default;
             Optional<CosmosDBConnectionMode> connectionMode = default;
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            accountKey = SecretBase.DeserializeSecretBase(property0.Value);
+                            accountKey = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("servicePrincipalId"))
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            servicePrincipalCredential = SecretBase.DeserializeSecretBase(property0.Value);
+                            servicePrincipalCredential = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("tenant"))

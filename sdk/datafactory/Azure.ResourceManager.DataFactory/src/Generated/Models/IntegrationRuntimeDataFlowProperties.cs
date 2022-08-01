@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Core count of the cluster which will execute data flow job. Supported values are: 8, 16, 32, 48, 80, 144 and 272.
         /// Serialized Name: IntegrationRuntimeDataFlowProperties.coreCount
         /// </param>
-        /// <param name="timeToLive">
+        /// <param name="ttlInMinutes">
         /// Time to live (in minutes) setting of the cluster which will execute data flow job.
         /// Serialized Name: IntegrationRuntimeDataFlowProperties.timeToLive
         /// </param>
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Serialized Name: IntegrationRuntimeDataFlowProperties.cleanup
         /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal IntegrationRuntimeDataFlowProperties(DataFlowComputeType? computeType, int? coreCount, int? timeToLive, bool? cleanup, IDictionary<string, BinaryData> additionalProperties)
+        internal IntegrationRuntimeDataFlowProperties(DataFlowComputeType? computeType, int? coreCount, int? ttlInMinutes, bool? cleanup, IDictionary<string, BinaryData> additionalProperties)
         {
             ComputeType = computeType;
             CoreCount = coreCount;
-            TimeToLive = timeToLive;
+            TtlInMinutes = ttlInMinutes;
             Cleanup = cleanup;
             AdditionalProperties = additionalProperties;
         }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Time to live (in minutes) setting of the cluster which will execute data flow job.
         /// Serialized Name: IntegrationRuntimeDataFlowProperties.timeToLive
         /// </summary>
-        public int? TimeToLive { get; set; }
+        public int? TtlInMinutes { get; set; }
         /// <summary>
         /// Cluster will not be recycled and it will be used in next data flow activity run until TTL (time to live) is reached if this is set as false. Default is true.
         /// Serialized Name: IntegrationRuntimeDataFlowProperties.cleanup

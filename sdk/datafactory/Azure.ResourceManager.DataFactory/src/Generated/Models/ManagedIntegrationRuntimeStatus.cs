@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Serialized Name: IntegrationRuntimeStatus.state
         /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="createOn">
+        /// <param name="createdOn">
         /// The time at which the integration runtime was created, in ISO8601 format.
         /// Serialized Name: ManagedIntegrationRuntimeStatus.typeProperties.createTime
         /// </param>
@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The last operation result that occurred on this integration runtime.
         /// Serialized Name: ManagedIntegrationRuntimeStatus.typeProperties.lastOperation
         /// </param>
-        internal ManagedIntegrationRuntimeStatus(IntegrationRuntimeType runtimeType, string dataFactoryName, IntegrationRuntimeState? state, IReadOnlyDictionary<string, BinaryData> additionalProperties, DateTimeOffset? createOn, IReadOnlyList<ManagedIntegrationRuntimeNode> nodes, IReadOnlyList<ManagedIntegrationRuntimeError> otherErrors, ManagedIntegrationRuntimeOperationResult lastOperation) : base(runtimeType, dataFactoryName, state, additionalProperties)
+        internal ManagedIntegrationRuntimeStatus(IntegrationRuntimeType runtimeType, string dataFactoryName, IntegrationRuntimeState? state, IReadOnlyDictionary<string, BinaryData> additionalProperties, DateTimeOffset? createdOn, IReadOnlyList<ManagedIntegrationRuntimeNode> nodes, IReadOnlyList<ManagedIntegrationRuntimeError> otherErrors, ManagedIntegrationRuntimeOperationResult lastOperation) : base(runtimeType, dataFactoryName, state, additionalProperties)
         {
-            CreateOn = createOn;
+            CreatedOn = createdOn;
             Nodes = nodes;
             OtherErrors = otherErrors;
             LastOperation = lastOperation;
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The time at which the integration runtime was created, in ISO8601 format.
         /// Serialized Name: ManagedIntegrationRuntimeStatus.typeProperties.createTime
         /// </summary>
-        public DateTimeOffset? CreateOn { get; }
+        public DateTimeOffset? CreatedOn { get; }
         /// <summary>
         /// The list of nodes for managed integration runtime.
         /// Serialized Name: ManagedIntegrationRuntimeStatus.typeProperties.nodes

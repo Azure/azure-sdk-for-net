@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Serialized Name: PipelineRun.message
         /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal FactoryPipelineRunInfo(string runId, string runGroupId, bool? isLatest, string pipelineName, IReadOnlyDictionary<string, string> parameters, IReadOnlyDictionary<string, string> runDimensions, FactoryPipelineRunInvokedByInfo invokedBy, DateTimeOffset? lastUpdated, DateTimeOffset? runStart, DateTimeOffset? runEnd, int? durationInMs, string status, string message, IReadOnlyDictionary<string, BinaryData> additionalProperties)
+        internal FactoryPipelineRunInfo(Guid? runId, string runGroupId, bool? isLatest, string pipelineName, IReadOnlyDictionary<string, string> parameters, IReadOnlyDictionary<string, string> runDimensions, FactoryPipelineRunInvokedByInfo invokedBy, DateTimeOffset? lastUpdated, DateTimeOffset? runStart, DateTimeOffset? runEnd, int? durationInMs, string status, string message, IReadOnlyDictionary<string, BinaryData> additionalProperties)
         {
             RunId = runId;
             RunGroupId = runGroupId;
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Identifier of a run.
         /// Serialized Name: PipelineRun.runId
         /// </summary>
-        public string RunId { get; }
+        public Guid? RunId { get; }
         /// <summary>
         /// Identifier that correlates all the recovery runs of a pipeline run.
         /// Serialized Name: PipelineRun.runGroupId

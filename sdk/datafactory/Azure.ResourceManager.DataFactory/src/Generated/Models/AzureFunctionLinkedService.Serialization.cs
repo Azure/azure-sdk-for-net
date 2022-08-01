@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
             Optional<IList<BinaryData>> annotations = default;
             BinaryData functionAppUrl = default;
-            Optional<SecretBase> functionKey = default;
+            Optional<FactorySecretBaseDefinition> functionKey = default;
             Optional<BinaryData> encryptedCredential = default;
             Optional<CredentialReference> credential = default;
             Optional<BinaryData> resourceId = default;
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            functionKey = SecretBase.DeserializeSecretBase(property0.Value);
+                            functionKey = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"))

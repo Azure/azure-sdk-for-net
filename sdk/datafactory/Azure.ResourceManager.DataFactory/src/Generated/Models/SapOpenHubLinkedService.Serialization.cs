@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<BinaryData> language = default;
             Optional<BinaryData> systemId = default;
             Optional<BinaryData> userName = default;
-            Optional<SecretBase> password = default;
+            Optional<FactorySecretBaseDefinition> password = default;
             Optional<BinaryData> messageServer = default;
             Optional<BinaryData> messageServerService = default;
             Optional<BinaryData> logonGroup = default;
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            password = SecretBase.DeserializeSecretBase(property0.Value);
+                            password = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("messageServer"))

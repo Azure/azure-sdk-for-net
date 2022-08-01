@@ -37,17 +37,17 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The location of the data factory for which the linked integration runtime belong to.
         /// Serialized Name: LinkedIntegrationRuntime.dataFactoryLocation
         /// </param>
-        /// <param name="createOn">
+        /// <param name="createdOn">
         /// The creating time of the linked integration runtime.
         /// Serialized Name: LinkedIntegrationRuntime.createTime
         /// </param>
-        internal LinkedIntegrationRuntime(string name, string subscriptionId, string dataFactoryName, string dataFactoryLocation, DateTimeOffset? createOn)
+        internal LinkedIntegrationRuntime(string name, string subscriptionId, string dataFactoryName, string dataFactoryLocation, DateTimeOffset? createdOn)
         {
             Name = name;
             SubscriptionId = subscriptionId;
             DataFactoryName = dataFactoryName;
             DataFactoryLocation = dataFactoryLocation;
-            CreateOn = createOn;
+            CreatedOn = createdOn;
         }
 
         /// <summary>
@@ -74,6 +74,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The creating time of the linked integration runtime.
         /// Serialized Name: LinkedIntegrationRuntime.createTime
         /// </summary>
-        public DateTimeOffset? CreateOn { get; }
+        public DateTimeOffset? CreatedOn { get; }
     }
 }

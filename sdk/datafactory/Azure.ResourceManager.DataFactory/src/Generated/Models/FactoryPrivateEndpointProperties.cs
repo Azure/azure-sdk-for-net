@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// A remote private endpoint connection
     /// Serialized Name: RemotePrivateEndpointConnection
     /// </summary>
-    public partial class RemotePrivateEndpointConnection
+    public partial class FactoryPrivateEndpointProperties
     {
-        /// <summary> Initializes a new instance of RemotePrivateEndpointConnection. </summary>
-        public RemotePrivateEndpointConnection()
+        /// <summary> Initializes a new instance of FactoryPrivateEndpointProperties. </summary>
+        public FactoryPrivateEndpointProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of RemotePrivateEndpointConnection. </summary>
+        /// <summary> Initializes a new instance of FactoryPrivateEndpointProperties. </summary>
         /// <param name="provisioningState"> Serialized Name: RemotePrivateEndpointConnection.provisioningState. </param>
         /// <param name="privateEndpoint">
         /// PrivateEndpoint of a remote private endpoint connection
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The state of a private link connection
         /// Serialized Name: RemotePrivateEndpointConnection.privateLinkServiceConnectionState
         /// </param>
-        internal RemotePrivateEndpointConnection(string provisioningState, SubResource privateEndpoint, PrivateLinkConnectionState privateLinkServiceConnectionState)
+        internal FactoryPrivateEndpointProperties(string provisioningState, SubResource privateEndpoint, PrivateLinkConnectionState privateLinkServiceConnectionState)
         {
             ProvisioningState = provisioningState;
             PrivateEndpoint = privateEndpoint;

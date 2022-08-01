@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// TimeSpan value, after which an Azure Monitoring Metric is fired.
         /// Serialized Name: PipelineElapsedTimeMetricPolicy.duration
         /// </param>
-        internal PipelineElapsedTimeMetricPolicy(BinaryData duration)
+        internal PipelineElapsedTimeMetricPolicy(TimeSpan? duration)
         {
             Duration = duration;
         }
@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// TimeSpan value, after which an Azure Monitoring Metric is fired.
         /// Serialized Name: PipelineElapsedTimeMetricPolicy.duration
         /// </summary>
-        public BinaryData Duration { get; set; }
+        public TimeSpan? Duration { get; set; }
     }
 }

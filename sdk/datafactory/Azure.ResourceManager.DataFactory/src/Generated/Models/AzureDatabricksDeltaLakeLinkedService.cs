@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="accessToken">
         /// Access token for databricks REST API. Refer to https://docs.azuredatabricks.net/api/latest/authentication.html. Type: string, SecureString or AzureKeyVaultSecretReference.
         /// Serialized Name: AzureDatabricksDeltaLakeLinkedService.typeProperties.accessToken
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="clusterId">
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Workspace resource id for databricks REST API. Type: string (or Expression with resultType string).
         /// Serialized Name: AzureDatabricksDeltaLakeLinkedService.typeProperties.workspaceResourceId
         /// </param>
-        internal AzureDatabricksDeltaLakeLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData domain, SecretBase accessToken, BinaryData clusterId, BinaryData encryptedCredential, CredentialReference credential, BinaryData workspaceResourceId) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal AzureDatabricksDeltaLakeLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData domain, FactorySecretBaseDefinition accessToken, BinaryData clusterId, BinaryData encryptedCredential, CredentialReference credential, BinaryData workspaceResourceId) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             Domain = domain;
             AccessToken = accessToken;
@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary>
         /// Access token for databricks REST API. Refer to https://docs.azuredatabricks.net/api/latest/authentication.html. Type: string, SecureString or AzureKeyVaultSecretReference.
         /// Serialized Name: AzureDatabricksDeltaLakeLinkedService.typeProperties.accessToken
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
-        public SecretBase AccessToken { get; set; }
+        public FactorySecretBaseDefinition AccessToken { get; set; }
         /// <summary>
         /// The id of an existing interactive cluster that will be used for all runs of this job. Type: string (or Expression with resultType string).
         /// Serialized Name: AzureDatabricksDeltaLakeLinkedService.typeProperties.clusterId

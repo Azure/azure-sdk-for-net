@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Serialized Name: IntegrationRuntimeStatus.state
         /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="createOn">
+        /// <param name="createdOn">
         /// The time at which the integration runtime was created, in ISO8601 format.
         /// Serialized Name: SelfHostedIntegrationRuntimeStatus.typeProperties.createTime
         /// </param>
@@ -105,9 +105,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The estimated time when the self-hosted integration runtime will be updated.
         /// Serialized Name: SelfHostedIntegrationRuntimeStatus.typeProperties.autoUpdateETA
         /// </param>
-        internal SelfHostedIntegrationRuntimeStatus(IntegrationRuntimeType runtimeType, string dataFactoryName, IntegrationRuntimeState? state, IReadOnlyDictionary<string, BinaryData> additionalProperties, DateTimeOffset? createOn, string taskQueueId, IntegrationRuntimeInternalChannelEncryptionMode? internalChannelEncryption, string version, IReadOnlyList<SelfHostedIntegrationRuntimeNode> nodes, DateTimeOffset? scheduledUpdateOn, string updateDelayOffset, string localTimeZoneOffset, IReadOnlyDictionary<string, string> capabilities, IReadOnlyList<string> serviceUrls, IntegrationRuntimeAutoUpdate? autoUpdate, string versionStatus, IReadOnlyList<LinkedIntegrationRuntime> links, string pushedVersion, string latestVersion, DateTimeOffset? autoUpdateETA) : base(runtimeType, dataFactoryName, state, additionalProperties)
+        internal SelfHostedIntegrationRuntimeStatus(IntegrationRuntimeType runtimeType, string dataFactoryName, IntegrationRuntimeState? state, IReadOnlyDictionary<string, BinaryData> additionalProperties, DateTimeOffset? createdOn, string taskQueueId, IntegrationRuntimeInternalChannelEncryptionMode? internalChannelEncryption, string version, IReadOnlyList<SelfHostedIntegrationRuntimeNode> nodes, DateTimeOffset? scheduledUpdateOn, string updateDelayOffset, string localTimeZoneOffset, IReadOnlyDictionary<string, string> capabilities, IReadOnlyList<string> serviceUrls, IntegrationRuntimeAutoUpdate? autoUpdate, string versionStatus, IReadOnlyList<LinkedIntegrationRuntime> links, string pushedVersion, string latestVersion, DateTimeOffset? autoUpdateETA) : base(runtimeType, dataFactoryName, state, additionalProperties)
         {
-            CreateOn = createOn;
+            CreatedOn = createdOn;
             TaskQueueId = taskQueueId;
             InternalChannelEncryption = internalChannelEncryption;
             Version = version;
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The time at which the integration runtime was created, in ISO8601 format.
         /// Serialized Name: SelfHostedIntegrationRuntimeStatus.typeProperties.createTime
         /// </summary>
-        public DateTimeOffset? CreateOn { get; }
+        public DateTimeOffset? CreatedOn { get; }
         /// <summary>
         /// The task queue id of the integration runtime.
         /// Serialized Name: SelfHostedIntegrationRuntimeStatus.typeProperties.taskQueueId

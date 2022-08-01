@@ -134,9 +134,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
             Optional<IList<BinaryData>> annotations = default;
             BinaryData clientId = default;
-            Optional<SecretBase> clientSecret = default;
-            Optional<SecretBase> accessToken = default;
-            Optional<SecretBase> refreshToken = default;
+            Optional<FactorySecretBaseDefinition> clientSecret = default;
+            Optional<FactorySecretBaseDefinition> accessToken = default;
+            Optional<FactorySecretBaseDefinition> refreshToken = default;
             Optional<BinaryData> useEncryptedEndpoints = default;
             Optional<BinaryData> useHostVerification = default;
             Optional<BinaryData> usePeerVerification = default;
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            clientSecret = SecretBase.DeserializeSecretBase(property0.Value);
+                            clientSecret = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("accessToken"))
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            accessToken = SecretBase.DeserializeSecretBase(property0.Value);
+                            accessToken = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("refreshToken"))
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            refreshToken = SecretBase.DeserializeSecretBase(property0.Value);
+                            refreshToken = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("useEncryptedEndpoints"))

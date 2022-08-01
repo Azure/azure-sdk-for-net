@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
             Optional<IList<BinaryData>> annotations = default;
             Optional<BinaryData> accessKeyId = default;
-            Optional<SecretBase> secretAccessKey = default;
+            Optional<FactorySecretBaseDefinition> secretAccessKey = default;
             Optional<BinaryData> serviceUrl = default;
             Optional<BinaryData> forcePathStyle = default;
             Optional<BinaryData> encryptedCredential = default;
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            secretAccessKey = SecretBase.DeserializeSecretBase(property0.Value);
+                            secretAccessKey = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("serviceUrl"))

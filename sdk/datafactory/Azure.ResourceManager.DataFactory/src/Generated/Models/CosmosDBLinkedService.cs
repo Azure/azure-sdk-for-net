@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="accountKey">
         /// The account key of the Azure CosmosDB account. Type: SecureString or AzureKeyVaultSecretReference.
         /// Serialized Name: CosmosDbLinkedService.typeProperties.accountKey
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="servicePrincipalId">
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="servicePrincipalCredential">
         /// The credential of the service principal object in Azure Active Directory. If servicePrincipalCredentialType is &apos;ServicePrincipalKey&apos;, servicePrincipalCredential can be SecureString or AzureKeyVaultSecretReference. If servicePrincipalCredentialType is &apos;ServicePrincipalCert&apos;, servicePrincipalCredential can only be AzureKeyVaultSecretReference.
         /// Serialized Name: CosmosDbLinkedService.typeProperties.servicePrincipalCredential
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="tenant">
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The credential reference containing authentication information.
         /// Serialized Name: CosmosDbLinkedService.typeProperties.credential
         /// </param>
-        internal CosmosDBLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData connectionString, BinaryData accountEndpoint, BinaryData database, SecretBase accountKey, BinaryData servicePrincipalId, CosmosDBServicePrincipalCredentialType? servicePrincipalCredentialType, SecretBase servicePrincipalCredential, BinaryData tenant, BinaryData azureCloudType, CosmosDBConnectionMode? connectionMode, BinaryData encryptedCredential, CredentialReference credential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal CosmosDBLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData connectionString, BinaryData accountEndpoint, BinaryData database, FactorySecretBaseDefinition accountKey, BinaryData servicePrincipalId, CosmosDBServicePrincipalCredentialType? servicePrincipalCredentialType, FactorySecretBaseDefinition servicePrincipalCredential, BinaryData tenant, BinaryData azureCloudType, CosmosDBConnectionMode? connectionMode, BinaryData encryptedCredential, CredentialReference credential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             ConnectionString = connectionString;
             AccountEndpoint = accountEndpoint;
@@ -131,10 +131,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary>
         /// The account key of the Azure CosmosDB account. Type: SecureString or AzureKeyVaultSecretReference.
         /// Serialized Name: CosmosDbLinkedService.typeProperties.accountKey
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
-        public SecretBase AccountKey { get; set; }
+        public FactorySecretBaseDefinition AccountKey { get; set; }
         /// <summary>
         /// The client ID of the application in Azure Active Directory used for Server-To-Server authentication. Type: string (or Expression with resultType string).
         /// Serialized Name: CosmosDbLinkedService.typeProperties.servicePrincipalId
@@ -148,10 +148,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary>
         /// The credential of the service principal object in Azure Active Directory. If servicePrincipalCredentialType is &apos;ServicePrincipalKey&apos;, servicePrincipalCredential can be SecureString or AzureKeyVaultSecretReference. If servicePrincipalCredentialType is &apos;ServicePrincipalCert&apos;, servicePrincipalCredential can only be AzureKeyVaultSecretReference.
         /// Serialized Name: CosmosDbLinkedService.typeProperties.servicePrincipalCredential
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
-        public SecretBase ServicePrincipalCredential { get; set; }
+        public FactorySecretBaseDefinition ServicePrincipalCredential { get; set; }
         /// <summary>
         /// The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string).
         /// Serialized Name: CosmosDbLinkedService.typeProperties.tenant

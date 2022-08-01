@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="refreshToken">
         /// The refresh token obtained from Google for authorizing access to BigQuery for UserAuthentication.
         /// Serialized Name: GoogleBigQueryLinkedService.typeProperties.refreshToken
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="clientId">
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="clientSecret">
         /// The client secret of the google application used to acquire the refresh token.
         /// Serialized Name: GoogleBigQueryLinkedService.typeProperties.clientSecret
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="email">
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
         /// Serialized Name: GoogleBigQueryLinkedService.typeProperties.encryptedCredential
         /// </param>
-        internal GoogleBigQueryLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData project, BinaryData additionalProjects, BinaryData requestGoogleDriveScope, GoogleBigQueryAuthenticationType authenticationType, SecretBase refreshToken, BinaryData clientId, SecretBase clientSecret, BinaryData email, BinaryData keyFilePath, BinaryData trustedCertPath, BinaryData useSystemTrustStore, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal GoogleBigQueryLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData project, BinaryData additionalProjects, BinaryData requestGoogleDriveScope, GoogleBigQueryAuthenticationType authenticationType, FactorySecretBaseDefinition refreshToken, BinaryData clientId, FactorySecretBaseDefinition clientSecret, BinaryData email, BinaryData keyFilePath, BinaryData trustedCertPath, BinaryData useSystemTrustStore, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             Project = project;
             AdditionalProjects = additionalProjects;
@@ -152,10 +152,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary>
         /// The refresh token obtained from Google for authorizing access to BigQuery for UserAuthentication.
         /// Serialized Name: GoogleBigQueryLinkedService.typeProperties.refreshToken
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
-        public SecretBase RefreshToken { get; set; }
+        public FactorySecretBaseDefinition RefreshToken { get; set; }
         /// <summary>
         /// The client id of the google application used to acquire the refresh token. Type: string (or Expression with resultType string).
         /// Serialized Name: GoogleBigQueryLinkedService.typeProperties.clientId
@@ -164,10 +164,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary>
         /// The client secret of the google application used to acquire the refresh token.
         /// Serialized Name: GoogleBigQueryLinkedService.typeProperties.clientSecret
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
-        public SecretBase ClientSecret { get; set; }
+        public FactorySecretBaseDefinition ClientSecret { get; set; }
         /// <summary>
         /// The service account email ID that is used for ServiceAuthentication and can only be used on self-hosted IR.
         /// Serialized Name: GoogleBigQueryLinkedService.typeProperties.email

@@ -15,15 +15,15 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// A list pipeline runs.
     /// Serialized Name: PipelineRunsQueryResponse
     /// </summary>
-    internal partial class PipelineRunsQueryResponse
+    internal partial class FactoryPipelineRunsQueryResult
     {
-        /// <summary> Initializes a new instance of PipelineRunsQueryResponse. </summary>
+        /// <summary> Initializes a new instance of FactoryPipelineRunsQueryResult. </summary>
         /// <param name="value">
         /// List of pipeline runs.
         /// Serialized Name: PipelineRunsQueryResponse.value
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal PipelineRunsQueryResponse(IEnumerable<FactoryPipelineRunInfo> value)
+        internal FactoryPipelineRunsQueryResult(IEnumerable<FactoryPipelineRunInfo> value)
         {
             if (value == null)
             {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of PipelineRunsQueryResponse. </summary>
+        /// <summary> Initializes a new instance of FactoryPipelineRunsQueryResult. </summary>
         /// <param name="value">
         /// List of pipeline runs.
         /// Serialized Name: PipelineRunsQueryResponse.value
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The continuation token for getting the next page of results, if any remaining results exist, null otherwise.
         /// Serialized Name: PipelineRunsQueryResponse.continuationToken
         /// </param>
-        internal PipelineRunsQueryResponse(IReadOnlyList<FactoryPipelineRunInfo> value, string continuationToken)
+        internal FactoryPipelineRunsQueryResult(IReadOnlyList<FactoryPipelineRunInfo> value, string continuationToken)
         {
             Value = value;
             ContinuationToken = continuationToken;

@@ -20,14 +20,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Identifier of a run.
         /// Serialized Name: CreateRunResponse.runId
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
-        internal PipelineCreateRunResult(string runId)
+        internal PipelineCreateRunResult(Guid runId)
         {
-            if (runId == null)
-            {
-                throw new ArgumentNullException(nameof(runId));
-            }
-
             RunId = runId;
         }
 
@@ -35,6 +29,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Identifier of a run.
         /// Serialized Name: CreateRunResponse.runId
         /// </summary>
-        public string RunId { get; }
+        public Guid RunId { get; }
     }
 }

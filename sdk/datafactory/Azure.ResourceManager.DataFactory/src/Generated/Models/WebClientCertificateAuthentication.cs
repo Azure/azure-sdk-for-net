@@ -23,17 +23,17 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="pfx">
         /// Base64-encoded contents of a PFX file.
         /// Serialized Name: WebClientCertificateAuthentication.pfx
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="password">
         /// Password for the PFX file.
         /// Serialized Name: WebClientCertificateAuthentication.password
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/>, <paramref name="pfx"/> or <paramref name="password"/> is null. </exception>
-        public WebClientCertificateAuthentication(BinaryData uri, SecretBase pfx, SecretBase password) : base(uri)
+        public WebClientCertificateAuthentication(BinaryData uri, FactorySecretBaseDefinition pfx, FactorySecretBaseDefinition password) : base(uri)
         {
             if (uri == null)
             {
@@ -65,16 +65,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="pfx">
         /// Base64-encoded contents of a PFX file.
         /// Serialized Name: WebClientCertificateAuthentication.pfx
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="password">
         /// Password for the PFX file.
         /// Serialized Name: WebClientCertificateAuthentication.password
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
-        internal WebClientCertificateAuthentication(BinaryData uri, WebAuthenticationType authenticationType, SecretBase pfx, SecretBase password) : base(uri, authenticationType)
+        internal WebClientCertificateAuthentication(BinaryData uri, WebAuthenticationType authenticationType, FactorySecretBaseDefinition pfx, FactorySecretBaseDefinition password) : base(uri, authenticationType)
         {
             Pfx = pfx;
             Password = password;
@@ -84,16 +84,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary>
         /// Base64-encoded contents of a PFX file.
         /// Serialized Name: WebClientCertificateAuthentication.pfx
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
-        public SecretBase Pfx { get; set; }
+        public FactorySecretBaseDefinition Pfx { get; set; }
         /// <summary>
         /// Password for the PFX file.
         /// Serialized Name: WebClientCertificateAuthentication.password
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
-        public SecretBase Password { get; set; }
+        public FactorySecretBaseDefinition Password { get; set; }
     }
 }

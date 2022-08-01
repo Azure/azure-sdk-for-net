@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<SparkThriftTransportProtocol> thriftTransportProtocol = default;
             SparkAuthenticationType authenticationType = default;
             Optional<BinaryData> username = default;
-            Optional<SecretBase> password = default;
+            Optional<FactorySecretBaseDefinition> password = default;
             Optional<BinaryData> httpPath = default;
             Optional<BinaryData> enableSsl = default;
             Optional<BinaryData> trustedCertPath = default;
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            password = SecretBase.DeserializeSecretBase(property0.Value);
+                            password = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("httpPath"))

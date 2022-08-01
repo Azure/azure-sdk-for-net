@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The ID of data flow debug session.
         /// Serialized Name: DataFlowDebugPackage.sessionId
         /// </summary>
-        public string SessionId { get; set; }
+        public Guid? SessionId { get; set; }
         /// <summary>
         /// Data flow instance.
         /// Serialized Name: DataFlowDebugPackage.dataFlow

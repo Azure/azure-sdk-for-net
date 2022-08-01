@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="password">
         /// Password for Basic, Digest, Windows, or ClientCertificate with EmbeddedCertData authentication.
         /// Serialized Name: HttpLinkedService.typeProperties.password
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="authHeaders">
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// If true, validate the HTTPS server SSL certificate. Default value is true. Type: boolean (or Expression with resultType boolean).
         /// Serialized Name: HttpLinkedService.typeProperties.enableServerCertificateValidation
         /// </param>
-        internal HttpLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData uri, HttpAuthenticationType? authenticationType, BinaryData userName, SecretBase password, BinaryData authHeaders, BinaryData embeddedCertData, BinaryData certThumbprint, BinaryData encryptedCredential, BinaryData enableServerCertificateValidation) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal HttpLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData uri, HttpAuthenticationType? authenticationType, BinaryData userName, FactorySecretBaseDefinition password, BinaryData authHeaders, BinaryData embeddedCertData, BinaryData certThumbprint, BinaryData encryptedCredential, BinaryData enableServerCertificateValidation) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             Uri = uri;
             AuthenticationType = authenticationType;
@@ -125,10 +125,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary>
         /// Password for Basic, Digest, Windows, or ClientCertificate with EmbeddedCertData authentication.
         /// Serialized Name: HttpLinkedService.typeProperties.password
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
-        public SecretBase Password { get; set; }
+        public FactorySecretBaseDefinition Password { get; set; }
         /// <summary>
         /// The additional HTTP headers in the request to RESTful API used for authorization. Type: object (or Expression with resultType object).
         /// Serialized Name: HttpLinkedService.typeProperties.authHeaders

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="secretAccessKey">
         /// The secret access key of the Amazon S3 Identity and Access Management (IAM) user.
         /// Serialized Name: AmazonS3LinkedService.typeProperties.secretAccessKey
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="serviceUri">
@@ -65,14 +65,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="sessionToken">
         /// The session token for the S3 temporary security credential.
         /// Serialized Name: AmazonS3LinkedService.typeProperties.sessionToken
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="encryptedCredential">
         /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
         /// Serialized Name: AmazonS3LinkedService.typeProperties.encryptedCredential
         /// </param>
-        internal AmazonS3LinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData authenticationType, BinaryData accessKeyId, SecretBase secretAccessKey, BinaryData serviceUri, SecretBase sessionToken, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal AmazonS3LinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData authenticationType, BinaryData accessKeyId, FactorySecretBaseDefinition secretAccessKey, BinaryData serviceUri, FactorySecretBaseDefinition sessionToken, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             AuthenticationType = authenticationType;
             AccessKeyId = accessKeyId;
@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary>
         /// The secret access key of the Amazon S3 Identity and Access Management (IAM) user.
         /// Serialized Name: AmazonS3LinkedService.typeProperties.secretAccessKey
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
-        public SecretBase SecretAccessKey { get; set; }
+        public FactorySecretBaseDefinition SecretAccessKey { get; set; }
         /// <summary>
         /// This value specifies the endpoint to access with the S3 Connector. This is an optional property; change it only if you want to try a different service endpoint or want to switch between https and http. Type: string (or Expression with resultType string).
         /// Serialized Name: AmazonS3LinkedService.typeProperties.serviceUrl
@@ -108,10 +108,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary>
         /// The session token for the S3 temporary security credential.
         /// Serialized Name: AmazonS3LinkedService.typeProperties.sessionToken
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
-        public SecretBase SessionToken { get; set; }
+        public FactorySecretBaseDefinition SessionToken { get; set; }
         /// <summary>
         /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
         /// Serialized Name: AmazonS3LinkedService.typeProperties.encryptedCredential

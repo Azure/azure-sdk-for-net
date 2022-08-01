@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<BinaryData> blobWriterDateTimeFormat = default;
             Optional<BinaryData> blobWriterAddHeader = default;
             Optional<BinaryData> copyBehavior = default;
-            Optional<IList<MetadataItem>> metadata = default;
+            Optional<IList<FactoryMetadataItemInfo>> metadata = default;
             string type = default;
             Optional<BinaryData> writeBatchSize = default;
             Optional<BinaryData> writeBatchTimeout = default;
@@ -196,10 +196,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<MetadataItem> array = new List<MetadataItem>();
+                    List<FactoryMetadataItemInfo> array = new List<FactoryMetadataItemInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetadataItem.DeserializeMetadataItem(item));
+                        array.Add(FactoryMetadataItemInfo.DeserializeFactoryMetadataItemInfo(item));
                     }
                     metadata = array;
                     continue;

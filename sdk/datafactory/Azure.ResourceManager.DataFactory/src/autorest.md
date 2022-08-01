@@ -26,6 +26,12 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
   'PurviewResourceId': 'arm-id'
+  'runId': 'uuid'
+  'activityRunId': 'uuid'
+  'pipelineRunId': 'uuid'
+  'sessionId': 'uuid'
+  'encryptedCredential': 'any'
+  'dataFactoryLocation': 'azure-location'
 
 rename-rules:
   CPU: Cpu
@@ -53,15 +59,39 @@ rename-rules:
   CMK: Cmk
 
 rename-mapping:
-  # Factory
-  Factory: DataFactory
-  FactoryListResponse: FactoryListResult
-  # Dataset
+  # Property
+  ActivityRun.activityRunEnd: EndOn
+  CassandraSourceReadConsistencyLevels.ALL: All
+  CassandraSourceReadConsistencyLevels.ONE: One
+  CassandraSourceReadConsistencyLevels.TWO: Two
+  CassandraSourceReadConsistencyLevels.LOCAL_ONE: LocalOne
+  CreateDataFlowDebugSessionRequest.timeToLive: TtlInMinutes
+  DataFlowDebugSessionInfo.startTime: StartOn
+  DataFlowDebugSessionInfo.timeToLiveInMinutes: TtlInMinutes
+  DataFlowDebugSessionInfo.lastActivityTime: LastActivityOn
   DatasetDataElement.name: ColumnName
   DatasetDataElement.type: columnType
   DatasetSchemaDataElement.name: schemaColumnName
   DatasetSchemaDataElement.type: schemaColumnType
   DatasetCompression.type: datasetCompressionType
+  ExposureControlBatchResponse.exposureControlResponses: ExposureControlResults
+  FactoryRepoUpdate.factoryResourceId: -|arm-id
+  HDInsightOnDemandLinkedService.typeProperties.timeToLive: TtlExpression
+  IntegrationRuntimeCustomerVirtualNetwork.subnetId: SubnetId|arm-id
+  IntegrationRuntimeDataFlowProperties.timeToLive: TtlInMinutes
+  IntegrationRuntimeNodeIpAddress.ipAddress: IPAddress|ip-address
+  IntegrationRuntimeVNetProperties.vNetId: VnetId|uuid
+  IntegrationRuntimeVNetProperties.subnetId: SubnetId|arm-id
+  Factory.properties.createTime: CreatedOn
+  LinkedIntegrationRuntime.createTime: CreatedOn
+  ManagedIntegrationRuntimeStatus.typeProperties.createTime: CreatedOn
+  ManagedVirtualNetwork.vNetId: VnetId|uuid
+  ManagedPrivateEndpoint.privateLinkResourceId: -|arm-id
+  SelfHostedIntegrationRuntimeStatus.typeProperties.createTime: CreatedOn
+  # Factory
+  Factory: DataFactory
+  FactoryListResponse: FactoryListResult
+  # Dataset
   Dataset: FactoryDatasetDefinition
   DatasetResource: FactoryDataset
   HttpDataset: HttpFileDataset
@@ -119,6 +149,7 @@ rename-mapping:
   PipelineReferenceType: FactoryPipelineReferenceType
   PipelineRun: FactoryPipelineRunInfo
   PipelineRunInvokedBy: FactoryPipelineRunInvokedByInfo
+  PipelineRunsQueryResponse: FactoryPipelineRunsQueryResult
   Activity: PipelineActivity
   ActivityRun: ActivityRunInfo
   ActivityRunsQueryResponse: ActivityRunsResult
@@ -133,6 +164,7 @@ rename-mapping:
   VariableType: PipelineVariableType
   # Private link
   ManagedPrivateEndpointResource: FactoryPrivateEndpoint
+  RemotePrivateEndpointConnection: FactoryPrivateEndpointProperties
   PrivateEndpointConnectionResource: FactoryPrivateEndpointConnection
   PrivateLinkResource: FactoryPrivateLinkResource
   PrivateLinkResourceProperties: FactoryPrivateLinkResourceProperties
@@ -161,11 +193,13 @@ rename-mapping:
   HDInsightActivityDebugInfoOption: HDInsightActivityDebugInfoOptionSetting
   GitHubAccessTokenResponse: GitHubAccessTokenResult
   HttpSource: HttpFileSource
+  MetadataItem: FactoryMetadataItemInfo
   PurviewConfiguration: FactoryPurviewConfiguration
   RunFilterParameters: RunFilterContent
+  SecretBase: FactorySecretBaseDefinition
   SsisObjectMetadataStatusResponse: SsisObjectMetadataStatusResult
   SsisParameter: SsisParameterInfo
-
+  
 override-operation-name:
   ActivityRuns_QueryByPipelineRun: GetActivityRunsByPipelineRun
   PipelineRuns_QueryByFactory: GetPipelineRuns
@@ -175,9 +209,18 @@ override-operation-name:
   Triggers_QueryByFactory: GetTriggers
   Factories_ConfigureFactoryRepo: ConfigureFactoryRepo
 
-#directive:
-#  - from: DataFlow.json
-#    where: $.definitions
-#    transform: >
-#      $.DataFlow['x-ms-client-name'] = 'FactoryDataFlowDefinition';
+directive:
+  - from: datafactory.json
+    where: $.parameters
+    transform: >
+      $.locationId['x-ms-format'] = 'arm-id';
+  - from: datafactory.json
+    where: $.definitions
+    transform: >
+      $.DataFlowDebugSessionInfo.properties.lastActivityTime['format'] = 'date-time';
+  - from: Pipeline.json
+    where: $.definitions
+    transform: >
+      $.PipelineElapsedTimeMetricPolicy.properties.duration['type'] = 'string';
+      $.PipelineElapsedTimeMetricPolicy.properties.duration['format'] = 'duration';
 ```

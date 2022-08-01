@@ -124,9 +124,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IList<BinaryData>> annotations = default;
             Optional<BinaryData> authenticationType = default;
             Optional<BinaryData> accessKeyId = default;
-            Optional<SecretBase> secretAccessKey = default;
+            Optional<FactorySecretBaseDefinition> secretAccessKey = default;
             Optional<BinaryData> serviceUrl = default;
-            Optional<SecretBase> sessionToken = default;
+            Optional<FactorySecretBaseDefinition> sessionToken = default;
             Optional<BinaryData> encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            secretAccessKey = SecretBase.DeserializeSecretBase(property0.Value);
+                            secretAccessKey = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("serviceUrl"))
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            sessionToken = SecretBase.DeserializeSecretBase(property0.Value);
+                            sessionToken = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"))

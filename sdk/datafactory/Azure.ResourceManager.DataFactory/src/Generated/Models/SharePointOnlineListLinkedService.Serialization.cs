@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             BinaryData siteUrl = default;
             BinaryData tenantId = default;
             BinaryData servicePrincipalId = default;
-            SecretBase servicePrincipalKey = default;
+            FactorySecretBaseDefinition servicePrincipalKey = default;
             Optional<BinaryData> encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         if (property0.NameEquals("servicePrincipalKey"))
                         {
-                            servicePrincipalKey = SecretBase.DeserializeSecretBase(property0.Value);
+                            servicePrincipalKey = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"))

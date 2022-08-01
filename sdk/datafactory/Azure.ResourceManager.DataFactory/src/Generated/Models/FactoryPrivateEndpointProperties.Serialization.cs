@@ -11,7 +11,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class RemotePrivateEndpointConnection : IUtf8JsonSerializable
+    public partial class FactoryPrivateEndpointProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static RemotePrivateEndpointConnection DeserializeRemotePrivateEndpointConnection(JsonElement element)
+        internal static FactoryPrivateEndpointProperties DeserializeFactoryPrivateEndpointProperties(JsonElement element)
         {
             Optional<string> provisioningState = default;
             Optional<SubResource> privateEndpoint = default;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     continue;
                 }
             }
-            return new RemotePrivateEndpointConnection(provisioningState.Value, privateEndpoint, privateLinkServiceConnectionState.Value);
+            return new FactoryPrivateEndpointProperties(provisioningState.Value, privateEndpoint, privateLinkServiceConnectionState.Value);
         }
     }
 }

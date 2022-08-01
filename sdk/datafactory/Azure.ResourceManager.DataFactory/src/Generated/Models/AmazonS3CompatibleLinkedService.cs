@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="secretAccessKey">
         /// The secret access key of the Amazon S3 Compatible Identity and Access Management (IAM) user.
         /// Serialized Name: AmazonS3CompatibleLinkedService.typeProperties.secretAccessKey
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </param>
         /// <param name="serviceUri">
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
         /// Serialized Name: AmazonS3CompatibleLinkedService.typeProperties.encryptedCredential
         /// </param>
-        internal AmazonS3CompatibleLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData accessKeyId, SecretBase secretAccessKey, BinaryData serviceUri, BinaryData forcePathStyle, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal AmazonS3CompatibleLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData accessKeyId, FactorySecretBaseDefinition secretAccessKey, BinaryData serviceUri, BinaryData forcePathStyle, BinaryData encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             AccessKeyId = accessKeyId;
             SecretAccessKey = secretAccessKey;
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary>
         /// The secret access key of the Amazon S3 Compatible Identity and Access Management (IAM) user.
         /// Serialized Name: AmazonS3CompatibleLinkedService.typeProperties.secretAccessKey
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecureString"/> and <see cref="AzureKeyVaultSecretReference"/>.
         /// </summary>
-        public SecretBase SecretAccessKey { get; set; }
+        public FactorySecretBaseDefinition SecretAccessKey { get; set; }
         /// <summary>
         /// This value specifies the endpoint to access with the Amazon S3 Compatible Connector. This is an optional property; change it only if you want to try a different service endpoint or want to switch between https and http. Type: string (or Expression with resultType string).
         /// Serialized Name: AmazonS3CompatibleLinkedService.typeProperties.serviceUrl
