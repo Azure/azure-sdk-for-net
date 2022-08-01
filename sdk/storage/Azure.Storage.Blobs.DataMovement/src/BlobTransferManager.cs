@@ -73,7 +73,6 @@ namespace Azure.Storage.Blobs.DataMovement
         /// Limit 4-300/Max amount of tasks allowed to process chunks
         /// </summary>
         private Channel<Func<Task>> _chunksToProcessChannel { get; set; }
-        private List<Task> _currentChunkTasks { get; set; }
 
         /// <summary>
         /// Total jobs indexed by the job id.
@@ -151,10 +150,9 @@ namespace Azure.Storage.Blobs.DataMovement
             _options = options;
             _currentOngoingTaskCount = 0;
             _maxDownloaders = Constants.DataMovement.InitialDownloadFileThreads;
-            _currentChunkTasks = new List<Task>();
-            _currentTaskIsProcessingJob = NotifyOfPendingJobProcessing();
-            _currentTaskIsProcessingJobPart = NotifyOfPendingJobPartProcessing();
-            _currentTaskIsProcessingJobChunk = NotifyOfPendingJobChunkProcessing();
+            _currentTaskIsProcessingJob = Task.Run(() => NotifyOfPendingJobProcessing());
+            _currentTaskIsProcessingJobPart = Task.Run(() => NotifyOfPendingJobPartProcessing());
+            _currentTaskIsProcessingJobChunk = Task.Run(() => NotifyOfPendingJobChunkProcessing());
         }
 
         /// <summary>
@@ -853,6 +851,7 @@ namespace Azure.Storage.Blobs.DataMovement
 
         private async Task NotifyOfPendingJobChunkProcessing()
         {
+            List<Task> _currentChunkTasks = new List<Task>(Constants.DataMovement.MaxJobChunkTasks);
             while (await _chunksToProcessChannel.Reader.WaitToReadAsync().ConfigureAwait(false))
             {
                 Func<Task> item = await _chunksToProcessChannel.Reader.ReadAsync().ConfigureAwait(false);

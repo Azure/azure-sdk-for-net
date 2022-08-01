@@ -701,6 +701,7 @@ namespace Azure.Storage
             internal const int InitialDownloadFileThreads = 32; // Max is 3000
             internal const int CpuTuningMultiplier = 16;
             internal const int MaxJobPartReaders = 64;
+            internal const int MaxJobChunkTasks = 300;
 
             /// <summary>
             /// If there are multiple log files or job state files
