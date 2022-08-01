@@ -3,7 +3,6 @@
 Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
-
 azure-arm: true
 library-name: ContainerInstance
 namespace: Azure.ResourceManager.ContainerInstance
@@ -56,13 +55,16 @@ override-operation-name:
 prepend-rp-prefix:
   - Container
   - Volume
+  - Capabilities
   - CapabilitiesListResult
+  - Scheme
+
 rename-mapping:
   Logs: ContainerLogs
   Event: ContainerEvent
   AzureFileVolume.readOnly: IsReadOnly
   VolumeMount.readOnly: IsReadOnly
-  Capabilities: ContainerInstanceSupportedCapabilities
+  CapabilitiesCapabilities: ContainerInstanceSupportedCapabilities
   ContainerProbe.timeoutSeconds: TimeoutInSeconds
   ContainerProbe.initialDelaySeconds: InitialDelayInSeconds
   ContainerProbe.periodSeconds: PeriodInSeconds
@@ -73,18 +75,9 @@ rename-mapping:
   GpuResource: GpuResourceInfo
   ContainerGroupPropertiesInstanceView: ContainerGroupInstanceView
   ContainerPropertiesInstanceView: ContainerInstanceView
-
-directive:
-  - from: containerInstance.json
-    where: $.definitions
-    transform: >
-      $.ContainerAttachResponse["x-ms-client-name"] = "ContainerAttachResult";
-      $.ContainerExecResponse["x-ms-client-name"] = "ContainerExecResult";
-      $.Capabilities["x-ms-client-name"] = "ContainerInstanceCapabilities";
-      $.ContainerGroupSubnetId.properties.id["x-ms-format"] = "arm-id";
-      $.InitContainerDefinition["x-ms-client-name"] = "InitContainerDefinitionContent";
-      $.LogAnalytics.properties.workspaceResourceId["x-ms-format"] = "arm-id";
-  - from: swagger-document
-    where: $.definitions.ContainerHttpGet.scheme["x-ms-enum"]
-    transform: $["name"] = "ContainerInstanceScheme"
+  ContainerAttachResponse: ContainerAttachResult
+  ContainerExecResponse: ContainerExecResult
+  ContainerGroupSubnetId.id: -|arm-id
+  InitContainerDefinition: InitContainerDefinitionContent
+  LogAnalytics.workspaceResourceId: -|arm-id
 ```
