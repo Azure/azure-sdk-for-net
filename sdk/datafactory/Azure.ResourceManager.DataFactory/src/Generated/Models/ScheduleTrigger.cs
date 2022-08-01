@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Recurrence schedule configuration.
         /// Serialized Name: ScheduleTrigger.typeProperties.recurrence
         /// </param>
-        internal ScheduleTrigger(string triggerType, string description, TriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, IList<TriggerPipelineReference> pipelines, ScheduleTriggerRecurrence recurrence) : base(triggerType, description, runtimeState, annotations, additionalProperties, pipelines)
+        internal ScheduleTrigger(string triggerType, string description, FactoryTriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, IList<TriggerPipelineReference> pipelines, ScheduleTriggerRecurrence recurrence) : base(triggerType, description, runtimeState, annotations, additionalProperties, pipelines)
         {
             Recurrence = recurrence;
             TriggerType = triggerType ?? "ScheduleTrigger";

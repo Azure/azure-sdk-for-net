@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Serialized Name: ChainingTrigger.typeProperties.runDimension
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/>, <paramref name="dependsOn"/> or <paramref name="runDimension"/> is null. </exception>
-        public ChainingTrigger(TriggerPipelineReference pipeline, IEnumerable<PipelineReference> dependsOn, string runDimension)
+        public ChainingTrigger(TriggerPipelineReference pipeline, IEnumerable<FactoryPipelineReference> dependsOn, string runDimension)
         {
             if (pipeline == null)
             {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Run Dimension property that needs to be emitted by upstream pipelines.
         /// Serialized Name: ChainingTrigger.typeProperties.runDimension
         /// </param>
-        internal ChainingTrigger(string triggerType, string description, TriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, TriggerPipelineReference pipeline, IList<PipelineReference> dependsOn, string runDimension) : base(triggerType, description, runtimeState, annotations, additionalProperties)
+        internal ChainingTrigger(string triggerType, string description, FactoryTriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, TriggerPipelineReference pipeline, IList<FactoryPipelineReference> dependsOn, string runDimension) : base(triggerType, description, runtimeState, annotations, additionalProperties)
         {
             Pipeline = pipeline;
             DependsOn = dependsOn;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Upstream Pipelines.
         /// Serialized Name: ChainingTrigger.typeProperties.dependsOn
         /// </summary>
-        public IList<PipelineReference> DependsOn { get; }
+        public IList<FactoryPipelineReference> DependsOn { get; }
         /// <summary>
         /// Run Dimension property that needs to be emitted by upstream pipelines.
         /// Serialized Name: ChainingTrigger.typeProperties.runDimension

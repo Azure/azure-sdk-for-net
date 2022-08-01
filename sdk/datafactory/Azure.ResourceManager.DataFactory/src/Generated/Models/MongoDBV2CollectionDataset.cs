@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The collection name of the MongoDB database. Type: string (or Expression with resultType string).
         /// Serialized Name: MongoDbV2CollectionDataset.typeProperties.collection
         /// </param>
-        internal MongoDBV2CollectionDataset(string datasetType, string description, BinaryData structure, BinaryData schema, FactoryLinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData collection) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal MongoDBV2CollectionDataset(string datasetType, string description, BinaryData structure, BinaryData schema, FactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData collection) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             Collection = collection;
             DatasetType = datasetType ?? "MongoDbV2Collection";

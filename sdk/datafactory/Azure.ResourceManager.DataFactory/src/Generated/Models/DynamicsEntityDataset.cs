@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The logical name of the entity. Type: string (or Expression with resultType string).
         /// Serialized Name: DynamicsEntityDataset.typeProperties.entityName
         /// </param>
-        internal DynamicsEntityDataset(string datasetType, string description, BinaryData structure, BinaryData schema, FactoryLinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData entityName) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal DynamicsEntityDataset(string datasetType, string description, BinaryData structure, BinaryData schema, FactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData entityName) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             EntityName = entityName;
             DatasetType = datasetType ?? "DynamicsEntity";

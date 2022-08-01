@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The collection name of the MongoDB Atlas database. Type: string (or Expression with resultType string).
         /// Serialized Name: MongoDbAtlasCollectionDataset.typeProperties.collection
         /// </param>
-        internal MongoDBAtlasCollectionDataset(string datasetType, string description, BinaryData structure, BinaryData schema, FactoryLinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData collection) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal MongoDBAtlasCollectionDataset(string datasetType, string description, BinaryData structure, BinaryData schema, FactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData collection) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             Collection = collection;
             DatasetType = datasetType ?? "MongoDbAtlasCollection";

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Workspace resource id for databricks REST API. Type: string (or Expression with resultType string).
         /// Serialized Name: AzureDatabricksDeltaLakeLinkedService.typeProperties.workspaceResourceId
         /// </param>
-        internal AzureDatabricksDeltaLakeLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData domain, SecretBase accessToken, BinaryData clusterId, BinaryData encryptedCredential, CredentialReference credential, BinaryData workspaceResourceId) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal AzureDatabricksDeltaLakeLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData domain, SecretBase accessToken, BinaryData clusterId, BinaryData encryptedCredential, CredentialReference credential, BinaryData workspaceResourceId) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             Domain = domain;
             AccessToken = accessToken;

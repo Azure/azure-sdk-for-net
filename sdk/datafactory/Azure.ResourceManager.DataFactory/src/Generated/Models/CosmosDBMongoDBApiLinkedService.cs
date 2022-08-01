@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The name of the CosmosDB (MongoDB API) database that you want to access. Type: string (or Expression with resultType string).
         /// Serialized Name: CosmosDbMongoDbApiLinkedService.typeProperties.database
         /// </param>
-        internal CosmosDBMongoDBApiLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData isServerVersionAbove32, BinaryData connectionString, BinaryData database) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal CosmosDBMongoDBApiLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData isServerVersionAbove32, BinaryData connectionString, BinaryData database) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             IsServerVersionAbove32 = isServerVersionAbove32;
             ConnectionString = connectionString;

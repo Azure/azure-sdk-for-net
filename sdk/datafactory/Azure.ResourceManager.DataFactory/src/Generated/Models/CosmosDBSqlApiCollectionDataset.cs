@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// CosmosDB (SQL API) collection name. Type: string (or Expression with resultType string).
         /// Serialized Name: CosmosDbSqlApiCollectionDataset.typeProperties.collectionName
         /// </param>
-        internal CosmosDBSqlApiCollectionDataset(string datasetType, string description, BinaryData structure, BinaryData schema, FactoryLinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData collectionName) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal CosmosDBSqlApiCollectionDataset(string datasetType, string description, BinaryData structure, BinaryData schema, FactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData collectionName) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             CollectionName = collectionName;
             DatasetType = datasetType ?? "CosmosDbSqlApiCollection";

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Transformation for data flow sink.
     /// Serialized Name: DataFlowSink
     /// </summary>
-    public partial class DataFlowSink : Transformation
+    public partial class DataFlowSink : DataFlowTransformation
     {
         /// <summary> Initializes a new instance of DataFlowSink. </summary>
         /// <param name="name">

@@ -262,14 +262,14 @@ namespace Azure.ResourceManager.DataFactory
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<TriggerSubscriptionOperationStatus>> SubscribeToEventsAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<FactoryTriggerSubscriptionOperationResult>> SubscribeToEventsAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _factoryTriggerTriggersClientDiagnostics.CreateScope("FactoryTriggerResource.SubscribeToEvents");
             scope.Start();
             try
             {
                 var response = await _factoryTriggerTriggersRestClient.SubscribeToEventsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DataFactoryArmOperation<TriggerSubscriptionOperationStatus>(new TriggerSubscriptionOperationStatusOperationSource(), _factoryTriggerTriggersClientDiagnostics, Pipeline, _factoryTriggerTriggersRestClient.CreateSubscribeToEventsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataFactoryArmOperation<FactoryTriggerSubscriptionOperationResult>(new FactoryTriggerSubscriptionOperationResultOperationSource(), _factoryTriggerTriggersClientDiagnostics, Pipeline, _factoryTriggerTriggersRestClient.CreateSubscribeToEventsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -288,14 +288,14 @@ namespace Azure.ResourceManager.DataFactory
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<TriggerSubscriptionOperationStatus> SubscribeToEvents(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<FactoryTriggerSubscriptionOperationResult> SubscribeToEvents(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _factoryTriggerTriggersClientDiagnostics.CreateScope("FactoryTriggerResource.SubscribeToEvents");
             scope.Start();
             try
             {
                 var response = _factoryTriggerTriggersRestClient.SubscribeToEvents(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new DataFactoryArmOperation<TriggerSubscriptionOperationStatus>(new TriggerSubscriptionOperationStatusOperationSource(), _factoryTriggerTriggersClientDiagnostics, Pipeline, _factoryTriggerTriggersRestClient.CreateSubscribeToEventsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataFactoryArmOperation<FactoryTriggerSubscriptionOperationResult>(new FactoryTriggerSubscriptionOperationResultOperationSource(), _factoryTriggerTriggersClientDiagnostics, Pipeline, _factoryTriggerTriggersRestClient.CreateSubscribeToEventsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.DataFactory
         /// Operation Id: Triggers_GetEventSubscriptionStatus
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<TriggerSubscriptionOperationStatus>> GetEventSubscriptionStatusAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FactoryTriggerSubscriptionOperationResult>> GetEventSubscriptionStatusAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _factoryTriggerTriggersClientDiagnostics.CreateScope("FactoryTriggerResource.GetEventSubscriptionStatus");
             scope.Start();
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.DataFactory
         /// Operation Id: Triggers_GetEventSubscriptionStatus
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<TriggerSubscriptionOperationStatus> GetEventSubscriptionStatus(CancellationToken cancellationToken = default)
+        public virtual Response<FactoryTriggerSubscriptionOperationResult> GetEventSubscriptionStatus(CancellationToken cancellationToken = default)
         {
             using var scope = _factoryTriggerTriggersClientDiagnostics.CreateScope("FactoryTriggerResource.GetEventSubscriptionStatus");
             scope.Start();
@@ -358,14 +358,14 @@ namespace Azure.ResourceManager.DataFactory
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<TriggerSubscriptionOperationStatus>> UnsubscribeFromEventsAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<FactoryTriggerSubscriptionOperationResult>> UnsubscribeFromEventsAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _factoryTriggerTriggersClientDiagnostics.CreateScope("FactoryTriggerResource.UnsubscribeFromEvents");
             scope.Start();
             try
             {
                 var response = await _factoryTriggerTriggersRestClient.UnsubscribeFromEventsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DataFactoryArmOperation<TriggerSubscriptionOperationStatus>(new TriggerSubscriptionOperationStatusOperationSource(), _factoryTriggerTriggersClientDiagnostics, Pipeline, _factoryTriggerTriggersRestClient.CreateUnsubscribeFromEventsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataFactoryArmOperation<FactoryTriggerSubscriptionOperationResult>(new FactoryTriggerSubscriptionOperationResultOperationSource(), _factoryTriggerTriggersClientDiagnostics, Pipeline, _factoryTriggerTriggersRestClient.CreateUnsubscribeFromEventsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -384,14 +384,14 @@ namespace Azure.ResourceManager.DataFactory
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<TriggerSubscriptionOperationStatus> UnsubscribeFromEvents(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<FactoryTriggerSubscriptionOperationResult> UnsubscribeFromEvents(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _factoryTriggerTriggersClientDiagnostics.CreateScope("FactoryTriggerResource.UnsubscribeFromEvents");
             scope.Start();
             try
             {
                 var response = _factoryTriggerTriggersRestClient.UnsubscribeFromEvents(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new DataFactoryArmOperation<TriggerSubscriptionOperationStatus>(new TriggerSubscriptionOperationStatusOperationSource(), _factoryTriggerTriggersClientDiagnostics, Pipeline, _factoryTriggerTriggersRestClient.CreateUnsubscribeFromEventsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataFactoryArmOperation<FactoryTriggerSubscriptionOperationResult>(new FactoryTriggerSubscriptionOperationResultOperationSource(), _factoryTriggerTriggersClientDiagnostics, Pipeline, _factoryTriggerTriggersRestClient.CreateUnsubscribeFromEventsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

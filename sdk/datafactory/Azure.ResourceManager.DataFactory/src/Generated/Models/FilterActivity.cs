@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Serialized Name: FilterActivity.typeProperties.condition
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="items"/> or <paramref name="condition"/> is null. </exception>
-        public FilterActivity(string name, Expression items, Expression condition) : base(name)
+        public FilterActivity(string name, FactoryExpressionDefinition items, FactoryExpressionDefinition condition) : base(name)
         {
             if (name == null)
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Condition to be used for filtering the input.
         /// Serialized Name: FilterActivity.typeProperties.condition
         /// </param>
-        internal FilterActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, Expression items, Expression condition) : base(name, activityType, description, dependsOn, userProperties, additionalProperties)
+        internal FilterActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, FactoryExpressionDefinition items, FactoryExpressionDefinition condition) : base(name, activityType, description, dependsOn, userProperties, additionalProperties)
         {
             Items = items;
             Condition = condition;
@@ -91,11 +91,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Input array on which filter should be applied.
         /// Serialized Name: FilterActivity.typeProperties.items
         /// </summary>
-        public Expression Items { get; set; }
+        public FactoryExpressionDefinition Items { get; set; }
         /// <summary>
         /// Condition to be used for filtering the input.
         /// Serialized Name: FilterActivity.typeProperties.condition
         /// </summary>
-        public Expression Condition { get; set; }
+        public FactoryExpressionDefinition Condition { get; set; }
     }
 }

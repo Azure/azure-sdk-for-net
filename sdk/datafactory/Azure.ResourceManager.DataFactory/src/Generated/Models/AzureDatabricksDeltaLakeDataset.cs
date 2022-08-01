@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The database name of delta table. Type: string (or Expression with resultType string).
         /// Serialized Name: AzureDatabricksDeltaLakeDataset.typeProperties.database
         /// </param>
-        internal AzureDatabricksDeltaLakeDataset(string datasetType, string description, BinaryData structure, BinaryData schema, FactoryLinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData table, BinaryData database) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal AzureDatabricksDeltaLakeDataset(string datasetType, string description, BinaryData structure, BinaryData schema, FactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData table, BinaryData database) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             Table = table;
             Database = database;

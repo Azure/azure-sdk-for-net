@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             BinaryData rootPath = default;
             BinaryData entryFilePath = default;
             Optional<IList<BinaryData>> arguments = default;
-            Optional<HDInsightActivityDebugInfoOption> getDebugInfo = default;
+            Optional<HDInsightActivityDebugInfoOptionSetting> getDebugInfo = default;
             Optional<FactoryLinkedServiceReference> sparkJobLinkedService = default;
             Optional<string> className = default;
             Optional<BinaryData> proxyUser = default;
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            getDebugInfo = new HDInsightActivityDebugInfoOption(property0.Value.GetString());
+                            getDebugInfo = new HDInsightActivityDebugInfoOptionSetting(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("sparkJobLinkedService"))

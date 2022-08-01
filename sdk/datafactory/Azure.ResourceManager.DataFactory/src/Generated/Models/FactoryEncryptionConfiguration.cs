@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// User assigned identity to use to authenticate to customer&apos;s key vault. If not provided Managed Service Identity will be used.
         /// Serialized Name: EncryptionConfiguration.identity
         /// </param>
-        internal FactoryEncryptionConfiguration(string keyName, Uri vaultBaseUri, string keyVersion, CMKIdentityDefinition identity)
+        internal FactoryEncryptionConfiguration(string keyName, Uri vaultBaseUri, string keyVersion, CmkIdentityDefinition identity)
         {
             KeyName = keyName;
             VaultBaseUri = vaultBaseUri;
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// User assigned identity to use to authenticate to customer&apos;s key vault. If not provided Managed Service Identity will be used.
         /// Serialized Name: EncryptionConfiguration.identity
         /// </summary>
-        internal CMKIdentityDefinition Identity { get; set; }
+        internal CmkIdentityDefinition Identity { get; set; }
         /// <summary>
         /// The resource id of the user assigned identity to authenticate to customer&apos;s key vault.
         /// Serialized Name: CMKIdentityDefinition.userAssignedIdentity
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             set
             {
                 if (Identity is null)
-                    Identity = new CMKIdentityDefinition();
+                    Identity = new CmkIdentityDefinition();
                 Identity.UserAssignedIdentity = value;
             }
         }

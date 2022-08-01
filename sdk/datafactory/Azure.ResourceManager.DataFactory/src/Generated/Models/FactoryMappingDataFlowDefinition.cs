@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             Sources = new ChangeTrackingList<DataFlowSource>();
             Sinks = new ChangeTrackingList<DataFlowSink>();
-            Transformations = new ChangeTrackingList<Transformation>();
+            Transformations = new ChangeTrackingList<DataFlowTransformation>();
             ScriptLines = new ChangeTrackingList<string>();
             DataFlowType = "MappingDataFlow";
         }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Data flow script lines.
         /// Serialized Name: MappingDataFlow.typeProperties.scriptLines
         /// </param>
-        internal FactoryMappingDataFlowDefinition(string dataFlowType, string description, IList<BinaryData> annotations, DataFlowFolder folder, IList<DataFlowSource> sources, IList<DataFlowSink> sinks, IList<Transformation> transformations, string script, IList<string> scriptLines) : base(dataFlowType, description, annotations, folder)
+        internal FactoryMappingDataFlowDefinition(string dataFlowType, string description, IList<BinaryData> annotations, DataFlowFolder folder, IList<DataFlowSource> sources, IList<DataFlowSink> sinks, IList<DataFlowTransformation> transformations, string script, IList<string> scriptLines) : base(dataFlowType, description, annotations, folder)
         {
             Sources = sources;
             Sinks = sinks;
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// List of transformations in data flow.
         /// Serialized Name: MappingDataFlow.typeProperties.transformations
         /// </summary>
-        public IList<Transformation> Transformations { get; }
+        public IList<DataFlowTransformation> Transformations { get; }
         /// <summary>
         /// DataFlow script.
         /// Serialized Name: MappingDataFlow.typeProperties.script

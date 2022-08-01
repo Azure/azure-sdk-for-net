@@ -682,7 +682,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="policy"> Data Plane user access policy definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policy"/> is null. </exception>
-        public virtual async Task<Response<FactoryDataPlaneAccessPolicyResult>> GetDataPlaneAccessAsync(UserAccessPolicy policy, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FactoryDataPlaneAccessPolicyResult>> GetDataPlaneAccessAsync(FactoryDataPlaneUserAccessPolicy policy, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(policy, nameof(policy));
 
@@ -708,7 +708,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="policy"> Data Plane user access policy definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policy"/> is null. </exception>
-        public virtual Response<FactoryDataPlaneAccessPolicyResult> GetDataPlaneAccess(UserAccessPolicy policy, CancellationToken cancellationToken = default)
+        public virtual Response<FactoryDataPlaneAccessPolicyResult> GetDataPlaneAccess(FactoryDataPlaneUserAccessPolicy policy, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(policy, nameof(policy));
 
@@ -838,12 +838,12 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="content"> Parameters to filter the pipeline run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> An async collection of <see cref="PipelineRun" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PipelineRun> GetPipelineRunsAsync(RunFilterContent content, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="FactoryPipelineRunInfo" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<FactoryPipelineRunInfo> GetPipelineRunsAsync(RunFilterContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            async Task<Page<PipelineRun>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<FactoryPipelineRunInfo>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _pipelineRunsClientDiagnostics.CreateScope("DataFactoryResource.GetPipelineRuns");
                 scope.Start();
@@ -869,12 +869,12 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="content"> Parameters to filter the pipeline run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> A collection of <see cref="PipelineRun" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PipelineRun> GetPipelineRuns(RunFilterContent content, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="FactoryPipelineRunInfo" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<FactoryPipelineRunInfo> GetPipelineRuns(RunFilterContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            Page<PipelineRun> FirstPageFunc(int? pageSizeHint)
+            Page<FactoryPipelineRunInfo> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _pipelineRunsClientDiagnostics.CreateScope("DataFactoryResource.GetPipelineRuns");
                 scope.Start();
@@ -901,7 +901,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
-        public virtual async Task<Response<PipelineRun>> GetPipelineRunAsync(string runId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FactoryPipelineRunInfo>> GetPipelineRunAsync(string runId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
@@ -928,7 +928,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
-        public virtual Response<PipelineRun> GetPipelineRun(string runId, CancellationToken cancellationToken = default)
+        public virtual Response<FactoryPipelineRunInfo> GetPipelineRun(string runId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
@@ -1140,12 +1140,12 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="content"> Parameters to filter the pipeline run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> An async collection of <see cref="TriggerRun" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<TriggerRun> GetTriggerRunsAsync(RunFilterContent content, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="FactoryTriggerRun" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<FactoryTriggerRun> GetTriggerRunsAsync(RunFilterContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            async Task<Page<TriggerRun>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<FactoryTriggerRun>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _triggerRunsClientDiagnostics.CreateScope("DataFactoryResource.GetTriggerRuns");
                 scope.Start();
@@ -1171,12 +1171,12 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="content"> Parameters to filter the pipeline run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> A collection of <see cref="TriggerRun" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<TriggerRun> GetTriggerRuns(RunFilterContent content, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="FactoryTriggerRun" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<FactoryTriggerRun> GetTriggerRuns(RunFilterContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            Page<TriggerRun> FirstPageFunc(int? pageSizeHint)
+            Page<FactoryTriggerRun> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _triggerRunsClientDiagnostics.CreateScope("DataFactoryResource.GetTriggerRuns");
                 scope.Start();
@@ -1508,10 +1508,10 @@ namespace Azure.ResourceManager.DataFactory
         /// Operation Id: privateLinkResources_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataFactoryPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DataFactoryPrivateLinkResource> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="FactoryPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<FactoryPrivateLinkResource> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DataFactoryPrivateLinkResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<FactoryPrivateLinkResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _privateLinkResourcesClientDiagnostics.CreateScope("DataFactoryResource.GetPrivateLinkResources");
                 scope.Start();
@@ -1535,10 +1535,10 @@ namespace Azure.ResourceManager.DataFactory
         /// Operation Id: privateLinkResources_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataFactoryPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DataFactoryPrivateLinkResource> GetPrivateLinkResources(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="FactoryPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<FactoryPrivateLinkResource> GetPrivateLinkResources(CancellationToken cancellationToken = default)
         {
-            Page<DataFactoryPrivateLinkResource> FirstPageFunc(int? pageSizeHint)
+            Page<FactoryPrivateLinkResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _privateLinkResourcesClientDiagnostics.CreateScope("DataFactoryResource.GetPrivateLinkResources");
                 scope.Start();

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Transformation for data flow source.
     /// Serialized Name: DataFlowSource
     /// </summary>
-    public partial class DataFlowSource : Transformation
+    public partial class DataFlowSource : DataFlowTransformation
     {
         /// <summary> Initializes a new instance of DataFlowSource. </summary>
         /// <param name="name">

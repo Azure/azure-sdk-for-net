@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The data orcCompressionCodec. Type: string (or Expression with resultType string).
         /// Serialized Name: OrcDataset.typeProperties.orcCompressionCodec
         /// </param>
-        internal OrcDataset(string datasetType, string description, BinaryData structure, BinaryData schema, FactoryLinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DatasetLocation location, BinaryData orcCompressionCodec) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal OrcDataset(string datasetType, string description, BinaryData structure, BinaryData schema, FactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DatasetLocation location, BinaryData orcCompressionCodec) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             Location = location;
             OrcCompressionCodec = orcCompressionCodec;

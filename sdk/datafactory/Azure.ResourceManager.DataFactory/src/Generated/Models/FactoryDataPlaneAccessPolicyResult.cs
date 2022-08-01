@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Data Plane service base URL.
         /// Serialized Name: AccessPolicyResponse.dataPlaneUrl
         /// </param>
-        internal FactoryDataPlaneAccessPolicyResult(UserAccessPolicy policy, string accessToken, Uri dataPlaneUri)
+        internal FactoryDataPlaneAccessPolicyResult(FactoryDataPlaneUserAccessPolicy policy, string accessToken, Uri dataPlaneUri)
         {
             Policy = policy;
             AccessToken = accessToken;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The user access policy.
         /// Serialized Name: AccessPolicyResponse.policy
         /// </summary>
-        public UserAccessPolicy Policy { get; }
+        public FactoryDataPlaneUserAccessPolicy Policy { get; }
         /// <summary>
         /// Data Plane read only access token.
         /// Serialized Name: AccessPolicyResponse.accessToken

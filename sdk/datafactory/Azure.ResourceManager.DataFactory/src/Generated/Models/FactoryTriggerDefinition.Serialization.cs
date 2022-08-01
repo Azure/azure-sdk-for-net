@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "BlobEventsTrigger": return BlobEventsTrigger.DeserializeBlobEventsTrigger(element);
-                    case "BlobTrigger": return BlobTrigger.DeserializeBlobTrigger(element);
+                    case "BlobEventsTrigger": return AzureBlobEventsTrigger.DeserializeAzureBlobEventsTrigger(element);
+                    case "BlobTrigger": return AzureBlobTrigger.DeserializeAzureBlobTrigger(element);
                     case "ChainingTrigger": return ChainingTrigger.DeserializeChainingTrigger(element);
                     case "CustomEventsTrigger": return CustomEventsTrigger.DeserializeCustomEventsTrigger(element);
                     case "MultiplePipelineTrigger": return MultiplePipelineTrigger.DeserializeMultiplePipelineTrigger(element);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             string type = default;
             Optional<string> description = default;
-            Optional<TriggerRuntimeState> runtimeState = default;
+            Optional<FactoryTriggerRuntimeState> runtimeState = default;
             Optional<IList<BinaryData>> annotations = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    runtimeState = new TriggerRuntimeState(property.Value.GetString());
+                    runtimeState = new FactoryTriggerRuntimeState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("annotations"))

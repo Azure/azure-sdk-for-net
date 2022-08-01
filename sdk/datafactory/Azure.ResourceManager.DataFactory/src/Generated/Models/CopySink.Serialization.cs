@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "AzureSqlSink": return AzureSqlSink.DeserializeAzureSqlSink(element);
                     case "AzureTableSink": return AzureTableSink.DeserializeAzureTableSink(element);
                     case "BinarySink": return BinarySink.DeserializeBinarySink(element);
-                    case "BlobSink": return BlobSink.DeserializeBlobSink(element);
+                    case "BlobSink": return AzureBlobSink.DeserializeAzureBlobSink(element);
                     case "CommonDataServiceForAppsSink": return CommonDataServiceForAppsSink.DeserializeCommonDataServiceForAppsSink(element);
                     case "CosmosDbMongoDbApiSink": return CosmosDBMongoDBApiSink.DeserializeCosmosDBMongoDBApiSink(element);
                     case "CosmosDbSqlApiSink": return CosmosDBSqlApiSink.DeserializeCosmosDBSqlApiSink(element);

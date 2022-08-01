@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Serialized Name: PipelineRunsQueryResponse.value
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal PipelineRunsQueryResponse(IEnumerable<PipelineRun> value)
+        internal PipelineRunsQueryResponse(IEnumerable<FactoryPipelineRunInfo> value)
         {
             if (value == null)
             {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The continuation token for getting the next page of results, if any remaining results exist, null otherwise.
         /// Serialized Name: PipelineRunsQueryResponse.continuationToken
         /// </param>
-        internal PipelineRunsQueryResponse(IReadOnlyList<PipelineRun> value, string continuationToken)
+        internal PipelineRunsQueryResponse(IReadOnlyList<FactoryPipelineRunInfo> value, string continuationToken)
         {
             Value = value;
             ContinuationToken = continuationToken;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// List of pipeline runs.
         /// Serialized Name: PipelineRunsQueryResponse.value
         /// </summary>
-        public IReadOnlyList<PipelineRun> Value { get; }
+        public IReadOnlyList<FactoryPipelineRunInfo> Value { get; }
         /// <summary>
         /// The continuation token for getting the next page of results, if any remaining results exist, null otherwise.
         /// Serialized Name: PipelineRunsQueryResponse.continuationToken

@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Allows user to specify defines for streaming job request.
         /// Serialized Name: HDInsightStreamingActivity.typeProperties.defines
         /// </param>
-        internal HDInsightStreamingActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, FactoryLinkedServiceReference linkedServiceName, ActivityPolicy policy, IList<FactoryLinkedServiceReference> storageLinkedServices, IList<BinaryData> arguments, HDInsightActivityDebugInfoOption? getDebugInfo, BinaryData mapper, BinaryData reducer, BinaryData input, BinaryData output, IList<BinaryData> filePaths, FactoryLinkedServiceReference fileLinkedService, BinaryData combiner, IList<BinaryData> commandEnvironment, IDictionary<string, BinaryData> defines) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal HDInsightStreamingActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, FactoryLinkedServiceReference linkedServiceName, ActivityPolicy policy, IList<FactoryLinkedServiceReference> storageLinkedServices, IList<BinaryData> arguments, HDInsightActivityDebugInfoOptionSetting? getDebugInfo, BinaryData mapper, BinaryData reducer, BinaryData input, BinaryData output, IList<BinaryData> filePaths, FactoryLinkedServiceReference fileLinkedService, BinaryData combiner, IList<BinaryData> commandEnvironment, IDictionary<string, BinaryData> defines) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             StorageLinkedServices = storageLinkedServices;
             Arguments = arguments;
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Debug info option.
         /// Serialized Name: HDInsightStreamingActivity.typeProperties.getDebugInfo
         /// </summary>
-        public HDInsightActivityDebugInfoOption? GetDebugInfo { get; set; }
+        public HDInsightActivityDebugInfoOptionSetting? GetDebugInfo { get; set; }
         /// <summary>
         /// Mapper executable name. Type: string (or Expression with resultType string).
         /// Serialized Name: HDInsightStreamingActivity.typeProperties.mapper

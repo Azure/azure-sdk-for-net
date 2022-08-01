@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Specify the FileSystem if the main storage for the HDInsight is ADLS Gen2. Type: string (or Expression with resultType string).
         /// Serialized Name: HDInsightLinkedService.typeProperties.fileSystem
         /// </param>
-        internal HDInsightLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData clusterUri, BinaryData userName, SecretBase password, FactoryLinkedServiceReference linkedServiceName, FactoryLinkedServiceReference hcatalogLinkedServiceName, BinaryData encryptedCredential, BinaryData isEspEnabled, BinaryData fileSystem) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal HDInsightLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData clusterUri, BinaryData userName, SecretBase password, FactoryLinkedServiceReference linkedServiceName, FactoryLinkedServiceReference hcatalogLinkedServiceName, BinaryData encryptedCredential, BinaryData isEspEnabled, BinaryData fileSystem) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             ClusterUri = clusterUri;
             UserName = userName;

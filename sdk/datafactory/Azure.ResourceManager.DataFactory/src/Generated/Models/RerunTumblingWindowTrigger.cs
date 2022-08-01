@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The max number of parallel time windows (ready for execution) for which a rerun is triggered.
         /// Serialized Name: RerunTumblingWindowTrigger.typeProperties.rerunConcurrency
         /// </param>
-        internal RerunTumblingWindowTrigger(string triggerType, string description, TriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData parentTrigger, DateTimeOffset requestedStartOn, DateTimeOffset requestedEndOn, int rerunConcurrency) : base(triggerType, description, runtimeState, annotations, additionalProperties)
+        internal RerunTumblingWindowTrigger(string triggerType, string description, FactoryTriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData parentTrigger, DateTimeOffset requestedStartOn, DateTimeOffset requestedEndOn, int rerunConcurrency) : base(triggerType, description, runtimeState, annotations, additionalProperties)
         {
             ParentTrigger = parentTrigger;
             RequestedStartOn = requestedStartOn;

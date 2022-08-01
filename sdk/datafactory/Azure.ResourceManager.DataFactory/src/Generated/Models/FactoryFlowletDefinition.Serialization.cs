@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<DataFlowFolder> folder = default;
             Optional<IList<DataFlowSource>> sources = default;
             Optional<IList<DataFlowSink>> sinks = default;
-            Optional<IList<Transformation>> transformations = default;
+            Optional<IList<DataFlowTransformation>> transformations = default;
             Optional<string> script = default;
             Optional<IList<string>> scriptLines = default;
             foreach (var property in element.EnumerateObject())
@@ -188,10 +188,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<Transformation> array = new List<Transformation>();
+                            List<DataFlowTransformation> array = new List<DataFlowTransformation>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Transformation.DeserializeTransformation(item));
+                                array.Add(DataFlowTransformation.DeserializeDataFlowTransformation(item));
                             }
                             transformations = array;
                             continue;

@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IntegrationRuntimeDataProxyProperties> dataProxyProperties = default;
             Optional<IntegrationRuntimeEdition> edition = default;
             Optional<IList<CustomSetupBase>> expressCustomSetupProperties = default;
-            Optional<IList<PackageStore>> packageStores = default;
+            Optional<IList<IntegrationRuntimeSsisPackageStore>> packageStores = default;
             Optional<CredentialReference> credential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -165,10 +165,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<PackageStore> array = new List<PackageStore>();
+                    List<IntegrationRuntimeSsisPackageStore> array = new List<IntegrationRuntimeSsisPackageStore>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PackageStore.DeserializePackageStore(item));
+                        array.Add(IntegrationRuntimeSsisPackageStore.DeserializeIntegrationRuntimeSsisPackageStore(item));
                     }
                     packageStores = array;
                     continue;

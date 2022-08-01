@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> description = default;
             Optional<IList<ActivityDependency>> dependsOn = default;
             Optional<IList<ActivityUserProperty>> userProperties = default;
-            Expression @on = default;
+            FactoryExpressionDefinition @on = default;
             Optional<IList<SwitchCaseActivity>> cases = default;
             Optional<IList<PipelineActivity>> defaultActivities = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("on"))
                         {
-                            @on = Expression.DeserializeExpression(property0.Value);
+                            @on = FactoryExpressionDefinition.DeserializeFactoryExpressionDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("cases"))

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Type of authentication (Required to specify MSI) used to connect to AzureFunction. Type: string (or Expression with resultType string).
         /// Serialized Name: AzureFunctionLinkedService.typeProperties.authentication
         /// </param>
-        internal AzureFunctionLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData functionAppUri, SecretBase functionKey, BinaryData encryptedCredential, CredentialReference credential, BinaryData resourceId, BinaryData authentication) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal AzureFunctionLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData functionAppUri, SecretBase functionKey, BinaryData encryptedCredential, CredentialReference credential, BinaryData resourceId, BinaryData authentication) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             FunctionAppUri = functionAppUri;
             FunctionKey = functionKey;

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Serialized Name: TriggerDependencyReference.referenceTrigger
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceTrigger"/> is null. </exception>
-        public TumblingWindowTriggerDependencyReference(TriggerReference referenceTrigger) : base(referenceTrigger)
+        public TumblingWindowTriggerDependencyReference(FactoryTriggerReference referenceTrigger) : base(referenceTrigger)
         {
             if (referenceTrigger == null)
             {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The size of the window when evaluating the dependency. If undefined the frequency of the tumbling window will be used.
         /// Serialized Name: TumblingWindowTriggerDependencyReference.size
         /// </param>
-        internal TumblingWindowTriggerDependencyReference(string dependencyReferenceType, TriggerReference referenceTrigger, string offset, string size) : base(dependencyReferenceType, referenceTrigger)
+        internal TumblingWindowTriggerDependencyReference(string dependencyReferenceType, FactoryTriggerReference referenceTrigger, string offset, string size) : base(dependencyReferenceType, referenceTrigger)
         {
             Offset = offset;
             Size = size;

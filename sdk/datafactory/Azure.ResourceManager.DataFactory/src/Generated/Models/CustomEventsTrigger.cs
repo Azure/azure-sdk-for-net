@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The ARM resource ID of the Azure Event Grid Topic.
         /// Serialized Name: CustomEventsTrigger.typeProperties.scope
         /// </param>
-        internal CustomEventsTrigger(string triggerType, string description, TriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, IList<TriggerPipelineReference> pipelines, string subjectBeginsWith, string subjectEndsWith, IList<BinaryData> events, string scope) : base(triggerType, description, runtimeState, annotations, additionalProperties, pipelines)
+        internal CustomEventsTrigger(string triggerType, string description, FactoryTriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, IList<TriggerPipelineReference> pipelines, string subjectBeginsWith, string subjectEndsWith, IList<BinaryData> events, string scope) : base(triggerType, description, runtimeState, annotations, additionalProperties, pipelines)
         {
             SubjectBeginsWith = subjectBeginsWith;
             SubjectEndsWith = subjectEndsWith;

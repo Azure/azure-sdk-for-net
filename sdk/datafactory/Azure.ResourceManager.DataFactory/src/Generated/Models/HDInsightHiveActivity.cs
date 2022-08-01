@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Query timeout value (in minutes).  Effective when the HDInsight cluster is with ESP (Enterprise Security Package)
         /// Serialized Name: HDInsightHiveActivity.typeProperties.queryTimeout
         /// </param>
-        internal HDInsightHiveActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, FactoryLinkedServiceReference linkedServiceName, ActivityPolicy policy, IList<FactoryLinkedServiceReference> storageLinkedServices, IList<BinaryData> arguments, HDInsightActivityDebugInfoOption? getDebugInfo, BinaryData scriptPath, FactoryLinkedServiceReference scriptLinkedService, IDictionary<string, BinaryData> defines, IList<BinaryData> variables, int? queryTimeout) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal HDInsightHiveActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, FactoryLinkedServiceReference linkedServiceName, ActivityPolicy policy, IList<FactoryLinkedServiceReference> storageLinkedServices, IList<BinaryData> arguments, HDInsightActivityDebugInfoOptionSetting? getDebugInfo, BinaryData scriptPath, FactoryLinkedServiceReference scriptLinkedService, IDictionary<string, BinaryData> defines, IList<BinaryData> variables, int? queryTimeout) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             StorageLinkedServices = storageLinkedServices;
             Arguments = arguments;
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Debug info option.
         /// Serialized Name: HDInsightHiveActivity.typeProperties.getDebugInfo
         /// </summary>
-        public HDInsightActivityDebugInfoOption? GetDebugInfo { get; set; }
+        public HDInsightActivityDebugInfoOptionSetting? GetDebugInfo { get; set; }
         /// <summary>
         /// Script path. Type: string (or Expression with resultType string).
         /// Serialized Name: HDInsightHiveActivity.typeProperties.scriptPath

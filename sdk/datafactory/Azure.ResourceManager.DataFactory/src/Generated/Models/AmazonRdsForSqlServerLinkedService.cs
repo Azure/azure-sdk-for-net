@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Sql always encrypted properties.
         /// Serialized Name: AmazonRdsForSqlServerLinkedService.typeProperties.alwaysEncryptedSettings
         /// </param>
-        internal AmazonRdsForSqlServerLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData connectionString, BinaryData userName, SecretBase password, BinaryData encryptedCredential, SqlAlwaysEncryptedProperties alwaysEncryptedSettings) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal AmazonRdsForSqlServerLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData connectionString, BinaryData userName, SecretBase password, BinaryData encryptedCredential, SqlAlwaysEncryptedProperties alwaysEncryptedSettings) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             ConnectionString = connectionString;
             UserName = userName;

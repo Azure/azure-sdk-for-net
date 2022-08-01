@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The null value string. Type: string (or Expression with resultType string).
         /// Serialized Name: DelimitedTextDataset.typeProperties.nullValue
         /// </param>
-        internal DelimitedTextDataset(string datasetType, string description, BinaryData structure, BinaryData schema, FactoryLinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DatasetLocation location, BinaryData columnDelimiter, BinaryData rowDelimiter, BinaryData encodingName, BinaryData compressionCodec, BinaryData compressionLevel, BinaryData quoteChar, BinaryData escapeChar, BinaryData firstRowAsHeader, BinaryData nullValue) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal DelimitedTextDataset(string datasetType, string description, BinaryData structure, BinaryData schema, FactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DatasetLocation location, BinaryData columnDelimiter, BinaryData rowDelimiter, BinaryData encodingName, BinaryData compressionCodec, BinaryData compressionLevel, BinaryData quoteChar, BinaryData escapeChar, BinaryData firstRowAsHeader, BinaryData nullValue) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             Location = location;
             ColumnDelimiter = columnDelimiter;

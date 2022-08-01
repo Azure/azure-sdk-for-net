@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of FactoryLinkedServiceDefinition. </summary>
         public FactoryLinkedServiceDefinition()
         {
-            Parameters = new ChangeTrackingDictionary<string, ParameterSpecification>();
+            Parameters = new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             Annotations = new ChangeTrackingList<BinaryData>();
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Serialized Name: LinkedService.annotations
         /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal FactoryLinkedServiceDefinition(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties)
+        internal FactoryLinkedServiceDefinition(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties)
         {
             LinkedServiceType = linkedServiceType;
             ConnectVia = connectVia;
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Parameters for linked service.
         /// Serialized Name: LinkedService.parameters
         /// </summary>
-        public IDictionary<string, ParameterSpecification> Parameters { get; }
+        public IDictionary<string, EntityParameterSpecification> Parameters { get; }
         /// <summary>
         /// List of tags that can be used for describing the linked service.
         /// Serialized Name: LinkedService.annotations

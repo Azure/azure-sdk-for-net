@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.DataFactory
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataFactory.DataFactoryResource>> GetAsync(string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.DataFactory.Models.DataFlowDebugSessionInfo> GetDataFlowDebugSessions(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DataFactory.Models.DataFlowDebugSessionInfo> GetDataFlowDebugSessionsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataFactory.Models.FactoryDataPlaneAccessPolicyResult> GetDataPlaneAccess(Azure.ResourceManager.DataFactory.Models.UserAccessPolicy policy, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataFactory.Models.FactoryDataPlaneAccessPolicyResult>> GetDataPlaneAccessAsync(Azure.ResourceManager.DataFactory.Models.UserAccessPolicy policy, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataFactory.Models.FactoryDataPlaneAccessPolicyResult> GetDataPlaneAccess(Azure.ResourceManager.DataFactory.Models.FactoryDataPlaneUserAccessPolicy policy, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataFactory.Models.FactoryDataPlaneAccessPolicyResult>> GetDataPlaneAccessAsync(Azure.ResourceManager.DataFactory.Models.FactoryDataPlaneUserAccessPolicy policy, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataFactory.Models.ExposureControlBatchResult> GetExposureControlFeatureValues(Azure.ResourceManager.DataFactory.Models.ExposureControlBatchContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataFactory.Models.ExposureControlBatchResult>> GetExposureControlFeatureValuesAsync(Azure.ResourceManager.DataFactory.Models.ExposureControlBatchContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataFactory.FactoryDataFlowResource> GetFactoryDataFlow(string dataFlowName, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -115,14 +115,14 @@ namespace Azure.ResourceManager.DataFactory
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataFactory.Models.ExposureControlResult>> GetFeatureValueByFactoryExposureControlAsync(Azure.ResourceManager.DataFactory.Models.ExposureControlContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataFactory.Models.GitHubAccessTokenResult> GetGitHubAccessToken(Azure.ResourceManager.DataFactory.Models.GitHubAccessTokenContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataFactory.Models.GitHubAccessTokenResult>> GetGitHubAccessTokenAsync(Azure.ResourceManager.DataFactory.Models.GitHubAccessTokenContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataFactory.Models.PipelineRun> GetPipelineRun(string runId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataFactory.Models.PipelineRun>> GetPipelineRunAsync(string runId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.DataFactory.Models.PipelineRun> GetPipelineRuns(Azure.ResourceManager.DataFactory.Models.RunFilterContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.DataFactory.Models.PipelineRun> GetPipelineRunsAsync(Azure.ResourceManager.DataFactory.Models.RunFilterContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.DataFactory.Models.DataFactoryPrivateLinkResource> GetPrivateLinkResources(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.DataFactory.Models.DataFactoryPrivateLinkResource> GetPrivateLinkResourcesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.DataFactory.Models.TriggerRun> GetTriggerRuns(Azure.ResourceManager.DataFactory.Models.RunFilterContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.DataFactory.Models.TriggerRun> GetTriggerRunsAsync(Azure.ResourceManager.DataFactory.Models.RunFilterContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataFactory.Models.FactoryPipelineRunInfo> GetPipelineRun(string runId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataFactory.Models.FactoryPipelineRunInfo>> GetPipelineRunAsync(string runId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DataFactory.Models.FactoryPipelineRunInfo> GetPipelineRuns(Azure.ResourceManager.DataFactory.Models.RunFilterContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DataFactory.Models.FactoryPipelineRunInfo> GetPipelineRunsAsync(Azure.ResourceManager.DataFactory.Models.RunFilterContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DataFactory.Models.FactoryPrivateLinkResource> GetPrivateLinkResources(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DataFactory.Models.FactoryPrivateLinkResource> GetPrivateLinkResourcesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DataFactory.Models.FactoryTriggerRun> GetTriggerRuns(Azure.ResourceManager.DataFactory.Models.RunFilterContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DataFactory.Models.FactoryTriggerRun> GetTriggerRunsAsync(Azure.ResourceManager.DataFactory.Models.RunFilterContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.DataFactory.FactoryTriggerResource> GetTriggers(Azure.ResourceManager.DataFactory.Models.TriggerFilterContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DataFactory.FactoryTriggerResource> GetTriggersAsync(Azure.ResourceManager.DataFactory.Models.TriggerFilterContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataFactory.DataFactoryResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -369,9 +369,9 @@ namespace Azure.ResourceManager.DataFactory
         public System.BinaryData ElapsedTimeMetricDuration { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } }
         public string FolderName { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DataFactory.Models.ParameterSpecification> Parameters { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DataFactory.Models.EntityParameterSpecification> Parameters { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> RunDimensions { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DataFactory.Models.VariableSpecification> Variables { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DataFactory.Models.PipelineVariableSpecification> Variables { get { throw null; } }
     }
     public partial class FactoryPipelineResource : Azure.ResourceManager.ArmResource
     {
@@ -493,18 +493,18 @@ namespace Azure.ResourceManager.DataFactory
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataFactory.FactoryTriggerResource> Get(string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataFactory.FactoryTriggerResource>> GetAsync(string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataFactory.Models.TriggerSubscriptionOperationStatus> GetEventSubscriptionStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataFactory.Models.TriggerSubscriptionOperationStatus>> GetEventSubscriptionStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataFactory.Models.FactoryTriggerSubscriptionOperationResult> GetEventSubscriptionStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataFactory.Models.FactoryTriggerSubscriptionOperationResult>> GetEventSubscriptionStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response RerunTriggerRun(string runId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> RerunTriggerRunAsync(string runId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Start(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> StartAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Stop(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> StopAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataFactory.Models.TriggerSubscriptionOperationStatus> SubscribeToEvents(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataFactory.Models.TriggerSubscriptionOperationStatus>> SubscribeToEventsAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataFactory.Models.TriggerSubscriptionOperationStatus> UnsubscribeFromEvents(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataFactory.Models.TriggerSubscriptionOperationStatus>> UnsubscribeFromEventsAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataFactory.Models.FactoryTriggerSubscriptionOperationResult> SubscribeToEvents(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataFactory.Models.FactoryTriggerSubscriptionOperationResult>> SubscribeToEventsAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataFactory.Models.FactoryTriggerSubscriptionOperationResult> UnsubscribeFromEvents(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataFactory.Models.FactoryTriggerSubscriptionOperationResult>> UnsubscribeFromEventsAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataFactory.FactoryTriggerResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataFactory.FactoryTriggerData data, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataFactory.FactoryTriggerResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataFactory.FactoryTriggerData data, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -787,10 +787,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         public int? AvroCompressionLevel { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.DatasetLocation Location { get { throw null; } set { } }
     }
-    public partial class AvroFormat : Azure.ResourceManager.DataFactory.Models.DatasetStorageFormat
-    {
-        public AvroFormat() { }
-    }
     public partial class AvroSink : Azure.ResourceManager.DataFactory.Models.CopySink
     {
         public AvroSink() { }
@@ -837,6 +833,33 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.BinaryData ModifiedDatetimeEnd { get { throw null; } set { } }
         public System.BinaryData ModifiedDatetimeStart { get { throw null; } set { } }
         public System.BinaryData TableRootLocation { get { throw null; } set { } }
+    }
+    public partial class AzureBlobEventsTrigger : Azure.ResourceManager.DataFactory.Models.MultiplePipelineTrigger
+    {
+        public AzureBlobEventsTrigger(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataFactory.Models.AzureBlobEventType> events, string scope) { }
+        public string BlobPathBeginsWith { get { throw null; } set { } }
+        public string BlobPathEndsWith { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DataFactory.Models.AzureBlobEventType> Events { get { throw null; } }
+        public bool? IgnoreEmptyBlobs { get { throw null; } set { } }
+        public string Scope { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AzureBlobEventType : System.IEquatable<Azure.ResourceManager.DataFactory.Models.AzureBlobEventType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AzureBlobEventType(string value) { throw null; }
+        public static Azure.ResourceManager.DataFactory.Models.AzureBlobEventType MicrosoftStorageBlobCreated { get { throw null; } }
+        public static Azure.ResourceManager.DataFactory.Models.AzureBlobEventType MicrosoftStorageBlobDeleted { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DataFactory.Models.AzureBlobEventType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DataFactory.Models.AzureBlobEventType left, Azure.ResourceManager.DataFactory.Models.AzureBlobEventType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataFactory.Models.AzureBlobEventType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DataFactory.Models.AzureBlobEventType left, Azure.ResourceManager.DataFactory.Models.AzureBlobEventType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class AzureBlobFSDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
@@ -896,6 +919,22 @@ namespace Azure.ResourceManager.DataFactory.Models
         public AzureBlobFSWriteSettings() { }
         public System.BinaryData BlockSizeInMB { get { throw null; } set { } }
     }
+    public partial class AzureBlobSink : Azure.ResourceManager.DataFactory.Models.CopySink
+    {
+        public AzureBlobSink() { }
+        public System.BinaryData BlobWriterAddHeader { get { throw null; } set { } }
+        public System.BinaryData BlobWriterDateTimeFormat { get { throw null; } set { } }
+        public System.BinaryData BlobWriterOverwriteFiles { get { throw null; } set { } }
+        public System.BinaryData CopyBehavior { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DataFactory.Models.MetadataItem> Metadata { get { throw null; } }
+    }
+    public partial class AzureBlobSource : Azure.ResourceManager.DataFactory.Models.CopyActivitySource
+    {
+        public AzureBlobSource() { }
+        public System.BinaryData Recursive { get { throw null; } set { } }
+        public System.BinaryData SkipHeaderLineCount { get { throw null; } set { } }
+        public System.BinaryData TreatEmptyAsNull { get { throw null; } set { } }
+    }
     public partial class AzureBlobStorageLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public AzureBlobStorageLinkedService() { }
@@ -935,6 +974,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         public AzureBlobStorageWriteSettings() { }
         public System.BinaryData BlockSizeInMB { get { throw null; } set { } }
+    }
+    public partial class AzureBlobTrigger : Azure.ResourceManager.DataFactory.Models.MultiplePipelineTrigger
+    {
+        public AzureBlobTrigger(string folderPath, int maxConcurrency, Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedService) { }
+        public string FolderPath { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference LinkedService { get { throw null; } set { } }
+        public int MaxConcurrency { get { throw null; } set { } }
     }
     public partial class AzureDatabricksDeltaLakeDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
@@ -1493,56 +1539,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         public Azure.ResourceManager.DataFactory.Models.BinaryReadSettings FormatSettings { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.StoreReadSettings StoreSettings { get { throw null; } set { } }
     }
-    public partial class BlobEventsTrigger : Azure.ResourceManager.DataFactory.Models.MultiplePipelineTrigger
-    {
-        public BlobEventsTrigger(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataFactory.Models.BlobEventType> events, string scope) { }
-        public string BlobPathBeginsWith { get { throw null; } set { } }
-        public string BlobPathEndsWith { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DataFactory.Models.BlobEventType> Events { get { throw null; } }
-        public bool? IgnoreEmptyBlobs { get { throw null; } set { } }
-        public string Scope { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct BlobEventType : System.IEquatable<Azure.ResourceManager.DataFactory.Models.BlobEventType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public BlobEventType(string value) { throw null; }
-        public static Azure.ResourceManager.DataFactory.Models.BlobEventType MicrosoftStorageBlobCreated { get { throw null; } }
-        public static Azure.ResourceManager.DataFactory.Models.BlobEventType MicrosoftStorageBlobDeleted { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DataFactory.Models.BlobEventType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DataFactory.Models.BlobEventType left, Azure.ResourceManager.DataFactory.Models.BlobEventType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DataFactory.Models.BlobEventType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DataFactory.Models.BlobEventType left, Azure.ResourceManager.DataFactory.Models.BlobEventType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class BlobSink : Azure.ResourceManager.DataFactory.Models.CopySink
-    {
-        public BlobSink() { }
-        public System.BinaryData BlobWriterAddHeader { get { throw null; } set { } }
-        public System.BinaryData BlobWriterDateTimeFormat { get { throw null; } set { } }
-        public System.BinaryData BlobWriterOverwriteFiles { get { throw null; } set { } }
-        public System.BinaryData CopyBehavior { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DataFactory.Models.MetadataItem> Metadata { get { throw null; } }
-    }
-    public partial class BlobSource : Azure.ResourceManager.DataFactory.Models.CopyActivitySource
-    {
-        public BlobSource() { }
-        public System.BinaryData Recursive { get { throw null; } set { } }
-        public System.BinaryData SkipHeaderLineCount { get { throw null; } set { } }
-        public System.BinaryData TreatEmptyAsNull { get { throw null; } set { } }
-    }
-    public partial class BlobTrigger : Azure.ResourceManager.DataFactory.Models.MultiplePipelineTrigger
-    {
-        public BlobTrigger(string folderPath, int maxConcurrency, Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedService) { }
-        public string FolderPath { get { throw null; } set { } }
-        public Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference LinkedService { get { throw null; } set { } }
-        public int MaxConcurrency { get { throw null; } set { } }
-    }
     public partial class CassandraLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public CassandraLinkedService(System.BinaryData host) { }
@@ -1593,8 +1589,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class ChainingTrigger : Azure.ResourceManager.DataFactory.Models.FactoryTriggerDefinition
     {
-        public ChainingTrigger(Azure.ResourceManager.DataFactory.Models.TriggerPipelineReference pipeline, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataFactory.Models.PipelineReference> dependsOn, string runDimension) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DataFactory.Models.PipelineReference> DependsOn { get { throw null; } }
+        public ChainingTrigger(Azure.ResourceManager.DataFactory.Models.TriggerPipelineReference pipeline, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataFactory.Models.FactoryPipelineReference> dependsOn, string runDimension) { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DataFactory.Models.FactoryPipelineReference> DependsOn { get { throw null; } }
         public Azure.ResourceManager.DataFactory.Models.TriggerPipelineReference Pipeline { get { throw null; } set { } }
         public string RunDimension { get { throw null; } set { } }
     }
@@ -1943,19 +1939,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         public Azure.ResourceManager.DataFactory.Models.FactoryPublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
-    public partial class DataFactoryPrivateLinkResource : Azure.ResourceManager.Models.ResourceData
-    {
-        public DataFactoryPrivateLinkResource() { }
-        public Azure.ETag? ETag { get { throw null; } }
-        public Azure.ResourceManager.DataFactory.Models.DataFactoryPrivateLinkResourceProperties Properties { get { throw null; } set { } }
-    }
-    public partial class DataFactoryPrivateLinkResourceProperties
-    {
-        public DataFactoryPrivateLinkResourceProperties() { }
-        public string GroupId { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> RequiredZoneNames { get { throw null; } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DataFlowComputeType : System.IEquatable<Azure.ResourceManager.DataFactory.Models.DataFlowComputeType>
     {
@@ -2056,13 +2039,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator !=(Azure.ResourceManager.DataFactory.Models.DataFlowReferenceType left, Azure.ResourceManager.DataFactory.Models.DataFlowReferenceType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class DataFlowSink : Azure.ResourceManager.DataFactory.Models.Transformation
+    public partial class DataFlowSink : Azure.ResourceManager.DataFactory.Models.DataFlowTransformation
     {
         public DataFlowSink(string name) : base (default(string)) { }
         public Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference RejectedDataLinkedService { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference SchemaLinkedService { get { throw null; } set { } }
     }
-    public partial class DataFlowSource : Azure.ResourceManager.DataFactory.Models.Transformation
+    public partial class DataFlowSource : Azure.ResourceManager.DataFactory.Models.DataFlowTransformation
     {
         public DataFlowSource(string name) : base (default(string)) { }
         public Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference SchemaLinkedService { get { throw null; } set { } }
@@ -2080,6 +2063,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.BinaryData FolderPath { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference LinkedService { get { throw null; } set { } }
     }
+    public partial class DataFlowTransformation
+    {
+        public DataFlowTransformation(string name) { }
+        public Azure.ResourceManager.DataFactory.Models.DatasetReference Dataset { get { throw null; } set { } }
+        public string Description { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.DataFlowReference Flowlet { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference LinkedService { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+    }
     public partial class DataLakeAnalyticsUsqlActivity : Azure.ResourceManager.DataFactory.Models.ExecutionActivity
     {
         public DataLakeAnalyticsUsqlActivity(string name, System.BinaryData scriptPath, Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference scriptLinkedService) : base (default(string)) { }
@@ -2091,6 +2083,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         public Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference ScriptLinkedService { get { throw null; } set { } }
         public System.BinaryData ScriptPath { get { throw null; } set { } }
     }
+    public partial class DatasetAvroFormat : Azure.ResourceManager.DataFactory.Models.DatasetStorageFormat
+    {
+        public DatasetAvroFormat() { }
+    }
     public partial class DatasetCompression
     {
         public DatasetCompression(System.BinaryData datasetCompressionType) { }
@@ -2098,12 +2094,29 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.BinaryData DatasetCompressionType { get { throw null; } set { } }
         public System.BinaryData Level { get { throw null; } set { } }
     }
+    public partial class DatasetJsonFormat : Azure.ResourceManager.DataFactory.Models.DatasetStorageFormat
+    {
+        public DatasetJsonFormat() { }
+        public System.BinaryData EncodingName { get { throw null; } set { } }
+        public System.BinaryData FilePattern { get { throw null; } set { } }
+        public System.BinaryData JsonNodeReference { get { throw null; } set { } }
+        public System.BinaryData JsonPathDefinition { get { throw null; } set { } }
+        public System.BinaryData NestingSeparator { get { throw null; } set { } }
+    }
     public partial class DatasetLocation
     {
         public DatasetLocation() { }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
         public System.BinaryData FileName { get { throw null; } set { } }
         public System.BinaryData FolderPath { get { throw null; } set { } }
+    }
+    public partial class DatasetOrcFormat : Azure.ResourceManager.DataFactory.Models.DatasetStorageFormat
+    {
+        public DatasetOrcFormat() { }
+    }
+    public partial class DatasetParquetFormat : Azure.ResourceManager.DataFactory.Models.DatasetStorageFormat
+    {
+        public DatasetParquetFormat() { }
     }
     public partial class DatasetReference
     {
@@ -2135,6 +2148,19 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
         public System.BinaryData Deserializer { get { throw null; } set { } }
         public System.BinaryData Serializer { get { throw null; } set { } }
+    }
+    public partial class DatasetTextFormat : Azure.ResourceManager.DataFactory.Models.DatasetStorageFormat
+    {
+        public DatasetTextFormat() { }
+        public System.BinaryData ColumnDelimiter { get { throw null; } set { } }
+        public System.BinaryData EncodingName { get { throw null; } set { } }
+        public System.BinaryData EscapeChar { get { throw null; } set { } }
+        public System.BinaryData FirstRowAsHeader { get { throw null; } set { } }
+        public System.BinaryData NullValue { get { throw null; } set { } }
+        public System.BinaryData QuoteChar { get { throw null; } set { } }
+        public System.BinaryData RowDelimiter { get { throw null; } set { } }
+        public System.BinaryData SkipLineCount { get { throw null; } set { } }
+        public System.BinaryData TreatEmptyAsNull { get { throw null; } set { } }
     }
     public partial class DataworldLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
@@ -2469,6 +2495,35 @@ namespace Azure.ResourceManager.DataFactory.Models
         public EloquaSource() { }
         public System.BinaryData Query { get { throw null; } set { } }
     }
+    public partial class EntityParameterSpecification
+    {
+        public EntityParameterSpecification(Azure.ResourceManager.DataFactory.Models.EntityParameterType parameterType) { }
+        public System.BinaryData DefaultValue { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.EntityParameterType ParameterType { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct EntityParameterType : System.IEquatable<Azure.ResourceManager.DataFactory.Models.EntityParameterType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public EntityParameterType(string value) { throw null; }
+        public static Azure.ResourceManager.DataFactory.Models.EntityParameterType Array { get { throw null; } }
+        public static Azure.ResourceManager.DataFactory.Models.EntityParameterType Bool { get { throw null; } }
+        public static Azure.ResourceManager.DataFactory.Models.EntityParameterType Float { get { throw null; } }
+        public static Azure.ResourceManager.DataFactory.Models.EntityParameterType Int { get { throw null; } }
+        public static Azure.ResourceManager.DataFactory.Models.EntityParameterType Object { get { throw null; } }
+        public static Azure.ResourceManager.DataFactory.Models.EntityParameterType SecureString { get { throw null; } }
+        public static Azure.ResourceManager.DataFactory.Models.EntityParameterType String { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DataFactory.Models.EntityParameterType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DataFactory.Models.EntityParameterType left, Azure.ResourceManager.DataFactory.Models.EntityParameterType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataFactory.Models.EntityParameterType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DataFactory.Models.EntityParameterType left, Azure.ResourceManager.DataFactory.Models.EntityParameterType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class EntityReference
     {
         public EntityReference() { }
@@ -2539,9 +2594,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class ExecutePipelineActivity : Azure.ResourceManager.DataFactory.Models.ControlActivity
     {
-        public ExecutePipelineActivity(string name, Azure.ResourceManager.DataFactory.Models.PipelineReference pipeline) : base (default(string)) { }
+        public ExecutePipelineActivity(string name, Azure.ResourceManager.DataFactory.Models.FactoryPipelineReference pipeline) : base (default(string)) { }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> Parameters { get { throw null; } }
-        public Azure.ResourceManager.DataFactory.Models.PipelineReference Pipeline { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.FactoryPipelineReference Pipeline { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.ExecutePipelineActivityPolicy Policy { get { throw null; } set { } }
         public bool? WaitOnCompletion { get { throw null; } set { } }
     }
@@ -2615,29 +2670,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         public string FeatureName { get { throw null; } }
         public string Value { get { throw null; } }
     }
-    public partial class Expression
-    {
-        public Expression(Azure.ResourceManager.DataFactory.Models.ExpressionType expressionType, string value) { }
-        public Azure.ResourceManager.DataFactory.Models.ExpressionType ExpressionType { get { throw null; } set { } }
-        public string Value { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ExpressionType : System.IEquatable<Azure.ResourceManager.DataFactory.Models.ExpressionType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ExpressionType(string value) { throw null; }
-        public static Azure.ResourceManager.DataFactory.Models.ExpressionType Expression { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DataFactory.Models.ExpressionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DataFactory.Models.ExpressionType left, Azure.ResourceManager.DataFactory.Models.ExpressionType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DataFactory.Models.ExpressionType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DataFactory.Models.ExpressionType left, Azure.ResourceManager.DataFactory.Models.ExpressionType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class FactoryDataFlowDebugCommandResult
     {
         internal FactoryDataFlowDebugCommandResult() { }
@@ -2692,7 +2724,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         internal FactoryDataPlaneAccessPolicyResult() { }
         public string AccessToken { get { throw null; } }
         public System.Uri DataPlaneUri { get { throw null; } }
-        public Azure.ResourceManager.DataFactory.Models.UserAccessPolicy Policy { get { throw null; } }
+        public Azure.ResourceManager.DataFactory.Models.FactoryDataPlaneUserAccessPolicy Policy { get { throw null; } }
+    }
+    public partial class FactoryDataPlaneUserAccessPolicy
+    {
+        public FactoryDataPlaneUserAccessPolicy() { }
+        public string AccessResourcePath { get { throw null; } set { } }
+        public string ExpireTime { get { throw null; } set { } }
+        public string Permissions { get { throw null; } set { } }
+        public string ProfileName { get { throw null; } set { } }
+        public string StartTime { get { throw null; } set { } }
     }
     public partial class FactoryDatasetDebugInfo : Azure.ResourceManager.DataFactory.Models.FactoryDebugInfo
     {
@@ -2707,7 +2748,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public string Description { get { throw null; } set { } }
         public string FolderName { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference LinkedServiceName { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DataFactory.Models.ParameterSpecification> Parameters { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DataFactory.Models.EntityParameterSpecification> Parameters { get { throw null; } }
         public System.BinaryData Schema { get { throw null; } set { } }
         public System.BinaryData Structure { get { throw null; } set { } }
     }
@@ -2724,6 +2765,29 @@ namespace Azure.ResourceManager.DataFactory.Models
         public string UserAssignedIdentity { get { throw null; } set { } }
         public System.Uri VaultBaseUri { get { throw null; } set { } }
     }
+    public partial class FactoryExpressionDefinition
+    {
+        public FactoryExpressionDefinition(Azure.ResourceManager.DataFactory.Models.FactoryExpressionType expressionType, string value) { }
+        public Azure.ResourceManager.DataFactory.Models.FactoryExpressionType ExpressionType { get { throw null; } set { } }
+        public string Value { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct FactoryExpressionType : System.IEquatable<Azure.ResourceManager.DataFactory.Models.FactoryExpressionType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public FactoryExpressionType(string value) { throw null; }
+        public static Azure.ResourceManager.DataFactory.Models.FactoryExpressionType Expression { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DataFactory.Models.FactoryExpressionType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DataFactory.Models.FactoryExpressionType left, Azure.ResourceManager.DataFactory.Models.FactoryExpressionType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataFactory.Models.FactoryExpressionType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DataFactory.Models.FactoryExpressionType left, Azure.ResourceManager.DataFactory.Models.FactoryExpressionType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class FactoryFlowletDefinition : Azure.ResourceManager.DataFactory.Models.FactoryDataFlowDefinition
     {
         public FactoryFlowletDefinition() { }
@@ -2731,7 +2795,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.Collections.Generic.IList<string> ScriptLines { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DataFactory.Models.DataFlowSink> Sinks { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DataFactory.Models.DataFlowSource> Sources { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DataFactory.Models.Transformation> Transformations { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DataFactory.Models.DataFlowTransformation> Transformations { get { throw null; } }
     }
     public partial class FactoryGitHubConfiguration : Azure.ResourceManager.DataFactory.Models.FactoryRepoConfiguration
     {
@@ -2818,7 +2882,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.Collections.Generic.IList<System.BinaryData> Annotations { get { throw null; } }
         public Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeReference ConnectVia { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DataFactory.Models.ParameterSpecification> Parameters { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DataFactory.Models.EntityParameterSpecification> Parameters { get { throw null; } }
     }
     public partial class FactoryLinkedServiceReference
     {
@@ -2851,13 +2915,77 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.Collections.Generic.IList<string> ScriptLines { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DataFactory.Models.DataFlowSink> Sinks { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DataFactory.Models.DataFlowSource> Sources { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DataFactory.Models.Transformation> Transformations { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DataFactory.Models.DataFlowTransformation> Transformations { get { throw null; } }
+    }
+    public partial class FactoryPipelineReference
+    {
+        public FactoryPipelineReference(Azure.ResourceManager.DataFactory.Models.FactoryPipelineReferenceType referenceType, string referenceName) { }
+        public string Name { get { throw null; } set { } }
+        public string ReferenceName { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.FactoryPipelineReferenceType ReferenceType { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct FactoryPipelineReferenceType : System.IEquatable<Azure.ResourceManager.DataFactory.Models.FactoryPipelineReferenceType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public FactoryPipelineReferenceType(string value) { throw null; }
+        public static Azure.ResourceManager.DataFactory.Models.FactoryPipelineReferenceType PipelineReference { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DataFactory.Models.FactoryPipelineReferenceType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DataFactory.Models.FactoryPipelineReferenceType left, Azure.ResourceManager.DataFactory.Models.FactoryPipelineReferenceType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataFactory.Models.FactoryPipelineReferenceType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DataFactory.Models.FactoryPipelineReferenceType left, Azure.ResourceManager.DataFactory.Models.FactoryPipelineReferenceType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class FactoryPipelineRunInfo
+    {
+        internal FactoryPipelineRunInfo() { }
+        public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
+        public int? DurationInMs { get { throw null; } }
+        public Azure.ResourceManager.DataFactory.Models.FactoryPipelineRunInvokedByInfo InvokedBy { get { throw null; } }
+        public bool? IsLatest { get { throw null; } }
+        public System.DateTimeOffset? LastUpdated { get { throw null; } }
+        public string Message { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, string> Parameters { get { throw null; } }
+        public string PipelineName { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, string> RunDimensions { get { throw null; } }
+        public System.DateTimeOffset? RunEnd { get { throw null; } }
+        public string RunGroupId { get { throw null; } }
+        public string RunId { get { throw null; } }
+        public System.DateTimeOffset? RunStart { get { throw null; } }
+        public string Status { get { throw null; } }
+    }
+    public partial class FactoryPipelineRunInvokedByInfo
+    {
+        internal FactoryPipelineRunInvokedByInfo() { }
+        public string Id { get { throw null; } }
+        public string InvokedByType { get { throw null; } }
+        public string Name { get { throw null; } }
+        public string PipelineName { get { throw null; } }
+        public string PipelineRunId { get { throw null; } }
     }
     public partial class FactoryPrivateEndpointConnectionCreateOrUpdateContent : Azure.ResourceManager.Models.ResourceData
     {
         public FactoryPrivateEndpointConnectionCreateOrUpdateContent() { }
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.DataFactory.Models.PrivateLinkConnectionApprovalRequest Properties { get { throw null; } set { } }
+    }
+    public partial class FactoryPrivateLinkResource : Azure.ResourceManager.Models.ResourceData
+    {
+        public FactoryPrivateLinkResource() { }
+        public Azure.ETag? ETag { get { throw null; } }
+        public Azure.ResourceManager.DataFactory.Models.FactoryPrivateLinkResourceProperties Properties { get { throw null; } set { } }
+    }
+    public partial class FactoryPrivateLinkResourceProperties
+    {
+        public FactoryPrivateLinkResourceProperties() { }
+        public string GroupId { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> RequiredZoneNames { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct FactoryPublicNetworkAccess : System.IEquatable<Azure.ResourceManager.DataFactory.Models.FactoryPublicNetworkAccess>
@@ -2898,7 +3026,89 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
         public System.Collections.Generic.IList<System.BinaryData> Annotations { get { throw null; } }
         public string Description { get { throw null; } set { } }
-        public Azure.ResourceManager.DataFactory.Models.TriggerRuntimeState? RuntimeState { get { throw null; } }
+        public Azure.ResourceManager.DataFactory.Models.FactoryTriggerRuntimeState? RuntimeState { get { throw null; } }
+    }
+    public partial class FactoryTriggerReference
+    {
+        public FactoryTriggerReference(Azure.ResourceManager.DataFactory.Models.FactoryTriggerReferenceType referenceType, string referenceName) { }
+        public string ReferenceName { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.FactoryTriggerReferenceType ReferenceType { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct FactoryTriggerReferenceType : System.IEquatable<Azure.ResourceManager.DataFactory.Models.FactoryTriggerReferenceType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public FactoryTriggerReferenceType(string value) { throw null; }
+        public static Azure.ResourceManager.DataFactory.Models.FactoryTriggerReferenceType TriggerReference { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DataFactory.Models.FactoryTriggerReferenceType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DataFactory.Models.FactoryTriggerReferenceType left, Azure.ResourceManager.DataFactory.Models.FactoryTriggerReferenceType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataFactory.Models.FactoryTriggerReferenceType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DataFactory.Models.FactoryTriggerReferenceType left, Azure.ResourceManager.DataFactory.Models.FactoryTriggerReferenceType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class FactoryTriggerRun
+    {
+        internal FactoryTriggerRun() { }
+        public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> DependencyStatus { get { throw null; } }
+        public string Message { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, string> Properties { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, string> RunDimension { get { throw null; } }
+        public Azure.ResourceManager.DataFactory.Models.FactoryTriggerRunStatus? Status { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, string> TriggeredPipelines { get { throw null; } }
+        public string TriggerName { get { throw null; } }
+        public string TriggerRunId { get { throw null; } }
+        public System.DateTimeOffset? TriggerRunTimestamp { get { throw null; } }
+        public string TriggerType { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct FactoryTriggerRunStatus : System.IEquatable<Azure.ResourceManager.DataFactory.Models.FactoryTriggerRunStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public FactoryTriggerRunStatus(string value) { throw null; }
+        public static Azure.ResourceManager.DataFactory.Models.FactoryTriggerRunStatus Failed { get { throw null; } }
+        public static Azure.ResourceManager.DataFactory.Models.FactoryTriggerRunStatus Inprogress { get { throw null; } }
+        public static Azure.ResourceManager.DataFactory.Models.FactoryTriggerRunStatus Succeeded { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DataFactory.Models.FactoryTriggerRunStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DataFactory.Models.FactoryTriggerRunStatus left, Azure.ResourceManager.DataFactory.Models.FactoryTriggerRunStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataFactory.Models.FactoryTriggerRunStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DataFactory.Models.FactoryTriggerRunStatus left, Azure.ResourceManager.DataFactory.Models.FactoryTriggerRunStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct FactoryTriggerRuntimeState : System.IEquatable<Azure.ResourceManager.DataFactory.Models.FactoryTriggerRuntimeState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public FactoryTriggerRuntimeState(string value) { throw null; }
+        public static Azure.ResourceManager.DataFactory.Models.FactoryTriggerRuntimeState Disabled { get { throw null; } }
+        public static Azure.ResourceManager.DataFactory.Models.FactoryTriggerRuntimeState Started { get { throw null; } }
+        public static Azure.ResourceManager.DataFactory.Models.FactoryTriggerRuntimeState Stopped { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DataFactory.Models.FactoryTriggerRuntimeState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DataFactory.Models.FactoryTriggerRuntimeState left, Azure.ResourceManager.DataFactory.Models.FactoryTriggerRuntimeState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataFactory.Models.FactoryTriggerRuntimeState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DataFactory.Models.FactoryTriggerRuntimeState left, Azure.ResourceManager.DataFactory.Models.FactoryTriggerRuntimeState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class FactoryTriggerSubscriptionOperationResult
+    {
+        internal FactoryTriggerSubscriptionOperationResult() { }
+        public Azure.ResourceManager.DataFactory.Models.EventSubscriptionStatus? Status { get { throw null; } }
+        public string TriggerName { get { throw null; } }
     }
     public partial class FactoryVstsConfiguration : Azure.ResourceManager.DataFactory.Models.FactoryRepoConfiguration
     {
@@ -2973,17 +3183,17 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class FilterActivity : Azure.ResourceManager.DataFactory.Models.ControlActivity
     {
-        public FilterActivity(string name, Azure.ResourceManager.DataFactory.Models.Expression items, Azure.ResourceManager.DataFactory.Models.Expression condition) : base (default(string)) { }
-        public Azure.ResourceManager.DataFactory.Models.Expression Condition { get { throw null; } set { } }
-        public Azure.ResourceManager.DataFactory.Models.Expression Items { get { throw null; } set { } }
+        public FilterActivity(string name, Azure.ResourceManager.DataFactory.Models.FactoryExpressionDefinition items, Azure.ResourceManager.DataFactory.Models.FactoryExpressionDefinition condition) : base (default(string)) { }
+        public Azure.ResourceManager.DataFactory.Models.FactoryExpressionDefinition Condition { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.FactoryExpressionDefinition Items { get { throw null; } set { } }
     }
     public partial class ForEachActivity : Azure.ResourceManager.DataFactory.Models.ControlActivity
     {
-        public ForEachActivity(string name, Azure.ResourceManager.DataFactory.Models.Expression items, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataFactory.Models.PipelineActivity> activities) : base (default(string)) { }
+        public ForEachActivity(string name, Azure.ResourceManager.DataFactory.Models.FactoryExpressionDefinition items, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataFactory.Models.PipelineActivity> activities) : base (default(string)) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.DataFactory.Models.PipelineActivity> Activities { get { throw null; } }
         public int? BatchCount { get { throw null; } set { } }
         public bool? IsSequential { get { throw null; } set { } }
-        public Azure.ResourceManager.DataFactory.Models.Expression Items { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.FactoryExpressionDefinition Items { get { throw null; } set { } }
     }
     public partial class FormatReadSettings
     {
@@ -3042,9 +3252,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         public FtpServerLocation() { }
     }
-    public partial class GetMetadataActivity : Azure.ResourceManager.DataFactory.Models.ExecutionActivity
+    public partial class GetDatasetMetadataActivity : Azure.ResourceManager.DataFactory.Models.ExecutionActivity
     {
-        public GetMetadataActivity(string name, Azure.ResourceManager.DataFactory.Models.DatasetReference dataset) : base (default(string)) { }
+        public GetDatasetMetadataActivity(string name, Azure.ResourceManager.DataFactory.Models.DatasetReference dataset) : base (default(string)) { }
         public Azure.ResourceManager.DataFactory.Models.DatasetReference Dataset { get { throw null; } set { } }
         public System.Collections.Generic.IList<System.BinaryData> FieldList { get { throw null; } }
         public Azure.ResourceManager.DataFactory.Models.FormatReadSettings FormatSettings { get { throw null; } set { } }
@@ -3288,22 +3498,22 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.BinaryData Recursive { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct HDInsightActivityDebugInfoOption : System.IEquatable<Azure.ResourceManager.DataFactory.Models.HDInsightActivityDebugInfoOption>
+    public readonly partial struct HDInsightActivityDebugInfoOptionSetting : System.IEquatable<Azure.ResourceManager.DataFactory.Models.HDInsightActivityDebugInfoOptionSetting>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public HDInsightActivityDebugInfoOption(string value) { throw null; }
-        public static Azure.ResourceManager.DataFactory.Models.HDInsightActivityDebugInfoOption Always { get { throw null; } }
-        public static Azure.ResourceManager.DataFactory.Models.HDInsightActivityDebugInfoOption Failure { get { throw null; } }
-        public static Azure.ResourceManager.DataFactory.Models.HDInsightActivityDebugInfoOption None { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DataFactory.Models.HDInsightActivityDebugInfoOption other) { throw null; }
+        public HDInsightActivityDebugInfoOptionSetting(string value) { throw null; }
+        public static Azure.ResourceManager.DataFactory.Models.HDInsightActivityDebugInfoOptionSetting Always { get { throw null; } }
+        public static Azure.ResourceManager.DataFactory.Models.HDInsightActivityDebugInfoOptionSetting Failure { get { throw null; } }
+        public static Azure.ResourceManager.DataFactory.Models.HDInsightActivityDebugInfoOptionSetting None { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DataFactory.Models.HDInsightActivityDebugInfoOptionSetting other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DataFactory.Models.HDInsightActivityDebugInfoOption left, Azure.ResourceManager.DataFactory.Models.HDInsightActivityDebugInfoOption right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DataFactory.Models.HDInsightActivityDebugInfoOption (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DataFactory.Models.HDInsightActivityDebugInfoOption left, Azure.ResourceManager.DataFactory.Models.HDInsightActivityDebugInfoOption right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DataFactory.Models.HDInsightActivityDebugInfoOptionSetting left, Azure.ResourceManager.DataFactory.Models.HDInsightActivityDebugInfoOptionSetting right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataFactory.Models.HDInsightActivityDebugInfoOptionSetting (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DataFactory.Models.HDInsightActivityDebugInfoOptionSetting left, Azure.ResourceManager.DataFactory.Models.HDInsightActivityDebugInfoOptionSetting right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class HDInsightHiveActivity : Azure.ResourceManager.DataFactory.Models.ExecutionActivity
@@ -3311,7 +3521,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public HDInsightHiveActivity(string name) : base (default(string)) { }
         public System.Collections.Generic.IList<System.BinaryData> Arguments { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> Defines { get { throw null; } }
-        public Azure.ResourceManager.DataFactory.Models.HDInsightActivityDebugInfoOption? GetDebugInfo { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.HDInsightActivityDebugInfoOptionSetting? GetDebugInfo { get { throw null; } set { } }
         public int? QueryTimeout { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference ScriptLinkedService { get { throw null; } set { } }
         public System.BinaryData ScriptPath { get { throw null; } set { } }
@@ -3336,7 +3546,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.Collections.Generic.IList<System.BinaryData> Arguments { get { throw null; } }
         public System.BinaryData ClassName { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> Defines { get { throw null; } }
-        public Azure.ResourceManager.DataFactory.Models.HDInsightActivityDebugInfoOption? GetDebugInfo { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.HDInsightActivityDebugInfoOptionSetting? GetDebugInfo { get { throw null; } set { } }
         public System.BinaryData JarFilePath { get { throw null; } set { } }
         public System.Collections.Generic.IList<System.BinaryData> JarLibs { get { throw null; } }
         public Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference JarLinkedService { get { throw null; } set { } }
@@ -3385,7 +3595,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public HDInsightPigActivity(string name) : base (default(string)) { }
         public System.BinaryData Arguments { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> Defines { get { throw null; } }
-        public Azure.ResourceManager.DataFactory.Models.HDInsightActivityDebugInfoOption? GetDebugInfo { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.HDInsightActivityDebugInfoOptionSetting? GetDebugInfo { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference ScriptLinkedService { get { throw null; } set { } }
         public System.BinaryData ScriptPath { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference> StorageLinkedServices { get { throw null; } }
@@ -3396,7 +3606,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.Collections.Generic.IList<System.BinaryData> Arguments { get { throw null; } }
         public string ClassName { get { throw null; } set { } }
         public System.BinaryData EntryFilePath { get { throw null; } set { } }
-        public Azure.ResourceManager.DataFactory.Models.HDInsightActivityDebugInfoOption? GetDebugInfo { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.HDInsightActivityDebugInfoOptionSetting? GetDebugInfo { get { throw null; } set { } }
         public System.BinaryData ProxyUser { get { throw null; } set { } }
         public System.BinaryData RootPath { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> SparkConfig { get { throw null; } }
@@ -3411,7 +3621,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.Collections.Generic.IDictionary<string, System.BinaryData> Defines { get { throw null; } }
         public Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference FileLinkedService { get { throw null; } set { } }
         public System.Collections.Generic.IList<System.BinaryData> FilePaths { get { throw null; } }
-        public Azure.ResourceManager.DataFactory.Models.HDInsightActivityDebugInfoOption? GetDebugInfo { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.HDInsightActivityDebugInfoOptionSetting? GetDebugInfo { get { throw null; } set { } }
         public System.BinaryData Input { get { throw null; } set { } }
         public System.BinaryData Mapper { get { throw null; } set { } }
         public System.BinaryData Output { get { throw null; } set { } }
@@ -3540,6 +3750,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.BinaryData RequestBody { get { throw null; } set { } }
         public System.BinaryData RequestMethod { get { throw null; } set { } }
     }
+    public partial class HttpFileSource : Azure.ResourceManager.DataFactory.Models.CopyActivitySource
+    {
+        public HttpFileSource() { }
+        public System.BinaryData HttpRequestTimeout { get { throw null; } set { } }
+    }
     public partial class HttpLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public HttpLinkedService(System.BinaryData uri) { }
@@ -3568,11 +3783,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         public HttpServerLocation() { }
         public System.BinaryData RelativeUri { get { throw null; } set { } }
     }
-    public partial class HttpSource : Azure.ResourceManager.DataFactory.Models.CopyActivitySource
-    {
-        public HttpSource() { }
-        public System.BinaryData HttpRequestTimeout { get { throw null; } set { } }
-    }
     public partial class HubspotLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {
         public HubspotLinkedService(System.BinaryData clientId) { }
@@ -3597,8 +3807,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class IfConditionActivity : Azure.ResourceManager.DataFactory.Models.ControlActivity
     {
-        public IfConditionActivity(string name, Azure.ResourceManager.DataFactory.Models.Expression expression) : base (default(string)) { }
-        public Azure.ResourceManager.DataFactory.Models.Expression Expression { get { throw null; } set { } }
+        public IfConditionActivity(string name, Azure.ResourceManager.DataFactory.Models.FactoryExpressionDefinition expression) : base (default(string)) { }
+        public Azure.ResourceManager.DataFactory.Models.FactoryExpressionDefinition Expression { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DataFactory.Models.PipelineActivity> IfFalseActivities { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DataFactory.Models.PipelineActivity> IfTrueActivities { get { throw null; } }
     }
@@ -3943,6 +4153,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator !=(Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeSsisCatalogPricingTier left, Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeSsisCatalogPricingTier right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class IntegrationRuntimeSsisPackageStore
+    {
+        public IntegrationRuntimeSsisPackageStore(string name, Azure.ResourceManager.DataFactory.Models.EntityReference packageStoreLinkedService) { }
+        public string Name { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.EntityReference PackageStoreLinkedService { get { throw null; } set { } }
+    }
     public partial class IntegrationRuntimeSsisProperties
     {
         public IntegrationRuntimeSsisProperties() { }
@@ -3954,7 +4170,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeEdition? Edition { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DataFactory.Models.CustomSetupBase> ExpressCustomSetupProperties { get { throw null; } }
         public Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeLicenseType? LicenseType { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DataFactory.Models.PackageStore> PackageStores { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeSsisPackageStore> PackageStores { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct IntegrationRuntimeState : System.IEquatable<Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeState>
@@ -4051,15 +4267,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         public Azure.ResourceManager.DataFactory.Models.DatasetCompression Compression { get { throw null; } set { } }
         public System.BinaryData EncodingName { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.DatasetLocation Location { get { throw null; } set { } }
-    }
-    public partial class JsonFormat : Azure.ResourceManager.DataFactory.Models.DatasetStorageFormat
-    {
-        public JsonFormat() { }
-        public System.BinaryData EncodingName { get { throw null; } set { } }
-        public System.BinaryData FilePattern { get { throw null; } set { } }
-        public System.BinaryData JsonNodeReference { get { throw null; } set { } }
-        public System.BinaryData JsonPathDefinition { get { throw null; } set { } }
-        public System.BinaryData NestingSeparator { get { throw null; } set { } }
     }
     public partial class JsonReadSettings : Azure.ResourceManager.DataFactory.Models.FormatReadSettings
     {
@@ -4700,10 +4907,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         public Azure.ResourceManager.DataFactory.Models.DatasetLocation Location { get { throw null; } set { } }
         public System.BinaryData OrcCompressionCodec { get { throw null; } set { } }
     }
-    public partial class OrcFormat : Azure.ResourceManager.DataFactory.Models.DatasetStorageFormat
-    {
-        public OrcFormat() { }
-    }
     public partial class OrcSink : Azure.ResourceManager.DataFactory.Models.CopySink
     {
         public OrcSink() { }
@@ -4722,50 +4925,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.BinaryData FileNamePrefix { get { throw null; } set { } }
         public System.BinaryData MaxRowsPerFile { get { throw null; } set { } }
     }
-    public partial class PackageStore
-    {
-        public PackageStore(string name, Azure.ResourceManager.DataFactory.Models.EntityReference packageStoreLinkedService) { }
-        public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.DataFactory.Models.EntityReference PackageStoreLinkedService { get { throw null; } set { } }
-    }
-    public partial class ParameterSpecification
-    {
-        public ParameterSpecification(Azure.ResourceManager.DataFactory.Models.ParameterType parameterType) { }
-        public System.BinaryData DefaultValue { get { throw null; } set { } }
-        public Azure.ResourceManager.DataFactory.Models.ParameterType ParameterType { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ParameterType : System.IEquatable<Azure.ResourceManager.DataFactory.Models.ParameterType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ParameterType(string value) { throw null; }
-        public static Azure.ResourceManager.DataFactory.Models.ParameterType Array { get { throw null; } }
-        public static Azure.ResourceManager.DataFactory.Models.ParameterType Bool { get { throw null; } }
-        public static Azure.ResourceManager.DataFactory.Models.ParameterType Float { get { throw null; } }
-        public static Azure.ResourceManager.DataFactory.Models.ParameterType Int { get { throw null; } }
-        public static Azure.ResourceManager.DataFactory.Models.ParameterType Object { get { throw null; } }
-        public static Azure.ResourceManager.DataFactory.Models.ParameterType SecureString { get { throw null; } }
-        public static Azure.ResourceManager.DataFactory.Models.ParameterType String { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DataFactory.Models.ParameterType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DataFactory.Models.ParameterType left, Azure.ResourceManager.DataFactory.Models.ParameterType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DataFactory.Models.ParameterType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DataFactory.Models.ParameterType left, Azure.ResourceManager.DataFactory.Models.ParameterType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class ParquetDataset : Azure.ResourceManager.DataFactory.Models.FactoryDatasetDefinition
     {
         public ParquetDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public System.BinaryData CompressionCodec { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.DatasetLocation Location { get { throw null; } set { } }
-    }
-    public partial class ParquetFormat : Azure.ResourceManager.DataFactory.Models.DatasetStorageFormat
-    {
-        public ParquetFormat() { }
     }
     public partial class ParquetSink : Azure.ResourceManager.DataFactory.Models.CopySink
     {
@@ -4867,56 +5031,30 @@ namespace Azure.ResourceManager.DataFactory.Models
         internal PipelineCreateRunResult() { }
         public string RunId { get { throw null; } }
     }
-    public partial class PipelineReference
+    public partial class PipelineVariableSpecification
     {
-        public PipelineReference(Azure.ResourceManager.DataFactory.Models.PipelineReferenceType referenceType, string referenceName) { }
-        public string Name { get { throw null; } set { } }
-        public string ReferenceName { get { throw null; } set { } }
-        public Azure.ResourceManager.DataFactory.Models.PipelineReferenceType ReferenceType { get { throw null; } set { } }
+        public PipelineVariableSpecification(Azure.ResourceManager.DataFactory.Models.PipelineVariableType variableType) { }
+        public System.BinaryData DefaultValue { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.PipelineVariableType VariableType { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct PipelineReferenceType : System.IEquatable<Azure.ResourceManager.DataFactory.Models.PipelineReferenceType>
+    public readonly partial struct PipelineVariableType : System.IEquatable<Azure.ResourceManager.DataFactory.Models.PipelineVariableType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public PipelineReferenceType(string value) { throw null; }
-        public static Azure.ResourceManager.DataFactory.Models.PipelineReferenceType PipelineReference { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DataFactory.Models.PipelineReferenceType other) { throw null; }
+        public PipelineVariableType(string value) { throw null; }
+        public static Azure.ResourceManager.DataFactory.Models.PipelineVariableType Array { get { throw null; } }
+        public static Azure.ResourceManager.DataFactory.Models.PipelineVariableType Bool { get { throw null; } }
+        public static Azure.ResourceManager.DataFactory.Models.PipelineVariableType String { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DataFactory.Models.PipelineVariableType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DataFactory.Models.PipelineReferenceType left, Azure.ResourceManager.DataFactory.Models.PipelineReferenceType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DataFactory.Models.PipelineReferenceType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DataFactory.Models.PipelineReferenceType left, Azure.ResourceManager.DataFactory.Models.PipelineReferenceType right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DataFactory.Models.PipelineVariableType left, Azure.ResourceManager.DataFactory.Models.PipelineVariableType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataFactory.Models.PipelineVariableType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DataFactory.Models.PipelineVariableType left, Azure.ResourceManager.DataFactory.Models.PipelineVariableType right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class PipelineRun
-    {
-        internal PipelineRun() { }
-        public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
-        public int? DurationInMs { get { throw null; } }
-        public Azure.ResourceManager.DataFactory.Models.PipelineRunInvokedBy InvokedBy { get { throw null; } }
-        public bool? IsLatest { get { throw null; } }
-        public System.DateTimeOffset? LastUpdated { get { throw null; } }
-        public string Message { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyDictionary<string, string> Parameters { get { throw null; } }
-        public string PipelineName { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyDictionary<string, string> RunDimensions { get { throw null; } }
-        public System.DateTimeOffset? RunEnd { get { throw null; } }
-        public string RunGroupId { get { throw null; } }
-        public string RunId { get { throw null; } }
-        public System.DateTimeOffset? RunStart { get { throw null; } }
-        public string Status { get { throw null; } }
-    }
-    public partial class PipelineRunInvokedBy
-    {
-        internal PipelineRunInvokedBy() { }
-        public string Id { get { throw null; } }
-        public string InvokedByType { get { throw null; } }
-        public string Name { get { throw null; } }
-        public string PipelineName { get { throw null; } }
-        public string PipelineRunId { get { throw null; } }
     }
     public partial class PolybaseSettings
     {
@@ -6488,7 +6626,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         internal SsisPackage() { }
         public long? FolderId { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataFactory.Models.SsisParameter> Parameters { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataFactory.Models.SsisParameterInfo> Parameters { get { throw null; } }
         public long? ProjectId { get { throw null; } }
         public long? ProjectVersion { get { throw null; } }
     }
@@ -6526,9 +6664,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator !=(Azure.ResourceManager.DataFactory.Models.SsisPackageLocationType left, Azure.ResourceManager.DataFactory.Models.SsisPackageLocationType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SsisParameter
+    public partial class SsisParameterInfo
     {
-        internal SsisParameter() { }
+        internal SsisParameterInfo() { }
         public string DataType { get { throw null; } }
         public string DefaultValue { get { throw null; } }
         public string Description { get { throw null; } }
@@ -6547,7 +6685,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         internal SsisProject() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataFactory.Models.SsisEnvironmentReference> EnvironmentRefs { get { throw null; } }
         public long? FolderId { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataFactory.Models.SsisParameter> Parameters { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataFactory.Models.SsisParameterInfo> Parameters { get { throw null; } }
         public long? Version { get { throw null; } }
     }
     public partial class SsisPropertyOverride
@@ -6621,10 +6759,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class SwitchActivity : Azure.ResourceManager.DataFactory.Models.ControlActivity
     {
-        public SwitchActivity(string name, Azure.ResourceManager.DataFactory.Models.Expression on) : base (default(string)) { }
+        public SwitchActivity(string name, Azure.ResourceManager.DataFactory.Models.FactoryExpressionDefinition on) : base (default(string)) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.DataFactory.Models.SwitchCaseActivity> Cases { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DataFactory.Models.PipelineActivity> DefaultActivities { get { throw null; } }
-        public Azure.ResourceManager.DataFactory.Models.Expression On { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.FactoryExpressionDefinition On { get { throw null; } set { } }
     }
     public partial class SwitchCaseActivity
     {
@@ -6763,32 +6901,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.BinaryData Database { get { throw null; } set { } }
         public System.BinaryData Table { get { throw null; } set { } }
     }
-    public partial class TextFormat : Azure.ResourceManager.DataFactory.Models.DatasetStorageFormat
-    {
-        public TextFormat() { }
-        public System.BinaryData ColumnDelimiter { get { throw null; } set { } }
-        public System.BinaryData EncodingName { get { throw null; } set { } }
-        public System.BinaryData EscapeChar { get { throw null; } set { } }
-        public System.BinaryData FirstRowAsHeader { get { throw null; } set { } }
-        public System.BinaryData NullValue { get { throw null; } set { } }
-        public System.BinaryData QuoteChar { get { throw null; } set { } }
-        public System.BinaryData RowDelimiter { get { throw null; } set { } }
-        public System.BinaryData SkipLineCount { get { throw null; } set { } }
-        public System.BinaryData TreatEmptyAsNull { get { throw null; } set { } }
-    }
-    public partial class Transformation
-    {
-        public Transformation(string name) { }
-        public Azure.ResourceManager.DataFactory.Models.DatasetReference Dataset { get { throw null; } set { } }
-        public string Description { get { throw null; } set { } }
-        public Azure.ResourceManager.DataFactory.Models.DataFlowReference Flowlet { get { throw null; } set { } }
-        public Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference LinkedService { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
-    }
     public partial class TriggerDependencyReference : Azure.ResourceManager.DataFactory.Models.DependencyReference
     {
-        public TriggerDependencyReference(Azure.ResourceManager.DataFactory.Models.TriggerReference referenceTrigger) { }
-        public Azure.ResourceManager.DataFactory.Models.TriggerReference ReferenceTrigger { get { throw null; } set { } }
+        public TriggerDependencyReference(Azure.ResourceManager.DataFactory.Models.FactoryTriggerReference referenceTrigger) { }
+        public Azure.ResourceManager.DataFactory.Models.FactoryTriggerReference ReferenceTrigger { get { throw null; } set { } }
     }
     public partial class TriggerFilterContent
     {
@@ -6800,89 +6916,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         public TriggerPipelineReference() { }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> Parameters { get { throw null; } }
-        public Azure.ResourceManager.DataFactory.Models.PipelineReference PipelineReference { get { throw null; } set { } }
-    }
-    public partial class TriggerReference
-    {
-        public TriggerReference(Azure.ResourceManager.DataFactory.Models.TriggerReferenceType referenceType, string referenceName) { }
-        public string ReferenceName { get { throw null; } set { } }
-        public Azure.ResourceManager.DataFactory.Models.TriggerReferenceType ReferenceType { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct TriggerReferenceType : System.IEquatable<Azure.ResourceManager.DataFactory.Models.TriggerReferenceType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public TriggerReferenceType(string value) { throw null; }
-        public static Azure.ResourceManager.DataFactory.Models.TriggerReferenceType TriggerReference { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DataFactory.Models.TriggerReferenceType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DataFactory.Models.TriggerReferenceType left, Azure.ResourceManager.DataFactory.Models.TriggerReferenceType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DataFactory.Models.TriggerReferenceType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DataFactory.Models.TriggerReferenceType left, Azure.ResourceManager.DataFactory.Models.TriggerReferenceType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class TriggerRun
-    {
-        internal TriggerRun() { }
-        public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> DependencyStatus { get { throw null; } }
-        public string Message { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyDictionary<string, string> Properties { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyDictionary<string, string> RunDimension { get { throw null; } }
-        public Azure.ResourceManager.DataFactory.Models.TriggerRunStatus? Status { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyDictionary<string, string> TriggeredPipelines { get { throw null; } }
-        public string TriggerName { get { throw null; } }
-        public string TriggerRunId { get { throw null; } }
-        public System.DateTimeOffset? TriggerRunTimestamp { get { throw null; } }
-        public string TriggerType { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct TriggerRunStatus : System.IEquatable<Azure.ResourceManager.DataFactory.Models.TriggerRunStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public TriggerRunStatus(string value) { throw null; }
-        public static Azure.ResourceManager.DataFactory.Models.TriggerRunStatus Failed { get { throw null; } }
-        public static Azure.ResourceManager.DataFactory.Models.TriggerRunStatus Inprogress { get { throw null; } }
-        public static Azure.ResourceManager.DataFactory.Models.TriggerRunStatus Succeeded { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DataFactory.Models.TriggerRunStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DataFactory.Models.TriggerRunStatus left, Azure.ResourceManager.DataFactory.Models.TriggerRunStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DataFactory.Models.TriggerRunStatus (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DataFactory.Models.TriggerRunStatus left, Azure.ResourceManager.DataFactory.Models.TriggerRunStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct TriggerRuntimeState : System.IEquatable<Azure.ResourceManager.DataFactory.Models.TriggerRuntimeState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public TriggerRuntimeState(string value) { throw null; }
-        public static Azure.ResourceManager.DataFactory.Models.TriggerRuntimeState Disabled { get { throw null; } }
-        public static Azure.ResourceManager.DataFactory.Models.TriggerRuntimeState Started { get { throw null; } }
-        public static Azure.ResourceManager.DataFactory.Models.TriggerRuntimeState Stopped { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DataFactory.Models.TriggerRuntimeState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DataFactory.Models.TriggerRuntimeState left, Azure.ResourceManager.DataFactory.Models.TriggerRuntimeState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DataFactory.Models.TriggerRuntimeState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DataFactory.Models.TriggerRuntimeState left, Azure.ResourceManager.DataFactory.Models.TriggerRuntimeState right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class TriggerSubscriptionOperationStatus
-    {
-        internal TriggerSubscriptionOperationStatus() { }
-        public Azure.ResourceManager.DataFactory.Models.EventSubscriptionStatus? Status { get { throw null; } }
-        public string TriggerName { get { throw null; } }
+        public Azure.ResourceManager.DataFactory.Models.FactoryPipelineReference PipelineReference { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct TumblingWindowFrequency : System.IEquatable<Azure.ResourceManager.DataFactory.Models.TumblingWindowFrequency>
@@ -6918,7 +6952,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class TumblingWindowTriggerDependencyReference : Azure.ResourceManager.DataFactory.Models.TriggerDependencyReference
     {
-        public TumblingWindowTriggerDependencyReference(Azure.ResourceManager.DataFactory.Models.TriggerReference referenceTrigger) : base (default(Azure.ResourceManager.DataFactory.Models.TriggerReference)) { }
+        public TumblingWindowTriggerDependencyReference(Azure.ResourceManager.DataFactory.Models.FactoryTriggerReference referenceTrigger) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryTriggerReference)) { }
         public string Offset { get { throw null; } set { } }
         public string Size { get { throw null; } set { } }
     }
@@ -6930,24 +6964,15 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class UntilActivity : Azure.ResourceManager.DataFactory.Models.ControlActivity
     {
-        public UntilActivity(string name, Azure.ResourceManager.DataFactory.Models.Expression expression, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataFactory.Models.PipelineActivity> activities) : base (default(string)) { }
+        public UntilActivity(string name, Azure.ResourceManager.DataFactory.Models.FactoryExpressionDefinition expression, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataFactory.Models.PipelineActivity> activities) : base (default(string)) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.DataFactory.Models.PipelineActivity> Activities { get { throw null; } }
-        public Azure.ResourceManager.DataFactory.Models.Expression Expression { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.FactoryExpressionDefinition Expression { get { throw null; } set { } }
         public System.BinaryData Timeout { get { throw null; } set { } }
     }
     public partial class UpdateIntegrationRuntimeNodeContent
     {
         public UpdateIntegrationRuntimeNodeContent() { }
         public int? ConcurrentJobsLimit { get { throw null; } set { } }
-    }
-    public partial class UserAccessPolicy
-    {
-        public UserAccessPolicy() { }
-        public string AccessResourcePath { get { throw null; } set { } }
-        public string ExpireTime { get { throw null; } set { } }
-        public string Permissions { get { throw null; } set { } }
-        public string ProfileName { get { throw null; } set { } }
-        public string StartTime { get { throw null; } set { } }
     }
     public partial class ValidationActivity : Azure.ResourceManager.DataFactory.Models.ControlActivity
     {
@@ -6957,31 +6982,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.BinaryData MinimumSize { get { throw null; } set { } }
         public System.BinaryData Sleep { get { throw null; } set { } }
         public System.BinaryData Timeout { get { throw null; } set { } }
-    }
-    public partial class VariableSpecification
-    {
-        public VariableSpecification(Azure.ResourceManager.DataFactory.Models.VariableType variableType) { }
-        public System.BinaryData DefaultValue { get { throw null; } set { } }
-        public Azure.ResourceManager.DataFactory.Models.VariableType VariableType { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct VariableType : System.IEquatable<Azure.ResourceManager.DataFactory.Models.VariableType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public VariableType(string value) { throw null; }
-        public static Azure.ResourceManager.DataFactory.Models.VariableType Array { get { throw null; } }
-        public static Azure.ResourceManager.DataFactory.Models.VariableType Bool { get { throw null; } }
-        public static Azure.ResourceManager.DataFactory.Models.VariableType String { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DataFactory.Models.VariableType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DataFactory.Models.VariableType left, Azure.ResourceManager.DataFactory.Models.VariableType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DataFactory.Models.VariableType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DataFactory.Models.VariableType left, Azure.ResourceManager.DataFactory.Models.VariableType right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class VerticaLinkedService : Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceDefinition
     {

@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The name of the MongoDB Atlas database that you want to access. Type: string (or Expression with resultType string).
         /// Serialized Name: MongoDbAtlasLinkedService.typeProperties.database
         /// </param>
-        internal MongoDBAtlasLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData connectionString, BinaryData database) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal MongoDBAtlasLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData connectionString, BinaryData database) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             ConnectionString = connectionString;
             Database = database;

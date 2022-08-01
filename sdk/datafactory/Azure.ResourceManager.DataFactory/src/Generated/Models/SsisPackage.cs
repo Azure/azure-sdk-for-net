@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of SsisPackage. </summary>
         internal SsisPackage()
         {
-            Parameters = new ChangeTrackingList<SsisParameter>();
+            Parameters = new ChangeTrackingList<SsisParameterInfo>();
             MetadataType = SsisObjectMetadataType.Package;
         }
 
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Parameters in package
         /// Serialized Name: SsisPackage.parameters
         /// </param>
-        internal SsisPackage(SsisObjectMetadataType metadataType, long? id, string name, string description, long? folderId, long? projectVersion, long? projectId, IReadOnlyList<SsisParameter> parameters) : base(metadataType, id, name, description)
+        internal SsisPackage(SsisObjectMetadataType metadataType, long? id, string name, string description, long? folderId, long? projectVersion, long? projectId, IReadOnlyList<SsisParameterInfo> parameters) : base(metadataType, id, name, description)
         {
             FolderId = folderId;
             ProjectVersion = projectVersion;
@@ -84,6 +84,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Parameters in package
         /// Serialized Name: SsisPackage.parameters
         /// </summary>
-        public IReadOnlyList<SsisParameter> Parameters { get; }
+        public IReadOnlyList<SsisParameterInfo> Parameters { get; }
     }
 }

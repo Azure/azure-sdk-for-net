@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The ID of request for delta loading. Once it is set, only data with requestId larger than the value of this property will be retrieved. The default value is 0. Type: integer (or Expression with resultType integer ).
         /// Serialized Name: SapOpenHubTableDataset.typeProperties.baseRequestId
         /// </param>
-        internal SapOpenHubTableDataset(string datasetType, string description, BinaryData structure, BinaryData schema, FactoryLinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData openHubDestinationName, BinaryData excludeLastRequest, BinaryData baseRequestId) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal SapOpenHubTableDataset(string datasetType, string description, BinaryData structure, BinaryData schema, FactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData openHubDestinationName, BinaryData excludeLastRequest, BinaryData baseRequestId) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             OpenHubDestinationName = openHubDestinationName;
             ExcludeLastRequest = excludeLastRequest;

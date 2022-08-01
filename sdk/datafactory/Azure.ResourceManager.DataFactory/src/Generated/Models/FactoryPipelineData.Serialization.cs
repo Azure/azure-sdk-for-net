@@ -125,13 +125,13 @@ namespace Azure.ResourceManager.DataFactory
             Optional<SystemData> systemData = default;
             Optional<string> description = default;
             Optional<IList<PipelineActivity>> activities = default;
-            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IDictionary<string, VariableSpecification>> variables = default;
+            Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
+            Optional<IDictionary<string, PipelineVariableSpecification>> variables = default;
             Optional<int> concurrency = default;
             Optional<IList<BinaryData>> annotations = default;
             Optional<IDictionary<string, BinaryData>> runDimensions = default;
             Optional<PipelineFolder> folder = default;
-            Optional<PipelinePolicy> policy = default;
+            Optional<FactoryPipelinePolicy> policy = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -207,10 +207,10 @@ namespace Azure.ResourceManager.DataFactory
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            Dictionary<string, ParameterSpecification> dictionary = new Dictionary<string, ParameterSpecification>();
+                            Dictionary<string, EntityParameterSpecification> dictionary = new Dictionary<string, EntityParameterSpecification>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, ParameterSpecification.DeserializeParameterSpecification(property1.Value));
+                                dictionary.Add(property1.Name, EntityParameterSpecification.DeserializeEntityParameterSpecification(property1.Value));
                             }
                             parameters = dictionary;
                             continue;
@@ -222,10 +222,10 @@ namespace Azure.ResourceManager.DataFactory
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            Dictionary<string, VariableSpecification> dictionary = new Dictionary<string, VariableSpecification>();
+                            Dictionary<string, PipelineVariableSpecification> dictionary = new Dictionary<string, PipelineVariableSpecification>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, VariableSpecification.DeserializeVariableSpecification(property1.Value));
+                                dictionary.Add(property1.Name, PipelineVariableSpecification.DeserializePipelineVariableSpecification(property1.Value));
                             }
                             variables = dictionary;
                             continue;
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.DataFactory
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            policy = PipelinePolicy.DeserializePipelinePolicy(property0.Value);
+                            policy = FactoryPipelinePolicy.DeserializeFactoryPipelinePolicy(property0.Value);
                             continue;
                         }
                     }

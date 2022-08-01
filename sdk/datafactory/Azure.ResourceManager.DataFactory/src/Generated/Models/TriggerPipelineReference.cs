@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Pipeline parameters.
         /// Serialized Name: TriggerPipelineReference.parameters
         /// </param>
-        internal TriggerPipelineReference(PipelineReference pipelineReference, IDictionary<string, BinaryData> parameters)
+        internal TriggerPipelineReference(FactoryPipelineReference pipelineReference, IDictionary<string, BinaryData> parameters)
         {
             PipelineReference = pipelineReference;
             Parameters = parameters;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Pipeline reference.
         /// Serialized Name: TriggerPipelineReference.pipelineReference
         /// </summary>
-        public PipelineReference PipelineReference { get; set; }
+        public FactoryPipelineReference PipelineReference { get; set; }
         /// <summary>
         /// Pipeline parameters.
         /// Serialized Name: TriggerPipelineReference.parameters

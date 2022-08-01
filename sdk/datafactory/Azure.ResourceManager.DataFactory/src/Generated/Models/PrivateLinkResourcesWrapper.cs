@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of PrivateLinkResourcesWrapper. </summary>
         /// <param name="value"> Serialized Name: PrivateLinkResourcesWrapper.value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal PrivateLinkResourcesWrapper(IEnumerable<DataFactoryPrivateLinkResource> value)
+        internal PrivateLinkResourcesWrapper(IEnumerable<FactoryPrivateLinkResource> value)
         {
             if (value == null)
             {
@@ -32,12 +32,12 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Initializes a new instance of PrivateLinkResourcesWrapper. </summary>
         /// <param name="value"> Serialized Name: PrivateLinkResourcesWrapper.value. </param>
-        internal PrivateLinkResourcesWrapper(IReadOnlyList<DataFactoryPrivateLinkResource> value)
+        internal PrivateLinkResourcesWrapper(IReadOnlyList<FactoryPrivateLinkResource> value)
         {
             Value = value;
         }
 
         /// <summary> Serialized Name: PrivateLinkResourcesWrapper.value. </summary>
-        public IReadOnlyList<DataFactoryPrivateLinkResource> Value { get; }
+        public IReadOnlyList<FactoryPrivateLinkResource> Value { get; }
     }
 }

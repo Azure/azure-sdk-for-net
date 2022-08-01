@@ -50,10 +50,12 @@ rename-rules:
   MWS: Mws
   Etag: ETag|etag
   Db: DB|db
+  CMK: Cmk
 
 rename-mapping:
   # Factory
   Factory: DataFactory
+  FactoryListResponse: FactoryListResult
   # Dataset
   DatasetDataElement.name: ColumnName
   DatasetDataElement.type: columnType
@@ -63,12 +65,21 @@ rename-mapping:
   Dataset: FactoryDatasetDefinition
   DatasetResource: FactoryDataset
   HttpDataset: HttpFileDataset
+  AvroFormat: DatasetAvroFormat
+  JsonFormat: DatasetJsonFormat
+  OrcFormat: DatasetOrcFormat
+  ParquetFormat: DatasetParquetFormat
+  TextFormat: DatasetTextFormat
   # DataFlow
   DataFlow: FactoryDataFlowDefinition
   DataFlowResource: FactoryDataFlow
   Flowlet: FactoryFlowletDefinition
   MappingDataFlow: FactoryMappingDataFlowDefinition
   WranglingDataFlow: FactoryWranglingDataFlowDefinition
+  Transformation: DataFlowTransformation
+  # Data source
+  BlobSink: AzureBlobSink
+  BlobSource: AzureBlobSource
   # Debug resource
   AddDataFlowToDebugSessionResponse: FactoryDataFlowDebugSessionStartResult
   CreateDataFlowDebugSessionRequest: FactoryDataFlowDebugSessionContent
@@ -84,43 +95,76 @@ rename-mapping:
   GlobalParameterResource: FactoryGlobalParameter
   GlobalParameterSpecification: FactoryGlobalParameterSpecification
   GlobalParameterType: FactoryGlobalParameterType
+  ParameterSpecification: EntityParameterSpecification
+  ParameterDefinitionSpecification: EntityParameterDefinitionSpecification
+  ParameterType: EntityParameterType
   # IntegrationRuntime
   IntegrationRuntime: IntegrationRuntimeDefinition
   IntegrationRuntimeResource: FactoryIntegrationRuntime
   IntegrationRuntimeStatusResponse: IntegrationRuntimeStatusResult
+  PackageStore: IntegrationRuntimeSsisPackageStore
   # LinkedService
   LinkedService: FactoryLinkedServiceDefinition
   LinkedServiceReference: FactoryLinkedServiceReference
   LinkedServiceReferenceType: FactoryLinkedServiceReferenceType
   LinkedServiceResource: FactoryLinkedService
+  # Network
+  ManagedVirtualNetworkResource: FactoryVirtualNetwork
+  PublicNetworkAccess: FactoryPublicNetworkAccess
   # Pipeline
   PipelineResource: FactoryPipeline
+  PipelineListResponse: FactoryPipelineListResult
+  PipelinePolicy: FactoryPipelinePolicy
+  PipelineReference: FactoryPipelineReference
+  PipelineReferenceType: FactoryPipelineReferenceType
+  PipelineRun: FactoryPipelineRunInfo
+  PipelineRunInvokedBy: FactoryPipelineRunInvokedByInfo
   Activity: PipelineActivity
   ActivityRun: ActivityRunInfo
   ActivityRunsQueryResponse: ActivityRunsResult
   CopySource: CopyActivitySource
   CreateRunResponse: PipelineCreateRunResult
+  Expression: FactoryExpressionDefinition
+  ExpressionType: FactoryExpressionType
+  GetMetadataActivity: GetDatasetMetadataActivity
   SwitchCase: SwitchCaseActivity
   UserProperty: ActivityUserProperty
+  VariableSpecification: PipelineVariableSpecification
+  VariableType: PipelineVariableType
   # Private link
   ManagedPrivateEndpointResource: FactoryPrivateEndpoint
   PrivateEndpointConnectionResource: FactoryPrivateEndpointConnection
+  PrivateLinkResource: FactoryPrivateLinkResource
+  PrivateLinkResourceProperties: FactoryPrivateLinkResourceProperties
   # Trigger
+  BlobEventsTrigger: AzureBlobEventsTrigger
+  BlobEventTypes: AzureBlobEventType
+  BlobTrigger: AzureBlobTrigger
   TriggerResource: FactoryTrigger
   Trigger: FactoryTriggerDefinition
+  TriggerListResponse: FactoryTriggerListResult
+  TriggerQueryResponse: FactoryTriggerQueryResult
+  TriggerReference: FactoryTriggerReference
+  TriggerReferenceType: FactoryTriggerReferenceType
+  TriggerRun: FactoryTriggerRun
+  TriggerRunsQueryResponse: FactoryTriggerRunsQueryResult
+  TriggerRunStatus: FactoryTriggerRunStatus
+  TriggerRuntimeState: FactoryTriggerRuntimeState
+  TriggerSubscriptionOperationStatus: FactoryTriggerSubscriptionOperationResult
   # Others
+  UserAccessPolicy: FactoryDataPlaneUserAccessPolicy
   AccessPolicyResponse: FactoryDataPlaneAccessPolicyResult
   EncryptionConfiguration: FactoryEncryptionConfiguration
   ExposureControlBatchResponse: ExposureControlBatchResult
   ExposureControlResponse: ExposureControlResult
   ExposureControlRequest: ExposureControlContent
+  HDInsightActivityDebugInfoOption: HDInsightActivityDebugInfoOptionSetting
   GitHubAccessTokenResponse: GitHubAccessTokenResult
-  ManagedVirtualNetworkResource: FactoryVirtualNetwork
-  PublicNetworkAccess: FactoryPublicNetworkAccess
+  HttpSource: HttpFileSource
   PurviewConfiguration: FactoryPurviewConfiguration
   RunFilterParameters: RunFilterContent
   SsisObjectMetadataStatusResponse: SsisObjectMetadataStatusResult
-
+  SsisParameter: SsisParameterInfo
 
 override-operation-name:
   ActivityRuns_QueryByPipelineRun: GetActivityRunsByPipelineRun

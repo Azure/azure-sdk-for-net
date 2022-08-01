@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> description = default;
             Optional<IList<ActivityDependency>> dependsOn = default;
             Optional<IList<ActivityUserProperty>> userProperties = default;
-            PipelineReference pipeline = default;
+            FactoryPipelineReference pipeline = default;
             Optional<IDictionary<string, BinaryData>> parameters = default;
             Optional<bool> waitOnCompletion = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("pipeline"))
                         {
-                            pipeline = PipelineReference.DeserializePipelineReference(property0.Value);
+                            pipeline = FactoryPipelineReference.DeserializeFactoryPipelineReference(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("parameters"))

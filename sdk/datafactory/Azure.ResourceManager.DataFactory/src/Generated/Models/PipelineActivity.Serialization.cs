@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "Fail": return FailActivity.DeserializeFailActivity(element);
                     case "Filter": return FilterActivity.DeserializeFilterActivity(element);
                     case "ForEach": return ForEachActivity.DeserializeForEachActivity(element);
-                    case "GetMetadata": return GetMetadataActivity.DeserializeGetMetadataActivity(element);
+                    case "GetMetadata": return GetDatasetMetadataActivity.DeserializeGetDatasetMetadataActivity(element);
                     case "HDInsightHive": return HDInsightHiveActivity.DeserializeHDInsightHiveActivity(element);
                     case "HDInsightMapReduce": return HDInsightMapReduceActivity.DeserializeHDInsightMapReduceActivity(element);
                     case "HDInsightPig": return HDInsightPigActivity.DeserializeHDInsightPigActivity(element);

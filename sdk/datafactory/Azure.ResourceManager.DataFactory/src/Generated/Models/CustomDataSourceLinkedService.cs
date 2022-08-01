@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Custom linked service properties.
         /// Serialized Name: CustomDataSourceLinkedService.typeProperties
         /// </param>
-        internal CustomDataSourceLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData typeProperties) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal CustomDataSourceLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData typeProperties) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             TypeProperties = typeProperties;
             LinkedServiceType = linkedServiceType ?? "CustomDataSource";

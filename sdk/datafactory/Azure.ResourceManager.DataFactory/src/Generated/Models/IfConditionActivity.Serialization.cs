@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> description = default;
             Optional<IList<ActivityDependency>> dependsOn = default;
             Optional<IList<ActivityUserProperty>> userProperties = default;
-            Expression expression = default;
+            FactoryExpressionDefinition expression = default;
             Optional<IList<PipelineActivity>> ifTrueActivities = default;
             Optional<IList<PipelineActivity>> ifFalseActivities = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("expression"))
                         {
-                            expression = Expression.DeserializeExpression(property0.Value);
+                            expression = FactoryExpressionDefinition.DeserializeFactoryExpressionDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("ifTrueActivities"))

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// If true, validate the FTP server SSL certificate when connect over SSL/TLS channel. Default value is true. Type: boolean (or Expression with resultType boolean).
         /// Serialized Name: FtpServerLinkedService.typeProperties.enableServerCertificateValidation
         /// </param>
-        internal FtpServerLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData host, BinaryData port, FtpAuthenticationType? authenticationType, BinaryData userName, SecretBase password, BinaryData encryptedCredential, BinaryData enableSsl, BinaryData enableServerCertificateValidation) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal FtpServerLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData host, BinaryData port, FtpAuthenticationType? authenticationType, BinaryData userName, SecretBase password, BinaryData encryptedCredential, BinaryData enableSsl, BinaryData enableServerCertificateValidation) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             Host = host;
             Port = port;

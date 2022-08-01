@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The null value string. Type: string (or Expression with resultType string).
         /// Serialized Name: ExcelDataset.typeProperties.nullValue
         /// </param>
-        internal ExcelDataset(string datasetType, string description, BinaryData structure, BinaryData schema, FactoryLinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DatasetLocation location, BinaryData sheetName, BinaryData sheetIndex, BinaryData range, BinaryData firstRowAsHeader, DatasetCompression compression, BinaryData nullValue) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal ExcelDataset(string datasetType, string description, BinaryData structure, BinaryData schema, FactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DatasetLocation location, BinaryData sheetName, BinaryData sheetIndex, BinaryData range, BinaryData firstRowAsHeader, DatasetCompression compression, BinaryData nullValue) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             Location = location;
             SheetName = sheetName;

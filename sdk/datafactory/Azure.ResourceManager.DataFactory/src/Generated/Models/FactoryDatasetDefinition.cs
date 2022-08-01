@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             LinkedServiceName = linkedServiceName;
-            Parameters = new ChangeTrackingDictionary<string, ParameterSpecification>();
+            Parameters = new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             Annotations = new ChangeTrackingList<BinaryData>();
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Serialized Name: Dataset.folder
         /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal FactoryDatasetDefinition(string datasetType, string description, BinaryData structure, BinaryData schema, FactoryLinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties)
+        internal FactoryDatasetDefinition(string datasetType, string description, BinaryData structure, BinaryData schema, FactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties)
         {
             DatasetType = datasetType;
             Description = description;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Parameters for dataset.
         /// Serialized Name: Dataset.parameters
         /// </summary>
-        public IDictionary<string, ParameterSpecification> Parameters { get; }
+        public IDictionary<string, EntityParameterSpecification> Parameters { get; }
         /// <summary>
         /// List of tags that can be used for describing the Dataset.
         /// Serialized Name: Dataset.annotations

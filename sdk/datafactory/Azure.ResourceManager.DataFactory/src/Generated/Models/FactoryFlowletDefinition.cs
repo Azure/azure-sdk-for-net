@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             Sources = new ChangeTrackingList<DataFlowSource>();
             Sinks = new ChangeTrackingList<DataFlowSink>();
-            Transformations = new ChangeTrackingList<Transformation>();
+            Transformations = new ChangeTrackingList<DataFlowTransformation>();
             ScriptLines = new ChangeTrackingList<string>();
             DataFlowType = "Flowlet";
         }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Flowlet script lines.
         /// Serialized Name: Flowlet.typeProperties.scriptLines
         /// </param>
-        internal FactoryFlowletDefinition(string dataFlowType, string description, IList<BinaryData> annotations, DataFlowFolder folder, IList<DataFlowSource> sources, IList<DataFlowSink> sinks, IList<Transformation> transformations, string script, IList<string> scriptLines) : base(dataFlowType, description, annotations, folder)
+        internal FactoryFlowletDefinition(string dataFlowType, string description, IList<BinaryData> annotations, DataFlowFolder folder, IList<DataFlowSource> sources, IList<DataFlowSink> sinks, IList<DataFlowTransformation> transformations, string script, IList<string> scriptLines) : base(dataFlowType, description, annotations, folder)
         {
             Sources = sources;
             Sinks = sinks;
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// List of transformations in Flowlet.
         /// Serialized Name: Flowlet.typeProperties.transformations
         /// </summary>
-        public IList<Transformation> Transformations { get; }
+        public IList<DataFlowTransformation> Transformations { get; }
         /// <summary>
         /// Flowlet script.
         /// Serialized Name: Flowlet.typeProperties.script

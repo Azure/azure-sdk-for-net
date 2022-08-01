@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Azure data factory nested object which contains information about creating pipeline run
     /// Serialized Name: Trigger
     /// Please note <see cref="FactoryTriggerDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="BlobEventsTrigger"/>, <see cref="BlobTrigger"/>, <see cref="ChainingTrigger"/>, <see cref="CustomEventsTrigger"/>, <see cref="MultiplePipelineTrigger"/>, <see cref="RerunTumblingWindowTrigger"/>, <see cref="ScheduleTrigger"/> and <see cref="TumblingWindowTrigger"/>.
+    /// The available derived classes include <see cref="AzureBlobEventsTrigger"/>, <see cref="AzureBlobTrigger"/>, <see cref="ChainingTrigger"/>, <see cref="CustomEventsTrigger"/>, <see cref="MultiplePipelineTrigger"/>, <see cref="RerunTumblingWindowTrigger"/>, <see cref="ScheduleTrigger"/> and <see cref="TumblingWindowTrigger"/>.
     /// </summary>
     public partial class FactoryTriggerDefinition
     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Serialized Name: Trigger.annotations
         /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal FactoryTriggerDefinition(string triggerType, string description, TriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties)
+        internal FactoryTriggerDefinition(string triggerType, string description, FactoryTriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties)
         {
             TriggerType = triggerType;
             Description = description;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger.
         /// Serialized Name: Trigger.runtimeState
         /// </summary>
-        public TriggerRuntimeState? RuntimeState { get; }
+        public FactoryTriggerRuntimeState? RuntimeState { get; }
         /// <summary>
         /// List of tags that can be used for describing the trigger.
         /// Serialized Name: Trigger.annotations

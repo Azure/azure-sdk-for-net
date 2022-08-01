@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The host key finger-print of the SFTP server. When SkipHostKeyValidation is false, HostKeyFingerprint should be specified. Type: string (or Expression with resultType string).
         /// Serialized Name: SftpServerLinkedService.typeProperties.hostKeyFingerprint
         /// </param>
-        internal SftpServerLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData host, BinaryData port, SftpAuthenticationType? authenticationType, BinaryData userName, SecretBase password, BinaryData encryptedCredential, BinaryData privateKeyPath, SecretBase privateKeyContent, SecretBase passPhrase, BinaryData skipHostKeyValidation, BinaryData hostKeyFingerprint) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal SftpServerLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData host, BinaryData port, SftpAuthenticationType? authenticationType, BinaryData userName, SecretBase password, BinaryData encryptedCredential, BinaryData privateKeyPath, SecretBase privateKeyContent, SecretBase passPhrase, BinaryData skipHostKeyValidation, BinaryData hostKeyFingerprint) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             Host = host;
             Port = port;

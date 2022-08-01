@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Type of authentication (Required to specify MSI) used to connect to AzureML. Type: string (or Expression with resultType string).
         /// Serialized Name: AzureMLLinkedService.typeProperties.authentication
         /// </param>
-        internal AzureMLLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData mlEndpoint, SecretBase apiKey, BinaryData updateResourceEndpoint, BinaryData servicePrincipalId, SecretBase servicePrincipalKey, BinaryData tenant, BinaryData encryptedCredential, BinaryData authentication) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal AzureMLLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData mlEndpoint, SecretBase apiKey, BinaryData updateResourceEndpoint, BinaryData servicePrincipalId, SecretBase servicePrincipalKey, BinaryData tenant, BinaryData encryptedCredential, BinaryData authentication) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             MlEndpoint = mlEndpoint;
             ApiKey = apiKey;

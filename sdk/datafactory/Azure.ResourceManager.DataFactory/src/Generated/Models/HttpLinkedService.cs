@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// If true, validate the HTTPS server SSL certificate. Default value is true. Type: boolean (or Expression with resultType boolean).
         /// Serialized Name: HttpLinkedService.typeProperties.enableServerCertificateValidation
         /// </param>
-        internal HttpLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData uri, HttpAuthenticationType? authenticationType, BinaryData userName, SecretBase password, BinaryData authHeaders, BinaryData embeddedCertData, BinaryData certThumbprint, BinaryData encryptedCredential, BinaryData enableServerCertificateValidation) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal HttpLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData uri, HttpAuthenticationType? authenticationType, BinaryData userName, SecretBase password, BinaryData authHeaders, BinaryData embeddedCertData, BinaryData certThumbprint, BinaryData encryptedCredential, BinaryData enableServerCertificateValidation) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             Uri = uri;
             AuthenticationType = authenticationType;

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Allows user to specify defines for Pig job request.
         /// Serialized Name: HDInsightPigActivity.typeProperties.defines
         /// </param>
-        internal HDInsightPigActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, FactoryLinkedServiceReference linkedServiceName, ActivityPolicy policy, IList<FactoryLinkedServiceReference> storageLinkedServices, BinaryData arguments, HDInsightActivityDebugInfoOption? getDebugInfo, BinaryData scriptPath, FactoryLinkedServiceReference scriptLinkedService, IDictionary<string, BinaryData> defines) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal HDInsightPigActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, FactoryLinkedServiceReference linkedServiceName, ActivityPolicy policy, IList<FactoryLinkedServiceReference> storageLinkedServices, BinaryData arguments, HDInsightActivityDebugInfoOptionSetting? getDebugInfo, BinaryData scriptPath, FactoryLinkedServiceReference scriptLinkedService, IDictionary<string, BinaryData> defines) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             StorageLinkedServices = storageLinkedServices;
             Arguments = arguments;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Debug info option.
         /// Serialized Name: HDInsightPigActivity.typeProperties.getDebugInfo
         /// </summary>
-        public HDInsightActivityDebugInfoOption? GetDebugInfo { get; set; }
+        public HDInsightActivityDebugInfoOptionSetting? GetDebugInfo { get; set; }
         /// <summary>
         /// Script path. Type: string (or Expression with resultType string).
         /// Serialized Name: HDInsightPigActivity.typeProperties.scriptPath

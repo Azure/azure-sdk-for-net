@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IList<ActivityUserProperty>> userProperties = default;
             Optional<IList<FactoryLinkedServiceReference>> storageLinkedServices = default;
             Optional<IList<BinaryData>> arguments = default;
-            Optional<HDInsightActivityDebugInfoOption> getDebugInfo = default;
+            Optional<HDInsightActivityDebugInfoOptionSetting> getDebugInfo = default;
             BinaryData className = default;
             BinaryData jarFilePath = default;
             Optional<FactoryLinkedServiceReference> jarLinkedService = default;
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            getDebugInfo = new HDInsightActivityDebugInfoOption(property0.Value.GetString());
+                            getDebugInfo = new HDInsightActivityDebugInfoOptionSetting(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("className"))

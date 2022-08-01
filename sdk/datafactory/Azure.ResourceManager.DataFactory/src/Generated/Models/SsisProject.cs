@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         internal SsisProject()
         {
             EnvironmentRefs = new ChangeTrackingList<SsisEnvironmentReference>();
-            Parameters = new ChangeTrackingList<SsisParameter>();
+            Parameters = new ChangeTrackingList<SsisParameterInfo>();
             MetadataType = SsisObjectMetadataType.Project;
         }
 
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Parameters in project
         /// Serialized Name: SsisProject.parameters
         /// </param>
-        internal SsisProject(SsisObjectMetadataType metadataType, long? id, string name, string description, long? folderId, long? version, IReadOnlyList<SsisEnvironmentReference> environmentRefs, IReadOnlyList<SsisParameter> parameters) : base(metadataType, id, name, description)
+        internal SsisProject(SsisObjectMetadataType metadataType, long? id, string name, string description, long? folderId, long? version, IReadOnlyList<SsisEnvironmentReference> environmentRefs, IReadOnlyList<SsisParameterInfo> parameters) : base(metadataType, id, name, description)
         {
             FolderId = folderId;
             Version = version;
@@ -85,6 +85,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Parameters in project
         /// Serialized Name: SsisProject.parameters
         /// </summary>
-        public IReadOnlyList<SsisParameter> Parameters { get; }
+        public IReadOnlyList<SsisParameterInfo> Parameters { get; }
     }
 }

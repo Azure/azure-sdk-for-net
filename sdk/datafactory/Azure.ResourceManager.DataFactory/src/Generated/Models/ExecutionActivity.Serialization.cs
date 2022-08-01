@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "Delete": return DeleteActivity.DeserializeDeleteActivity(element);
                     case "ExecuteDataFlow": return ExecuteDataFlowActivity.DeserializeExecuteDataFlowActivity(element);
                     case "ExecuteSSISPackage": return ExecuteSsisPackageActivity.DeserializeExecuteSsisPackageActivity(element);
-                    case "GetMetadata": return GetMetadataActivity.DeserializeGetMetadataActivity(element);
+                    case "GetMetadata": return GetDatasetMetadataActivity.DeserializeGetDatasetMetadataActivity(element);
                     case "HDInsightHive": return HDInsightHiveActivity.DeserializeHDInsightHiveActivity(element);
                     case "HDInsightMapReduce": return HDInsightMapReduceActivity.DeserializeHDInsightMapReduceActivity(element);
                     case "HDInsightPig": return HDInsightPigActivity.DeserializeHDInsightPigActivity(element);

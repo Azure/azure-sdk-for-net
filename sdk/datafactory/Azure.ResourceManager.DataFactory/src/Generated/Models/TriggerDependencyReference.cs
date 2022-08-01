@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Serialized Name: TriggerDependencyReference.referenceTrigger
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceTrigger"/> is null. </exception>
-        public TriggerDependencyReference(TriggerReference referenceTrigger)
+        public TriggerDependencyReference(FactoryTriggerReference referenceTrigger)
         {
             if (referenceTrigger == null)
             {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Referenced trigger.
         /// Serialized Name: TriggerDependencyReference.referenceTrigger
         /// </param>
-        internal TriggerDependencyReference(string dependencyReferenceType, TriggerReference referenceTrigger) : base(dependencyReferenceType)
+        internal TriggerDependencyReference(string dependencyReferenceType, FactoryTriggerReference referenceTrigger) : base(dependencyReferenceType)
         {
             ReferenceTrigger = referenceTrigger;
             DependencyReferenceType = dependencyReferenceType ?? "TriggerDependencyReference";
@@ -53,6 +53,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Referenced trigger.
         /// Serialized Name: TriggerDependencyReference.referenceTrigger
         /// </summary>
-        public TriggerReference ReferenceTrigger { get; set; }
+        public FactoryTriggerReference ReferenceTrigger { get; set; }
     }
 }

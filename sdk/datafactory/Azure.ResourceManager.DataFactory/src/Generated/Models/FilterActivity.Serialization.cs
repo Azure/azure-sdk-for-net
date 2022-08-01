@@ -72,8 +72,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> description = default;
             Optional<IList<ActivityDependency>> dependsOn = default;
             Optional<IList<ActivityUserProperty>> userProperties = default;
-            Expression items = default;
-            Expression condition = default;
+            FactoryExpressionDefinition items = default;
+            FactoryExpressionDefinition condition = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,12 +134,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("items"))
                         {
-                            items = Expression.DeserializeExpression(property0.Value);
+                            items = FactoryExpressionDefinition.DeserializeFactoryExpressionDefinition(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("condition"))
                         {
-                            condition = Expression.DeserializeExpression(property0.Value);
+                            condition = FactoryExpressionDefinition.DeserializeFactoryExpressionDefinition(property0.Value);
                             continue;
                         }
                     }
