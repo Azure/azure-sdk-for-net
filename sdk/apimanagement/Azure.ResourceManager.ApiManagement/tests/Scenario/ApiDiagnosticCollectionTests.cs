@@ -13,7 +13,7 @@ using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.ApiManagement.Tests.Scenario
+namespace Azure.ResourceManager.ApiManagement.Tests
 {
     public class ApiDiagnosticCollectionTests : ApiManagementManagementTestBase
     {
