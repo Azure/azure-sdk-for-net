@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Dns
         {
             Etag = etag;
             Metadata = metadata;
-            Ttl = ttl;
+            TtlInSenconds = ttl;
             Fqdn = fqdn;
             ProvisioningState = provisioningState;
             TargetResource = targetResource;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Dns
         /// <summary> The metadata attached to the record set. </summary>
         public IDictionary<string, string> Metadata { get; }
         /// <summary> The Ttl (time-to-live) of the records in the record set. </summary>
-        public long? Ttl { get; set; }
+        public long? TtlInSenconds { get; set; }
         /// <summary> Fully qualified domain name of the record set. </summary>
         public string Fqdn { get; }
         /// <summary> provisioning State of the record set. </summary>
