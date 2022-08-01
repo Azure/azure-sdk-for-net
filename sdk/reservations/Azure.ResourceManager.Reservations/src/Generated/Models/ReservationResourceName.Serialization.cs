@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    public partial class ResourceName : IUtf8JsonSerializable
+    public partial class ReservationResourceName : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Reservations.Models
             writer.WriteEndObject();
         }
 
-        internal static ResourceName DeserializeResourceName(JsonElement element)
+        internal static ReservationResourceName DeserializeReservationResourceName(JsonElement element)
         {
             Optional<string> value = default;
             Optional<string> localizedValue = default;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     continue;
                 }
             }
-            return new ResourceName(value.Value, localizedValue.Value);
+            return new ReservationResourceName(value.Value, localizedValue.Value);
         }
     }
 }

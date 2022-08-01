@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Reservations.Tests
             Assert.AreEqual(ReservationProvisioningState.Failed, reservation.Data.Properties.ProvisioningState);
             Assert.AreEqual("testVM", reservation.Data.Properties.DisplayName);
             Assert.AreEqual(ReservedResourceType.VirtualMachines, reservation.Data.Properties.ReservedResourceType);
-            Assert.AreEqual(false, reservation.Data.Properties.Renew);
+            Assert.AreEqual(false, reservation.Data.Properties.IsRenewEnabled);
             Assert.AreEqual(ReservationTerm.P1Y, reservation.Data.Properties.Term);
             Assert.AreEqual(false, reservation.Data.Properties.IsArchived);
         }
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Reservations.Tests
             Assert.AreEqual(ReservedResourceType.VirtualMachines, responseData.Properties.ReservedResourceType);
             Assert.AreEqual(InstanceFlexibility.On, responseData.Properties.InstanceFlexibility);
             Assert.AreEqual("Reserved VM Instance, Standard_B1ls, US West, 1 Year", responseData.Properties.SkuDescription);
-            Assert.AreEqual(false, responseData.Properties.Renew);
+            Assert.AreEqual(false, responseData.Properties.IsRenewEnabled);
             Assert.AreEqual(ReservationTerm.P1Y, responseData.Properties.Term);
             Assert.AreEqual(ReservationBillingPlan.Upfront, responseData.Properties.BillingPlan);
             Assert.AreEqual("/subscriptions/6d5e2387-bdf5-4ca1-83db-795fd2398b93", responseData.Properties.BillingScopeId.ToString());

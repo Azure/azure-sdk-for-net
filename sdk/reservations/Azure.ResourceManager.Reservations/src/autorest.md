@@ -63,7 +63,6 @@ rename-mapping:
   ReservationOrderResponse.properties.expiryDate: ExpireOn
   ProvisioningState: ReservationProvisioningState
   ReservationResponse: ReservationDetail
-  ReservationsKind: ReservationKind
   ReservationsProperties: ReservationProperties
   AvailableScopeProperties: AvailableScopesProperties
   AvailableScopeRequest: AvailableScopesContent
@@ -91,7 +90,6 @@ rename-mapping:
   ScopeProperties.valid: IsValid
   SubRequest: SubContent
   OperationStatus: ReservationOperationStatus
-  ReservationToReturn.reservationId: -|arm-id
   ResourceName: ReservationResourceName
   
 directive:
@@ -124,6 +122,7 @@ directive:
       $.ReservationToReturnForExchange.properties.reservationId['x-ms-format'] = 'arm-id';
       $.SplitProperties.properties.reservationId['x-ms-format'] = 'arm-id';
       $.ReservationsProperties.properties.renew['x-ms-client-name'] = 'IsRenewEnabled';
+      $.ReservationToReturn.properties.reservationId['x-ms-format'] = 'arm-id';
   - from: reservations.json
     where: $.parameters
     transform: >

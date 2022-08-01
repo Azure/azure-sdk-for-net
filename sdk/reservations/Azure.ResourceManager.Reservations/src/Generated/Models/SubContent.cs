@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <param name="provisioningState"> The quota request status. </param>
         /// <param name="message"> User-friendly status message. </param>
         /// <param name="subRequestId"> Sub request ID for individual request. </param>
-        internal SubContent(int? limit, ResourceName name, string resourceType, string unit, QuotaRequestState? provisioningState, string message, Guid? subRequestId)
+        internal SubContent(int? limit, ReservationResourceName name, string resourceType, string unit, QuotaRequestState? provisioningState, string message, Guid? subRequestId)
         {
             Limit = limit;
             Name = name;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <summary> Quota (resource limit). </summary>
         public int? Limit { get; }
         /// <summary> The resource name. </summary>
-        public ResourceName Name { get; }
+        public ReservationResourceName Name { get; }
         /// <summary> Resource type for which the quota check was made. </summary>
         public string ResourceType { get; }
         /// <summary> The limit units, such as **count** and **bytes**. Use the unit field provided in the response of the GET quota operation. </summary>
