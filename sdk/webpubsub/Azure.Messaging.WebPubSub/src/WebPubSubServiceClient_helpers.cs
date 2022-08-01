@@ -92,9 +92,9 @@ namespace Azure.Messaging.WebPubSub
             return await GetClientAccessUriAsync(expiresAfter, userId, roles, cancellationToken).ConfigureAwait(false);
         }
 
-        internal static int GetMinutesToExpire(TimeSpan expiresAfter) => Math.Max(((int)expiresAfter.TotalMinutes), 1);
+        internal static int GetMinutesToExpire(TimeSpan expiresAfter) => Math.Max((int)expiresAfter.TotalMinutes, 1);
 
-        internal static int GetMinutesToExpire(DateTimeOffset expiresAt) => Math.Max(((int)expiresAt.Subtract(DateTimeOffset.UtcNow).TotalMinutes), 1);
+        internal static int GetMinutesToExpire(DateTimeOffset expiresAt) => Math.Max((int)expiresAt.Subtract(DateTimeOffset.UtcNow).TotalMinutes, 1);
 
         private async Task<Uri> GetClientAccessUriInternal(
             DateTimeOffset expiresAt,
