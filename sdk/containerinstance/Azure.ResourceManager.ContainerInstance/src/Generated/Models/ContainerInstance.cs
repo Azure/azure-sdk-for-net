@@ -12,14 +12,14 @@ using Azure.Core;
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     /// <summary> A container instance. </summary>
-    public partial class ContainerInstanceContainer
+    public partial class ContainerInstance
     {
-        /// <summary> Initializes a new instance of ContainerInstanceContainer. </summary>
+        /// <summary> Initializes a new instance of ContainerInstance. </summary>
         /// <param name="name"> The user-provided name of the container instance. </param>
         /// <param name="image"> The name of the image used to create the container instance. </param>
         /// <param name="resources"> The resource requirements of the container instance. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="image"/> or <paramref name="resources"/> is null. </exception>
-        public ContainerInstanceContainer(string name, string image, ResourceRequirements resources)
+        public ContainerInstance(string name, string image, ResourceRequirements resources)
         {
             if (name == null)
             {
@@ -40,10 +40,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             Ports = new ChangeTrackingList<ContainerPort>();
             EnvironmentVariables = new ChangeTrackingList<EnvironmentVariable>();
             Resources = resources;
-            VolumeMounts = new ChangeTrackingList<VolumeMount>();
+            VolumeMounts = new ChangeTrackingList<ContainerInstanceVolumeMount>();
         }
 
-        /// <summary> Initializes a new instance of ContainerInstanceContainer. </summary>
+        /// <summary> Initializes a new instance of ContainerInstance. </summary>
         /// <param name="name"> The user-provided name of the container instance. </param>
         /// <param name="image"> The name of the image used to create the container instance. </param>
         /// <param name="command"> The commands to execute within the container instance in exec form. </param>
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="volumeMounts"> The volume mounts available to the container instance. </param>
         /// <param name="livenessProbe"> The liveness probe. </param>
         /// <param name="readinessProbe"> The readiness probe. </param>
-        internal ContainerInstanceContainer(string name, string image, IList<string> command, IList<ContainerPort> ports, IList<EnvironmentVariable> environmentVariables, ContainerPropertiesInstanceView instanceView, ResourceRequirements resources, IList<VolumeMount> volumeMounts, ContainerProbe livenessProbe, ContainerProbe readinessProbe)
+        internal ContainerInstance(string name, string image, IList<string> command, IList<ContainerPort> ports, IList<EnvironmentVariable> environmentVariables, ContainerInstanceView instanceView, ResourceRequirements resources, IList<ContainerInstanceVolumeMount> volumeMounts, ContainerProbe livenessProbe, ContainerProbe readinessProbe)
         {
             Name = name;
             Image = image;
@@ -79,11 +79,11 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> The environment variables to set in the container instance. </summary>
         public IList<EnvironmentVariable> EnvironmentVariables { get; }
         /// <summary> The instance view of the container instance. Only valid in response. </summary>
-        public ContainerPropertiesInstanceView InstanceView { get; }
+        public ContainerInstanceView InstanceView { get; }
         /// <summary> The resource requirements of the container instance. </summary>
         public ResourceRequirements Resources { get; set; }
         /// <summary> The volume mounts available to the container instance. </summary>
-        public IList<VolumeMount> VolumeMounts { get; }
+        public IList<ContainerInstanceVolumeMount> VolumeMounts { get; }
         /// <summary> The liveness probe. </summary>
         public ContainerProbe LivenessProbe { get; set; }
         /// <summary> The readiness probe. </summary>

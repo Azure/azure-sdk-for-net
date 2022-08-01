@@ -11,18 +11,18 @@ using Azure.Core;
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     /// <summary> The instance view of the container group. Only valid in response. </summary>
-    public partial class ContainerGroupPropertiesInstanceView
+    public partial class ContainerGroupInstanceView
     {
-        /// <summary> Initializes a new instance of ContainerGroupPropertiesInstanceView. </summary>
-        internal ContainerGroupPropertiesInstanceView()
+        /// <summary> Initializes a new instance of ContainerGroupInstanceView. </summary>
+        internal ContainerGroupInstanceView()
         {
             Events = new ChangeTrackingList<ContainerEvent>();
         }
 
-        /// <summary> Initializes a new instance of ContainerGroupPropertiesInstanceView. </summary>
+        /// <summary> Initializes a new instance of ContainerGroupInstanceView. </summary>
         /// <param name="events"> The events of this container group. </param>
         /// <param name="state"> The state of the container group. Only valid in response. </param>
-        internal ContainerGroupPropertiesInstanceView(IReadOnlyList<ContainerEvent> events, string state)
+        internal ContainerGroupInstanceView(IReadOnlyList<ContainerEvent> events, string state)
         {
             Events = events;
             State = state;

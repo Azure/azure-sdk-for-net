@@ -8,27 +8,27 @@
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     /// <summary> The port exposed on the container group. </summary>
-    public partial class Port
+    public partial class ContainerGroupPort
     {
-        /// <summary> Initializes a new instance of Port. </summary>
-        /// <param name="portValue"> The port number. </param>
-        public Port(int portValue)
+        /// <summary> Initializes a new instance of ContainerGroupPort. </summary>
+        /// <param name="port"> The port number. </param>
+        public ContainerGroupPort(int port)
         {
-            PortValue = portValue;
+            Port = port;
         }
 
-        /// <summary> Initializes a new instance of Port. </summary>
+        /// <summary> Initializes a new instance of ContainerGroupPort. </summary>
         /// <param name="protocol"> The protocol associated with the port. </param>
-        /// <param name="portValue"> The port number. </param>
-        internal Port(ContainerGroupNetworkProtocol? protocol, int portValue)
+        /// <param name="port"> The port number. </param>
+        internal ContainerGroupPort(ContainerGroupNetworkProtocol? protocol, int port)
         {
             Protocol = protocol;
-            PortValue = portValue;
+            Port = port;
         }
 
         /// <summary> The protocol associated with the port. </summary>
         public ContainerGroupNetworkProtocol? Protocol { get; set; }
         /// <summary> The port number. </summary>
-        public int PortValue { get; set; }
+        public int Port { get; set; }
     }
 }

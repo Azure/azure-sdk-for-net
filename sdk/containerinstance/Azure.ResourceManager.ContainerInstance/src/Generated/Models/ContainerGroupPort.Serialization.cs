@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    public partial class Port : IUtf8JsonSerializable
+    public partial class ContainerGroupPort : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -21,11 +21,11 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
             writer.WritePropertyName("port");
-            writer.WriteNumberValue(PortValue);
+            writer.WriteNumberValue(Port);
             writer.WriteEndObject();
         }
 
-        internal static Port DeserializePort(JsonElement element)
+        internal static ContainerGroupPort DeserializeContainerGroupPort(JsonElement element)
         {
             Optional<ContainerGroupNetworkProtocol> protocol = default;
             int port = default;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     continue;
                 }
             }
-            return new Port(Optional.ToNullable(protocol), port);
+            return new ContainerGroupPort(Optional.ToNullable(protocol), port);
         }
     }
 }

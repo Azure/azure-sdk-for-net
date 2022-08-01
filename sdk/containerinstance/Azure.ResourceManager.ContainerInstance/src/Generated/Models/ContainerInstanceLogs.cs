@@ -8,16 +8,16 @@
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     /// <summary> The logs. </summary>
-    public partial class ContainerLogs
+    public partial class ContainerInstanceLogs
     {
-        /// <summary> Initializes a new instance of ContainerLogs. </summary>
-        internal ContainerLogs()
+        /// <summary> Initializes a new instance of ContainerInstanceLogs. </summary>
+        internal ContainerInstanceLogs()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerLogs. </summary>
+        /// <summary> Initializes a new instance of ContainerInstanceLogs. </summary>
         /// <param name="content"> The content of the log. </param>
-        internal ContainerLogs(string content)
+        internal ContainerInstanceLogs(string content)
         {
             Content = content;
         }

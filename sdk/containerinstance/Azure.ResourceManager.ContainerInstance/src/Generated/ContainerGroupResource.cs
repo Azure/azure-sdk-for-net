@@ -458,11 +458,11 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
-        public virtual async Task<Response<ContainerLogs>> GetLogsContainerAsync(string containerName, int? tail = null, bool? timestamps = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerInstanceLogs>> GetContainerLogsAsync(string containerName, int? tail = null, bool? timestamps = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
-            using var scope = _containersClientDiagnostics.CreateScope("ContainerGroupResource.GetLogsContainer");
+            using var scope = _containersClientDiagnostics.CreateScope("ContainerGroupResource.GetContainerLogs");
             scope.Start();
             try
             {
@@ -487,11 +487,11 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
-        public virtual Response<ContainerLogs> GetLogsContainer(string containerName, int? tail = null, bool? timestamps = null, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerInstanceLogs> GetContainerLogs(string containerName, int? tail = null, bool? timestamps = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
-            using var scope = _containersClientDiagnostics.CreateScope("ContainerGroupResource.GetLogsContainer");
+            using var scope = _containersClientDiagnostics.CreateScope("ContainerGroupResource.GetContainerLogs");
             scope.Start();
             try
             {
@@ -515,12 +515,12 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<ContainerExecResult>> ExecuteCommandContainerAsync(string containerName, ContainerExecContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerExecResult>> ExecuteContainerCommandAsync(string containerName, ContainerExecContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _containersClientDiagnostics.CreateScope("ContainerGroupResource.ExecuteCommandContainer");
+            using var scope = _containersClientDiagnostics.CreateScope("ContainerGroupResource.ExecuteContainerCommand");
             scope.Start();
             try
             {
@@ -544,12 +544,12 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="content"/> is null. </exception>
-        public virtual Response<ContainerExecResult> ExecuteCommandContainer(string containerName, ContainerExecContent content, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerExecResult> ExecuteContainerCommand(string containerName, ContainerExecContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _containersClientDiagnostics.CreateScope("ContainerGroupResource.ExecuteCommandContainer");
+            using var scope = _containersClientDiagnostics.CreateScope("ContainerGroupResource.ExecuteContainerCommand");
             scope.Start();
             try
             {

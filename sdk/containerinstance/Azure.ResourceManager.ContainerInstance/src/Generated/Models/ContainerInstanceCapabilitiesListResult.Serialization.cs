@@ -11,36 +11,36 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    public partial class ContainerGroupPropertiesInstanceView
+    internal partial class ContainerInstanceCapabilitiesListResult
     {
-        internal static ContainerGroupPropertiesInstanceView DeserializeContainerGroupPropertiesInstanceView(JsonElement element)
+        internal static ContainerInstanceCapabilitiesListResult DeserializeContainerInstanceCapabilitiesListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ContainerEvent>> events = default;
-            Optional<string> state = default;
+            Optional<IReadOnlyList<ContainerInstanceCapabilities>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("events"))
+                if (property.NameEquals("value"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ContainerEvent> array = new List<ContainerEvent>();
+                    List<ContainerInstanceCapabilities> array = new List<ContainerInstanceCapabilities>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerEvent.DeserializeContainerEvent(item));
+                        array.Add(ContainerInstanceCapabilities.DeserializeContainerInstanceCapabilities(item));
                     }
-                    events = array;
+                    value = array;
                     continue;
                 }
-                if (property.NameEquals("state"))
+                if (property.NameEquals("nextLink"))
                 {
-                    state = property.Value.GetString();
+                    nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new ContainerGroupPropertiesInstanceView(Optional.ToList(events), state.Value);
+            return new ContainerInstanceCapabilitiesListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }
