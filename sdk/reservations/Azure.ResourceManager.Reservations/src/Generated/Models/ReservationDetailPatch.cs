@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <summary> Name of the Reservation. </summary>
         public string Name { get; set; }
         /// <summary> Setting this to true will automatically purchase a new reservation on the expiration date time. </summary>
-        public bool? Renew { get; set; }
+        public bool? IsRenewEnabled { get; set; }
         /// <summary> Gets or sets the renew properties. </summary>
         internal PatchPropertiesRenewProperties RenewProperties { get; set; }
         /// <summary> Gets or sets the renew purchase properties. </summary>

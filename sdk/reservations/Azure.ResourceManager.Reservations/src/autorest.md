@@ -91,6 +91,7 @@ rename-mapping:
   SubRequest: SubContent
   OperationStatus: ReservationOperationStatus
   ResourceName: ReservationResourceName
+  Patch.properties.renew: IsRenewEnabled
   
 directive:
   - from: quota.json

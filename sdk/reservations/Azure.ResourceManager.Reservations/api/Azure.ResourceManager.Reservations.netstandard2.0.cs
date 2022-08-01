@@ -546,8 +546,8 @@ namespace Azure.ResourceManager.Reservations.Models
         public System.Collections.Generic.IList<string> AppliedScopes { get { throw null; } }
         public Azure.ResourceManager.Reservations.Models.AppliedScopeType? AppliedScopeType { get { throw null; } set { } }
         public Azure.ResourceManager.Reservations.Models.InstanceFlexibility? InstanceFlexibility { get { throw null; } set { } }
+        public bool? IsRenewEnabled { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
-        public bool? Renew { get { throw null; } set { } }
         public Azure.ResourceManager.Reservations.Models.ReservationPurchaseContent RenewPurchaseProperties { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
