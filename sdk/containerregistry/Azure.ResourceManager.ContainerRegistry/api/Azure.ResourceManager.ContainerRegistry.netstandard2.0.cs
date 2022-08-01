@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ContainerRegistry
     {
         public RegistryData(Azure.Core.AzureLocation location, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySku sku) : base (default(Azure.Core.AzureLocation)) { }
         public bool? AdminUserEnabled { get { throw null; } set { } }
-        public System.DateTimeOffset? CreationOn { get { throw null; } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public bool? DataEndpointEnabled { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<string> DataEndpointHostNames { get { throw null; } }
         public Azure.ResourceManager.ContainerRegistry.Models.EncryptionProperty Encryption { get { throw null; } set { } }
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         public TaskData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public int? AgentCpu { get { throw null; } set { } }
         public string AgentPoolName { get { throw null; } set { } }
-        public System.DateTimeOffset? CreationOn { get { throw null; } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public Azure.ResourceManager.ContainerRegistry.Models.Credentials Credentials { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerRegistry.Models.IdentityProperties Identity { get { throw null; } set { } }
         public bool? IsSystemTask { get { throw null; } set { } }

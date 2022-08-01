@@ -4,6 +4,8 @@
 
 ### Features Added
 - Added `Length` property to `BoundingPolygon`.
+- Added a public constructor to `CopyAuthorization`.
+- Added properties `AccessToken` and `TargetResourceId` to `CopyAuthorization`.
 
 ### Breaking Changes
 - Updated all long-running operation client methods to a new pattern. This affects `StartAnalyzeDocument`, `StartAnalyzeDocumentFromUri`, `StartBuildModel`, `StartCopyModelTo`, and `StartCreateComposedModel` methods. Changes are:
@@ -24,6 +26,8 @@
 - Renamed parameter `buildModelOptions` to `options` in the `StartBuildModel` method.
 - `FormRecognizerClientOptions.Audience` and `DocumentAnalysisClientOptions.Audience` now default to `null`.
 - In the `DocumentAnalysis` namespace, `CopyModelOperation.PercentCompleted` and `BuildModelOperation.PercentCompleted` now throw an `InvalidOperationException` if called before a call to `UpdateStatus`.
+- Updated `CopyAuthorization.TargetModelLocation` to be a `Uri` instead of `string`.
+- Removed method `DocumentAnalysisModelFactory.CopyAuthorization`.
 
 ### Bugs Fixed
 

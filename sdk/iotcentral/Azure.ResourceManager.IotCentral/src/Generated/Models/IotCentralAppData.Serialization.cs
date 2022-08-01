@@ -24,7 +24,8 @@ namespace Azure.ResourceManager.IotCentral
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity");
-                JsonSerializer.Serialize(writer, Identity);
+                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
+                JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -73,7 +74,7 @@ namespace Azure.ResourceManager.IotCentral
         internal static IotCentralAppData DeserializeIotCentralAppData(JsonElement element)
         {
             IotCentralAppSkuInfo sku = default;
-            Optional<SystemAssignedServiceIdentity> identity = default;
+            Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -103,7 +104,8 @@ namespace Azure.ResourceManager.IotCentral
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<SystemAssignedServiceIdentity>(property.Value.ToString());
+                    var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString(), serializeOptions);
                     continue;
                 }
                 if (property.NameEquals("tags"))

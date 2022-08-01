@@ -773,7 +773,7 @@ namespace Azure.ResourceManager.Media
 }
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class AacAudio : Azure.ResourceManager.Media.Models.AudiocommonProperties
+    public partial class AacAudio : Azure.ResourceManager.Media.Models.AudioCommonProperties
     {
         public AacAudio() { }
         public Azure.ResourceManager.Media.Models.AacAudioProfile? Profile { get { throw null; } set { } }
@@ -995,9 +995,9 @@ namespace Azure.ResourceManager.Media.Models
         public System.Collections.Generic.IDictionary<string, string> ExperimentalOptions { get { throw null; } }
         public Azure.ResourceManager.Media.Models.AudioAnalysisMode? Mode { get { throw null; } set { } }
     }
-    public partial class AudiocommonProperties : Azure.ResourceManager.Media.Models.CodecBasicProperties
+    public partial class AudioCommonProperties : Azure.ResourceManager.Media.Models.CodecBasicProperties
     {
-        public AudiocommonProperties() { }
+        public AudioCommonProperties() { }
         public int? Bitrate { get { throw null; } set { } }
         public int? Channels { get { throw null; } set { } }
         public int? SamplingRate { get { throw null; } set { } }
