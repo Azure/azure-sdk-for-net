@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             Assert.AreEqual(name, recordSetSrvResource.Value.Data.Name);
             Assert.AreEqual("Succeeded", recordSetSrvResource.Value.Data.ProvisioningState);
             Assert.AreEqual("dnszones/SRV", recordSetSrvResource.Value.Data.ResourceType.Type);
+            Assert.AreEqual(300, recordSetSrvResource.Value.Data.TtlInSeconds);
         }
 
         [Test]
