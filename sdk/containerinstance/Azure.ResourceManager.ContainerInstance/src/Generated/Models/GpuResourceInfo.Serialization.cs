@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    public partial class GpuResource : IUtf8JsonSerializable
+    public partial class GpuResourceInfo : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             writer.WriteEndObject();
         }
 
-        internal static GpuResource DeserializeGpuResource(JsonElement element)
+        internal static GpuResourceInfo DeserializeGpuResourceInfo(JsonElement element)
         {
             int count = default;
             GpuSku sku = default;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     continue;
                 }
             }
-            return new GpuResource(count, sku);
+            return new GpuResourceInfo(count, sku);
         }
     }
 }

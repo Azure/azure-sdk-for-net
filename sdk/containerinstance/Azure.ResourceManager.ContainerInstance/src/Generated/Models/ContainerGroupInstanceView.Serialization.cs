@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    public partial class ContainerGroupPropertiesInstanceView
+    public partial class ContainerGroupInstanceView
     {
-        internal static ContainerGroupPropertiesInstanceView DeserializeContainerGroupPropertiesInstanceView(JsonElement element)
+        internal static ContainerGroupInstanceView DeserializeContainerGroupInstanceView(JsonElement element)
         {
             Optional<IReadOnlyList<ContainerEvent>> events = default;
             Optional<string> state = default;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     continue;
                 }
             }
-            return new ContainerGroupPropertiesInstanceView(Optional.ToList(events), state.Value);
+            return new ContainerGroupInstanceView(Optional.ToList(events), state.Value);
         }
     }
 }

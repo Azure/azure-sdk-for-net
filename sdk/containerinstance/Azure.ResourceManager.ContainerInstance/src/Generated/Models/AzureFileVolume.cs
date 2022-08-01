@@ -33,13 +33,13 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         /// <summary> Initializes a new instance of AzureFileVolume. </summary>
         /// <param name="shareName"> The name of the Azure File share to be mounted as a volume. </param>
-        /// <param name="readOnly"> The flag indicating whether the Azure File shared mounted as a volume is read-only. </param>
+        /// <param name="isReadOnly"> The flag indicating whether the Azure File shared mounted as a volume is read-only. </param>
         /// <param name="storageAccountName"> The name of the storage account that contains the Azure File share. </param>
         /// <param name="storageAccountKey"> The storage account access key used to access the Azure File share. </param>
-        internal AzureFileVolume(string shareName, bool? readOnly, string storageAccountName, string storageAccountKey)
+        internal AzureFileVolume(string shareName, bool? isReadOnly, string storageAccountName, string storageAccountKey)
         {
             ShareName = shareName;
-            ReadOnly = readOnly;
+            IsReadOnly = isReadOnly;
             StorageAccountName = storageAccountName;
             StorageAccountKey = storageAccountKey;
         }
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> The name of the Azure File share to be mounted as a volume. </summary>
         public string ShareName { get; set; }
         /// <summary> The flag indicating whether the Azure File shared mounted as a volume is read-only. </summary>
-        public bool? ReadOnly { get; set; }
+        public bool? IsReadOnly { get; set; }
         /// <summary> The name of the storage account that contains the Azure File share. </summary>
         public string StorageAccountName { get; set; }
         /// <summary> The storage account access key used to access the Azure File share. </summary>

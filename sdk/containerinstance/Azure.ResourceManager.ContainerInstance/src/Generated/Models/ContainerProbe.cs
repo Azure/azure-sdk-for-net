@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="periodSeconds"> The period seconds. </param>
         /// <param name="failureThreshold"> The failure threshold. </param>
         /// <param name="successThreshold"> The success threshold. </param>
-        /// <param name="timeoutSeconds"> The timeout seconds. </param>
-        internal ContainerProbe(ContainerExec exec, ContainerHttpGet httpGet, int? initialDelaySeconds, int? periodSeconds, int? failureThreshold, int? successThreshold, int? timeoutSeconds)
+        /// <param name="timeoutInSeconds"> The timeout seconds. </param>
+        internal ContainerProbe(ContainerExec exec, ContainerHttpGet httpGet, int? initialDelaySeconds, int? periodSeconds, int? failureThreshold, int? successThreshold, int? timeoutInSeconds)
         {
             Exec = exec;
             HttpGet = httpGet;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             PeriodSeconds = periodSeconds;
             FailureThreshold = failureThreshold;
             SuccessThreshold = successThreshold;
-            TimeoutSeconds = timeoutSeconds;
+            TimeoutInSeconds = timeoutInSeconds;
         }
 
         /// <summary> The execution command to probe. </summary>
@@ -60,6 +60,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> The success threshold. </summary>
         public int? SuccessThreshold { get; set; }
         /// <summary> The timeout seconds. </summary>
-        public int? TimeoutSeconds { get; set; }
+        public int? TimeoutInSeconds { get; set; }
     }
 }

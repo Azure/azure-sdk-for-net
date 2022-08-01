@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             writer.WriteStartObject();
             writer.WritePropertyName("shareName");
             writer.WriteStringValue(ShareName);
-            if (Optional.IsDefined(ReadOnly))
+            if (Optional.IsDefined(IsReadOnly))
             {
                 writer.WritePropertyName("readOnly");
-                writer.WriteBooleanValue(ReadOnly.Value);
+                writer.WriteBooleanValue(IsReadOnly.Value);
             }
             writer.WritePropertyName("storageAccountName");
             writer.WriteStringValue(StorageAccountName);

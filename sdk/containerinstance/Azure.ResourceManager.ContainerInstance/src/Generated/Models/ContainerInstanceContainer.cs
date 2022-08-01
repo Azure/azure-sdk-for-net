@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="volumeMounts"> The volume mounts available to the container instance. </param>
         /// <param name="livenessProbe"> The liveness probe. </param>
         /// <param name="readinessProbe"> The readiness probe. </param>
-        internal ContainerInstanceContainer(string name, string image, IList<string> command, IList<ContainerPort> ports, IList<EnvironmentVariable> environmentVariables, ContainerPropertiesInstanceView instanceView, ResourceRequirements resources, IList<VolumeMount> volumeMounts, ContainerProbe livenessProbe, ContainerProbe readinessProbe)
+        internal ContainerInstanceContainer(string name, string image, IList<string> command, IList<ContainerPort> ports, IList<EnvironmentVariable> environmentVariables, ContainerInstanceView instanceView, ResourceRequirements resources, IList<VolumeMount> volumeMounts, ContainerProbe livenessProbe, ContainerProbe readinessProbe)
         {
             Name = name;
             Image = image;
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> The environment variables to set in the container instance. </summary>
         public IList<EnvironmentVariable> EnvironmentVariables { get; }
         /// <summary> The instance view of the container instance. Only valid in response. </summary>
-        public ContainerPropertiesInstanceView InstanceView { get; }
+        public ContainerInstanceView InstanceView { get; }
         /// <summary> The resource requirements of the container instance. </summary>
         public ResourceRequirements Resources { get; set; }
         /// <summary> The volume mounts available to the container instance. </summary>

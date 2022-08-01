@@ -145,10 +145,10 @@ namespace Azure.ResourceManager.ContainerInstance
             IList<ContainerInstanceContainer> containers = default;
             Optional<IList<ImageRegistryCredential>> imageRegistryCredentials = default;
             Optional<ContainerGroupRestartPolicy> restartPolicy = default;
-            Optional<IPAddress> ipAddress = default;
+            Optional<ContainerGroupIPAddress> ipAddress = default;
             OperatingSystemType osType = default;
             Optional<IList<ContainerInstanceVolume>> volumes = default;
-            Optional<ContainerGroupPropertiesInstanceView> instanceView = default;
+            Optional<ContainerGroupInstanceView> instanceView = default;
             Optional<ContainerGroupDiagnostics> diagnostics = default;
             Optional<IList<ContainerGroupSubnetId>> subnetIds = default;
             Optional<DnsConfiguration> dnsConfig = default;
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.ContainerInstance
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            ipAddress = IPAddress.DeserializeIPAddress(property0.Value);
+                            ipAddress = ContainerGroupIPAddress.DeserializeContainerGroupIPAddress(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("osType"))
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.ContainerInstance
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            instanceView = ContainerGroupPropertiesInstanceView.DeserializeContainerGroupPropertiesInstanceView(property0.Value);
+                            instanceView = ContainerGroupInstanceView.DeserializeContainerGroupInstanceView(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("diagnostics"))

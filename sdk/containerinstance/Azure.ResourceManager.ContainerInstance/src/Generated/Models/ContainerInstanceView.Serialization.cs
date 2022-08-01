@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    public partial class ContainerPropertiesInstanceView
+    public partial class ContainerInstanceView
     {
-        internal static ContainerPropertiesInstanceView DeserializeContainerPropertiesInstanceView(JsonElement element)
+        internal static ContainerInstanceView DeserializeContainerInstanceView(JsonElement element)
         {
             Optional<int> restartCount = default;
             Optional<ContainerState> currentState = default;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     continue;
                 }
             }
-            return new ContainerPropertiesInstanceView(Optional.ToNullable(restartCount), currentState.Value, previousState.Value, Optional.ToList(events));
+            return new ContainerInstanceView(Optional.ToNullable(restartCount), currentState.Value, previousState.Value, Optional.ToList(events));
         }
     }
 }

@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 writer.WritePropertyName("successThreshold");
                 writer.WriteNumberValue(SuccessThreshold.Value);
             }
-            if (Optional.IsDefined(TimeoutSeconds))
+            if (Optional.IsDefined(TimeoutInSeconds))
             {
                 writer.WritePropertyName("timeoutSeconds");
-                writer.WriteNumberValue(TimeoutSeconds.Value);
+                writer.WriteNumberValue(TimeoutInSeconds.Value);
             }
             writer.WriteEndObject();
         }

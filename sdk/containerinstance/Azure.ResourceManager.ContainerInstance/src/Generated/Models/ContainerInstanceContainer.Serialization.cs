@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             Optional<IList<string>> command = default;
             Optional<IList<ContainerPort>> ports = default;
             Optional<IList<EnvironmentVariable>> environmentVariables = default;
-            Optional<ContainerPropertiesInstanceView> instanceView = default;
+            Optional<ContainerInstanceView> instanceView = default;
             ResourceRequirements resources = default;
             Optional<IList<VolumeMount>> volumeMounts = default;
             Optional<ContainerProbe> livenessProbe = default;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            instanceView = ContainerPropertiesInstanceView.DeserializeContainerPropertiesInstanceView(property0.Value);
+                            instanceView = ContainerInstanceView.DeserializeContainerInstanceView(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("resources"))

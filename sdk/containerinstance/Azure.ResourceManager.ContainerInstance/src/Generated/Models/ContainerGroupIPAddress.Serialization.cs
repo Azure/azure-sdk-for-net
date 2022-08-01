@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    public partial class IPAddress : IUtf8JsonSerializable
+    public partial class ContainerGroupIPAddress : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
             writer.WriteEndArray();
             writer.WritePropertyName("type");
-            writer.WriteStringValue(ContainerGroupIPAddressType.ToString());
-            if (Optional.IsDefined(IP))
+            writer.WriteStringValue(AddressType.ToString());
+            if (Optional.IsDefined(IpAddress))
             {
                 writer.WritePropertyName("ip");
-                writer.WriteStringValue(IP);
+                writer.WriteStringValue(IpAddress);
             }
             if (Optional.IsDefined(DnsNameLabel))
             {
@@ -43,9 +43,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             writer.WriteEndObject();
         }
 
-        internal static IPAddress DeserializeIPAddress(JsonElement element)
+        internal static ContainerGroupIPAddress DeserializeContainerGroupIPAddress(JsonElement element)
         {
-            IList<Port> ports = default;
+            IList<ContainerGroupPort> ports = default;
             ContainerGroupIPAddressType type = default;
             Optional<string> ip = default;
             Optional<string> dnsNameLabel = default;
@@ -55,10 +55,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 if (property.NameEquals("ports"))
                 {
-                    List<Port> array = new List<Port>();
+                    List<ContainerGroupPort> array = new List<ContainerGroupPort>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Port.DeserializePort(item));
+                        array.Add(ContainerGroupPort.DeserializeContainerGroupPort(item));
                     }
                     ports = array;
                     continue;
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     continue;
                 }
             }
-            return new IPAddress(ports, type, ip.Value, dnsNameLabel.Value, Optional.ToNullable(dnsNameLabelReusePolicy), fqdn.Value);
+            return new ContainerGroupIPAddress(ports, type, ip.Value, dnsNameLabel.Value, Optional.ToNullable(dnsNameLabelReusePolicy), fqdn.Value);
         }
     }
 }

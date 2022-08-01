@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> Initializes a new instance of VolumeMount. </summary>
         /// <param name="name"> The name of the volume mount. </param>
         /// <param name="mountPath"> The path within the container where the volume should be mounted. Must not contain colon (:). </param>
-        /// <param name="readOnly"> The flag indicating whether the volume mount is read-only. </param>
-        internal VolumeMount(string name, string mountPath, bool? readOnly)
+        /// <param name="isReadOnly"> The flag indicating whether the volume mount is read-only. </param>
+        internal VolumeMount(string name, string mountPath, bool? isReadOnly)
         {
             Name = name;
             MountPath = mountPath;
-            ReadOnly = readOnly;
+            IsReadOnly = isReadOnly;
         }
 
         /// <summary> The name of the volume mount. </summary>
@@ -47,6 +47,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> The path within the container where the volume should be mounted. Must not contain colon (:). </summary>
         public string MountPath { get; set; }
         /// <summary> The flag indicating whether the volume mount is read-only. </summary>
-        public bool? ReadOnly { get; set; }
+        public bool? IsReadOnly { get; set; }
     }
 }

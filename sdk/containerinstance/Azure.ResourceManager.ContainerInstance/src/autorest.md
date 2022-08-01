@@ -44,26 +44,35 @@ rename-rules:
   Etag: ETag|etag
   TCP: Tcp
   UDP: Udp
+  Noreuse: NoReuse
 
 override-operation-name:
   Location_ListCachedImages: GetCachedImagesWithLocation
   Location_ListCapabilities: GetCapabilitiesWithLocation
-  Location_ListUsage: GetUsageWithLocation
+  Location_ListUsage: GetUsagesWithLocation
+  Containers_ExecuteCommand: ExecuteContainerCommand
+  Containers_ListLogs: GetContainerLogs
+
+prepend-rp-prefix:
+  - Container
+  - Volume
+rename-mapping:
+  Logs: ContainerLogs
+  Event: ContainerEvent
+  AzureFileVolume.readOnly: IsReadOnly
+  VolumeMount.readOnly: IsReadOnly
+#   Capabilities: ContainerInstanceCapabilities
+#   CapabilitiesPropertiesCapabilities: ContainerInstanceSupportedCapabilities
+  ContainerProbe.timeoutSeconds: TimeoutInSeconds
+  Scheme: ContainerHttpGetScheme
+  Port: ContainerGroupPort
+  IpAddress.ip: -|ip-address
+  IpAddress: ContainerGroupIPAddress
+  GpuResource: GpuResourceInfo
+  ContainerGroupPropertiesInstanceView: ContainerGroupInstanceView
+  ContainerPropertiesInstanceView: ContainerInstanceView
 
 directive:
-  - rename-model:
-      from: Container
-      to: ContainerInstanceContainer
-  - rename-model:
-      from: Volume
-      to: ContainerInstanceVolume
-  - rename-model:
-      from: Logs
-      to: ContainerLogs
-  - rename-model:
-      from: Event
-      to: ContainerEvent
-      
   - from: containerInstance.json
     where: $.definitions
     transform: >
@@ -72,7 +81,7 @@ directive:
       $.Capabilities["x-ms-client-name"] = "ContainerInstanceCapabilities";
       $.ContainerGroupSubnetId.properties.id["x-ms-format"] = "arm-id";
       $.InitContainerDefinition["x-ms-client-name"] = "InitContainerDefinitionContent";
-      $.LogAnalytics.properties.workspaceId["x-ms-format"] = "arm-id";
+      $.LogAnalytics.properties.workspaceResourceId["x-ms-format"] = "arm-id";
   - from: swagger-document
     where: $.definitions.ContainerHttpGet.scheme["x-ms-enum"]
     transform: $["name"] = "ContainerInstanceScheme"

@@ -11,20 +11,20 @@ using Azure.Core;
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     /// <summary> The instance view of the container instance. Only valid in response. </summary>
-    public partial class ContainerPropertiesInstanceView
+    public partial class ContainerInstanceView
     {
-        /// <summary> Initializes a new instance of ContainerPropertiesInstanceView. </summary>
-        internal ContainerPropertiesInstanceView()
+        /// <summary> Initializes a new instance of ContainerInstanceView. </summary>
+        internal ContainerInstanceView()
         {
             Events = new ChangeTrackingList<ContainerEvent>();
         }
 
-        /// <summary> Initializes a new instance of ContainerPropertiesInstanceView. </summary>
+        /// <summary> Initializes a new instance of ContainerInstanceView. </summary>
         /// <param name="restartCount"> The number of times that the container instance has been restarted. </param>
         /// <param name="currentState"> Current container instance state. </param>
         /// <param name="previousState"> Previous container instance state. </param>
         /// <param name="events"> The events of the container instance. </param>
-        internal ContainerPropertiesInstanceView(int? restartCount, ContainerState currentState, ContainerState previousState, IReadOnlyList<ContainerEvent> events)
+        internal ContainerInstanceView(int? restartCount, ContainerState currentState, ContainerState previousState, IReadOnlyList<ContainerEvent> events)
         {
             RestartCount = restartCount;
             CurrentState = currentState;

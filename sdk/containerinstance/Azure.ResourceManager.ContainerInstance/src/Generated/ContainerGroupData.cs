@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="encryptionProperties"> The encryption properties for a container group. </param>
         /// <param name="initContainers"> The init containers for a container group. </param>
         /// <param name="zones"> The zones for the container group. </param>
-        internal ContainerGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string provisioningState, IList<ContainerInstanceContainer> containers, IList<ImageRegistryCredential> imageRegistryCredentials, ContainerGroupRestartPolicy? restartPolicy, IPAddress ipAddress, OperatingSystemType osType, IList<ContainerInstanceVolume> volumes, ContainerGroupPropertiesInstanceView instanceView, ContainerGroupDiagnostics diagnostics, IList<ContainerGroupSubnetId> subnetIds, DnsConfiguration dnsConfig, ContainerGroupSku? sku, Models.EncryptionProperties encryptionProperties, IList<InitContainerDefinitionContent> initContainers, IList<string> zones) : base(id, name, resourceType, systemData, tags, location)
+        internal ContainerGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string provisioningState, IList<ContainerInstanceContainer> containers, IList<ImageRegistryCredential> imageRegistryCredentials, ContainerGroupRestartPolicy? restartPolicy, ContainerGroupIPAddress ipAddress, OperatingSystemType osType, IList<ContainerInstanceVolume> volumes, ContainerGroupInstanceView instanceView, ContainerGroupDiagnostics diagnostics, IList<ContainerGroupSubnetId> subnetIds, DnsConfiguration dnsConfig, ContainerGroupSku? sku, Models.EncryptionProperties encryptionProperties, IList<InitContainerDefinitionContent> initContainers, IList<string> zones) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             ProvisioningState = provisioningState;
@@ -104,13 +104,13 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </summary>
         public ContainerGroupRestartPolicy? RestartPolicy { get; set; }
         /// <summary> The IP address type of the container group. </summary>
-        public IPAddress IPAddress { get; set; }
+        public ContainerGroupIPAddress IPAddress { get; set; }
         /// <summary> The operating system type required by the containers in the container group. </summary>
         public OperatingSystemType OSType { get; set; }
         /// <summary> The list of volumes that can be mounted by containers in this container group. </summary>
         public IList<ContainerInstanceVolume> Volumes { get; }
         /// <summary> The instance view of the container group. Only valid in response. </summary>
-        public ContainerGroupPropertiesInstanceView InstanceView { get; }
+        public ContainerGroupInstanceView InstanceView { get; }
         /// <summary> The diagnostic information for a container group. </summary>
         internal ContainerGroupDiagnostics Diagnostics { get; set; }
         /// <summary> Container group log analytics information. </summary>
