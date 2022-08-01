@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Serialized Name: PipelineListResponse.value
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal PipelineListResponse(IEnumerable<DataFactoryPipelineData> value)
+        internal PipelineListResponse(IEnumerable<FactoryPipelineData> value)
         {
             if (value == null)
             {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The link to the next page of results, if any remaining results exist.
         /// Serialized Name: PipelineListResponse.nextLink
         /// </param>
-        internal PipelineListResponse(IReadOnlyList<DataFactoryPipelineData> value, string nextLink)
+        internal PipelineListResponse(IReadOnlyList<FactoryPipelineData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// List of pipelines.
         /// Serialized Name: PipelineListResponse.value
         /// </summary>
-        public IReadOnlyList<DataFactoryPipelineData> Value { get; }
+        public IReadOnlyList<FactoryPipelineData> Value { get; }
         /// <summary>
         /// The link to the next page of results, if any remaining results exist.
         /// Serialized Name: PipelineListResponse.nextLink

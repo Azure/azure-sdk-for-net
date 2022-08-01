@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Serialized Name: DataFlowListResponse.value
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal DataFlowListResponse(IEnumerable<DataFactoryDataFlowData> value)
+        internal DataFlowListResponse(IEnumerable<FactoryDataFlowData> value)
         {
             if (value == null)
             {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The link to the next page of results, if any remaining results exist.
         /// Serialized Name: DataFlowListResponse.nextLink
         /// </param>
-        internal DataFlowListResponse(IReadOnlyList<DataFactoryDataFlowData> value, string nextLink)
+        internal DataFlowListResponse(IReadOnlyList<FactoryDataFlowData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// List of data flows.
         /// Serialized Name: DataFlowListResponse.value
         /// </summary>
-        public IReadOnlyList<DataFactoryDataFlowData> Value { get; }
+        public IReadOnlyList<FactoryDataFlowData> Value { get; }
         /// <summary>
         /// The link to the next page of results, if any remaining results exist.
         /// Serialized Name: DataFlowListResponse.nextLink

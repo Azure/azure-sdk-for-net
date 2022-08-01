@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Serialized Name: TriggerQueryResponse.value
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal TriggerQueryResponse(IEnumerable<DataFactoryTriggerData> value)
+        internal TriggerQueryResponse(IEnumerable<FactoryTriggerData> value)
         {
             if (value == null)
             {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The continuation token for getting the next page of results, if any remaining results exist, null otherwise.
         /// Serialized Name: TriggerQueryResponse.continuationToken
         /// </param>
-        internal TriggerQueryResponse(IReadOnlyList<DataFactoryTriggerData> value, string continuationToken)
+        internal TriggerQueryResponse(IReadOnlyList<FactoryTriggerData> value, string continuationToken)
         {
             Value = value;
             ContinuationToken = continuationToken;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// List of triggers.
         /// Serialized Name: TriggerQueryResponse.value
         /// </summary>
-        public IReadOnlyList<DataFactoryTriggerData> Value { get; }
+        public IReadOnlyList<FactoryTriggerData> Value { get; }
         /// <summary>
         /// The continuation token for getting the next page of results, if any remaining results exist, null otherwise.
         /// Serialized Name: TriggerQueryResponse.continuationToken

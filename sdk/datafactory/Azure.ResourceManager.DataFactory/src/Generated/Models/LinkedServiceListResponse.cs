@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Serialized Name: LinkedServiceListResponse.value
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal LinkedServiceListResponse(IEnumerable<DataFactoryLinkedServiceData> value)
+        internal LinkedServiceListResponse(IEnumerable<FactoryLinkedServiceData> value)
         {
             if (value == null)
             {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The link to the next page of results, if any remaining results exist.
         /// Serialized Name: LinkedServiceListResponse.nextLink
         /// </param>
-        internal LinkedServiceListResponse(IReadOnlyList<DataFactoryLinkedServiceData> value, string nextLink)
+        internal LinkedServiceListResponse(IReadOnlyList<FactoryLinkedServiceData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// List of linked services.
         /// Serialized Name: LinkedServiceListResponse.value
         /// </summary>
-        public IReadOnlyList<DataFactoryLinkedServiceData> Value { get; }
+        public IReadOnlyList<FactoryLinkedServiceData> Value { get; }
         /// <summary>
         /// The link to the next page of results, if any remaining results exist.
         /// Serialized Name: LinkedServiceListResponse.nextLink

@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         internal static PipelineListResponse DeserializePipelineListResponse(JsonElement element)
         {
-            IReadOnlyList<DataFactoryPipelineData> value = default;
+            IReadOnlyList<FactoryPipelineData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<DataFactoryPipelineData> array = new List<DataFactoryPipelineData>();
+                    List<FactoryPipelineData> array = new List<FactoryPipelineData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataFactoryPipelineData.DeserializeDataFactoryPipelineData(item));
+                        array.Add(FactoryPipelineData.DeserializeFactoryPipelineData(item));
                     }
                     value = array;
                     continue;

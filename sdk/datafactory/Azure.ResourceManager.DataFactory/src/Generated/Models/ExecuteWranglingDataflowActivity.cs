@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Execute power query activity.
     /// Serialized Name: ExecuteWranglingDataflowActivity
     /// </summary>
-    public partial class ExecuteWranglingDataflowActivity : PipelineActivityInfo
+    public partial class ExecuteWranglingDataflowActivity : PipelineActivityDefinition
     {
         /// <summary> Initializes a new instance of ExecuteWranglingDataflowActivity. </summary>
         /// <param name="name">

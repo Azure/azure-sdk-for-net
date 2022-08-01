@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Serialized Name: IntegrationRuntimeListResponse.value
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal IntegrationRuntimeListResponse(IEnumerable<DataFactoryIntegrationRuntimeData> value)
+        internal IntegrationRuntimeListResponse(IEnumerable<FactoryIntegrationRuntimeData> value)
         {
             if (value == null)
             {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The link to the next page of results, if any remaining results exist.
         /// Serialized Name: IntegrationRuntimeListResponse.nextLink
         /// </param>
-        internal IntegrationRuntimeListResponse(IReadOnlyList<DataFactoryIntegrationRuntimeData> value, string nextLink)
+        internal IntegrationRuntimeListResponse(IReadOnlyList<FactoryIntegrationRuntimeData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// List of integration runtimes.
         /// Serialized Name: IntegrationRuntimeListResponse.value
         /// </summary>
-        public IReadOnlyList<DataFactoryIntegrationRuntimeData> Value { get; }
+        public IReadOnlyList<FactoryIntegrationRuntimeData> Value { get; }
         /// <summary>
         /// The link to the next page of results, if any remaining results exist.
         /// Serialized Name: IntegrationRuntimeListResponse.nextLink

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
             On = @on;
             Cases = new ChangeTrackingList<SwitchCase>();
-            DefaultActivities = new ChangeTrackingList<PipelineActivityInfo>();
+            DefaultActivities = new ChangeTrackingList<PipelineActivityDefinition>();
             ActivityType = "Switch";
         }
 
@@ -77,10 +77,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="defaultActivities">
         /// List of activities to execute if no case condition is satisfied. This is an optional property and if not provided, the activity will exit without any action.
         /// Serialized Name: SwitchActivity.typeProperties.defaultActivities
-        /// Please note <see cref="PipelineActivityInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="PipelineActivityDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="PipelineActivityAppendVariableInfo"/>, <see cref="AzureDataExplorerCommandActivity"/>, <see cref="AzureFunctionActivity"/>, <see cref="AzureMLBatchExecutionActivity"/>, <see cref="AzureMLExecutePipelineActivity"/>, <see cref="AzureMLUpdateResourceActivity"/>, <see cref="ControlActivity"/>, <see cref="CopyActivity"/>, <see cref="CustomActivity"/>, <see cref="DataLakeAnalyticsUsqlActivity"/>, <see cref="DatabricksNotebookActivity"/>, <see cref="DatabricksSparkJarActivity"/>, <see cref="DatabricksSparkPythonActivity"/>, <see cref="DeleteActivity"/>, <see cref="ExecuteDataFlowActivity"/>, <see cref="ExecutePipelineActivity"/>, <see cref="ExecuteSsisPackageActivity"/>, <see cref="ExecuteWranglingDataflowActivity"/>, <see cref="ExecutionActivity"/>, <see cref="FailActivity"/>, <see cref="FilterActivity"/>, <see cref="ForEachActivity"/>, <see cref="GetMetadataActivity"/>, <see cref="HDInsightHiveActivity"/>, <see cref="HDInsightMapReduceActivity"/>, <see cref="HDInsightPigActivity"/>, <see cref="HDInsightSparkActivity"/>, <see cref="HDInsightStreamingActivity"/>, <see cref="IfConditionActivity"/>, <see cref="LookupActivity"/>, <see cref="ScriptActivity"/>, <see cref="SetVariableActivity"/>, <see cref="SqlServerStoredProcedureActivity"/>, <see cref="SwitchActivity"/>, <see cref="UntilActivity"/>, <see cref="ValidationActivity"/>, <see cref="WaitActivity"/>, <see cref="WebActivity"/> and <see cref="WebHookActivity"/>.
         /// </param>
-        internal SwitchActivity(string name, string activityType, string description, IList<PipelineActivityDependencyInfo> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, Expression @on, IList<SwitchCase> cases, IList<PipelineActivityInfo> defaultActivities) : base(name, activityType, description, dependsOn, userProperties, additionalProperties)
+        internal SwitchActivity(string name, string activityType, string description, IList<PipelineActivityDependencyInfo> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, Expression @on, IList<SwitchCase> cases, IList<PipelineActivityDefinition> defaultActivities) : base(name, activityType, description, dependsOn, userProperties, additionalProperties)
         {
             On = @on;
             Cases = cases;
@@ -101,9 +101,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary>
         /// List of activities to execute if no case condition is satisfied. This is an optional property and if not provided, the activity will exit without any action.
         /// Serialized Name: SwitchActivity.typeProperties.defaultActivities
-        /// Please note <see cref="PipelineActivityInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="PipelineActivityDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="PipelineActivityAppendVariableInfo"/>, <see cref="AzureDataExplorerCommandActivity"/>, <see cref="AzureFunctionActivity"/>, <see cref="AzureMLBatchExecutionActivity"/>, <see cref="AzureMLExecutePipelineActivity"/>, <see cref="AzureMLUpdateResourceActivity"/>, <see cref="ControlActivity"/>, <see cref="CopyActivity"/>, <see cref="CustomActivity"/>, <see cref="DataLakeAnalyticsUsqlActivity"/>, <see cref="DatabricksNotebookActivity"/>, <see cref="DatabricksSparkJarActivity"/>, <see cref="DatabricksSparkPythonActivity"/>, <see cref="DeleteActivity"/>, <see cref="ExecuteDataFlowActivity"/>, <see cref="ExecutePipelineActivity"/>, <see cref="ExecuteSsisPackageActivity"/>, <see cref="ExecuteWranglingDataflowActivity"/>, <see cref="ExecutionActivity"/>, <see cref="FailActivity"/>, <see cref="FilterActivity"/>, <see cref="ForEachActivity"/>, <see cref="GetMetadataActivity"/>, <see cref="HDInsightHiveActivity"/>, <see cref="HDInsightMapReduceActivity"/>, <see cref="HDInsightPigActivity"/>, <see cref="HDInsightSparkActivity"/>, <see cref="HDInsightStreamingActivity"/>, <see cref="IfConditionActivity"/>, <see cref="LookupActivity"/>, <see cref="ScriptActivity"/>, <see cref="SetVariableActivity"/>, <see cref="SqlServerStoredProcedureActivity"/>, <see cref="SwitchActivity"/>, <see cref="UntilActivity"/>, <see cref="ValidationActivity"/>, <see cref="WaitActivity"/>, <see cref="WebActivity"/> and <see cref="WebHookActivity"/>.
         /// </summary>
-        public IList<PipelineActivityInfo> DefaultActivities { get; }
+        public IList<PipelineActivityDefinition> DefaultActivities { get; }
     }
 }

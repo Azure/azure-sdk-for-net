@@ -51,14 +51,14 @@ namespace Azure.ResourceManager.DataFactory.Tests
             return dataFactory.Value;
         }
 
-        protected async Task<DataFactoryLinkedServiceResource> CreateLinkedService(DataFactoryResource dataFactory, string linkedServiceName, string accessKey)
+        protected async Task<FactoryLinkedServiceResource> CreateLinkedService(DataFactoryResource dataFactory, string linkedServiceName, string accessKey)
         {
             AzureBlobStorageLinkedService azureBlobStorageLinkedService = new AzureBlobStorageLinkedService()
             {
                 ConnectionString = BinaryData.FromString($"\"{accessKey}\""),
             };
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(azureBlobStorageLinkedService);
-            var linkedService = await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
+            FactoryLinkedServiceData data = new FactoryLinkedServiceData(azureBlobStorageLinkedService);
+            var linkedService = await dataFactory.GetFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             return linkedService.Value;
         }
 

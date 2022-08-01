@@ -716,7 +716,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="policy"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="factoryName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<FactoryDataPlaneAccessAccessPolicyResult>> GetDataPlaneAccessAsync(string subscriptionId, string resourceGroupName, string factoryName, UserAccessPolicy policy, CancellationToken cancellationToken = default)
+        public async Task<Response<FactoryDataPlaneAccessPolicyResult>> GetDataPlaneAccessAsync(string subscriptionId, string resourceGroupName, string factoryName, UserAccessPolicy policy, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -729,9 +729,9 @@ namespace Azure.ResourceManager.DataFactory
             {
                 case 200:
                     {
-                        FactoryDataPlaneAccessAccessPolicyResult value = default;
+                        FactoryDataPlaneAccessPolicyResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = FactoryDataPlaneAccessAccessPolicyResult.DeserializeFactoryDataPlaneAccessAccessPolicyResult(document.RootElement);
+                        value = FactoryDataPlaneAccessPolicyResult.DeserializeFactoryDataPlaneAccessPolicyResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -747,7 +747,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="policy"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="factoryName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<FactoryDataPlaneAccessAccessPolicyResult> GetDataPlaneAccess(string subscriptionId, string resourceGroupName, string factoryName, UserAccessPolicy policy, CancellationToken cancellationToken = default)
+        public Response<FactoryDataPlaneAccessPolicyResult> GetDataPlaneAccess(string subscriptionId, string resourceGroupName, string factoryName, UserAccessPolicy policy, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -760,9 +760,9 @@ namespace Azure.ResourceManager.DataFactory
             {
                 case 200:
                     {
-                        FactoryDataPlaneAccessAccessPolicyResult value = default;
+                        FactoryDataPlaneAccessPolicyResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = FactoryDataPlaneAccessAccessPolicyResult.DeserializeFactoryDataPlaneAccessAccessPolicyResult(document.RootElement);
+                        value = FactoryDataPlaneAccessPolicyResult.DeserializeFactoryDataPlaneAccessPolicyResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

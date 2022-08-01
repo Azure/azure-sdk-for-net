@@ -52,13 +52,7 @@ rename-rules:
   Db: DB|db
 
 rename-mapping:
-  AccessPolicyResponse: FactoryDataPlaneAccessAccessPolicyResult
-  Activity: PipelineActivityInfo
-  ActivityDependency: PipelineActivityDependencyInfo
-  ActivityPolicy: PipelineActivityPolicyInfo
-  ActivityRun: PipelineActivityRunInfo
-  ActivityRunsQueryResponse: PipelineActivityRunsQueryResult
-  AppendVariableActivity: PipelineActivityAppendVariableInfo
+  AccessPolicyResponse: FactoryDataPlaneAccessPolicyResult
   CopySource: CopyActivitySource
   CreateRunResponse: CreateRunResult
   EncryptionConfiguration: FactoryEncryptionConfiguration
@@ -67,18 +61,15 @@ rename-mapping:
   ExposureControlRequest: ExposureControlContent
   Factory: DataFactory
   GitHubAccessTokenResponse: GitHubAccessTokenResult
-  IntegrationRuntimeResource: DataFactoryIntegrationRuntime
-  ManagedPrivateEndpointResource: DataFactoryPrivateEndpoint
-  ManagedVirtualNetworkResource: DataFactoryVirtualNetwork
-  PipelineResource: DataFactoryPipeline
-  PrivateEndpointConnectionResource: DataFactoryPrivateEndpointConnection
+  ManagedPrivateEndpointResource: FactoryPrivateEndpoint
+  ManagedVirtualNetworkResource: FactoryVirtualNetwork
+  PrivateEndpointConnectionResource: FactoryPrivateEndpointConnection
   PublicNetworkAccess: FactoryPublicNetworkAccess
   PurviewConfiguration: FactoryPurviewConfiguration
   RunFilterParameters: RunFilterContent
   SsisObjectMetadataStatusResponse: SsisObjectMetadataStatusResult
-  TriggerResource: DataFactoryTrigger
-  Trigger: DataFactoryTriggerProperties
-  IntegrationRuntimeStatusResponse: IntegrationRuntimeStatusResult
+  TriggerResource: FactoryTrigger
+  Trigger: FactoryTriggerProperties
   # Dataset
   DatasetDataElement.name: ColumnName
   DatasetDataElement.type: columnType
@@ -86,11 +77,11 @@ rename-mapping:
   DatasetSchemaDataElement.type: schemaColumnType
   DatasetCompression.type: datasetCompressionType
   Dataset: FactoryDatasetDefinition
-  DatasetResource: DataFactoryDataset
+  DatasetResource: FactoryDataset
   HttpDataset: HttpFileDataset
   # DataFlow
   DataFlow: FactoryDataFlowDefinition
-  DataFlowResource: DataFactoryDataFlow
+  DataFlowResource: FactoryDataFlow
   Flowlet: FactoryFlowletDefinition
   MappingDataFlow: FactoryMappingDataFlowDefinition
   WranglingDataFlow: FactoryWranglingDataFlowDefinition
@@ -106,20 +97,26 @@ rename-mapping:
   LinkedServiceDebugResource: FactoryLinkedServiceDebugInfo
   SubResourceDebugResource: FactoryDebugInfo
   # GlobalParameter
-  GlobalParameterResource: DataFactoryGlobalParameter
+  GlobalParameterResource: FactoryGlobalParameter
   GlobalParameterSpecification: FactoryGlobalParameterSpecification
   GlobalParameterType: FactoryGlobalParameterType
   # IntegrationRuntime
   IntegrationRuntime: IntegrationRuntimeDefinition
+  IntegrationRuntimeResource: FactoryIntegrationRuntime
+  IntegrationRuntimeStatusResponse: IntegrationRuntimeStatusResult
   # LinkedService
   LinkedService: FactoryLinkedServiceDefinition
   LinkedServiceReference: FactoryLinkedServiceReference
   LinkedServiceReferenceType: FactoryLinkedServiceReferenceType
-  LinkedServiceResource: DataFactoryLinkedService
-
-  
-# prepend-rp-prefix:
-#  - DataFlowDefinition
+  LinkedServiceResource: FactoryLinkedService
+  # Pipeline
+  PipelineResource: FactoryPipeline
+  Activity: PipelineActivityDefinition
+  ActivityDependency: PipelineActivityDependencyInfo
+  ActivityPolicy: PipelineActivityPolicyInfo
+  ActivityRun: PipelineActivityRunInfo
+  ActivityRunsQueryResponse: PipelineActivityRunsQueryResult
+  AppendVariableActivity: PipelineActivityAppendVariableInfo
 
 override-operation-name:
   ActivityRuns_QueryByPipelineRun: GetActivityRunsByPipelineRun

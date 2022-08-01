@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IList<UserProperty>> userProperties = default;
             Expression @on = default;
             Optional<IList<SwitchCase>> cases = default;
-            Optional<IList<PipelineActivityInfo>> defaultActivities = default;
+            Optional<IList<PipelineActivityDefinition>> defaultActivities = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -178,10 +178,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<PipelineActivityInfo> array = new List<PipelineActivityInfo>();
+                            List<PipelineActivityDefinition> array = new List<PipelineActivityDefinition>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeserializePipelineActivityInfo(item));
+                                array.Add(DeserializePipelineActivityDefinition(item));
                             }
                             defaultActivities = array;
                             continue;

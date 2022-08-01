@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         internal static ManagedVirtualNetworkListResponse DeserializeManagedVirtualNetworkListResponse(JsonElement element)
         {
-            IReadOnlyList<DataFactoryVirtualNetworkData> value = default;
+            IReadOnlyList<FactoryVirtualNetworkData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<DataFactoryVirtualNetworkData> array = new List<DataFactoryVirtualNetworkData>();
+                    List<FactoryVirtualNetworkData> array = new List<FactoryVirtualNetworkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataFactoryVirtualNetworkData.DeserializeDataFactoryVirtualNetworkData(item));
+                        array.Add(FactoryVirtualNetworkData.DeserializeFactoryVirtualNetworkData(item));
                     }
                     value = array;
                     continue;

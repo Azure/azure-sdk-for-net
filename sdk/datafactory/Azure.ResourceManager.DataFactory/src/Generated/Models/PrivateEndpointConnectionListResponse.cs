@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Serialized Name: PrivateEndpointConnectionListResponse.value
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal PrivateEndpointConnectionListResponse(IEnumerable<DataFactoryPrivateEndpointConnectionData> value)
+        internal PrivateEndpointConnectionListResponse(IEnumerable<FactoryPrivateEndpointConnectionData> value)
         {
             if (value == null)
             {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The link to the next page of results, if any remaining results exist.
         /// Serialized Name: PrivateEndpointConnectionListResponse.nextLink
         /// </param>
-        internal PrivateEndpointConnectionListResponse(IReadOnlyList<DataFactoryPrivateEndpointConnectionData> value, string nextLink)
+        internal PrivateEndpointConnectionListResponse(IReadOnlyList<FactoryPrivateEndpointConnectionData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// List of Private Endpoint Connections.
         /// Serialized Name: PrivateEndpointConnectionListResponse.value
         /// </summary>
-        public IReadOnlyList<DataFactoryPrivateEndpointConnectionData> Value { get; }
+        public IReadOnlyList<FactoryPrivateEndpointConnectionData> Value { get; }
         /// <summary>
         /// The link to the next page of results, if any remaining results exist.
         /// Serialized Name: PrivateEndpointConnectionListResponse.nextLink

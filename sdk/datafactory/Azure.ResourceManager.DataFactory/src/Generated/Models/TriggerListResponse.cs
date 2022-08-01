@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Serialized Name: TriggerListResponse.value
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal TriggerListResponse(IEnumerable<DataFactoryTriggerData> value)
+        internal TriggerListResponse(IEnumerable<FactoryTriggerData> value)
         {
             if (value == null)
             {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The link to the next page of results, if any remaining results exist.
         /// Serialized Name: TriggerListResponse.nextLink
         /// </param>
-        internal TriggerListResponse(IReadOnlyList<DataFactoryTriggerData> value, string nextLink)
+        internal TriggerListResponse(IReadOnlyList<FactoryTriggerData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// List of triggers.
         /// Serialized Name: TriggerListResponse.value
         /// </summary>
-        public IReadOnlyList<DataFactoryTriggerData> Value { get; }
+        public IReadOnlyList<FactoryTriggerData> Value { get; }
         /// <summary>
         /// The link to the next page of results, if any remaining results exist.
         /// Serialized Name: TriggerListResponse.nextLink

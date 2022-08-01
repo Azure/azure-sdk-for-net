@@ -200,191 +200,191 @@ namespace Azure.ResourceManager.DataFactory
         }
         #endregion
 
-        #region DataFactoryIntegrationRuntimeResource
+        #region FactoryIntegrationRuntimeResource
         /// <summary>
-        /// Gets an object representing a <see cref="DataFactoryIntegrationRuntimeResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataFactoryIntegrationRuntimeResource.CreateResourceIdentifier" /> to create a <see cref="DataFactoryIntegrationRuntimeResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="FactoryIntegrationRuntimeResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FactoryIntegrationRuntimeResource.CreateResourceIdentifier" /> to create a <see cref="FactoryIntegrationRuntimeResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataFactoryIntegrationRuntimeResource" /> object. </returns>
-        public static DataFactoryIntegrationRuntimeResource GetDataFactoryIntegrationRuntimeResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="FactoryIntegrationRuntimeResource" /> object. </returns>
+        public static FactoryIntegrationRuntimeResource GetFactoryIntegrationRuntimeResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DataFactoryIntegrationRuntimeResource.ValidateResourceId(id);
-                return new DataFactoryIntegrationRuntimeResource(client, id);
+                FactoryIntegrationRuntimeResource.ValidateResourceId(id);
+                return new FactoryIntegrationRuntimeResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DataFactoryLinkedServiceResource
+        #region FactoryLinkedServiceResource
         /// <summary>
-        /// Gets an object representing a <see cref="DataFactoryLinkedServiceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataFactoryLinkedServiceResource.CreateResourceIdentifier" /> to create a <see cref="DataFactoryLinkedServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="FactoryLinkedServiceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FactoryLinkedServiceResource.CreateResourceIdentifier" /> to create a <see cref="FactoryLinkedServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataFactoryLinkedServiceResource" /> object. </returns>
-        public static DataFactoryLinkedServiceResource GetDataFactoryLinkedServiceResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="FactoryLinkedServiceResource" /> object. </returns>
+        public static FactoryLinkedServiceResource GetFactoryLinkedServiceResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DataFactoryLinkedServiceResource.ValidateResourceId(id);
-                return new DataFactoryLinkedServiceResource(client, id);
+                FactoryLinkedServiceResource.ValidateResourceId(id);
+                return new FactoryLinkedServiceResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DataFactoryDatasetResource
+        #region FactoryDatasetResource
         /// <summary>
-        /// Gets an object representing a <see cref="DataFactoryDatasetResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataFactoryDatasetResource.CreateResourceIdentifier" /> to create a <see cref="DataFactoryDatasetResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="FactoryDatasetResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FactoryDatasetResource.CreateResourceIdentifier" /> to create a <see cref="FactoryDatasetResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataFactoryDatasetResource" /> object. </returns>
-        public static DataFactoryDatasetResource GetDataFactoryDatasetResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="FactoryDatasetResource" /> object. </returns>
+        public static FactoryDatasetResource GetFactoryDatasetResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DataFactoryDatasetResource.ValidateResourceId(id);
-                return new DataFactoryDatasetResource(client, id);
+                FactoryDatasetResource.ValidateResourceId(id);
+                return new FactoryDatasetResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DataFactoryPipelineResource
+        #region FactoryPipelineResource
         /// <summary>
-        /// Gets an object representing a <see cref="DataFactoryPipelineResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataFactoryPipelineResource.CreateResourceIdentifier" /> to create a <see cref="DataFactoryPipelineResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="FactoryPipelineResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FactoryPipelineResource.CreateResourceIdentifier" /> to create a <see cref="FactoryPipelineResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataFactoryPipelineResource" /> object. </returns>
-        public static DataFactoryPipelineResource GetDataFactoryPipelineResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="FactoryPipelineResource" /> object. </returns>
+        public static FactoryPipelineResource GetFactoryPipelineResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DataFactoryPipelineResource.ValidateResourceId(id);
-                return new DataFactoryPipelineResource(client, id);
+                FactoryPipelineResource.ValidateResourceId(id);
+                return new FactoryPipelineResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DataFactoryTriggerResource
+        #region FactoryTriggerResource
         /// <summary>
-        /// Gets an object representing a <see cref="DataFactoryTriggerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataFactoryTriggerResource.CreateResourceIdentifier" /> to create a <see cref="DataFactoryTriggerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="FactoryTriggerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FactoryTriggerResource.CreateResourceIdentifier" /> to create a <see cref="FactoryTriggerResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataFactoryTriggerResource" /> object. </returns>
-        public static DataFactoryTriggerResource GetDataFactoryTriggerResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="FactoryTriggerResource" /> object. </returns>
+        public static FactoryTriggerResource GetFactoryTriggerResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DataFactoryTriggerResource.ValidateResourceId(id);
-                return new DataFactoryTriggerResource(client, id);
+                FactoryTriggerResource.ValidateResourceId(id);
+                return new FactoryTriggerResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DataFactoryDataFlowResource
+        #region FactoryDataFlowResource
         /// <summary>
-        /// Gets an object representing a <see cref="DataFactoryDataFlowResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataFactoryDataFlowResource.CreateResourceIdentifier" /> to create a <see cref="DataFactoryDataFlowResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="FactoryDataFlowResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FactoryDataFlowResource.CreateResourceIdentifier" /> to create a <see cref="FactoryDataFlowResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataFactoryDataFlowResource" /> object. </returns>
-        public static DataFactoryDataFlowResource GetDataFactoryDataFlowResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="FactoryDataFlowResource" /> object. </returns>
+        public static FactoryDataFlowResource GetFactoryDataFlowResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DataFactoryDataFlowResource.ValidateResourceId(id);
-                return new DataFactoryDataFlowResource(client, id);
+                FactoryDataFlowResource.ValidateResourceId(id);
+                return new FactoryDataFlowResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DataFactoryVirtualNetworkResource
+        #region FactoryVirtualNetworkResource
         /// <summary>
-        /// Gets an object representing a <see cref="DataFactoryVirtualNetworkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataFactoryVirtualNetworkResource.CreateResourceIdentifier" /> to create a <see cref="DataFactoryVirtualNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="FactoryVirtualNetworkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FactoryVirtualNetworkResource.CreateResourceIdentifier" /> to create a <see cref="FactoryVirtualNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataFactoryVirtualNetworkResource" /> object. </returns>
-        public static DataFactoryVirtualNetworkResource GetDataFactoryVirtualNetworkResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="FactoryVirtualNetworkResource" /> object. </returns>
+        public static FactoryVirtualNetworkResource GetFactoryVirtualNetworkResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DataFactoryVirtualNetworkResource.ValidateResourceId(id);
-                return new DataFactoryVirtualNetworkResource(client, id);
+                FactoryVirtualNetworkResource.ValidateResourceId(id);
+                return new FactoryVirtualNetworkResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DataFactoryPrivateEndpointResource
+        #region FactoryPrivateEndpointResource
         /// <summary>
-        /// Gets an object representing a <see cref="DataFactoryPrivateEndpointResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataFactoryPrivateEndpointResource.CreateResourceIdentifier" /> to create a <see cref="DataFactoryPrivateEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="FactoryPrivateEndpointResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FactoryPrivateEndpointResource.CreateResourceIdentifier" /> to create a <see cref="FactoryPrivateEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataFactoryPrivateEndpointResource" /> object. </returns>
-        public static DataFactoryPrivateEndpointResource GetDataFactoryPrivateEndpointResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="FactoryPrivateEndpointResource" /> object. </returns>
+        public static FactoryPrivateEndpointResource GetFactoryPrivateEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DataFactoryPrivateEndpointResource.ValidateResourceId(id);
-                return new DataFactoryPrivateEndpointResource(client, id);
+                FactoryPrivateEndpointResource.ValidateResourceId(id);
+                return new FactoryPrivateEndpointResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DataFactoryPrivateEndpointConnectionResource
+        #region FactoryPrivateEndpointConnectionResource
         /// <summary>
-        /// Gets an object representing a <see cref="DataFactoryPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataFactoryPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="DataFactoryPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="FactoryPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FactoryPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="FactoryPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataFactoryPrivateEndpointConnectionResource" /> object. </returns>
-        public static DataFactoryPrivateEndpointConnectionResource GetDataFactoryPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="FactoryPrivateEndpointConnectionResource" /> object. </returns>
+        public static FactoryPrivateEndpointConnectionResource GetFactoryPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DataFactoryPrivateEndpointConnectionResource.ValidateResourceId(id);
-                return new DataFactoryPrivateEndpointConnectionResource(client, id);
+                FactoryPrivateEndpointConnectionResource.ValidateResourceId(id);
+                return new FactoryPrivateEndpointConnectionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DataFactoryGlobalParameterResource
+        #region FactoryGlobalParameterResource
         /// <summary>
-        /// Gets an object representing a <see cref="DataFactoryGlobalParameterResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataFactoryGlobalParameterResource.CreateResourceIdentifier" /> to create a <see cref="DataFactoryGlobalParameterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="FactoryGlobalParameterResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FactoryGlobalParameterResource.CreateResourceIdentifier" /> to create a <see cref="FactoryGlobalParameterResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataFactoryGlobalParameterResource" /> object. </returns>
-        public static DataFactoryGlobalParameterResource GetDataFactoryGlobalParameterResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="FactoryGlobalParameterResource" /> object. </returns>
+        public static FactoryGlobalParameterResource GetFactoryGlobalParameterResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DataFactoryGlobalParameterResource.ValidateResourceId(id);
-                return new DataFactoryGlobalParameterResource(client, id);
+                FactoryGlobalParameterResource.ValidateResourceId(id);
+                return new FactoryGlobalParameterResource(client, id);
             }
             );
         }

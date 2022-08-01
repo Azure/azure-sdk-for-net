@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Serialized Name: GlobalParameterListResponse.value
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal GlobalParameterListResponse(IEnumerable<DataFactoryGlobalParameterData> value)
+        internal GlobalParameterListResponse(IEnumerable<FactoryGlobalParameterData> value)
         {
             if (value == null)
             {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The link to the next page of results, if any remaining results exist.
         /// Serialized Name: GlobalParameterListResponse.nextLink
         /// </param>
-        internal GlobalParameterListResponse(IReadOnlyList<DataFactoryGlobalParameterData> value, string nextLink)
+        internal GlobalParameterListResponse(IReadOnlyList<FactoryGlobalParameterData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// List of global parameters.
         /// Serialized Name: GlobalParameterListResponse.value
         /// </summary>
-        public IReadOnlyList<DataFactoryGlobalParameterData> Value { get; }
+        public IReadOnlyList<FactoryGlobalParameterData> Value { get; }
         /// <summary>
         /// The link to the next page of results, if any remaining results exist.
         /// Serialized Name: GlobalParameterListResponse.nextLink

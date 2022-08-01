@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Serialized Name: DatasetListResponse.value
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal DatasetListResponse(IEnumerable<DataFactoryDatasetData> value)
+        internal DatasetListResponse(IEnumerable<FactoryDatasetData> value)
         {
             if (value == null)
             {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The link to the next page of results, if any remaining results exist.
         /// Serialized Name: DatasetListResponse.nextLink
         /// </param>
-        internal DatasetListResponse(IReadOnlyList<DataFactoryDatasetData> value, string nextLink)
+        internal DatasetListResponse(IReadOnlyList<FactoryDatasetData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// List of datasets.
         /// Serialized Name: DatasetListResponse.value
         /// </summary>
-        public IReadOnlyList<DataFactoryDatasetData> Value { get; }
+        public IReadOnlyList<FactoryDatasetData> Value { get; }
         /// <summary>
         /// The link to the next page of results, if any remaining results exist.
         /// Serialized Name: DatasetListResponse.nextLink
