@@ -89,7 +89,7 @@ directive:
 
   - from: swagger-document
     where: $.definitions.NsRecord.properties.nsdname
-    transform: $["x-ms-client-name"] = "DnsNsDomainName";
+    transform: $["x-ms-client-name"] = "DnsNSDomainName";
   - from: swagger-document
     where: $.definitions.PtrRecord.properties.ptrdname
     transform: $["x-ms-client-name"] = "DnsPtrDomainName";
