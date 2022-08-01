@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Trigger that schedules pipeline reruns for all fixed time interval windows from a requested start time to requested end time.
     /// Serialized Name: RerunTumblingWindowTrigger
     /// </summary>
-    public partial class RerunTumblingWindowTrigger : FactoryTriggerProperties
+    public partial class RerunTumblingWindowTrigger : FactoryTriggerDefinition
     {
         /// <summary> Initializes a new instance of RerunTumblingWindowTrigger. </summary>
         /// <param name="parentTrigger">

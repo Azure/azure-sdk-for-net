@@ -14,19 +14,19 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary>
     /// Azure data factory nested object which contains information about creating pipeline run
     /// Serialized Name: Trigger
-    /// Please note <see cref="FactoryTriggerProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// Please note <see cref="FactoryTriggerDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="BlobEventsTrigger"/>, <see cref="BlobTrigger"/>, <see cref="ChainingTrigger"/>, <see cref="CustomEventsTrigger"/>, <see cref="MultiplePipelineTrigger"/>, <see cref="RerunTumblingWindowTrigger"/>, <see cref="ScheduleTrigger"/> and <see cref="TumblingWindowTrigger"/>.
     /// </summary>
-    public partial class FactoryTriggerProperties
+    public partial class FactoryTriggerDefinition
     {
-        /// <summary> Initializes a new instance of FactoryTriggerProperties. </summary>
-        public FactoryTriggerProperties()
+        /// <summary> Initializes a new instance of FactoryTriggerDefinition. </summary>
+        public FactoryTriggerDefinition()
         {
             Annotations = new ChangeTrackingList<BinaryData>();
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of FactoryTriggerProperties. </summary>
+        /// <summary> Initializes a new instance of FactoryTriggerDefinition. </summary>
         /// <param name="triggerType">
         /// Trigger type.
         /// Serialized Name: Trigger.type
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Serialized Name: Trigger.annotations
         /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal FactoryTriggerProperties(string triggerType, string description, TriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties)
+        internal FactoryTriggerDefinition(string triggerType, string description, TriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties)
         {
             TriggerType = triggerType;
             Description = description;

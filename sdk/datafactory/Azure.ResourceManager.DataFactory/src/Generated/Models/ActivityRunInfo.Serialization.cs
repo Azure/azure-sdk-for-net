@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class PipelineActivityRunInfo
+    public partial class ActivityRunInfo
     {
-        internal static PipelineActivityRunInfo DeserializePipelineActivityRunInfo(JsonElement element)
+        internal static ActivityRunInfo DeserializeActivityRunInfo(JsonElement element)
         {
             Optional<string> pipelineName = default;
             Optional<string> pipelineRunId = default;
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new PipelineActivityRunInfo(pipelineName.Value, pipelineRunId.Value, activityName.Value, activityType.Value, activityRunId.Value, linkedServiceName.Value, status.Value, Optional.ToNullable(activityRunStart), Optional.ToNullable(activityRunEnd), Optional.ToNullable(durationInMs), input.Value, output.Value, error.Value, additionalProperties);
+            return new ActivityRunInfo(pipelineName.Value, pipelineRunId.Value, activityName.Value, activityType.Value, activityRunId.Value, linkedServiceName.Value, status.Value, Optional.ToNullable(activityRunStart), Optional.ToNullable(activityRunEnd), Optional.ToNullable(durationInMs), input.Value, output.Value, error.Value, additionalProperties);
         }
     }
 }

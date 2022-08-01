@@ -1012,13 +1012,13 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="runId"/> or <paramref name="content"/> is null. </exception>
-        /// <returns> An async collection of <see cref="PipelineActivityRunInfo" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PipelineActivityRunInfo> GetActivityRunsByPipelineRunAsync(string runId, RunFilterContent content, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ActivityRunInfo" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ActivityRunInfo> GetActivityRunsByPipelineRunAsync(string runId, RunFilterContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
             Argument.AssertNotNull(content, nameof(content));
 
-            async Task<Page<PipelineActivityRunInfo>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ActivityRunInfo>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _activityRunsClientDiagnostics.CreateScope("DataFactoryResource.GetActivityRunsByPipelineRun");
                 scope.Start();
@@ -1046,13 +1046,13 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="runId"/> or <paramref name="content"/> is null. </exception>
-        /// <returns> A collection of <see cref="PipelineActivityRunInfo" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PipelineActivityRunInfo> GetActivityRunsByPipelineRun(string runId, RunFilterContent content, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ActivityRunInfo" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ActivityRunInfo> GetActivityRunsByPipelineRun(string runId, RunFilterContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
             Argument.AssertNotNull(content, nameof(content));
 
-            Page<PipelineActivityRunInfo> FirstPageFunc(int? pageSizeHint)
+            Page<ActivityRunInfo> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _activityRunsClientDiagnostics.CreateScope("DataFactoryResource.GetActivityRunsByPipelineRun");
                 scope.Start();

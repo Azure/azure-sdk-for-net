@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class PipelineActivityDependencyInfo : IUtf8JsonSerializable
+    public partial class ActivityDependency : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static PipelineActivityDependencyInfo DeserializePipelineActivityDependencyInfo(JsonElement element)
+        internal static ActivityDependency DeserializeActivityDependency(JsonElement element)
         {
             string activity = default;
             IList<DependencyCondition> dependencyConditions = default;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new PipelineActivityDependencyInfo(activity, dependencyConditions, additionalProperties);
+            return new ActivityDependency(activity, dependencyConditions, additionalProperties);
         }
     }
 }

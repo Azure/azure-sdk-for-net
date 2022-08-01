@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Execute power query activity.
     /// Serialized Name: ExecuteWranglingDataflowActivity
     /// </summary>
-    public partial class ExecuteWranglingDataflowActivity : PipelineActivityDefinition
+    public partial class ExecuteWranglingDataflowActivity : PipelineActivity
     {
         /// <summary> Initializes a new instance of ExecuteWranglingDataflowActivity. </summary>
         /// <param name="name">
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// List of mapping for Power Query mashup query to sink dataset(s).
         /// Serialized Name: ExecuteWranglingDataflowActivity.typeProperties.queries
         /// </param>
-        internal ExecuteWranglingDataflowActivity(string name, string activityType, string description, IList<PipelineActivityDependencyInfo> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, PipelineActivityPolicyInfo policy, DataFlowReference dataFlow, DataFlowStagingInfo staging, IntegrationRuntimeReference integrationRuntime, ExecuteDataFlowActivityTypePropertiesCompute compute, BinaryData traceLevel, BinaryData continueOnError, BinaryData runConcurrently, BinaryData sourceStagingConcurrency, IDictionary<string, PowerQuerySink> sinks, IList<PowerQuerySinkMapping> queries) : base(name, activityType, description, dependsOn, userProperties, additionalProperties)
+        internal ExecuteWranglingDataflowActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, ActivityPolicy policy, DataFlowReference dataFlow, DataFlowStagingInfo staging, IntegrationRuntimeReference integrationRuntime, ExecuteDataFlowActivityTypePropertiesCompute compute, BinaryData traceLevel, BinaryData continueOnError, BinaryData runConcurrently, BinaryData sourceStagingConcurrency, IDictionary<string, PowerQuerySink> sinks, IList<PowerQuerySinkMapping> queries) : base(name, activityType, description, dependsOn, userProperties, additionalProperties)
         {
             Policy = policy;
             DataFlow = dataFlow;
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Activity policy.
         /// Serialized Name: ExecuteWranglingDataflowActivity.policy
         /// </summary>
-        public PipelineActivityPolicyInfo Policy { get; set; }
+        public ActivityPolicy Policy { get; set; }
         /// <summary>
         /// Data flow reference.
         /// Serialized Name: ExecuteWranglingDataflowActivity.typeProperties.dataFlow

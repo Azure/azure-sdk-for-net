@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// A list of libraries to be installed on the cluster that will execute the job.
         /// Serialized Name: DatabricksSparkJarActivity.typeProperties.libraries
         /// </param>
-        internal DatabricksSparkJarActivity(string name, string activityType, string description, IList<PipelineActivityDependencyInfo> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, FactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicyInfo policy, BinaryData mainClassName, IList<BinaryData> parameters, IList<IDictionary<string, BinaryData>> libraries) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal DatabricksSparkJarActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, FactoryLinkedServiceReference linkedServiceName, ActivityPolicy policy, BinaryData mainClassName, IList<BinaryData> parameters, IList<IDictionary<string, BinaryData>> libraries) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             MainClassName = mainClassName;
             Parameters = parameters;

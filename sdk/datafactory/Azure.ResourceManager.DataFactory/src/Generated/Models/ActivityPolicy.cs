@@ -15,15 +15,15 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Execution policy for an activity.
     /// Serialized Name: ActivityPolicy
     /// </summary>
-    public partial class PipelineActivityPolicyInfo
+    public partial class ActivityPolicy
     {
-        /// <summary> Initializes a new instance of PipelineActivityPolicyInfo. </summary>
-        public PipelineActivityPolicyInfo()
+        /// <summary> Initializes a new instance of ActivityPolicy. </summary>
+        public ActivityPolicy()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of PipelineActivityPolicyInfo. </summary>
+        /// <summary> Initializes a new instance of ActivityPolicy. </summary>
         /// <param name="timeout">
         /// Specifies the timeout for the activity to run. The default timeout is 7 days. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
         /// Serialized Name: ActivityPolicy.timeout
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Serialized Name: ActivityPolicy.secureOutput
         /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal PipelineActivityPolicyInfo(BinaryData timeout, BinaryData retry, int? retryIntervalInSeconds, bool? secureInput, bool? secureOutput, IDictionary<string, BinaryData> additionalProperties)
+        internal ActivityPolicy(BinaryData timeout, BinaryData retry, int? retryIntervalInSeconds, bool? secureInput, bool? secureOutput, IDictionary<string, BinaryData> additionalProperties)
         {
             Timeout = timeout;
             Retry = retry;

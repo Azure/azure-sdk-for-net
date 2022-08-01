@@ -14,18 +14,18 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary>
     /// A pipeline activity.
     /// Serialized Name: Activity
-    /// Please note <see cref="PipelineActivityDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="PipelineActivityAppendVariableInfo"/>, <see cref="AzureDataExplorerCommandActivity"/>, <see cref="AzureFunctionActivity"/>, <see cref="AzureMLBatchExecutionActivity"/>, <see cref="AzureMLExecutePipelineActivity"/>, <see cref="AzureMLUpdateResourceActivity"/>, <see cref="ControlActivity"/>, <see cref="CopyActivity"/>, <see cref="CustomActivity"/>, <see cref="DataLakeAnalyticsUsqlActivity"/>, <see cref="DatabricksNotebookActivity"/>, <see cref="DatabricksSparkJarActivity"/>, <see cref="DatabricksSparkPythonActivity"/>, <see cref="DeleteActivity"/>, <see cref="ExecuteDataFlowActivity"/>, <see cref="ExecutePipelineActivity"/>, <see cref="ExecuteSsisPackageActivity"/>, <see cref="ExecuteWranglingDataflowActivity"/>, <see cref="ExecutionActivity"/>, <see cref="FailActivity"/>, <see cref="FilterActivity"/>, <see cref="ForEachActivity"/>, <see cref="GetMetadataActivity"/>, <see cref="HDInsightHiveActivity"/>, <see cref="HDInsightMapReduceActivity"/>, <see cref="HDInsightPigActivity"/>, <see cref="HDInsightSparkActivity"/>, <see cref="HDInsightStreamingActivity"/>, <see cref="IfConditionActivity"/>, <see cref="LookupActivity"/>, <see cref="ScriptActivity"/>, <see cref="SetVariableActivity"/>, <see cref="SqlServerStoredProcedureActivity"/>, <see cref="SwitchActivity"/>, <see cref="UntilActivity"/>, <see cref="ValidationActivity"/>, <see cref="WaitActivity"/>, <see cref="WebActivity"/> and <see cref="WebHookActivity"/>.
+    /// Please note <see cref="PipelineActivity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="AppendVariableActivity"/>, <see cref="AzureDataExplorerCommandActivity"/>, <see cref="AzureFunctionActivity"/>, <see cref="AzureMLBatchExecutionActivity"/>, <see cref="AzureMLExecutePipelineActivity"/>, <see cref="AzureMLUpdateResourceActivity"/>, <see cref="ControlActivity"/>, <see cref="CopyActivity"/>, <see cref="CustomActivity"/>, <see cref="DataLakeAnalyticsUsqlActivity"/>, <see cref="DatabricksNotebookActivity"/>, <see cref="DatabricksSparkJarActivity"/>, <see cref="DatabricksSparkPythonActivity"/>, <see cref="DeleteActivity"/>, <see cref="ExecuteDataFlowActivity"/>, <see cref="ExecutePipelineActivity"/>, <see cref="ExecuteSsisPackageActivity"/>, <see cref="ExecuteWranglingDataflowActivity"/>, <see cref="ExecutionActivity"/>, <see cref="FailActivity"/>, <see cref="FilterActivity"/>, <see cref="ForEachActivity"/>, <see cref="GetMetadataActivity"/>, <see cref="HDInsightHiveActivity"/>, <see cref="HDInsightMapReduceActivity"/>, <see cref="HDInsightPigActivity"/>, <see cref="HDInsightSparkActivity"/>, <see cref="HDInsightStreamingActivity"/>, <see cref="IfConditionActivity"/>, <see cref="LookupActivity"/>, <see cref="ScriptActivity"/>, <see cref="SetVariableActivity"/>, <see cref="SqlServerStoredProcedureActivity"/>, <see cref="SwitchActivity"/>, <see cref="UntilActivity"/>, <see cref="ValidationActivity"/>, <see cref="WaitActivity"/>, <see cref="WebActivity"/> and <see cref="WebHookActivity"/>.
     /// </summary>
-    public partial class PipelineActivityDefinition
+    public partial class PipelineActivity
     {
-        /// <summary> Initializes a new instance of PipelineActivityDefinition. </summary>
+        /// <summary> Initializes a new instance of PipelineActivity. </summary>
         /// <param name="name">
         /// Activity name.
         /// Serialized Name: Activity.name
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public PipelineActivityDefinition(string name)
+        public PipelineActivity(string name)
         {
             if (name == null)
             {
@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             Name = name;
-            DependsOn = new ChangeTrackingList<PipelineActivityDependencyInfo>();
-            UserProperties = new ChangeTrackingList<UserProperty>();
+            DependsOn = new ChangeTrackingList<ActivityDependency>();
+            UserProperties = new ChangeTrackingList<ActivityUserProperty>();
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of PipelineActivityDefinition. </summary>
+        /// <summary> Initializes a new instance of PipelineActivity. </summary>
         /// <param name="name">
         /// Activity name.
         /// Serialized Name: Activity.name
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Serialized Name: Activity.userProperties
         /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal PipelineActivityDefinition(string name, string activityType, string description, IList<PipelineActivityDependencyInfo> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties)
+        internal PipelineActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties)
         {
             Name = name;
             ActivityType = activityType;
@@ -89,12 +89,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Activity depends on condition.
         /// Serialized Name: Activity.dependsOn
         /// </summary>
-        public IList<PipelineActivityDependencyInfo> DependsOn { get; }
+        public IList<ActivityDependency> DependsOn { get; }
         /// <summary>
         /// Activity user properties.
         /// Serialized Name: Activity.userProperties
         /// </summary>
-        public IList<UserProperty> UserProperties { get; }
+        public IList<ActivityUserProperty> UserProperties { get; }
         /// <summary> Additional Properties. </summary>
         public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }

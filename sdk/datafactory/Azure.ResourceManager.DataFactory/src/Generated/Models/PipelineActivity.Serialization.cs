@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class PipelineActivityDefinition : IUtf8JsonSerializable
+    public partial class PipelineActivity : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -58,13 +58,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static PipelineActivityDefinition DeserializePipelineActivityDefinition(JsonElement element)
+        internal static PipelineActivity DeserializePipelineActivity(JsonElement element)
         {
             if (element.TryGetProperty("type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "AppendVariable": return PipelineActivityAppendVariableInfo.DeserializePipelineActivityAppendVariableInfo(element);
+                    case "AppendVariable": return AppendVariableActivity.DeserializeAppendVariableActivity(element);
                     case "AzureDataExplorerCommand": return AzureDataExplorerCommandActivity.DeserializeAzureDataExplorerCommandActivity(element);
                     case "AzureFunctionActivity": return AzureFunctionActivity.DeserializeAzureFunctionActivity(element);
                     case "AzureMLBatchExecution": return AzureMLBatchExecutionActivity.DeserializeAzureMLBatchExecutionActivity(element);
@@ -108,8 +108,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             string name = default;
             string type = default;
             Optional<string> description = default;
-            Optional<IList<PipelineActivityDependencyInfo>> dependsOn = default;
-            Optional<IList<UserProperty>> userProperties = default;
+            Optional<IList<ActivityDependency>> dependsOn = default;
+            Optional<IList<ActivityUserProperty>> userProperties = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -136,10 +136,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<PipelineActivityDependencyInfo> array = new List<PipelineActivityDependencyInfo>();
+                    List<ActivityDependency> array = new List<ActivityDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PipelineActivityDependencyInfo.DeserializePipelineActivityDependencyInfo(item));
+                        array.Add(ActivityDependency.DeserializeActivityDependency(item));
                     }
                     dependsOn = array;
                     continue;
@@ -151,10 +151,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<UserProperty> array = new List<UserProperty>();
+                    List<ActivityUserProperty> array = new List<ActivityUserProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UserProperty.DeserializeUserProperty(item));
+                        array.Add(ActivityUserProperty.DeserializeActivityUserProperty(item));
                     }
                     userProperties = array;
                     continue;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new PipelineActivityDefinition(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties);
+            return new PipelineActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties);
         }
     }
 }

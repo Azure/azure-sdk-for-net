@@ -13,9 +13,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// User property.
     /// Serialized Name: UserProperty
     /// </summary>
-    public partial class UserProperty
+    public partial class ActivityUserProperty
     {
-        /// <summary> Initializes a new instance of UserProperty. </summary>
+        /// <summary> Initializes a new instance of ActivityUserProperty. </summary>
         /// <param name="name">
         /// User property name.
         /// Serialized Name: UserProperty.name
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Serialized Name: UserProperty.value
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="value"/> is null. </exception>
-        public UserProperty(string name, BinaryData value)
+        public ActivityUserProperty(string name, BinaryData value)
         {
             if (name == null)
             {

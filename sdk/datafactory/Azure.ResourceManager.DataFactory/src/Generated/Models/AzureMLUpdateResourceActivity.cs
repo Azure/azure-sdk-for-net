@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The relative file path in trainedModelLinkedService to represent the .ilearner file that will be uploaded by the update operation.  Type: string (or Expression with resultType string).
         /// Serialized Name: AzureMLUpdateResourceActivity.typeProperties.trainedModelFilePath
         /// </param>
-        internal AzureMLUpdateResourceActivity(string name, string activityType, string description, IList<PipelineActivityDependencyInfo> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, FactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicyInfo policy, BinaryData trainedModelName, FactoryLinkedServiceReference trainedModelLinkedServiceName, BinaryData trainedModelFilePath) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal AzureMLUpdateResourceActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, FactoryLinkedServiceReference linkedServiceName, ActivityPolicy policy, BinaryData trainedModelName, FactoryLinkedServiceReference trainedModelLinkedServiceName, BinaryData trainedModelFilePath) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             TrainedModelName = trainedModelName;
             TrainedModelLinkedServiceName = trainedModelLinkedServiceName;

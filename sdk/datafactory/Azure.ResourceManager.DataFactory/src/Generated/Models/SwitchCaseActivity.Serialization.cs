@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class SwitchCase : IUtf8JsonSerializable
+    public partial class SwitchCaseActivity : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static SwitchCase DeserializeSwitchCase(JsonElement element)
+        internal static SwitchCaseActivity DeserializeSwitchCaseActivity(JsonElement element)
         {
             Optional<string> value = default;
-            Optional<IList<PipelineActivityDefinition>> activities = default;
+            Optional<IList<PipelineActivity>> activities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -52,16 +52,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<PipelineActivityDefinition> array = new List<PipelineActivityDefinition>();
+                    List<PipelineActivity> array = new List<PipelineActivity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PipelineActivityDefinition.DeserializePipelineActivityDefinition(item));
+                        array.Add(PipelineActivity.DeserializePipelineActivity(item));
                     }
                     activities = array;
                     continue;
                 }
             }
-            return new SwitchCase(value.Value, Optional.ToList(activities));
+            return new SwitchCaseActivity(value.Value, Optional.ToList(activities));
         }
     }
 }

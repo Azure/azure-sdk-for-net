@@ -15,15 +15,15 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// A list activity runs.
     /// Serialized Name: ActivityRunsQueryResponse
     /// </summary>
-    internal partial class PipelineActivityRunsQueryResult
+    internal partial class ActivityRunsResult
     {
-        /// <summary> Initializes a new instance of PipelineActivityRunsQueryResult. </summary>
+        /// <summary> Initializes a new instance of ActivityRunsResult. </summary>
         /// <param name="value">
         /// List of activity runs.
         /// Serialized Name: ActivityRunsQueryResponse.value
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal PipelineActivityRunsQueryResult(IEnumerable<PipelineActivityRunInfo> value)
+        internal ActivityRunsResult(IEnumerable<ActivityRunInfo> value)
         {
             if (value == null)
             {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of PipelineActivityRunsQueryResult. </summary>
+        /// <summary> Initializes a new instance of ActivityRunsResult. </summary>
         /// <param name="value">
         /// List of activity runs.
         /// Serialized Name: ActivityRunsQueryResponse.value
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// The continuation token for getting the next page of results, if any remaining results exist, null otherwise.
         /// Serialized Name: ActivityRunsQueryResponse.continuationToken
         /// </param>
-        internal PipelineActivityRunsQueryResult(IReadOnlyList<PipelineActivityRunInfo> value, string continuationToken)
+        internal ActivityRunsResult(IReadOnlyList<ActivityRunInfo> value, string continuationToken)
         {
             Value = value;
             ContinuationToken = continuationToken;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// List of activity runs.
         /// Serialized Name: ActivityRunsQueryResponse.value
         /// </summary>
-        public IReadOnlyList<PipelineActivityRunInfo> Value { get; }
+        public IReadOnlyList<ActivityRunInfo> Value { get; }
         /// <summary>
         /// The continuation token for getting the next page of results, if any remaining results exist, null otherwise.
         /// Serialized Name: ActivityRunsQueryResponse.continuationToken

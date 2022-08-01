@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Log settings of script activity.
         /// Serialized Name: ScriptActivity.typeProperties.logSettings
         /// </param>
-        internal ScriptActivity(string name, string activityType, string description, IList<PipelineActivityDependencyInfo> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, FactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicyInfo policy, IList<ScriptActivityScriptBlock> scripts, ScriptActivityTypePropertiesLogSettings logSettings) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal ScriptActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, FactoryLinkedServiceReference linkedServiceName, ActivityPolicy policy, IList<ScriptActivityScriptBlock> scripts, ScriptActivityTypePropertiesLogSettings logSettings) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             Scripts = scripts;
             LogSettings = logSettings;

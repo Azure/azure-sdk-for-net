@@ -52,24 +52,8 @@ rename-rules:
   Db: DB|db
 
 rename-mapping:
-  AccessPolicyResponse: FactoryDataPlaneAccessPolicyResult
-  CopySource: CopyActivitySource
-  CreateRunResponse: CreateRunResult
-  EncryptionConfiguration: FactoryEncryptionConfiguration
-  ExposureControlBatchResponse: ExposureControlBatchResult
-  ExposureControlResponse: ExposureControlResult
-  ExposureControlRequest: ExposureControlContent
+  # Factory
   Factory: DataFactory
-  GitHubAccessTokenResponse: GitHubAccessTokenResult
-  ManagedPrivateEndpointResource: FactoryPrivateEndpoint
-  ManagedVirtualNetworkResource: FactoryVirtualNetwork
-  PrivateEndpointConnectionResource: FactoryPrivateEndpointConnection
-  PublicNetworkAccess: FactoryPublicNetworkAccess
-  PurviewConfiguration: FactoryPurviewConfiguration
-  RunFilterParameters: RunFilterContent
-  SsisObjectMetadataStatusResponse: SsisObjectMetadataStatusResult
-  TriggerResource: FactoryTrigger
-  Trigger: FactoryTriggerProperties
   # Dataset
   DatasetDataElement.name: ColumnName
   DatasetDataElement.type: columnType
@@ -111,12 +95,32 @@ rename-mapping:
   LinkedServiceResource: FactoryLinkedService
   # Pipeline
   PipelineResource: FactoryPipeline
-  Activity: PipelineActivityDefinition
-  ActivityDependency: PipelineActivityDependencyInfo
-  ActivityPolicy: PipelineActivityPolicyInfo
-  ActivityRun: PipelineActivityRunInfo
-  ActivityRunsQueryResponse: PipelineActivityRunsQueryResult
-  AppendVariableActivity: PipelineActivityAppendVariableInfo
+  Activity: PipelineActivity
+  ActivityRun: ActivityRunInfo
+  ActivityRunsQueryResponse: ActivityRunsResult
+  CopySource: CopyActivitySource
+  CreateRunResponse: PipelineCreateRunResult
+  SwitchCase: SwitchCaseActivity
+  UserProperty: ActivityUserProperty
+  # Private link
+  ManagedPrivateEndpointResource: FactoryPrivateEndpoint
+  PrivateEndpointConnectionResource: FactoryPrivateEndpointConnection
+  # Trigger
+  TriggerResource: FactoryTrigger
+  Trigger: FactoryTriggerDefinition
+  # Others
+  AccessPolicyResponse: FactoryDataPlaneAccessPolicyResult
+  EncryptionConfiguration: FactoryEncryptionConfiguration
+  ExposureControlBatchResponse: ExposureControlBatchResult
+  ExposureControlResponse: ExposureControlResult
+  ExposureControlRequest: ExposureControlContent
+  GitHubAccessTokenResponse: GitHubAccessTokenResult
+  ManagedVirtualNetworkResource: FactoryVirtualNetwork
+  PublicNetworkAccess: FactoryPublicNetworkAccess
+  PurviewConfiguration: FactoryPurviewConfiguration
+  RunFilterParameters: RunFilterContent
+  SsisObjectMetadataStatusResponse: SsisObjectMetadataStatusResult
+
 
 override-operation-name:
   ActivityRuns_QueryByPipelineRun: GetActivityRunsByPipelineRun
@@ -127,13 +131,7 @@ override-operation-name:
   Triggers_QueryByFactory: GetTriggers
   Factories_ConfigureFactoryRepo: ConfigureFactoryRepo
 
-directive:
-  - from: datafactory.json
-    where: $.paths
-    transform: >
-      $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/addDataFlowToDebugSession'].post.parameters[4].name = 'content';
-      $['/subscriptions/{subscriptionId}/providers/Microsoft.DataFactory/locations/{locationId}/getFeatureValue'].post.parameters[3].name = 'content';
-      $['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/getFeatureValue'].post.parameters[4].name = 'content';
+#directive:
 #  - from: DataFlow.json
 #    where: $.definitions
 #    transform: >

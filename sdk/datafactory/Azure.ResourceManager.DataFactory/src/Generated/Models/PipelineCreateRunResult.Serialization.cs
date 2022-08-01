@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class CreateRunResult
+    public partial class PipelineCreateRunResult
     {
-        internal static CreateRunResult DeserializeCreateRunResult(JsonElement element)
+        internal static PipelineCreateRunResult DeserializePipelineCreateRunResult(JsonElement element)
         {
             string runId = default;
             foreach (var property in element.EnumerateObject())
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     continue;
                 }
             }
-            return new CreateRunResult(runId);
+            return new PipelineCreateRunResult(runId);
         }
     }
 }

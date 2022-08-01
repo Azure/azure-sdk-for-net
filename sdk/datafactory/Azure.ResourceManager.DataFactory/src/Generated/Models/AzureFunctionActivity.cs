@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Represents the payload that will be sent to the endpoint. Required for POST/PUT method, not allowed for GET method Type: string (or Expression with resultType string).
         /// Serialized Name: AzureFunctionActivity.typeProperties.body
         /// </param>
-        internal AzureFunctionActivity(string name, string activityType, string description, IList<PipelineActivityDependencyInfo> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, FactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicyInfo policy, AzureFunctionActivityMethod method, BinaryData functionName, BinaryData headers, BinaryData body) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal AzureFunctionActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, FactoryLinkedServiceReference linkedServiceName, ActivityPolicy policy, AzureFunctionActivityMethod method, BinaryData functionName, BinaryData headers, BinaryData body) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             Method = method;
             FunctionName = functionName;

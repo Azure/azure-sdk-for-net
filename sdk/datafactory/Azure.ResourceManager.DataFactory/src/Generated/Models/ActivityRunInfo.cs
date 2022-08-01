@@ -15,15 +15,15 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Information about an activity run in a pipeline.
     /// Serialized Name: ActivityRun
     /// </summary>
-    public partial class PipelineActivityRunInfo
+    public partial class ActivityRunInfo
     {
-        /// <summary> Initializes a new instance of PipelineActivityRunInfo. </summary>
-        internal PipelineActivityRunInfo()
+        /// <summary> Initializes a new instance of ActivityRunInfo. </summary>
+        internal ActivityRunInfo()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of PipelineActivityRunInfo. </summary>
+        /// <summary> Initializes a new instance of ActivityRunInfo. </summary>
         /// <param name="pipelineName">
         /// The name of the pipeline.
         /// Serialized Name: ActivityRun.pipelineName
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Serialized Name: ActivityRun.error
         /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal PipelineActivityRunInfo(string pipelineName, string pipelineRunId, string activityName, string activityType, string activityRunId, string linkedServiceName, string status, DateTimeOffset? activityRunStart, DateTimeOffset? activityRunEnd, int? durationInMs, BinaryData input, BinaryData output, BinaryData error, IReadOnlyDictionary<string, BinaryData> additionalProperties)
+        internal ActivityRunInfo(string pipelineName, string pipelineRunId, string activityName, string activityType, string activityRunId, string linkedServiceName, string status, DateTimeOffset? activityRunStart, DateTimeOffset? activityRunEnd, int? durationInMs, BinaryData input, BinaryData output, BinaryData error, IReadOnlyDictionary<string, BinaryData> additionalProperties)
         {
             PipelineName = pipelineName;
             PipelineRunId = pipelineRunId;

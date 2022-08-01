@@ -11,20 +11,20 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    internal partial class PipelineActivityRunsQueryResult
+    internal partial class ActivityRunsResult
     {
-        internal static PipelineActivityRunsQueryResult DeserializePipelineActivityRunsQueryResult(JsonElement element)
+        internal static ActivityRunsResult DeserializeActivityRunsResult(JsonElement element)
         {
-            IReadOnlyList<PipelineActivityRunInfo> value = default;
+            IReadOnlyList<ActivityRunInfo> value = default;
             Optional<string> continuationToken = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<PipelineActivityRunInfo> array = new List<PipelineActivityRunInfo>();
+                    List<ActivityRunInfo> array = new List<ActivityRunInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PipelineActivityRunInfo.DeserializePipelineActivityRunInfo(item));
+                        array.Add(ActivityRunInfo.DeserializeActivityRunInfo(item));
                     }
                     value = array;
                     continue;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     continue;
                 }
             }
-            return new PipelineActivityRunsQueryResult(value, continuationToken.Value);
+            return new ActivityRunsResult(value, continuationToken.Value);
         }
     }
 }

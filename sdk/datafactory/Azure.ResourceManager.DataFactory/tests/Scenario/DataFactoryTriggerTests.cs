@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.IotHub.Tests.Scenario
 
         private async Task<FactoryTriggerResource> CreateDefaultTrigger(DataFactoryResource dataFactory, string triggerName)
         {
-            FactoryTriggerProperties dataFactoryTriggerProperties = new FactoryTriggerProperties()
+            FactoryTriggerDefinition dataFactoryTriggerProperties = new FactoryTriggerDefinition()
             {
                 TriggerType = "ScheduleTrigger",
             };

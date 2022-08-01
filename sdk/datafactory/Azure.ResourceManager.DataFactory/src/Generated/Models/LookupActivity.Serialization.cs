@@ -87,12 +87,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         internal static LookupActivity DeserializeLookupActivity(JsonElement element)
         {
             Optional<FactoryLinkedServiceReference> linkedServiceName = default;
-            Optional<PipelineActivityPolicyInfo> policy = default;
+            Optional<ActivityPolicy> policy = default;
             string name = default;
             string type = default;
             Optional<string> description = default;
-            Optional<IList<PipelineActivityDependencyInfo>> dependsOn = default;
-            Optional<IList<UserProperty>> userProperties = default;
+            Optional<IList<ActivityDependency>> dependsOn = default;
+            Optional<IList<ActivityUserProperty>> userProperties = default;
             CopyActivitySource source = default;
             DatasetReference dataset = default;
             Optional<BinaryData> firstRowOnly = default;
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    policy = PipelineActivityPolicyInfo.DeserializePipelineActivityPolicyInfo(property.Value);
+                    policy = ActivityPolicy.DeserializeActivityPolicy(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -142,10 +142,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<PipelineActivityDependencyInfo> array = new List<PipelineActivityDependencyInfo>();
+                    List<ActivityDependency> array = new List<ActivityDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PipelineActivityDependencyInfo.DeserializePipelineActivityDependencyInfo(item));
+                        array.Add(ActivityDependency.DeserializeActivityDependency(item));
                     }
                     dependsOn = array;
                     continue;
@@ -157,10 +157,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<UserProperty> array = new List<UserProperty>();
+                    List<ActivityUserProperty> array = new List<ActivityUserProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UserProperty.DeserializeUserProperty(item));
+                        array.Add(ActivityUserProperty.DeserializeActivityUserProperty(item));
                     }
                     userProperties = array;
                     continue;

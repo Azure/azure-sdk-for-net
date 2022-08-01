@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="pipelineName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="pipelineName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CreateRunResult>> CreateRunAsync(string subscriptionId, string resourceGroupName, string factoryName, string pipelineName, IDictionary<string, BinaryData> parameterValueSpecification = null, string referencePipelineRunId = null, bool? isRecovery = null, string startActivityName = null, bool? startFromFailure = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PipelineCreateRunResult>> CreateRunAsync(string subscriptionId, string resourceGroupName, string factoryName, string pipelineName, IDictionary<string, BinaryData> parameterValueSpecification = null, string referencePipelineRunId = null, bool? isRecovery = null, string startActivityName = null, bool? startFromFailure = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -469,9 +469,9 @@ namespace Azure.ResourceManager.DataFactory
             {
                 case 200:
                     {
-                        CreateRunResult value = default;
+                        PipelineCreateRunResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CreateRunResult.DeserializeCreateRunResult(document.RootElement);
+                        value = PipelineCreateRunResult.DeserializePipelineCreateRunResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -492,7 +492,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="pipelineName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="pipelineName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CreateRunResult> CreateRun(string subscriptionId, string resourceGroupName, string factoryName, string pipelineName, IDictionary<string, BinaryData> parameterValueSpecification = null, string referencePipelineRunId = null, bool? isRecovery = null, string startActivityName = null, bool? startFromFailure = null, CancellationToken cancellationToken = default)
+        public Response<PipelineCreateRunResult> CreateRun(string subscriptionId, string resourceGroupName, string factoryName, string pipelineName, IDictionary<string, BinaryData> parameterValueSpecification = null, string referencePipelineRunId = null, bool? isRecovery = null, string startActivityName = null, bool? startFromFailure = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -505,9 +505,9 @@ namespace Azure.ResourceManager.DataFactory
             {
                 case 200:
                     {
-                        CreateRunResult value = default;
+                        PipelineCreateRunResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CreateRunResult.DeserializeCreateRunResult(document.RootElement);
+                        value = PipelineCreateRunResult.DeserializePipelineCreateRunResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

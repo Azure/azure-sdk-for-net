@@ -13,15 +13,15 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Response body with a run identifier.
     /// Serialized Name: CreateRunResponse
     /// </summary>
-    public partial class CreateRunResult
+    public partial class PipelineCreateRunResult
     {
-        /// <summary> Initializes a new instance of CreateRunResult. </summary>
+        /// <summary> Initializes a new instance of PipelineCreateRunResult. </summary>
         /// <param name="runId">
         /// Identifier of a run.
         /// Serialized Name: CreateRunResponse.runId
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
-        internal CreateRunResult(string runId)
+        internal PipelineCreateRunResult(string runId)
         {
             if (runId == null)
             {

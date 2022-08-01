@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Condition to be used for filtering the input.
         /// Serialized Name: FilterActivity.typeProperties.condition
         /// </param>
-        internal FilterActivity(string name, string activityType, string description, IList<PipelineActivityDependencyInfo> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, Expression items, Expression condition) : base(name, activityType, description, dependsOn, userProperties, additionalProperties)
+        internal FilterActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, Expression items, Expression condition) : base(name, activityType, description, dependsOn, userProperties, additionalProperties)
         {
             Items = items;
             Condition = condition;

@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// A list of libraries to be installed on the cluster that will execute the job.
         /// Serialized Name: DatabricksNotebookActivity.typeProperties.libraries
         /// </param>
-        internal DatabricksNotebookActivity(string name, string activityType, string description, IList<PipelineActivityDependencyInfo> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, FactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicyInfo policy, BinaryData notebookPath, IDictionary<string, BinaryData> baseParameters, IList<IDictionary<string, BinaryData>> libraries) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal DatabricksNotebookActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, FactoryLinkedServiceReference linkedServiceName, ActivityPolicy policy, BinaryData notebookPath, IDictionary<string, BinaryData> baseParameters, IList<IDictionary<string, BinaryData>> libraries) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             NotebookPath = notebookPath;
             BaseParameters = baseParameters;

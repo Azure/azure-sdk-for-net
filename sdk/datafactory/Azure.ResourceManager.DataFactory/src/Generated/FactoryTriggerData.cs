@@ -20,11 +20,11 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="properties">
         /// Properties of the trigger.
         /// Serialized Name: TriggerResource.properties
-        /// Please note <see cref="FactoryTriggerProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactoryTriggerDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="BlobEventsTrigger"/>, <see cref="BlobTrigger"/>, <see cref="ChainingTrigger"/>, <see cref="CustomEventsTrigger"/>, <see cref="MultiplePipelineTrigger"/>, <see cref="RerunTumblingWindowTrigger"/>, <see cref="ScheduleTrigger"/> and <see cref="TumblingWindowTrigger"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public FactoryTriggerData(FactoryTriggerProperties properties)
+        public FactoryTriggerData(FactoryTriggerDefinition properties)
         {
             if (properties == null)
             {
@@ -42,14 +42,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="properties">
         /// Properties of the trigger.
         /// Serialized Name: TriggerResource.properties
-        /// Please note <see cref="FactoryTriggerProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactoryTriggerDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="BlobEventsTrigger"/>, <see cref="BlobTrigger"/>, <see cref="ChainingTrigger"/>, <see cref="CustomEventsTrigger"/>, <see cref="MultiplePipelineTrigger"/>, <see cref="RerunTumblingWindowTrigger"/>, <see cref="ScheduleTrigger"/> and <see cref="TumblingWindowTrigger"/>.
         /// </param>
         /// <param name="eTag">
         /// Etag identifies change in the resource.
         /// Serialized Name: SubResource.etag
         /// </param>
-        internal FactoryTriggerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, FactoryTriggerProperties properties, ETag? eTag) : base(id, name, resourceType, systemData)
+        internal FactoryTriggerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, FactoryTriggerDefinition properties, ETag? eTag) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             ETag = eTag;
@@ -58,10 +58,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <summary>
         /// Properties of the trigger.
         /// Serialized Name: TriggerResource.properties
-        /// Please note <see cref="FactoryTriggerProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="FactoryTriggerDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="BlobEventsTrigger"/>, <see cref="BlobTrigger"/>, <see cref="ChainingTrigger"/>, <see cref="CustomEventsTrigger"/>, <see cref="MultiplePipelineTrigger"/>, <see cref="RerunTumblingWindowTrigger"/>, <see cref="ScheduleTrigger"/> and <see cref="TumblingWindowTrigger"/>.
         /// </summary>
-        public FactoryTriggerProperties Properties { get; set; }
+        public FactoryTriggerDefinition Properties { get; set; }
         /// <summary>
         /// Etag identifies change in the resource.
         /// Serialized Name: SubResource.etag

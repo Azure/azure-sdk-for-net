@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Trigger that schedules pipeline runs for all fixed time interval windows from a start time without gaps and also supports backfill scenarios (when start time is in the past).
     /// Serialized Name: TumblingWindowTrigger
     /// </summary>
-    public partial class TumblingWindowTrigger : FactoryTriggerProperties
+    public partial class TumblingWindowTrigger : FactoryTriggerDefinition
     {
         /// <summary> Initializes a new instance of TumblingWindowTrigger. </summary>
         /// <param name="pipeline">

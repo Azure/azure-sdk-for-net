@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class FactoryTriggerProperties : IUtf8JsonSerializable
+    public partial class FactoryTriggerDefinition : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static FactoryTriggerProperties DeserializeFactoryTriggerProperties(JsonElement element)
+        internal static FactoryTriggerDefinition DeserializeFactoryTriggerDefinition(JsonElement element)
         {
             if (element.TryGetProperty("type", out JsonElement discriminator))
             {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new FactoryTriggerProperties(type, description.Value, Optional.ToNullable(runtimeState), Optional.ToList(annotations), additionalProperties);
+            return new FactoryTriggerDefinition(type, description.Value, Optional.ToNullable(runtimeState), Optional.ToList(annotations), additionalProperties);
         }
     }
 }

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class UserProperty : IUtf8JsonSerializable
+    public partial class ActivityUserProperty : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static UserProperty DeserializeUserProperty(JsonElement element)
+        internal static ActivityUserProperty DeserializeActivityUserProperty(JsonElement element)
         {
             string name = default;
             BinaryData value = default;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     continue;
                 }
             }
-            return new UserProperty(name, value);
+            return new ActivityUserProperty(name, value);
         }
     }
 }

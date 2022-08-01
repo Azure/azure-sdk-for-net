@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="startActivityName"> In recovery mode, the rerun will start from this activity. If not specified, all activities will run. </param>
         /// <param name="startFromFailure"> In recovery mode, if set to true, the rerun will start from failed activities. The property will be used only if startActivityName is not specified. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CreateRunResult>> CreateRunAsync(IDictionary<string, BinaryData> parameterValueSpecification = null, string referencePipelineRunId = null, bool? isRecovery = null, string startActivityName = null, bool? startFromFailure = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PipelineCreateRunResult>> CreateRunAsync(IDictionary<string, BinaryData> parameterValueSpecification = null, string referencePipelineRunId = null, bool? isRecovery = null, string startActivityName = null, bool? startFromFailure = null, CancellationToken cancellationToken = default)
         {
             using var scope = _factoryPipelinePipelinesClientDiagnostics.CreateScope("FactoryPipelineResource.CreateRun");
             scope.Start();
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="startActivityName"> In recovery mode, the rerun will start from this activity. If not specified, all activities will run. </param>
         /// <param name="startFromFailure"> In recovery mode, if set to true, the rerun will start from failed activities. The property will be used only if startActivityName is not specified. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CreateRunResult> CreateRun(IDictionary<string, BinaryData> parameterValueSpecification = null, string referencePipelineRunId = null, bool? isRecovery = null, string startActivityName = null, bool? startFromFailure = null, CancellationToken cancellationToken = default)
+        public virtual Response<PipelineCreateRunResult> CreateRun(IDictionary<string, BinaryData> parameterValueSpecification = null, string referencePipelineRunId = null, bool? isRecovery = null, string startActivityName = null, bool? startFromFailure = null, CancellationToken cancellationToken = default)
         {
             using var scope = _factoryPipelinePipelinesClientDiagnostics.CreateScope("FactoryPipelineResource.CreateRun");
             scope.Start();

@@ -14,15 +14,15 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Append value for a Variable of type Array.
     /// Serialized Name: AppendVariableActivity
     /// </summary>
-    public partial class PipelineActivityAppendVariableInfo : ControlActivity
+    public partial class AppendVariableActivity : ControlActivity
     {
-        /// <summary> Initializes a new instance of PipelineActivityAppendVariableInfo. </summary>
+        /// <summary> Initializes a new instance of AppendVariableActivity. </summary>
         /// <param name="name">
         /// Activity name.
         /// Serialized Name: Activity.name
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public PipelineActivityAppendVariableInfo(string name) : base(name)
+        public AppendVariableActivity(string name) : base(name)
         {
             if (name == null)
             {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = "AppendVariable";
         }
 
-        /// <summary> Initializes a new instance of PipelineActivityAppendVariableInfo. </summary>
+        /// <summary> Initializes a new instance of AppendVariableActivity. </summary>
         /// <param name="name">
         /// Activity name.
         /// Serialized Name: Activity.name
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Value to be appended. Could be a static value or Expression
         /// Serialized Name: AppendVariableActivity.typeProperties.value
         /// </param>
-        internal PipelineActivityAppendVariableInfo(string name, string activityType, string description, IList<PipelineActivityDependencyInfo> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, string variableName, BinaryData value) : base(name, activityType, description, dependsOn, userProperties, additionalProperties)
+        internal AppendVariableActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, string variableName, BinaryData value) : base(name, activityType, description, dependsOn, userProperties, additionalProperties)
         {
             VariableName = variableName;
             Value = value;

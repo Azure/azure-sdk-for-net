@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Elevation level and scope for the user, default is nonadmin task. Type: string (or Expression with resultType double).
         /// Serialized Name: CustomActivity.typeProperties.autoUserSpecification
         /// </param>
-        internal CustomActivity(string name, string activityType, string description, IList<PipelineActivityDependencyInfo> dependsOn, IList<UserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, FactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicyInfo policy, BinaryData command, FactoryLinkedServiceReference resourceLinkedService, BinaryData folderPath, CustomActivityReferenceObject referenceObjects, IDictionary<string, BinaryData> extendedProperties, BinaryData retentionTimeInDays, BinaryData autoUserSpecification) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal CustomActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, FactoryLinkedServiceReference linkedServiceName, ActivityPolicy policy, BinaryData command, FactoryLinkedServiceReference resourceLinkedService, BinaryData folderPath, CustomActivityReferenceObject referenceObjects, IDictionary<string, BinaryData> extendedProperties, BinaryData retentionTimeInDays, BinaryData autoUserSpecification) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             Command = command;
             ResourceLinkedService = resourceLinkedService;
