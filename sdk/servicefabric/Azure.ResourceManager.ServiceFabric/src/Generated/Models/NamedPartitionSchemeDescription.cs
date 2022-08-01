@@ -11,12 +11,21 @@ using System.Linq;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    /// <summary> Describes the named partition scheme of the service. </summary>
+    /// <summary>
+    /// Describes the named partition scheme of the service.
+    /// Serialized Name: NamedPartitionSchemeDescription
+    /// </summary>
     public partial class NamedPartitionSchemeDescription : PartitionSchemeDescription
     {
         /// <summary> Initializes a new instance of NamedPartitionSchemeDescription. </summary>
-        /// <param name="count"> The number of partitions. </param>
-        /// <param name="names"> Array of size specified by the ‘count’ parameter, for the names of the partitions. </param>
+        /// <param name="count">
+        /// The number of partitions.
+        /// Serialized Name: NamedPartitionSchemeDescription.count
+        /// </param>
+        /// <param name="names">
+        /// Array of size specified by the ‘count’ parameter, for the names of the partitions.
+        /// Serialized Name: NamedPartitionSchemeDescription.names
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="names"/> is null. </exception>
         public NamedPartitionSchemeDescription(int count, IEnumerable<string> names)
         {
@@ -27,23 +36,38 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
             Count = count;
             Names = names.ToList();
-            PartitionScheme = PartitionScheme.Named;
+            PartitionScheme = ApplicationPartitionScheme.Named;
         }
 
         /// <summary> Initializes a new instance of NamedPartitionSchemeDescription. </summary>
-        /// <param name="partitionScheme"> Specifies how the service is partitioned. </param>
-        /// <param name="count"> The number of partitions. </param>
-        /// <param name="names"> Array of size specified by the ‘count’ parameter, for the names of the partitions. </param>
-        internal NamedPartitionSchemeDescription(PartitionScheme partitionScheme, int count, IList<string> names) : base(partitionScheme)
+        /// <param name="partitionScheme">
+        /// Specifies how the service is partitioned.
+        /// Serialized Name: PartitionSchemeDescription.partitionScheme
+        /// </param>
+        /// <param name="count">
+        /// The number of partitions.
+        /// Serialized Name: NamedPartitionSchemeDescription.count
+        /// </param>
+        /// <param name="names">
+        /// Array of size specified by the ‘count’ parameter, for the names of the partitions.
+        /// Serialized Name: NamedPartitionSchemeDescription.names
+        /// </param>
+        internal NamedPartitionSchemeDescription(ApplicationPartitionScheme partitionScheme, int count, IList<string> names) : base(partitionScheme)
         {
             Count = count;
             Names = names;
             PartitionScheme = partitionScheme;
         }
 
-        /// <summary> The number of partitions. </summary>
+        /// <summary>
+        /// The number of partitions.
+        /// Serialized Name: NamedPartitionSchemeDescription.count
+        /// </summary>
         public int Count { get; set; }
-        /// <summary> Array of size specified by the ‘count’ parameter, for the names of the partitions. </summary>
+        /// <summary>
+        /// Array of size specified by the ‘count’ parameter, for the names of the partitions.
+        /// Serialized Name: NamedPartitionSchemeDescription.names
+        /// </summary>
         public IList<string> Names { get; }
     }
 }

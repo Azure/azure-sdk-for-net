@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.AppService.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled");
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsDefined(RuntimeVersion))
             {
@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("unauthenticatedClientAction");
                 writer.WriteStringValue(UnauthenticatedClientAction.Value.ToSerialString());
             }
-            if (Optional.IsDefined(TokenStoreEnabled))
+            if (Optional.IsDefined(IsTokenStoreEnabled))
             {
                 writer.WritePropertyName("tokenStoreEnabled");
-                writer.WriteBooleanValue(TokenStoreEnabled.Value);
+                writer.WriteBooleanValue(IsTokenStoreEnabled.Value);
             }
             if (Optional.IsCollectionDefined(AllowedExternalRedirectUrls))
             {

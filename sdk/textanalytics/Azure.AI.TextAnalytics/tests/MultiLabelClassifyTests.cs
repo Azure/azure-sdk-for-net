@@ -94,7 +94,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             Assert.AreEqual(1, multiLabelClassifyActions.Count);
 
-            MultiLabelClassifyResultCollection documentsResults = multiLabelClassifyActions[0].DocumentsResults;
+            ClassifyDocumentResultCollection documentsResults = multiLabelClassifyActions[0].DocumentsResults;
             Assert.IsFalse(documentsResults[0].HasError);
             Assert.IsTrue(documentsResults[1].HasError);
             Assert.AreEqual(TextAnalyticsErrorCode.InvalidDocument, documentsResults[1].Error.ErrorCode.ToString());
@@ -122,7 +122,7 @@ namespace Azure.AI.TextAnalytics.Tests
             AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
 
             IReadOnlyCollection<MultiLabelClassifyActionResult> multiLabelClassifyActionsResults = resultCollection.MultiLabelClassifyResults;
-            MultiLabelClassifyResultCollection multiLabelClassifyResults = multiLabelClassifyActionsResults.FirstOrDefault().DocumentsResults;
+            ClassifyDocumentResultCollection multiLabelClassifyResults = multiLabelClassifyActionsResults.FirstOrDefault().DocumentsResults;
 
             ValidateSummaryBatchResult(multiLabelClassifyResults);
         }
@@ -154,7 +154,7 @@ namespace Azure.AI.TextAnalytics.Tests
             AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
 
             IReadOnlyCollection<MultiLabelClassifyActionResult> multiLabelClassifyActionsResults = resultCollection.MultiLabelClassifyResults;
-            MultiLabelClassifyResultCollection multiLabelClassifyResults = multiLabelClassifyActionsResults.FirstOrDefault().DocumentsResults;
+            ClassifyDocumentResultCollection multiLabelClassifyResults = multiLabelClassifyActionsResults.FirstOrDefault().DocumentsResults;
 
             ValidateSummaryBatchResult(multiLabelClassifyResults, includeStatistics: true);
         }
@@ -181,7 +181,7 @@ namespace Azure.AI.TextAnalytics.Tests
             AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
 
             IReadOnlyCollection<MultiLabelClassifyActionResult> multiLabelClassifyActionsResults = resultCollection.MultiLabelClassifyResults;
-            MultiLabelClassifyResultCollection multiLabelClassifyResults = multiLabelClassifyActionsResults.FirstOrDefault().DocumentsResults;
+            ClassifyDocumentResultCollection multiLabelClassifyResults = multiLabelClassifyActionsResults.FirstOrDefault().DocumentsResults;
 
             ValidateSummaryBatchResult(multiLabelClassifyResults);
         }
@@ -213,7 +213,7 @@ namespace Azure.AI.TextAnalytics.Tests
             AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
 
             IReadOnlyCollection<MultiLabelClassifyActionResult> multiLabelClassifyActionsResults = resultCollection.MultiLabelClassifyResults;
-            MultiLabelClassifyResultCollection multiLabelClassifyResults = multiLabelClassifyActionsResults.FirstOrDefault().DocumentsResults;
+            ClassifyDocumentResultCollection multiLabelClassifyResults = multiLabelClassifyActionsResults.FirstOrDefault().DocumentsResults;
 
             ValidateSummaryBatchResult(multiLabelClassifyResults, includeStatistics: true);
         }
@@ -268,7 +268,7 @@ namespace Azure.AI.TextAnalytics.Tests
             }
         }
 
-        private void ValidateSummaryBatchResult(MultiLabelClassifyResultCollection results, bool includeStatistics = false)
+        private void ValidateSummaryBatchResult(ClassifyDocumentResultCollection results, bool includeStatistics = false)
         {
             Assert.AreEqual(results.ProjectName, TestEnvironment.MultiClassificationProjectName);
             Assert.AreEqual(results.DeploymentName, TestEnvironment.MultiClassificationDeploymentName);
@@ -286,7 +286,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 Assert.IsNull(results.Statistics);
             }
 
-            foreach (LabelClassifyResult result in results)
+            foreach (ClassifyDocumentResult result in results)
             {
                 Assert.That(result.Id, Is.Not.Null.And.Not.Empty);
                 Assert.False(result.HasError);

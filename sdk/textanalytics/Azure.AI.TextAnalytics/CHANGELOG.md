@@ -6,19 +6,19 @@
 
 ### Breaking Changes
 
-- Merged `MultiCategoryClassifyResult` and `SingleCategoryClassifyResult` into `LabelClassifyResult`.
+- Merged `MultiCategoryClassifyResult` and `SingleCategoryClassifyResult` into `ClassifyDocumentResult`.
 - Removed Extractive Text Summarization and related models. To access this beta feature, install the 5.2.0-beta.3 version of the client library.
 - Removed Extractive Text Summarization, Multi Label Classification, and Single Label Classification from legacy client library.
 - Removed `HealthcareTaskParameters.FhirVersion` and `AnalyzeHealthcareEntitiesResult.FhirBundle`. To access this beta feature, install the 5.2.0-beta.3 version of the client library.
 - Renamed `LabelClassifyResult.Classifications` to `LabelClassifyResult.ClassificationCategories`.
 - Renamed `MultiCategoryClassifyAction` to `MultiLabelClassifyAction`.
 - Renamed `MultiCategoryClassifyActionResult` to `MultiLabelClassifyActionResult`.
-- Renamed `MultiCategoryClassifyResult` to `MultiLabelClassifyResult`.
-- Renamed `MultiCategoryClassifyResultCollection` to `MultiLabelClassifyResultCollection`.
+- Renamed `MultiCategoryClassifyResult` to `ClassifyDocumentResult`.
+- Renamed `MultiCategoryClassifyResultCollection` to `ClassifyDocumentResultCollection`.
 - Renamed `SingleCategoryClassifyAction` to `SingleLabelClassifyAction`.
 - Renamed `SingleCategoryClassifyActionResult` to `SingleLabelClassifyActionResult`.
-- Renamed `SingleCategoryClassifyResult` to `SingleLabelClassifyResult`.
-- Renamed `SingleCategoryClassifyResultCollection` to `SingleLabelClassifyResultCollection`.
+- Renamed `SingleCategoryClassifyResult` to `ClassifyDocumentResult`.
+- Renamed `SingleCategoryClassifyResultCollection` to `ClassifyDocumentResultCollection`.
 
 ### Bugs Fixed
 

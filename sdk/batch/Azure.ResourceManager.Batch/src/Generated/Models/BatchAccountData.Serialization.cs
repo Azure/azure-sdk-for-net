@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Batch
     {
         internal static BatchAccountData DeserializeBatchAccountData(JsonElement element)
         {
-            Optional<BatchAccountIdentity> identity = default;
+            Optional<ManagedServiceIdentity> identity = default;
             Optional<AzureLocation> location = default;
             Optional<IReadOnlyDictionary<string, string>> tags = default;
             ResourceIdentifier id = default;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Batch
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = BatchAccountIdentity.DeserializeBatchAccountIdentity(property.Value);
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("location"))
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.Batch
                     continue;
                 }
             }
-            return new BatchAccountData(id, name, type, systemData.Value, identity.Value, accountEndpoint.Value, nodeManagementEndpoint.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(poolAllocationMode), keyVaultReference.Value, Optional.ToNullable(publicNetworkAccess), networkProfile.Value, Optional.ToList(privateEndpointConnections), autoStorage.Value, encryption.Value, Optional.ToNullable(dedicatedCoreQuota), Optional.ToNullable(lowPriorityCoreQuota), Optional.ToList(dedicatedCoreQuotaPerVmFamily), Optional.ToNullable(dedicatedCoreQuotaPerVmFamilyEnforced), Optional.ToNullable(poolQuota), Optional.ToNullable(activeJobAndJobScheduleQuota), Optional.ToList(allowedAuthenticationModes), Optional.ToNullable(location), Optional.ToDictionary(tags));
+            return new BatchAccountData(id, name, type, systemData.Value, identity, accountEndpoint.Value, nodeManagementEndpoint.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(poolAllocationMode), keyVaultReference.Value, Optional.ToNullable(publicNetworkAccess), networkProfile.Value, Optional.ToList(privateEndpointConnections), autoStorage.Value, encryption.Value, Optional.ToNullable(dedicatedCoreQuota), Optional.ToNullable(lowPriorityCoreQuota), Optional.ToList(dedicatedCoreQuotaPerVmFamily), Optional.ToNullable(dedicatedCoreQuotaPerVmFamilyEnforced), Optional.ToNullable(poolQuota), Optional.ToNullable(activeJobAndJobScheduleQuota), Optional.ToList(allowedAuthenticationModes), Optional.ToNullable(location), Optional.ToDictionary(tags));
         }
     }
 }

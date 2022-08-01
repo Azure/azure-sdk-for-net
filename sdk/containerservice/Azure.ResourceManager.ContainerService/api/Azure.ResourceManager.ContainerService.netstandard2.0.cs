@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.ContainerService
         public string Fqdn { get { throw null; } }
         public string FqdnSubdomain { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerService.Models.ManagedClusterHttpProxyConfig HttpProxyConfig { get { throw null; } set { } }
-        public Azure.ResourceManager.ContainerService.Models.ManagedClusterIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.ContainerService.Models.UserAssignedIdentity> IdentityProfile { get { throw null; } }
         public string KubernetesVersion { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerService.Models.ContainerServiceLinuxProfile LinuxProfile { get { throw null; } set { } }
@@ -842,14 +842,6 @@ namespace Azure.ResourceManager.ContainerService.Models
         public System.Collections.Generic.IList<string> NoProxy { get { throw null; } }
         public string TrustedCA { get { throw null; } set { } }
     }
-    public partial class ManagedClusterIdentity
-    {
-        public ManagedClusterIdentity() { }
-        public System.Guid? PrincipalId { get { throw null; } }
-        public Azure.ResourceManager.ContainerService.Models.ResourceIdentityType? ResourceIdentityType { get { throw null; } set { } }
-        public System.Guid? TenantId { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Models.UserAssignedIdentity> UserAssignedIdentities { get { throw null; } }
-    }
     public partial class ManagedClusterLoadBalancerProfile
     {
         public ManagedClusterLoadBalancerProfile() { }
@@ -1177,12 +1169,6 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static implicit operator Azure.ResourceManager.ContainerService.Models.PublicNetworkAccess (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ContainerService.Models.PublicNetworkAccess left, Azure.ResourceManager.ContainerService.Models.PublicNetworkAccess right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public enum ResourceIdentityType
-    {
-        None = 0,
-        SystemAssigned = 1,
-        UserAssigned = 2,
     }
     public partial class RunCommandContent
     {

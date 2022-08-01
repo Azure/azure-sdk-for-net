@@ -72,9 +72,11 @@ await foreach (AnalyzeActionsResult documentsInPage in operation.Value)
     foreach (SingleLabelClassifyActionResult classificationActionResults in singleClassificationActionResults)
     {
         Console.WriteLine($" Action name: {classificationActionResults.ActionName}");
-        foreach (SingleLabelClassifyResult documentResults in classificationActionResults.DocumentsResults)
+        foreach (ClassifyDocumentResult documentResults in classificationActionResults.DocumentsResults)
         {
-            Console.WriteLine($"  Class label \"{documentResults.Classification.Category}\" predicted with a confidence score of {documentResults.Classification.ConfidenceScore}.");
+            ClassificationCategory classification = documentResults.ClassificationCategories.First();
+
+            Console.WriteLine($"  Class label \"{classification.Category}\" predicted with a confidence score of {classification.ConfidenceScore}.");
             Console.WriteLine();
         }
     }

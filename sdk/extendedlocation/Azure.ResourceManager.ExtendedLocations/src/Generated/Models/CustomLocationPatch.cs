@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             ClusterExtensionIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
-        /// <summary> Identity for the resource. </summary>
-        public SystemAssignedServiceIdentity Identity { get; set; }
+        /// <summary> Identity for the resource. Current supported identity types: SystemAssigned, None. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> This is optional input that contains the authentication that should be used to generate the namespace. </summary>

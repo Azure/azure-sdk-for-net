@@ -36,6 +36,7 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/products/{productId}/policies/{policyId}: ApiManagementProductPolicy
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/products/{productId}/tags/{tagId}: ApiManagementProductTag
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/users/{userId}/subscriptions/{sid}: ApiManagementUserSubscription
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/privateLinkResources/{privateLinkSubResourceName}: ApiManagementPrivateLink
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -120,7 +121,9 @@ rename-mapping:
   OperationResultContract: GitOperationResultContractData
   ConfigurationIdName: ConfigurationName
   SaveConfigurationParameter: ConfigurationSaveContent
+  SaveConfigurationParameter.properties.force: ForceUpdate
   DeployConfigurationParameters: ConfigurationDeployContent
+  DeployConfigurationParameters.properties.force: ForceDelete
   ApiVersionSetContract: ApiVersionSet
   AuthorizationServerContract:  ApiManagementAuthorizationServer
   BackendContract: ApiManagementBackend
@@ -146,8 +149,6 @@ rename-mapping:
   NotificationContract: ApiManagementNotification
   PolicyDescriptionContract: PolicyDescriptionContractData
   PortalDelegationSettings: ApiManagementPortalDelegationSettings
-  PortalDelegationSettings.properties.subscriptions: IsSubscriptions
-  PortalDelegationSettings.properties.userRegistration: IsUserRegistration
   PortalRevisionContract: ApiManagementPortalRevision
   PortalSettingsContract: PortalSettingsContractData
   PortalSigninSettings: ApiManagementPortalSignInSettings
@@ -173,6 +174,7 @@ rename-mapping:
   SubscriptionContract.properties.notificationDate: NotifiesOn
   UserContract.properties.registrationDate: RegistriesOn
   AccessInformationSecretsContract: TenantAccessInfoSecretsDetails
+  AccessInformationSecretsContract.enabled: IsEnabled
   AccessInformationSecretsContract.id: AccessInfoType
   ApiManagementServiceCheckNameAvailabilityParameters: ApiManagementServiceNameAvailabilityContent
   ApiManagementServiceNameAvailabilityResult.nameAvailable: IsNameAvailable
@@ -228,6 +230,12 @@ rename-mapping:
   PolicyExportFormat.rawxml: RawXml
   ResourceSkuResult: AvailableApiManagementServiceSkuResult
   SkuType: ApiManagementServiceSkuType
+  PrivateLinkResource: ApiManagementPrivateLink
+  HostnameConfiguration.keyVaultId: keyVaultSecretUri
+  ParameterContract.required: IsRequired
+  PortalSettingsContract.properties.enabled: IsEnabled
+  TermsOfServiceProperties.enabled: IsEnabled
+  TermsOfServiceProperties.consentRequired: IsConsentRequired
 
 directive:
   - remove-operation: 'ApiManagementOperations_List'
@@ -269,12 +277,27 @@ directive:
               }
           }
         }
+      $.IssueCommentContractProperties.properties.userId['x-ms-format'] = 'arm-id';
+      $.AuthorizationServerContractBaseProperties.properties.supportState['x-ms-client-name'] = 'DoesSupportState';
+      $.DeletedServiceContractProperties.properties.serviceId['x-ms-format'] = 'arm-id';
+      $.PortalSettingsContractProperties.properties.subscriptions['x-ms-client-name'] = 'IsSubscriptions';
+      $.PortalSettingsContractProperties.properties.userRegistration['x-ms-client-name'] = 'IsUserRegistration';
+      $.AccessInformationCreateParameterProperties.properties.enabled['x-ms-client-name'] = 'IsEnabled';
+      $.PrivateEndpointConnectionRequest.properties.id['x-ms-format'] = 'arm-id';
+      $.AccessInformationUpdateParameterProperties.properties.enabled['x-ms-client-name'] = 'IsEnabled';
+  - from: apimskus.json
+    where: $.definitions
+    transform: >
+      $.ApiManagementSku.properties.locations.items['x-ms-format'] = 'azure-location';
   - from: apimdeployment.json
     where: $.definitions
     transform: >
       $.Operation['x-ms-client-name'] = 'RestApiOperation';
       $.VirtualNetworkConfiguration.properties.vnetid['format'] = 'uuid';
       $.VirtualNetworkConfiguration.properties.subnetResourceId['x-ms-format'] = 'arm-id';
+      $.ResourceSkuResult.properties.resourceType['x-ms-format'] = 'resource-type';
+      $.ApiManagementServiceBaseProperties.properties.publicIpAddressId['x-ms-format'] = 'arm-id';
+      $.AdditionalLocation.properties.publicIpAddressId['x-ms-format'] = 'arm-id';
   - from: apimanagement.json
     where: $.parameters
     transform: >

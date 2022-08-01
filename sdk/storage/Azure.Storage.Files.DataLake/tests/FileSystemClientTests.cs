@@ -309,13 +309,15 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             DataLakeFileSystemEncryptionScopeOptions encryptionScopeOptions = new DataLakeFileSystemEncryptionScopeOptions
             {
-                DefaultEncryptionScope = TestConfigHierarchicalNamespace.EncryptionScope
+                DefaultEncryptionScope = TestConfigHierarchicalNamespace.EncryptionScope,
+                PreventEncryptionScopeOverride = true
             };
             await using DisposingFileSystem test = await GetNewFileSystem(encryptionScopeOptions: encryptionScopeOptions);
 
             // Assert - We are also testing GetPropertiesAsync() in this test.
             Response<FileSystemProperties> response = await test.FileSystem.GetPropertiesAsync();
             Assert.AreEqual(TestConfigHierarchicalNamespace.EncryptionScope, response.Value.DefaultEncryptionScope);
+            Assert.IsTrue(response.Value.PreventEncryptionScopeOverride);
         }
 
         [RecordedTest]

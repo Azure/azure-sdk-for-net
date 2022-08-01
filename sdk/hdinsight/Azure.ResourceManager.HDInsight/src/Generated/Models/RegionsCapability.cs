@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary> The regions capability. </summary>
+    /// <summary>
+    /// The regions capability.
+    /// Serialized Name: RegionsCapability
+    /// </summary>
     public partial class RegionsCapability
     {
         /// <summary> Initializes a new instance of RegionsCapability. </summary>
@@ -20,13 +23,19 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of RegionsCapability. </summary>
-        /// <param name="available"> The list of region capabilities. </param>
+        /// <param name="available">
+        /// The list of region capabilities.
+        /// Serialized Name: RegionsCapability.available
+        /// </param>
         internal RegionsCapability(IReadOnlyList<string> available)
         {
             Available = available;
         }
 
-        /// <summary> The list of region capabilities. </summary>
+        /// <summary>
+        /// The list of region capabilities.
+        /// Serialized Name: RegionsCapability.available
+        /// </summary>
         public IReadOnlyList<string> Available { get; }
     }
 }

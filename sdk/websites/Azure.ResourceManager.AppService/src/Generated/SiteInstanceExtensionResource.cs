@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _siteInstanceExtensionWebAppsRestClient.GetInstanceMsDeployStatusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _siteInstanceExtensionWebAppsRestClient.GetInstanceMSDeployStatusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SiteInstanceExtensionResource(Client, response.Value), response.GetRawResponse());
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _siteInstanceExtensionWebAppsRestClient.GetInstanceMsDeployStatus(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
+                var response = _siteInstanceExtensionWebAppsRestClient.GetInstanceMSDeployStatus(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SiteInstanceExtensionResource(Client, response.Value), response.GetRawResponse());
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="msDeploy"> Details of MSDeploy operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="msDeploy"/> is null. </exception>
-        public virtual async Task<ArmOperation<SiteInstanceExtensionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, MsDeploy msDeploy, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SiteInstanceExtensionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, MSDeploy msDeploy, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(msDeploy, nameof(msDeploy));
 
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="msDeploy"> Details of MSDeploy operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="msDeploy"/> is null. </exception>
-        public virtual ArmOperation<SiteInstanceExtensionResource> CreateOrUpdate(WaitUntil waitUntil, MsDeploy msDeploy, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SiteInstanceExtensionResource> CreateOrUpdate(WaitUntil waitUntil, MSDeploy msDeploy, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(msDeploy, nameof(msDeploy));
 
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetInstanceMSDeployLog
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MsDeployLog>> GetInstanceMSDeployLogAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MSDeployLog>> GetInstanceMSDeployLogAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteInstanceExtensionWebAppsClientDiagnostics.CreateScope("SiteInstanceExtensionResource.GetInstanceMSDeployLog");
             scope.Start();
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetInstanceMSDeployLog
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MsDeployLog> GetInstanceMSDeployLog(CancellationToken cancellationToken = default)
+        public virtual Response<MSDeployLog> GetInstanceMSDeployLog(CancellationToken cancellationToken = default)
         {
             using var scope = _siteInstanceExtensionWebAppsClientDiagnostics.CreateScope("SiteInstanceExtensionResource.GetInstanceMSDeployLog");
             scope.Start();

@@ -339,10 +339,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     }
     public partial class CopyAuthorization
     {
-        internal CopyAuthorization() { }
+        public CopyAuthorization(string targetResourceId, string targetResourceRegion, string targetModelId, System.Uri targetModelLocation, string accessToken, System.DateTimeOffset expiresOn) { }
+        public string AccessToken { get { throw null; } }
         public System.DateTimeOffset ExpiresOn { get { throw null; } }
         public string TargetModelId { get { throw null; } }
-        public string TargetModelLocation { get { throw null; } }
+        public System.Uri TargetModelLocation { get { throw null; } }
+        public string TargetResourceId { get { throw null; } }
         public string TargetResourceRegion { get { throw null; } }
     }
     public partial class CopyModelOperation : Azure.Operation<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentModelDetails>
@@ -424,7 +426,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public static Azure.AI.FormRecognizer.DocumentAnalysis.AnalyzeResult AnalyzeResult(string modelId = null, string content = null, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentPage> pages = null, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentTable> tables = null, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentKeyValuePair> keyValuePairs = null, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentStyle> styles = null, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentLanguage> languages = null, System.Collections.Generic.IEnumerable<Azure.AI.FormRecognizer.DocumentAnalysis.AnalyzedDocument> documents = null) { throw null; }
         public static Azure.AI.FormRecognizer.DocumentAnalysis.BoundingPolygon BoundingPolygon(System.Collections.Generic.IEnumerable<System.Drawing.PointF> points = null) { throw null; }
         public static Azure.AI.FormRecognizer.DocumentAnalysis.BoundingRegion BoundingRegion(int pageNumber = 0, Azure.AI.FormRecognizer.DocumentAnalysis.BoundingPolygon boundingPolygon = default(Azure.AI.FormRecognizer.DocumentAnalysis.BoundingPolygon)) { throw null; }
-        public static Azure.AI.FormRecognizer.DocumentAnalysis.CopyAuthorization CopyAuthorization(string targetResourceRegion = null, string targetModelId = null, string targetModelLocation = null, System.DateTimeOffset expiresOn = default(System.DateTimeOffset)) { throw null; }
         public static Azure.AI.FormRecognizer.DocumentAnalysis.CurrencyValue CurrencyValue(double amount = 0, string symbol = null) { throw null; }
         public static Azure.AI.FormRecognizer.DocumentAnalysis.DocTypeInfo DocTypeInfo(string description = null, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentBuildMode? buildMode = default(Azure.AI.FormRecognizer.DocumentAnalysis.DocumentBuildMode?), System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentFieldSchema> fieldSchema = null, System.Collections.Generic.IReadOnlyDictionary<string, float> fieldConfidence = null) { throw null; }
         public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentFieldSchema DocumentFieldSchema(Azure.AI.FormRecognizer.DocumentAnalysis.DocumentFieldType type = Azure.AI.FormRecognizer.DocumentAnalysis.DocumentFieldType.String, string description = null, string example = null, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentFieldSchema items = null, System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentFieldSchema> properties = null) { throw null; }

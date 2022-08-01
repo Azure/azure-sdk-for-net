@@ -102,8 +102,8 @@ namespace Azure.ResourceManager.AppConfiguration
     public partial class ConfigurationStoreData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public ConfigurationStoreData(Azure.Core.AzureLocation location, Azure.ResourceManager.AppConfiguration.Models.AppConfigurationSku sku) : base (default(Azure.Core.AzureLocation)) { }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public Azure.ResourceManager.AppConfiguration.Models.CreateMode? CreateMode { get { throw null; } set { } }
-        public System.DateTimeOffset? CreationOn { get { throw null; } }
         public bool? DisableLocalAuth { get { throw null; } set { } }
         public bool? EnablePurgeProtection { get { throw null; } set { } }
         public Azure.ResourceManager.AppConfiguration.Models.KeyVaultProperties EncryptionKeyVaultProperties { get { throw null; } set { } }
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.AppConfiguration
     {
         internal DeletedConfigurationStoreData() { }
         public string ConfigurationStoreId { get { throw null; } }
-        public System.DateTimeOffset? DeletionOn { get { throw null; } }
+        public System.DateTimeOffset? DeletedOn { get { throw null; } }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public bool? PurgeProtectionEnabled { get { throw null; } }
         public System.DateTimeOffset? ScheduledPurgeOn { get { throw null; } }
@@ -192,8 +192,8 @@ namespace Azure.ResourceManager.AppConfiguration
     public partial class KeyValueCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppConfiguration.KeyValueResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppConfiguration.KeyValueResource>, System.Collections.IEnumerable
     {
         protected KeyValueCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppConfiguration.KeyValueResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string keyValueName, Azure.ResourceManager.AppConfiguration.KeyValueData data = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppConfiguration.KeyValueResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string keyValueName, Azure.ResourceManager.AppConfiguration.KeyValueData data = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppConfiguration.KeyValueResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string keyValueName, Azure.ResourceManager.AppConfiguration.KeyValueData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppConfiguration.KeyValueResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string keyValueName, Azure.ResourceManager.AppConfiguration.KeyValueData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string keyValueName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string keyValueName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppConfiguration.KeyValueResource> Get(string keyValueName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -233,8 +233,8 @@ namespace Azure.ResourceManager.AppConfiguration
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppConfiguration.KeyValueResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppConfiguration.KeyValueResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppConfiguration.KeyValueResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppConfiguration.KeyValueResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppConfiguration.KeyValueData data = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppConfiguration.KeyValueResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppConfiguration.KeyValueData data = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppConfiguration.KeyValueResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppConfiguration.KeyValueData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppConfiguration.KeyValueResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppConfiguration.KeyValueData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.AppConfiguration.Models

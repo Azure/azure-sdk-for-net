@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Authorization
         {
             Optional<string> displayName = default;
             Optional<IReadOnlyList<ProviderOperationsResourceType>> resourceTypes = default;
-            Optional<IReadOnlyList<ProviderOperation>> operations = default;
+            Optional<IReadOnlyList<ProviderOperationInfo>> operations = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -53,10 +53,10 @@ namespace Azure.ResourceManager.Authorization
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ProviderOperation> array = new List<ProviderOperation>();
+                    List<ProviderOperationInfo> array = new List<ProviderOperationInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProviderOperation.DeserializeProviderOperation(item));
+                        array.Add(ProviderOperationInfo.DeserializeProviderOperationInfo(item));
                     }
                     operations = array;
                     continue;

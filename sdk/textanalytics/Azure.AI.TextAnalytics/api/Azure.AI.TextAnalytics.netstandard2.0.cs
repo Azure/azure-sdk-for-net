@@ -155,6 +155,19 @@ namespace Azure.AI.TextAnalytics
         internal ClassificationCategoryCollection() : base (default(System.Collections.Generic.IList<Azure.AI.TextAnalytics.ClassificationCategory>)) { }
         public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.TextAnalyticsWarning> Warnings { get { throw null; } }
     }
+    public partial class ClassifyDocumentResult : Azure.AI.TextAnalytics.TextAnalyticsResult
+    {
+        internal ClassifyDocumentResult() { }
+        public Azure.AI.TextAnalytics.ClassificationCategoryCollection ClassificationCategories { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.TextAnalyticsWarning> Warnings { get { throw null; } }
+    }
+    public partial class ClassifyDocumentResultCollection : System.Collections.ObjectModel.ReadOnlyCollection<Azure.AI.TextAnalytics.ClassifyDocumentResult>
+    {
+        internal ClassifyDocumentResultCollection() : base (default(System.Collections.Generic.IList<Azure.AI.TextAnalytics.ClassifyDocumentResult>)) { }
+        public string DeploymentName { get { throw null; } }
+        public string ProjectName { get { throw null; } }
+        public Azure.AI.TextAnalytics.TextDocumentBatchStatistics Statistics { get { throw null; } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DetectedLanguage
     {
@@ -385,12 +398,6 @@ namespace Azure.AI.TextAnalytics
         internal KeyPhraseCollection() : base (default(System.Collections.Generic.IList<string>)) { }
         public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.TextAnalyticsWarning> Warnings { get { throw null; } }
     }
-    public partial class LabelClassifyResult : Azure.AI.TextAnalytics.TextAnalyticsResult
-    {
-        internal LabelClassifyResult() { }
-        public Azure.AI.TextAnalytics.ClassificationCategoryCollection ClassificationCategories { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.TextAnalyticsWarning> Warnings { get { throw null; } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct LinkedEntity
     {
@@ -430,14 +437,7 @@ namespace Azure.AI.TextAnalytics
     public partial class MultiLabelClassifyActionResult : Azure.AI.TextAnalytics.TextAnalyticsActionResult
     {
         internal MultiLabelClassifyActionResult() { }
-        public Azure.AI.TextAnalytics.MultiLabelClassifyResultCollection DocumentsResults { get { throw null; } }
-    }
-    public partial class MultiLabelClassifyResultCollection : System.Collections.ObjectModel.ReadOnlyCollection<Azure.AI.TextAnalytics.LabelClassifyResult>
-    {
-        internal MultiLabelClassifyResultCollection() : base (default(System.Collections.Generic.IList<Azure.AI.TextAnalytics.LabelClassifyResult>)) { }
-        public string DeploymentName { get { throw null; } }
-        public string ProjectName { get { throw null; } }
-        public Azure.AI.TextAnalytics.TextDocumentBatchStatistics Statistics { get { throw null; } }
+        public Azure.AI.TextAnalytics.ClassifyDocumentResultCollection DocumentsResults { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PiiEntity
@@ -789,20 +789,7 @@ namespace Azure.AI.TextAnalytics
     public partial class SingleLabelClassifyActionResult : Azure.AI.TextAnalytics.TextAnalyticsActionResult
     {
         internal SingleLabelClassifyActionResult() { }
-        public Azure.AI.TextAnalytics.SingleLabelClassifyResultCollection DocumentsResults { get { throw null; } }
-    }
-    public partial class SingleLabelClassifyResult : Azure.AI.TextAnalytics.TextAnalyticsResult
-    {
-        internal SingleLabelClassifyResult() { }
-        public Azure.AI.TextAnalytics.ClassificationCategory Classification { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyCollection<Azure.AI.TextAnalytics.TextAnalyticsWarning> Warnings { get { throw null; } }
-    }
-    public partial class SingleLabelClassifyResultCollection : System.Collections.ObjectModel.ReadOnlyCollection<Azure.AI.TextAnalytics.SingleLabelClassifyResult>
-    {
-        internal SingleLabelClassifyResultCollection() : base (default(System.Collections.Generic.IList<Azure.AI.TextAnalytics.SingleLabelClassifyResult>)) { }
-        public string DeploymentName { get { throw null; } }
-        public string ProjectName { get { throw null; } }
-        public Azure.AI.TextAnalytics.TextDocumentBatchStatistics Statistics { get { throw null; } }
+        public Azure.AI.TextAnalytics.ClassifyDocumentResultCollection DocumentsResults { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct TargetSentiment
@@ -1008,6 +995,9 @@ namespace Azure.AI.TextAnalytics
         public static Azure.AI.TextAnalytics.CategorizedEntityCollection CategorizedEntityCollection(System.Collections.Generic.IList<Azure.AI.TextAnalytics.CategorizedEntity> entities, System.Collections.Generic.IList<Azure.AI.TextAnalytics.TextAnalyticsWarning> warnings = null) { throw null; }
         public static Azure.AI.TextAnalytics.ClassificationCategory ClassificationCategory(string category, double confidenceScore) { throw null; }
         public static Azure.AI.TextAnalytics.ClassificationCategoryCollection ClassificationCategoryCollection(System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.ClassificationCategory> classificationList, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.TextAnalyticsWarning> warnings) { throw null; }
+        public static Azure.AI.TextAnalytics.ClassifyDocumentResult ClassifyDocumentResult(string id, Azure.AI.TextAnalytics.TextAnalyticsError error) { throw null; }
+        public static Azure.AI.TextAnalytics.ClassifyDocumentResult ClassifyDocumentResult(string id, Azure.AI.TextAnalytics.TextDocumentStatistics statistics, Azure.AI.TextAnalytics.ClassificationCategoryCollection documentClassificationCollection, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.TextAnalyticsWarning> warnings = null) { throw null; }
+        public static Azure.AI.TextAnalytics.ClassifyDocumentResultCollection ClassifyDocumentResultCollection(System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.ClassifyDocumentResult> classificationResultList, Azure.AI.TextAnalytics.TextDocumentBatchStatistics statistics, string projectName, string deploymentName) { throw null; }
         public static Azure.AI.TextAnalytics.DetectedLanguage DetectedLanguage(string name, string iso6391Name, double confidenceScore, System.Collections.Generic.IList<Azure.AI.TextAnalytics.TextAnalyticsWarning> warnings = null) { throw null; }
         public static Azure.AI.TextAnalytics.DetectLanguageResult DetectLanguageResult(string id, Azure.AI.TextAnalytics.TextAnalyticsError error) { throw null; }
         public static Azure.AI.TextAnalytics.DetectLanguageResult DetectLanguageResult(string id, Azure.AI.TextAnalytics.TextDocumentStatistics statistics, Azure.AI.TextAnalytics.DetectedLanguage detectedLanguage) { throw null; }
@@ -1036,14 +1026,11 @@ namespace Azure.AI.TextAnalytics
         public static Azure.AI.TextAnalytics.LinkedEntityMatch LinkedEntityMatch(string text, double score) { throw null; }
         public static Azure.AI.TextAnalytics.LinkedEntityMatch LinkedEntityMatch(string text, double score, int offset, int length) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public static Azure.AI.TextAnalytics.MultiLabelClassifyActionResult MultiLabelClassifyActionResult(Azure.AI.TextAnalytics.MultiLabelClassifyResultCollection result, System.DateTimeOffset completedOn) { throw null; }
-        public static Azure.AI.TextAnalytics.MultiLabelClassifyActionResult MultiLabelClassifyActionResult(Azure.AI.TextAnalytics.MultiLabelClassifyResultCollection result, string actionName, System.DateTimeOffset completedOn) { throw null; }
+        public static Azure.AI.TextAnalytics.MultiLabelClassifyActionResult MultiLabelClassifyActionResult(Azure.AI.TextAnalytics.ClassifyDocumentResultCollection result, System.DateTimeOffset completedOn) { throw null; }
+        public static Azure.AI.TextAnalytics.MultiLabelClassifyActionResult MultiLabelClassifyActionResult(Azure.AI.TextAnalytics.ClassifyDocumentResultCollection result, string actionName, System.DateTimeOffset completedOn) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.AI.TextAnalytics.MultiLabelClassifyActionResult MultiLabelClassifyActionResult(System.DateTimeOffset completedOn, string code, string message) { throw null; }
         public static Azure.AI.TextAnalytics.MultiLabelClassifyActionResult MultiLabelClassifyActionResult(string actionName, System.DateTimeOffset completedOn, string code, string message) { throw null; }
-        public static Azure.AI.TextAnalytics.LabelClassifyResult MultiLabelClassifyResult(string id, Azure.AI.TextAnalytics.TextAnalyticsError error) { throw null; }
-        public static Azure.AI.TextAnalytics.LabelClassifyResult MultiLabelClassifyResult(string id, Azure.AI.TextAnalytics.TextDocumentStatistics statistics, Azure.AI.TextAnalytics.ClassificationCategoryCollection documentClassificationCollection, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.TextAnalyticsWarning> warnings = null) { throw null; }
-        public static Azure.AI.TextAnalytics.MultiLabelClassifyResultCollection MultiLabelClassifyResultCollection(System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.LabelClassifyResult> classificationResultList, Azure.AI.TextAnalytics.TextDocumentBatchStatistics statistics, string projectName, string deploymentName) { throw null; }
         public static Azure.AI.TextAnalytics.PiiEntity PiiEntity(string text, string category, string subCategory, double score, int offset, int length) { throw null; }
         public static Azure.AI.TextAnalytics.PiiEntityCollection PiiEntityCollection(System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.PiiEntity> entities, string redactedText, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.TextAnalyticsWarning> warnings = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -1085,14 +1072,11 @@ namespace Azure.AI.TextAnalytics
         public static Azure.AI.TextAnalytics.SentenceSentiment SentenceSentiment(Azure.AI.TextAnalytics.TextSentiment sentiment, string text, double positiveScore, double neutralScore, double negativeScore, int offset, int length, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.SentenceOpinion> opinions) { throw null; }
         public static Azure.AI.TextAnalytics.SentimentConfidenceScores SentimentConfidenceScores(double positiveScore, double neutralScore, double negativeScore) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public static Azure.AI.TextAnalytics.SingleLabelClassifyActionResult SingleLabelClassifyActionResult(Azure.AI.TextAnalytics.SingleLabelClassifyResultCollection result, System.DateTimeOffset completedOn) { throw null; }
-        public static Azure.AI.TextAnalytics.SingleLabelClassifyActionResult SingleLabelClassifyActionResult(Azure.AI.TextAnalytics.SingleLabelClassifyResultCollection result, string actionName, System.DateTimeOffset completedOn) { throw null; }
+        public static Azure.AI.TextAnalytics.SingleLabelClassifyActionResult SingleLabelClassifyActionResult(Azure.AI.TextAnalytics.ClassifyDocumentResultCollection result, System.DateTimeOffset completedOn) { throw null; }
+        public static Azure.AI.TextAnalytics.SingleLabelClassifyActionResult SingleLabelClassifyActionResult(Azure.AI.TextAnalytics.ClassifyDocumentResultCollection result, string actionName, System.DateTimeOffset completedOn) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.AI.TextAnalytics.SingleLabelClassifyActionResult SingleLabelClassifyActionResult(System.DateTimeOffset completedOn, string code, string message) { throw null; }
         public static Azure.AI.TextAnalytics.SingleLabelClassifyActionResult SingleLabelClassifyActionResult(string actionName, System.DateTimeOffset completedOn, string code, string message) { throw null; }
-        public static Azure.AI.TextAnalytics.SingleLabelClassifyResult SingleLabelClassifyResult(string id, Azure.AI.TextAnalytics.TextAnalyticsError error) { throw null; }
-        public static Azure.AI.TextAnalytics.SingleLabelClassifyResult SingleLabelClassifyResult(string id, Azure.AI.TextAnalytics.TextDocumentStatistics statistics, Azure.AI.TextAnalytics.ClassificationCategory classification, System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.TextAnalyticsWarning> warnings = null) { throw null; }
-        public static Azure.AI.TextAnalytics.SingleLabelClassifyResultCollection SingleLabelClassifyResultCollection(System.Collections.Generic.IEnumerable<Azure.AI.TextAnalytics.SingleLabelClassifyResult> classificationResultList, Azure.AI.TextAnalytics.TextDocumentBatchStatistics statistics, string projectName, string deploymentName) { throw null; }
         public static Azure.AI.TextAnalytics.TargetSentiment TargetSentiment(Azure.AI.TextAnalytics.TextSentiment sentiment, string text, double positiveScore, double negativeScore, int offset, int length) { throw null; }
         public static Azure.AI.TextAnalytics.TextAnalyticsError TextAnalyticsError(string code, string message, string target = null) { throw null; }
         public static Azure.AI.TextAnalytics.TextAnalyticsWarning TextAnalyticsWarning(string code, string message) { throw null; }

@@ -20,17 +20,17 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> Initializes a new instance of AssetStreamingLocator. </summary>
         /// <param name="name"> Streaming Locator name. </param>
         /// <param name="assetName"> Asset Name. </param>
-        /// <param name="created"> The creation time of the Streaming Locator. </param>
+        /// <param name="createdOn"> The creation time of the Streaming Locator. </param>
         /// <param name="startOn"> The start time of the Streaming Locator. </param>
         /// <param name="endOn"> The end time of the Streaming Locator. </param>
         /// <param name="streamingLocatorId"> StreamingLocatorId of the Streaming Locator. </param>
         /// <param name="streamingPolicyName"> Name of the Streaming Policy used by this Streaming Locator. </param>
         /// <param name="defaultContentKeyPolicyName"> Name of the default ContentKeyPolicy used by this Streaming Locator. </param>
-        internal AssetStreamingLocator(string name, string assetName, DateTimeOffset? created, DateTimeOffset? startOn, DateTimeOffset? endOn, Guid? streamingLocatorId, string streamingPolicyName, string defaultContentKeyPolicyName)
+        internal AssetStreamingLocator(string name, string assetName, DateTimeOffset? createdOn, DateTimeOffset? startOn, DateTimeOffset? endOn, Guid? streamingLocatorId, string streamingPolicyName, string defaultContentKeyPolicyName)
         {
             Name = name;
             AssetName = assetName;
-            Created = created;
+            CreatedOn = createdOn;
             StartOn = startOn;
             EndOn = endOn;
             StreamingLocatorId = streamingLocatorId;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> Asset Name. </summary>
         public string AssetName { get; }
         /// <summary> The creation time of the Streaming Locator. </summary>
-        public DateTimeOffset? Created { get; }
+        public DateTimeOffset? CreatedOn { get; }
         /// <summary> The start time of the Streaming Locator. </summary>
         public DateTimeOffset? StartOn { get; }
         /// <summary> The end time of the Streaming Locator. </summary>

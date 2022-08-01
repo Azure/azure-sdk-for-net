@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary> The directory type. </summary>
+    /// <summary>
+    /// The directory type.
+    /// Serialized Name: DirectoryType
+    /// </summary>
     public readonly partial struct DirectoryType : IEquatable<DirectoryType>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         private const string ActiveDirectoryValue = "ActiveDirectory";
 
-        /// <summary> ActiveDirectory. </summary>
+        /// <summary>
+        /// ActiveDirectory
+        /// Serialized Name: DirectoryType.ActiveDirectory
+        /// </summary>
         public static DirectoryType ActiveDirectory { get; } = new DirectoryType(ActiveDirectoryValue);
         /// <summary> Determines if two <see cref="DirectoryType"/> values are the same. </summary>
         public static bool operator ==(DirectoryType left, DirectoryType right) => left.Equals(right);
