@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<DateTimeOffset> lastRenewedTime = default;
             Optional<bool> autoRenew = default;
             Optional<bool> readyForDnsRecordManagement = default;
-            Optional<IReadOnlyList<HostName>> managedHostNames = default;
+            Optional<IReadOnlyList<AppServiceHostName>> managedHostNames = default;
             Optional<DomainPurchaseConsent> consent = default;
             Optional<IReadOnlyList<DomainNotRenewableReason>> domainNotRenewableReasons = default;
             Optional<DnsType> dnsType = default;
@@ -294,10 +294,10 @@ namespace Azure.ResourceManager.AppService.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<HostName> array = new List<HostName>();
+                            List<AppServiceHostName> array = new List<AppServiceHostName>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(HostName.DeserializeHostName(item));
+                                array.Add(AppServiceHostName.DeserializeAppServiceHostName(item));
                             }
                             managedHostNames = array;
                             continue;

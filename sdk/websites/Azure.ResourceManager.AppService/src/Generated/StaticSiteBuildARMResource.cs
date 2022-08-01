@@ -334,10 +334,10 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: StaticSites_ListStaticSiteBuildFunctions
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StaticSiteFunctionOverviewARMResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<StaticSiteFunctionOverviewARMResource> GetStaticSiteBuildFunctionsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="StaticSiteFunctionOverview" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<StaticSiteFunctionOverview> GetStaticSiteBuildFunctionsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<StaticSiteFunctionOverviewARMResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<StaticSiteFunctionOverview>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _staticSiteBuildARMStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildARMResource.GetStaticSiteBuildFunctions");
                 scope.Start();
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            async Task<Page<StaticSiteFunctionOverviewARMResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<StaticSiteFunctionOverview>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _staticSiteBuildARMStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildARMResource.GetStaticSiteBuildFunctions");
                 scope.Start();
@@ -376,10 +376,10 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: StaticSites_ListStaticSiteBuildFunctions
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StaticSiteFunctionOverviewARMResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<StaticSiteFunctionOverviewARMResource> GetStaticSiteBuildFunctions(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="StaticSiteFunctionOverview" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<StaticSiteFunctionOverview> GetStaticSiteBuildFunctions(CancellationToken cancellationToken = default)
         {
-            Page<StaticSiteFunctionOverviewARMResource> FirstPageFunc(int? pageSizeHint)
+            Page<StaticSiteFunctionOverview> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _staticSiteBuildARMStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildARMResource.GetStaticSiteBuildFunctions");
                 scope.Start();
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            Page<StaticSiteFunctionOverviewARMResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<StaticSiteFunctionOverview> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _staticSiteBuildARMStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildARMResource.GetStaticSiteBuildFunctions");
                 scope.Start();

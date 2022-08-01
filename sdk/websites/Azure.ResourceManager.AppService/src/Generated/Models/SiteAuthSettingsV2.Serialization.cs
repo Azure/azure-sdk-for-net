@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AppService.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<AuthPlatform> platform = default;
+            Optional<AppServiceAuthPlatform> platform = default;
             Optional<GlobalValidation> globalValidation = default;
             Optional<IdentityProviders> identityProviders = default;
             Optional<LoginInformation> login = default;
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.AppService.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            platform = AuthPlatform.DeserializeAuthPlatform(property0.Value);
+                            platform = AppServiceAuthPlatform.DeserializeAppServiceAuthPlatform(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("globalValidation"))

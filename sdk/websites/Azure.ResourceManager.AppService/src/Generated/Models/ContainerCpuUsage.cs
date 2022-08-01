@@ -16,26 +16,26 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of ContainerCpuUsage. </summary>
         public ContainerCpuUsage()
         {
-            PerCpuUsage = new ChangeTrackingList<long>();
+            PerCpuUsages = new ChangeTrackingList<long>();
         }
 
         /// <summary> Initializes a new instance of ContainerCpuUsage. </summary>
         /// <param name="totalUsage"></param>
-        /// <param name="perCpuUsage"></param>
+        /// <param name="perCpuUsages"></param>
         /// <param name="kernelModeUsage"></param>
         /// <param name="userModeUsage"></param>
-        internal ContainerCpuUsage(long? totalUsage, IList<long> perCpuUsage, long? kernelModeUsage, long? userModeUsage)
+        internal ContainerCpuUsage(long? totalUsage, IList<long> perCpuUsages, long? kernelModeUsage, long? userModeUsage)
         {
             TotalUsage = totalUsage;
-            PerCpuUsage = perCpuUsage;
+            PerCpuUsages = perCpuUsages;
             KernelModeUsage = kernelModeUsage;
             UserModeUsage = userModeUsage;
         }
 
         /// <summary> Gets or sets the total usage. </summary>
         public long? TotalUsage { get; set; }
-        /// <summary> Gets the per cpu usage. </summary>
-        public IList<long> PerCpuUsage { get; }
+        /// <summary> Gets the per cpu usages. </summary>
+        public IList<long> PerCpuUsages { get; }
         /// <summary> Gets or sets the kernel mode usage. </summary>
         public long? KernelModeUsage { get; set; }
         /// <summary> Gets or sets the user mode usage. </summary>

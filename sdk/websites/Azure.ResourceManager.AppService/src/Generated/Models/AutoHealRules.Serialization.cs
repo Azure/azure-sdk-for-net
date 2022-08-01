@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppService.Models
         internal static AutoHealRules DeserializeAutoHealRules(JsonElement element)
         {
             Optional<AutoHealTriggers> triggers = default;
-            Optional<AutoHealActions> actions = default;
+            Optional<AutoHealAction> actions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("triggers"))
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    actions = AutoHealActions.DeserializeAutoHealActions(property.Value);
+                    actions = AutoHealAction.DeserializeAutoHealAction(property.Value);
                     continue;
                 }
             }

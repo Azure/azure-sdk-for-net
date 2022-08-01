@@ -135,9 +135,9 @@ rename-mapping:
   AppServicePlanPatchResource: AppServicePlanPatchContent
   Contact: ContactInformation 
   Login: LoginInformation
-  MSDeploy: MsDeploy
-  MSDeployLog: MsDeployLog
-  MSDeployLogEntry: MsDeployLogEntry
+#   MSDeploy: MsDeploy
+#   MSDeployLog: MsDeployLog
+#   MSDeployLogEntry: MsDeployLogEntry
   Operation: OperationInformation
   Recommendation: AppServiceRecommendation
   Resource: AppServiceResource
@@ -152,6 +152,7 @@ rename-mapping:
   AppServiceCertificateOrder.properties.expirationTime: ExpireOn
   AppServiceCertificateOrder.properties.lastCertificateIssuanceTime: LastCertificateIssuedOn
   AppServiceCertificateOrder.properties.nextAutoRenewalTimeStamp: NextAutoRenewTimeStamp
+  AppServiceCertificateOrder.properties.csr: CertificateSigningRequest
   Domain.properties.privacy: AppServiceHasPrivacy
   Domain.properties.expirationTime: ExpireOn
   Domain.properties.autoRenew: IsAutoRenew
@@ -193,7 +194,7 @@ rename-mapping:
   SwiftVirtualNetwork.properties.swiftSupported: IsSwiftSupported
   TopLevelDomain.properties.privacy: HasPrivacy
   TriggeredWebJob.properties.using_sdk: IsUsingSdk
-  VnetInfoResource.properties.resyncRequired: IsResyncRequired
+  VnetInfo.properties.resyncRequired: IsResyncRequired
   WebJob.properties.using_sdk: IsUsingSdk
   Site.properties.clientAffinityEnabled: IsClientAffinityEnabled
   Site.properties.clientCertEnabled: IsClientCertEnabled
@@ -318,9 +319,11 @@ rename-mapping:
   ValidateRequest.properties.needLinuxWorkers: IsNeedLinuxWorkers
   VirtualApplication.preloadEnabled: IsPreloadEnabled
   VirtualIPMapping.inUse: IsInUse
-  VnetInfo.resyncRequired: IsResyncRequired
+  VnetInfoResource.resyncRequired: IsResyncRequired
   VnetValidationFailureDetails.properties.failed: IsFailed
   WebAppRuntimeSettings.remoteDebuggingSupported: IsRemoteDebuggingSupported
+  ContainerCpuUsage.perCpuUsage: PerCpuUsages
+  DataSource.dataSourceUri: DataSourceUris
 #rename resource
   AppServiceCertificate: AppServiceCertificateInfo
   AppServiceCertificateResource: AppServicCertificate
@@ -352,6 +355,49 @@ rename-mapping:
   StaticSiteZipDeploymentARMResource: StaticSiteZipDeploymentARM
   StorageMigrationResponse: StorageMigrationResponseInfo
   Status: AppServiceStatusInfo
+  AnalysisData: AnalysisInfo
+  ApplicationStackResource: ApplicationStackInfo
+  ArmPlan: AppServiceArmPlan
+  AuthPlatform: AppServiceAuthPlatform
+  AutoHealActions: AutoHealAction
+  AzureActiveDirectory: AppServiceAzureActiveDirectory
+  AzureActiveDirectoryRegistration: AppServiceAzureActiveDirectoryRegistration
+  AzureActiveDirectoryValidation: AppServiceAzureActiveDirectoryValidation
+  BackupRequest: BackupResult
+  Capability: AppServiceCapability
+  CertificateDetails: CertificateDetail
+  ClientRegistration: AppServieClientRegistration
+  CloningInfo: AppServiceCloningInfo
+  DataSource: AppServiceDataSource
+  Dimension: AppServiceDimension
+  HostName: AppServiceHostName
+  IpSecurityRestriction: IpSecurityRestriction
+  MSDeploy: MSDeploy
+  MSDeployLog: MSDeployLog
+  MSDeployLogEntry: MSDeployLogEntry
+  PremierAddOnPatchResource: PremierAddOnPatch
+  ResponseMessageEnvelopeRemotePrivateEndpointConnection: ResponseMessageEnvelope
+  SnapshotRestoreRequest: SnapshotRestoreResult
+#   StaticSiteCustomDomainRequestPropertiesARMResource: StaticSiteCustomDomainResult
+  StaticSiteFunctionOverviewARMResource:  StaticSiteFunctionOverview
+  StaticSiteCustomDomainRequestPropertiesARMResource: StaticSiteCustomDomainResource
+  ValidateResponse: ValidateResult
+# single name fixed required
+  Certificate: CertificateFixedRequired
+  User: AppServiceUser
+  Address: AddressInfo
+  Apple: AppleInfo
+  Facebook: FacebookInfo
+  GitHub: GitHubInfo
+  Google: GoogleInfo
+  Nonce: AppServiceNonce
+  Rendering: AppServiceRendering
+  Snapshot: AppServiceSnapshot
+  Solution: AppServiceSolution
+  Twitter: TwitterInfo
+  Channels: AppServiceChannels
+#   complicated name
+  SiteConfig.properties.scmIpSecurityRestrictionsUseMain: ScmIpSecurityRestrictions
 
 directive:
   - rename-model:
@@ -406,7 +452,7 @@ directive:
     where: $.definitions.SupportTopic.properties.pesId
     transform: $["x-ms-format"] = "arm-id"
   - from: CommonDefinitions.json
-    where: $.definitions.VnetInfo.properties.vnetResourceId
+    where: $.definitions.VnetInfoResource.properties.vnetResourceId
     transform: $["x-ms-format"] = "arm-id"
   - from: CommonDefinitions.json
     where: $.definitions.VirtualNetworkProfile.properties.id

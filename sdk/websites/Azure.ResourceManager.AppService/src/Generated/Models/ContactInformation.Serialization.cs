@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static ContactInformation DeserializeContactInformation(JsonElement element)
         {
-            Optional<Address> addressMailing = default;
+            Optional<AddressInfo> addressMailing = default;
             string email = default;
             Optional<string> fax = default;
             Optional<string> jobTitle = default;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.AppService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    addressMailing = Address.DeserializeAddress(property.Value);
+                    addressMailing = AddressInfo.DeserializeAddressInfo(property.Value);
                     continue;
                 }
                 if (property.NameEquals("email"))

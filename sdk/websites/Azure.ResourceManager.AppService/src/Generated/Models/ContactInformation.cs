@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="nameMiddle"> Middle name. </param>
         /// <param name="organization"> Organization contact belongs to. </param>
         /// <param name="phone"> Phone number. </param>
-        internal ContactInformation(Address addressMailing, string email, string fax, string jobTitle, string nameFirst, string nameLast, string nameMiddle, string organization, string phone)
+        internal ContactInformation(AddressInfo addressMailing, string email, string fax, string jobTitle, string nameFirst, string nameLast, string nameMiddle, string organization, string phone)
         {
             AddressMailing = addressMailing;
             Email = email;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Mailing address. </summary>
-        public Address AddressMailing { get; set; }
+        public AddressInfo AddressMailing { get; set; }
         /// <summary> Email address. </summary>
         public string Email { get; set; }
         /// <summary> Fax number. </summary>

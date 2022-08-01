@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="provisioningState"> Status of certificate order. </param>
         /// <param name="status"> Current order status. </param>
         /// <param name="signedCertificate"> Signed certificate. </param>
-        /// <param name="csr"> Last CSR that was created for this order. </param>
+        /// <param name="certificateSigningRequest"> Last CSR that was created for this order. </param>
         /// <param name="intermediate"> Intermediate certificate. </param>
         /// <param name="root"> Root certificate. </param>
         /// <param name="serialNumber"> Current serial number of the certificate. </param>
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="nextAutoRenewTimeStamp"> Time stamp when the certificate would be auto renewed next. </param>
         /// <param name="contact"> Contact info. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal AppServiceCertificateOrderData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IDictionary<string, AppServiceCertificateInfo> certificates, string distinguishedName, string domainVerificationToken, int? validityInYears, int? keySize, CertificateProductType? productType, bool? isAutoRenew, ProvisioningState? provisioningState, CertificateOrderStatus? status, CertificateDetails signedCertificate, string csr, CertificateDetails intermediate, CertificateDetails root, string serialNumber, DateTimeOffset? lastCertificateIssuedOn, DateTimeOffset? expireOn, bool? isPrivateKeyExternal, IReadOnlyList<AppServiceCertificateNotRenewableReason> appServiceCertificateNotRenewableReasons, DateTimeOffset? nextAutoRenewTimeStamp, CertificateOrderContact contact, string kind) : base(id, name, resourceType, systemData, tags, location)
+        internal AppServiceCertificateOrderData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IDictionary<string, AppServiceCertificateInfo> certificates, string distinguishedName, string domainVerificationToken, int? validityInYears, int? keySize, CertificateProductType? productType, bool? isAutoRenew, ProvisioningState? provisioningState, CertificateOrderStatus? status, CertificateDetail signedCertificate, string certificateSigningRequest, CertificateDetail intermediate, CertificateDetail root, string serialNumber, DateTimeOffset? lastCertificateIssuedOn, DateTimeOffset? expireOn, bool? isPrivateKeyExternal, IReadOnlyList<AppServiceCertificateNotRenewableReason> appServiceCertificateNotRenewableReasons, DateTimeOffset? nextAutoRenewTimeStamp, CertificateOrderContact contact, string kind) : base(id, name, resourceType, systemData, tags, location)
         {
             Certificates = certificates;
             DistinguishedName = distinguishedName;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppService
             ProvisioningState = provisioningState;
             Status = status;
             SignedCertificate = signedCertificate;
-            Csr = csr;
+            CertificateSigningRequest = certificateSigningRequest;
             Intermediate = intermediate;
             Root = root;
             SerialNumber = serialNumber;
@@ -96,13 +96,13 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Current order status. </summary>
         public CertificateOrderStatus? Status { get; }
         /// <summary> Signed certificate. </summary>
-        public CertificateDetails SignedCertificate { get; }
+        public CertificateDetail SignedCertificate { get; }
         /// <summary> Last CSR that was created for this order. </summary>
-        public string Csr { get; set; }
+        public string CertificateSigningRequest { get; set; }
         /// <summary> Intermediate certificate. </summary>
-        public CertificateDetails Intermediate { get; }
+        public CertificateDetail Intermediate { get; }
         /// <summary> Root certificate. </summary>
-        public CertificateDetails Root { get; }
+        public CertificateDetail Root { get; }
         /// <summary> Current serial number of the certificate. </summary>
         public string SerialNumber { get; }
         /// <summary> Certificate last issuance time. </summary>

@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="request"> Information on backup request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
-        public virtual async Task<Response<SiteSlotBackupResource>> GetBackupStatusSecretsSlotAsync(BackupRequest request, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteSlotBackupResource>> GetBackupStatusSecretsSlotAsync(BackupResult request, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(request, nameof(request));
 
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="request"> Information on backup request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
-        public virtual Response<SiteSlotBackupResource> GetBackupStatusSecretsSlot(BackupRequest request, CancellationToken cancellationToken = default)
+        public virtual Response<SiteSlotBackupResource> GetBackupStatusSecretsSlot(BackupResult request, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(request, nameof(request));
 

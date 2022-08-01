@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="nextAutoRenewalTimeStampOn"> Time stamp when the certificate would be auto renewed next. </param>
         /// <param name="contact"> Contact info. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal AppServiceCertificateOrderPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, AppServiceCertificateInfo> certificates, string distinguishedName, string domainVerificationToken, int? validityInYears, int? keySize, CertificateProductType? productType, bool? isAutoRenew, ProvisioningState? provisioningState, CertificateOrderStatus? status, CertificateDetails signedCertificate, string csr, CertificateDetails intermediate, CertificateDetails root, string serialNumber, DateTimeOffset? lastCertificateIssuanceOn, DateTimeOffset? expirationOn, bool? isPrivateKeyExternal, IReadOnlyList<AppServiceCertificateNotRenewableReason> appServiceCertificateNotRenewableReasons, DateTimeOffset? nextAutoRenewalTimeStampOn, CertificateOrderContact contact, string kind) : base(id, name, resourceType, systemData)
+        internal AppServiceCertificateOrderPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, AppServiceCertificateInfo> certificates, string distinguishedName, string domainVerificationToken, int? validityInYears, int? keySize, CertificateProductType? productType, bool? isAutoRenew, ProvisioningState? provisioningState, CertificateOrderStatus? status, CertificateDetail signedCertificate, string csr, CertificateDetail intermediate, CertificateDetail root, string serialNumber, DateTimeOffset? lastCertificateIssuanceOn, DateTimeOffset? expirationOn, bool? isPrivateKeyExternal, IReadOnlyList<AppServiceCertificateNotRenewableReason> appServiceCertificateNotRenewableReasons, DateTimeOffset? nextAutoRenewalTimeStampOn, CertificateOrderContact contact, string kind) : base(id, name, resourceType, systemData)
         {
             Certificates = certificates;
             DistinguishedName = distinguishedName;
@@ -92,13 +92,13 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Current order status. </summary>
         public CertificateOrderStatus? Status { get; }
         /// <summary> Signed certificate. </summary>
-        public CertificateDetails SignedCertificate { get; }
+        public CertificateDetail SignedCertificate { get; }
         /// <summary> Last CSR that was created for this order. </summary>
         public string Csr { get; set; }
         /// <summary> Intermediate certificate. </summary>
-        public CertificateDetails Intermediate { get; }
+        public CertificateDetail Intermediate { get; }
         /// <summary> Root certificate. </summary>
-        public CertificateDetails Root { get; }
+        public CertificateDetail Root { get; }
         /// <summary> Current serial number of the certificate. </summary>
         public string SerialNumber { get; }
         /// <summary> Certificate last issuance time. </summary>

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static ResponseMetaData DeserializeResponseMetaData(JsonElement element)
         {
-            Optional<DataSource> dataSource = default;
+            Optional<AppServiceDataSource> dataSource = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dataSource"))
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AppService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    dataSource = DataSource.DeserializeDataSource(property.Value);
+                    dataSource = AppServiceDataSource.DeserializeAppServiceDataSource(property.Value);
                     continue;
                 }
             }

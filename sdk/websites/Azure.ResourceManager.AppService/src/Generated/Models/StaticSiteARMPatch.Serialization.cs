@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<IReadOnlyList<string>> customDomains = default;
             Optional<string> repositoryToken = default;
             Optional<StaticSiteBuildProperties> buildProperties = default;
-            Optional<IReadOnlyList<ResponseMessageEnvelopeRemotePrivateEndpointConnection>> privateEndpointConnections = default;
+            Optional<IReadOnlyList<ResponseMessageEnvelope>> privateEndpointConnections = default;
             Optional<StagingEnvironmentPolicy> stagingEnvironmentPolicy = default;
             Optional<bool> allowConfigFileUpdates = default;
             Optional<StaticSiteTemplate> templateProperties = default;
@@ -183,10 +183,10 @@ namespace Azure.ResourceManager.AppService.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ResponseMessageEnvelopeRemotePrivateEndpointConnection> array = new List<ResponseMessageEnvelopeRemotePrivateEndpointConnection>();
+                            List<ResponseMessageEnvelope> array = new List<ResponseMessageEnvelope>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ResponseMessageEnvelopeRemotePrivateEndpointConnection.DeserializeResponseMessageEnvelopeRemotePrivateEndpointConnection(item));
+                                array.Add(ResponseMessageEnvelope.DeserializeResponseMessageEnvelope(item));
                             }
                             privateEndpointConnections = array;
                             continue;

@@ -193,18 +193,18 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/premieraddons/{premierAddOnName}
         /// Operation Id: WebApps_UpdatePremierAddOn
         /// </summary>
-        /// <param name="premierAddOn"> A JSON representation of the edited premier add-on. </param>
+        /// <param name="patch"> A JSON representation of the edited premier add-on. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="premierAddOn"/> is null. </exception>
-        public virtual async Task<Response<SitePremierAddonResource>> UpdateAsync(PremierAddOnPatchResource premierAddOn, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<SitePremierAddonResource>> UpdateAsync(PremierAddOnPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(premierAddOn, nameof(premierAddOn));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _sitePremierAddonWebAppsClientDiagnostics.CreateScope("SitePremierAddonResource.Update");
             scope.Start();
             try
             {
-                var response = await _sitePremierAddonWebAppsRestClient.UpdatePremierAddOnAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, premierAddOn, cancellationToken).ConfigureAwait(false);
+                var response = await _sitePremierAddonWebAppsRestClient.UpdatePremierAddOnAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new SitePremierAddonResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -219,18 +219,18 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/premieraddons/{premierAddOnName}
         /// Operation Id: WebApps_UpdatePremierAddOn
         /// </summary>
-        /// <param name="premierAddOn"> A JSON representation of the edited premier add-on. </param>
+        /// <param name="patch"> A JSON representation of the edited premier add-on. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="premierAddOn"/> is null. </exception>
-        public virtual Response<SitePremierAddonResource> Update(PremierAddOnPatchResource premierAddOn, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<SitePremierAddonResource> Update(PremierAddOnPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(premierAddOn, nameof(premierAddOn));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _sitePremierAddonWebAppsClientDiagnostics.CreateScope("SitePremierAddonResource.Update");
             scope.Start();
             try
             {
-                var response = _sitePremierAddonWebAppsRestClient.UpdatePremierAddOn(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, premierAddOn, cancellationToken);
+                var response = _sitePremierAddonWebAppsRestClient.UpdatePremierAddOn(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
                 return Response.FromValue(new SitePremierAddonResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

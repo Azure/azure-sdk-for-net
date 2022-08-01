@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.AppService
             );
         }
 
-        /// <summary> Gets an object representing a UserResource along with the instance operations that can be performed on it in the TenantResource. </summary>
+        /// <summary> Gets an object representing a AppServiceUserResource along with the instance operations that can be performed on it in the TenantResource. </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="UserResource" /> object. </returns>
-        public static UserResource GetUser(this TenantResource tenantResource)
+        /// <returns> Returns a <see cref="AppServiceUserResource" /> object. </returns>
+        public static AppServiceUserResource GetAppServiceUser(this TenantResource tenantResource)
         {
-            return GetExtensionClient(tenantResource).GetUser();
+            return GetExtensionClient(tenantResource).GetAppServiceUser();
         }
 
         /// <summary> Gets a collection of SourceControlResources in the TenantResource. </summary>
@@ -136,8 +136,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="osTypeSelected"> The ProviderOSTypeSelected to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApplicationStackResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ApplicationStackResource> GetAvailableStacksProvidersAsync(this TenantResource tenantResource, ProviderOSTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ApplicationStackInfo" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ApplicationStackInfo> GetAvailableStacksProvidersAsync(this TenantResource tenantResource, ProviderOSTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(tenantResource).GetAvailableStacksProvidersAsync(osTypeSelected, cancellationToken);
         }
@@ -150,8 +150,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="osTypeSelected"> The ProviderOSTypeSelected to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApplicationStackResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ApplicationStackResource> GetAvailableStacksProviders(this TenantResource tenantResource, ProviderOSTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ApplicationStackInfo" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ApplicationStackInfo> GetAvailableStacksProviders(this TenantResource tenantResource, ProviderOSTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(tenantResource).GetAvailableStacksProviders(osTypeSelected, cancellationToken);
         }
@@ -629,10 +629,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=KeyVaultId eq &apos;KeyVaultId&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CertificateResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<CertificateResource> GetCertificatesAsync(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="CertificateFixedRequiredResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<CertificateFixedRequiredResource> GetCertificateFixedRequiredsAsync(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetCertificatesAsync(filter, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetCertificateFixedRequiredsAsync(filter, cancellationToken);
         }
 
         /// <summary>
@@ -643,10 +643,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=KeyVaultId eq &apos;KeyVaultId&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CertificateResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<CertificateResource> GetCertificates(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CertificateFixedRequiredResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<CertificateFixedRequiredResource> GetCertificateFixedRequireds(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetCertificates(filter, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetCertificateFixedRequireds(filter, cancellationToken);
         }
 
         /// <summary>
@@ -783,8 +783,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="osTypeSelected"> The ProviderOSTypeSelected to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApplicationStackResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ApplicationStackResource> GetAvailableStacksOnPremProvidersAsync(this SubscriptionResource subscriptionResource, ProviderOSTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ApplicationStackInfo" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ApplicationStackInfo> GetAvailableStacksOnPremProvidersAsync(this SubscriptionResource subscriptionResource, ProviderOSTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetAvailableStacksOnPremProvidersAsync(osTypeSelected, cancellationToken);
         }
@@ -797,8 +797,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="osTypeSelected"> The ProviderOSTypeSelected to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApplicationStackResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ApplicationStackResource> GetAvailableStacksOnPremProviders(this SubscriptionResource subscriptionResource, ProviderOSTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ApplicationStackInfo" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ApplicationStackInfo> GetAvailableStacksOnPremProviders(this SubscriptionResource subscriptionResource, ProviderOSTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetAvailableStacksOnPremProviders(osTypeSelected, cancellationToken);
         }
@@ -1408,12 +1408,12 @@ namespace Azure.ResourceManager.AppService
             return resourceGroupResource.GetAppServicePlans().Get(name, cancellationToken);
         }
 
-        /// <summary> Gets a collection of CertificateResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of CertificateFixedRequiredResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of CertificateResources and their operations over a CertificateResource. </returns>
-        public static CertificateCollection GetCertificates(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of CertificateFixedRequiredResources and their operations over a CertificateFixedRequiredResource. </returns>
+        public static CertificateFixedRequiredCollection GetCertificateFixedRequireds(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetCertificates();
+            return GetExtensionClient(resourceGroupResource).GetCertificateFixedRequireds();
         }
 
         /// <summary>
@@ -1427,9 +1427,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<CertificateResource>> GetCertificateAsync(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
+        public static async Task<Response<CertificateFixedRequiredResource>> GetCertificateFixedRequiredAsync(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetCertificates().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetCertificateFixedRequireds().GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1443,9 +1443,9 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<CertificateResource> GetCertificate(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
+        public static Response<CertificateFixedRequiredResource> GetCertificateFixedRequired(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetCertificates().Get(name, cancellationToken);
+            return resourceGroupResource.GetCertificateFixedRequireds().Get(name, cancellationToken);
         }
 
         /// <summary> Gets a collection of KubeEnvironmentResources in the ResourceGroupResource. </summary>
@@ -1635,7 +1635,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="content"> Request with the resources to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<Response<ValidateResponse>> ValidateAsync(this ResourceGroupResource resourceGroupResource, ValidateContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<ValidateResult>> ValidateAsync(this ResourceGroupResource resourceGroupResource, ValidateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1651,7 +1651,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="content"> Request with the resources to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static Response<ValidateResponse> Validate(this ResourceGroupResource resourceGroupResource, ValidateContent content, CancellationToken cancellationToken = default)
+        public static Response<ValidateResult> Validate(this ResourceGroupResource resourceGroupResource, ValidateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -2222,20 +2222,20 @@ namespace Azure.ResourceManager.AppService
         }
         #endregion
 
-        #region CertificateResource
+        #region CertificateFixedRequiredResource
         /// <summary>
-        /// Gets an object representing a <see cref="CertificateResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CertificateResource.CreateResourceIdentifier" /> to create a <see cref="CertificateResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="CertificateFixedRequiredResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CertificateFixedRequiredResource.CreateResourceIdentifier" /> to create a <see cref="CertificateFixedRequiredResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CertificateResource" /> object. </returns>
-        public static CertificateResource GetCertificateResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CertificateFixedRequiredResource" /> object. </returns>
+        public static CertificateFixedRequiredResource GetCertificateFixedRequiredResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                CertificateResource.ValidateResourceId(id);
-                return new CertificateResource(client, id);
+                CertificateFixedRequiredResource.ValidateResourceId(id);
+                return new CertificateFixedRequiredResource(client, id);
             }
             );
         }
@@ -2469,20 +2469,20 @@ namespace Azure.ResourceManager.AppService
         }
         #endregion
 
-        #region UserResource
+        #region AppServiceUserResource
         /// <summary>
-        /// Gets an object representing an <see cref="UserResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="UserResource.CreateResourceIdentifier" /> to create an <see cref="UserResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AppServiceUserResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AppServiceUserResource.CreateResourceIdentifier" /> to create an <see cref="AppServiceUserResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="UserResource" /> object. </returns>
-        public static UserResource GetUserResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AppServiceUserResource" /> object. </returns>
+        public static AppServiceUserResource GetAppServiceUserResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                UserResource.ValidateResourceId(id);
-                return new UserResource(client, id);
+                AppServiceUserResource.ValidateResourceId(id);
+                return new AppServiceUserResource(client, id);
             }
             );
         }

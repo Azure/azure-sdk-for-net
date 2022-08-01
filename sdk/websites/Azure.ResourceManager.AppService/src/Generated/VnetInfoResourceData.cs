@@ -33,17 +33,17 @@ namespace Azure.ResourceManager.AppService
         /// Point-To-Site VPN connection.
         /// </param>
         /// <param name="routes"> The routes that this Virtual Network connection uses. </param>
-        /// <param name="isResyncRequired"> &lt;code&gt;true&lt;/code&gt; if a resync is required; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="resyncRequired"> &lt;code&gt;true&lt;/code&gt; if a resync is required; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="dnsServers"> DNS servers to be used by this Virtual Network. This should be a comma-separated list of IP addresses. </param>
         /// <param name="isSwift"> Flag that is used to denote if this is VNET injection. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal VnetInfoResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier vnetResourceId, string certThumbprint, string certBlob, IReadOnlyList<VnetRoute> routes, bool? isResyncRequired, string dnsServers, bool? isSwift, string kind) : base(id, name, resourceType, systemData)
+        internal VnetInfoResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier vnetResourceId, string certThumbprint, string certBlob, IReadOnlyList<VnetRoute> routes, bool? resyncRequired, string dnsServers, bool? isSwift, string kind) : base(id, name, resourceType, systemData)
         {
             VnetResourceId = vnetResourceId;
             CertThumbprint = certThumbprint;
             CertBlob = certBlob;
             Routes = routes;
-            IsResyncRequired = isResyncRequired;
+            ResyncRequired = resyncRequired;
             DnsServers = dnsServers;
             IsSwift = isSwift;
             Kind = kind;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> The routes that this Virtual Network connection uses. </summary>
         public IReadOnlyList<VnetRoute> Routes { get; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if a resync is required; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
-        public bool? IsResyncRequired { get; }
+        public bool? ResyncRequired { get; }
         /// <summary> DNS servers to be used by this Virtual Network. This should be a comma-separated list of IP addresses. </summary>
         public string DnsServers { get; set; }
         /// <summary> Flag that is used to denote if this is VNET injection. </summary>

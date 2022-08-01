@@ -15,16 +15,16 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static ApplicationStackCollection DeserializeApplicationStackCollection(JsonElement element)
         {
-            IReadOnlyList<ApplicationStackResource> value = default;
+            IReadOnlyList<ApplicationStackInfo> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<ApplicationStackResource> array = new List<ApplicationStackResource>();
+                    List<ApplicationStackInfo> array = new List<ApplicationStackInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplicationStackResource.DeserializeApplicationStackResource(item));
+                        array.Add(ApplicationStackInfo.DeserializeApplicationStackInfo(item));
                     }
                     value = array;
                     continue;

@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IReadOnlyList<Capability>>> ListCapabilitiesAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<AppServiceCapability>>> ListCapabilitiesAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -548,12 +548,12 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        IReadOnlyList<Capability> value = default;
+                        IReadOnlyList<AppServiceCapability> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        List<Capability> array = new List<Capability>();
+                        List<AppServiceCapability> array = new List<AppServiceCapability>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(Capability.DeserializeCapability(item));
+                            array.Add(AppServiceCapability.DeserializeAppServiceCapability(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -570,7 +570,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IReadOnlyList<Capability>> ListCapabilities(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyList<AppServiceCapability>> ListCapabilities(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -582,12 +582,12 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        IReadOnlyList<Capability> value = default;
+                        IReadOnlyList<AppServiceCapability> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        List<Capability> array = new List<Capability>();
+                        List<AppServiceCapability> array = new List<AppServiceCapability>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(Capability.DeserializeCapability(item));
+                            array.Add(AppServiceCapability.DeserializeAppServiceCapability(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);

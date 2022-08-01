@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Initializes a new instance of ResponseMetaData. </summary>
         /// <param name="dataSource"> Source of the Data. </param>
-        internal ResponseMetaData(DataSource dataSource)
+        internal ResponseMetaData(AppServiceDataSource dataSource)
         {
             DataSource = dataSource;
         }
 
         /// <summary> Source of the Data. </summary>
-        public DataSource DataSource { get; set; }
+        public AppServiceDataSource DataSource { get; set; }
     }
 }

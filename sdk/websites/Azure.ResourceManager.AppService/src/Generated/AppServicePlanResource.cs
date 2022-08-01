@@ -331,10 +331,10 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: AppServicePlans_ListCapabilities
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Capability" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Capability> GetCapabilitiesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AppServiceCapability" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AppServiceCapability> GetCapabilitiesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<Capability>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<AppServiceCapability>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanResource.GetCapabilities");
                 scope.Start();
@@ -358,10 +358,10 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: AppServicePlans_ListCapabilities
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Capability" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Capability> GetCapabilities(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppServiceCapability" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AppServiceCapability> GetCapabilities(CancellationToken cancellationToken = default)
         {
-            Page<Capability> FirstPageFunc(int? pageSizeHint)
+            Page<AppServiceCapability> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanResource.GetCapabilities");
                 scope.Start();

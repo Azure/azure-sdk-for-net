@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<bool> preserveUrlFragmentsForLogins = default;
             Optional<IList<string>> allowedExternalRedirectUrls = default;
             Optional<CookieExpiration> cookieExpiration = default;
-            Optional<Nonce> nonce = default;
+            Optional<AppServiceNonce> nonce = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("routes"))
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.AppService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    nonce = Nonce.DeserializeNonce(property.Value);
+                    nonce = AppServiceNonce.DeserializeAppServiceNonce(property.Value);
                     continue;
                 }
             }

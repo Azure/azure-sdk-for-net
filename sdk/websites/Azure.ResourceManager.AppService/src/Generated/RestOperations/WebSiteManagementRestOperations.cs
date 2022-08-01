@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for Gets publishing user. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<UserData>> GetPublishingUserAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceUserData>> GetPublishingUserAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetPublishingUserRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -62,13 +62,13 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        UserData value = default;
+                        AppServiceUserData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = UserData.DeserializeUserData(document.RootElement);
+                        value = AppServiceUserData.DeserializeAppServiceUserData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((UserData)null, message.Response);
+                    return Response.FromValue((AppServiceUserData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for Gets publishing user. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<UserData> GetPublishingUser(CancellationToken cancellationToken = default)
+        public Response<AppServiceUserData> GetPublishingUser(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetPublishingUserRequest();
             _pipeline.Send(message, cancellationToken);
@@ -84,19 +84,19 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        UserData value = default;
+                        AppServiceUserData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = UserData.DeserializeUserData(document.RootElement);
+                        value = AppServiceUserData.DeserializeAppServiceUserData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((UserData)null, message.Response);
+                    return Response.FromValue((AppServiceUserData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateUpdatePublishingUserRequest(UserData data)
+        internal HttpMessage CreateUpdatePublishingUserRequest(AppServiceUserData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> Details of publishing user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public async Task<Response<UserData>> UpdatePublishingUserAsync(UserData data, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceUserData>> UpdatePublishingUserAsync(AppServiceUserData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -129,9 +129,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        UserData value = default;
+                        AppServiceUserData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = UserData.DeserializeUserData(document.RootElement);
+                        value = AppServiceUserData.DeserializeAppServiceUserData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> Details of publishing user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public Response<UserData> UpdatePublishingUser(UserData data, CancellationToken cancellationToken = default)
+        public Response<AppServiceUserData> UpdatePublishingUser(AppServiceUserData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -153,9 +153,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        UserData value = default;
+                        AppServiceUserData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = UserData.DeserializeUserData(document.RootElement);
+                        value = AppServiceUserData.DeserializeAppServiceUserData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1059,7 +1059,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ValidateResponse>> ValidateAsync(string subscriptionId, string resourceGroupName, ValidateContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<ValidateResult>> ValidateAsync(string subscriptionId, string resourceGroupName, ValidateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1071,9 +1071,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        ValidateResponse value = default;
+                        ValidateResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ValidateResponse.DeserializeValidateResponse(document.RootElement);
+                        value = ValidateResult.DeserializeValidateResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1088,7 +1088,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ValidateResponse> Validate(string subscriptionId, string resourceGroupName, ValidateContent content, CancellationToken cancellationToken = default)
+        public Response<ValidateResult> Validate(string subscriptionId, string resourceGroupName, ValidateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1100,9 +1100,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        ValidateResponse value = default;
+                        ValidateResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ValidateResponse.DeserializeValidateResponse(document.RootElement);
+                        value = ValidateResult.DeserializeValidateResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

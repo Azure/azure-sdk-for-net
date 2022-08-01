@@ -32,8 +32,8 @@ namespace Azure.ResourceManager.AppService
         private AppServiceEnvironmentsRestOperations _appServiceEnvironmentRestClient;
         private ClientDiagnostics _appServicePlanClientDiagnostics;
         private AppServicePlansRestOperations _appServicePlanRestClient;
-        private ClientDiagnostics _certificateClientDiagnostics;
-        private CertificatesRestOperations _certificateRestClient;
+        private ClientDiagnostics _certificateFixedRequiredCertificatesClientDiagnostics;
+        private CertificatesRestOperations _certificateFixedRequiredCertificatesRestClient;
         private ClientDiagnostics _deletedSiteDeletedWebAppsClientDiagnostics;
         private DeletedWebAppsRestOperations _deletedSiteDeletedWebAppsRestClient;
         private ClientDiagnostics _deletedSiteGlobalClientDiagnostics;
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.AppService
         private AppServiceEnvironmentsRestOperations AppServiceEnvironmentRestClient => _appServiceEnvironmentRestClient ??= new AppServiceEnvironmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(AppServiceEnvironmentResource.ResourceType));
         private ClientDiagnostics AppServicePlanClientDiagnostics => _appServicePlanClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", AppServicePlanResource.ResourceType.Namespace, Diagnostics);
         private AppServicePlansRestOperations AppServicePlanRestClient => _appServicePlanRestClient ??= new AppServicePlansRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(AppServicePlanResource.ResourceType));
-        private ClientDiagnostics CertificateClientDiagnostics => _certificateClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", CertificateResource.ResourceType.Namespace, Diagnostics);
-        private CertificatesRestOperations CertificateRestClient => _certificateRestClient ??= new CertificatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(CertificateResource.ResourceType));
+        private ClientDiagnostics CertificateFixedRequiredCertificatesClientDiagnostics => _certificateFixedRequiredCertificatesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", CertificateFixedRequiredResource.ResourceType.Namespace, Diagnostics);
+        private CertificatesRestOperations CertificateFixedRequiredCertificatesRestClient => _certificateFixedRequiredCertificatesRestClient ??= new CertificatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(CertificateFixedRequiredResource.ResourceType));
         private ClientDiagnostics DeletedSiteDeletedWebAppsClientDiagnostics => _deletedSiteDeletedWebAppsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", DeletedSiteResource.ResourceType.Namespace, Diagnostics);
         private DeletedWebAppsRestOperations DeletedSiteDeletedWebAppsRestClient => _deletedSiteDeletedWebAppsRestClient ??= new DeletedWebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DeletedSiteResource.ResourceType));
         private ClientDiagnostics DeletedSiteGlobalClientDiagnostics => _deletedSiteGlobalClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", DeletedSiteResource.ResourceType.Namespace, Diagnostics);
@@ -695,17 +695,17 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=KeyVaultId eq &apos;KeyVaultId&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CertificateResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CertificateResource> GetCertificatesAsync(string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="CertificateFixedRequiredResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CertificateFixedRequiredResource> GetCertificateFixedRequiredsAsync(string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<CertificateResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<CertificateFixedRequiredResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = CertificateClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCertificates");
+                using var scope = CertificateFixedRequiredCertificatesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCertificateFixedRequireds");
                 scope.Start();
                 try
                 {
-                    var response = await CertificateRestClient.ListAsync(Id.SubscriptionId, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CertificateResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await CertificateFixedRequiredCertificatesRestClient.ListAsync(Id.SubscriptionId, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new CertificateFixedRequiredResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -713,14 +713,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            async Task<Page<CertificateResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<CertificateFixedRequiredResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = CertificateClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCertificates");
+                using var scope = CertificateFixedRequiredCertificatesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCertificateFixedRequireds");
                 scope.Start();
                 try
                 {
-                    var response = await CertificateRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CertificateResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await CertificateFixedRequiredCertificatesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new CertificateFixedRequiredResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -738,17 +738,17 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=KeyVaultId eq &apos;KeyVaultId&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CertificateResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CertificateResource> GetCertificates(string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CertificateFixedRequiredResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CertificateFixedRequiredResource> GetCertificateFixedRequireds(string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<CertificateResource> FirstPageFunc(int? pageSizeHint)
+            Page<CertificateFixedRequiredResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = CertificateClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCertificates");
+                using var scope = CertificateFixedRequiredCertificatesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCertificateFixedRequireds");
                 scope.Start();
                 try
                 {
-                    var response = CertificateRestClient.List(Id.SubscriptionId, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CertificateResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = CertificateFixedRequiredCertificatesRestClient.List(Id.SubscriptionId, filter, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new CertificateFixedRequiredResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -756,14 +756,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            Page<CertificateResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<CertificateFixedRequiredResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = CertificateClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCertificates");
+                using var scope = CertificateFixedRequiredCertificatesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCertificateFixedRequireds");
                 scope.Start();
                 try
                 {
-                    var response = CertificateRestClient.ListNextPage(nextLink, Id.SubscriptionId, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CertificateResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = CertificateFixedRequiredCertificatesRestClient.ListNextPage(nextLink, Id.SubscriptionId, filter, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new CertificateFixedRequiredResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1047,10 +1047,10 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="osTypeSelected"> The ProviderOSTypeSelected to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApplicationStackResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApplicationStackResource> GetAvailableStacksOnPremProvidersAsync(ProviderOSTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ApplicationStackInfo" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApplicationStackInfo> GetAvailableStacksOnPremProvidersAsync(ProviderOSTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ApplicationStackResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ApplicationStackInfo>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = ProviderClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAvailableStacksOnPremProviders");
                 scope.Start();
@@ -1065,7 +1065,7 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            async Task<Page<ApplicationStackResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ApplicationStackInfo>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = ProviderClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAvailableStacksOnPremProviders");
                 scope.Start();
@@ -1090,10 +1090,10 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="osTypeSelected"> The ProviderOSTypeSelected to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApplicationStackResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApplicationStackResource> GetAvailableStacksOnPremProviders(ProviderOSTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ApplicationStackInfo" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApplicationStackInfo> GetAvailableStacksOnPremProviders(ProviderOSTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
-            Page<ApplicationStackResource> FirstPageFunc(int? pageSizeHint)
+            Page<ApplicationStackInfo> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = ProviderClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAvailableStacksOnPremProviders");
                 scope.Start();
@@ -1108,7 +1108,7 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            Page<ApplicationStackResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ApplicationStackInfo> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = ProviderClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAvailableStacksOnPremProviders");
                 scope.Start();

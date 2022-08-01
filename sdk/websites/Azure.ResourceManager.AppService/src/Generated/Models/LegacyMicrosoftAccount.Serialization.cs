@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppService.Models
         internal static LegacyMicrosoftAccount DeserializeLegacyMicrosoftAccount(JsonElement element)
         {
             Optional<bool> enabled = default;
-            Optional<ClientRegistration> registration = default;
+            Optional<AppServieClientRegistration> registration = default;
             Optional<LoginScopes> login = default;
             Optional<AllowedAudiencesValidation> validation = default;
             foreach (var property in element.EnumerateObject())
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.AppService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    registration = ClientRegistration.DeserializeClientRegistration(property.Value);
+                    registration = AppServieClientRegistration.DeserializeAppServieClientRegistration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("login"))

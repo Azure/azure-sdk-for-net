@@ -193,18 +193,18 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/premieraddons/{premierAddOnName}
         /// Operation Id: WebApps_UpdatePremierAddOnSlot
         /// </summary>
-        /// <param name="premierAddOn"> A JSON representation of the edited premier add-on. </param>
+        /// <param name="patch"> A JSON representation of the edited premier add-on. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="premierAddOn"/> is null. </exception>
-        public virtual async Task<Response<SiteSlotPremierAddOnResource>> UpdateAsync(PremierAddOnPatchResource premierAddOn, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<SiteSlotPremierAddOnResource>> UpdateAsync(PremierAddOnPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(premierAddOn, nameof(premierAddOn));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _siteSlotPremierAddOnWebAppsClientDiagnostics.CreateScope("SiteSlotPremierAddOnResource.Update");
             scope.Start();
             try
             {
-                var response = await _siteSlotPremierAddOnWebAppsRestClient.UpdatePremierAddOnSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, premierAddOn, cancellationToken).ConfigureAwait(false);
+                var response = await _siteSlotPremierAddOnWebAppsRestClient.UpdatePremierAddOnSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new SiteSlotPremierAddOnResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -219,18 +219,18 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/premieraddons/{premierAddOnName}
         /// Operation Id: WebApps_UpdatePremierAddOnSlot
         /// </summary>
-        /// <param name="premierAddOn"> A JSON representation of the edited premier add-on. </param>
+        /// <param name="patch"> A JSON representation of the edited premier add-on. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="premierAddOn"/> is null. </exception>
-        public virtual Response<SiteSlotPremierAddOnResource> Update(PremierAddOnPatchResource premierAddOn, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<SiteSlotPremierAddOnResource> Update(PremierAddOnPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(premierAddOn, nameof(premierAddOn));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _siteSlotPremierAddOnWebAppsClientDiagnostics.CreateScope("SiteSlotPremierAddOnResource.Update");
             scope.Start();
             try
             {
-                var response = _siteSlotPremierAddOnWebAppsRestClient.UpdatePremierAddOnSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, premierAddOn, cancellationToken);
+                var response = _siteSlotPremierAddOnWebAppsRestClient.UpdatePremierAddOnSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch, cancellationToken);
                 return Response.FromValue(new SiteSlotPremierAddOnResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

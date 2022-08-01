@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<bool> autoRenew = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<CertificateOrderStatus> status = default;
-            Optional<CertificateDetails> signedCertificate = default;
+            Optional<CertificateDetail> signedCertificate = default;
             Optional<string> csr = default;
-            Optional<CertificateDetails> intermediate = default;
-            Optional<CertificateDetails> root = default;
+            Optional<CertificateDetail> intermediate = default;
+            Optional<CertificateDetail> root = default;
             Optional<string> serialNumber = default;
             Optional<DateTimeOffset> lastCertificateIssuanceTime = default;
             Optional<DateTimeOffset> expirationTime = default;
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.AppService.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            signedCertificate = CertificateDetails.DeserializeCertificateDetails(property0.Value);
+                            signedCertificate = CertificateDetail.DeserializeCertificateDetail(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("csr"))
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.AppService.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            intermediate = CertificateDetails.DeserializeCertificateDetails(property0.Value);
+                            intermediate = CertificateDetail.DeserializeCertificateDetail(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("root"))
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.AppService.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            root = CertificateDetails.DeserializeCertificateDetails(property0.Value);
+                            root = CertificateDetail.DeserializeCertificateDetail(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("serialNumber"))

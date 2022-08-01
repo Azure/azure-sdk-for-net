@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppService.Models
         public SkuDescription()
         {
             AzureLocations = new ChangeTrackingList<string>();
-            Capabilities = new ChangeTrackingList<Capability>();
+            Capabilities = new ChangeTrackingList<AppServiceCapability>();
         }
 
         /// <summary> Initializes a new instance of SkuDescription. </summary>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="skuCapacity"> Min, max, and default scale values of the SKU. </param>
         /// <param name="azureLocations"> Locations of the SKU. </param>
         /// <param name="capabilities"> Capabilities of the SKU, e.g., is traffic manager enabled?. </param>
-        internal SkuDescription(string name, string tier, string size, string family, int? capacity, SkuCapacity skuCapacity, IList<string> azureLocations, IList<Capability> capabilities)
+        internal SkuDescription(string name, string tier, string size, string family, int? capacity, SkuCapacity skuCapacity, IList<string> azureLocations, IList<AppServiceCapability> capabilities)
         {
             Name = name;
             Tier = tier;
@@ -56,6 +56,6 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Locations of the SKU. </summary>
         public IList<string> AzureLocations { get; }
         /// <summary> Capabilities of the SKU, e.g., is traffic manager enabled?. </summary>
-        public IList<Capability> Capabilities { get; }
+        public IList<AppServiceCapability> Capabilities { get; }
     }
 }

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of AutoHealRules. </summary>
         /// <param name="triggers"> Conditions that describe when to execute the auto-heal actions. </param>
         /// <param name="actions"> Actions to be executed when a rule is triggered. </param>
-        internal AutoHealRules(AutoHealTriggers triggers, AutoHealActions actions)
+        internal AutoHealRules(AutoHealTriggers triggers, AutoHealAction actions)
         {
             Triggers = triggers;
             Actions = actions;
@@ -27,6 +27,6 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Conditions that describe when to execute the auto-heal actions. </summary>
         public AutoHealTriggers Triggers { get; set; }
         /// <summary> Actions to be executed when a rule is triggered. </summary>
-        public AutoHealActions Actions { get; set; }
+        public AutoHealAction Actions { get; set; }
     }
 }

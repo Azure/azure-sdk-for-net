@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> metricFilterPattern = default;
             Optional<bool> fillGapWithZero = default;
             Optional<bool> isInternal = default;
-            Optional<IReadOnlyList<Dimension>> dimensions = default;
+            Optional<IReadOnlyList<AppServiceDimension>> dimensions = default;
             Optional<string> category = default;
             Optional<IReadOnlyList<MetricAvailability>> availabilities = default;
             Optional<IReadOnlyList<string>> supportedTimeGrainTypes = default;
@@ -121,10 +121,10 @@ namespace Azure.ResourceManager.AppService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Dimension> array = new List<Dimension>();
+                    List<AppServiceDimension> array = new List<AppServiceDimension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Dimension.DeserializeDimension(item));
+                        array.Add(AppServiceDimension.DeserializeAppServiceDimension(item));
                     }
                     dimensions = array;
                     continue;

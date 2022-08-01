@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AppService
         public StaticSiteARMData(AzureLocation location) : base(location)
         {
             CustomDomains = new ChangeTrackingList<string>();
-            PrivateEndpointConnections = new ChangeTrackingList<ResponseMessageEnvelopeRemotePrivateEndpointConnection>();
+            PrivateEndpointConnections = new ChangeTrackingList<ResponseMessageEnvelope>();
             UserProvidedFunctionApps = new ChangeTrackingList<StaticSiteUserProvidedFunctionApp>();
         }
 
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="userProvidedFunctionApps"> User provided function apps registered with the static site. </param>
         /// <param name="provider"> The provider that submitted the last deployment to the primary environment of the static site. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal StaticSiteARMData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SkuDescription sku, ManagedServiceIdentity identity, string defaultHostname, Uri repositoryUri, string branch, IReadOnlyList<string> customDomains, string repositoryToken, StaticSiteBuildProperties buildProperties, IReadOnlyList<ResponseMessageEnvelopeRemotePrivateEndpointConnection> privateEndpointConnections, StagingEnvironmentPolicy? stagingEnvironmentPolicy, bool? allowConfigFileUpdates, StaticSiteTemplate templateProperties, string contentDistributionEndpoint, string keyVaultReferenceIdentity, IReadOnlyList<StaticSiteUserProvidedFunctionApp> userProvidedFunctionApps, string provider, string kind) : base(id, name, resourceType, systemData, tags, location)
+        internal StaticSiteARMData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SkuDescription sku, ManagedServiceIdentity identity, string defaultHostname, Uri repositoryUri, string branch, IReadOnlyList<string> customDomains, string repositoryToken, StaticSiteBuildProperties buildProperties, IReadOnlyList<ResponseMessageEnvelope> privateEndpointConnections, StagingEnvironmentPolicy? stagingEnvironmentPolicy, bool? allowConfigFileUpdates, StaticSiteTemplate templateProperties, string contentDistributionEndpoint, string keyVaultReferenceIdentity, IReadOnlyList<StaticSiteUserProvidedFunctionApp> userProvidedFunctionApps, string provider, string kind) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Identity = identity;
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Build properties to configure on the repository. </summary>
         public StaticSiteBuildProperties BuildProperties { get; set; }
         /// <summary> Private endpoint connections. </summary>
-        public IReadOnlyList<ResponseMessageEnvelopeRemotePrivateEndpointConnection> PrivateEndpointConnections { get; }
+        public IReadOnlyList<ResponseMessageEnvelope> PrivateEndpointConnections { get; }
         /// <summary> State indicating whether staging environments are allowed or not allowed for a static web app. </summary>
         public StagingEnvironmentPolicy? StagingEnvironmentPolicy { get; set; }
         /// <summary> &lt;code&gt;false&lt;/code&gt; if config file is locked for this static web app; otherwise, &lt;code&gt;true&lt;/code&gt;. </summary>

@@ -21,11 +21,11 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("totalUsage");
                 writer.WriteNumberValue(TotalUsage.Value);
             }
-            if (Optional.IsCollectionDefined(PerCpuUsage))
+            if (Optional.IsCollectionDefined(PerCpuUsages))
             {
                 writer.WritePropertyName("perCpuUsage");
                 writer.WriteStartArray();
-                foreach (var item in PerCpuUsage)
+                foreach (var item in PerCpuUsages)
                 {
                     writer.WriteNumberValue(item);
                 }

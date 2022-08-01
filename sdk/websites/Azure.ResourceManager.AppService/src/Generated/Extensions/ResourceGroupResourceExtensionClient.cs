@@ -76,11 +76,11 @@ namespace Azure.ResourceManager.AppService
             return GetCachedClient(Client => new AppServicePlanCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of CertificateResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of CertificateResources and their operations over a CertificateResource. </returns>
-        public virtual CertificateCollection GetCertificates()
+        /// <summary> Gets a collection of CertificateFixedRequiredResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of CertificateFixedRequiredResources and their operations over a CertificateFixedRequiredResource. </returns>
+        public virtual CertificateFixedRequiredCollection GetCertificateFixedRequireds()
         {
-            return GetCachedClient(Client => new CertificateCollection(Client, Id));
+            return GetCachedClient(Client => new CertificateFixedRequiredCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of KubeEnvironmentResources in the ResourceGroupResource. </summary>
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="content"> Request with the resources to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ValidateResponse>> ValidateAsync(ValidateContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ValidateResult>> ValidateAsync(ValidateContent content, CancellationToken cancellationToken = default)
         {
             using var scope = DefaultClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.Validate");
             scope.Start();
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="content"> Request with the resources to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ValidateResponse> Validate(ValidateContent content, CancellationToken cancellationToken = default)
+        public virtual Response<ValidateResult> Validate(ValidateContent content, CancellationToken cancellationToken = default)
         {
             using var scope = DefaultClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.Validate");
             scope.Start();

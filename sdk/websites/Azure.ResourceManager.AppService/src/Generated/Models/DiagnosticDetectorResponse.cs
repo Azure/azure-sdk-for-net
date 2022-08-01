@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Meta Data. </summary>
         internal ResponseMetaData ResponseMetaData { get; set; }
         /// <summary> Source of the Data. </summary>
-        public DataSource DataSource
+        public AppServiceDataSource DataSource
         {
             get => ResponseMetaData is null ? default : ResponseMetaData.DataSource;
             set

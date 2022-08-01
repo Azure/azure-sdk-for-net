@@ -51,11 +51,11 @@ namespace Azure.ResourceManager.AppService
             return apiVersion;
         }
 
-        /// <summary> Gets an object representing a UserResource along with the instance operations that can be performed on it in the TenantResource. </summary>
-        /// <returns> Returns a <see cref="UserResource" /> object. </returns>
-        public virtual UserResource GetUser()
+        /// <summary> Gets an object representing a AppServiceUserResource along with the instance operations that can be performed on it in the TenantResource. </summary>
+        /// <returns> Returns a <see cref="AppServiceUserResource" /> object. </returns>
+        public virtual AppServiceUserResource GetAppServiceUser()
         {
-            return new UserResource(Client, new ResourceIdentifier(Id.ToString() + "/providers/Microsoft.Web/publishingUsers/web"));
+            return new AppServiceUserResource(Client, new ResourceIdentifier(Id.ToString() + "/providers/Microsoft.Web/publishingUsers/web"));
         }
 
         /// <summary> Gets a collection of SourceControlResources in the TenantResource. </summary>
@@ -240,10 +240,10 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="osTypeSelected"> The ProviderOSTypeSelected to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApplicationStackResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApplicationStackResource> GetAvailableStacksProvidersAsync(ProviderOSTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ApplicationStackInfo" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApplicationStackInfo> GetAvailableStacksProvidersAsync(ProviderOSTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ApplicationStackResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ApplicationStackInfo>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = ProviderClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetAvailableStacksProviders");
                 scope.Start();
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            async Task<Page<ApplicationStackResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ApplicationStackInfo>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = ProviderClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetAvailableStacksProviders");
                 scope.Start();
@@ -283,10 +283,10 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="osTypeSelected"> The ProviderOSTypeSelected to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApplicationStackResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApplicationStackResource> GetAvailableStacksProviders(ProviderOSTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ApplicationStackInfo" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApplicationStackInfo> GetAvailableStacksProviders(ProviderOSTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
-            Page<ApplicationStackResource> FirstPageFunc(int? pageSizeHint)
+            Page<ApplicationStackInfo> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = ProviderClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetAvailableStacksProviders");
                 scope.Start();
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            Page<ApplicationStackResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ApplicationStackInfo> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = ProviderClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetAvailableStacksProviders");
                 scope.Start();

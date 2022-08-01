@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.AppService
             Optional<int> dailyMemoryTimeQuota = default;
             Optional<DateTimeOffset?> suspendedTill = default;
             Optional<int?> maxNumberOfWorkers = default;
-            Optional<CloningInfo> cloningInfo = default;
+            Optional<AppServiceCloningInfo> cloningInfo = default;
             Optional<string> resourceGroup = default;
             Optional<bool> isDefaultContainer = default;
             Optional<string> defaultHostName = default;
@@ -608,7 +608,7 @@ namespace Azure.ResourceManager.AppService
                                 cloningInfo = null;
                                 continue;
                             }
-                            cloningInfo = CloningInfo.DeserializeCloningInfo(property0.Value);
+                            cloningInfo = AppServiceCloningInfo.DeserializeAppServiceCloningInfo(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("resourceGroup"))
