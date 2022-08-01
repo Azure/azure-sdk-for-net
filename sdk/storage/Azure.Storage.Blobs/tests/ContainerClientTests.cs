@@ -2914,6 +2914,56 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2021_12_02)]
+        public async Task ListBlobsHierarchySegmentAsync_VersionPrefixDelimiter()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            await SetUpContainerForListing(test.Container);
+
+            var blobs = new List<BlobItem>();
+            var prefixes = new List<string>();
+
+            await foreach (BlobHierarchyItem blobItem in test.Container.GetBlobsByHierarchyAsync(
+                states: BlobStates.Version,
+                delimiter: "/",
+                prefix: "baz"))
+            {
+                if (blobItem.IsBlob)
+                {
+                    blobs.Add(blobItem.Blob);
+                }
+                else
+                {
+                    prefixes.Add(blobItem.Prefix);
+                }
+            }
+
+            //Assert.AreEqual(3, blobs.Count);
+            //Assert.AreEqual(2, prefixes.Count);
+
+            //var foundBlobNames = blobs.Select(blob => blob.Name).ToArray();
+            //var foundBlobPrefixes = prefixes.ToArray();
+            //IEnumerable<string> expectedPrefixes =
+            //    BlobNames
+            //    .Where(blobName => blobName.Contains(delimiter))
+            //    .Select(blobName => blobName.Split(new[] { delimiter[0] })[0] + delimiter)
+            //    .Distinct()
+            //    ;
+
+            //Assert.IsTrue(
+            //    BlobNames
+            //    .Where(blobName => !blobName.Contains(delimiter))
+            //    .All(blobName => foundBlobNames.Contains(blobName))
+            //    );
+
+            //Assert.IsTrue(
+            //    expectedPrefixes
+            //    .All(prefix => foundBlobPrefixes.Contains(prefix))
+            //    );
+        }
+
+        [RecordedTest]
         public async Task UploadBlobAsync()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
