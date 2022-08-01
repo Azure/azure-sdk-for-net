@@ -9,7 +9,7 @@ namespace Azure.ResourceManager.Dns
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } set { } }
-        public long? TtlInSenconds { get { throw null; } set { } }
+        public long? TtlInSeconds { get { throw null; } set { } }
     }
     public partial class ARecordSetData : Azure.ResourceManager.Models.ResourceData
     {
@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Dns
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } set { } }
-        public long? TtlInSenconds { get { throw null; } set { } }
+        public long? TtlInSeconds { get { throw null; } set { } }
     }
     public partial class CaaRecordSetData : Azure.ResourceManager.Models.ResourceData
     {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Dns
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } set { } }
-        public long? TtlInSenconds { get { throw null; } set { } }
+        public long? TtlInSeconds { get { throw null; } set { } }
     }
     public partial class CnameRecordSetData : Azure.ResourceManager.Models.ResourceData
     {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Dns
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } set { } }
-        public long? TtlInSenconds { get { throw null; } set { } }
+        public long? TtlInSeconds { get { throw null; } set { } }
     }
     public static partial class DnsExtensions
     {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Dns
         public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.DnsMXRecord> MXRecords { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } set { } }
-        public long? TtlInSenconds { get { throw null; } set { } }
+        public long? TtlInSeconds { get { throw null; } set { } }
     }
     public partial class NSRecordSetData : Azure.ResourceManager.Models.ResourceData
     {
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Dns
         public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.DnsNSRecord> NSRecords { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } set { } }
-        public long? TtlInSenconds { get { throw null; } set { } }
+        public long? TtlInSeconds { get { throw null; } set { } }
     }
     public partial class PtrRecordSetData : Azure.ResourceManager.Models.ResourceData
     {
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Dns
         public string ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.DnsPtrRecord> PtrRecords { get { throw null; } }
         public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } set { } }
-        public long? TtlInSenconds { get { throw null; } set { } }
+        public long? TtlInSeconds { get { throw null; } set { } }
     }
     public partial class RecordSetAaaaCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Dns.RecordSetAaaaResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Dns.RecordSetAaaaResource>, System.Collections.IEnumerable
     {
@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.Dns
         public string ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Dns.Models.DnsSoaRecord SoaRecord { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } set { } }
-        public long? TtlInSenconds { get { throw null; } set { } }
+        public long? TtlInSeconds { get { throw null; } set { } }
     }
     public partial class SrvRecordSetData : Azure.ResourceManager.Models.ResourceData
     {
@@ -507,7 +507,7 @@ namespace Azure.ResourceManager.Dns
         public string ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.DnsSrvRecord> SrvRecords { get { throw null; } }
         public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } set { } }
-        public long? TtlInSenconds { get { throw null; } set { } }
+        public long? TtlInSeconds { get { throw null; } set { } }
     }
     public partial class TxtRecordSetData : Azure.ResourceManager.Models.ResourceData
     {
@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.Dns
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } set { } }
-        public long? TtlInSenconds { get { throw null; } set { } }
+        public long? TtlInSeconds { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.DnsTxtRecord> TxtRecords { get { throw null; } }
     }
 }

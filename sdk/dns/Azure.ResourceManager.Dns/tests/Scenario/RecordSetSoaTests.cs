@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             Assert.AreEqual("@", recordSetSoaResource.Value.Data.Name);
             Assert.AreEqual("Succeeded", recordSetSoaResource.Value.Data.ProvisioningState);
             Assert.AreEqual("dnszones/SOA", recordSetSoaResource.Value.Data.ResourceType.Type);
-            Assert.AreEqual(3600, recordSetSoaResource.Value.Data.TtlInSenconds);
+            Assert.AreEqual(3600, recordSetSoaResource.Value.Data.TtlInSeconds);
         }
 
         [Test]
