@@ -3,6 +3,7 @@
 
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Authorization.Models;
 using Azure.ResourceManager.Resources;
@@ -35,14 +36,14 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
                 Description = "SDKTestDescription",
                 RoleType = "CustomRole",
                 Permissions = {
-                    new AzurePermission() {
+                    new RoleDefinitionPermission() {
                         Actions = { "Microsoft.Authorization/*/read" }
                         }
                 },
                 AssignableScopes = { ResourceGroup.Id }
             };
             var id = "49b923e6-f458-4229-a980-c0e62fcea856";
-            var roleDefinition = await collection.CreateOrUpdateAsync(WaitUntil.Completed, id, data);
+            var roleDefinition = await collection.CreateOrUpdateAsync(WaitUntil.Completed, new ResourceIdentifier(id), data);
             Assert.AreEqual(roleDefinition.Value.Data.Name, id);
         }
 
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             var roleDefinition1 = roleDefinitions.FirstOrDefault();
             if (roleDefinition1 != null)
             {
-                var roleDefinition2 = await collection.GetAsync(roleDefinition1.Data.Name);
+                var roleDefinition2 = await collection.GetAsync(new ResourceIdentifier(roleDefinition1.Data.Name));
                 Assert.AreEqual(roleDefinition2.Value.Data.Name, roleDefinition1.Data.Name);
             }
         }
@@ -75,7 +76,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             var roleDefinition = roleDefinitions.FirstOrDefault();
             if (roleDefinition != null)
             {
-                var result = await collection.ExistsAsync(roleDefinition.Data.Name);
+                var result = await collection.ExistsAsync(new ResourceIdentifier(roleDefinition.Data.Name));
                 Assert.IsTrue(result);
             }
         }

@@ -22,19 +22,19 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="serialNumber"> Certificate Serial Number. </param>
         /// <param name="thumbprint"> Certificate Thumbprint. </param>
         /// <param name="subject"> Certificate Subject. </param>
-        /// <param name="noBeforeOn"> Date Certificate is valid from. </param>
-        /// <param name="noAfterOn"> Date Certificate is valid to. </param>
+        /// <param name="notBefore"> Date Certificate is valid from. </param>
+        /// <param name="notAfter"> Date Certificate is valid to. </param>
         /// <param name="signatureAlgorithm"> Certificate Signature algorithm. </param>
         /// <param name="issuer"> Certificate Issuer. </param>
         /// <param name="rawData"> Raw certificate data. </param>
-        internal CertificateDetails(int? version, string serialNumber, string thumbprint, string subject, DateTimeOffset? noBeforeOn, DateTimeOffset? noAfterOn, string signatureAlgorithm, string issuer, string rawData)
+        internal CertificateDetails(int? version, string serialNumber, string thumbprint, string subject, DateTimeOffset? notBefore, DateTimeOffset? notAfter, string signatureAlgorithm, string issuer, string rawData)
         {
             Version = version;
             SerialNumber = serialNumber;
             Thumbprint = thumbprint;
             Subject = subject;
-            NoBeforeOn = noBeforeOn;
-            NoAfterOn = noAfterOn;
+            NotBefore = notBefore;
+            NotAfter = notAfter;
             SignatureAlgorithm = signatureAlgorithm;
             Issuer = issuer;
             RawData = rawData;
@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Certificate Subject. </summary>
         public string Subject { get; }
         /// <summary> Date Certificate is valid from. </summary>
-        public DateTimeOffset? NoBeforeOn { get; }
+        public DateTimeOffset? NotBefore { get; }
         /// <summary> Date Certificate is valid to. </summary>
-        public DateTimeOffset? NoAfterOn { get; }
+        public DateTimeOffset? NotAfter { get; }
         /// <summary> Certificate Signature algorithm. </summary>
         public string SignatureAlgorithm { get; }
         /// <summary> Certificate Issuer. </summary>

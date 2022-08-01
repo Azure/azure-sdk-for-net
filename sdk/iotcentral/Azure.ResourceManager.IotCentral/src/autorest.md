@@ -84,4 +84,9 @@ directive:
       $.AppPatch.properties.identity['$ref'] = $.App.properties.identity['$ref'].replace('SystemAssignedServiceIdentity', 'ManagedServiceIdentity');
       $.AppPatch.properties.identity.description = $.App.properties.identity.description + ' Current supported identity types: None, SystemAssigned.';
     reason: Temporal workaround to replace SystemAssignedServiceIdentity with ManagedServiceIdentity
+  - from: iotcentral.json
+    where: $.definitions
+    transform: >
+      $.AppTemplate.properties.order['type'] = 'integer';
+
 ```

@@ -30,15 +30,15 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("validationKey");
                 writer.WriteStringValue(ValidationKey);
             }
-            if (Optional.IsDefined(IsSubscriptions))
+            if (Optional.IsDefined(Subscriptions))
             {
                 writer.WritePropertyName("subscriptions");
-                writer.WriteObjectValue(IsSubscriptions);
+                writer.WriteObjectValue(Subscriptions);
             }
-            if (Optional.IsDefined(IsUserRegistration))
+            if (Optional.IsDefined(UserRegistration))
             {
                 writer.WritePropertyName("userRegistration");
-                writer.WriteObjectValue(IsUserRegistration);
+                writer.WriteObjectValue(UserRegistration);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

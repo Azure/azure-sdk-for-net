@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class MsDeploy : IUtf8JsonSerializable
+    public partial class MSDeploy : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -56,10 +56,10 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(IsSkipAppData))
+            if (Optional.IsDefined(SkipAppData))
             {
                 writer.WritePropertyName("skipAppData");
-                writer.WriteBooleanValue(IsSkipAppData.Value);
+                writer.WriteBooleanValue(SkipAppData.Value);
             }
             if (Optional.IsDefined(IsAppOffline))
             {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteEndObject();
         }
 
-        internal static MsDeploy DeserializeMsDeploy(JsonElement element)
+        internal static MSDeploy DeserializeMSDeploy(JsonElement element)
         {
             Optional<string> kind = default;
             ResourceIdentifier id = default;
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new MsDeploy(id, name, type, systemData.Value, packageUri.Value, connectionString.Value, dbType.Value, setParametersXmlFileUri.Value, Optional.ToDictionary(setParameters), Optional.ToNullable(skipAppData), Optional.ToNullable(appOffline), kind.Value);
+            return new MSDeploy(id, name, type, systemData.Value, packageUri.Value, connectionString.Value, dbType.Value, setParametersXmlFileUri.Value, Optional.ToDictionary(setParameters), Optional.ToNullable(skipAppData), Optional.ToNullable(appOffline), kind.Value);
         }
     }
 }

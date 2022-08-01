@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> Describes all the settings to be used when analyzing a video in order to detect (and optionally redact) all the faces present. </summary>
-    public partial class FaceDetectorPreset : Preset
+    public partial class FaceDetectorPreset : MediaPreset
     {
         /// <summary> Initializes a new instance of FaceDetectorPreset. </summary>
         public FaceDetectorPreset()

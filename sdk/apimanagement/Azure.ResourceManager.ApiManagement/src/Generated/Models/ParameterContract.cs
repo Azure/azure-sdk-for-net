@@ -40,18 +40,18 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="description"> Parameter description. </param>
         /// <param name="parameterContractType"> Parameter type. </param>
         /// <param name="defaultValue"> Default parameter value. </param>
-        /// <param name="required"> Specifies whether parameter is required or not. </param>
+        /// <param name="isRequired"> Specifies whether parameter is required or not. </param>
         /// <param name="values"> Parameter values. </param>
         /// <param name="schemaId"> Schema identifier. </param>
         /// <param name="typeName"> Type name defined by the schema. </param>
         /// <param name="examples"> Exampled defined for the parameter. </param>
-        internal ParameterContract(string name, string description, string parameterContractType, string defaultValue, bool? required, IList<string> values, string schemaId, string typeName, IDictionary<string, ParameterExampleContract> examples)
+        internal ParameterContract(string name, string description, string parameterContractType, string defaultValue, bool? isRequired, IList<string> values, string schemaId, string typeName, IDictionary<string, ParameterExampleContract> examples)
         {
             Name = name;
             Description = description;
             ParameterContractType = parameterContractType;
             DefaultValue = defaultValue;
-            Required = required;
+            IsRequired = isRequired;
             Values = values;
             SchemaId = schemaId;
             TypeName = typeName;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Default parameter value. </summary>
         public string DefaultValue { get; set; }
         /// <summary> Specifies whether parameter is required or not. </summary>
-        public bool? Required { get; set; }
+        public bool? IsRequired { get; set; }
         /// <summary> Parameter values. </summary>
         public IList<string> Values { get; }
         /// <summary> Schema identifier. </summary>
