@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="nameServers"> Name servers. </param>
         /// <param name="hasPrivacy"> &lt;code&gt;true&lt;/code&gt; if domain privacy is enabled for this domain; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="createdOn"> Domain creation timestamp. </param>
-        /// <param name="expirationOn"> Domain expiration timestamp. </param>
+        /// <param name="expireOn"> Domain expiration timestamp. </param>
         /// <param name="lastRenewedOn"> Timestamp when the domain was renewed last time. </param>
         /// <param name="isAutoRenew"> &lt;code&gt;true&lt;/code&gt; if the domain should be automatically renewed; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="isReadyForDnsRecordManagement">
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="targetDnsType"> Target DNS type (would be used for migration). </param>
         /// <param name="authCode"></param>
         /// <param name="kind"> Kind of resource. </param>
-        internal AppServiceDomainPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ContactInformation contactAdmin, ContactInformation contactBilling, ContactInformation contactRegistrant, ContactInformation contactTech, DomainStatus? registrationStatus, ProvisioningState? provisioningState, IReadOnlyList<string> nameServers, bool? hasPrivacy, DateTimeOffset? createdOn, DateTimeOffset? expirationOn, DateTimeOffset? lastRenewedOn, bool? isAutoRenew, bool? isReadyForDnsRecordManagement, IReadOnlyList<HostName> managedHostNames, DomainPurchaseConsent consent, IReadOnlyList<DomainNotRenewableReason> domainNotRenewableReasons, DnsType? dnsType, string dnsZoneId, DnsType? targetDnsType, string authCode, string kind) : base(id, name, resourceType, systemData)
+        internal AppServiceDomainPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ContactInformation contactAdmin, ContactInformation contactBilling, ContactInformation contactRegistrant, ContactInformation contactTech, DomainStatus? registrationStatus, ProvisioningState? provisioningState, IReadOnlyList<string> nameServers, bool? hasPrivacy, DateTimeOffset? createdOn, DateTimeOffset? expireOn, DateTimeOffset? lastRenewedOn, bool? isAutoRenew, bool? isReadyForDnsRecordManagement, IReadOnlyList<HostName> managedHostNames, DomainPurchaseConsent consent, IReadOnlyList<DomainNotRenewableReason> domainNotRenewableReasons, DnsType? dnsType, string dnsZoneId, DnsType? targetDnsType, string authCode, string kind) : base(id, name, resourceType, systemData)
         {
             ContactAdmin = contactAdmin;
             ContactBilling = contactBilling;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.AppService.Models
             NameServers = nameServers;
             HasPrivacy = hasPrivacy;
             CreatedOn = createdOn;
-            ExpirationOn = expirationOn;
+            ExpireOn = expireOn;
             LastRenewedOn = lastRenewedOn;
             IsAutoRenew = isAutoRenew;
             IsReadyForDnsRecordManagement = isReadyForDnsRecordManagement;
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Domain creation timestamp. </summary>
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> Domain expiration timestamp. </summary>
-        public DateTimeOffset? ExpirationOn { get; }
+        public DateTimeOffset? ExpireOn { get; }
         /// <summary> Timestamp when the domain was renewed last time. </summary>
         public DateTimeOffset? LastRenewedOn { get; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the domain should be automatically renewed; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>

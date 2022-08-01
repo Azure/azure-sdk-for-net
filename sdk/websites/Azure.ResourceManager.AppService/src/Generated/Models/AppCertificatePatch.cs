@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="selfLink"> Self link. </param>
         /// <param name="issuer"> Certificate issuer. </param>
         /// <param name="issueOn"> Certificate issue Date. </param>
-        /// <param name="expirationOn"> Certificate expiration date. </param>
+        /// <param name="expireOn"> Certificate expiration date. </param>
         /// <param name="thumbprint"> Certificate thumbprint. </param>
         /// <param name="isValid"> Is the certificate valid?. </param>
         /// <param name="cerBlob"> Raw bytes of .cer file. </param>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="canonicalName"> CNAME of the certificate to be issued via free certificate. </param>
         /// <param name="domainValidationMethod"> Method of domain validation for free cert. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal AppCertificatePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string password, string friendlyName, string subjectName, IList<string> hostNames, byte[] pfxBlob, string siteName, string selfLink, string issuer, DateTimeOffset? issueOn, DateTimeOffset? expirationOn, string thumbprint, bool? isValid, byte[] cerBlob, string publicKeyHash, HostingEnvironmentProfile hostingEnvironmentProfile, ResourceIdentifier keyVaultId, string keyVaultSecretName, KeyVaultSecretStatus? keyVaultSecretStatus, ResourceIdentifier serverFarmId, string canonicalName, string domainValidationMethod, string kind) : base(id, name, resourceType, systemData)
+        internal AppCertificatePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string password, string friendlyName, string subjectName, IList<string> hostNames, byte[] pfxBlob, string siteName, string selfLink, string issuer, DateTimeOffset? issueOn, DateTimeOffset? expireOn, string thumbprint, bool? isValid, byte[] cerBlob, string publicKeyHash, HostingEnvironmentProfile hostingEnvironmentProfile, ResourceIdentifier keyVaultId, string keyVaultSecretName, KeyVaultSecretStatus? keyVaultSecretStatus, ResourceIdentifier serverFarmId, string canonicalName, string domainValidationMethod, string kind) : base(id, name, resourceType, systemData)
         {
             Password = password;
             FriendlyName = friendlyName;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AppService.Models
             SelfLink = selfLink;
             Issuer = issuer;
             IssueOn = issueOn;
-            ExpirationOn = expirationOn;
+            ExpireOn = expireOn;
             Thumbprint = thumbprint;
             IsValid = isValid;
             CerBlob = cerBlob;
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Certificate issue Date. </summary>
         public DateTimeOffset? IssueOn { get; }
         /// <summary> Certificate expiration date. </summary>
-        public DateTimeOffset? ExpirationOn { get; }
+        public DateTimeOffset? ExpireOn { get; }
         /// <summary> Certificate thumbprint. </summary>
         public string Thumbprint { get; }
         /// <summary> Is the certificate valid?. </summary>

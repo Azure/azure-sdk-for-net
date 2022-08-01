@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Media.Models
                 switch (discriminator.GetString())
                 {
                     case "#Microsoft.Media.AacAudio": return AacAudio.DeserializeAacAudio(element);
-                    case "#Microsoft.Media.Audio": return AudiocommonProperties.DeserializeAudiocommonProperties(element);
+                    case "#Microsoft.Media.Audio": return AudioCommonProperties.DeserializeAudioCommonProperties(element);
                     case "#Microsoft.Media.CopyAudio": return CopyAudio.DeserializeCopyAudio(element);
                     case "#Microsoft.Media.CopyVideo": return CopyVideo.DeserializeCopyVideo(element);
                     case "#Microsoft.Media.H264Video": return H264Video.DeserializeH264Video(element);

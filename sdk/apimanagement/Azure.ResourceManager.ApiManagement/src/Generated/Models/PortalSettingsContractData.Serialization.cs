@@ -29,20 +29,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("validationKey");
                 writer.WriteStringValue(ValidationKey);
             }
-            if (Optional.IsDefined(Subscriptions))
+            if (Optional.IsDefined(IsSubscriptions))
             {
                 writer.WritePropertyName("subscriptions");
-                writer.WriteObjectValue(Subscriptions);
+                writer.WriteObjectValue(IsSubscriptions);
             }
-            if (Optional.IsDefined(UserRegistration))
+            if (Optional.IsDefined(IsUserRegistration))
             {
                 writer.WritePropertyName("userRegistration");
-                writer.WriteObjectValue(UserRegistration);
+                writer.WriteObjectValue(IsUserRegistration);
             }
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled");
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsDefined(TermsOfService))
             {

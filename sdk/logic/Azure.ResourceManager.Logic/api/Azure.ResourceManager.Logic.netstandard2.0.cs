@@ -1977,7 +1977,7 @@ namespace Azure.ResourceManager.Logic.Models
     public partial class ListOperationCallbackUri
     {
         internal ListOperationCallbackUri() { }
-        public string Value { get { throw null; } }
+        public System.Uri Uri { get { throw null; } }
     }
     public partial class ListOperationCallbackUrlParameterInfo
     {

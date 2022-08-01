@@ -11,27 +11,36 @@ using Azure.ResourceManager.ServiceFabric;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    /// <summary> The list of service resources. </summary>
+    /// <summary>
+    /// The list of service resources.
+    /// Serialized Name: ServiceResourceList
+    /// </summary>
     internal partial class ServiceResourceList
     {
         /// <summary> Initializes a new instance of ServiceResourceList. </summary>
         internal ServiceResourceList()
         {
-            Value = new ChangeTrackingList<ServiceResourceData>();
+            Value = new ChangeTrackingList<ServiceFabricServiceData>();
         }
 
         /// <summary> Initializes a new instance of ServiceResourceList. </summary>
-        /// <param name="value"></param>
-        /// <param name="nextLink"> URL to get the next set of service list results if there are any. </param>
-        internal ServiceResourceList(IReadOnlyList<ServiceResourceData> value, string nextLink)
+        /// <param name="value"> Serialized Name: ServiceResourceList.value. </param>
+        /// <param name="nextLink">
+        /// URL to get the next set of service list results if there are any.
+        /// Serialized Name: ServiceResourceList.nextLink
+        /// </param>
+        internal ServiceResourceList(IReadOnlyList<ServiceFabricServiceData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Gets the value. </summary>
-        public IReadOnlyList<ServiceResourceData> Value { get; }
-        /// <summary> URL to get the next set of service list results if there are any. </summary>
+        /// <summary> Serialized Name: ServiceResourceList.value. </summary>
+        public IReadOnlyList<ServiceFabricServiceData> Value { get; }
+        /// <summary>
+        /// URL to get the next set of service list results if there are any.
+        /// Serialized Name: ServiceResourceList.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

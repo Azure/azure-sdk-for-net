@@ -100,7 +100,7 @@ rename-mapping:
   EntityNameAvailabilityCheckOutput.nameAvailable: IsNameAvailable
   AssetStreamingLocator.created: CreatedOn
   Codec: CodecBasicProperties
-  Audio: AudiocommonProperties
+  Audio: AudioCommonProperties
   Overlay: OverlayBasicProperties
   Complexity: EncoderComplexitySetting
   ContentKeyPolicyPlayReadyLicense.expirationDate: ExpireOn

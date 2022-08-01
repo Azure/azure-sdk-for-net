@@ -28,6 +28,8 @@ namespace Azure.Communication
         public override bool Equals(object obj) { throw null; }
         public static Azure.Communication.CommunicationIdentifier FromRawId(string rawId) { throw null; }
         public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Communication.CommunicationIdentifier left, Azure.Communication.CommunicationIdentifier right) { throw null; }
+        public static bool operator !=(Azure.Communication.CommunicationIdentifier left, Azure.Communication.CommunicationIdentifier right) { throw null; }
     }
     public sealed partial class CommunicationTokenCredential : System.IDisposable
     {
