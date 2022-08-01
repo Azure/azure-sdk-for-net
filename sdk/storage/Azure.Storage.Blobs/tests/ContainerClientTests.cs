@@ -2939,28 +2939,13 @@ namespace Azure.Storage.Blobs.Test
                 }
             }
 
-            //Assert.AreEqual(3, blobs.Count);
-            //Assert.AreEqual(2, prefixes.Count);
+            Assert.AreEqual(1, blobs.Count);
+            Assert.AreEqual(1, prefixes.Count);
 
-            //var foundBlobNames = blobs.Select(blob => blob.Name).ToArray();
-            //var foundBlobPrefixes = prefixes.ToArray();
-            //IEnumerable<string> expectedPrefixes =
-            //    BlobNames
-            //    .Where(blobName => blobName.Contains(delimiter))
-            //    .Select(blobName => blobName.Split(new[] { delimiter[0] })[0] + delimiter)
-            //    .Distinct()
-            //    ;
+            Assert.AreEqual("baz", blobs[0].Name);
+            Assert.IsNotNull(blobs[0].VersionId);
 
-            //Assert.IsTrue(
-            //    BlobNames
-            //    .Where(blobName => !blobName.Contains(delimiter))
-            //    .All(blobName => foundBlobNames.Contains(blobName))
-            //    );
-
-            //Assert.IsTrue(
-            //    expectedPrefixes
-            //    .All(prefix => foundBlobPrefixes.Contains(prefix))
-            //    );
+            Assert.AreEqual("baz/", prefixes[0]);
         }
 
         [RecordedTest]
