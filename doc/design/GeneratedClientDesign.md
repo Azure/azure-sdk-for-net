@@ -60,6 +60,7 @@ Constructor Accessibility | public | internal | public |
 Required Property | get-only | get-only | get/set | [autorest.csharp #2463](https://github.com/Azure/autorest.csharp/issues/2463)
 Optional Property | get/set | get-only | get/set | [autorest.csharp #2339](https://github.com/Azure/autorest.csharp/issues/2339)
 Collection Property | `IList<T>` get-only | `IReadOnlyList<T>` get-only | `IList<T>` get-only | [autorest.csharp #2471](https://github.com/Azure/autorest.csharp/issues/2471)
+Readonly Property | n/a |  |  | [autorest.csharp #2341](https://github.com/Azure/autorest.csharp/issues/2341)
 
 ### Model Constructors
 
