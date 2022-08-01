@@ -422,7 +422,8 @@
         "Nvarchar",
         "Stdev",
         "Unrestorable",
-        "Vcores"
+        "Vcores",
+        "Dtcs"
       ]
     },
     {
