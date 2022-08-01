@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="location"> The location. </param>
         /// <param name="sku"> The managed cluster SKU. </param>
         /// <param name="extendedLocation"> The extended location of the Virtual Machine. </param>
-        /// <param name="identity"> The identity of the managed cluster, if configured. </param>
+        /// <param name="identity"> The identity of the managed cluster, if configured. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
         /// <param name="provisioningState"> The current provisioning state. </param>
         /// <param name="powerState"> The Power State of the cluster. </param>
         /// <param name="maxAgentPools"> The max number of agent pools for the managed cluster. </param>
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="securityProfile"> Security profile for the managed cluster. </param>
         /// <param name="storageProfile"> Storage profile for the managed cluster. </param>
         /// <param name="publicNetworkAccess"> Allow or deny public network access for AKS. </param>
-        internal ManagedClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedClusterSku sku, ExtendedLocation extendedLocation, ManagedClusterIdentity identity, string provisioningState, PowerState powerState, int? maxAgentPools, string kubernetesVersion, string currentKubernetesVersion, string dnsPrefix, string fqdnSubdomain, string fqdn, string privateFqdn, string azurePortalFqdn, IList<ManagedClusterAgentPoolProfile> agentPoolProfiles, ContainerServiceLinuxProfile linuxProfile, ManagedClusterWindowsProfile windowsProfile, ManagedClusterServicePrincipalProfile servicePrincipalProfile, IDictionary<string, ManagedClusterAddonProfile> addonProfiles, ManagedClusterPodIdentityProfile podIdentityProfile, string nodeResourceGroup, bool? enableRbac, bool? enablePodSecurityPolicy, ContainerServiceNetworkProfile networkProfile, ManagedClusterAadProfile aadProfile, ManagedClusterAutoUpgradeProfile autoUpgradeProfile, ManagedClusterAutoScalerProfile autoScalerProfile, ManagedClusterApiServerAccessProfile apiServerAccessProfile, ResourceIdentifier diskEncryptionSetId, IDictionary<string, Models.UserAssignedIdentity> identityProfile, IList<ContainerServicePrivateLinkResourceData> privateLinkResources, bool? disableLocalAccounts, ManagedClusterHttpProxyConfig httpProxyConfig, ManagedClusterSecurityProfile securityProfile, ManagedClusterStorageProfile storageProfile, PublicNetworkAccess? publicNetworkAccess) : base(id, name, resourceType, systemData, tags, location)
+        internal ManagedClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedClusterSku sku, ExtendedLocation extendedLocation, ManagedServiceIdentity identity, string provisioningState, PowerState powerState, int? maxAgentPools, string kubernetesVersion, string currentKubernetesVersion, string dnsPrefix, string fqdnSubdomain, string fqdn, string privateFqdn, string azurePortalFqdn, IList<ManagedClusterAgentPoolProfile> agentPoolProfiles, ContainerServiceLinuxProfile linuxProfile, ManagedClusterWindowsProfile windowsProfile, ManagedClusterServicePrincipalProfile servicePrincipalProfile, IDictionary<string, ManagedClusterAddonProfile> addonProfiles, ManagedClusterPodIdentityProfile podIdentityProfile, string nodeResourceGroup, bool? enableRbac, bool? enablePodSecurityPolicy, ContainerServiceNetworkProfile networkProfile, ManagedClusterAadProfile aadProfile, ManagedClusterAutoUpgradeProfile autoUpgradeProfile, ManagedClusterAutoScalerProfile autoScalerProfile, ManagedClusterApiServerAccessProfile apiServerAccessProfile, ResourceIdentifier diskEncryptionSetId, IDictionary<string, Models.UserAssignedIdentity> identityProfile, IList<ContainerServicePrivateLinkResourceData> privateLinkResources, bool? disableLocalAccounts, ManagedClusterHttpProxyConfig httpProxyConfig, ManagedClusterSecurityProfile securityProfile, ManagedClusterStorageProfile storageProfile, PublicNetworkAccess? publicNetworkAccess) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             ExtendedLocation = extendedLocation;
@@ -111,8 +111,8 @@ namespace Azure.ResourceManager.ContainerService
         public ManagedClusterSku Sku { get; set; }
         /// <summary> The extended location of the Virtual Machine. </summary>
         public ExtendedLocation ExtendedLocation { get; set; }
-        /// <summary> The identity of the managed cluster, if configured. </summary>
-        public ManagedClusterIdentity Identity { get; set; }
+        /// <summary> The identity of the managed cluster, if configured. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The current provisioning state. </summary>
         public string ProvisioningState { get; }
         /// <summary> The Power State of the cluster. </summary>
