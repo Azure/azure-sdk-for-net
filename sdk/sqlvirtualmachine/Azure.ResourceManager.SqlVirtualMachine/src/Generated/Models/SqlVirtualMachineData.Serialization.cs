@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<ResourceManager.Models.SystemData> systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<ResourceIdentifier> virtualMachineResourceId = default;
             Optional<string> provisioningState = default;
             Optional<string> sqlImageOffer = default;
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<ResourceManager.Models.SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))

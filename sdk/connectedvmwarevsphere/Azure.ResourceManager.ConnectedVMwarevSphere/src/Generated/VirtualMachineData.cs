@@ -11,7 +11,6 @@ using Azure.ResourceManager.ConnectedVMwarevSphere.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
-[assembly:CodeGenSuppressType("VirtualMachineData")]
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
     /// <summary> A class representing the VirtualMachine data model. </summary>
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="location"> The location. </param>
         /// <param name="extendedLocation"> Gets or sets the extended location. </param>
         /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
-        /// <param name="identity"> The identity of the resource. Current supported identity types: SystemAssigned, None. </param>
+        /// <param name="identity"> The identity of the resource. Current supported identity types: None, SystemAssigned. </param>
         /// <param name="resourcePoolId">
         /// Gets or sets the ARM Id of the resourcePool resource on which this virtual machine will
         /// deploy.
@@ -59,7 +58,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="statuses"> The resource status information. </param>
         /// <param name="provisioningState"> Gets or sets the provisioning state. </param>
         /// <param name="vmId"> Gets or sets a unique identifier for the vm resource. </param>
-        internal VirtualMachineData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Resources.Models.ExtendedLocation extendedLocation, string kind, ManagedServiceIdentity identity, string resourcePoolId, string templateId, string vCenterId, PlacementProfile placementProfile, OSProfile osProfile, HardwareProfile hardwareProfile, NetworkProfile networkProfile, StorageProfile storageProfile, GuestAgentProfile guestAgentProfile, string moRefId, string inventoryItemId, string moName, string folderPath, string instanceUuid, string smbiosUuid, FirmwareType? firmwareType, string powerState, string customResourceName, string uuid, IReadOnlyList<ResourceStatus> statuses, string provisioningState, string vmId) : base(id, name, resourceType, systemData, tags, location)
+        internal VirtualMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string kind, ManagedServiceIdentity identity, string resourcePoolId, string templateId, string vCenterId, PlacementProfile placementProfile, OSProfile osProfile, HardwareProfile hardwareProfile, NetworkProfile networkProfile, StorageProfile storageProfile, GuestAgentProfile guestAgentProfile, string moRefId, string inventoryItemId, string moName, string folderPath, string instanceUuid, string smbiosUuid, FirmwareType? firmwareType, string powerState, string customResourceName, string uuid, IReadOnlyList<ResourceStatus> statuses, string provisioningState, string vmId) : base(id, name, resourceType, systemData, tags, location)
         {
             ExtendedLocation = extendedLocation;
             Kind = kind;
@@ -89,10 +88,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         }
 
         /// <summary> Gets or sets the extended location. </summary>
-        public Resources.Models.ExtendedLocation ExtendedLocation { get; set; }
+        public ExtendedLocation ExtendedLocation { get; set; }
         /// <summary> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </summary>
         public string Kind { get; set; }
-        /// <summary> The identity of the resource. Current supported identity types: SystemAssigned, None. </summary>
+        /// <summary> The identity of the resource. Current supported identity types: None, SystemAssigned. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary>
         /// Gets or sets the ARM Id of the resourcePool resource on which this virtual machine will
