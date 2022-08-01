@@ -24,22 +24,10 @@ namespace Azure.Template.Models
         /// <exception cref="ArgumentNullException"> <paramref name="requiredReadonlyString"/>, <paramref name="requiredReadonlyModel"/>, <paramref name="readonlyStringList"/> or <paramref name="readonlyIntList"/> is null. </exception>
         public RoundTripModel(string requiredReadonlyString, int requiredReadonlyInt, ReadonlyModel requiredReadonlyModel, IEnumerable<string> readonlyStringList, IEnumerable<int> readonlyIntList)
         {
-            if (requiredReadonlyString == null)
-            {
-                throw new ArgumentNullException(nameof(requiredReadonlyString));
-            }
-            if (requiredReadonlyModel == null)
-            {
-                throw new ArgumentNullException(nameof(requiredReadonlyModel));
-            }
-            if (readonlyStringList == null)
-            {
-                throw new ArgumentNullException(nameof(readonlyStringList));
-            }
-            if (readonlyIntList == null)
-            {
-                throw new ArgumentNullException(nameof(readonlyIntList));
-            }
+            Argument.AssertNotNull(requiredReadonlyString, nameof(requiredReadonlyString));
+            Argument.AssertNotNull(requiredReadonlyModel, nameof(requiredReadonlyModel));
+            Argument.AssertNotNull(readonlyStringList, nameof(readonlyStringList));
+            Argument.AssertNotNull(readonlyIntList, nameof(readonlyIntList));
 
             RequiredReadonlyString = requiredReadonlyString;
             RequiredReadonlyInt = requiredReadonlyInt;

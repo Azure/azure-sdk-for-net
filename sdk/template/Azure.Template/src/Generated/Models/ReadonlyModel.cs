@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Template.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.Template.Models
         /// <exception cref="ArgumentNullException"> <paramref name="requiredString"/> is null. </exception>
         internal ReadonlyModel(string requiredString)
         {
-            if (requiredString == null)
-            {
-                throw new ArgumentNullException(nameof(requiredString));
-            }
+            Argument.AssertNotNull(requiredString, nameof(requiredString));
 
             RequiredString = requiredString;
         }
