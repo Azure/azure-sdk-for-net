@@ -93,6 +93,9 @@ directive:
   - from: swagger-document
     where: $.definitions.PtrRecord.properties.ptrdname
     transform: $["x-ms-client-name"] = "PtrdName";
+  - from: swagger-document
+    where: $.definitions.RecordSetProperties.properties.TTL
+    transform: $["x-ms-client-name"] = "Ttl";
 
 # FooTime => FooTimeInSeconds
   - from: swagger-document
