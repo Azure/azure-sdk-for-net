@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.HDInsight;
 
@@ -32,9 +33,9 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             ClusterDefinition = clusterDefinition;
-            Errors = new ChangeTrackingList<Errors>();
+            Errors = new ChangeTrackingList<ResponseError>();
             ConnectivityEndpoints = new ChangeTrackingList<ConnectivityEndpoint>();
-            PrivateLinkConfigurations = new ChangeTrackingList<PrivateLinkConfiguration>();
+            PrivateLinkConfigurations = new ChangeTrackingList<HDInsightPrivateLinkConfiguration>();
             PrivateEndpointConnections = new ChangeTrackingList<HDInsightPrivateEndpointConnectionData>();
         }
 
@@ -135,7 +136,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// The list of private endpoint connections.
         /// Serialized Name: ClusterGetProperties.privateEndpointConnections
         /// </param>
-        internal HDInsightClusterProperties(string clusterVersion, string clusterHdpVersion, OSType? osType, HDInsightTier? tier, string clusterId, HDInsightClusterDefinition clusterDefinition, KafkaRestProperties kafkaRestProperties, SecurityProfile securityProfile, ComputeProfile computeProfile, HDInsightClusterProvisioningState? provisioningState, string createdDate, string clusterState, QuotaInfo quotaInfo, IList<Errors> errors, IList<ConnectivityEndpoint> connectivityEndpoints, DiskEncryptionProperties diskEncryptionProperties, EncryptionInTransitProperties encryptionInTransitProperties, StorageProfile storageProfile, string minSupportedTlsVersion, ExcludedServicesConfig excludedServicesConfig, NetworkProperties networkProperties, ComputeIsolationProperties computeIsolationProperties, IList<PrivateLinkConfiguration> privateLinkConfigurations, IReadOnlyList<HDInsightPrivateEndpointConnectionData> privateEndpointConnections)
+        internal HDInsightClusterProperties(string clusterVersion, string clusterHdpVersion, HDInsightOSType? osType, HDInsightTier? tier, string clusterId, HDInsightClusterDefinition clusterDefinition, KafkaRestProperties kafkaRestProperties, HDInsightSecurityProfile securityProfile, ComputeProfile computeProfile, HDInsightClusterProvisioningState? provisioningState, string createdDate, string clusterState, QuotaInfo quotaInfo, IList<ResponseError> errors, IList<ConnectivityEndpoint> connectivityEndpoints, HDInsightDiskEncryptionProperties diskEncryptionProperties, EncryptionInTransitProperties encryptionInTransitProperties, StorageProfile storageProfile, string minSupportedTlsVersion, ExcludedServicesConfig excludedServicesConfig, HDInsightClusterNetworkProperties networkProperties, HDInsightComputeIsolationProperties computeIsolationProperties, IList<HDInsightPrivateLinkConfiguration> privateLinkConfigurations, IReadOnlyList<HDInsightPrivateEndpointConnectionData> privateEndpointConnections)
         {
             ClusterVersion = clusterVersion;
             ClusterHdpVersion = clusterHdpVersion;
@@ -177,7 +178,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// The type of operating system.
         /// Serialized Name: ClusterGetProperties.osType
         /// </summary>
-        public OSType? OSType { get; set; }
+        public HDInsightOSType? OSType { get; set; }
         /// <summary>
         /// The cluster tier.
         /// Serialized Name: ClusterGetProperties.tier
@@ -202,7 +203,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// The security profile.
         /// Serialized Name: ClusterGetProperties.securityProfile
         /// </summary>
-        public SecurityProfile SecurityProfile { get; set; }
+        public HDInsightSecurityProfile SecurityProfile { get; set; }
         /// <summary>
         /// The compute profile.
         /// Serialized Name: ClusterGetProperties.computeProfile
@@ -261,7 +262,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// The list of errors.
         /// Serialized Name: ClusterGetProperties.errors
         /// </summary>
-        public IList<Errors> Errors { get; }
+        public IList<ResponseError> Errors { get; }
         /// <summary>
         /// The list of connectivity endpoints.
         /// Serialized Name: ClusterGetProperties.connectivityEndpoints
@@ -271,7 +272,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// The disk encryption properties.
         /// Serialized Name: ClusterGetProperties.diskEncryptionProperties
         /// </summary>
-        public DiskEncryptionProperties DiskEncryptionProperties { get; set; }
+        public HDInsightDiskEncryptionProperties DiskEncryptionProperties { get; set; }
         /// <summary>
         /// The encryption-in-transit properties.
         /// Serialized Name: ClusterGetProperties.encryptionInTransitProperties
@@ -301,13 +302,13 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// The list of storage accounts in the cluster.
         /// Serialized Name: StorageProfile.storageaccounts
         /// </summary>
-        public IList<StorageAccount> StorageStorageaccounts
+        public IList<HDInsightStorageAccountInfo> StorageAccounts
         {
             get
             {
                 if (StorageProfile is null)
                     StorageProfile = new StorageProfile();
-                return StorageProfile.Storageaccounts;
+                return StorageProfile.StorageAccounts;
             }
         }
 
@@ -325,17 +326,17 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// The network properties.
         /// Serialized Name: ClusterGetProperties.networkProperties
         /// </summary>
-        public NetworkProperties NetworkProperties { get; set; }
+        public HDInsightClusterNetworkProperties NetworkProperties { get; set; }
         /// <summary>
         /// The compute isolation properties.
         /// Serialized Name: ClusterGetProperties.computeIsolationProperties
         /// </summary>
-        public ComputeIsolationProperties ComputeIsolationProperties { get; set; }
+        public HDInsightComputeIsolationProperties ComputeIsolationProperties { get; set; }
         /// <summary>
         /// The private link configurations.
         /// Serialized Name: ClusterGetProperties.privateLinkConfigurations
         /// </summary>
-        public IList<PrivateLinkConfiguration> PrivateLinkConfigurations { get; }
+        public IList<HDInsightPrivateLinkConfiguration> PrivateLinkConfigurations { get; }
         /// <summary>
         /// The list of private endpoint connections.
         /// Serialized Name: ClusterGetProperties.privateEndpointConnections

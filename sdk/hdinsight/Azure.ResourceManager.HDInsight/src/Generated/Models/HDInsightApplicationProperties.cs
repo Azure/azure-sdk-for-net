@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
@@ -23,8 +24,8 @@ namespace Azure.ResourceManager.HDInsight.Models
             UninstallScriptActions = new ChangeTrackingList<RuntimeScriptAction>();
             HttpsEndpoints = new ChangeTrackingList<HDInsightApplicationHttpsEndpoint>();
             SshEndpoints = new ChangeTrackingList<HDInsightApplicationEndpoint>();
-            Errors = new ChangeTrackingList<Errors>();
-            PrivateLinkConfigurations = new ChangeTrackingList<PrivateLinkConfiguration>();
+            Errors = new ChangeTrackingList<ResponseError>();
+            PrivateLinkConfigurations = new ChangeTrackingList<HDInsightPrivateLinkConfiguration>();
         }
 
         /// <summary> Initializes a new instance of HDInsightApplicationProperties. </summary>
@@ -76,7 +77,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// The private link configurations.
         /// Serialized Name: ApplicationProperties.privateLinkConfigurations
         /// </param>
-        internal HDInsightApplicationProperties(ComputeProfile computeProfile, IList<RuntimeScriptAction> installScriptActions, IList<RuntimeScriptAction> uninstallScriptActions, IList<HDInsightApplicationHttpsEndpoint> httpsEndpoints, IList<HDInsightApplicationEndpoint> sshEndpoints, string provisioningState, string applicationType, string applicationState, IList<Errors> errors, string createdDate, string marketplaceIdentifier, IList<PrivateLinkConfiguration> privateLinkConfigurations)
+        internal HDInsightApplicationProperties(ComputeProfile computeProfile, IList<RuntimeScriptAction> installScriptActions, IList<RuntimeScriptAction> uninstallScriptActions, IList<HDInsightApplicationHttpsEndpoint> httpsEndpoints, IList<HDInsightApplicationEndpoint> sshEndpoints, string provisioningState, string applicationType, string applicationState, IList<ResponseError> errors, string createdDate, string marketplaceIdentifier, IList<HDInsightPrivateLinkConfiguration> privateLinkConfigurations)
         {
             ComputeProfile = computeProfile;
             InstallScriptActions = installScriptActions;
@@ -150,7 +151,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// The list of errors.
         /// Serialized Name: ApplicationProperties.errors
         /// </summary>
-        public IList<Errors> Errors { get; }
+        public IList<ResponseError> Errors { get; }
         /// <summary>
         /// The application create date time.
         /// Serialized Name: ApplicationProperties.createdDate
@@ -165,6 +166,6 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// The private link configurations.
         /// Serialized Name: ApplicationProperties.privateLinkConfigurations
         /// </summary>
-        public IList<PrivateLinkConfiguration> PrivateLinkConfigurations { get; }
+        public IList<HDInsightPrivateLinkConfiguration> PrivateLinkConfigurations { get; }
     }
 }

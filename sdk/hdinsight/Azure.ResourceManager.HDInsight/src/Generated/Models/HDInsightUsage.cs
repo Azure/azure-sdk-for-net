@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// The details about the localizable name of the used resource.
         /// Serialized Name: Usage.name
         /// </param>
-        internal HDInsightUsage(string unit, long? currentValue, long? limit, LocalizedName name)
+        internal HDInsightUsage(string unit, long? currentValue, long? limit, HDInsightLocalizedName name)
         {
             Unit = unit;
             CurrentValue = currentValue;
@@ -62,6 +62,6 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// The details about the localizable name of the used resource.
         /// Serialized Name: Usage.name
         /// </summary>
-        public LocalizedName Name { get; }
+        public HDInsightLocalizedName Name { get; }
     }
 }

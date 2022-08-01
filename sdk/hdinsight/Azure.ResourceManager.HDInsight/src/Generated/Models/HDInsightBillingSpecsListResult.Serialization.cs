@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.HDInsight.Models
         {
             Optional<IReadOnlyList<string>> vmSizes = default;
             Optional<IReadOnlyList<string>> vmSizesWithEncryptionAtHost = default;
-            Optional<IReadOnlyList<VmSizeCompatibilityFilterV2>> vmSizeFilters = default;
-            Optional<IReadOnlyList<VmSizeProperty>> vmSizeProperties = default;
+            Optional<IReadOnlyList<HDInsightVmSizeCompatibilityFilterV2>> vmSizeFilters = default;
+            Optional<IReadOnlyList<HDInsightVmSizeProperty>> vmSizeProperties = default;
             Optional<IReadOnlyList<HDInsightBillingResources>> billingResources = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -59,10 +59,10 @@ namespace Azure.ResourceManager.HDInsight.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<VmSizeCompatibilityFilterV2> array = new List<VmSizeCompatibilityFilterV2>();
+                    List<HDInsightVmSizeCompatibilityFilterV2> array = new List<HDInsightVmSizeCompatibilityFilterV2>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VmSizeCompatibilityFilterV2.DeserializeVmSizeCompatibilityFilterV2(item));
+                        array.Add(HDInsightVmSizeCompatibilityFilterV2.DeserializeHDInsightVmSizeCompatibilityFilterV2(item));
                     }
                     vmSizeFilters = array;
                     continue;
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.HDInsight.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<VmSizeProperty> array = new List<VmSizeProperty>();
+                    List<HDInsightVmSizeProperty> array = new List<HDInsightVmSizeProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VmSizeProperty.DeserializeVmSizeProperty(item));
+                        array.Add(HDInsightVmSizeProperty.DeserializeHDInsightVmSizeProperty(item));
                     }
                     vmSizeProperties = array;
                     continue;

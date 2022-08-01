@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.HDInsight.Models
 {
     /// <summary>
@@ -27,6 +29,6 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// The resource type
         /// Serialized Name: NameAvailabilityCheckRequestParameters.type
         /// </summary>
-        public string ResourceType { get; set; }
+        public ResourceType? ResourceType { get; set; }
     }
 }

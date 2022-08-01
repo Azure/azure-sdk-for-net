@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <summary> Initializes a new instance of SshProfile. </summary>
         public SshProfile()
         {
-            PublicKeys = new ChangeTrackingList<SshPublicKey>();
+            PublicKeys = new ChangeTrackingList<HDInsightSshPublicKey>();
         }
 
         /// <summary> Initializes a new instance of SshProfile. </summary>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// The list of SSH public keys.
         /// Serialized Name: SshProfile.publicKeys
         /// </param>
-        internal SshProfile(IList<SshPublicKey> publicKeys)
+        internal SshProfile(IList<HDInsightSshPublicKey> publicKeys)
         {
             PublicKeys = publicKeys;
         }
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// The list of SSH public keys.
         /// Serialized Name: SshProfile.publicKeys
         /// </summary>
-        public IList<SshPublicKey> PublicKeys { get; }
+        public IList<HDInsightSshPublicKey> PublicKeys { get; }
     }
 }

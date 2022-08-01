@@ -19,19 +19,19 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of OSProfile. </summary>
-        /// <param name="linuxOperatingSystemProfile">
+        /// <param name="linuxProfile">
         /// The Linux OS profile.
         /// Serialized Name: OsProfile.linuxOperatingSystemProfile
         /// </param>
-        internal OSProfile(LinuxOperatingSystemProfile linuxOperatingSystemProfile)
+        internal OSProfile(HDInsightLinuxOSProfile linuxProfile)
         {
-            LinuxOperatingSystemProfile = linuxOperatingSystemProfile;
+            LinuxProfile = linuxProfile;
         }
 
         /// <summary>
         /// The Linux OS profile.
         /// Serialized Name: OsProfile.linuxOperatingSystemProfile
         /// </summary>
-        public LinuxOperatingSystemProfile LinuxOperatingSystemProfile { get; set; }
+        public HDInsightLinuxOSProfile LinuxProfile { get; set; }
     }
 }

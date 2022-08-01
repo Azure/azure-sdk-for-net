@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <summary> Initializes a new instance of HDInsightClusterCreateOrUpdateProperties. </summary>
         public HDInsightClusterCreateOrUpdateProperties()
         {
-            PrivateLinkConfigurations = new ChangeTrackingList<PrivateLinkConfiguration>();
+            PrivateLinkConfigurations = new ChangeTrackingList<HDInsightPrivateLinkConfiguration>();
         }
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// The type of operating system.
         /// Serialized Name: ClusterCreateProperties.osType
         /// </summary>
-        public OSType? OSType { get; set; }
+        public HDInsightOSType? OSType { get; set; }
         /// <summary>
         /// The cluster tier.
         /// Serialized Name: ClusterCreateProperties.tier
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// The security profile.
         /// Serialized Name: ClusterCreateProperties.securityProfile
         /// </summary>
-        public SecurityProfile SecurityProfile { get; set; }
+        public HDInsightSecurityProfile SecurityProfile { get; set; }
         /// <summary>
         /// The compute profile.
         /// Serialized Name: ClusterCreateProperties.computeProfile
@@ -80,13 +80,13 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// The list of storage accounts in the cluster.
         /// Serialized Name: StorageProfile.storageaccounts
         /// </summary>
-        public IList<StorageAccount> StorageStorageaccounts
+        public IList<HDInsightStorageAccountInfo> StorageAccounts
         {
             get
             {
                 if (StorageProfile is null)
                     StorageProfile = new StorageProfile();
-                return StorageProfile.Storageaccounts;
+                return StorageProfile.StorageAccounts;
             }
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// The disk encryption properties.
         /// Serialized Name: ClusterCreateProperties.diskEncryptionProperties
         /// </summary>
-        public DiskEncryptionProperties DiskEncryptionProperties { get; set; }
+        public HDInsightDiskEncryptionProperties DiskEncryptionProperties { get; set; }
         /// <summary>
         /// The encryption-in-transit properties.
         /// Serialized Name: ClusterCreateProperties.encryptionInTransitProperties
@@ -124,16 +124,16 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// The network properties.
         /// Serialized Name: ClusterCreateProperties.networkProperties
         /// </summary>
-        public NetworkProperties NetworkProperties { get; set; }
+        public HDInsightClusterNetworkProperties NetworkProperties { get; set; }
         /// <summary>
         /// The compute isolation properties.
         /// Serialized Name: ClusterCreateProperties.computeIsolationProperties
         /// </summary>
-        public ComputeIsolationProperties ComputeIsolationProperties { get; set; }
+        public HDInsightComputeIsolationProperties ComputeIsolationProperties { get; set; }
         /// <summary>
         /// The private link configurations.
         /// Serialized Name: ClusterCreateProperties.privateLinkConfigurations
         /// </summary>
-        public IList<PrivateLinkConfiguration> PrivateLinkConfigurations { get; }
+        public IList<HDInsightPrivateLinkConfiguration> PrivateLinkConfigurations { get; }
     }
 }

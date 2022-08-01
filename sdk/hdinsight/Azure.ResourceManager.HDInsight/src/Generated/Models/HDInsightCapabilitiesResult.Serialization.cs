@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HDInsight.Models
     {
         internal static HDInsightCapabilitiesResult DeserializeHDInsightCapabilitiesResult(JsonElement element)
         {
-            Optional<IReadOnlyDictionary<string, VersionsCapability>> versions = default;
+            Optional<IReadOnlyDictionary<string, HDInsightVersionsCapability>> versions = default;
             Optional<IReadOnlyDictionary<string, RegionsCapability>> regions = default;
             Optional<IReadOnlyList<string>> features = default;
             Optional<QuotaCapability> quota = default;
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.HDInsight.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    Dictionary<string, VersionsCapability> dictionary = new Dictionary<string, VersionsCapability>();
+                    Dictionary<string, HDInsightVersionsCapability> dictionary = new Dictionary<string, HDInsightVersionsCapability>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, VersionsCapability.DeserializeVersionsCapability(property0.Value));
+                        dictionary.Add(property0.Name, HDInsightVersionsCapability.DeserializeHDInsightVersionsCapability(property0.Value));
                     }
                     versions = dictionary;
                     continue;

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <summary> Initializes a new instance of HDInsightCapabilitiesResult. </summary>
         internal HDInsightCapabilitiesResult()
         {
-            Versions = new ChangeTrackingDictionary<string, VersionsCapability>();
+            Versions = new ChangeTrackingDictionary<string, HDInsightVersionsCapability>();
             Regions = new ChangeTrackingDictionary<string, RegionsCapability>();
             Features = new ChangeTrackingList<string>();
         }
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// The quota capability.
         /// Serialized Name: CapabilitiesResult.quota
         /// </param>
-        internal HDInsightCapabilitiesResult(IReadOnlyDictionary<string, VersionsCapability> versions, IReadOnlyDictionary<string, RegionsCapability> regions, IReadOnlyList<string> features, QuotaCapability quota)
+        internal HDInsightCapabilitiesResult(IReadOnlyDictionary<string, HDInsightVersionsCapability> versions, IReadOnlyDictionary<string, RegionsCapability> regions, IReadOnlyList<string> features, QuotaCapability quota)
         {
             Versions = versions;
             Regions = regions;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// The version capability.
         /// Serialized Name: CapabilitiesResult.versions
         /// </summary>
-        public IReadOnlyDictionary<string, VersionsCapability> Versions { get; }
+        public IReadOnlyDictionary<string, HDInsightVersionsCapability> Versions { get; }
         /// <summary>
         /// The virtual machine size compatibility features.
         /// Serialized Name: CapabilitiesResult.regions

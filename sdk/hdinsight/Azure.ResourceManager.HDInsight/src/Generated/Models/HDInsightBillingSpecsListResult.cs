@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.HDInsight.Models
         {
             VmSizes = new ChangeTrackingList<string>();
             VmSizesWithEncryptionAtHost = new ChangeTrackingList<string>();
-            VmSizeFilters = new ChangeTrackingList<VmSizeCompatibilityFilterV2>();
-            VmSizeProperties = new ChangeTrackingList<VmSizeProperty>();
+            VmSizeFilters = new ChangeTrackingList<HDInsightVmSizeCompatibilityFilterV2>();
+            VmSizeProperties = new ChangeTrackingList<HDInsightVmSizeProperty>();
             BillingResources = new ChangeTrackingList<HDInsightBillingResources>();
         }
 
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// The billing and managed disk billing resources for a region.
         /// Serialized Name: BillingResponseListResult.billingResources
         /// </param>
-        internal HDInsightBillingSpecsListResult(IReadOnlyList<string> vmSizes, IReadOnlyList<string> vmSizesWithEncryptionAtHost, IReadOnlyList<VmSizeCompatibilityFilterV2> vmSizeFilters, IReadOnlyList<VmSizeProperty> vmSizeProperties, IReadOnlyList<HDInsightBillingResources> billingResources)
+        internal HDInsightBillingSpecsListResult(IReadOnlyList<string> vmSizes, IReadOnlyList<string> vmSizesWithEncryptionAtHost, IReadOnlyList<HDInsightVmSizeCompatibilityFilterV2> vmSizeFilters, IReadOnlyList<HDInsightVmSizeProperty> vmSizeProperties, IReadOnlyList<HDInsightBillingResources> billingResources)
         {
             VmSizes = vmSizes;
             VmSizesWithEncryptionAtHost = vmSizesWithEncryptionAtHost;
@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// The virtual machine filtering mode. Effectively this can enabling or disabling the virtual machine sizes in a particular set.
         /// Serialized Name: BillingResponseListResult.vmSizeFilters
         /// </summary>
-        public IReadOnlyList<VmSizeCompatibilityFilterV2> VmSizeFilters { get; }
+        public IReadOnlyList<HDInsightVmSizeCompatibilityFilterV2> VmSizeFilters { get; }
         /// <summary>
         /// The vm size properties.
         /// Serialized Name: BillingResponseListResult.vmSizeProperties
         /// </summary>
-        public IReadOnlyList<VmSizeProperty> VmSizeProperties { get; }
+        public IReadOnlyList<HDInsightVmSizeProperty> VmSizeProperties { get; }
         /// <summary>
         /// The billing and managed disk billing resources for a region.
         /// Serialized Name: BillingResponseListResult.billingResources

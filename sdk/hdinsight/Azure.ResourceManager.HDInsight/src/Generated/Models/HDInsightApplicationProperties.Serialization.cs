@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
@@ -99,10 +100,10 @@ namespace Azure.ResourceManager.HDInsight.Models
             Optional<string> provisioningState = default;
             Optional<string> applicationType = default;
             Optional<string> applicationState = default;
-            Optional<IList<Errors>> errors = default;
+            Optional<IList<ResponseError>> errors = default;
             Optional<string> createdDate = default;
             Optional<string> marketplaceIdentifier = default;
-            Optional<IList<PrivateLinkConfiguration>> privateLinkConfigurations = default;
+            Optional<IList<HDInsightPrivateLinkConfiguration>> privateLinkConfigurations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("computeProfile"))
@@ -197,10 +198,10 @@ namespace Azure.ResourceManager.HDInsight.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Errors> array = new List<Errors>();
+                    List<ResponseError> array = new List<ResponseError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.Errors.DeserializeErrors(item));
+                        array.Add(JsonSerializer.Deserialize<ResponseError>(item.ToString()));
                     }
                     errors = array;
                     continue;
@@ -222,10 +223,10 @@ namespace Azure.ResourceManager.HDInsight.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<PrivateLinkConfiguration> array = new List<PrivateLinkConfiguration>();
+                    List<HDInsightPrivateLinkConfiguration> array = new List<HDInsightPrivateLinkConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PrivateLinkConfiguration.DeserializePrivateLinkConfiguration(item));
+                        array.Add(HDInsightPrivateLinkConfiguration.DeserializeHDInsightPrivateLinkConfiguration(item));
                     }
                     privateLinkConfigurations = array;
                     continue;

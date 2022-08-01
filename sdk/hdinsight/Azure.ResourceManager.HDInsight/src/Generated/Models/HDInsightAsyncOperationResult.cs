@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure;
+
 namespace Azure.ResourceManager.HDInsight.Models
 {
     /// <summary>
@@ -27,7 +29,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// The operation error information.
         /// Serialized Name: AsyncOperationResult.error
         /// </param>
-        internal HDInsightAsyncOperationResult(HDInsightAsyncOperationState? status, Errors error)
+        internal HDInsightAsyncOperationResult(HDInsightAsyncOperationState? status, ResponseError error)
         {
             Status = status;
             Error = error;
@@ -42,6 +44,6 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// The operation error information.
         /// Serialized Name: AsyncOperationResult.error
         /// </summary>
-        public Errors Error { get; }
+        public ResponseError Error { get; }
     }
 }

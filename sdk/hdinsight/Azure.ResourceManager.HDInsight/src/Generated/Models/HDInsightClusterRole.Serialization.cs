@@ -93,8 +93,8 @@ namespace Azure.ResourceManager.HDInsight.Models
             Optional<HDInsightAutoScaleConfiguration> autoScale = default;
             Optional<HardwareProfile> hardwareProfile = default;
             Optional<OSProfile> osProfile = default;
-            Optional<VirtualNetworkProfile> virtualNetworkProfile = default;
-            Optional<IList<HDInsightClusterDataDisksGroup>> dataDisksGroups = default;
+            Optional<HDInsightVirtualNetworkProfile> virtualNetworkProfile = default;
+            Optional<IList<HDInsightClusterDataDiskGroup>> dataDisksGroups = default;
             Optional<IList<ScriptAction>> scriptActions = default;
             Optional<bool> encryptDataDisks = default;
             foreach (var property in element.EnumerateObject())
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    virtualNetworkProfile = VirtualNetworkProfile.DeserializeVirtualNetworkProfile(property.Value);
+                    virtualNetworkProfile = HDInsightVirtualNetworkProfile.DeserializeHDInsightVirtualNetworkProfile(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataDisksGroups"))
@@ -176,10 +176,10 @@ namespace Azure.ResourceManager.HDInsight.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<HDInsightClusterDataDisksGroup> array = new List<HDInsightClusterDataDisksGroup>();
+                    List<HDInsightClusterDataDiskGroup> array = new List<HDInsightClusterDataDiskGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HDInsightClusterDataDisksGroup.DeserializeHDInsightClusterDataDisksGroup(item));
+                        array.Add(HDInsightClusterDataDiskGroup.DeserializeHDInsightClusterDataDiskGroup(item));
                     }
                     dataDisksGroups = array;
                     continue;

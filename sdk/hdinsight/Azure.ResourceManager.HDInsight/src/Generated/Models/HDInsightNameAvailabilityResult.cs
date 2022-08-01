@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of HDInsightNameAvailabilityResult. </summary>
-        /// <param name="nameAvailable">
+        /// <param name="isNameAvailable">
         /// This indicates whether the name is available.
         /// Serialized Name: NameAvailabilityCheckResult.nameAvailable
         /// </param>
@@ -31,9 +31,9 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// The related message.
         /// Serialized Name: NameAvailabilityCheckResult.message
         /// </param>
-        internal HDInsightNameAvailabilityResult(bool? nameAvailable, string reason, string message)
+        internal HDInsightNameAvailabilityResult(bool? isNameAvailable, string reason, string message)
         {
-            NameAvailable = nameAvailable;
+            IsNameAvailable = isNameAvailable;
             Reason = reason;
             Message = message;
         }
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// This indicates whether the name is available.
         /// Serialized Name: NameAvailabilityCheckResult.nameAvailable
         /// </summary>
-        public bool? NameAvailable { get; }
+        public bool? IsNameAvailable { get; }
         /// <summary>
         /// The reason of the result.
         /// Serialized Name: NameAvailabilityCheckResult.reason

@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.HDInsight;
 
@@ -151,27 +152,27 @@ namespace Azure.ResourceManager.HDInsight.Models
         {
             Optional<string> clusterVersion = default;
             Optional<string> clusterHdpVersion = default;
-            Optional<OSType> osType = default;
+            Optional<HDInsightOSType> osType = default;
             Optional<HDInsightTier> tier = default;
             Optional<string> clusterId = default;
             HDInsightClusterDefinition clusterDefinition = default;
             Optional<KafkaRestProperties> kafkaRestProperties = default;
-            Optional<SecurityProfile> securityProfile = default;
+            Optional<HDInsightSecurityProfile> securityProfile = default;
             Optional<ComputeProfile> computeProfile = default;
             Optional<HDInsightClusterProvisioningState> provisioningState = default;
             Optional<string> createdDate = default;
             Optional<string> clusterState = default;
             Optional<QuotaInfo> quotaInfo = default;
-            Optional<IList<Errors>> errors = default;
+            Optional<IList<ResponseError>> errors = default;
             Optional<IList<ConnectivityEndpoint>> connectivityEndpoints = default;
-            Optional<DiskEncryptionProperties> diskEncryptionProperties = default;
+            Optional<HDInsightDiskEncryptionProperties> diskEncryptionProperties = default;
             Optional<EncryptionInTransitProperties> encryptionInTransitProperties = default;
             Optional<StorageProfile> storageProfile = default;
             Optional<string> minSupportedTlsVersion = default;
             Optional<ExcludedServicesConfig> excludedServicesConfig = default;
-            Optional<NetworkProperties> networkProperties = default;
-            Optional<ComputeIsolationProperties> computeIsolationProperties = default;
-            Optional<IList<PrivateLinkConfiguration>> privateLinkConfigurations = default;
+            Optional<HDInsightClusterNetworkProperties> networkProperties = default;
+            Optional<HDInsightComputeIsolationProperties> computeIsolationProperties = default;
+            Optional<IList<HDInsightPrivateLinkConfiguration>> privateLinkConfigurations = default;
             Optional<IReadOnlyList<HDInsightPrivateEndpointConnectionData>> privateEndpointConnections = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -192,7 +193,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    osType = new OSType(property.Value.GetString());
+                    osType = new HDInsightOSType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tier"))
@@ -232,7 +233,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    securityProfile = SecurityProfile.DeserializeSecurityProfile(property.Value);
+                    securityProfile = HDInsightSecurityProfile.DeserializeHDInsightSecurityProfile(property.Value);
                     continue;
                 }
                 if (property.NameEquals("computeProfile"))
@@ -282,10 +283,10 @@ namespace Azure.ResourceManager.HDInsight.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Errors> array = new List<Errors>();
+                    List<ResponseError> array = new List<ResponseError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.Errors.DeserializeErrors(item));
+                        array.Add(JsonSerializer.Deserialize<ResponseError>(item.ToString()));
                     }
                     errors = array;
                     continue;
@@ -312,7 +313,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    diskEncryptionProperties = DiskEncryptionProperties.DeserializeDiskEncryptionProperties(property.Value);
+                    diskEncryptionProperties = HDInsightDiskEncryptionProperties.DeserializeHDInsightDiskEncryptionProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("encryptionInTransitProperties"))
@@ -357,7 +358,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    networkProperties = NetworkProperties.DeserializeNetworkProperties(property.Value);
+                    networkProperties = HDInsightClusterNetworkProperties.DeserializeHDInsightClusterNetworkProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("computeIsolationProperties"))
@@ -367,7 +368,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    computeIsolationProperties = ComputeIsolationProperties.DeserializeComputeIsolationProperties(property.Value);
+                    computeIsolationProperties = HDInsightComputeIsolationProperties.DeserializeHDInsightComputeIsolationProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("privateLinkConfigurations"))
@@ -377,10 +378,10 @@ namespace Azure.ResourceManager.HDInsight.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<PrivateLinkConfiguration> array = new List<PrivateLinkConfiguration>();
+                    List<HDInsightPrivateLinkConfiguration> array = new List<HDInsightPrivateLinkConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PrivateLinkConfiguration.DeserializePrivateLinkConfiguration(item));
+                        array.Add(HDInsightPrivateLinkConfiguration.DeserializeHDInsightPrivateLinkConfiguration(item));
                     }
                     privateLinkConfigurations = array;
                     continue;

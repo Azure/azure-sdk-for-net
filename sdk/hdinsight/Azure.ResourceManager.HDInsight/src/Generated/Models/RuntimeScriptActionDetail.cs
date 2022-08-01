@@ -74,11 +74,11 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// The execution id of the script action.
         /// Serialized Name: RuntimeScriptActionDetail.scriptExecutionId
         /// </param>
-        /// <param name="startTime">
+        /// <param name="startOn">
         /// The start time of script action execution.
         /// Serialized Name: RuntimeScriptActionDetail.startTime
         /// </param>
-        /// <param name="endTime">
+        /// <param name="endOn">
         /// The end time of script action execution.
         /// Serialized Name: RuntimeScriptActionDetail.endTime
         /// </param>
@@ -98,11 +98,11 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// The script action execution debug information.
         /// Serialized Name: RuntimeScriptActionDetail.debugInformation
         /// </param>
-        internal RuntimeScriptActionDetail(string name, Uri uri, string parameters, IList<string> roles, string applicationName, long? scriptExecutionId, string startTime, string endTime, string status, string operation, IReadOnlyList<ScriptActionExecutionSummary> executionSummary, string debugInformation) : base(name, uri, parameters, roles, applicationName)
+        internal RuntimeScriptActionDetail(string name, Uri uri, string parameters, IList<string> roles, string applicationName, long? scriptExecutionId, DateTimeOffset? startOn, DateTimeOffset? endOn, string status, string operation, IReadOnlyList<ScriptActionExecutionSummary> executionSummary, string debugInformation) : base(name, uri, parameters, roles, applicationName)
         {
             ScriptExecutionId = scriptExecutionId;
-            StartTime = startTime;
-            EndTime = endTime;
+            StartOn = startOn;
+            EndOn = endOn;
             Status = status;
             Operation = operation;
             ExecutionSummary = executionSummary;
@@ -118,12 +118,12 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// The start time of script action execution.
         /// Serialized Name: RuntimeScriptActionDetail.startTime
         /// </summary>
-        public string StartTime { get; }
+        public DateTimeOffset? StartOn { get; }
         /// <summary>
         /// The end time of script action execution.
         /// Serialized Name: RuntimeScriptActionDetail.endTime
         /// </summary>
-        public string EndTime { get; }
+        public DateTimeOffset? EndOn { get; }
         /// <summary>
         /// The current execution status of the script action.
         /// Serialized Name: RuntimeScriptActionDetail.status

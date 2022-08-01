@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <summary> Initializes a new instance of HDInsightClusterRole. </summary>
         public HDInsightClusterRole()
         {
-            DataDisksGroups = new ChangeTrackingList<HDInsightClusterDataDisksGroup>();
+            DataDisksGroups = new ChangeTrackingList<HDInsightClusterDataDiskGroup>();
             ScriptActions = new ChangeTrackingList<ScriptAction>();
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// Indicates whether encrypt the data disks.
         /// Serialized Name: Role.encryptDataDisks
         /// </param>
-        internal HDInsightClusterRole(string name, int? minInstanceCount, int? targetInstanceCount, string vmGroupName, HDInsightAutoScaleConfiguration autoScaleConfiguration, HardwareProfile hardwareProfile, OSProfile osProfile, VirtualNetworkProfile virtualNetworkProfile, IList<HDInsightClusterDataDisksGroup> dataDisksGroups, IList<ScriptAction> scriptActions, bool? encryptDataDisks)
+        internal HDInsightClusterRole(string name, int? minInstanceCount, int? targetInstanceCount, string vmGroupName, HDInsightAutoScaleConfiguration autoScaleConfiguration, HardwareProfile hardwareProfile, OSProfile osProfile, HDInsightVirtualNetworkProfile virtualNetworkProfile, IList<HDInsightClusterDataDiskGroup> dataDisksGroups, IList<ScriptAction> scriptActions, bool? encryptDataDisks)
         {
             Name = name;
             MinInstanceCount = minInstanceCount;
@@ -137,14 +137,14 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// The Linux OS profile.
         /// Serialized Name: OsProfile.linuxOperatingSystemProfile
         /// </summary>
-        public LinuxOperatingSystemProfile OSLinuxOperatingSystemProfile
+        public HDInsightLinuxOSProfile OSLinuxProfile
         {
-            get => OSProfile is null ? default : OSProfile.LinuxOperatingSystemProfile;
+            get => OSProfile is null ? default : OSProfile.LinuxProfile;
             set
             {
                 if (OSProfile is null)
                     OSProfile = new OSProfile();
-                OSProfile.LinuxOperatingSystemProfile = value;
+                OSProfile.LinuxProfile = value;
             }
         }
 
@@ -152,12 +152,12 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// The virtual network profile.
         /// Serialized Name: Role.virtualNetworkProfile
         /// </summary>
-        public VirtualNetworkProfile VirtualNetworkProfile { get; set; }
+        public HDInsightVirtualNetworkProfile VirtualNetworkProfile { get; set; }
         /// <summary>
         /// The data disks groups for the role.
         /// Serialized Name: Role.dataDisksGroups
         /// </summary>
-        public IList<HDInsightClusterDataDisksGroup> DataDisksGroups { get; }
+        public IList<HDInsightClusterDataDiskGroup> DataDisksGroups { get; }
         /// <summary>
         /// The list of script actions on the role.
         /// Serialized Name: Role.scriptActions
