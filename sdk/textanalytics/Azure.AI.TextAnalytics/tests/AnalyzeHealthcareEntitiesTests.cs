@@ -5,16 +5,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Azure.AI.TextAnalytics.Models;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Tests
 {
     [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_1)]
-    public class RecognizeHealthcareEntitiesTests : TextAnalyticsClientLiveTestBase
+    public class AnalyzeHealthcareEntitiesTests : TextAnalyticsClientLiveTestBase
     {
-        public RecognizeHealthcareEntitiesTests(bool isAsync, TextAnalyticsClientOptions.ServiceVersion serviceVersion)
+        public AnalyzeHealthcareEntitiesTests(bool isAsync, TextAnalyticsClientOptions.ServiceVersion serviceVersion)
             : base(isAsync, serviceVersion)
         {
         }
@@ -55,7 +54,7 @@ namespace Azure.AI.TextAnalytics.Tests
         };
 
         [RecordedTest]
-        public async Task RecognizeHealthcareEntitiesWithAADTest()
+        public async Task AnalyzeHealthcareEntitiesWithAADTest()
         {
             TextAnalyticsClient client = GetClient(useTokenCredential: true);
 
@@ -74,7 +73,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
-        public async Task RecognizeHealthcareEntitiesTest()
+        public async Task AnalyzeHealthcareEntitiesTest()
         {
             TextAnalyticsClient client = GetClient();
 
@@ -136,7 +135,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
         [RecordedTest]
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21796")]
-        public async Task RecognizeHealthcareEntitiesTestWithAssertions()
+        public async Task AnalyzeHealthcareEntitiesTestWithAssertions()
         {
             TextAnalyticsClient client = GetClient();
 
@@ -201,7 +200,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
-        public async Task RecognizeHealthcareEntitiesWithLanguageTest()
+        public async Task AnalyzeHealthcareEntitiesWithLanguageTest()
         {
             TextAnalyticsClient client = GetClient();
 
@@ -224,7 +223,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
-        public async Task RecognizeHealthcareEntitiesBatchWithErrorTest()
+        public async Task AnalyzeHealthcareEntitiesBatchWithErrorTest()
         {
             TextAnalyticsClient client = GetClient();
             var documents = new List<string>
@@ -254,7 +253,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
-        public async Task RecognizeHealthcareEntitiesBatchConvenienceTest()
+        public async Task AnalyzeHealthcareEntitiesBatchConvenienceTest()
         {
             TextAnalyticsClient client = GetClient();
 
@@ -277,7 +276,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
-        public async Task RecognizeHealthcareEntitiesBatchConvenienceWithStatisticsTest()
+        public async Task AnalyzeHealthcareEntitiesBatchConvenienceWithStatisticsTest()
         {
             TextAnalyticsClient client = GetClient();
 
@@ -305,7 +304,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
-        public async Task RecognizeHealthcareEntitiesBatchTest()
+        public async Task AnalyzeHealthcareEntitiesBatchTest()
         {
             TextAnalyticsClient client = GetClient();
 
@@ -328,7 +327,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
-        public async Task RecognizeHealthcareEntitiesBatchWithStatisticsTest()
+        public async Task AnalyzeHealthcareEntitiesBatchWithStatisticsTest()
         {
             TextAnalyticsClient client = GetClient();
 
@@ -357,7 +356,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
         [RecordedTest]
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/26528")]
-        public async Task RecognizeHealthcareEntitiesBatchWithCancellation()
+        public async Task AnalyzeHealthcareEntitiesBatchWithCancellation()
         {
             TextAnalyticsClient client = GetClient();
             string document = @"RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS |";

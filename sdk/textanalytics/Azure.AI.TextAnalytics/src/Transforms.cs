@@ -491,6 +491,20 @@ namespace Azure.AI.TextAnalytics
             };
         }
 
+        internal static HealthcareLROTask ConvertToHealthcareTask(AnalyzeHealthcareEntitiesAction action)
+        {
+            return new HealthcareLROTask()
+            {
+                Parameters = new HealthcareTaskParameters()
+                {
+                    ModelVersion = action.ModelVersion,
+                    StringIndexType = Constants.DefaultStringIndexType,
+                    LoggingOptOut = action.DisableServiceLogs,
+                },
+                TaskName = action.ActionName,
+            };
+        }
+
         internal static CustomEntitiesLROTask ConvertToCustomEntitiesLROTask(RecognizeCustomEntitiesAction action)
         {
             return new CustomEntitiesLROTask()
@@ -587,6 +601,18 @@ namespace Azure.AI.TextAnalytics
             return list;
         }
 
+        internal static IList<HealthcareLROTask> ConvertFromAnalyzeHealthcareEntitiesActionsToTasks(IReadOnlyCollection<AnalyzeHealthcareEntitiesAction> analyzeHealthcareEntitiesActions)
+        {
+            List<HealthcareLROTask> list = new(analyzeHealthcareEntitiesActions.Count);
+
+            foreach (AnalyzeHealthcareEntitiesAction action in analyzeHealthcareEntitiesActions)
+            {
+                list.Add(ConvertToHealthcareTask(action));
+            }
+
+            return list;
+        }
+
         internal static IList<CustomSingleLabelClassificationLROTask> ConvertFromSingleLabelClassifyActionsToTasks(IReadOnlyCollection<SingleLabelClassifyAction> singleLabelClassifyActions)
         {
             List<CustomSingleLabelClassificationLROTask> list = new(singleLabelClassifyActions.Count);
@@ -633,6 +659,7 @@ namespace Azure.AI.TextAnalytics
             List<RecognizeCustomEntitiesActionResult> customEntitiesRecognition = new();
             List<SingleLabelClassifyActionResult> singleLabelClassify = new();
             List<MultiLabelClassifyActionResult> multiLabelClassify = new();
+            List<AnalyzeHealthcareEntitiesActionResult> analyzeHealthcareEntities = new();
 
             foreach (AnalyzeTextLROResult task in jobState.Tasks.Items)
             {
@@ -668,6 +695,10 @@ namespace Azure.AI.TextAnalytics
                 {
                     multiLabelClassify.Add(new MultiLabelClassifyActionResult(ConvertToClassifyDocumentResultCollection((task as CustomMultiLabelClassificationLROResult).Results, map), task.TaskName, task.LastUpdateDateTime));
                 }
+                else if (task.Kind == AnalyzeTextLROResultsKind.HealthcareLROResults)
+                {
+                    analyzeHealthcareEntities.Add(new AnalyzeHealthcareEntitiesActionResult(ConvertToAnalyzeHealthcareEntitiesResultCollection((task as HealthcareLROResult).Results, map), task.TaskName, task.LastUpdateDateTime));
+                }
             }
 
             return new AnalyzeActionsResult(
@@ -678,7 +709,8 @@ namespace Azure.AI.TextAnalytics
                 analyzeSentiment,
                 customEntitiesRecognition,
                 singleLabelClassify,
-                multiLabelClassify);
+                multiLabelClassify,
+                analyzeHealthcareEntities);
         }
 
         #endregion
