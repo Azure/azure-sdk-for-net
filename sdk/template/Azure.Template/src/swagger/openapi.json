@@ -1,9 +1,9 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "PrimitivePropertyClient",
+    "title": "ReadonlyPropertiesClient",
     "version": "1.0.0",
-    "description": "Illustrates model generation, as well as serialization and deserialization.",
+    "description": "Illustrates models with readonly properties.",
     "x-cadl-generated": [
       {
         "emitter": "@azure-tools/cadl-autorest"
@@ -24,14 +24,32 @@
   "paths": {
     "/models": {
       "get": {
-        "operationId": "PrimitiveProperties_GetModel",
+        "operationId": "ReadonlyProperties_GetOptionalPropertyModel",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "The request has succeeded.",
+            "schema": {
+              "$ref": "#/definitions/OutputModel"
+            }
+          },
+          "default": {
+            "description": "A response containing error details.",
+            "schema": {
+              "$ref": "#/definitions/Azure.Core.Operations.ErrorResponse"
+            }
+          }
+        }
+      },
+      "put": {
+        "operationId": "ReadonlyProperties_SetOptionalPropertyModel",
         "parameters": [
           {
             "name": "input",
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/PrimitivePropertyModel"
+              "$ref": "#/definitions/RoundTripModel"
             }
           }
         ],
@@ -39,7 +57,7 @@
           "200": {
             "description": "The request has succeeded.",
             "schema": {
-              "$ref": "#/definitions/PrimitivePropertyModel"
+              "$ref": "#/definitions/RoundTripModel"
             }
           },
           "default": {
@@ -114,61 +132,183 @@
         "code"
       ]
     },
-    "PrimitivePropertyModel": {
+    "OutputModel": {
+      "type": "object",
+      "properties": {
+        "requiredReadonlyString": {
+          "type": "string",
+          "description": "Required string, illustrating a readonly reference type property.",
+          "readOnly": true
+        },
+        "requiredReadonlyInt": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Required int, illustrating a readonly value type property.",
+          "readOnly": true
+        },
+        "optionalReadonlyString": {
+          "type": "string",
+          "description": "Optional string, illustrating a readonly reference type property.",
+          "readOnly": true
+        },
+        "optionalReadonlyInt": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Optional int, illustrating a readonly value type property.",
+          "readOnly": true
+        },
+        "requiredReadonlyModel": {
+          "$ref": "#/definitions/ReadonlyModel",
+          "description": "Required readonly model.",
+          "readOnly": true
+        },
+        "optionalReadonlyModel": {
+          "$ref": "#/definitions/ReadonlyModel",
+          "description": "Optional readonly model.",
+          "readOnly": true
+        },
+        "readonlyStringList": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-cadl-name": "string[]",
+          "description": "Required readonly string collection.",
+          "readOnly": true
+        },
+        "readonlyIntList": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "x-cadl-name": "int32[]",
+          "description": "Required readonly int collection.",
+          "readOnly": true
+        },
+        "optionalReadonlyStringList": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-cadl-name": "string[]",
+          "description": "Optional readonly string collection.",
+          "readOnly": true
+        },
+        "optionalReadonlyIntList": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "x-cadl-name": "int32[]",
+          "description": "Optional readonly int collection.",
+          "readOnly": true
+        }
+      },
+      "description": "Output model with readonly properties.",
+      "required": [
+        "requiredReadonlyString",
+        "requiredReadonlyInt",
+        "requiredReadonlyModel",
+        "readonlyStringList",
+        "readonlyIntList"
+      ]
+    },
+    "ReadonlyModel": {
       "type": "object",
       "properties": {
         "requiredString": {
-          "type": "string"
-        },
-        "requiredBytes": {
           "type": "string",
-          "format": "byte"
-        },
-        "requiredInt": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "requiredLong": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "requiredSafeInt": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "requiredFloat": {
-          "type": "number",
-          "format": "float"
-        },
-        "requiredDouble": {
-          "type": "number",
-          "format": "double"
-        },
-        "requiredBodyDateTime": {
-          "type": "string",
-          "format": "date-time",
-          "description": "Illustrate a zonedDateTime body parameter, serialized as (https://datatracker.ietf.org/doc/html/rfc3339)"
-        },
-        "requiredDuration": {
-          "type": "string",
-          "format": "duration"
-        },
-        "requiredBoolean": {
-          "type": "boolean"
+          "description": "Required string"
         }
       },
-      "description": "Round-trip model with primitive properties to show serialization and deserialization of each.",
+      "description": "Readonly model",
       "required": [
-        "requiredString",
-        "requiredBytes",
-        "requiredInt",
-        "requiredLong",
-        "requiredSafeInt",
-        "requiredFloat",
-        "requiredDouble",
-        "requiredBodyDateTime",
-        "requiredDuration",
-        "requiredBoolean"
+        "requiredString"
+      ]
+    },
+    "RoundTripModel": {
+      "type": "object",
+      "properties": {
+        "requiredReadonlyString": {
+          "type": "string",
+          "description": "Required string, illustrating a readonly reference type property.",
+          "readOnly": true
+        },
+        "requiredReadonlyInt": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Required int, illustrating a readonly value type property.",
+          "readOnly": true
+        },
+        "optionalReadonlyString": {
+          "type": "string",
+          "description": "Optional string, illustrating a readonly reference type property.",
+          "readOnly": true
+        },
+        "optionalReadonlyInt": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Optional int, illustrating a readonly value type property.",
+          "readOnly": true
+        },
+        "requiredReadonlyModel": {
+          "$ref": "#/definitions/ReadonlyModel",
+          "description": "Required readonly model.",
+          "readOnly": true
+        },
+        "optionalReadonlyModel": {
+          "$ref": "#/definitions/ReadonlyModel",
+          "description": "Optional readonly model.",
+          "readOnly": true
+        },
+        "readonlyStringList": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-cadl-name": "string[]",
+          "description": "Required readonly string collection.",
+          "readOnly": true
+        },
+        "readonlyIntList": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "x-cadl-name": "int32[]",
+          "description": "Required readonly int collection.",
+          "readOnly": true
+        },
+        "optionalReadonlyStringList": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-cadl-name": "string[]",
+          "description": "Optional readonly string collection.",
+          "readOnly": true
+        },
+        "optionalReadonlyIntList": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "x-cadl-name": "int32[]",
+          "description": "Optional readonly int collection.",
+          "readOnly": true
+        }
+      },
+      "description": "Round-trip model with readonly properties.",
+      "required": [
+        "requiredReadonlyString",
+        "requiredReadonlyInt",
+        "requiredReadonlyModel",
+        "readonlyStringList",
+        "readonlyIntList"
       ]
     }
   },
