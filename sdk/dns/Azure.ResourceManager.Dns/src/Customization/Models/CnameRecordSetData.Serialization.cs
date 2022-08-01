@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Dns
             }
             if (Optional.IsDefined(Ttl))
             {
-                writer.WritePropertyName("Ttl");
+                writer.WritePropertyName("TTL");
                 writer.WriteNumberValue(Ttl.Value);
             }
             if (Optional.IsDefined(TargetResource))
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Dns
                             metadata = dictionary;
                             continue;
                         }
-                        if (property0.NameEquals("Ttl"))
+                        if (property0.NameEquals("TTL"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
