@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    public partial class PurchaseRequestContent : IUtf8JsonSerializable
+    public partial class ReservationPurchaseContent : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -73,10 +73,10 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Renew))
+            if (Optional.IsDefined(IsRenewEnabled))
             {
                 writer.WritePropertyName("renew");
-                writer.WriteBooleanValue(Renew.Value);
+                writer.WriteBooleanValue(IsRenewEnabled.Value);
             }
             if (Optional.IsDefined(ReservedResourceProperties))
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Reservations.Models
             writer.WriteEndObject();
         }
 
-        internal static PurchaseRequestContent DeserializePurchaseRequestContent(JsonElement element)
+        internal static ReservationPurchaseContent DeserializeReservationPurchaseContent(JsonElement element)
         {
             Optional<ReservationsSkuName> sku = default;
             Optional<AzureLocation> location = default;
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     continue;
                 }
             }
-            return new PurchaseRequestContent(sku.Value, Optional.ToNullable(location), Optional.ToNullable(reservedResourceType), billingScopeId.Value, Optional.ToNullable(term), Optional.ToNullable(billingPlan), Optional.ToNullable(quantity), displayName.Value, Optional.ToNullable(appliedScopeType), Optional.ToList(appliedScopes), Optional.ToNullable(renew), reservedResourceProperties.Value);
+            return new ReservationPurchaseContent(sku.Value, Optional.ToNullable(location), Optional.ToNullable(reservedResourceType), billingScopeId.Value, Optional.ToNullable(term), Optional.ToNullable(billingPlan), Optional.ToNullable(quantity), displayName.Value, Optional.ToNullable(appliedScopeType), Optional.ToList(appliedScopes), Optional.ToNullable(renew), reservedResourceProperties.Value);
         }
     }
 }

@@ -18,46 +18,46 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Reservations
 {
     /// <summary>
-    /// A Class representing a ReservationQuotum along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ReservationQuotumResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetReservationQuotumResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetReservationQuotum method.
+    /// A Class representing a ReservationQuota along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ReservationQuotaResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetReservationQuotaResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetReservationQuota method.
     /// </summary>
-    public partial class ReservationQuotumResource : ArmResource
+    public partial class ReservationQuotaResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ReservationQuotumResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="ReservationQuotaResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string providerId, AzureLocation location, string resourceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Capacity/resourceProviders/{providerId}/locations/{location}/serviceLimits/{resourceName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _reservationQuotumQuotaClientDiagnostics;
-        private readonly QuotaRestOperations _reservationQuotumQuotaRestClient;
-        private readonly ReservationQuotumData _data;
+        private readonly ClientDiagnostics _reservationQuotaQuotaClientDiagnostics;
+        private readonly QuotaRestOperations _reservationQuotaQuotaRestClient;
+        private readonly ReservationQuotaData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="ReservationQuotumResource"/> class for mocking. </summary>
-        protected ReservationQuotumResource()
+        /// <summary> Initializes a new instance of the <see cref="ReservationQuotaResource"/> class for mocking. </summary>
+        protected ReservationQuotaResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ReservationQuotumResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "ReservationQuotaResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ReservationQuotumResource(ArmClient client, ReservationQuotumData data) : this(client, data.Id)
+        internal ReservationQuotaResource(ArmClient client, ReservationQuotaData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ReservationQuotumResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ReservationQuotaResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ReservationQuotumResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ReservationQuotaResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _reservationQuotumQuotaClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Reservations", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string reservationQuotumQuotaApiVersion);
-            _reservationQuotumQuotaRestClient = new QuotaRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, reservationQuotumQuotaApiVersion);
+            _reservationQuotaQuotaClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Reservations", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string reservationQuotaQuotaApiVersion);
+            _reservationQuotaQuotaRestClient = new QuotaRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, reservationQuotaQuotaApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual ReservationQuotumData Data
+        public virtual ReservationQuotaData Data
         {
             get
             {
@@ -93,16 +93,16 @@ namespace Azure.ResourceManager.Reservations
         /// Operation Id: Quota_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ReservationQuotumResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ReservationQuotaResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _reservationQuotumQuotaClientDiagnostics.CreateScope("ReservationQuotumResource.Get");
+            using var scope = _reservationQuotaQuotaClientDiagnostics.CreateScope("ReservationQuotaResource.Get");
             scope.Start();
             try
             {
-                var response = await _reservationQuotumQuotaRestClient.GetAsync(Id.SubscriptionId, Id.Parent.Parent.Name, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _reservationQuotaQuotaRestClient.GetAsync(Id.SubscriptionId, Id.Parent.Parent.Name, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ReservationQuotumResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ReservationQuotaResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,16 +117,16 @@ namespace Azure.ResourceManager.Reservations
         /// Operation Id: Quota_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ReservationQuotumResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ReservationQuotaResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _reservationQuotumQuotaClientDiagnostics.CreateScope("ReservationQuotumResource.Get");
+            using var scope = _reservationQuotaQuotaClientDiagnostics.CreateScope("ReservationQuotaResource.Get");
             scope.Start();
             try
             {
-                var response = _reservationQuotumQuotaRestClient.Get(Id.SubscriptionId, Id.Parent.Parent.Name, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
+                var response = _reservationQuotaQuotaRestClient.Get(Id.SubscriptionId, Id.Parent.Parent.Name, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ReservationQuotumResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ReservationQuotaResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -148,16 +148,16 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="data"> Payload for the quota request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ReservationQuotumResource>> UpdateAsync(WaitUntil waitUntil, ReservationQuotumData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ReservationQuotaResource>> UpdateAsync(WaitUntil waitUntil, ReservationQuotaData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _reservationQuotumQuotaClientDiagnostics.CreateScope("ReservationQuotumResource.Update");
+            using var scope = _reservationQuotaQuotaClientDiagnostics.CreateScope("ReservationQuotaResource.Update");
             scope.Start();
             try
             {
-                var response = await _reservationQuotumQuotaRestClient.UpdateAsync(Id.SubscriptionId, Id.Parent.Parent.Name, new AzureLocation(Id.Parent.Name), Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ReservationsArmOperation<ReservationQuotumResource>(new ReservationQuotumOperationSource(Client), _reservationQuotumQuotaClientDiagnostics, Pipeline, _reservationQuotumQuotaRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.Parent.Parent.Name, new AzureLocation(Id.Parent.Name), Id.Name, data).Request, response, OperationFinalStateVia.OriginalUri);
+                var response = await _reservationQuotaQuotaRestClient.UpdateAsync(Id.SubscriptionId, Id.Parent.Parent.Name, new AzureLocation(Id.Parent.Name), Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new ReservationsArmOperation<ReservationQuotaResource>(new ReservationQuotaOperationSource(Client), _reservationQuotaQuotaClientDiagnostics, Pipeline, _reservationQuotaQuotaRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.Parent.Parent.Name, new AzureLocation(Id.Parent.Name), Id.Name, data).Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -182,16 +182,16 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="data"> Payload for the quota request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ReservationQuotumResource> Update(WaitUntil waitUntil, ReservationQuotumData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ReservationQuotaResource> Update(WaitUntil waitUntil, ReservationQuotaData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _reservationQuotumQuotaClientDiagnostics.CreateScope("ReservationQuotumResource.Update");
+            using var scope = _reservationQuotaQuotaClientDiagnostics.CreateScope("ReservationQuotaResource.Update");
             scope.Start();
             try
             {
-                var response = _reservationQuotumQuotaRestClient.Update(Id.SubscriptionId, Id.Parent.Parent.Name, new AzureLocation(Id.Parent.Name), Id.Name, data, cancellationToken);
-                var operation = new ReservationsArmOperation<ReservationQuotumResource>(new ReservationQuotumOperationSource(Client), _reservationQuotumQuotaClientDiagnostics, Pipeline, _reservationQuotumQuotaRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.Parent.Parent.Name, new AzureLocation(Id.Parent.Name), Id.Name, data).Request, response, OperationFinalStateVia.OriginalUri);
+                var response = _reservationQuotaQuotaRestClient.Update(Id.SubscriptionId, Id.Parent.Parent.Name, new AzureLocation(Id.Parent.Name), Id.Name, data, cancellationToken);
+                var operation = new ReservationsArmOperation<ReservationQuotaResource>(new ReservationQuotaOperationSource(Client), _reservationQuotaQuotaClientDiagnostics, Pipeline, _reservationQuotaQuotaRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.Parent.Parent.Name, new AzureLocation(Id.Parent.Name), Id.Name, data).Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

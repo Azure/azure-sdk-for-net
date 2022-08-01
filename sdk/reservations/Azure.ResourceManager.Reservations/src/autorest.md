@@ -3,7 +3,6 @@
 Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
-
 azure-arm: true
 csharp: true
 library-name: Reservations
@@ -60,7 +59,6 @@ rename-rules:
   Db: DB
 
 rename-mapping:
-  CurrentQuotaLimitBase: ReservationQuota
   ReservationOrderResponse: ReservationOrder
   ReservationOrderResponse.properties.expiryDate: ExpireOn
   ProvisioningState: ReservationProvisioningState
@@ -70,11 +68,12 @@ rename-mapping:
   AvailableScopeProperties: AvailableScopesProperties
   AvailableScopeRequest: AvailableScopesContent
   PurchaseRequest: ReservationPurchaseContent
+  PurchaseRequest.properties.renew: IsRenewEnabled
   CalculatePriceResponse: CalculatePriceResult
   CalculatePriceResponseProperties: CalculatePriceResultProperties
   CalculateExchangeOperationResultResponse: CalculateExchangeResult
   ExchangeOperationResultResponse: ExchangeResult
-  AppliedReservations: AppliedReservationsData
+  AppliedReservations: AppliedReservationData
   CalculateExchangeRequestProperties: CalculateExchangeContentProperties
   CalculateExchangeResponseProperties: CalculateExchangeResultProperties
   CalculatePriceResponsePropertiesBillingCurrencyTotal: CalculatePriceResultPropertiesBillingCurrencyTotal
@@ -91,6 +90,7 @@ rename-mapping:
   ReservationsPropertiesUtilization:  ReservationPropertiesUtilization
   ScopeProperties.valid: IsValid
   SubRequest: SubContent
+  OperationStatus: ReservationOperationStatus
   
 directive:
   - from: quota.json
@@ -100,13 +100,13 @@ directive:
       $.ResourceTypesName['x-ms-enum']['name'] = 'ResourceTypeName';
       $.QuotaProperties.properties.name['x-ms-client-name'] = 'ResourceName';
       $.QuotaProperties.properties.resourceType['x-ms-client-name'] = 'ResourceTypeName';
+      $.CurrentQuotaLimitBase['x-ms-client-name'] = 'ReservationQuotas';
   - from: reservations.json
     where: $.definitions
     transform: >
       delete $.Location;
       $.ReservationResponse.properties.etag['x-ms-client-name'] = 'version';
       $.ReservationOrderResponse.properties.etag['x-ms-client-name'] = 'version';
-      $.PurchaseRequest['x-ms-client-name'] = 'PurchaseRequestContent';
       $.Price['x-ms-client-name'] = 'PurchasePrice';
       $.Catalog.properties.resourceType['x-ms-client-name'] = 'reservedResourceType';
       $.Catalog.properties.name['x-ms-client-name'] = 'SkuName';
@@ -120,5 +120,14 @@ directive:
       $.ReservationToPurchaseExchange.properties.reservationOrderId['x-ms-format'] = 'arm-id';
       $.ReservationToReturnForExchange.properties.reservationId['x-ms-format'] = 'arm-id';
       $.SplitProperties.properties.reservationId['x-ms-format'] = 'arm-id';
+  - from: reservations.json
+    where: $.parameters
+    transform: >
+      $.ReservationIdParameter['format'] = 'uuid';
+      $.ReservationOrderIdParameter['format'] = 'uuid';
+  - from: quota.json
+    where: $.parameters
+    transform: >
+      $.RequestIdInParameters['format'] = 'uuid';
   - remove-operation: Operation_List
 ```

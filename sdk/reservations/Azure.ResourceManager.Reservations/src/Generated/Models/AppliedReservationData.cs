@@ -10,21 +10,21 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    /// <summary> The AppliedReservationsData. </summary>
-    public partial class AppliedReservationsData : ResourceData
+    /// <summary> The AppliedReservationData. </summary>
+    public partial class AppliedReservationData : ResourceData
     {
-        /// <summary> Initializes a new instance of AppliedReservationsData. </summary>
-        internal AppliedReservationsData()
+        /// <summary> Initializes a new instance of AppliedReservationData. </summary>
+        internal AppliedReservationData()
         {
         }
 
-        /// <summary> Initializes a new instance of AppliedReservationsData. </summary>
+        /// <summary> Initializes a new instance of AppliedReservationData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="reservationOrderIds"></param>
-        internal AppliedReservationsData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AppliedReservationList reservationOrderIds) : base(id, name, resourceType, systemData)
+        internal AppliedReservationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AppliedReservationList reservationOrderIds) : base(id, name, resourceType, systemData)
         {
             ReservationOrderIds = reservationOrderIds;
         }

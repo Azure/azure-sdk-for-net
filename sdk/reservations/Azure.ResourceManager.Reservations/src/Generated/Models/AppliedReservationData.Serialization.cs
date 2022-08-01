@@ -8,42 +8,20 @@
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Reservations.Models;
 
-namespace Azure.ResourceManager.Reservations
+namespace Azure.ResourceManager.Reservations.Models
 {
-    public partial class ReservationQuotumData : IUtf8JsonSerializable
+    public partial class AppliedReservationData
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        internal static AppliedReservationData DeserializeAppliedReservationData(JsonElement element)
         {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Properties))
-            {
-                writer.WritePropertyName("properties");
-                writer.WriteObjectValue(Properties);
-            }
-            writer.WriteEndObject();
-        }
-
-        internal static ReservationQuotumData DeserializeReservationQuotumData(JsonElement element)
-        {
-            Optional<QuotaProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
+            Optional<AppliedReservationList> reservationOrderIds = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("properties"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    properties = QuotaProperties.DeserializeQuotaProperties(property.Value);
-                    continue;
-                }
                 if (property.NameEquals("id"))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -69,8 +47,30 @@ namespace Azure.ResourceManager.Reservations
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
+                if (property.NameEquals("properties"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("reservationOrderIds"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            reservationOrderIds = AppliedReservationList.DeserializeAppliedReservationList(property0.Value);
+                            continue;
+                        }
+                    }
+                    continue;
+                }
             }
-            return new ReservationQuotumData(id, name, type, systemData.Value, properties.Value);
+            return new AppliedReservationData(id, name, type, systemData.Value, reservationOrderIds.Value);
         }
     }
 }

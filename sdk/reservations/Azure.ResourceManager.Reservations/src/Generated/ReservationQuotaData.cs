@@ -11,21 +11,21 @@ using Azure.ResourceManager.Reservations.Models;
 
 namespace Azure.ResourceManager.Reservations
 {
-    /// <summary> A class representing the ReservationQuotum data model. </summary>
-    public partial class ReservationQuotumData : ResourceData
+    /// <summary> A class representing the ReservationQuota data model. </summary>
+    public partial class ReservationQuotaData : ResourceData
     {
-        /// <summary> Initializes a new instance of ReservationQuotumData. </summary>
-        public ReservationQuotumData()
+        /// <summary> Initializes a new instance of ReservationQuotaData. </summary>
+        public ReservationQuotaData()
         {
         }
 
-        /// <summary> Initializes a new instance of ReservationQuotumData. </summary>
+        /// <summary> Initializes a new instance of ReservationQuotaData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Quota properties for the resource. </param>
-        internal ReservationQuotumData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, QuotaProperties properties) : base(id, name, resourceType, systemData)
+        internal ReservationQuotaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, QuotaProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }

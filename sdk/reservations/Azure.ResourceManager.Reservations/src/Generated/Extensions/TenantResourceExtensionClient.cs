@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Reservations
         /// </summary>
         /// <param name="content"> Information needed for calculate or purchase reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CalculatePriceResult>> CalculateReservationOrderAsync(PurchaseRequestContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CalculatePriceResult>> CalculateReservationOrderAsync(ReservationPurchaseContent content, CancellationToken cancellationToken = default)
         {
             using var scope = ReservationOrderClientDiagnostics.CreateScope("TenantResourceExtensionClient.CalculateReservationOrder");
             scope.Start();
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Reservations
         /// </summary>
         /// <param name="content"> Information needed for calculate or purchase reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CalculatePriceResult> CalculateReservationOrder(PurchaseRequestContent content, CancellationToken cancellationToken = default)
+        public virtual Response<CalculatePriceResult> CalculateReservationOrder(ReservationPurchaseContent content, CancellationToken cancellationToken = default)
         {
             using var scope = ReservationOrderClientDiagnostics.CreateScope("TenantResourceExtensionClient.CalculateReservationOrder");
             scope.Start();

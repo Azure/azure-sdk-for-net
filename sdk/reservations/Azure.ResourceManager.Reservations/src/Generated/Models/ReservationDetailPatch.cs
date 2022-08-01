@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <summary> Gets or sets the renew properties. </summary>
         internal PatchPropertiesRenewProperties RenewProperties { get; set; }
         /// <summary> Gets or sets the renew purchase properties. </summary>
-        public PurchaseRequestContent RenewPurchaseProperties
+        public ReservationPurchaseContent RenewPurchaseProperties
         {
             get => RenewProperties is null ? default : RenewProperties.PurchaseProperties;
             set

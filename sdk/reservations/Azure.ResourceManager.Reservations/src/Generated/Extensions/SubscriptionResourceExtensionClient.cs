@@ -43,13 +43,13 @@ namespace Azure.ResourceManager.Reservations
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of ReservationQuotumResources in the SubscriptionResource. </summary>
+        /// <summary> Gets a collection of ReservationQuotaResources in the SubscriptionResource. </summary>
         /// <param name="providerId"> Azure resource provider ID. </param>
         /// <param name="location"> Azure region. </param>
-        /// <returns> An object representing collection of ReservationQuotumResources and their operations over a ReservationQuotumResource. </returns>
-        public virtual ReservationQuotumCollection GetReservationQuota(string providerId, AzureLocation location)
+        /// <returns> An object representing collection of ReservationQuotaResources and their operations over a ReservationQuotaResource. </returns>
+        public virtual ReservationQuotaCollection GetAllReservationQuota(string providerId, AzureLocation location)
         {
-            return new ReservationQuotumCollection(Client, Id, providerId, location);
+            return new ReservationQuotaCollection(Client, Id, providerId, location);
         }
 
         /// <summary> Gets a collection of QuotaRequestDetailResources in the SubscriptionResource. </summary>
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Reservations
         /// Operation Id: GetAppliedReservationList
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AppliedReservationsData>> GetAppliedReservationsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppliedReservationData>> GetAppliedReservationsAsync(CancellationToken cancellationToken = default)
         {
             using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAppliedReservations");
             scope.Start();
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Reservations
         /// Operation Id: GetAppliedReservationList
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AppliedReservationsData> GetAppliedReservations(CancellationToken cancellationToken = default)
+        public virtual Response<AppliedReservationData> GetAppliedReservations(CancellationToken cancellationToken = default)
         {
             using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAppliedReservations");
             scope.Start();
