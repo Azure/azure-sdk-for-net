@@ -433,7 +433,7 @@ namespace Azure.Data.AppConfiguration
 
             try
             {
-                var eTag = requestOptions?.IfMatch;
+                ETag? eTag = requestOptions?.IfMatch;
                 if (requestOptions != null && requestOptions.IfMatch.HasValue)
                 {
                      eTag = new ETag($"\"{requestOptions?.IfMatch.Value.ToString()}\"");
