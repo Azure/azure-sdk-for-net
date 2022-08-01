@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.Reservations.Models
         {
             Optional<ResourceIdentifier> reservationOrderId = default;
             Optional<ResourceIdentifier> reservationId = default;
-            Optional<PurchaseRequestContent> properties = default;
+            Optional<ReservationPurchaseContent> properties = default;
             Optional<PurchasePrice> billingCurrencyTotal = default;
-            Optional<OperationStatus> status = default;
+            Optional<ReservationOperationStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("reservationOrderId"))
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = PurchaseRequestContent.DeserializePurchaseRequestContent(property.Value);
+                    properties = ReservationPurchaseContent.DeserializeReservationPurchaseContent(property.Value);
                     continue;
                 }
                 if (property.NameEquals("billingCurrencyTotal"))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = new OperationStatus(property.Value.GetString());
+                    status = new ReservationOperationStatus(property.Value.GetString());
                     continue;
                 }
             }

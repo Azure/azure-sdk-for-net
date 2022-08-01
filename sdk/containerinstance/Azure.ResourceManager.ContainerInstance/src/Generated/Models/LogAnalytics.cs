@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="workspaceId"> The workspace id for log analytics. </param>
         /// <param name="workspaceKey"> The workspace key for log analytics. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceId"/> or <paramref name="workspaceKey"/> is null. </exception>
-        public LogAnalytics(ResourceIdentifier workspaceId, string workspaceKey)
+        public LogAnalytics(string workspaceId, string workspaceKey)
         {
             if (workspaceId == null)
             {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="logType"> The log type to be used. </param>
         /// <param name="metadata"> Metadata for log analytics. </param>
         /// <param name="workspaceResourceId"> The workspace resource id for log analytics. </param>
-        internal LogAnalytics(ResourceIdentifier workspaceId, string workspaceKey, LogAnalyticsLogType? logType, IDictionary<string, string> metadata, string workspaceResourceId)
+        internal LogAnalytics(string workspaceId, string workspaceKey, LogAnalyticsLogType? logType, IDictionary<string, string> metadata, ResourceIdentifier workspaceResourceId)
         {
             WorkspaceId = workspaceId;
             WorkspaceKey = workspaceKey;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         }
 
         /// <summary> The workspace id for log analytics. </summary>
-        public ResourceIdentifier WorkspaceId { get; set; }
+        public string WorkspaceId { get; set; }
         /// <summary> The workspace key for log analytics. </summary>
         public string WorkspaceKey { get; set; }
         /// <summary> The log type to be used. </summary>
@@ -58,6 +58,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> Metadata for log analytics. </summary>
         public IDictionary<string, string> Metadata { get; }
         /// <summary> The workspace resource id for log analytics. </summary>
-        public string WorkspaceResourceId { get; set; }
+        public ResourceIdentifier WorkspaceResourceId { get; set; }
     }
 }

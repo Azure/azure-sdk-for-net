@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="memoryInGB"> The memory request in GB of this container instance. </param>
         /// <param name="cpu"> The CPU request of this container instance. </param>
         /// <param name="gpu"> The GPU request of this container instance. </param>
-        internal ResourceRequests(double memoryInGB, double cpu, GpuResource gpu)
+        internal ResourceRequests(double memoryInGB, double cpu, GpuResourceInfo gpu)
         {
             MemoryInGB = memoryInGB;
             Cpu = cpu;
@@ -35,6 +35,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> The CPU request of this container instance. </summary>
         public double Cpu { get; set; }
         /// <summary> The GPU request of this container instance. </summary>
-        public GpuResource Gpu { get; set; }
+        public GpuResourceInfo Gpu { get; set; }
     }
 }

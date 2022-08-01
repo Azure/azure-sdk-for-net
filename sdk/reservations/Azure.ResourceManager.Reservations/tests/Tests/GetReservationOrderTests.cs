@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.Reservations.Tests
         [RecordedTest]
         public async Task TestGetSingleReservationOrder()
         {
-            var response = await Collection.GetAsync("838f3bcf-5af0-4606-ae23-cdea328acd51");
+            var response = await Collection.GetAsync(Guid.Parse("838f3bcf-5af0-4606-ae23-cdea328acd51"));
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.IsNotNull(response.Value);
             Assert.IsNotNull(response.Value.Data);

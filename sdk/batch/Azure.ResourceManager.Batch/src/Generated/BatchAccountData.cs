@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Batch
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="identity"> The identity of the Batch account. </param>
+        /// <param name="identity"> The identity of the Batch account. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
         /// <param name="accountEndpoint"> The account endpoint used to interact with the Batch service. </param>
         /// <param name="nodeManagementEndpoint"> The endpoint used by compute node to connect to the Batch node management service. </param>
         /// <param name="provisioningState"> The provisioned state of the resource. </param>
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Batch
         /// <param name="allowedAuthenticationModes"> List of allowed authentication modes for the Batch account that can be used to authenticate with the data plane. This does not affect authentication with the control plane. </param>
         /// <param name="location"> The location of the resource. </param>
         /// <param name="tags"> The tags of the resource. </param>
-        internal BatchAccountData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, BatchAccountIdentity identity, string accountEndpoint, string nodeManagementEndpoint, ProvisioningState? provisioningState, PoolAllocationMode? poolAllocationMode, KeyVaultReference keyVaultReference, PublicNetworkAccessType? publicNetworkAccess, BatchVirtualMachineNetworkProfile networkProfile, IReadOnlyList<BatchPrivateEndpointConnectionData> privateEndpointConnections, AutoStorageProperties autoStorage, Models.EncryptionProperties encryption, int? dedicatedCoreQuota, int? lowPriorityCoreQuota, IReadOnlyList<VirtualMachineFamilyCoreQuota> dedicatedCoreQuotaPerVmFamily, bool? dedicatedCoreQuotaPerVmFamilyEnforced, int? poolQuota, int? activeJobAndJobScheduleQuota, IReadOnlyList<AuthenticationMode> allowedAuthenticationModes, AzureLocation? location, IReadOnlyDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        internal BatchAccountData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, string accountEndpoint, string nodeManagementEndpoint, ProvisioningState? provisioningState, PoolAllocationMode? poolAllocationMode, KeyVaultReference keyVaultReference, PublicNetworkAccessType? publicNetworkAccess, BatchVirtualMachineNetworkProfile networkProfile, IReadOnlyList<BatchPrivateEndpointConnectionData> privateEndpointConnections, AutoStorageProperties autoStorage, Models.EncryptionProperties encryption, int? dedicatedCoreQuota, int? lowPriorityCoreQuota, IReadOnlyList<VirtualMachineFamilyCoreQuota> dedicatedCoreQuotaPerVmFamily, bool? dedicatedCoreQuotaPerVmFamilyEnforced, int? poolQuota, int? activeJobAndJobScheduleQuota, IReadOnlyList<AuthenticationMode> allowedAuthenticationModes, AzureLocation? location, IReadOnlyDictionary<string, string> tags) : base(id, name, resourceType, systemData)
         {
             Identity = identity;
             AccountEndpoint = accountEndpoint;
@@ -73,8 +73,8 @@ namespace Azure.ResourceManager.Batch
             Tags = tags;
         }
 
-        /// <summary> The identity of the Batch account. </summary>
-        public BatchAccountIdentity Identity { get; }
+        /// <summary> The identity of the Batch account. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
+        public ManagedServiceIdentity Identity { get; }
         /// <summary> The account endpoint used to interact with the Batch service. </summary>
         public string AccountEndpoint { get; }
         /// <summary> The endpoint used by compute node to connect to the Batch node management service. </summary>

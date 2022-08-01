@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary> The regional quota capacity. </summary>
+    /// <summary>
+    /// The regional quota capacity.
+    /// Serialized Name: RegionalQuotaCapability
+    /// </summary>
     public partial class RegionalQuotaCapability
     {
         /// <summary> Initializes a new instance of RegionalQuotaCapability. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> Initializes a new instance of RegionalQuotaCapability. </summary>
-        /// <param name="regionName"> The region name. </param>
-        /// <param name="coresUsed"> The number of cores used in the region. </param>
-        /// <param name="coresAvailable"> The number of cores available in the region. </param>
+        /// <param name="regionName">
+        /// The region name.
+        /// Serialized Name: RegionalQuotaCapability.regionName
+        /// </param>
+        /// <param name="coresUsed">
+        /// The number of cores used in the region.
+        /// Serialized Name: RegionalQuotaCapability.coresUsed
+        /// </param>
+        /// <param name="coresAvailable">
+        /// The number of cores available in the region.
+        /// Serialized Name: RegionalQuotaCapability.coresAvailable
+        /// </param>
         internal RegionalQuotaCapability(string regionName, long? coresUsed, long? coresAvailable)
         {
             RegionName = regionName;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.HDInsight.Models
             CoresAvailable = coresAvailable;
         }
 
-        /// <summary> The region name. </summary>
+        /// <summary>
+        /// The region name.
+        /// Serialized Name: RegionalQuotaCapability.regionName
+        /// </summary>
         public string RegionName { get; }
-        /// <summary> The number of cores used in the region. </summary>
+        /// <summary>
+        /// The number of cores used in the region.
+        /// Serialized Name: RegionalQuotaCapability.coresUsed
+        /// </summary>
         public long? CoresUsed { get; }
-        /// <summary> The number of cores available in the region. </summary>
+        /// <summary>
+        /// The number of cores available in the region.
+        /// Serialized Name: RegionalQuotaCapability.coresAvailable
+        /// </summary>
         public long? CoresAvailable { get; }
     }
 }

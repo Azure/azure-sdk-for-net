@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Reservations.Models
         internal static SubContent DeserializeSubContent(JsonElement element)
         {
             Optional<int> limit = default;
-            Optional<ResourceName> name = default;
+            Optional<ReservationResourceName> name = default;
             Optional<string> resourceType = default;
             Optional<string> unit = default;
             Optional<QuotaRequestState> provisioningState = default;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    name = ResourceName.DeserializeResourceName(property.Value);
+                    name = ReservationResourceName.DeserializeReservationResourceName(property.Value);
                     continue;
                 }
                 if (property.NameEquals("resourceType"))
