@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    public partial class Capabilities
+    public partial class ContainerInstanceSupportedCapabilities
     {
-        internal static Capabilities DeserializeCapabilities(JsonElement element)
+        internal static ContainerInstanceSupportedCapabilities DeserializeContainerInstanceSupportedCapabilities(JsonElement element)
         {
             Optional<float> maxMemoryInGB = default;
             Optional<float> maxCpu = default;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     continue;
                 }
             }
-            return new Capabilities(Optional.ToNullable(maxMemoryInGB), Optional.ToNullable(maxCpu), Optional.ToNullable(maxGpuCount));
+            return new ContainerInstanceSupportedCapabilities(Optional.ToNullable(maxMemoryInGB), Optional.ToNullable(maxCpu), Optional.ToNullable(maxGpuCount));
         }
     }
 }

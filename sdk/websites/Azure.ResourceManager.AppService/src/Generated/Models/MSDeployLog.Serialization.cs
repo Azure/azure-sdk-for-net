@@ -5,45 +5,44 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.ConnectedVMwarevSphere
+namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class HybridIdentityMetadataData : IUtf8JsonSerializable
+    public partial class MSDeployLog : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(Kind))
+            {
+                writer.WritePropertyName("kind");
+                writer.WriteStringValue(Kind);
+            }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(VmId))
-            {
-                writer.WritePropertyName("vmId");
-                writer.WriteStringValue(VmId);
-            }
-            if (Optional.IsDefined(PublicKey))
-            {
-                writer.WritePropertyName("publicKey");
-                writer.WriteStringValue(PublicKey);
-            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
-        internal static HybridIdentityMetadataData DeserializeHybridIdentityMetadataData(JsonElement element)
+        internal static MSDeployLog DeserializeMSDeployLog(JsonElement element)
         {
+            Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> vmId = default;
-            Optional<string> publicKey = default;
-            Optional<SystemAssignedServiceIdentity> identity = default;
-            Optional<string> provisioningState = default;
+            Optional<IReadOnlyList<MSDeployLogEntry>> entries = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("kind"))
+                {
+                    kind = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("id"))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -78,36 +77,26 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("vmId"))
-                        {
-                            vmId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("publicKey"))
-                        {
-                            publicKey = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("identity"))
+                        if (property0.NameEquals("entries"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            identity = JsonSerializer.Deserialize<SystemAssignedServiceIdentity>(property0.Value.ToString());
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"))
-                        {
-                            provisioningState = property0.Value.GetString();
+                            List<MSDeployLogEntry> array = new List<MSDeployLogEntry>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(MSDeployLogEntry.DeserializeMSDeployLogEntry(item));
+                            }
+                            entries = array;
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new HybridIdentityMetadataData(id, name, type, systemData.Value, vmId.Value, publicKey.Value, identity, provisioningState.Value);
+            return new MSDeployLog(id, name, type, systemData.Value, Optional.ToList(entries), kind.Value);
         }
     }
 }

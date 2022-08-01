@@ -25,15 +25,15 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 writer.WritePropertyName("httpGet");
                 writer.WriteObjectValue(HttpGet);
             }
-            if (Optional.IsDefined(InitialDelaySeconds))
+            if (Optional.IsDefined(InitialDelayInSeconds))
             {
                 writer.WritePropertyName("initialDelaySeconds");
-                writer.WriteNumberValue(InitialDelaySeconds.Value);
+                writer.WriteNumberValue(InitialDelayInSeconds.Value);
             }
-            if (Optional.IsDefined(PeriodSeconds))
+            if (Optional.IsDefined(PeriodInSeconds))
             {
                 writer.WritePropertyName("periodSeconds");
-                writer.WriteNumberValue(PeriodSeconds.Value);
+                writer.WriteNumberValue(PeriodInSeconds.Value);
             }
             if (Optional.IsDefined(FailureThreshold))
             {

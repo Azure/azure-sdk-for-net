@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    internal partial class CapabilitiesListResult
+    internal partial class ContainerInstanceCapabilitiesListResult
     {
-        internal static CapabilitiesListResult DeserializeCapabilitiesListResult(JsonElement element)
+        internal static ContainerInstanceCapabilitiesListResult DeserializeContainerInstanceCapabilitiesListResult(JsonElement element)
         {
             Optional<IReadOnlyList<ContainerInstanceCapabilities>> value = default;
             Optional<string> nextLink = default;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     continue;
                 }
             }
-            return new CapabilitiesListResult(Optional.ToList(value), nextLink.Value);
+            return new ContainerInstanceCapabilitiesListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

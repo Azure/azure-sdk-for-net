@@ -114,13 +114,13 @@ namespace Azure.ResourceManager.SqlVirtualMachine
 
         internal static SqlVirtualMachineData DeserializeSqlVirtualMachineData(JsonElement element)
         {
-            Optional<SystemAssignedServiceIdentity> identity = default;
+            Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            Optional<ResourceManager.Models.SystemData> systemData = default;
             Optional<ResourceIdentifier> virtualMachineResourceId = default;
             Optional<string> provisioningState = default;
             Optional<string> sqlImageOffer = default;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<SystemAssignedServiceIdentity>(property.Value.ToString());
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<ResourceManager.Models.SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))

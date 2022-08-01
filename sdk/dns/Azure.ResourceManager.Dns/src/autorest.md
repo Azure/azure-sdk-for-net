@@ -89,10 +89,16 @@ directive:
 
   - from: swagger-document
     where: $.definitions.NsRecord.properties.nsdname
-    transform: $["x-ms-client-name"] = "NsdName";
+    transform: $["x-ms-client-name"] = "DnsNSDomainName";
   - from: swagger-document
     where: $.definitions.PtrRecord.properties.ptrdname
-    transform: $["x-ms-client-name"] = "PtrdName";
+    transform: $["x-ms-client-name"] = "DnsPtrDomainName";
+  - from: swagger-document
+    where: $.definitions.RecordSetProperties.properties.TTL
+    transform: $["x-ms-client-name"] = "TtlInSeconds";
+  - from: swagger-document
+    where: $.definitions.TxtRecord.properties.value
+    transform: $["x-ms-client-name"] = "values";
 
 # FooTime => FooTimeInSeconds
   - from: swagger-document

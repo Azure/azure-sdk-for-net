@@ -8,18 +8,18 @@
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     /// <summary> The supported capabilities. </summary>
-    public partial class Capabilities
+    public partial class ContainerInstanceSupportedCapabilities
     {
-        /// <summary> Initializes a new instance of Capabilities. </summary>
-        internal Capabilities()
+        /// <summary> Initializes a new instance of ContainerInstanceSupportedCapabilities. </summary>
+        internal ContainerInstanceSupportedCapabilities()
         {
         }
 
-        /// <summary> Initializes a new instance of Capabilities. </summary>
+        /// <summary> Initializes a new instance of ContainerInstanceSupportedCapabilities. </summary>
         /// <param name="maxMemoryInGB"> The maximum allowed memory request in GB. </param>
         /// <param name="maxCpu"> The maximum allowed CPU request in cores. </param>
         /// <param name="maxGpuCount"> The maximum allowed GPU count. </param>
-        internal Capabilities(float? maxMemoryInGB, float? maxCpu, float? maxGpuCount)
+        internal ContainerInstanceSupportedCapabilities(float? maxMemoryInGB, float? maxCpu, float? maxGpuCount)
         {
             MaxMemoryInGB = maxMemoryInGB;
             MaxCpu = maxCpu;

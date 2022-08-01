@@ -1,0 +1,73 @@
+{
+  "OutputFolder": ".",
+  "Namespace": "Azure.ResourceManager.ContainerInstance",
+  "LibraryName": "ContainerInstance",
+  "SharedSourceFolders": [
+    "..\\..\\..\\..\\core\\Azure.Core\\src\\Shared\\",
+    "..\\..\\..\\..\\..\\..\\..\\.nuget\\packages\\microsoft.azure.autorest.csharp\\3.0.0-beta.20220731.2\\content\\Generator.Shared\\"
+  ],
+  "azure-arm": true,
+  "public-clients": true,
+  "head-as-boolean": true,
+  "PrependRPPrefix": [
+    "Container",
+    "Volume",
+    "CapabilitiesListResult"
+  ],
+  "RawRenameRules": {
+    "CPU": "Cpu",
+    "CPUs": "Cpus",
+    "Os": "OS",
+    "Ip": "IP",
+    "Ips": "IPs|ips",
+    "ID": "Id",
+    "IDs": "Ids",
+    "VM": "Vm",
+    "VMs": "Vms",
+    "VMScaleSet": "VmScaleSet",
+    "DNS": "Dns",
+    "VPN": "Vpn",
+    "NAT": "Nat",
+    "WAN": "Wan",
+    "Ipv4": "IPv4|ipv4",
+    "Ipv6": "IPv6|ipv6",
+    "Ipsec": "IPsec|ipsec",
+    "SSO": "Sso",
+    "URI": "Uri",
+    "Etag": "ETag|etag",
+    "TCP": "Tcp",
+    "UDP": "Udp",
+    "Noreuse": "NoReuse"
+  },
+  "FormatByNameRules": {
+    "tenantId": "uuid",
+    "etag": "etag",
+    "location": "azure-location",
+    "*Uri": "Uri",
+    "*Uris": "Uri"
+  },
+  "RenameMapping": {
+    "Logs": "ContainerLogs",
+    "Event": "ContainerEvent",
+    "AzureFileVolume.readOnly": "IsReadOnly",
+    "VolumeMount.readOnly": "IsReadOnly",
+    "Capabilities": "ContainerInstanceSupportedCapabilities",
+    "ContainerProbe.timeoutSeconds": "TimeoutInSeconds",
+    "ContainerProbe.initialDelaySeconds": "InitialDelayInSeconds",
+    "ContainerProbe.periodSeconds": "PeriodInSeconds",
+    "Scheme": "ContainerHttpGetScheme",
+    "Port": "ContainerGroupPort",
+    "IpAddress.ip": "-|ip-address",
+    "IpAddress": "ContainerGroupIPAddress",
+    "GpuResource": "GpuResourceInfo",
+    "ContainerGroupPropertiesInstanceView": "ContainerGroupInstanceView",
+    "ContainerPropertiesInstanceView": "ContainerInstanceView"
+  },
+  "OverrideOperationName": {
+    "Location_ListCachedImages": "GetCachedImagesWithLocation",
+    "Location_ListCapabilities": "GetCapabilitiesWithLocation",
+    "Location_ListUsage": "GetUsagesWithLocation",
+    "Containers_ExecuteCommand": "ExecuteContainerCommand",
+    "Containers_ListLogs": "GetContainerLogs"
+  }
+}

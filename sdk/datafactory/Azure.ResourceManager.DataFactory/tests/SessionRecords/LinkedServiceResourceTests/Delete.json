@@ -146,7 +146,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/DataFactory-RG-2355/providers/Microsoft.Storage/storageAccounts/220730datafactory1869?api-version=2021-09-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/DataFactory-RG-2355/providers/Microsoft.Storage/storageAccounts/datafactory1869?api-version=2021-09-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -255,8 +255,8 @@
           "tier": "Standard"
         },
         "kind": "BlobStorage",
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/DataFactory-RG-2355/providers/Microsoft.Storage/storageAccounts/220730datafactory1869",
-        "name": "220730datafactory1869",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/DataFactory-RG-2355/providers/Microsoft.Storage/storageAccounts/datafactory1869",
+        "name": "datafactory1869",
         "type": "Microsoft.Storage/storageAccounts",
         "location": "westus2",
         "tags": {},
@@ -294,9 +294,9 @@
           "provisioningState": "Succeeded",
           "creationTime": "2022-07-30T01:27:29.5634062Z",
           "primaryEndpoints": {
-            "dfs": "https://220730datafactory1869.dfs.core.windows.net/",
-            "blob": "https://220730datafactory1869.blob.core.windows.net/",
-            "table": "https://220730datafactory1869.table.core.windows.net/"
+            "dfs": "https://datafactory1869.dfs.core.windows.net/",
+            "blob": "https://datafactory1869.blob.core.windows.net/",
+            "table": "https://datafactory1869.table.core.windows.net/"
           },
           "primaryLocation": "westus2",
           "statusOfPrimary": "available"
@@ -304,7 +304,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/DataFactory-RG-2355/providers/Microsoft.Storage/storageAccounts/220730datafactory1869/listKeys?api-version=2021-09-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/DataFactory-RG-2355/providers/Microsoft.Storage/storageAccounts/datafactory1869/listKeys?api-version=2021-09-01",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -548,8 +548,8 @@
               "tier": "Standard"
             },
             "kind": "BlobStorage",
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/DataFactory-RG-2355/providers/Microsoft.Storage/storageAccounts/220730datafactory1869",
-            "name": "220730datafactory1869",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/DataFactory-RG-2355/providers/Microsoft.Storage/storageAccounts/datafactory1869",
+            "name": "datafactory1869",
             "type": "Microsoft.Storage/storageAccounts",
             "location": "westus2",
             "tags": {},
@@ -587,9 +587,9 @@
               "provisioningState": "Succeeded",
               "creationTime": "2022-07-30T01:27:29.5634062Z",
               "primaryEndpoints": {
-                "dfs": "https://220730datafactory1869.dfs.core.windows.net/",
-                "blob": "https://220730datafactory1869.blob.core.windows.net/",
-                "table": "https://220730datafactory1869.table.core.windows.net/"
+                "dfs": "https://datafactory1869.dfs.core.windows.net/",
+                "blob": "https://datafactory1869.blob.core.windows.net/",
+                "table": "https://datafactory1869.table.core.windows.net/"
               },
               "primaryLocation": "westus2",
               "statusOfPrimary": "available"
@@ -599,7 +599,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/DataFactory-RG-2355/providers/Microsoft.Storage/storageAccounts/220730datafactory1869?api-version=2021-09-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/DataFactory-RG-2355/providers/Microsoft.Storage/storageAccounts/datafactory1869?api-version=2021-09-01",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",

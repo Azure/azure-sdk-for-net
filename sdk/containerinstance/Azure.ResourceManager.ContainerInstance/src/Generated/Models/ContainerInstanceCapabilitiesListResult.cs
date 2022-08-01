@@ -11,18 +11,18 @@ using Azure.Core;
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     /// <summary> The response containing list of capabilities. </summary>
-    internal partial class CapabilitiesListResult
+    internal partial class ContainerInstanceCapabilitiesListResult
     {
-        /// <summary> Initializes a new instance of CapabilitiesListResult. </summary>
-        internal CapabilitiesListResult()
+        /// <summary> Initializes a new instance of ContainerInstanceCapabilitiesListResult. </summary>
+        internal ContainerInstanceCapabilitiesListResult()
         {
             Value = new ChangeTrackingList<ContainerInstanceCapabilities>();
         }
 
-        /// <summary> Initializes a new instance of CapabilitiesListResult. </summary>
+        /// <summary> Initializes a new instance of ContainerInstanceCapabilitiesListResult. </summary>
         /// <param name="value"> The list of capabilities. </param>
         /// <param name="nextLink"> The URI to fetch the next page of capabilities. </param>
-        internal CapabilitiesListResult(IReadOnlyList<ContainerInstanceCapabilities> value, string nextLink)
+        internal ContainerInstanceCapabilitiesListResult(IReadOnlyList<ContainerInstanceCapabilities> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;

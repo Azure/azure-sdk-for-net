@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.IotCentral.Tests
             var iotCentralAppPatch = new IotCentralAppPatch()
             {
                 Sku = new IotCentralAppSkuInfo(IotCentralAppSku.ST1),
-                Identity = new SystemAssignedServiceIdentity(ResourceManager.Models.SystemAssignedServiceIdentityType.SystemAssigned),
+                Identity = new ManagedServiceIdentity(ResourceManager.Models.ManagedServiceIdentityType.SystemAssigned),
             };
             await iotCentralApp.UpdateAsync(WaitUntil.Completed, iotCentralAppPatch, CancellationToken.None);
 

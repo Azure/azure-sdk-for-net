@@ -56,14 +56,16 @@ override-operation-name:
 prepend-rp-prefix:
   - Container
   - Volume
+  - CapabilitiesListResult
 rename-mapping:
   Logs: ContainerLogs
   Event: ContainerEvent
   AzureFileVolume.readOnly: IsReadOnly
   VolumeMount.readOnly: IsReadOnly
-#   Capabilities: ContainerInstanceCapabilities
-#   CapabilitiesPropertiesCapabilities: ContainerInstanceSupportedCapabilities
+  Capabilities: ContainerInstanceSupportedCapabilities
   ContainerProbe.timeoutSeconds: TimeoutInSeconds
+  ContainerProbe.initialDelaySeconds: InitialDelayInSeconds
+  ContainerProbe.periodSeconds: PeriodInSeconds
   Scheme: ContainerHttpGetScheme
   Port: ContainerGroupPort
   IpAddress.ip: -|ip-address
